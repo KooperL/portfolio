@@ -12,5 +12,6 @@ export const endpoints: ApiEndpoints = {
   secondary: `${apiHost}/secondary`,
   fuelprices: `${apiHost}/fuelprices`,
   tictactoe: `${apiHost}/tictactoe`,
+  randombio: `${apiHost}/randombio`,
 }
 
