@@ -1,0 +1,47 @@
+.screen {
+  padding-top: 5rem;
+}
+
+.table {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.cell {
+  padding: 1rem;
+}
+
+.header {
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.chart {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  max-width: 2000px;
+  width: 60%;
+  overflow: visible;
+}
+
+.table-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1000px) {
+  .table {
+    flex-direction: column;
+    padding-bottom: 1rem;
+  }
+  .chart {
+    width: 80%;
+  }
+}

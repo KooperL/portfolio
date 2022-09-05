@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock %}
+
+{% block body %}
+
+<a href='https://www.ncbi.nlm.nih.gov/gene/'>Gene sequence database</a>
+<div id='decode_ascii'>
+<pre>
+:-.   ,-;'`-:-.   ,-;'`-:-.   ,-;'`-:-.   ,-;'`-:-.   ,-;'`-:-.   ,-;'`-:-.   ,-;'`-:-.   ,-;'
+ `=`,'=/     `=`,'=/     `=`,'=/     `=`,'=/   `=`,'=/     `=`,'=/     `=`,'=/     `=`,'=/
+   y==/        y==/        y==/        y==/      y==/        y==/        y==/        y==/
+,=,-<=`.    ,=,-<=`.    ,=,-<=`.    ,=,-<=`.   ,=,-<=`.    ,=,-<=`.    ,=,-<=`.    ,=,-<=`.
+,-'-'   `-=_,-'-'   `-=_,-'-'   `-=_,-'-'   `-=_,-'-'   `-=_,-'-'   `-=_,-'-'   `-=_,-'-'   `-=_
+</pre>
+	<!-- https://ascii.co.uk/art/dna -->
+</div>
+<div id='decode_container' class='column'>
+<div id='decode_dna'>	
+<h2>DNA sequence: </h2>
+<form action='/mrna/' method='POST'>
+<textarea id='dna_field_id' name='dna_field_id' rows='10' cols='55' placeholder='Input field eg. AAGC' value='aaa'>{{ dna_field }}</textarea>
+<br>
+<br>
+<input type='submit' value='Decode'>
+</form>
+</div>
+</div>
+
+<div id='decode_stack1' class='column'>
+<div id='decode_cdna'>
+<h2>Complement DNA:</h2>
+<textarea id='mrna_field_id' name='mrna' rows='10' cols='55' disabled='disabled'>{{ rdna_field }}</textarea>
+</div>
+<div id='decode_cmrna'>
+<h2>Complement mRNA:</h2>
+<textarea id='mrna_field_id' name='mrna' rows='10' cols='55' disabled='disabled'>{{ mrna_field }}</textarea> 
+</div>
+<div id='decode_aap'>
+<h2>Amino acids (partial):</h2>
+<textarea id='aa_field_id' name='aa' rows='10' cols='55' disabled='disabled'>{{ aa }}</textarea>
+</div>
+</div>
+
+<div id='decode_stack2' class='column'>
+<div id='decode_aas'>
+<h2>Amino acids (single):</h2>
+<textarea id='aa_field_id' name='aa' rows='10' cols='55' disabled='disabled'>{{ aa_s }}</textarea>
+</div>
+<div  id='decode_stats'>
+<p><strong>Nucleotide count:</strong></p>
+<ul>.... G : {{ simplecount[0] }}</ul>
+<ul>.... C : {{ simplecount[1] }}</ul>
+<ul>.... A : {{ simplecount[2] }}</ul>
+<ul>.... T : {{ simplecount[3] }}</ul>
+{% set count = namespace(value=0) %}
+{% for i in simplecount %}
+{% set count.value = count.value + i %}
+{% endfor %}
+<p>.... Total : {{ count.value }} bp</P>
+<p><strong>GC ratio:</strong> {{ gccontent }}</p>
+<p><strong>Molecular weight: </strong>{{ molweight }} g/mol</p>
+<p><strong>Melting temperature: </strong>{{ tm }} C</p>
+</div>
+</div>
+{% endblock %}

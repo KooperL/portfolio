@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock %}
+
+{% block body %}
+ <form>
+<select name="pattern">
+<option value="">-- Select a Pattern --</option>
+{% for key in candlestick_patterns %}
+<option value="{{ key }}" {% if pattern == key %}selected="selected"{% endif %}>{{ candlestick_patterns[key] }}</option>
+{% endfor %}
+</select>
+<input type="submit" value="Scan" />
+</form>
+
+{% endblock %}

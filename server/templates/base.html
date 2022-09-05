@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+<link rel='shortcut icon' href='{{ url_for('static', filename='images/cruze.ico') }}'>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+<meta http-equiv='X-UA-Compatible' content='ie=edge'>
+<title>{{ title }}</title>
+<link rel="stylesheet" href='{{ url_for('static', filename='css/main.css') }}'>
+{% block head %}
+{% endblock %}
+</head>
+
+<body>
+<div id='container'>
+<div id='header-container' class='header'>
+
+<div class='row'>
+<div id='home' class='column'>	
+<a href='/home' style='font-size:12px;'><strong>>Home</strong></a>
+</div>
+<div id='heading' class='column'>
+<h1 style='font-size:24px;'>{{ heading }}</h1>
+</div>
+
+
+</div>
+</div>
+
+<div id='content-container'>
+{% block body %} {% endblock %}
+</div>
+
+</div>
+</body>
+</html>

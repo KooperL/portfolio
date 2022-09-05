@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<!--
+<script>
+javascript: alert('ik about the bad fit aiight')
+</script>	
+-->
+<div id='fuel_images' class='dual-column'>
+<div id='fuel_img1'>
+<img src='{{ url_for('static', filename='images/fuel-1000minp.jpg') }}'>
+</div>
+<div class='column'>
+</div>
+<div id='fuel_img2'> 
+<img src='{{ url_for('static', filename='images/fuel-600averagep.jpg') }}'>
+</div>
+</div>
+
+<div id=fuel_wrapper' class='dual-column'>
+<span style='font-family:consolas'>
+<div id='fuel_stats'>
+<table id='fuel_stats' width=90%>
+<tr>
+<th>Average: </th>
+<th>Price dist.: </th>
+<th>Price rank: </th>
+<th>Price trend: </th>
+<th>Suggestion: </th>
+</tr>
+<tr>
+<td>{{ stats[0] }}</td>
+<td>{{ stats[1] }}</td>
+<td>{{ stats[2] }}</td>
+<td>{{ stats[3] }}</td>
+<td>{{ stats[4] }}</td>
+</tr>
+</table>
+</div>
+
+<p>
+<p>
+<p>
+
+<div id='fuel_table'>
+<table id='fuel_table' width=90%>
+<tr>
+<th>Date</strong> (yyyy-mm-dd hh:mm:ss.ms): </th>
+<th>Min (c): </th>
+<th>Max (c): </th>
+<th>Average (c): </th>
+<th>Wholesale (c): </th>
+</tr>
+<!--
+{% for filler in  fuelprices[::-1] %}
+<tr>
+<td>{{ filler.date }}</td>
+<td>{{ filler.minprice }}</td>
+<td>{{ filler.maxprice }}</td>
+<td>{{ filler.averageprice }}</td>
+<td>{{ filler.wholesaleprice }}</td>
+</tr>
+{% endfor %}
+-->
+{% for filler in  fuelprices[::-1] %}
+<tr>
+<td>{{ filler[1] }}</td>
+<td>{{ filler[2] }}</td>
+<td>{{ filler[3] }}</td>
+<td>{{ filler[4] }}</td>
+<td>{{ filler[0] }}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+
+{% endblock %}

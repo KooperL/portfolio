@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Pairwise sequence alignment</title>
+{% endblock %}
+
+{% block body %}
+<div>
+<h1>Pairwise sequence alignment</h1>
+</div>
+<div>
+<span style='font-family:consolas'>	
+<p>Match score = {{ results }}</p>
+{% for res in draw_res %}
+<p>{{ res }}</p>
+{% endfor %}
+</span>
+</div>
+
+{% endblock %}

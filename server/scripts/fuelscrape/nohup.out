@@ -1,0 +1,52 @@
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+/usr/local/lib/python3.8/dist-packages/numpy/core/fromnumeric.py:3372: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+/usr/local/lib/python3.8/dist-packages/numpy/core/_methods.py:170: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+/usr/local/lib/python3.8/dist-packages/flask_sqlalchemy/__init__.py:833: FSADeprecationWarning: SQLALCHEMY_TRACK_MODIFICATIONS adds significant overhead and will be disabled by default in the future.  Set it to True or False to suppress this warning.
+  warnings.warn(FSADeprecationWarning(
+ * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+ * Restarting with stat
+/usr/local/lib/python3.8/dist-packages/numpy/core/fromnumeric.py:3372: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+/usr/local/lib/python3.8/dist-packages/numpy/core/_methods.py:170: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+/usr/local/lib/python3.8/dist-packages/flask_sqlalchemy/__init__.py:833: FSADeprecationWarning: SQLALCHEMY_TRACK_MODIFICATIONS adds significant overhead and will be disabled by default in the future.  Set it to True or False to suppress this warning.
+  warnings.warn(FSADeprecationWarning(
+ * Debugger is active!
+ * Debugger PIN: 178-757-202
+103.137.14.132 - - [15/Nov/2020 11:12:23] "[35m[1mGET /fuelprices HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2450, in wsgi_app
+    response = self.handle_exception(e)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1867, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.8/dist-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.8/dist-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.8/dist-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/var/www/app/app.py", line 64, in fuelpricesHome
+    conn = sqlite3.connect('/var/www/app/database.db')
+NameError: name 'sqlite3' is not defined
+103.137.14.132 - - [15/Nov/2020 11:12:24] "[37mGET /fuelprices?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+103.137.14.132 - - [15/Nov/2020 11:12:24] "[37mGET /fuelprices?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+103.137.14.132 - - [15/Nov/2020 11:12:24] "[37mGET /fuelprices?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+103.137.14.132 - - [15/Nov/2020 11:12:25] "[37mGET /fuelprices?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+103.137.14.132 - - [15/Nov/2020 11:12:25] "[37mGET /fuelprices?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+103.137.14.132 - - [15/Nov/2020 11:12:25] "[37mGET /fuelprices?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -

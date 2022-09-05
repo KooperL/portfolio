@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock %}
+
+{% block body %}
+
+<div id='prop_filesd' class='left'>
+<span style='font-family:consolas'>
+<table style='width:100%' id='prop_filest'>
+<tr>
+<td><strong>File</strong></td>
+</tr>
+{% for file in files %}
+<tr>
+<!-- <td><a href='{{ url_for('static', filename='../static/downloads/prop_data/{{ file }}') }}'>{{ file }}</a></td>-->
+<td><a href='/static/downloads/prop_data/{{ file }}'>{{ file }}</a></td>
+{% endfor %}
+</div>
+
+{% endblock %}
