@@ -37,7 +37,8 @@ import scripts.utils.rgb
 
 def build_preflight_response():
   response = make_response()
-  response.headers.add('Access-Control-Allow-Origin', config['ORIGIN'])
+  origin = config['ORIGIN'].split(',')
+  response.headers.add('Access-Control-Allow-Origin', origin)
   response.headers.add('Access-Control-Allow-Headers', '*')
   response.headers.add('Access-Control-Allow-Methods', '*')
   return response
