@@ -110,7 +110,7 @@ function SecondaryPage(props: Props): JSX.Element {
   if(state.error) {
     return (
       <div>
-        {state.errorMessage}
+        {JSON.stringify(state.errorMessage)}
       </div>
     );
   }

@@ -37,17 +37,26 @@ todo
 FOR FLASK
 
 NGINX CONFIG `/etc/nginx/conf.d/site2.conf`
-```server {
-    listen       80;
-    server_name  api.kooperlingohr.com;
-    location / {
-        proxy_pass  http://127.0.0.1:5000/;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header X-Forwarded-Host $host;
-        proxy_set_header X-Forwarded-Prefix /;
-    }
-}```
+```
+server {
+  listen       80;
+  server_name  kooperlingohr.com;
+  location /api/ {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-NginX-Proxy true;
+    proxy_pass https://api.kooperlingohr.com/;
+    proxy_ssl_session_reuse off;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+  }
+  location / {
+    root   /var/www/portfolio/ui.react/build;
+    index  index.html;
+    try_files $uri /index.html;
+  }
+}
+```
 
 CRONs
 ```0 16 * * * /usr/bin/python3 /var/www/portfolio/server/scripts/fuelscrape/fuelscrape.py
@@ -58,6 +67,17 @@ CRONs
 
 @reboot cd /var/www/portfolio/server/ && /usr/bin/python3 /var/www/portfolio/server/app.py```
 
+
+MONGO
+`/etc/mongod.conf`
+```storage:
+  dbPath: /var/www/portfolio/server/data/mongodb
+security:
+    authorization: enabled
+setParameter:
+    enableLocalhostAuthBypass: false
+bind_ip = 0.0.0.0
+```
 
 
 HELP: https://stackoverflow.com/questions/62166918/node-wont-change-to-newest-version-14-4-0

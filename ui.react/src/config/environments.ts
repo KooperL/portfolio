@@ -6,7 +6,7 @@ export interface Environment {
 
 export const environments: Environment = {
   PROD: {
-    apiHost: 'https://api.kooperlingohr.com'
+    apiHost: 'https://kooperlingohr.com/api'
   },
   SIT: {
     apiHost: 'https://SIT.kooperlingohr.com'
