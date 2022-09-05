@@ -1,0 +1,20 @@
+{
+  "header": {
+    "background": "#205375",
+    "text": "#EFEFEF",
+    "outline": "#EFEFEF"
+  },
+  "body": {
+    "background": "#112B3C",
+    "foreground": "#205375",
+    "h1": "#F66B0E",
+    "h2": "#EFEFEF",
+    "text": "#F2F2F2"
+  },
+  "button": {
+    "bgSolid": "#205375",
+    "bgGrad1": "#455375",
+    "bgGrad2": "#20535a",
+    "text": "#F2F2F2"
+  }
+}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock %}
+
+{% block body %}
+
+
+<div id='prop_search'>
+<form action='/property/' method='POST'>
+<label for='prop_suburb'>Search suburb: </label>
+<input type='text' id='prop_suburb' name='prop_suburb'>
+<input type='submit' value='Search'>
+</form>
+</div>
+
+<div id='prop_hist' class='dual-column'>
+<!--<img src='{{ url_for('static', filename='images/prop_gen_hist.jpg') }}'>-->
+<img src='{{ prop_pic1 }}'>
+{% if suburb is none %}
+<img src='../static/images/prop_data/prop_datapoints.jpg'>
+{% else %}
+
+<iframe width="550" height="450" src=
+	       "https://maps.google.com/maps?width=150&amp;height=50&amp;hl=en&amp;q={{ suburb }}%20Victoria%20Australia&amp;ie=UTF8&amp;t=&amp;z=8&amp;iwloc=B&amp;output=embed" 
+	frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+
+{% endif %}
+</div>
+
+<div id='prop_tabled' class='dual-column'>
+<div id=prop_tablet>
+{% if suburb is none %}	
+<h3>State (Victoria) statistics</h3>
+{% else %}
+<h3>{{ suburb }} statistics</h3>
+{% endif %}
+<table style='width:100%' id='prop_tablet'>
+<tr>
+<td><strong>{{ stats[0][0] }}: </strong></td>
+<td><strong>{{ stats[0][1] }}: </strong></td>
+<td><strong>{{ stats[0][2] }}: </strong></td>
+<td><strong>{{ stats[0][3] }}: </strong></td>
+<td><strong>{{ stats[0][4] }}: </strong></td>
+<td><strong>{{ stats[0][5] }}: </strong></td>
+</tr>
+<tr>
+<td>{{ stats[1][0] }}</td>
+<td>{{ stats[1][1] }}</td>
+<td>{{ stats[1][2] }}</td>
+<td>{{ stats[1][3] }}</td>
+<td>{{ stats[1][4] }}</td>
+<td>{{ stats[1][5] }}</td>
+</tr>
+</table>
+</div>
+<div id=prop_tablet>
+<h3>Algorithmically Ranked Suburbs</h3>
+<table style='width:100%' id='prop_tablet'>
+<tr>
+<td><strong>Suburb: </strong></td>
+<td><strong>Mean Price ($): </strong></td>
+<td><strong>Distance: </strong></td>
+<td><strong>Popularity: </strong></td>
+<td><strong>m Coefficient: </strong></td>
+<td><strong>Calculated Desirability: </strong></td>
+</tr>
+{% for ent in highest %}
+<tr>
+<td><a href='/property?prop_suburb={{ ent[0] }}'>{{ ent[0] }}</a></td>
+<td>{{ ent[1] }}</td>
+<td>{{ ent[2] }}</td>
+<td>{{ ent[3] }}</td>
+<td>{{ ent[4] }}</td>
+<td>{{ ent[5] }}</td>
+</tr>	
+{%endfor%}
+</tr>
+</td>
+</table>
+</div>
+</div>
+
+<div id='prop_filesd' class='footer'>
+<strong>Limitations: </strong>
+<ul>Properties not subdivided into apartments, houses, land, etc. </ul>
+<ul>Insights only gained from available listings </ul>
+<a href='/property/files/'>Raw data</a>
+</div>
+
+{% endblock %}
