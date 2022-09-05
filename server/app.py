@@ -34,7 +34,15 @@ import scripts.utils.rgb
 #import pattern_detect
 
 
-
+def build_preflight_response():
+  response = make_response()
+  response.headers.add("Access-Control-Allow-Origin", "*")
+  response.headers.add('Access-Control-Allow-Headers', "*")
+  response.headers.add('Access-Control-Allow-Methods', "*")
+  return response
+def build_actual_response(response):
+  response.headers.add("Access-Control-Allow-Origin", "*")
+  return response
 
 app = Flask(__name__)
 # cors = CORS(app, resources={r'*': {'origins': '*'}})
@@ -89,90 +97,118 @@ def log(ip, page):
 #   return render_template('log.html', data=json_data)
   #return jsonify(json_data)
 
-@cross_origin()
-@app.route('/home')
+# @cross_origin()
+@app.route('/home', methods=['GET', 'OPTIONS'])
 def homeHome():
   # log(request.remote_addr, inspect.stack()[0][3])
-  kwargs = {
-    'success': True,
-    'data': [
-      {
-        'title': 'Games',
-        'points': [
+  try:
+    if request.method == 'GET':
+      kwargs = {
+        'success': True,
+        'data': [
           {
-            'address': '/tictactoe',
-            'name': 'Tictactoe',
-          }
-        ]
-      }, {
-        'title': 'Data Storage and Analysis',
-        'points': [
-          {
-            'address': '/fuelprices',
-            'name': 'UL91 Fuel Price trends',
-          },
-          {
-            'address': '/property',
-            'name': 'Real estate data interface',
-          }
-      ],
-      }, {
-        'title': 'Bioinformatics',
-        'points': [
-          {
-            'address': '/mrna',
-            'name': 'DNA:mRNA decoder',
-          },
-          {
-            'address': '/secondary',
-            'name': 'Predict secondary protein structure',
-          },
-          {
-            'address': '/seqalign',
-            'name': 'Pairwise sequence alignment',
-          }
-        ],
-      }, {
-        'title': 'Repos',
-        'points': [
-          {
-            'address': 'https://github.com/KooperL/tkinter3dengine',
-            'name': 'Python/Tkinter 3d Engine',
-            },
-          {
-            'address': 'https://github.com/KooperL/tkinterAstar',
-            'name': 'A* Path finder py',
+            'title': 'Games',
+            'points': [
+              {
+                'address': '/tictactoe',
+                'name': 'Tictactoe',
+              }
+            ]
+          }, {
+            'title': 'Data Storage and Analysis',
+            'points': [
+              {
+                'address': '/fuelprices',
+                'name': 'UL91 Fuel Price trends',
+              },
+              {
+                'address': '/property',
+                'name': 'Real estate data interface',
+              }
+          ],
+          }, {
+            'title': 'Bioinformatics',
+            'points': [
+              {
+                'address': '/mrna',
+                'name': 'DNA:mRNA decoder',
+              },
+              {
+                'address': '/secondary',
+                'name': 'Predict secondary protein structure',
+              },
+              {
+                'address': '/seqalign',
+                'name': 'Pairwise sequence alignment',
+              }
+            ],
+          }, {
+            'title': 'Repos',
+            'points': [
+              {
+                'address': 'https://github.com/KooperL/tkinter3dengine',
+                'name': 'Python/Tkinter 3d Engine',
+                },
+              {
+                'address': 'https://github.com/KooperL/tkinterAstar',
+                'name': 'A* Path finder py',
+              }
+            ]
           }
         ]
       }
-    ]
-  }
-  response = jsonify(kwargs)
-  response.headers.add('Access-Control-Allow-Origin', '*')
-  return response
+      response = jsonify(kwargs)
+      response.headers.add('Access-Control-Allow-Origin', '*')
+      return response
+    elif request.method == 'OPTIONS': 
+      return build_preflight_response()
+    else:
+      raise RuntimeError('Method not allowed')
+  except Exception as e:
+    kwargs = {
+      'success': False,
+      'error': e
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
 
-@cross_origin()
-@app.route('/heatmap')
+# @cross_origin()
+@app.route('/heatmap', methods=['GET', 'OPTIONS'])
 def heatmapHome():
-  dic = []
-  allSubs = scripts.utils.databaseUtils.call()
-  priceMin = 200000
-  priceMax = 2000000
+  try:
+    if request.method == 'GET':
+      dic = []
+      allSubs = scripts.utils.databaseUtils.call()
+      priceMin = 200000
+      priceMax = 2000000
 
-  for sub in allSubs:
-    price = scripts.utils.databaseUtils.call({'suburb': sub['suburb']}, 'price')
-    try:
-      price = price[0]['pricedata']['mean_means']
-    except:
-      continue
-    mean = priceMin*(price<priceMin) + priceMax*(price>priceMax) + (price>priceMin)*(price<priceMax)*price
-    #col = ((mean-priceMin)/(priceMax-priceMin))*255
-    col = scripts.utils.rgb.rgb(priceMin, priceMax, mean)
-    bounds = sub['bounds']
-    boundsCorrected = map(lambda x: {'lat': x[1], 'lng': x[0]}, bounds)
-    dic.append({'suburb': sub['suburb'], 'price': price, 'colour': ''.join([hex(c)[-2:].replace('x','0') for c in col]), 'bounds': list(boundsCorrected)})
-  return render_template('test.html', data={'data':dic})
-
+      for sub in allSubs:
+        price = scripts.utils.databaseUtils.call({'suburb': sub['suburb']}, 'price')
+        try:
+          price = price[0]['pricedata']['mean_means']
+        except:
+          continue
+        mean = priceMin*(price<priceMin) + priceMax*(price>priceMax) + (price>priceMin)*(price<priceMax)*price
+        #col = ((mean-priceMin)/(priceMax-priceMin))*255
+        col = scripts.utils.rgb.rgb(priceMin, priceMax, mean)
+        bounds = sub['bounds']
+        boundsCorrected = map(lambda x: {'lat': x[1], 'lng': x[0]}, bounds)
+        dic.append({'suburb': sub['suburb'], 'price': price, 'colour': ''.join([hex(c)[-2:].replace('x','0') for c in col]), 'bounds': list(boundsCorrected)})
+        kwargs={'data':dic}
+        res = jsonify(kwargs)
+        return build_actual_response(res)
+    elif request.method == 'OPTIONS': 
+      return build_preflight_response()
+    else:
+      raise RuntimeError('Method not allowed')
+  except Exception as e:
+    kwargs = {
+      'success': False,
+      'error': e
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
+    
 # @app.route('/stocks/', methods=['GET', 'POST'])
 # def stocksHome():
   # log(request.remote_addr, inspect.stack()[0][3])
@@ -192,40 +228,44 @@ def heatmapHome():
 #     pattern = None
 # '''
 
-@app.route('/fuelprices')
-@cross_origin()
+@app.route('/fuelprices', methods=['GET', 'OPTIONS'])
+# @cross_origin()
 def fuelpricesHome():
   # log(request.remote_addr, inspect.stack()[0][3])
   try:
-    conn = sqlite3.connect(f'{appDir}/data/database.db')
-    rows = list(conn.execute(f'SELECT * FROM fuelpricesDB ORDER BY id DESC LIMIT 200'))[::-1]
-    dic = {'wholesale': [], 'min': [], 'max': [], 'average': [], }
-    for key in rows:
-      date = datetime.datetime.strptime(key[1], '%Y-%m-%d %H:%M:%S.%f')#.timestamp()
-      dic['wholesale'].append({'x': date, 'y': key[5]})
-      dic['min'].append({'x': date, 'y': key[2]})
-      dic['max'].append({'x': date, 'y': key[3]})
-      dic['average'].append({'x': date, 'y': key[4]})
-    kwargs = {
-      'success': True,
-      'data': {
-        'fuelprices': dic,
-        'stats': scripts.fuelscrape.newdrawfuel.table()
+    if request.method == 'GET':
+      conn = sqlite3.connect(f'{appDir}/data/database.db')
+      rows = list(conn.execute(f'SELECT * FROM fuelpricesDB ORDER BY id DESC LIMIT 200'))[::-1]
+      dic = {'wholesale': [], 'min': [], 'max': [], 'average': [], }
+      for key in rows:
+        date = datetime.datetime.strptime(key[1], '%Y-%m-%d %H:%M:%S.%f')#.timestamp()
+        dic['wholesale'].append({'x': date, 'y': key[5]})
+        dic['min'].append({'x': date, 'y': key[2]})
+        dic['max'].append({'x': date, 'y': key[3]})
+        dic['average'].append({'x': date, 'y': key[4]})
+      kwargs = {
+        'success': True,
+        'data': {
+          'fuelprices': dic,
+          'stats': scripts.fuelscrape.newdrawfuel.table()
+        }
       }
-    }
-    response = jsonify(kwargs)
-    # response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+      res = jsonify(kwargs)
+      return build_actual_response(res)
+    elif request.method == 'OPTIONS': 
+        return build_preflight_response()
+    else:
+      raise RuntimeError('Method not allowed')
   except Exception as e:
     kwargs = {
       'success': False,
       'error': e
     }
-    response = jsonify(kwargs)
-    return response
+    res = jsonify(kwargs)
+    return build_actual_response(res)
 
-@app.route('/mrna', methods=['GET'])
-@cross_origin()
+@app.route('/mrna', methods=['GET', 'OPTIONS'])
+# @cross_origin()
 def mrnaHome():
   # log(request.remote_addr, inspect.stack()[0][3])
   try: 
@@ -256,7 +296,10 @@ def mrnaHome():
         }
       }
         # return render_template('mrna.html', **kwargs)
-      return jsonify(kwargs)
+      res = jsonify(kwargs)
+      return build_actual_response(res)
+    elif request.method == 'OPTIONS': 
+        return build_preflight_response()
     else:
       raise RuntimeError('Method not allowed')
   except Exception as e:
@@ -264,12 +307,12 @@ def mrnaHome():
       'success': False,
       'error': e
     }
-    response = jsonify(kwargs)
-    return response
+    res = jsonify(kwargs)
+    return build_actual_response(res)
 
 
-@app.route('/secondary', methods=['GET'])
-@cross_origin()
+@app.route('/secondary', methods=['GET', 'OPTIONS'])
+# @cross_origin()
 def secondaryHome():
   # log(request.remote_addr, inspect.stack()[0][3]).
   try:
@@ -295,8 +338,10 @@ def secondaryHome():
         'bsl_field': output[6],
         }
       }
-      response = jsonify(kwargs)
-      return response
+      res = jsonify(kwargs)
+      return build_actual_response(res)
+    elif request.method == 'OPTIONS': 
+        return build_preflight_response()
     else:
       raise RuntimeError('Method not allowed')
   except Exception as e:
@@ -304,13 +349,13 @@ def secondaryHome():
       'success': False,
       'error': e
     }
-    response = jsonify(kwargs)
-    return response
+    res = jsonify(kwargs)
+    return build_actual_response(res)
 
 # environment.tests['isvalidsuburb'] = isvalidsuburb
 
-@app.route('/property', methods=['GET'])
-@cross_origin()
+@app.route('/property', methods=['GET', 'OPTIONS'])
+# @cross_origin()
 def propertyHome():
   try:
     # log(request.remote_addr, inspect.stack()[0][3])
@@ -324,8 +369,10 @@ def propertyHome():
           'highest': ranked
         }
       }
-      response = jsonify(kwargs)
-      return response
+      res = jsonify(kwargs)
+      return build_actual_response(res)
+    elif request.method == 'OPTIONS': 
+        return build_preflight_response()
     else:
       raise RuntimeError('Method not allowed')
   except Exception as e:
@@ -333,11 +380,11 @@ def propertyHome():
       'success': False,
       'error': e
     }
-    response = jsonify(kwargs)
-    return response
+    res = jsonify(kwargs)
+    return build_actual_response(res)
 
-@app.route('/property/search', methods=['GET'])
-@cross_origin()
+@app.route('/property/search', methods=['GET', 'OPTIONS'])
+# @cross_origin()
 def propertySearchHome():
   # log(request.remote_addr, inspect.stack()[0][3])
   try:
@@ -356,8 +403,10 @@ def propertySearchHome():
           'details': data
         }
       }
-      response = jsonify(kwargs)
-      return response
+      res = jsonify(kwargs)
+      return build_actual_response(res)
+    elif request.method == 'OPTIONS': 
+        return build_preflight_response()
     else:
       raise RuntimeError('Method not allowed')
   except Exception as e:
@@ -365,16 +414,16 @@ def propertySearchHome():
       'success': False,
       'error': e
     }
-    response = jsonify(kwargs)
-    return response
+    res = jsonify(kwargs)
+    return build_actual_response(res)
 
-# @app.route('/property/files', methods=['GET'])
+# @app.route('/property/files', methods=['GET', 'OPTIONS'])
 # def propfilesHome():
 #   # log(request.remote_addr, inspect.stack()[0][3])
 #   return render_template('prop_files.html',files = list_files(appDir + '/property/prop_data/'))
 
-@cross_origin()
-@app.route('/seqalign', methods=['GET'])
+# @cross_origin()
+@app.route('/seqalign', methods=['GET', 'OPTIONS'])
 def seqalignHome():
   # log(request.remote_addr, inspect.stack()[0][3])
   try:
@@ -398,8 +447,10 @@ def seqalignHome():
           'draw_res':draw_res,
         }
       }
-      response = jsonify(kwargs)
-      return response
+      res = jsonify(kwargs)
+      return build_actual_response(res)
+    elif request.method == 'OPTIONS': 
+        return build_preflight_response()
     else:
       raise RuntimeError('Method not allowed')
   except Exception as e:
@@ -407,8 +458,8 @@ def seqalignHome():
       'success': False,
       'error': e
     }
-    response = jsonify(kwargs)
-    return response
+    res = jsonify(kwargs)
+    return build_actual_response(res)
 
 
 
