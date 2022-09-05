@@ -7,5 +7,6 @@ export enum RouteType {
   Mrna = '/mrna',
   Secondary = '/secondary',
   Seqalign = '/seqalign',
-  Heatmap = '/heatmap'
+  Heatmap = '/heatmap',
+  RandomBio = '/randombio'
 }

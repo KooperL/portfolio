@@ -7,6 +7,7 @@ import { FuelPricesPage } from '../fuelPricesPage/loadable';
 import { SecondaryPage } from '../secondaryPage/loadable';
 import { SeqAlignPage } from '../seqAlignPage/loadable';
 import { TictactoePage } from '../tictactoePage/loadable';
+import { RandomBioPage } from '../randomBioPage/loadable';
 // import { Render } from '../renderer/grid/Render';
 import { RouteType } from './routeTypes';
 import { SchemeSettings } from '../context/colourScheme';
@@ -28,6 +29,7 @@ function App() {
             <Route path={`${RouteType.Mrna}`} element={<MrnaPage />} />
             <Route path={`${RouteType.Secondary}`} element={<SecondaryPage />} />
             <Route path={`${RouteType.Seqalign}`} element={<SeqAlignPage />} />
+            <Route path={`${RouteType.RandomBio}`} element={<RandomBioPage />} />
             {/* <Route path={`${RouteType.Heatmap}`} element={<SeqAlignPage />} /> */}
           </Routes>
       </Router>

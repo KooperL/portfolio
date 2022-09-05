@@ -7,6 +7,7 @@ export interface ApiEndpoints {
   fuelprices: string;
   secondary: string;
   tictactoe: string;
+  randombio: string;
 }
 
 export interface Payload {

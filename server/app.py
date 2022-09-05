@@ -1,4 +1,5 @@
 import datetime
+import urllib.parse
 import inspect
 import random
 import json
@@ -26,6 +27,7 @@ from bson.json_util import dumps
 import scripts.mrna_files.decode
 import scripts.mrna_files.secondary
 import scripts.mrna_files.seqalign
+import scripts.mrna_files.randomGenerator
 import scripts.property.draw
 import scripts.utils.databaseUtils
 import scripts.fuelscrape.newdrawfuel
@@ -37,8 +39,7 @@ import scripts.utils.rgb
 
 def build_preflight_response():
   response = make_response()
-  origin = config['ORIGIN'].split(',')
-  response.headers.add('Access-Control-Allow-Origin', origin)
+  response.headers.add('Access-Control-Allow-Origin', config['ORIGIN'])
   response.headers.add('Access-Control-Allow-Headers', '*')
   response.headers.add('Access-Control-Allow-Methods', '*')
   return response
@@ -72,10 +73,11 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 #   wholesaleprice = db.Column(db.Float(6), nullable=False)
 
 
-import urllib.parse
 username = urllib.parse.quote_plus(config['MONGO_USERNAME'])
 password = urllib.parse.quote_plus(config['MONGO_PASSWORD'])
 client = MongoClient('mongodb://%s:%s@localhost:%s/' % (username, password, config['MONGO_PORT']))
+
+
 db = client['traffic_log']
 traffic_data = db['data']
 
@@ -458,7 +460,50 @@ def seqalignHome():
     res = jsonify(kwargs)
     return build_actual_response(res)
 
+@app.route('/randombio', methods=['GET', 'OPTIONS'])
+def randomBioHome():
+  # log(request.remote_addr, inspect.stack()[0][3])
+  try:
+    def validate(e):
+      if not all(pull):
+        raise RuntimeError('Mandatory value(s) not provided')
 
+    if request.method == 'GET':
+      pull = [
+        int(request.args.get('type')),
+        int(request.args.get('length'))
+      ]
+
+      results = None
+      if pull[0] == 1:
+        results = scripts.mrna_files.randomGenerator.randomDNA(pull[1])
+      elif pull[0] == 2:
+        results = scripts.mrna_files.randomGenerator.randomRNA(pull[1])
+      elif pull[0] == 3:
+        single = int(request.args.get('single'))
+        validate(single)
+        results = scripts.mrna_files.randomGenerator.randomProteins(pull[1], single)
+      else:
+        raise RuntimeError('Invalid value(s) provided')
+      kwargs = {
+        'success': True,
+        'data': {
+          'results':results,
+        }
+      }
+      res = jsonify(kwargs)
+      return build_actual_response(res)
+    elif request.method == 'OPTIONS': 
+        return build_preflight_response()
+    else:
+      raise RuntimeError('Method not allowed')
+  except Exception as e:
+    kwargs = {
+      'success': False,
+      'error': e
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=5000, debug=True)
