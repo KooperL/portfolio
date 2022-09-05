@@ -12,6 +12,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, mak
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
 import sqlite3
+from werkzeug.middleware.proxy_fix import ProxyFix
 #export FLASK_ENV=development (or production I guess)
 from jinja2 import Environment
 environment = Environment()
@@ -36,36 +37,40 @@ import scripts.utils.rgb
 
 def build_preflight_response():
   response = make_response()
-  response.headers.add("Access-Control-Allow-Origin", "*")
-  response.headers.add('Access-Control-Allow-Headers', "*")
-  response.headers.add('Access-Control-Allow-Methods', "*")
+  response.headers.add('Access-Control-Allow-Origin', config['ORIGIN'])
+  response.headers.add('Access-Control-Allow-Headers', '*')
+  response.headers.add('Access-Control-Allow-Methods', '*')
   return response
+
 def build_actual_response(response):
-  response.headers.add("Access-Control-Allow-Origin", "*")
+  response.headers.add('Access-Control-Allow-Origin', '*')
   return response
 
 app = Flask(__name__)
-# cors = CORS(app, resources={r'*': {'origins': '*'}})
-cors = CORS(app)
-# app.config['CORS_HEADERS'] = 'Content-Type'
+# cors = CORS(app)
+app.wsgi_app = ProxyFix(
+    app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
+)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-db = SQLAlchemy(app)
-
-class fuelpricesDB(db.Model):
-  id = db.Column(db.Integer, primary_key=True)
-  date = db.Column(db.DateTime, nullable=False)
-  minprice = db.Column(db.Float(6), nullable=False)
-  maxprice = db.Column(db.Float(6), nullable=False)
-  averageprice = db.Column(db.Float(6), nullable=False)
-  wholesaleprice = db.Column(db.Float(6), nullable=False)
 
 ##################################
 #  use in python IDE to create #
 #from app import db,emailsDB,cartivoiceDB,cartioptionsDB,fuelpricesDB
 #db.create_all()         #
 ##################################
+# db = SQLAlchemy(app)
+
+# class fuelpricesDB(db.Model):
+#   id = db.Column(db.Integer, primary_key=True)
+#   date = db.Column(db.DateTime, nullable=False)
+#   minprice = db.Column(db.Float(6), nullable=False)
+#   maxprice = db.Column(db.Float(6), nullable=False)
+#   averageprice = db.Column(db.Float(6), nullable=False)
+#   wholesaleprice = db.Column(db.Float(6), nullable=False)
+
+
 import urllib.parse
 username = urllib.parse.quote_plus(config['MONGO_USERNAME'])
 password = urllib.parse.quote_plus(config['MONGO_PASSWORD'])
@@ -80,14 +85,6 @@ def log(ip, page):
     'page': page,
   }
   traffic_data.insert_one(dic)
-
-# @app.after_request
-# def apply_caching(response):
-  # response.headers["X-Frame-Options"] = "SAMEORIGIN"
-  # response.headers['Access-Control-Allow-Origin'] = '*'
-  # response.headers['Content-Type'] = 'application/json'
-  # response.headers['Access-Control-Allow-Origin'] = '*'
-  # return response
 
 # @app.route('/log/')
 # def logHome():
@@ -157,9 +154,8 @@ def homeHome():
           }
         ]
       }
-      response = jsonify(kwargs)
-      response.headers.add('Access-Control-Allow-Origin', '*')
-      return response
+      res = jsonify(kwargs)
+      return build_actual_response(res)
     elif request.method == 'OPTIONS': 
       return build_preflight_response()
     else:
@@ -177,7 +173,7 @@ def homeHome():
 def heatmapHome():
   try:
     if request.method == 'GET':
-      dic = []
+      arr = []
       allSubs = scripts.utils.databaseUtils.call()
       priceMin = 200000
       priceMax = 2000000
@@ -193,8 +189,8 @@ def heatmapHome():
         col = scripts.utils.rgb.rgb(priceMin, priceMax, mean)
         bounds = sub['bounds']
         boundsCorrected = map(lambda x: {'lat': x[1], 'lng': x[0]}, bounds)
-        dic.append({'suburb': sub['suburb'], 'price': price, 'colour': ''.join([hex(c)[-2:].replace('x','0') for c in col]), 'bounds': list(boundsCorrected)})
-        kwargs={'data':dic}
+        arr.append({'suburb': sub['suburb'], 'price': price, 'colour': ''.join([hex(c)[-2:].replace('x','0') for c in col]), 'bounds': list(boundsCorrected)})
+        kwargs={'data':arr}
         res = jsonify(kwargs)
         return build_actual_response(res)
     elif request.method == 'OPTIONS': 
