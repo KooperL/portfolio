@@ -60,20 +60,27 @@ function RandomBioPage(props: Props): JSX.Element {
             ...(type===3 && {single: +single})
           }))}>
             <div className="type">
-              <input type="radio" id="inputtype" name="inputtype" value="1" checked={type===1?true:false} onChange={((e) => {setType(+e.target.value)})}/>
+              <div>
+              <input type="radio" id="inputtype" name="inputtype" value="1" checked={type===1} onChange={((e) => {setType(+e.target.value)})}/>
               <label className='pl-2' htmlFor="inputtype">DNA</label>
-              <input type="radio" id="inputtype" name="inputtype" value="2" checked={type===2?true:false} onChange={((e) => {setType(+e.target.value)})}/>
+              </div>
+              <div>
+              <input type="radio" id="inputtype" name="inputtype" value="2" checked={type===2} onChange={((e) => {setType(+e.target.value)})}/>
               <label className='pl-2' htmlFor="inputtype">RNA</label>
-              <input type="radio" id="inputtype" name="inputtype" value="3" checked={type===3?true:false} onChange={((e) => {setType(+e.target.value)})}/>
+              </div>
+              <div>
+              
+              <input type="radio" id="inputtype" name="inputtype" value="3" checked={type===3} onChange={((e) => {setType(+e.target.value)})}/>
               <label className='pl-2' htmlFor="inputtype">Amino acids</label>
+            </div>
             </div>
             <div className="length">
               <p>Sequence length: </p>
-              <input className='ml-2 bg-gray-100 rounded w-1/2' type='text' name='leniency' id='leniency' value={length} onChange={((e) => {setLength(+e.target.value)})} />
+              <input className='' type='text' name='length' id='length' value={length} onChange={((e) => {setLength(+e.target.value)})} />
             </div>   
             <div className="single">
               <p>Single letter abbreviations : </p>
-              <input type="checkbox" id="inputtype" name="inputtype" value="t" checked={single===true?true:false} onChange={((e) => {setSingle(!single)})}/>
+              <input type="checkbox" id="inputtype" name="inputtype" value="t" disabled={type!==3} checked={single===true} onChange={((e) => {setSingle(!single)})}/>
             </div>
               <div className="button">
                 <Button colours={scheme} />
@@ -107,9 +114,7 @@ function RandomBioPage(props: Props): JSX.Element {
             <div>
               <h2>Results: </h2>
             </div>
-            <div>
               <textarea>{data.results}</textarea>
-            </div>
           </div>
         </div>
       </div>

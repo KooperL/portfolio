@@ -48,6 +48,19 @@ def build_actual_response(response):
   response.headers.add('Access-Control-Allow-Origin', '*')
   return response
 
+def errorHandle(f):
+    def wrapper(*args, **kwargs):
+      try:
+          return f(*args, **kwargs)
+      except Exception as e:
+        kwargs = {
+          'success': False,
+          'error': e
+        }
+        res = jsonify(kwargs)
+        return build_actual_response(res)
+    return wrapper
+
 app = Flask(__name__)
 # cors = CORS(app)
 app.wsgi_app = ProxyFix(
