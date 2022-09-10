@@ -46,7 +46,7 @@ export default function Vchart(props) {
             data={set}
             key={ind}
             style={{
-              data: { stroke: props.cols[ind] || 'black', strokeWidth: ({ active }) => active ? 0.5 : 0.5},
+              data: { stroke: props.cols[ind] || 'black', strokeWidth: ({ active }) => active ? 0.5 : 1.0},
               labels: {fill: props.cols[ind] || 'black'}
             }}
           />
