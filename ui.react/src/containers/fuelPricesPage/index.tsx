@@ -58,8 +58,8 @@ function FuelPricesPage(props: Props): JSX.Element {
             <Vchart
               data={[data.fuelprices.min, data.fuelprices.max, data.fuelprices.average, data.fuelprices.wholesale]}
               cols={['green', 'red', 'blue', 'black']}
-              width={width}
-              height={width/2}
+              width={width/2}
+              height={width/4}
             />
             {/* <Line data={{
               labels: this.state.data.fuelprices.average.map(e => {return e.x}),
