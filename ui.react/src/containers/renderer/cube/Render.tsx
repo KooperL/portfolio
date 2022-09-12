@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Matrix, Vector, vec3d, triangle, mat4x4, Obj, Grid } from "../utils/types";
+import { Matrix, Vector, vec3d, triangle, mat4x4 } from "../utils/types";
 import { MultiplyMatrixVector,
   matProj,
   vec_subtract,
@@ -30,6 +30,7 @@ import { MultiplyMatrixVector,
 import ship from './ship.obj';
 import { useEventListener } from "../utils/helpers";
 import { drawBlueprint } from "../Draw";
+import { Obj } from "../utils/raster";
 
 
 export function DrawFigure(props: {name: string, h: number | string, w: number | string}) {

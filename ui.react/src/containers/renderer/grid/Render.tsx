@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Dims, Grid, RenderProps } from "../utils/types";
+import { Dims, RenderProps } from "../utils/types";
 import { } from '../utils/math';
 import { drawBlueprint, DrawFigure } from "../Draw";
+import { Grid } from "../utils/raster";
 
 // todo
 export function Render(props: RenderProps) {

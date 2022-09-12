@@ -1,4 +1,4 @@
-import { vec3d } from "./types"
+import { vec3d } from "../types"
 
 function lerp3d(start: vec3d, end: vec3d, t: number) {
   if(t>0 && t<1) {
