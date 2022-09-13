@@ -84,7 +84,7 @@ function HomePage(props: Props): JSX.Element {
               // transformations={{roll: 0.4, pitch: 4.7, yaw: 0.4}}
               // translations={{x: 11, y: 20, z: 20}}
               // dims={{w: 1280, h: 720, fov: 40}}
-              dims={{w: window.outerWidth, h: window.outerHeight, fov: 80}}
+              dims={{w: window.outerWidth, h: window.outerHeight}}
               transformations={{roll: 0.4, pitch: 4.7, yaw: 0.4}}
               translations={{x: Math.max(window.outerWidth/60, 10), y: Math.max(window.outerWidth/40, 40), z: 40}}
               colours={{'fill': scheme.header.background ?? 'black', 'stroke': scheme.body.h1, 'strokeWidth': 2}}
