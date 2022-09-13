@@ -7,7 +7,6 @@ export type Matrix = number[][];
 export interface Dims {
   w: number;
   h: number;
-  fov: number;
 }
 
 export interface Colours {
