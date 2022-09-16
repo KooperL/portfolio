@@ -5,7 +5,9 @@ import { fetchHome } from "../App/api/homeApi";
 import Navbar from "../../components/Navbar";
 import { SchemeContext } from "../context/colourScheme";
 import './style.css';
-import { Render } from "../renderer/grid/Render";
+
+import { ReactP5Wrapper } from "react-p5-wrapper";
+import sketchWrapper from "../../components/p5/box";
 
 interface Props {
   dataCall: Function; 
@@ -79,16 +81,7 @@ function HomePage(props: Props): JSX.Element {
           </div>
           <div className='render'>
             {window.outerWidth > 1000 ?
-            <Render name='render'
-              // dims={{w: 1280, h: 720, fov: 40}}
-              // transformations={{roll: 0.4, pitch: 4.7, yaw: 0.4}}
-              // translations={{x: 11, y: 20, z: 20}}
-              // dims={{w: 1280, h: 720, fov: 40}}
-              dims={{w: window.outerWidth, h: window.outerHeight}}
-              transformations={{roll: 0.4, pitch: 4.7, yaw: 0.4}}
-              translations={{x: Math.max(window.outerWidth/60, 10), y: Math.max(window.outerWidth/40, 40), z: 40}}
-              colours={{'fill': scheme.header.background ?? 'black', 'stroke': scheme.body.h1, 'strokeWidth': 2}}
-            /> : <></>
+              <ReactP5Wrapper sketch={sketchWrapper(1200, 1200, scheme.body.background, scheme.body.h1)} /> : <></>
             }
           </div>
         </div>
