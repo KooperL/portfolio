@@ -8,10 +8,10 @@ import { SecondaryPage } from '../secondaryPage/loadable';
 import { SeqAlignPage } from '../seqAlignPage/loadable';
 import { TictactoePage } from '../tictactoePage/loadable';
 import { RandomBioPage } from '../randomBioPage/loadable';
-// import { Render } from '../renderer/grid/Render';
 import { RouteType } from './routeTypes';
 import { SchemeSettings } from '../context/colourScheme';
-import { Render } from '../renderer/cube/Render';
+// import { Render } from '../renderer/renderer v3/cube/Render';
+// import { Render } from '../renderer/grid/Render';
 
 
 // TODO fingerprint, helmet, proper logs
@@ -23,7 +23,7 @@ function App() {
         <Navbar isVertical={false} />
           <Routes>
             <Route path={`${RouteType.Home}`} element={<HomePage />} />
-            <Route path={`${RouteType.Render}`} element={<Render />} />
+            {/* <Route path={`${RouteType.Render}`} element={<Render />} /> */}
             <Route path={`${RouteType.Tictactoe}`} element={<TictactoePage />} />
             <Route path={`${RouteType.Fuelprices}`} element={<FuelPricesPage />} />
             <Route path={`${RouteType.Property}`} element={<PropertyPage />} />
