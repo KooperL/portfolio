@@ -81,7 +81,7 @@ function HomePage(props: Props): JSX.Element {
           </div>
           <div className='render'>
             {window.outerWidth > 1000 ?
-              <ReactP5Wrapper sketch={sketchWrapper(1200, 1200, scheme.body.background, scheme.body.h1)} /> : <></>
+              <ReactP5Wrapper sketch={sketchWrapper(1200, 1200, scheme.body.background, scheme.body.foreground, scheme.body.h1)} /> : <></>
             }
           </div>
         </div>

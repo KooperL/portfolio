@@ -11,11 +11,11 @@ function Navbar(props: {isVertical: boolean}) {
   const home = <a className='px-5 hover:bg-gray-600 flex justify-center items-center' href='/' style={{height: '100%'}}>Home 🏠</a>
   let bannerText = [];
   // window.innerHeight window.innerWidth
-  for (let i=0; i<(props.isVertical?20:21); i++) {
+  for (let i=0; i<(props.isVertical? 15 : 21); i++) {
     if(i%2===0) {
       bannerText.push(<div key={i} style={{"color": scheme.header.text}}>kooperlingohr.com/</div>)
     } else {
-      bannerText.push(<div  key={i} className='text-black/[.99]' style={{"color": scheme.header.background}}>-------</div>)
+      bannerText.push(<div  key={i} className='' style={{"color": scheme.header.background}}>-------</div>)
     }
   }
   const isHome = !!window.location.href.replace(/((http)[s]?:[/]{2}(www\.)*((localhost:3000)|(kooperlingohr.com)))[/]+/g, '').length;
