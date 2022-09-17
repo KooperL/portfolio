@@ -7,14 +7,74 @@
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="A portfolio app made by Kooper Lingohr, using React and Flask."
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>Kooper's React App</title>
+    <title>Kooper's Online Portfolio</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <span id='canvas-hash' style="opacity: 0;"></span><br>
+    <span id='unique-session-id' style="opacity: 0;"></span><br>
+    <canvas id='myCanvas' width='200' height='40' style='border:1px solid #000000; position: absolute; top: 0; left: 0;opacity: 0;'></canvas>
+    <a target="_blank" href="https://icons8.com/icon/sOQViGqkPy2h/generated-photos" style="opacity: 0;">Generated Photos</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+    <script>
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext("2d");
+
+      ctx.fillStyle = "rgb(255,0,255)";
+      ctx.beginPath();
+      ctx.rect(20, 20, 150, 100);
+      ctx.fill();
+      ctx.stroke();
+      ctx.closePath();
+      ctx.beginPath();
+      ctx.fillStyle = "rgb(0,255,255)";
+      ctx.arc(50, 50, 50, 0, Math.PI * 2, true);
+      ctx.fill();
+      ctx.stroke();   
+      ctx.closePath();
+
+      txt = 'abz190#$%^@£éú';
+      ctx.textBaseline = "top";
+      ctx.font = '17px "Arial 17"';
+      ctx.textBaseline = "alphabetic";
+      ctx.fillStyle = "rgb(255,5,5)";
+      ctx.rotate(.03);
+      ctx.fillText(txt, 4, 17);
+      ctx.fillStyle = "rgb(155,255,5)";
+      ctx.shadowBlur=8;
+      ctx.shadowColor="red";
+      ctx.fillRect(20,12,100,5);
+
+      // hashing function
+      src = canvas.toDataURL();
+      hash = 0;
+
+      for (i = 0; i < src.length; i++) {
+        char = src.charCodeAt(i);
+        hash = ((hash<<5)-hash)+char;
+        hash = hash & hash;
+      }
+
+      let uuid = '';
+      let validChars = 'abcdefghijklmnopqrstuvwxyz'
+      for(let i=0;i<40;i++) {
+        let random = Math.random();
+        if(random>0.8) {
+          uuid = uuid.concat(parseInt(random*10));
+        } else {
+          const index = Math.floor(Math.random() * validChars.length);
+          let alpha = validChars[index];
+          uuid = uuid.concat(index%2?alpha.toLowerCase():alpha.toUpperCase());
+        }
+      }
+
+      // output this however you want
+      document.getElementById('canvas-hash').innerText = hash;
+      document.getElementById('unique-session-id').innerText = uuid;
+    </script>
   </body>
 </html>

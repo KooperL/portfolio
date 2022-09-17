@@ -3,7 +3,7 @@ import { makeNoise3D } from "open-simplex-noise";
 import { Noise3D } from "open-simplex-noise/lib/3d";
 
 
-function sketchWrapper(width: number, height: number, background: string, stroke: string) {
+function sketchWrapper(width: number, height: number, background: string, foreground:string, stroke: string) {
   function sketch(p5: P5Instance) {
     const scale = 50;
     const w = 600;
@@ -24,6 +24,7 @@ function sketchWrapper(width: number, height: number, background: string, stroke
 
     p5.draw = () => {
       p5.background(background);
+      p5.fill(foreground);
       // p5.normalMaterial();
       // p5.push();
       // p5.rotateZ(p5.frameCount * 0.01);
@@ -36,8 +37,8 @@ function sketchWrapper(width: number, height: number, background: string, stroke
       p5.translate(p5.width/8, -p5.height, -300);
       p5.rotateZ(p5.PI/3);
       p5.stroke(stroke);
-      p5.strokeWeight(3);
-      p5.noFill();
+      p5.strokeWeight(2);
+      // p5.noFill();
       for(let y = 0; y < rows-1; y++) {
         p5.beginShape(p5.TRIANGLE_STRIP);
         for(let x = 0; x < cols; x++) {

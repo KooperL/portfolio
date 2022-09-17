@@ -36,7 +36,7 @@ import scripts.utils.rgb
 
 #sys.path.insert(1, appDir + '/stocks/')
 #import pattern_detect
-
+    
 
 def build_preflight_response():
   response = make_response()
@@ -184,6 +184,36 @@ def homeHome():
           ]
         }
       ]
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
+
+@app.route('/capture', methods=['GET', 'OPTIONS'])
+@errorHandle
+def captureHome():
+  # log(request.remote_addr, inspect.stack()[0][3])
+  if request.method == 'GET':
+    kwargs = {
+      'request': {
+        'path': request.path,
+        'method': request.method,
+        'remote_addr': request.remote_addr,
+        'root_url': request.root_url,
+        'headers': dict(request.headers),
+        'origin': request.origin,
+        'host': request.host,
+        'data': {
+          'args': request.args,
+          'form': (request.form),
+          'json': (dict(request.get_json()) if request.is_json else {}),
+          'data': (request.data if request.data else '')
+        },
+      },
+      'inspect':  inspect.stack()[0][3]
     }
     res = jsonify(kwargs)
     return build_actual_response(res)
