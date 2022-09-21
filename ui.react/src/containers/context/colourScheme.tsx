@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from "react";
+import { useState, createContext, useContext, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import dark from './dark.json';
 import { Scheme } from "./type";
@@ -17,6 +17,8 @@ export function SchemeSettings({ children }: any) {
   const scheme = useState(pageInformation);
   document.body.style.background = scheme[0].body.background;
   document.body.style.color = scheme[0].body.text;
+  const isDarkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+
   return (
     <SchemeContext.Provider value={scheme}>
       {children}

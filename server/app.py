@@ -84,7 +84,7 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 ##################################
 #  use in python IDE to create #
-#from app import db,emailsDB,cartivoiceDB,cartioptionsDB,fuelpricesDB
+#from app import fuelpricesDB
 #db.create_all()         #
 ##################################
 # db = SQLAlchemy(app)

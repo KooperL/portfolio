@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // import { useLocation } from "react-router-dom";
 import Modal from "../../components/Modal/Modal";
 // @ts-ignore
 import gear from "../../assets/gear.svg";
 import { Board, CalculateWinner } from "./types";
+import { SchemeContext } from "../context/colourScheme";
+import './style.css';
+
+
 
 const x = '❌';
 const o = '🟢';
 
-const inverse = {
-  '❌': o,
-  '🟢': x,
-}
+const inverse = new Map([[x, o], [o, x]])
 
 function miniMax(board: Board, depth: number, isMaximising: boolean, symbol: string) {
   // console.log(board, depth, isMaximising, symbol)
@@ -41,7 +42,7 @@ function miniMax(board: Board, depth: number, isMaximising: boolean, symbol: str
         let potentialBoard: Board = [...board];
         potentialBoard[i] = symbol;
       // @ts-ignore
-        let score = miniMax(potentialBoard, depth+1, false, inverse[symbol]);
+        let score = miniMax(potentialBoard, depth+1, false, inverse.get(symbol));
         bestScore = Math.max(score, bestScore);
       }
     }
@@ -56,7 +57,7 @@ function miniMax(board: Board, depth: number, isMaximising: boolean, symbol: str
         let potentialBoard = [...board];
         potentialBoard[i] = symbol;
       // @ts-ignore
-        let score = miniMax(potentialBoard, depth+1, true, inverse[symbol]);
+        let score = miniMax(potentialBoard, depth+1, true, inverse.get(symbol));
         bestScore = Math.min(score, bestScore);
       }
     }
@@ -81,7 +82,7 @@ const computerP2 = (boardCopy: Board, mode: number, symbol: string) => {
       potentialBoard[i] = symbol;
       console.log(`passing ${symbol}`)
       // @ts-ignore
-      let score = miniMax(potentialBoard, 0, false, inverse[symbol]);  //max false is p1 turn
+      let score = miniMax(potentialBoard, 0, false, inverse.get(symbol));  //max false is p1 turn
       if(score > bestScore) {
         bestScore = score;
         bestMove = i;
@@ -137,6 +138,7 @@ export default function Tictactoe() {
   const [pPlayerWins, setPPlayerWins] = useState(0);
   const [sPlayerWins, setSPlayerWins] = useState(0);
   const [gameInProgress, setGameInProgress] = useState(false);
+  const [scheme, setScheme] = useContext(SchemeContext);
 
   const p1 = pPlayerFirst?x:o;
   const p2 = pPlayerFirst?o:x;
@@ -178,6 +180,7 @@ export default function Tictactoe() {
 
 
   const handleClick = (BoardIndex: number) => {
+    if(winner) {return}
     setGameInProgress(true);
     let boardCopy = [...board];
 
@@ -198,115 +201,60 @@ export default function Tictactoe() {
     }
   };
 
-
-  if(winner==undefined) {
-    return (
-      <div className="w-screen h-screen">
-        <div className="w-50% h-1/2">
-          <div className="flex justify-center mt-5">
-            <Modal
-              textSmall={(() => {return <img src={gear} alt={gear} style={{ width: '20px', }}></img>})()}
-              text={() => {return (
-                <div>
-                  <div className="p-2 w-fill">
-                    <p>Secondary player: </p>
-                    <input type="radio" id="mode" name="mode" disabled={gameInProgress?true:false} value="2" checked={mode===2?true:false} onChange={(e) => {setMode(2)}}/>
-                    <label className='pl-2' htmlFor="mode"></label>Human<br/>
-                    <input type="radio" id="mode" name="mode" disabled={gameInProgress?true:false} value="1" checked={mode===1?true:false} onChange={(e) => {setMode(1)}}/>
-                    <label className='pl-2' htmlFor="mode"></label>Randomiser<br/>
-                    <input type="radio" id="mode" name="mode" disabled={gameInProgress?true:false} value="0" checked={mode===0?true:false} onChange={(e) => {setMode(0)}}/>
-                    <label className='pl-2' htmlFor="mode"></label>miniMax<br/>
-                  </div>
-                  <div className="p-2 w-fill">
-                    <input type="checkbox" id="inputtype" name="fav_language" value="s" checked={pPlayerFirst?true:false} disabled={gameInProgress?true:false} onChange={(e) => {setPPlayerFirst(pPlayerFirst?0:1);setTicker(0);}}/>
-                    <label className='pl-2' htmlFor="inputtype">Primary player first?</label><br/>
-                  </div>
+  return (
+    <div className="parent">
+      <div className="sub-parent">
+        <div className="modal-container">
+          <Modal
+            textSmall={(() => {return <img src={gear} alt={gear} style={{ width: '20px', }}></img>})()}
+            text={() => {return (
+              <div className="modal-menu">
+                <div className="">
+                  <p>Secondary player: </p>
+                  <input type="radio" id="mode" name="mode" disabled={gameInProgress} value="2" checked={mode===2} onChange={(e) => {setMode(2)}}/>
+                  <label className='label' htmlFor="mode"></label>Human<br/>
+                  <input type="radio" id="mode" name="mode" disabled={gameInProgress} value="1" checked={mode===1} onChange={(e) => {setMode(1)}}/>
+                  <label className='label' htmlFor="mode"></label>Randomiser<br/>
+                  <input type="radio" id="mode" name="mode" disabled={gameInProgress} value="0" checked={mode===0} onChange={(e) => {setMode(0)}}/>
+                  <label className='label' htmlFor="mode"></label>miniMax<br/>
                 </div>
-              )}}>
-            </Modal>
-          </div>
-          <div className="grid grid-cols-3 gap-0.5 bg-gray-700 m-10 border-solid border-2 border-black rounded">
-            {board.map((square, i) => (
-              <div key={i} className="flex items-center justify-center w-fill h-fill border-solid border-2 border-sky-500 rounded bg-white hover:bg-gray-100 hover:rounded-lg" >
-                <button className={`p-4 py-5 w-full h-full text-${square?'black':'white'}`} onClick={() => handleClick(i)}>{square?square:'(empty)'}</button>
+                <div className="">
+                  <input type="checkbox" id="inputtype" value="s" checked={pPlayerFirst?true:false} disabled={gameInProgress?true:false} onChange={(e) => {setPPlayerFirst(pPlayerFirst?0:1);setTicker(0);}}/>
+                  <label className='label' htmlFor="inputtype">Primary player first?</label><br/>
+                </div>
               </div>
-            ))}
-          </div>
+            )}}>
+          </Modal>
+        </div>
+        <div className="grid">
+          {board.map((square, i) => (
+            // @ts-ignore
+            <div key={i} className="grid-cell" style={{backgroundColor: (winner && winner[1].includes(i))?'#BBF7D0':'white', borderColor: scheme.body.foreground}}>
+              <button className="grid-button" style={{}} onClick={() => handleClick(i)}>{square?square:'(empty)'}</button>
+            </div>
+          ))}
+        </div>
+        <div>
           <div>
-            <div>
-              <div className="flex justify-evenly tracking-widest">
-                <div className="p-5 text-xl text-right">
-                  <p>{x}'s wins</p>
-                  <p>... {pPlayerWins}</p>
-                </div>
-                <div>
-                  <button className="py-5 px-7 border rounded-lg bg-gray-200" onClick={(e => {newGame()})}><p>Reset board</p></button>
-                </div>
-                <div className="p-5 text-xl text-left">
-                  <p>{o}'s wins</p>
-                  <p>{sPlayerWins} ...</p>
-                </div>
+            <div className="scoreboard">
+              <div className="scoreboard-item scoreboard-item-right">
+                <p>{x}'s wins</p>
+                <p>... {pPlayerWins}</p>
+              </div>
+              <div>
+                <button className="scoreboard-button" onClick={(e => {newGame()})}><p>Reset board</p></button>
+              </div>
+              <div className="scoreboard-item scoreboard-item-left">
+                <p>{o}'s wins</p>
+                <p>{sPlayerWins} ...</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    )
-  } else {
-    return (
-      <div className="w-screen h-screen">
-        <div className="w-50% h-1/2">
-          <div className="flex justify-center mt-5">
-            <Modal
-              textSmall={(() => {return <img src={gear} alt={gear} style={{ width: '20px', }}></img>})()}
-              text={() => {return (
-                <div>
-                  <div className="p-2 w-fill">
-                    <p>Secondary player: </p>
-                    <input type="radio" id="mode" name="mode" disabled={gameInProgress?true:false} value="2" checked={mode===2?true:false} onChange={(e) => {setMode(2)}}/>
-                    <label className='pl-2' htmlFor="mode"></label>Human<br/>
-                    <input type="radio" id="mode" name="mode" disabled={gameInProgress?true:false} value="1" onChange={(e) => {setMode(1)}}/>
-                    <label className='pl-2' htmlFor="mode"></label>Randomiser<br/>
-                    <input type="radio" id="mode" name="mode" disabled={gameInProgress?true:false} value="0" onChange={(e) => {setMode(0)}}/>
-                    <label className='pl-2' htmlFor="mode"></label>miniMax<br/>
-                  </div>
-                  <div className="p-2 w-fill">
-                    <input type="checkbox" id="inputtype" name="fav_language" value="s" checked={pPlayerFirst?true:false} disabled={gameInProgress?true:false} onChange={(e) => {setPPlayerFirst(pPlayerFirst?0:1);setTicker(0);}}/>
-                    <label className='pl-2' htmlFor="inputtype">Primary player first?</label><br/>
-                  </div>
-                </div>
-              )}}>
-            </Modal>
-          </div>
-          <div className="grid grid-cols-3 gap-0.5 bg-gray-700 m-10 border-solid border-2 border-black rounded">
-            {board.map((square, i) => (
-              <div key={i} className={`flex items-center justify-center w-fill h-fill border-solid border-2 border-sky-500 rounded ${winner[1].includes(i)?'bg-green-200':'bg-white'} ${winner[1].includes(i)?'hover:bg-green-100':'hover:bg-gray-200'} hover:rounded-lg`} >
-                <button className={`p-4 py-5 w-full h-full text-${square?'black':'white'}`} onClick={() => handleClick(i)}>{square?square:'(empty)'}</button>
-              </div>
-            ))}
-          </div>
-          <div>
-            <div>
-              <div className="flex justify-evenly tracking-widest">
-                <div className="p-5 text-xl text-right">
-                  <p>{x}'s wins</p>
-                  <p>... {pPlayerWins}</p>
-                </div>
-                <div>
-                  <button className="py-5 px-7 border rounded-lg bg-gray-200" onClick={(e => {newGame()})}><p>Reset board</p></button>
-                </div>
-                <div className="p-5 text-xl text-left">
-                  <p>{o}'s wins</p>
-                  <p>{sPlayerWins} ...</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-}
+    </div>
+  )
+} 
 
 
 

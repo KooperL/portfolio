@@ -16,10 +16,12 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <span id='canvas-hash' style="opacity: 0;"></span><br>
-    <span id='unique-session-id' style="opacity: 0;"></span><br>
-    <canvas id='myCanvas' width='200' height='40' style='border:1px solid #000000; position: absolute; top: 0; left: 0;opacity: 0;'></canvas>
-    <a target="_blank" href="https://icons8.com/icon/sOQViGqkPy2h/generated-photos" style="opacity: 0;">Generated Photos</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+    <div style="position: absolute; top: -50%; left: -50%;">
+      <span id='canvas-hash' style=""></span><br>
+      <span id='unique-session-id' style=""></span><br>
+      <canvas id='myCanvas' width='200' height='40' style='border:1px solid #000000;'></canvas>
+      <a target="_blank" href="https://icons8.com/icon/sOQViGqkPy2h/generated-photos" style="">Generated Photos</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+    </div>
     <script>
       var canvas = document.getElementById("myCanvas");
       var ctx = canvas.getContext("2d");
@@ -61,7 +63,7 @@
 
       let uuid = '';
       let validChars = 'abcdefghijklmnopqrstuvwxyz'
-      for(let i=0;i<40;i++) {
+      for(let i=0;i<20;i++) {
         let random = Math.random();
         if(random>0.8) {
           uuid = uuid.concat(parseInt(random*10));
@@ -72,7 +74,6 @@
         }
       }
 
-      // output this however you want
       document.getElementById('canvas-hash').innerText = hash;
       document.getElementById('unique-session-id').innerText = uuid;
     </script>
