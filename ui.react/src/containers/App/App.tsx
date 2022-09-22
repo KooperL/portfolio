@@ -10,6 +10,8 @@ import { TictactoePage } from '../tictactoePage/loadable';
 import { RandomBioPage } from '../randomBioPage/loadable';
 import { RouteType } from './routeTypes';
 import { SchemeSettings } from '../context/colourScheme';
+import { MinesweeperPage } from '../minesweeperPage/loadable';
+import { JsSimPage } from '../jsSimPage/loadable';
 // import { Render } from '../renderer/renderer v3/cube/Render';
 // import { Render } from '../renderer/grid/Render';
 
@@ -31,6 +33,8 @@ function App() {
             <Route path={`${RouteType.Secondary}`} element={<SecondaryPage />} />
             <Route path={`${RouteType.Seqalign}`} element={<SeqAlignPage />} />
             <Route path={`${RouteType.RandomBio}`} element={<RandomBioPage />} />
+            <Route path={`${RouteType.Minesweeper}`} element={<MinesweeperPage />} />
+            <Route path={`${RouteType.JsSim}`} element={<JsSimPage />} />
             {/* <Route path={`${RouteType.Heatmap}`} element={<SeqAlignPage />} /> */}
           </Routes>
       </Router>

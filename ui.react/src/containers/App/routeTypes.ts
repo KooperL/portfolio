@@ -8,5 +8,7 @@ export enum RouteType {
   Secondary = '/secondary',
   Seqalign = '/seqalign',
   Heatmap = '/heatmap',
-  RandomBio = '/randombio'
+  RandomBio = '/randombio',
+  Minesweeper = '/minesweeper',
+  JsSim = '/jssimulator'
 }

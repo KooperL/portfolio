@@ -136,6 +136,10 @@ def homeHome():
             {
               'address': '/tictactoe',
               'name': 'Tictactoe',
+            },
+            {
+              'address': '/minesweeper',
+              'name': 'Minesweeper',
             }
           ]
         }, {
@@ -174,9 +178,25 @@ def homeHome():
           'title': 'Repos',
           'points': [
             {
+              'address': 'https://github.com/KooperL/portfolio',
+              'name': 'This Website ',
+            },
+            {
+              'address': 'https://github.com/KooperL/trafficCounter',
+              'name': 'AI Traffic Counter',
+            },
+            {
+              'address': 'https://github.com/KooperL/AI-player',
+              'name': 'AI FPS Player',
+            },
+            {
               'address': 'https://github.com/KooperL/tkinter3dengine',
               'name': 'Python/Tkinter 3d Engine',
-              },
+            },
+            {
+              'address': 'https://github.com/KooperL/CV-ping-pong-ball-tracker',
+              'name': 'Computer Vision - Ping Pong ',
+            },
             {
               'address': 'https://github.com/KooperL/tkinterAstar',
               'name': 'A* Path finder py',
