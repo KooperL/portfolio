@@ -70,10 +70,10 @@ export default function JsSim() {
   const sentences = [
     'for (let i = 0; i < arr.length; i++) {};',
     'console.log(\'test\');',
-    'function setup() {}',
-    '.container {display: flex;}',
+    'function setup() {return 0}',
+    '.container {display: flex; align-items: center; justify-content: center;}',
     'git add . && git commit && git push',
-    '<div></div>'
+    '<div className="container"></div>'
   ];
 
   function selectString(index?: number) {
@@ -190,24 +190,31 @@ export default function JsSim() {
     <div className="parent">
       <div className="container">
         <div className="instrucions">
-          <span>As a programmer, some code sequences appear more commonly than others.</span>
-          <span>Some appear hilariously often.</span>
-          <span>This is a typing challenge which measures how long it takes to write these sequences.</span>
-          <span>Timer appears as soon as you press a key.</span>
-          <span>Good luck 🏁</span>
+          <p>
+            <span>As a programmer, some code sequences appear more commonly than others. </span>
+            <span>Some appear hilariously often. </span>
+            <span>This is a typing challenge which measures how long it takes to write these sequences. </span>
+            <span>Timer appears as soon as you press a key. </span>
+          </p>
+          <p>
+            <span>Good luck 🏁</span>
+            </p>
         </div>
-        <div className="timer">
-          <span className="digits">
-            {("0" + Math.floor((timer / 60000) % 60)).slice(-2)}:
-          </span>
-          <span className="digits">
-            {("0" + Math.floor((timer / 1000) % 60)).slice(-2)}.
-          </span>
-          <span className="digits mili-sec">
-            {("0" + ((timer / 10) % 100)).slice(-2)}
-          </span>
+        <hr/>
+        <div className="info">
+          <div className="timer">
+            <span className="digits">
+              {("0" + Math.floor((timer / 60000) % 60)).slice(-2)}:
+            </span>
+            <span className="digits">
+              {("0" + Math.floor((timer / 1000) % 60)).slice(-2)}.
+            </span>
+            <span className="digits mili-sec">
+              {("0" + ((timer / 10) % 100)).slice(-2)}
+            </span>
+          </div>
+          <div>{score}%</div>
         </div>
-        <div>{score}%</div>
         <div className="string">
           {referenceString.map((char, index) => (
             // @ts-ignore
@@ -215,8 +222,8 @@ export default function JsSim() {
           ))}
         </div>
         <div className="buttons">
-          <div className="button"><button onClick={(e) => {selectString(referenceIndex)}}>reset</button></div>
-          <div className="button"><button onClick={(e) => {selectString()}}>new</button></div>
+          <button className="button" style={{backgroundColor: scheme.button.bgSolid}} onClick={(e) => {selectString(referenceIndex)}}>reset</button>
+          <button className="button" style={{backgroundColor: scheme.button.bgSolid}} onClick={(e) => {selectString()}}>new</button>
         </div>
       </div>
     </div>

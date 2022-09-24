@@ -39,7 +39,7 @@ function HomePage(props: Props): JSX.Element {
   function typeLookup(type: string, data:string[]) {
     switch(type) {
       case 'button':
-        return <a style={{backgroundColor: scheme.button.bgSolid}} className={type} href={data[0]}>{data[0]}</a>
+        return <a href={data[0]}><div style={{backgroundColor: scheme.button.bgSolid}} className={type}>{data[0]}</div></a>
       case 'unorderedList':
         return <ul className={`text ${type}`}>{data.map((item:string) => <li>{item}</li>)}</ul>
       case 'body':
@@ -73,7 +73,7 @@ function HomePage(props: Props): JSX.Element {
           <div className="links">
             <h2 className='main-heading' style={{color: scheme.body.h1}}>About</h2>
             {data.map((segment, indexSegment) => (
-              <div className={segment.type} key={indexSegment}>
+              <div key={indexSegment}>
                 {typeLookup(segment.type, segment.data)}
               </div>
             ))}
