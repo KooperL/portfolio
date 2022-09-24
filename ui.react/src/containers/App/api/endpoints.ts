@@ -5,6 +5,7 @@ const { apiHost } = environmentConfig();
 
 export const endpoints: ApiEndpoints = {
   home: `${apiHost}/home`,
+  projects: `${apiHost}/projects`,
   property: `${apiHost}/property`,
   mrna: `${apiHost}/mrna`,
   seqalign: `${apiHost}/seqalign`,

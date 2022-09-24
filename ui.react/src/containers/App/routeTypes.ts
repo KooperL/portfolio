@@ -1,5 +1,6 @@
 export enum RouteType {
   Home = '/',
+  Projects = '/projects',
   Render = '/render',
   Tictactoe = '/tictactoe',
   Fuelprices = '/fuelprices',

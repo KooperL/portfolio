@@ -35,38 +35,31 @@
   padding-bottom: 25px;
 }
 
-a.button {
+.button {
   width: 16rem;
   margin: 3px;
-  padding: 20px;
+  padding: 12px;
   align-items: flex-end;
   border-radius: 7px;
 }
 
-div.button {
-  margin: 3px;
-  padding: 20px;
-}
-
-a.button:hover {
+.button:hover {
   background-image: linear-gradient(to right, rgb(219 234 254), #f3e8ff);
   color: black;
 }
 
-.text {
-  padding-bottom: 1rem;
-}
-
-ul.unorderedList {
-  padding-left: 40px;
-  list-style-type: circle;
+.buttonInner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 @media screen and (max-width: 1000px) {
   .container {
-    padding: 8rem 4rem;
+    padding: 8rem 1rem;
   }
-  div.button a.button {
-    width: 100%;
+  .button {
+    width: 24rem;
   }
 }
