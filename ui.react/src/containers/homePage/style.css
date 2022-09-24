@@ -35,31 +35,28 @@
   padding-bottom: 25px;
 }
 
-a.button {
+.button {
   width: 16rem;
   margin: 3px;
   padding: 20px;
   align-items: flex-end;
   border-radius: 7px;
+  text-align: center;
 }
 
-div.button {
-  margin: 3px;
-  padding: 20px;
-}
-
-a.button:hover {
+.button:hover {
   background-image: linear-gradient(to right, rgb(219 234 254), #f3e8ff);
   color: black;
 }
 
 .text {
-  padding-bottom: 1rem;
+  padding: 2rem 0;
 }
 
 ul.unorderedList {
   padding-left: 40px;
   list-style-type: circle;
+  padding-top: 0;
 }
 
 @media screen and (max-width: 1000px) {

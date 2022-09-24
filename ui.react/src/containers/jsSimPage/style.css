@@ -20,3 +20,68 @@
 .button {
   width: auto;
 }
+
+.info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 1.2rem;
+  padding: 1.5rem 0;
+}
+
+.string {
+  text-align: center;
+  font-size: 1.4rem;
+  padding: 1.5rem 0;
+  letter-spacing: 0.5rem;
+  font-weight: 500;
+}
+
+.instrucions {
+  font-size: 1.4rem;
+  padding: 1.5rem 0;
+}
+
+.button {
+  width: 16rem;
+  margin: 3px;
+  padding: 20px;
+  align-items: flex-end;
+  border-radius: 7px;
+}
+
+
+.button:hover {
+  background-image: linear-gradient(to right, rgb(219 234 254), #f3e8ff);
+  color: black;
+}
+
+
+@media screen and (max-width: 1000px) {
+  .parent {
+    align-items: flex-start;
+  }
+
+  .container {
+    width: 100%;
+    padding: 5rem 4rem;
+  }
+  .buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  button {
+    max-width: 100%;
+    padding-left: 0;
+  }
+  .instrucions {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .string {
+    word-wrap: break-word;
+  }
+}

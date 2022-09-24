@@ -132,7 +132,7 @@ def homeHome():
       'data': [
         {'type': 'header',
          'data': [
-          'Hi 👋 I\'m Kooper and welcome to my website.',
+          'Hi 👋 I\'m Kooper, welcome to my website.',
         ]},
         {'type': 'subheader',
          'data': [
@@ -145,10 +145,10 @@ def homeHome():
         ]},
         {'type': 'body',
          'data': [
-          'Programming is a genuine passion of mine, .',
-          'This is the perfect place for me to apply the skills and techniques I learn both recreationally and professionally.',
-          'Above all, creating this website, and making projects for it has taught me two things: 1) Each component of a website stack/CS domain is deep enough to spend an entire career to perfect, and 2) I want to spend my career in the frontend.',
-          'This is my roadmap\'s destination and ultimately this webiste will reflect where I place on that roadmap.',
+          # 'Programming is a genuine passion of mine, .',
+          'This is the perfect place for me to apply the skills and techniques I learn both recreationally and professionally. ',
+          'Above all, creating this website, and making projects for it has taught me two things: 1) Each component of a website stack/CS domain is deep enough to spend an entire career to perfect, and 2) I want to spend my career in the frontend. ',
+          'This is my roadmap\'s destination and ultimately this webiste will reflect where I place on that roadmap. ',
           # 'Unfortunately, ... .',
         ]},
         {'type': 'body',
