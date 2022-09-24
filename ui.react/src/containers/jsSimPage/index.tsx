@@ -26,13 +26,36 @@ export const useEventListener = (eventName: string, handler: Function, element=w
 
 
 
+function calcScore(arr: number[]): number {
+  let score = 0;
+  for(let i = 0; i<arr.length; i++) {
+    switch (arr[i]) {
+      case 0:
+        break;
+      case 1:
+        score += 1;
+        break;
+      case 2:
+        score -= 0.5;
+        break;
+      case 3:
+        score += 0.5;
+        break;
+      
+      default:
+        break;
+    }
+  }
+  return Math.ceil((score / arr.length)*100)
+}
+
 export default function JsSim() {
-  const [inputString, setInputString] = useState<Array<string>>([]) ;
   const [typedString, setTypedString] = useState<Array<string>>([]) ;
   const [referenceString, setReferenceString] = useState<Array<string>>([]) ;
+  const [referenceIndex, setReferenceIndex] = useState(0) ;
   const [scheme, setScheme] = useContext(SchemeContext);
-  const [strokesRemaining, setStrokesRemaining] = useState(0);
   const [cursor, setCursor] = useState(-1);
+  const [score, setScore] = useState(0);
   const [scoreTally, setScoreTally] = useState<Array<number>>([]);
   const [timer, setTimer] = useState(0);
   const [timerIsActive, setTimerIsActive] = useState(false);
@@ -40,17 +63,47 @@ export default function JsSim() {
 
   const scoreColourLookup = {
     0: scheme.body.text,   // Unpicked
-    1: '#347543',   // Correct
-    2: '#963033',   // Incorrect
-    3: '#967F30',   // Corrected **
+    1: '#347543',          // Correct
+    2: '#963033',          // Incorrect
+    3: '#967F30',          // Corrected **
+  }
+  const sentences = [
+    'for (let i = 0; i < arr.length; i++) {};',
+    'console.log(\'test\');',
+    'function setup() {}',
+    '.container {display: flex;}',
+    'git add . && git commit && git push',
+    '<div></div>'
+  ];
+
+  function selectString(index?: number) {
+    handleReset();
+    setTypedString([])
+    setCursor(-1)
+    let newReferenceIndex = +referenceIndex;
+    if(!referenceString.length) {
+      newReferenceIndex = Math.floor(Math.random() * sentences.length);
+    } else {
+      if(index !== undefined) {
+        newReferenceIndex = index
+      } else {
+        while (true) {
+          newReferenceIndex = Math.floor(Math.random() * sentences.length);
+          if(newReferenceIndex !== referenceIndex) {
+            break;
+          }
+        }
+      }
+    }
+    const sentence = sentences[newReferenceIndex].split('');
+    setReferenceIndex(newReferenceIndex);
+    setReferenceString(sentence);
+    setScoreTally(new Array(sentence.length).fill(0))
+    setScore(0)
   }
 
   useEffect(() => {
-    const sentences = ['for (let i = 0; i < arr.length; i++) {};'];
-    const sentence = sentences[0].split('');
-    setReferenceString(sentence);
-    setScoreTally(new Array(sentence.length).fill(0))
-    setStrokesRemaining(sentence.length);
+    selectString()
   }, [])
 
   useEffect(() => {
@@ -83,17 +136,21 @@ export default function JsSim() {
   };
 
   useEventListener("keydown", ((e: any) => {
-    if(typedString.length < referenceString.length-1) {
+    e.preventDefault();
+    console.log(typedString)
+    console.log(typedString.length, referenceString.length)
+    if(typedString.length < referenceString.length) {
       handleStart();
     
       let cursorClone = cursor
       const typedStringClone = [...typedString]
       const scoreTallyClone = [...scoreTally]
       // console.log(e.key)
-      const keyType = e.key.match(/[a-zA-Z0-9 .'":();<+=}{]/g);
+      const keyType = e.key.match(/[a-zA-Z0-9 .'":&(^%$#@!*);>\-_</+=}{]/g);
       if(keyType.length === 1) {
+        // console.log(keyType, e.key)
         cursorClone+=1
-        typedStringClone.push(e.key.toString())
+        typedStringClone.push(e.key.toString() !== ' ' ? e.key : '·')
         if(scoreTallyClone[cursorClone] === 0) {
           if(e.key === referenceString[cursorClone]) {
             scoreTallyClone[cursorClone] = 1
@@ -111,29 +168,34 @@ export default function JsSim() {
         if(e.key === 'Backspace') {
           scoreTallyClone[cursorClone] = 3;
           typedStringClone.pop()
-          if(cursorClone > 0) {
+          if(cursorClone > -1) {
             cursorClone-=1
           }
         }
       }
-      setScoreTally(scoreTallyClone)
+      console.log(typedStringClone)
       setTypedString(typedStringClone)
+      setScoreTally(scoreTallyClone)
       setCursor(cursorClone)
+      setScore(calcScore(scoreTallyClone))
+      if(typedStringClone.length === referenceString.length) {
+        handlePause()
+      }
     } else {
       handlePause()
     }
   }));
 
-  useEffect(() => {
-    if(strokesRemaining <= 0) {
-      handlePause();
-    }
-  }, [inputString])
-
   return (
     <div className="parent">
       <div className="container">
-        <div className="instrucions"><p>This is a description of how the game will work</p></div>
+        <div className="instrucions">
+          <span>As a programmer, some code sequences appear more commonly than others.</span>
+          <span>Some appear hilariously often.</span>
+          <span>This is a typing challenge which measures how long it takes to write these sequences.</span>
+          <span>Timer appears as soon as you press a key.</span>
+          <span>Good luck 🏁</span>
+        </div>
         <div className="timer">
           <span className="digits">
             {("0" + Math.floor((timer / 60000) % 60)).slice(-2)}:
@@ -145,11 +207,16 @@ export default function JsSim() {
             {("0" + ((timer / 10) % 100)).slice(-2)}
           </span>
         </div>
+        <div>{score}%</div>
         <div className="string">
           {referenceString.map((char, index) => (
             // @ts-ignore
             <span key={index} style={{color: typedString[index] ? scoreColourLookup[scoreTally[index]] : scoreColourLookup[0]}}>{typedString[index] ?? char}</span>
           ))}
+        </div>
+        <div className="buttons">
+          <div className="button"><button onClick={(e) => {selectString(referenceIndex)}}>reset</button></div>
+          <div className="button"><button onClick={(e) => {selectString()}}>new</button></div>
         </div>
       </div>
     </div>

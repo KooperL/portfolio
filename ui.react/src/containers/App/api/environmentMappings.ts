@@ -26,11 +26,11 @@ const configurationByEnv = (): Environment => {
 }
 
 export const environmentConfig = (): Environment => {
-  if(process.env.NODE_ENV === 'development') {
+  if(process.env.REACT_APP_NODE_ENV === 'development') {
   localStorage.setItem(storageKey, environmentalKeys['local']);
-  } else if(process.env.NODE_ENV === 'production') {
+  } else if(process.env.REACT_APP_NODE_ENV === 'production') {
   localStorage.setItem(storageKey, environmentalKeys['production']);
-  } else if(process.env.NODE_ENV === 'sit') {
+  } else if(process.env.REACT_APP_NODE_ENV === 'sit') {
     localStorage.setItem(storageKey, environmentalKeys['sit']);
     }
   

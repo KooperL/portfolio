@@ -8,11 +8,8 @@ export interface HomeState {
 
 export interface HomePayload {
   data: {
-    title: string;
-    points: {
-      address: string;
-      name: string
-    }[] | null;
+    type: string;
+    data: string[];
   }[]
   success: boolean;
 }

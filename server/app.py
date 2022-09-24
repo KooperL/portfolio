@@ -130,6 +130,58 @@ def homeHome():
     kwargs = {
       'success': True,
       'data': [
+        {'type': 'header',
+         'data': [
+          'Hi 👋 I\'m Kooper and welcome to my website.',
+        ]},
+        {'type': 'subheader',
+         'data': [
+          'I update it constantly to demonstrate my comprehension of programming and computer science.',
+          'If you\'re just here for a quick visit, you might be more interested in browsing some of my favourite projects.',
+        ]},
+        {'type': 'button',
+         'data': [
+          '/projects',
+        ]},
+        {'type': 'body',
+         'data': [
+          'Programming is a genuine passion of mine, .',
+          'This is the perfect place for me to apply the skills and techniques I learn both recreationally and professionally.',
+          'Above all, creating this website, and making projects for it has taught me two things: 1) Each component of a website stack/CS domain is deep enough to spend an entire career to perfect, and 2) I want to spend my career in the frontend.',
+          'This is my roadmap\'s destination and ultimately this webiste will reflect where I place on that roadmap.',
+          # 'Unfortunately, ... .',
+        ]},
+        {'type': 'body',
+         'data': [
+          'Here\'s some information on what is being used to serve this website to you:',
+        ]},
+        {'type': 'unorderedList',
+         'data': [
+          'Domain registration was handled through GoDaddy',
+          'Servers are hosted on a VPS',
+          'SSL certification through Cloudflare',
+          'Sqlite (SQL) and MongoDB (noSQL) as databases/backends',
+          'Flask middleware to act as API service',
+          'Front end is written with React in Typescript',
+          'Served with Nginx',
+        ]}
+      ]
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
+
+@app.route('/projects', methods=['GET', 'OPTIONS'])
+@errorHandle
+def projectsHome():
+  # log(request.remote_addr, inspect.stack()[0][3])
+  if request.method == 'GET':
+    kwargs = {
+      'success': True,
+      'data': [
         {
           'title': 'Games',
           'points': [
@@ -140,6 +192,10 @@ def homeHome():
             {
               'address': '/minesweeper',
               'name': 'Minesweeper',
+            },
+            {
+              'address': '/jssimulator',
+              'name': 'Javascript Programmer Simulator',
             }
           ]
         }, {
@@ -179,24 +235,24 @@ def homeHome():
           'points': [
             {
               'address': 'https://github.com/KooperL/portfolio',
-              'name': 'This Website ',
+              'name': 'This Website',
             },
             {
               'address': 'https://github.com/KooperL/trafficCounter',
               'name': 'AI Traffic Counter',
             },
-            {
-              'address': 'https://github.com/KooperL/AI-player',
-              'name': 'AI FPS Player',
-            },
+            # {
+            #   'address': 'https://github.com/KooperL/AI-player',
+            #   'name': 'AI FPS Player',
+            # },
             {
               'address': 'https://github.com/KooperL/tkinter3dengine',
               'name': 'Python/Tkinter 3d Engine',
             },
-            {
-              'address': 'https://github.com/KooperL/CV-ping-pong-ball-tracker',
-              'name': 'Computer Vision - Ping Pong ',
-            },
+            # {
+            #   'address': 'https://github.com/KooperL/CV-ping-pong-ball-tracker',
+            #   'name': 'Computer Vision - Ping Pong ',
+            # },
             {
               'address': 'https://github.com/KooperL/tkinterAstar',
               'name': 'A* Path finder py',
@@ -514,4 +570,7 @@ def randomBioHome():
     raise RuntimeError('Method not allowed')
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=5000, debug=True)
+  if config['ENV'] == 'development':
+    app.run(host='0.0.0.0', port=config['DEV_PORT'], debug=True)
+  elif config['ENV'] == 'production':
+    app.run(host='0.0.0.0', port=config['PROD_PORT'], debug=False)

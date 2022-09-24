@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import { HomePage } from '../homePage/loadable';
+import { ProjectsPage } from '../projectsPage/loadable';
 import { MrnaPage } from '../mrnaPage/loadable';
 import { PropertyPage } from '../propertyPage/loadable';
 import { FuelPricesPage } from '../fuelPricesPage/loadable';
@@ -16,7 +17,7 @@ import { JsSimPage } from '../jsSimPage/loadable';
 // import { Render } from '../renderer/grid/Render';
 
 
-// TODO fingerprint, helmet, proper logs
+// TODO Helmet, proper logs
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Navbar isVertical={false} />
           <Routes>
             <Route path={`${RouteType.Home}`} element={<HomePage />} />
+            <Route path={`${RouteType.Projects}`} element={<ProjectsPage />} />
             {/* <Route path={`${RouteType.Render}`} element={<Render />} /> */}
             <Route path={`${RouteType.Tictactoe}`} element={<TictactoePage />} />
             <Route path={`${RouteType.Fuelprices}`} element={<FuelPricesPage />} />

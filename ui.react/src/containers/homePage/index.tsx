@@ -35,6 +35,23 @@ function HomePage(props: Props): JSX.Element {
       });
     })
   }, []);
+
+  function typeLookup(type: string, data:string[]) {
+    switch(type) {
+      case 'button':
+        return <a style={{backgroundColor: scheme.button.bgSolid}} className={type} href={data[0]}>{data[0]}</a>
+      case 'unorderedList':
+        return <ul className={`text ${type}`}>{data.map((item:string) => <li>{item}</li>)}</ul>
+      case 'body':
+        return <p className={`text ${type}`}>{data.map((item:string) => <span>{item}</span>)}</p>
+      case 'header':
+        return <p className={`text ${type}`}>{data}</p>
+      case 'subheader':
+        return <p className={`text ${type}`}>{data}</p>
+    }
+      
+  }
+
   if(state.loading) {
    return <Spinner/>
   }
@@ -46,36 +63,18 @@ function HomePage(props: Props): JSX.Element {
     );
   }
   if(state.details) {
+    const data = state.details.data
+    console.log(data)
+
     return (
       <>
         {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
         <div className="container">
           <div className="links">
-            <h2 className='main-heading' style={{color: scheme.body.h1}}>Projects</h2>
-            {state.details.data.map((topic, indexTopic) => (
-              <div className='' key={indexTopic}>
-                <div className='area-heading' style={{color: scheme.body.h2}} key={indexTopic}>
-                  <h3>{topic.title}</h3>
-                </div>
-                <div className='area'>
-                  { /**@ts-ignore */ }
-                  {topic.points.map((link, indexLink) => (
-                    // <div className="text-black w-48 m-3 p-3 hover:border rounded-3xl bg-gray-50 hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100" key={indexLink} >
-                    <div className='button' key={indexLink} style={{backgroundColor: scheme.button.bgSolid}}
-                    // onMouseOver={(e: any) => {e.target.style['backgroundImage']='linear-gradient(red, yellow)'}}
-                    // onMouseOut={(e: any) => {e.target.style['backgroundImage']=''}}
-                    >
-                      <a className='buttonInner' href={link.address} key={indexLink}>
-                        <div className=''>
-                          {link.name}
-                        </div>
-                        <div className=''>
-                          {'> Go!'}
-                        </div>
-                      </a>
-                    </div>
-                  ))}
-                </div>
+            <h2 className='main-heading' style={{color: scheme.body.h1}}>About</h2>
+            {data.map((segment, indexSegment) => (
+              <div className={segment.type} key={indexSegment}>
+                {typeLookup(segment.type, segment.data)}
               </div>
             ))}
           </div>
