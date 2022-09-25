@@ -76,6 +76,11 @@ export default function JsSim() {
     '<div className="container"></div>'
   ];
 
+
+  useEffect(() => {
+    document.title = `JS Sim | ${scheme.title}`;
+  }, []);
+
   function selectString(index?: number) {
     handleReset();
     setTypedString([])

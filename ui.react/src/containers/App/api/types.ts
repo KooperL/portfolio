@@ -1,5 +1,11 @@
 export interface ApiEndpoints {
   home: string;
+  about: string;
+  contact: string;
+  capture: string;
+  monitor: string;
+  logsInsert: string;
+  logsPull: string;
   projects: string;
   property: string;
   mrna: string;

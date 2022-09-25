@@ -17,7 +17,7 @@ export function SchemeSettings({ children }: any) {
   const scheme = useState(pageInformation);
   document.body.style.background = scheme[0].body.background;
   document.body.style.color = scheme[0].body.text;
-  const isDarkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+  const isDarkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches   //todo
 
   return (
     <SchemeContext.Provider value={scheme}>

@@ -1,7 +1,7 @@
 import React, { HtmlHTMLAttributes, useContext, useEffect, useState } from "react";
 import Spinner from "../../components/Spinner";
-import { HomeState, HomePayload, HomeInitialState } from "./types";
-import { fetchHome } from "../App/api/homeApi";
+import { AboutState, AboutPayload, AboutInitialState } from "./types";
+import { fetchAbout } from "../App/api/aboutApi";
 import Navbar from "../../components/Navbar";
 import { SchemeContext } from "../context/colourScheme";
 import './style.css';
@@ -13,16 +13,14 @@ interface Props {
   dataCall: Function; 
 }
 
-function HomePage(props: Props): JSX.Element {
-  const [state, setState] = useState({...HomeInitialState});
+// max width 1684px
+
+function AboutPage(props: Props): JSX.Element {
+  const [state, setState] = useState({...AboutInitialState});
   const [scheme, setScheme] = useContext(SchemeContext);
 
   useEffect(() => {
-    document.title = `Home | ${scheme.title}`;
-  }, []);
-
-  useEffect(() => {
-    props.dataCall().then((resp: HomePayload) => {
+    props.dataCall().then((resp: AboutPayload) => {
       setState({
         details: resp,
         error: false,
@@ -36,6 +34,10 @@ function HomePage(props: Props): JSX.Element {
         loading: false
       });
     })
+  }, []);
+
+  useEffect(() => {
+    document.title = `About | ${scheme.title}`;
   }, []);
 
   function typeLookup(type: string, data:string[]) {
@@ -72,15 +74,13 @@ function HomePage(props: Props): JSX.Element {
       <>
         {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
         <div className="container">
-          <div className="">
-            <h2 className='main-heading' style={{color: scheme.body.h1}}>Home</h2>
-            <div className="links">
-              {data.map((segment, indexSegment) => (
-                <div key={indexSegment}>
-                  {typeLookup(segment.type, segment.data)}
-                </div>
-              ))}
-            </div>
+          <div className="links">
+            <h2 className='main-heading' style={{color: scheme.body.h1}}>About</h2>
+            {data.map((segment, indexSegment) => (
+              <div key={indexSegment}>
+                {typeLookup(segment.type, segment.data)}
+              </div>
+            ))}
           </div>
           <div className='render'>
             {window.outerWidth > 1000 ?
@@ -96,7 +96,7 @@ function HomePage(props: Props): JSX.Element {
 
 const enhance = (): JSX.Element => {
   return(
-    <HomePage dataCall={fetchHome} />
+    <AboutPage dataCall={fetchAbout} />
   ) 
 };
 

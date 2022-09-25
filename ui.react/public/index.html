@@ -60,22 +60,8 @@
         hash = ((hash<<5)-hash)+char;
         hash = hash & hash;
       }
-
-      let uuid = '';
-      let validChars = 'abcdefghijklmnopqrstuvwxyz'
-      for(let i=0;i<20;i++) {
-        let random = Math.random();
-        if(random>0.8) {
-          uuid = uuid.concat(parseInt(random*10));
-        } else {
-          const index = Math.floor(Math.random() * validChars.length);
-          let alpha = validChars[index];
-          uuid = uuid.concat(index%2?alpha.toLowerCase():alpha.toUpperCase());
-        }
-      }
-
+      
       document.getElementById('canvas-hash').innerText = hash;
-      document.getElementById('unique-session-id').innerText = uuid;
     </script>
   </body>
 </html>
