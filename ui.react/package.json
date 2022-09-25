@@ -33,7 +33,10 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "globals": {
+      "screen": true
+    }
   },
   "browserslist": {
     "production": [

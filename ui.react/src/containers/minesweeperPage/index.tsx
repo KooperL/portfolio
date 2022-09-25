@@ -182,6 +182,11 @@ export default function Minesweeper() {
   const [gameState, setGameState] = useState(0);
   const [scheme, setScheme] = useContext(SchemeContext);
 
+
+  useEffect(() => {
+    document.title = `Minesweeper | ${scheme.title}`;
+  }, []);
+
   function genFreshBoard() {
     let newGrid = new Array(gridSize)
     for(let y = 0; y < newGrid.length; y++) {

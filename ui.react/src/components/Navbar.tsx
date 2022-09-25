@@ -1,5 +1,5 @@
 
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { SchemeContext } from '../containers/context/colourScheme';
 import './test.css';
 

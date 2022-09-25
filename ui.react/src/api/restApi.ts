@@ -32,3 +32,22 @@ export const get = async<T> (
   };
   return request(requestConfig);
 }
+
+
+export const post = async<T> (
+  url: string,
+  options: AxiosRequestConfig,
+  noCache: Boolean = true                                   // TODO
+): Promise<T> => {
+  const requestConfig: AxiosRequestConfig = {
+    ...options,
+    headers: {
+      ...defaultOptions.headers,
+      ...(noCache && noCacheHeaders),
+      ...options.headers
+    },
+    method: 'POST',
+    url: url
+  };
+  return request(requestConfig);
+}
