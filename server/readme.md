@@ -36,6 +36,8 @@ The app leverages scheduled webscrapers. Configure CRON with `sudo crontab -e`. 
 
 @reboot cd /DIR/portfolio/server/ && /usr/bin/python3 /DIR/portfolio/server/app.py```
 
+## SQLITE
+Tracking for the `data/` folder is now disables, so the same applies for the databases. Run `mkdir data/` and `python initDatabase.py` to create the SQLite3 database file. Edit the file to change its behaviour. By default the important functions are commented out to save me from myself.
 
 ## MONGO
 Configure the mongodb daemon at `/etc/mongod.conf` and populate the following values.

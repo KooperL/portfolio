@@ -20,7 +20,6 @@ from jinja2 import Environment
 environment = Environment()
 
 
-
 import pymongo
 from pymongo import MongoClient
 from bson.json_util import dumps
@@ -53,8 +52,8 @@ def errorHandle(func):
   def wrapper(*args, **kwargs):
     try:
       return func(*args, **kwargs)
-    except Exception:
-      print('cause')
+    except Exception as e:
+      print(e)
       kwargs = {
         'success': False,
         'error': 'Deliberate error'
@@ -102,9 +101,12 @@ username = urllib.parse.quote_plus(config['MONGO_USERNAME'])
 password = urllib.parse.quote_plus(config['MONGO_PASSWORD'])
 client = MongoClient('mongodb://%s:%s@localhost:%s/' % (username, password, config['MONGO_PORT']))
 
-
 db = client['traffic_log']
 traffic_data = db['data']
+
+
+conn = sqlite3.connect(f'{appDir}/data/database.db', check_same_thread=False)
+
 
 def log(ip, page):
   dic = {
@@ -130,41 +132,154 @@ def homeHome():
     kwargs = {
       'success': True,
       'data': [
-        {'type': 'header',
-         'data': [
-          'Hi 👋 I\'m Kooper, welcome to my website.',
-        ]},
-        {'type': 'subheader',
-         'data': [
-          'I update it constantly to demonstrate my comprehension of programming and computer science.',
-          'If you\'re just here for a quick visit, you might be more interested in browsing some of my favourite projects.',
-        ]},
-        {'type': 'button',
-         'data': [
-          '/projects',
-        ]},
-        {'type': 'body',
-         'data': [
-          # 'Programming is a genuine passion of mine, .',
-          'This is the perfect place for me to apply the skills and techniques I learn both recreationally and professionally. ',
-          'Above all, creating this website, and making projects for it has taught me two things: 1) Each component of a website stack/CS domain is deep enough to spend an entire career to perfect, and 2) I want to spend my career in the frontend. ',
-          'This is my roadmap\'s destination and ultimately this webiste will reflect where I place on that roadmap. ',
-          # 'Unfortunately, ... .',
-        ]},
-        {'type': 'body',
-         'data': [
-          'Here\'s some information on what is being used to serve this website to you:',
-        ]},
-        {'type': 'unorderedList',
-         'data': [
-          'Domain registration was handled through GoDaddy',
-          'Servers are hosted on a VPS',
-          'SSL certification through Cloudflare',
-          'Sqlite (SQL) and MongoDB (noSQL) as databases/backends',
-          'Flask middleware to act as API service',
-          'Front end is written with React in Typescript',
-          'Served with Nginx',
-        ]}
+        {
+          'type': 'header',
+          'data': [
+            'Hi 👋 I\'m Kooper, welcome to my website.',
+          ]
+        },
+        {
+          'type': 'button',
+          'data': [
+            '/projects',
+          ]
+        },
+        {
+          'type': 'button',
+          'data': [
+            '/contact',
+          ]
+        },        {
+          'type': 'button',
+          'data': [
+            '/about',
+          ]
+        }
+      ]
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
+
+@app.route('/contact', methods=['GET', 'POST', 'OPTIONS'])
+@errorHandle
+def contactHome():
+  # log(request.remote_addr, inspect.stack()[0][3])
+  if request.method == 'GET':
+    kwargs = {
+      'success': True,
+      'data': [
+        {
+          'type': 'emoji',
+          'data': [
+            '😵‍💫',
+          ]
+        },
+        {
+          'type': 'subheader',
+          'data': [
+            'Aw, snap! Something went wrong...',
+          ]
+        },
+        {
+          'type': 'body',
+          'data': [
+            'You should probably contact me to let me know you found this error. My preferred method of contact is LinkedIn:',
+          ]
+        },        {
+          'type': 'button',
+          'data': [
+            'https://www.linkedin.com/in/kooper/',
+          ]
+        },
+        {
+          'type': 'body',
+          'data': [
+            'Alternatively, leave an anonymous message. If you\'re expecting a reply though, be sure to include your email too.',
+          ]
+        }
+      ]
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
+  elif request.method == 'POST':
+    session_id = request.args.get('session_id')
+    message = request.args.get('message')
+    if not all([session_id, message]):
+      raise RuntimeError('Mandatory value(s) not provided')
+
+    insertQuery = """INSERT INTO contactMessagesDB VALUES (?, ?, ?, ?);"""
+    conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, message))
+    conn.commit()
+    # print(list(conn.execute(f'SELECT * FROM contactMessagesDB ORDER BY id DESC LIMIT 200')))
+    kwargs = {
+      'success': True,
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
+
+@app.route('/about', methods=['GET', 'OPTIONS'])
+@errorHandle
+def aboutHome():
+  # log(request.remote_addr, inspect.stack()[0][3])
+  if request.method == 'GET':
+    kwargs = {
+      'success': True,
+      'data': [
+        {
+          'type': 'header',
+          'data': [
+            'Hi 👋 I\'m Kooper, welcome to my website.',
+          ]
+        },
+        {
+          'type': 'subheader',
+          'data': [
+            'I update it constantly to demonstrate my comprehension of programming and computer science.',
+            'If you\'re just here for a quick visit, you might be more interested in browsing some of my favourite projects.',
+          ]
+        },
+        {
+          'type': 'button',
+          'data': [
+            '/projects',
+          ]
+        },
+        {
+          'type': 'body',
+          'data': [
+            'Initially created in July 2020 during my Honours year, this started from scratch as a hobby, secondary only to my studies. As I learned more, it ate more of my free time and continued to evolve. ',
+            'It is designed with functionality and design over speed and SEO. This was a deliberate trade off to demonstrate experience with many technologies. ',
+            'This is the perfect place for me to apply the skills and techniques I learn both recreationally and professionally. ',
+            'Above all, creating this website, and making projects for it has taught me two things: 1) Each component of a website stack/CS domain is deep enough to spend an entire career to perfect, and 2) I want to spend my career in the frontend. ',
+            'This is my roadmap\'s destination and ultimately this webiste will reflect where I place on that roadmap. ',
+          ]
+        },
+        {
+          'type': 'body',
+          'data': [
+            'Here\'s some information on what is being used to serve this website to you:',
+          ]
+        },
+        {
+          'type': 'unorderedList',
+          'data': [
+            'Domain registration and mapping through GoDaddy 📝',
+            'Servers are deployed and hosted on a VPS 🖥️',
+            'SSL certification and other security through Cloudflare 🕵️',
+            'Sqlite (SQL) and MongoDB (noSQL) as databases/backends 💽',
+            'Flask HTTP → WSGI server to act as a middleware API 🤖',
+            'Front end is written with React in Typescript 💄',
+            'Stack served to you and all with NGINX Unit 🧠',
+          ]
+        }
       ]
     }
     res = jsonify(kwargs)
@@ -268,28 +383,31 @@ def projectsHome():
   else:
     raise RuntimeError('Method not allowed')
 
-@app.route('/capture', methods=['GET', 'OPTIONS'])
+@app.route('/capture', methods=['POST', 'OPTIONS'])
 @errorHandle
 def captureHome():
   # log(request.remote_addr, inspect.stack()[0][3])
-  if request.method == 'GET':
+  if request.method == 'POST':
     kwargs = {
       'request': {
-        'path': request.path,
-        'method': request.method,
         'remote_addr': request.remote_addr,
-        'root_url': request.root_url,
         'headers': dict(request.headers),
         'origin': request.origin,
         'host': request.host,
-        'data': {
-          'args': request.args,
-          'form': (request.form),
-          'json': (dict(request.get_json()) if request.is_json else {}),
-          'data': (request.data if request.data else '')
-        },
       },
-      'inspect':  inspect.stack()[0][3]
+    }
+
+    session_id = request.args.get('session_id')
+    fingerprint = request.args.get('fingerprint')
+    if not all([session_id, fingerprint]):
+      raise RuntimeError('Mandatory value(s) not provided')
+
+    insertQuery = """INSERT INTO fingerprintDB VALUES (?, ?, ?, ?, ?);"""
+    conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, request.remote_addr, fingerprint))
+    conn.commit()
+    # print(list(conn.execute(f'SELECT * FROM fingerprintDB ORDER BY id DESC LIMIT 200')))
+    kwargs = {
+      'success': True,
     }
     res = jsonify(kwargs)
     return build_actual_response(res)
@@ -297,6 +415,74 @@ def captureHome():
     return build_preflight_response()
   else:
     raise RuntimeError('Method not allowed')
+
+@app.route('/monitor', methods=['POST', 'OPTIONS'])
+@errorHandle
+def monitorHome():
+  # log(request.remote_addr, inspect.stack()[0][3])
+  if request.method == 'POST':
+    session_id = request.args.get('session_id')
+    href = request.args.get('href')
+    if not all([session_id, href]):
+      raise RuntimeError('Mandatory value(s) not provided')
+
+    insertQuery = """INSERT INTO browserSnapshotDB VALUES (?, ?, ?, ?);"""
+    conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, href))
+    conn.commit()
+
+    kwargs = {
+      # 'request': {
+      #   'path': request.path,
+      #   'method': request.method,
+      #   'root_url': request.root_url,
+      #   'data': {
+      #     'args': request.args,
+      #     'form': (request.form),
+      #     'json': (dict(request.get_json()) if request.is_json else {}),
+      #     'data': (request.data if request.data else '')
+      #   },
+      # },
+      # 'inspect':  inspect.stack()[0][3],
+      # 'href': request.args.get('href')
+      'success': True,
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
+
+@app.route('/logs/pull', methods=['GET', 'OPTIONS'])
+@errorHandle
+def logsPullHome():
+  # log(request.remote_addr, inspect.stack()[0][3])
+  if request.method == 'GET':
+    kwargs = {
+      'test': 123
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
+
+@app.route('/logs/insert', methods=['POST', 'OPTIONS'])
+@errorHandle
+def logsInsertHome():
+  # log(request.remote_addr, inspect.stack()[0][3])
+  if request.method == 'POST':
+    kwargs = {
+      'test': 321
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
+
 
 @app.route('/heatmap', methods=['GET', 'OPTIONS'])
 @errorHandle
@@ -351,7 +537,6 @@ def heatmapHome():
 def fuelpricesHome():
   # log(request.remote_addr, inspect.stack()[0][3])
   if request.method == 'GET':
-    conn = sqlite3.connect(f'{appDir}/data/database.db')
     rows = list(conn.execute(f'SELECT * FROM fuelpricesDB ORDER BY id DESC LIMIT 200'))[::-1]
     dic = {'wholesale': [], 'min': [], 'max': [], 'average': [], }
     for key in rows:
