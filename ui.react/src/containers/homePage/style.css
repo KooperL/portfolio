@@ -70,4 +70,7 @@ ul.unorderedList {
   div.button {
     width: 100%;
   }
+  .render {
+    width: 0;
+  }
 }

@@ -10,6 +10,7 @@ export interface HomePayload {
   data: {
     type: string;
     data: string[];
+    text: string;
   }[]
   success: boolean;
 }
