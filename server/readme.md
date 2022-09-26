@@ -15,7 +15,7 @@ The conf file in `/etc/mongodb.conf` must point to `{dir}/data/mongodb` instead 
 # Getting started
 
 ## Env
-A `.env` file is required by the app. It must provide values for the following keys:
+A `.env` file is required by the app. See `../setup.sh` to skip. It must provide values for the following keys:
 ```ENV=[development, production]
 MONGO_USERNAME=<value>
 MONGO_PASSWORD=<value>
@@ -26,7 +26,7 @@ DEV_PORT=5000
 PROD_PORT=5000``` 
 
 ## CRON
-The app leverages scheduled webscrapers. Configure CRON with `sudo crontab -e`. Replace `/DIR/` with the repository location path.
+The app leverages scheduled webscrapers. Configure CRON with `sudo crontab -e`. Replace `/DIR/` with the repository location path. See `../setup.sh` to skip.
 
 ```0 16 * * * /usr/bin/python3 /DIR/portfolio/server/scripts/fuelscrape/fuelscrape.py
 
@@ -48,8 +48,6 @@ security:
 setParameter:
     enableLocalhostAuthBypass: false
 bind_ip = 0.0.0.0```
-
-## Creating the database
 
 ## Running
 The entry point for this app is `app.py`
