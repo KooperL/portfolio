@@ -140,17 +140,20 @@ def homeHome():
         },
         {
           'type': 'button',
+          'text': '/projects',
           'data': [
             '/projects',
           ]
         },
         {
           'type': 'button',
+          'text': '/contact',
           'data': [
             '/contact',
           ]
         },        {
           'type': 'button',
+          'text': '/about',
           'data': [
             '/about',
           ]
@@ -191,6 +194,7 @@ def contactHome():
           ]
         },        {
           'type': 'button',
+          'text': 'LinkedIn',
           'data': [
             'https://www.linkedin.com/in/kooper/',
           ]
@@ -248,6 +252,7 @@ def aboutHome():
         },
         {
           'type': 'button',
+          'text': '/projects',
           'data': [
             '/projects',
           ]

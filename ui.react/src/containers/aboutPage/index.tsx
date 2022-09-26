@@ -40,20 +40,19 @@ function AboutPage(props: Props): JSX.Element {
     document.title = `About | ${scheme.title}`;
   }, []);
 
-  function typeLookup(type: string, data:string[]) {
+  function typeLookup(type: string, data:string[], text?:string) {
     switch(type) {
       case 'button':
-        return <a href={data[0]}><div style={{backgroundColor: scheme.button.bgSolid}} className={type}>{data[0]}</div></a>
+        return <a href={data[0]}><div style={{backgroundColor: scheme.button.bgSolid}} className={type}>{text}</div></a>
       case 'unorderedList':
-        return <ul className={`text ${type}`}>{data.map((item:string) => <li>{item}</li>)}</ul>
+        return <ul className={`text ${type}`}>{data.map((item:string, index:number) => <li key={index}>{item}</li>)}</ul>
       case 'body':
-        return <p className={`text ${type}`}>{data.map((item:string) => <span>{item}</span>)}</p>
+        return <p className={`text ${type}`}>{data.map((item:string, index:number) => <span key={index}>{item}</span>)}</p>
       case 'header':
-        return <p className={`text ${type}`}>{data}</p>
       case 'subheader':
-        return <p className={`text ${type}`}>{data}</p>
+      case 'emoji':
+        return <p className={`text ${type}`}>{data[0]}</p>
     }
-      
   }
 
   if(state.loading) {
@@ -68,8 +67,6 @@ function AboutPage(props: Props): JSX.Element {
   }
   if(state.details) {
     const data = state.details.data
-    console.log(data)
-
     return (
       <>
         {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
@@ -78,7 +75,7 @@ function AboutPage(props: Props): JSX.Element {
             <h2 className='main-heading' style={{color: scheme.body.h1}}>About</h2>
             {data.map((segment, indexSegment) => (
               <div key={indexSegment}>
-                {typeLookup(segment.type, segment.data)}
+                {typeLookup(segment.type, segment.data, segment?.text)}
               </div>
             ))}
           </div>

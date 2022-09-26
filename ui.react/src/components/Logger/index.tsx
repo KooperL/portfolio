@@ -31,7 +31,8 @@ function Logger(props: Props) {
       }
       localStorage.setItem('uuid', uuid);
     }
-
+    // const isDarkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches   //todo
+    
     const canvasHash = document.getElementById('canvas-hash')?.innerText ?? '';
     if((!localStorage.getItem('canvas-hash')) || (localStorage.getItem('canvas-hash') !== canvasHash)) {
       localStorage.setItem('canvas-hash', canvasHash?.toString());
