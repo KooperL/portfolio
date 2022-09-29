@@ -20,7 +20,7 @@ import { Logger } from '../../components/Logger/loadable';
 // import { Render } from '../renderer/grid/Render';
 
 
-// TODO Helmet, proper logs
+// TODO Helmet
 
 function App() {
   return (

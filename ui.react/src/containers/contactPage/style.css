@@ -102,7 +102,9 @@ ul.unorderedList {
 }
 
 .submit-button {
-  width: fit-content;
+  width: auto;;
+  display: flex;
+  flex-direction: row;
 }
 
 .emoji {
@@ -122,12 +124,22 @@ ul.unorderedList {
     padding: 8rem 2rem;
   }
   div.button a.button {
-    width: 100%;
+    width: max-content;
   }
+
+  .submit-button {
+    padding-top: 10px;
+    align-items: center;
+  }
+
   .input {
     width: 100%;
   }
   .emoji {
 
+  }
+
+  .status {
+    width: fit-content;
   }
 }
