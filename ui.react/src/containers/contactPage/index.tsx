@@ -97,9 +97,9 @@ function ContactPage(props: Props): JSX.Element {
               </div>
               <div className="submit-button">
                 <Button colours={scheme} />
-              </div>
-              <div className="status">
-                {POSTstate.loading ? '🛫' : (POSTstate.details ? (POSTstate.details.success ? '✅' : '❌') : '')}
+                <div className="status">
+                  {value.length ? (POSTstate.loading ? '🛫' : (POSTstate.details ? (POSTstate.details.success ? '✅' : '❌') : '✏️')) : '🗒️'}
+                </div>
               </div>
             </div>
           </form>

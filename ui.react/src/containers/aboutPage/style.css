@@ -10,13 +10,18 @@
   z-index: 10;
 }
 
-.render {
+#test {
   position: fixed;
-  height: 100vh;
-  width: 100vw;
-  left: 50%;
-  top: 0;
+  /* height: 100vh;
+  width: 100vw; */
+  left: 70%;
+  top: 10%;
   z-index: 1;
+  font-size: x-small;
+}
+
+.render {
+  display: none;
 }
 
 .area {
@@ -43,6 +48,8 @@
   border-radius: 7px;
   text-align: center;
 }
+
+
 
 .button:hover {
   background-image: linear-gradient(to right, rgb(219 234 254), #f3e8ff);

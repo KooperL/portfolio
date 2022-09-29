@@ -276,11 +276,12 @@ def aboutHome():
         {
           'type': 'unorderedList',
           'data': [
-            'Domain registration and mapping through GoDaddy 📝',
+            'Domain registration and namespace mapping through GoDaddy 📝',
             'Servers are deployed and hosted on a VPS 🖥️',
+            'Version control and storage managed with Git/Github 📆',
             'SSL certification and other security through Cloudflare 🕵️',
             'Sqlite (SQL) and MongoDB (noSQL) as databases/backends 💽',
-            'Flask HTTP → WSGI server to act as a middleware API 🤖',
+            'Flask HTTP → WSGI server as a middleware API 🤖',
             'Front end is written with React in Typescript 💄',
             'Stack served to you and all with NGINX Unit 🧠',
           ]
@@ -450,36 +451,6 @@ def monitorHome():
       # 'inspect':  inspect.stack()[0][3],
       # 'href': request.args.get('href')
       'success': True,
-    }
-    res = jsonify(kwargs)
-    return build_actual_response(res)
-  elif request.method == 'OPTIONS': 
-    return build_preflight_response()
-  else:
-    raise RuntimeError('Method not allowed')
-
-@app.route('/logs/pull', methods=['GET', 'OPTIONS'])
-@errorHandle
-def logsPullHome():
-  # log(request.remote_addr, inspect.stack()[0][3])
-  if request.method == 'GET':
-    kwargs = {
-      'test': 123
-    }
-    res = jsonify(kwargs)
-    return build_actual_response(res)
-  elif request.method == 'OPTIONS': 
-    return build_preflight_response()
-  else:
-    raise RuntimeError('Method not allowed')
-
-@app.route('/logs/insert', methods=['POST', 'OPTIONS'])
-@errorHandle
-def logsInsertHome():
-  # log(request.remote_addr, inspect.stack()[0][3])
-  if request.method == 'POST':
-    kwargs = {
-      'test': 321
     }
     res = jsonify(kwargs)
     return build_actual_response(res)

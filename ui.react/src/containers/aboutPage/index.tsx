@@ -7,7 +7,7 @@ import { SchemeContext } from "../context/colourScheme";
 import './style.css';
 
 import { ReactP5Wrapper } from "react-p5-wrapper";
-import sketchWrapper from "../../components/p5/box";
+import sketchWrapper from "../../components/p5/dnaAscii";
 
 interface Props {
   dataCall: Function; 
@@ -80,10 +80,9 @@ function AboutPage(props: Props): JSX.Element {
             ))}
           </div>
           <div className='render'>
-            {window.outerWidth > 1000 ?
-              <ReactP5Wrapper sketch={sketchWrapper(1200, 1200, scheme.body.background, scheme.body.foreground, scheme.body.h1)} /> : <></>
-            }
+            {window.outerWidth > 1000 ? <ReactP5Wrapper sketch={sketchWrapper(scheme.body.h1)} /> : <></>}
           </div>
+          <div id="test"></div>
         </div>
       </>
     );
