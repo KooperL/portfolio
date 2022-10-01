@@ -4,6 +4,9 @@ function generateNucleotide(nWidth: number, nHeight: number, bWidth: number, bHe
 
   const n1Body = 0
 
+
+  let bridge = new Array(bHeight).fill(new Array(bWidth).fill(1))
+
   let rows = new Array(totalHeight)
   for(let y=0; y<totalHeight;y++) {
     let row = new Array(totalWidth);
@@ -25,9 +28,9 @@ export default generateNucleotide;
 
 function printPattern(radius: number, border: number) {
   var dist = 0.0;
-  let rows:string[][] = []
+  let rows:number[][] = []
   for (var i = 0; i <= 2 * radius; i++) {
-    let row:string[] = []
+    let row:number[] = []
     for (var j = 0; j <= 2 * radius; j++) {
       dist = Math.sqrt(
         (i - radius) * (i - radius) +
@@ -42,15 +45,16 @@ function printPattern(radius: number, border: number) {
         query  = dist > radius - border && dist < radius + border               // Hollow circle with border
       }
       if (query) {
-        row.push(' * ')
+        row.push(1)
       } else {
-        row.push('   ')
+        row.push(0)
       }
     }
-    row.push('\n')
+    // row.push('\n')
     rows.push(row)
   }
-  console.log(rows.map((e:string[]) => e.join('')).join(''))
+  // console.log(rows.map((e:number[]) => e.join('')).join(''))
+  return rows
   
 }       
 

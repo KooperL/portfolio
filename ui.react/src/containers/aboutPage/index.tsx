@@ -5,21 +5,27 @@ import { fetchAbout } from "../App/api/aboutApi";
 import Navbar from "../../components/Navbar";
 import { SchemeContext } from "../context/colourScheme";
 import './style.css';
-
-import { ReactP5Wrapper } from "react-p5-wrapper";
 import sketchWrapper from "../../components/p5/dnaAscii";
+import { ReactP5Wrapper } from "react-p5-wrapper";
+// @ts-ignore
+import dna from './dna.txt';
 
 interface Props {
   dataCall: Function; 
 }
 
-// max width 1684px
 
 function AboutPage(props: Props): JSX.Element {
   const [state, setState] = useState({...AboutInitialState});
+  const [seed, setSeed] = useState(Math.random());
+  const [text, setText] = useState<Array<Array<string>>>([[]]);
   const [scheme, setScheme] = useContext(SchemeContext);
 
+
   useEffect(() => {
+    fetch(dna).then(r => r.text()).then(textRaw => {
+      setText(textRaw.split('\n').map(item => item.split('')));
+    })
     props.dataCall().then((resp: AboutPayload) => {
       setState({
         details: resp,
@@ -55,6 +61,16 @@ function AboutPage(props: Props): JSX.Element {
     }
   }
 
+  function newSeed() {
+    setSeed(Math.random())
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      newSeed()
+    }, 500)
+  }, [seed])
+
   if(state.loading) {
    return <Spinner/>
   }
@@ -67,6 +83,8 @@ function AboutPage(props: Props): JSX.Element {
   }
   if(state.details) {
     const data = state.details.data
+    const validCharsBinary = ['1','0']
+    const validCharsNucleotides = ['A','T','G','C']
     return (
       <>
         {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
@@ -81,6 +99,15 @@ function AboutPage(props: Props): JSX.Element {
           </div>
           <div className='render'>
             {window.outerWidth > 1000 ? <ReactP5Wrapper sketch={sketchWrapper(scheme.body.h1)} /> : <></>}
+            {/* {text.map((row, rowindex) => (
+              <div key={rowindex}>
+              {row.map((col, colIndex) => (
+                <span className="nucleotide" key={colIndex} style={{opacity: `${+col*10}%`, ...(Math.ceil((colIndex+rowindex)*seed)%4 && {color: scheme.body.h1})}}>
+                  {+col < 10 ? ( Math.ceil((colIndex+rowindex)*seed)%4 ? validCharsBinary[Math.floor(Math.random()*validCharsBinary.length)] : validCharsNucleotides[Math.floor(Math.random()*validCharsNucleotides.length)]) : '&nbsp;'}
+                </span>
+              ))}
+              </div>
+            ))} */}
           </div>
           <div id="test"></div>
         </div>
