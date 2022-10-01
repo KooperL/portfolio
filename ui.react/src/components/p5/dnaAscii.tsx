@@ -33,6 +33,8 @@ function sketchWrapper(foreground: string) {
           const opacity = 100-Math.floor((avg/255)*100);
           const seed = +Math.random().toFixed(1)
           if(opacity>10) {
+            // row.push(opacity/10)
+
             if(seed<0.9) {
               row.push(`<span style=opacity:${opacity}%>&nbsp;${validCharsNucleotides[Math.floor(Math.random()*validCharsNucleotides.length)]}</span>`)
             } else {
@@ -40,10 +42,12 @@ function sketchWrapper(foreground: string) {
             }
           } else {
             row.push(`<span>&nbsp;&nbsp;</span>`)
+            // row.push('00')
           } 
         }
         parent.push(`<div>${row.join('')}</div>`)
       }
+      // console.log(parent)
       //@ts-ignore
       document.getElementById('test').innerHTML = parent.join('')
     }
