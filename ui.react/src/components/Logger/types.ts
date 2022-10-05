@@ -1,22 +1,28 @@
 export interface CapturePOSTPayload {
   success: boolean;
-  error?: string
+  error?: string;
 
 }
 
 export interface CapturePOST {
-  session_id: string
-  message: string
+  uuid: string;
+  message: string;
 }
 
 
 export interface MonitorPOSTPayload {
   success: boolean;
-  error?: string
+  error?: string;
 
 }
 
 export interface MonitorPOST {
-  session_id: string
-  href: string
+  uuid: string;
+  page: string;
+}
+
+export interface TrackPOST {
+  uuid: string;
+  source: string;
+  destination: string;
 }

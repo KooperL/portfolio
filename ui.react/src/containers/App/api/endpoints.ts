@@ -9,6 +9,7 @@ export const endpoints: ApiEndpoints = {
   contact: `${apiHost}/contact`,
   monitor: `${apiHost}/monitor`,
   capture: `${apiHost}/capture`,
+  track: `${apiHost}/track`,
   logsInsert: `${apiHost}/logs/insert`,
   logsPull: `${apiHost}/logs/pull`,
   projects: `${apiHost}/projects`,

@@ -7,58 +7,71 @@ appDir = os.getcwd()
 print(f'RUN THIS COMMAND TO CREATE THE FOLDER: $mkdir {appDir}/data/')
 conn = sqlite3.connect(f'{appDir}/data/database.db')
 
-create_fuelpricesDB= '''create table fuelpricesDB (
+create_fuelpricesDB= '''create table if not exists fuelpricesDB (
   id integer PRIMARY KEY,
   date TIMESTAMP not null unique,
   minprice text not null,
   maxprice text not null ,
   averageprice text not null,
-  wholesale text not null);'''
+  wholesale text not null
+);'''
 
-create_contactMessagesDB = '''create table contactMessagesDB (
+create_contact_messagesDB = '''create table if not exists contactMessagesDB (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
   uuid text not null,
-  message text not null);'''
+  message text not null
+);'''
 
-create_fingerprintDB__TODO = '''create table fingerprintDB (
+create_fingerprintDB = '''create table if not exists fingerprintDB (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
   uuid text not null,
+  canvas_hash text not null,
+  platform text not null,
   useragent text,
-  platform text,
-  cookieEnabled text,
-  java text,
-  online text,
-  actualHeight text,
-  actualWidth text,
-  pixelDepth text,
-  innerHeight text,
-  innerWidth text,
-  outerHeight text,
-  outerWidth text,
-  ip text not null,
-  canvas_hash text not null);'''
+  darkmode boolean,
+  cookieEnabled boolean,
+  actualHeight INTEGER,
+  actualWidth INTEGER,
+  pixelDepth INTEGER,
+  innerHeight INTEGER,
+  innerWidth INTEGER,
+  outerHeight INTEGER,
+  outerWidth INTEGER,
+  ip text not null
+);'''
 
-create_fingerprintDB = '''create table fingerprintDB (
+# create_fingerprint_liteDB = '''create table if not exists fingerprint_liteDB (
+#   id integer PRIMARY KEY,
+#   date TIMESTAMP not null,
+#   uuid text not null,
+#   canvas_hash text not null,
+#   darkmode boolean not null,
+#   ip text not null
+# );'''
+
+create_monitorDB = '''create table if not exists monitorDB (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
   uuid text not null,
-  ip text not null,
-  canvas_hash text not null);'''
+  path text not null
+);'''
 
-create_browserSnapshotDB = '''create table browserSnapshotDB (
+create_route_trackDB = '''create table if not exists routeTrackDB (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
   uuid TIMESTAMP not null,
-  path text not null);'''
-
+  source text not null,
+  destination text not null
+);'''
 
 def create():
-  # conn.execute(create_fuelpricesDB)
-  # conn.execute(create_contactMessagesDB)
-  # conn.execute(create_fingerprintDB)
-  # conn.execute(create_browserSnapshotDB)
+  conn.execute(create_fuelpricesDB)
+  conn.execute(create_contact_messagesDB)
+  conn.execute(create_fingerprintDB)
+  conn.execute(create_monitorDB)
+  conn.execute(create_route_trackDB)
   print('success')
 
 def insert():
@@ -72,7 +85,7 @@ def close():
 
 
 if __name__ == '__main__':
-  # create()
+  create()
   # insert()
   close()
 
