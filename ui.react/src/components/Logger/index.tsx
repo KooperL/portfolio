@@ -13,8 +13,6 @@ import { CapturePOSTPayload, MonitorPOSTPayload } from './types';
   }
 
 function Logger(props: Props) {
-  const [identity, setIdentity] = useState(false);
-
   useEffect(() => {
     if(!localStorage.getItem('uuid')) {
       let uuid = '';
@@ -37,32 +35,35 @@ function Logger(props: Props) {
     if((!localStorage.getItem('canvas-hash')) || (localStorage.getItem('canvas-hash') !== canvasHash)) {
       localStorage.setItem('canvas-hash', canvasHash?.toString());
       props.capturePost({
-        fingerprint: document.getElementById('canvas-hash')?.innerText,
-        session_id: localStorage.getItem('uuid')
-        // plugins: JSON.stringify([].slice.call(navigator.plugins).map((item: any) => {
-        //   return {
-        //     name: item.name,
-        //     filename: item.filename,
-        //     description: item.description,
-        //   }
-        // })) ?? null,
-        // window: {
-        //   innerHeight: window.innerHeight ?? null,
-        //   outerHeight: window.outerHeight ?? null,
-        //   innerWidth: window.innerWidth ?? null,
-        //   outerWidth: window.outerWidth ?? null,
-        // },
-        // screen: {
-        //   actualHeight: window.screen.height ??  null,  // window.screen might not be valid in safari
-        //   actualWidth: window.screen.width ??  null,
-        //   pixelDepth: window.screen.pixelDepth ??  null,
-        // },
-        // navigator: {
-        //   'platform': navigator.platform ?? null,
-        //   'cookieEnabled': navigator.cookieEnabled ?? null,
-        //   'java': navigator.javaEnabled ?? null,
-        //   'online': navigator.onLine ?? null
+        canvas_hash: document.getElementById('canvas-hash')?.innerText,
+        uuid: localStorage.getItem('uuid'),
+        // windowInfo: {
+          // plugins: JSON.stringify([].slice.call(navigator.plugins).map((item: any) => {
+          //   return {
+          //     name: item.name,
+          //     filename: item.filename,
+          //     description: item.description,
+          //   }
+          // })) ?? null,
+          // window: {
+          innerHeight: window.innerHeight ?? 123,
+          outerHeight: window.outerHeight ?? 123,
+          innerWidth: window.innerWidth ?? 123,
+          outerWidth: window.outerWidth ?? 123,
+          // },
+          // screen: {
+          actualHeight: window.screen.height ??  123,  // window.screen might not be valid in safari
+          actualWidth: window.screen.width ??  123,
+          pixelDepth: window.screen.pixelDepth ??  123,
+          // },
+          // navigator: {
+          platform: navigator.platform ?? null,
+          'cookieEnabled': navigator.cookieEnabled ?? false,
+          // 'java': navigator.javaEnabled ?? null,
+          // 'online': navigator.onLine ?? null,
+          // },
         // }
+        darkMode: window.matchMedia("(prefers-color-scheme: dark)").matches ?? false
       }).then((resp: CapturePOSTPayload) => {
         if(resp.success) {
         } else {
@@ -72,7 +73,10 @@ function Logger(props: Props) {
         console.log(err);   //TODO
       })
     }
-    props.monitorPost({session_id: localStorage.getItem('uuid'), href: window.location.href}).then((resp: MonitorPOSTPayload) => {
+    props.monitorPost({
+      uuid: localStorage.getItem('uuid'),
+      page: window.location.href}
+    ).then((resp: MonitorPOSTPayload) => {
       if(resp.success) {
       } else {
         throw new Error(resp.error);

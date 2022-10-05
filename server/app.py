@@ -1,5 +1,6 @@
 import datetime
 from lib2to3.pytree import Base
+from tokenize import Number
 import urllib.parse
 import inspect
 import random
@@ -45,7 +46,7 @@ def build_preflight_response():
   return response
 
 def build_actual_response(response):
-  response.headers.add('Access-Control-Allow-Origin', '*')
+  response.headers.add('Access-Control-Allow-Origin', config['ORIGIN'])
   return response
 
 def errorHandle(func):
@@ -73,34 +74,16 @@ def errorHandle(func):
 
 
 app = Flask(__name__)
-# cors = CORS(app)
 app.wsgi_app = ProxyFix(
     app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
 )
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-
-##################################
-#  use in python IDE to create #
-#from app import fuelpricesDB
-#db.create_all()         #
-##################################
-# db = SQLAlchemy(app)
-
-# class fuelpricesDB(db.Model):
-#   id = db.Column(db.Integer, primary_key=True)
-#   date = db.Column(db.DateTime, nullable=False)
-#   minprice = db.Column(db.Float(6), nullable=False)
-#   maxprice = db.Column(db.Float(6), nullable=False)
-#   averageprice = db.Column(db.Float(6), nullable=False)
-#   wholesaleprice = db.Column(db.Float(6), nullable=False)
-
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+# app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 username = urllib.parse.quote_plus(config['MONGO_USERNAME'])
 password = urllib.parse.quote_plus(config['MONGO_PASSWORD'])
 client = MongoClient('mongodb://%s:%s@localhost:%s/' % (username, password, config['MONGO_PORT']))
-
 db = client['traffic_log']
 traffic_data = db['data']
 
@@ -108,26 +91,9 @@ traffic_data = db['data']
 conn = sqlite3.connect(f'{appDir}/data/database.db', check_same_thread=False)
 
 
-def log(ip, page):
-  dic = {
-    'Date': datetime.datetime.now(),
-    'ip': ip,
-    'page': page,
-  }
-  traffic_data.insert_one(dic)
-
-# @app.route('/log/')
-# def logHome():
-#   data = traffic_data.find()
-#   list_data = list(traffic_data.find())
-#   json_data = json.loads(dumps(list_data))
-#   return render_template('log.html', data=json_data)
-  #return jsonify(json_data)
-
 @app.route('/home', methods=['GET', 'OPTIONS'])
 @errorHandle
 def homeHome():
-  # log(request.remote_addr, inspect.stack()[0][3])
   if request.method == 'GET':
     kwargs = {
       'success': True,
@@ -170,7 +136,6 @@ def homeHome():
 @app.route('/contact', methods=['GET', 'POST', 'OPTIONS'])
 @errorHandle
 def contactHome():
-  # log(request.remote_addr, inspect.stack()[0][3])
   if request.method == 'GET':
     kwargs = {
       'success': True,
@@ -210,13 +175,13 @@ def contactHome():
     res = jsonify(kwargs)
     return build_actual_response(res)
   elif request.method == 'POST':
-    session_id = request.args.get('session_id')
+    uuid = request.args.get('uuid')
     message = request.args.get('message')
-    if not all([session_id, message]):
+    if not all([uuid, message]):
       raise RuntimeError('Mandatory value(s) not provided')
 
-    insertQuery = """INSERT INTO contactMessagesDB VALUES (?, ?, ?, ?);"""
-    conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, message))
+    insertQuery = """INSERT INTO contact_messagesDB VALUES (?, ?, ?, ?);"""
+    conn.execute(insertQuery, (None, datetime.datetime.now(), uuid, message))
     conn.commit()
     # print(list(conn.execute(f'SELECT * FROM contactMessagesDB ORDER BY id DESC LIMIT 200')))
     kwargs = {
@@ -232,7 +197,6 @@ def contactHome():
 @app.route('/about', methods=['GET', 'OPTIONS'])
 @errorHandle
 def aboutHome():
-  # log(request.remote_addr, inspect.stack()[0][3])
   if request.method == 'GET':
     kwargs = {
       'success': True,
@@ -298,7 +262,6 @@ def aboutHome():
 @app.route('/projects', methods=['GET', 'OPTIONS'])
 @errorHandle
 def projectsHome():
-  # log(request.remote_addr, inspect.stack()[0][3])
   if request.method == 'GET':
     kwargs = {
       'success': True,
@@ -392,30 +355,49 @@ def projectsHome():
 @app.route('/capture', methods=['POST', 'OPTIONS'])
 @errorHandle
 def captureHome():
-  # log(request.remote_addr, inspect.stack()[0][3])
   if request.method == 'POST':
-    kwargs = {
-      'request': {
-        'remote_addr': request.remote_addr,
-        'headers': dict(request.headers),
-        'origin': request.origin,
-        'host': request.host,
-      },
-    }
+    # kwargs = {
+    #   'request': {
+    #     'remote_addr': request.remote_addr,
+    #     'headers': dict(request.headers),
+    #     'origin': request.origin,
+    #     'host': request.host,
+    #   },
+    # }
 
-    session_id = request.args.get('session_id')
-    fingerprint = request.args.get('fingerprint')
-    if not all([session_id, fingerprint]):
+    args = [
+      None,
+      datetime.datetime.now(),
+      request.args.get('uuid'),
+      request.args.get('canvas_hash'),
+      request.args.get('platform'),
+      request.headers.get('User-Agent'),
+      bool(request.args.get('darkMode')),
+      request.args.get('cookieEnabled'),
+      # request.args.get('java'),
+      # request.args.get('online'),
+      int(request.args.get('actualHeight')),
+      int(request.args.get('actualWidth')),
+      int(request.args.get('pixelDepth')),
+      int(request.args.get('innerHeight')),
+      int(request.args.get('innerWidth')),
+      int(request.args.get('outerHeight')),
+      int(request.args.get('outerWidth')),
+      request.remote_addr
+    ]
+
+    if not all(args[1:]):
+      print(args[1:])
       raise RuntimeError('Mandatory value(s) not provided')
 
-    insertQuery = """INSERT INTO fingerprintDB VALUES (?, ?, ?, ?, ?);"""
-    conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, request.remote_addr, fingerprint))
+    insertFingerprintLiteQuery = """INSERT INTO fingerprintDB VALUES (
+      ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+    );"""
+    conn.execute(insertFingerprintLiteQuery, args)
+
     conn.commit()
     # print(list(conn.execute(f'SELECT * FROM fingerprintDB ORDER BY id DESC LIMIT 200')))
-    kwargs = {
-      'success': True,
-    }
-    res = jsonify(kwargs)
+    res = jsonify({'success': True})
     return build_actual_response(res)
   elif request.method == 'OPTIONS': 
     return build_preflight_response()
@@ -425,15 +407,15 @@ def captureHome():
 @app.route('/monitor', methods=['POST', 'OPTIONS'])
 @errorHandle
 def monitorHome():
-  # log(request.remote_addr, inspect.stack()[0][3])
   if request.method == 'POST':
-    session_id = request.args.get('session_id')
-    href = request.args.get('href')
-    if not all([session_id, href]):
+
+    uuid = request.args.get('uuid')
+    page = request.args.get('page')
+    if not all([uuid, page]):
       raise RuntimeError('Mandatory value(s) not provided')
 
-    insertQuery = """INSERT INTO browserSnapshotDB VALUES (?, ?, ?, ?);"""
-    conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, href))
+    insertMonitorQuery = """INSERT INTO monitorDB VALUES (?, ?, ?, ?);"""
+    conn.execute(insertMonitorQuery, (None, datetime.datetime.now(), uuid, page))
     conn.commit()
 
     kwargs = {
@@ -459,6 +441,29 @@ def monitorHome():
   else:
     raise RuntimeError('Method not allowed')
 
+@app.route('/track', methods=['POST', 'OPTIONS'])
+@errorHandle
+def trackHome():
+  if request.method == 'POST':
+    uuid = request.args.get('uuid')
+    source = request.args.get('source')
+    destination = request.args.get('destination')
+    if not all([uuid, source, destination]):
+      raise RuntimeError('Mandatory value(s) not provided')
+
+    insertQuery = """INSERT INTO routeTrackDB VALUES (?, ?, ?, ?, ?);"""
+    conn.execute(insertQuery, (None, datetime.datetime.now(), uuid, source, destination))
+    conn.commit()
+
+    kwargs = {
+      'success': True,
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
 
 @app.route('/heatmap', methods=['GET', 'OPTIONS'])
 @errorHandle
@@ -491,7 +496,6 @@ def heatmapHome():
     
 # @app.route('/stocks/', methods=['GET', 'POST'])
 # def stocksHome():
-  # log(request.remote_addr, inspect.stack()[0][3])
 #   kwargs = {
 #       'title':'Stock page',
 #       'heading':'Stock page',
@@ -511,7 +515,6 @@ def heatmapHome():
 @app.route('/fuelprices', methods=['GET', 'OPTIONS'])
 @errorHandle
 def fuelpricesHome():
-  # log(request.remote_addr, inspect.stack()[0][3])
   if request.method == 'GET':
     rows = list(conn.execute(f'SELECT * FROM fuelpricesDB ORDER BY id DESC LIMIT 200'))[::-1]
     dic = {'wholesale': [], 'min': [], 'max': [], 'average': [], }
@@ -538,7 +541,6 @@ def fuelpricesHome():
 @app.route('/mrna', methods=['GET', 'OPTIONS'])
 @errorHandle
 def mrnaHome():
-  # log(request.remote_addr, inspect.stack()[0][3])
   if request.method == 'GET':
     if not request.args.get('dna_field_id'):
       raise RuntimeError('Mandatory value not provided')
@@ -612,7 +614,6 @@ def secondaryHome():
 @app.route('/property', methods=['GET', 'OPTIONS'])
 @errorHandle
 def propertyHome():
-  # log(request.remote_addr, inspect.stack()[0][3])
   if request.method == 'GET':
     stats = scripts.property.draw.state_stats()
     ranked = scripts.property.draw.highest_des()
@@ -633,7 +634,6 @@ def propertyHome():
 @app.route('/property/search', methods=['GET', 'OPTIONS'])
 @errorHandle
 def propertySearchHome():
-  # log(request.remote_addr, inspect.stack()[0][3])
   if request.method == 'GET':
     if not request.args.get('prop_suburb'):
       raise RuntimeError('Mandatory value not provided')
@@ -658,13 +658,11 @@ def propertySearchHome():
 
 # @app.route('/property/files', methods=['GET', 'OPTIONS'])
 # def propfilesHome():
-#   # log(request.remote_addr, inspect.stack()[0][3])
-#   return render_template('prop_files.html',files = list_files(appDir + '/property/prop_data/'))
+# #   return render_template('prop_files.html',files = list_files(appDir + '/property/prop_data/'))
 
 @app.route('/seqalign', methods=['GET', 'OPTIONS'])
 @errorHandle
 def seqalignHome():
-  # log(request.remote_addr, inspect.stack()[0][3])
   if request.method == 'GET':
     pull = [
       request.args.get('sampletxt'),
@@ -695,7 +693,6 @@ def seqalignHome():
 @app.route('/randombio', methods=['GET', 'OPTIONS'])
 @errorHandle
 def randomBioHome():
-  # log(request.remote_addr, inspect.stack()[0][3])
   def validate(e):
     if not all(pull):
       raise RuntimeError('Mandatory value(s) not provided')

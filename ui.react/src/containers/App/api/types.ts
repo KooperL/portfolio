@@ -4,6 +4,7 @@ export interface ApiEndpoints {
   contact: string;
   capture: string;
   monitor: string;
+  track: string;
   logsInsert: string;
   logsPull: string;
   projects: string;
