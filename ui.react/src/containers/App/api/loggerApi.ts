@@ -5,8 +5,18 @@ import { Payload } from './types';
 
 
 export const postCapture = (params: {
-  session_id: string
-  fingerprint: string
+  canvas_hash: string;
+  uuid: string;
+  innerHeight: number;
+  outerHeight: number;
+  innerWidth: number;
+  outerWidth: number;
+  actualHeight: number;
+  actualWidth: number;
+  pixelDepth: number;
+  platform: string;
+  cookieEnabled: boolean;
+  darkMode: boolean;
 }): Promise<ContactPOSTPayload>  => {
   const apiConfig = {
     headers: {},
@@ -16,8 +26,9 @@ export const postCapture = (params: {
 }
 
 export const postMonitor = (params: {
-  session_id: string
-  href: string
+  uuid: string
+  page: string
+  prevPage?: string
 }): Promise<ContactPOSTPayload>  => {
   const apiConfig = {
     headers: {},
@@ -26,4 +37,3 @@ export const postMonitor = (params: {
   return post(endpoints['monitor'], apiConfig);
 }
 
-// TODO

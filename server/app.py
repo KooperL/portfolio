@@ -411,11 +411,17 @@ def monitorHome():
 
     uuid = request.args.get('uuid')
     page = request.args.get('page')
+    prevPage = request.args.get('prevPage')
     if not all([uuid, page]):
       raise RuntimeError('Mandatory value(s) not provided')
 
     insertMonitorQuery = """INSERT INTO monitorDB VALUES (?, ?, ?, ?);"""
     conn.execute(insertMonitorQuery, (None, datetime.datetime.now(), uuid, page))
+
+    if prevPage:
+      insertQuery = """INSERT INTO routeTrackDB VALUES (?, ?, ?, ?, ?);"""
+      conn.execute(insertQuery, (None, datetime.datetime.now(), uuid, prevPage, page))
+      
     conn.commit()
 
     kwargs = {
@@ -454,16 +460,6 @@ def trackHome():
     insertQuery = """INSERT INTO routeTrackDB VALUES (?, ?, ?, ?, ?);"""
     conn.execute(insertQuery, (None, datetime.datetime.now(), uuid, source, destination))
     conn.commit()
-
-    kwargs = {
-      'success': True,
-    }
-    res = jsonify(kwargs)
-    return build_actual_response(res)
-  elif request.method == 'OPTIONS': 
-    return build_preflight_response()
-  else:
-    raise RuntimeError('Method not allowed')
 
 @app.route('/heatmap', methods=['GET', 'OPTIONS'])
 @errorHandle

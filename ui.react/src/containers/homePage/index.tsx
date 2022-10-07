@@ -8,6 +8,7 @@ import './style.css';
 
 import { ReactP5Wrapper } from "react-p5-wrapper";
 import sketchWrapper from "../../components/p5/box";
+import ButtonRedir from "../../components/ButtonRedir";
 
 interface Props {
   dataCall: Function; 
@@ -41,7 +42,7 @@ function HomePage(props: Props): JSX.Element {
   function typeLookup(type: string, data:string[], text?:string) {
     switch(type) {
       case 'button':
-        return <a href={data[0]}><div style={{backgroundColor: scheme.button.bgSolid}} className={type}>{text}</div></a>
+        return <ButtonRedir destination={data[0]} label={text ?? ''} />
       case 'unorderedList':
         return <ul className={`text ${type}`}>{data.map((item:string, index:number) => <li key={index}>{item}</li>)}</ul>
       case 'body':
