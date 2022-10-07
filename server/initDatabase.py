@@ -42,15 +42,6 @@ create_fingerprintDB = '''create table if not exists fingerprintDB (
   ip text not null
 );'''
 
-# create_fingerprint_liteDB = '''create table if not exists fingerprint_liteDB (
-#   id integer PRIMARY KEY,
-#   date TIMESTAMP not null,
-#   uuid text not null,
-#   canvas_hash text not null,
-#   darkmode boolean not null,
-#   ip text not null
-# );'''
-
 create_monitorDB = '''create table if not exists monitorDB (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
@@ -79,14 +70,21 @@ def insert():
   # conn.execute(query, (None, datetime.datetime.now(), 'U8YfzMdrd9AWQM9p8988', 'test'))
   print('success')
 
+def delete(table):
+  conn.execute(f'DROP TABLE if exists {table}')
+
 def close():
   conn.commit()
   conn.close()
 
 
 if __name__ == '__main__':
-  create()
+  # create()
   # insert()
+  delete('routeTrackDB')
+  delete('monitorDB')
+  delete('fingerprintDB')
+  delete('contactMessagesDB')
   close()
 
 

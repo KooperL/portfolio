@@ -13,16 +13,11 @@ export interface CapturePOST {
 export interface MonitorPOSTPayload {
   success: boolean;
   error?: string;
-
 }
 
 export interface MonitorPOST {
   uuid: string;
   page: string;
+  prevPage?: string;
 }
 
-export interface TrackPOST {
-  uuid: string;
-  source: string;
-  destination: string;
-}

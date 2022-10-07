@@ -46,19 +46,19 @@ function Logger(props: Props) {
           //   }
           // })) ?? null,
           // window: {
-          innerHeight: window.innerHeight ?? 123,
-          outerHeight: window.outerHeight ?? 123,
-          innerWidth: window.innerWidth ?? 123,
-          outerWidth: window.outerWidth ?? 123,
+          innerHeight: +window.innerHeight ?? 123,
+          outerHeight: +window.outerHeight ?? 123,
+          innerWidth: +window.innerWidth ?? 123,
+          outerWidth: +window.outerWidth ?? 123,
           // },
           // screen: {
-          actualHeight: window.screen.height ??  123,  // window.screen might not be valid in safari
-          actualWidth: window.screen.width ??  123,
-          pixelDepth: window.screen.pixelDepth ??  123,
+          actualHeight: +window.screen.height ??  123,  // window.screen might not be valid in safari
+          actualWidth: +window.screen.width ??  123,
+          pixelDepth: +window.screen.pixelDepth ??  123,
           // },
           // navigator: {
           platform: navigator.platform ?? null,
-          'cookieEnabled': navigator.cookieEnabled ?? false,
+          cookieEnabled: navigator.cookieEnabled ?? false,
           // 'java': navigator.javaEnabled ?? null,
           // 'online': navigator.onLine ?? null,
           // },
@@ -75,9 +75,11 @@ function Logger(props: Props) {
     }
     props.monitorPost({
       uuid: localStorage.getItem('uuid'),
-      page: window.location.href}
-    ).then((resp: MonitorPOSTPayload) => {
+      page: window.location.pathname,
+      ...(localStorage.getItem('currentPage') && {prevPage: localStorage.getItem('currentPage')})
+    }).then((resp: MonitorPOSTPayload) => {
       if(resp.success) {
+        localStorage.setItem('currentPage', window.location.pathname)
       } else {
         throw new Error(resp.error);
       }
