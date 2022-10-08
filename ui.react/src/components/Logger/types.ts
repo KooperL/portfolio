@@ -1,4 +1,4 @@
-export interface CapturePOSTPayload {
+export interface LoggingPOSTResponse {
   success: boolean;
   error?: string;
 
@@ -7,12 +7,6 @@ export interface CapturePOSTPayload {
 export interface CapturePOST {
   uuid: string;
   message: string;
-}
-
-
-export interface MonitorPOSTPayload {
-  success: boolean;
-  error?: string;
 }
 
 export interface MonitorPOST {

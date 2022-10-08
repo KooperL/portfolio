@@ -27,8 +27,10 @@ export const postCapture = (params: {
 
 export const postMonitor = (params: {
   uuid: string
+  session_id: string
   page: string
   prevPage?: string
+  newVisit?: string
 }): Promise<ContactPOSTPayload>  => {
   const apiConfig = {
     headers: {},
