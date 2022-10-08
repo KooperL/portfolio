@@ -1,9 +1,14 @@
+import base64
+import binascii
 import datetime
+import hashlib
+import hmac
 from lib2to3.pytree import Base
 from tokenize import Number
 import urllib.parse
 import inspect
 import random
+import secrets
 import json
 import sys
 import os
@@ -20,6 +25,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from jinja2 import Environment
 environment = Environment()
 
+# TODO: base64 helper and other code coverage for blog calls
 
 import pymongo
 from pymongo import MongoClient
@@ -72,6 +78,43 @@ def errorHandle(func):
   wrapper.__name__ = func.__name__
   return wrapper
 
+def base64ToString():
+  return 0
+
+def stringToBase64(string):
+  return 0
+
+def generateJWT(header, payload, key, expires=None):
+  if expires != None:
+    expires = str(int((datetime.datetime.now() + datetime.timedelta(minutes = 1)).timestamp() * 1000 ))
+  issuedAtRaw = datetime.datetime.now()
+  issuedAt = str(int(issuedAtRaw.timestamp() * 1000 ))
+  return 0
+
+def blogAuthorize(jwt, key):
+  jwt = jwt.split('.')
+  jwtSignature = hmac.new(
+    binascii.unhexlify(key),
+    '.'.join(jwt[0:2]).encode(),
+    hashlib.sha256,
+  ).hexdigest()
+  if base64.b64encode(str(jwtSignature).encode("utf-8", "strict")).decode("utf-8") == jwt[2]:
+    jwtDecoded = [eval(str(base64.b64decode(jwt[0]), "utf-8")), eval(str(base64.b64decode(jwt[1]), "utf-8"))]
+    if jwtDecoded[1].has_key('exp'):
+      # tokenExpires = datetime.fromtimestamp(int(jwtDecoded[1].get('exp'))/1000, tz=None)
+      timestampNow = int(datetime.datetime.now().timestamp() * 1000)
+      timestampToken = int(jwtDecoded[1].get('exp'))
+      if timestampToken > timestampNow:
+        return {
+          'success': True,
+          'payload': jwtDecoded[1]
+        }
+    else:
+      return {
+        'success': True,
+        'payload': jwtDecoded[1]
+      }
+  return {'success': False}
 
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(
@@ -175,13 +218,13 @@ def contactHome():
     res = jsonify(kwargs)
     return build_actual_response(res)
   elif request.method == 'POST':
-    uuid = request.args.get('uuid')
+    session_id = request.args.get('session_id')
     message = request.args.get('message')
-    if not all([uuid, message]):
+    if not all([session_id, message]):
       raise RuntimeError('Mandatory value(s) not provided')
 
     insertQuery = """INSERT INTO contact_messagesDB VALUES (?, ?, ?, ?);"""
-    conn.execute(insertQuery, (None, datetime.datetime.now(), uuid, message))
+    conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, message))
     conn.commit()
     # print(list(conn.execute(f'SELECT * FROM contactMessagesDB ORDER BY id DESC LIMIT 200')))
     kwargs = {
@@ -371,9 +414,11 @@ def captureHome():
       request.args.get('uuid'),
       request.args.get('canvas_hash'),
       request.args.get('platform'),
+      request.args.get('browser'),
+      request.args.get('version'),
       request.headers.get('User-Agent'),
-      bool(request.args.get('darkMode')),
-      request.args.get('cookieEnabled'),
+      int(request.args.get('darkMode')),
+      int(request.args.get('cookieEnabled')),
       # request.args.get('java'),
       # request.args.get('online'),
       int(request.args.get('actualHeight')),
@@ -390,14 +435,218 @@ def captureHome():
       print(args[1:])
       raise RuntimeError('Mandatory value(s) not provided')
 
-    insertFingerprintLiteQuery = """INSERT INTO fingerprintDB VALUES (
-      ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+    insertFingerprintQuery = """INSERT INTO fingerprintDB VALUES (
+      ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
     );"""
-    conn.execute(insertFingerprintLiteQuery, args)
+    conn.execute(insertFingerprintQuery, args)
 
     conn.commit()
     # print(list(conn.execute(f'SELECT * FROM fingerprintDB ORDER BY id DESC LIMIT 200')))
     res = jsonify({'success': True})
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
+
+@app.route('/blog/register', methods=['POST', 'OPTIONS'])
+@errorHandle
+def blogRegisterHome():
+  if request.method == 'POST':
+    data = request.get_json()
+    salt = secrets.token_hex(8)
+    blog_password_hash = hmac.new(
+      binascii.unhexlify(config['blog-register-hask-key']),
+      (data.get('blog_password') + salt).encode(),
+      hashlib.sha256,
+    ).hexdigest()
+    insertBlogUserQuery = 'INSERT INTO blog_usersDB VALUES (?, ?, ?, ?, ?);'
+    conn.execute(insertBlogUserQuery, (None, datetime.datetime.now(), data.get('blog_username'), blog_password_hash, salt))
+    conn.commit()
+    kwargs = {
+      'success': True,
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
+
+@app.route('/blog/login', methods=['POST', 'OPTIONS'])
+@errorHandle
+def blogLoginHome():
+  if request.method == 'POST':
+    auth_header = request.headers.get('Authorization')
+    if auth_header is None or not auth_header.startswith('Basic '):
+      kwargs = {
+        'success': False,
+        'error': 'Invalid "Authorization" header'
+      }
+      res = jsonify(kwargs)
+      return build_actual_response(res)   #401
+    basicToken = auth_header.split(' ')[1]
+    decodedBytes = base64.b64decode(basicToken)
+    decodedStr = str(decodedBytes, "utf-8").split(':')
+
+    userSearchQuery = 'SELECT blog_password_hash, blog_password_salt FROM blog_usersDB where ? = "None" and blog_username = ?'    # expanding string when only one item in tuple ??? have to add second arg
+    userRow = conn.execute(userSearchQuery, ('None', decodedStr[0])).fetchall()
+    if len(userRow) != 1:
+      kwargs = {
+        'success': False,
+        'error': 'Incorrect username/password'
+      }
+      res = jsonify(kwargs)
+      return build_actual_response(res)   #403
+    blog_password_hash = hmac.new(
+      binascii.unhexlify(config['blog-register-hask-key']),
+      (decodedStr[1] + userRow[0][1]).encode(),
+      hashlib.sha256,
+    ).hexdigest()
+
+    if userRow[0][0] != blog_password_hash:
+      kwargs = {
+        'success': False,
+        'error': 'Incorrect username/password'
+      }
+      res = jsonify(kwargs)
+      return build_actual_response(res)   #403
+
+    expires = str(int((datetime.datetime.now() + datetime.timedelta(minutes = 1)).timestamp() * 1000 ))
+    issuedAtRaw = datetime.datetime.now()
+    issuedAt = str(int(issuedAtRaw.timestamp() * 1000 ))
+
+    jwtAccessRaw = {
+      'header': {
+        'alg': 'SHA256',
+        'typ': 'JWT'
+      },
+      'payload': {
+        'username': decodedStr[0],
+        'iat': issuedAt,
+        'exp': expires
+      }
+    }
+    jwtRefreshRaw = {
+      'header': {
+        'alg': 'SHA256',
+        'typ': 'JWT'
+      },
+      'payload': {
+        'username': decodedStr[0],
+        'iat': issuedAt
+      }
+    }
+
+    jwtAccessEncoded = f'{base64.b64encode(str(json.dumps(jwtAccessRaw.get("header"))).encode("utf-8", "strict")).decode("utf-8")}.{base64.b64encode(str(json.dumps(jwtAccessRaw.get("payload"))).encode("utf-8", "strict")).decode("utf-8")}'
+    jwtRefreshEncoded = f'{base64.b64encode(str(json.dumps(jwtRefreshRaw.get("header"))).encode("utf-8", "strict")).decode("utf-8")}.{base64.b64encode(str(json.dumps(jwtRefreshRaw.get("payload"))).encode("utf-8", "strict")).decode("utf-8")}'
+    jwtAccessSignature = hmac.new(
+      binascii.unhexlify(config['blog-jwt-auth-token']),
+      jwtAccessEncoded.encode(),
+      hashlib.sha256,
+    ).hexdigest()
+    jwtRefreshSignature = hmac.new(
+      binascii.unhexlify(config['blog-jwt-refresh-token']),
+      jwtRefreshEncoded.encode(),
+      hashlib.sha256,
+    ).hexdigest()
+    jwtAccess = f'{jwtAccessEncoded}.{base64.b64encode(str(jwtAccessSignature).encode("utf-8", "strict")).decode("utf-8")}'
+    jwtRefresh = f'{jwtRefreshEncoded}.{base64.b64encode(str(jwtRefreshSignature).encode("utf-8", "strict")).decode("utf-8")}'
+
+    userRefreshTokenDelete = 'DELETE from blog_refresh_tokensDB where None = ? and blog_username = ?;'
+    conn.execute(userRefreshTokenDelete, ('None', decodedStr[0]))
+    conn.commit()
+
+    userRefreshTokenInsert = 'INSERT INTO blog_refresh_tokensDB VALUES (?, ?, ?, ?);'
+    conn.execute(userRefreshTokenInsert, (None, issuedAtRaw, decodedStr[0], jwtRefresh))
+    conn.commit()
+
+    kwargs = {
+      'success': True,
+      'type': 'Bearer',
+      'accessToken': jwtAccess,
+      'expires': expires
+    }
+
+    res = jsonify(kwargs)
+    res.set_cookie('refresh_token', value = jwtRefresh, httponly = True)
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
+
+@app.route('/blog/test', methods=['POST', 'OPTIONS'])
+@errorHandle
+def blogTestHome():
+  if request.method == 'POST':
+    auth_header = request.headers.get('Authorization')
+    if auth_header is None or not auth_header.startswith('Bearer '):
+      kwargs = {
+        'success': False,
+        'error': 'Invalid "Authorization" header'
+      }
+      res = jsonify(kwargs)
+      return build_actual_response(res)   #401
+    bearerToken = auth_header.split(' ')[1]
+
+    outcome = blogAuthorize(bearerToken, config['blog-jwt-auth-token'])
+
+    kwargs = {
+      'success': outcome.get('succes'),
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
+
+@app.route('/blog/refresh', methods=['POST', 'OPTIONS'])
+@errorHandle
+def blogRefreshHome():
+  if request.method == 'POST':
+    refresh_token = request.cookies.get('refresh_token')
+    refreshTokenSearchQuery = 'SELECT count(*) FROM blog_refresh_tokensDB where ? = "None" and blog_refresh_token = ?'    # expanding string when only one item in tuple ??? have to add second arg
+    tokenRows = conn.execute(refreshTokenSearchQuery, ('None', refresh_token)).fetchall()
+    if len(tokenRows) != 1:
+      kwargs = {
+        'success': False,
+        'error': 'Unauthorized'
+      }
+      res = jsonify(kwargs)
+      return build_actual_response(res)   #401
+
+    outcome = blogAuthorize(refresh_token, config['blog-jwt-refresh-token'])
+    if not outcome.get('success'):
+      kwargs = {
+        'success': False,
+        'error': 'Unauthorized'
+      }
+      res = jsonify(kwargs)
+      return build_actual_response(res)   #401
+
+
+
+    expires = str(int((datetime.datetime.now() + datetime.timedelta(minutes = 1)).timestamp() * 1000 ))
+    issuedAtRaw = datetime.datetime.now()
+    issuedAt = str(int(issuedAtRaw.timestamp() * 1000 ))
+
+    jwtAccessRaw = {
+      'header': {
+        'alg': 'SHA256',
+        'typ': 'JWT'
+      },
+      'payload': {
+        'username': outcome.get('payload').get('username'),
+        'iat': issuedAt,
+        'exp': expires
+      }
+    }
+    kwargs = {
+      'success': True,
+    }
+    res = jsonify(kwargs)
     return build_actual_response(res)
   elif request.method == 'OPTIONS': 
     return build_preflight_response()
@@ -410,18 +659,20 @@ def monitorHome():
   if request.method == 'POST':
 
     uuid = request.args.get('uuid')
+    session_id = request.args.get('session_id')
     page = request.args.get('page')
     prevPage = request.args.get('prevPage')
-    if not all([uuid, page]):
+    if not all([uuid, page, session_id]):
       raise RuntimeError('Mandatory value(s) not provided')
 
-    insertMonitorQuery = """INSERT INTO monitorDB VALUES (?, ?, ?, ?);"""
-    conn.execute(insertMonitorQuery, (None, datetime.datetime.now(), uuid, page))
+    insertMonitorQuery = 'INSERT INTO monitorDB VALUES (?, ?, ?, ?, ?);'
+    conn.execute(insertMonitorQuery, (None, datetime.datetime.now(), uuid, session_id, page))
+    conn.commit()
 
     if prevPage:
-      insertQuery = """INSERT INTO routeTrackDB VALUES (?, ?, ?, ?, ?);"""
-      conn.execute(insertQuery, (None, datetime.datetime.now(), uuid, prevPage, page))
-      
+      insertQuery = 'INSERT INTO route_trackDB VALUES (?, ?, ?, ?, ?);'
+      conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, prevPage, page))
+
     conn.commit()
 
     kwargs = {
@@ -447,19 +698,34 @@ def monitorHome():
   else:
     raise RuntimeError('Method not allowed')
 
-@app.route('/track', methods=['POST', 'OPTIONS'])
+@app.route('/analytics', methods=['GET', 'OPTIONS'])
 @errorHandle
-def trackHome():
-  if request.method == 'POST':
-    uuid = request.args.get('uuid')
-    source = request.args.get('source')
-    destination = request.args.get('destination')
-    if not all([uuid, source, destination]):
-      raise RuntimeError('Mandatory value(s) not provided')
+def analyticsHome():
+  if request.method == 'GET':
+    kwargs = {
+      'success': True,
+      'data': {
+        'platformVisits': {
+          'Linux': 3,
+          'Windows': 5,
+          'OSX': 1
+        },
+        'browserVisits': {
+          'Firefox': 10,
+          'Chrome': 7,
+          'Edge': 3
+        },
+        'uniqueVisits': 7,
+        'allVisits': 20,
 
-    insertQuery = """INSERT INTO routeTrackDB VALUES (?, ?, ?, ?, ?);"""
-    conn.execute(insertQuery, (None, datetime.datetime.now(), uuid, source, destination))
-    conn.commit()
+      }
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
 
 @app.route('/heatmap', methods=['GET', 'OPTIONS'])
 @errorHandle

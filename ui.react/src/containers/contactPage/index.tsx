@@ -87,7 +87,7 @@ function ContactPage(props: Props): JSX.Element {
       <div className="search-container">
         <div className="form">
           <form onSubmit={((e) => handleSubmit(e, {
-            session_id: localStorage.getItem('uuid') ?? 'error',
+            session_id: sessionStorage.getItem('session_id') ?? 'error',
             message: value
           }))}>
             <div className="inputWithButton">

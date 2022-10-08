@@ -16,10 +16,10 @@ create_fuelpricesDB= '''create table if not exists fuelpricesDB (
   wholesale text not null
 );'''
 
-create_contact_messagesDB = '''create table if not exists contactMessagesDB (
+create_contact_messagesDB = '''create table if not exists contact_messagesDB (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
-  uuid text not null,
+  session_id text not null,
   message text not null
 );'''
 
@@ -29,9 +29,11 @@ create_fingerprintDB = '''create table if not exists fingerprintDB (
   uuid text not null,
   canvas_hash text not null,
   platform text not null,
+  browser text not null,
+  version text not null,
   useragent text,
-  darkmode boolean,
-  cookieEnabled boolean,
+  darkmode INTEGER,
+  cookieEnabled INTEGER,
   actualHeight INTEGER,
   actualWidth INTEGER,
   pixelDepth INTEGER,
@@ -42,19 +44,36 @@ create_fingerprintDB = '''create table if not exists fingerprintDB (
   ip text not null
 );'''
 
+
 create_monitorDB = '''create table if not exists monitorDB (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
   uuid text not null,
-  path text not null
+  session_id text not null,
+  page text not null
 );'''
 
-create_route_trackDB = '''create table if not exists routeTrackDB (
+create_route_trackDB = '''create table if not exists route_trackDB (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
-  uuid TIMESTAMP not null,
+  session_id text not null,
   source text not null,
   destination text not null
+);'''
+
+create_blog_usersDB = '''create table if not exists blog_usersDB (
+  id integer PRIMARY KEY,
+  date TIMESTAMP not null,
+  blog_username text unique not null,
+  blog_password_hash text not null,
+  blog_password_salt text not null
+);'''
+
+create_blog_refresh_tokensDB = '''create table if not exists blog_refresh_tokensDB (
+  id integer PRIMARY KEY,
+  date TIMESTAMP not null,
+  blog_username unique text not null
+  blog_refresh_token unique text not null
 );'''
 
 def create():
@@ -63,6 +82,8 @@ def create():
   conn.execute(create_fingerprintDB)
   conn.execute(create_monitorDB)
   conn.execute(create_route_trackDB)
+  conn.execute(create_blog_usersDB)
+  conn.execute(create_blog_refresh_tokensDB)
   print('success')
 
 def insert():
@@ -79,12 +100,12 @@ def close():
 
 
 if __name__ == '__main__':
-  # create()
   # insert()
-  delete('routeTrackDB')
-  delete('monitorDB')
-  delete('fingerprintDB')
-  delete('contactMessagesDB')
+  # delete('routeTrackDB')
+  # delete('monitorDB')
+  # delete('fingerprintDB')
+  # delete('contactMessagesDB')
+  create()
   close()
 
 
