@@ -13,5 +13,13 @@ export enum RouteType {
   Heatmap = '/heatmap',
   RandomBio = '/randombio',
   Minesweeper = '/minesweeper',
-  JsSim = '/jssimulator'
+  JsSim = '/jssimulator',
+
+  BlogHome = '/blog/home',
+  // BlogSearch = '/blog/search',
+  BlogCreate = '/blog/create',
+  BlogLogin = '/blog/login',
+  BlogPost = '/blog/post/:postId',
+  BlogRegister = '/blog/register',
 }
+

@@ -1,0 +1,39 @@
+.container {
+  padding: 8rem 8rem;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+}
+
+.links {
+  width: auto;
+  z-index: 10;
+}
+
+
+
+.main-heading {
+  font-size: 3rem;
+  padding-bottom: 25px;
+}
+
+#button {
+  padding-top: 1rem;
+}
+
+input {
+  margin-right: 10px;
+  color: black;
+}
+
+
+@media screen and (max-width: 1000px) {
+  .container {
+    padding: 8rem 2rem;
+  }
+
+  input {
+    width: 100%;
+  }
+
+}

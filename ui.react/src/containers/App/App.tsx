@@ -16,36 +16,48 @@ import { JsSimPage } from '../jsSimPage/loadable';
 import { ContactPage } from '../contactPage/loadable';
 import { AboutPage } from '../aboutPage/loadable';
 import { Logger } from '../../components/Logger/loadable';
+import { AccessTokenProvider } from '../authContext/context';
+import { BlogHomePage } from '../blogHomePage/loadable';
+import { BlogRegisterPage } from '../blogRegisterPage/loadable';
+import { BlogLoginPage } from '../blogLoginPage/loadable';
 // import { Render } from '../renderer/renderer v3/cube/Render';
 // import { Render } from '../renderer/grid/Render';
 
 
 // TODO Helmet
+// TODO: https://www.w3schools.com/react/react_router.asp - proper paths and routes
+// TODO Feature toggling
 
 function App() {
   return (
     <SchemeSettings>
+            <AccessTokenProvider>
         <Router>
           <Navbar isVertical={false} />
             <Logger />
-            <Routes>
-              <Route path={`${RouteType.Home}`} element={<HomePage />} />
-              <Route path={`${RouteType.About}`} element={<AboutPage />} />
-              <Route path={`${RouteType.Contact}`} element={<ContactPage />} />
-              <Route path={`${RouteType.Projects}`} element={<ProjectsPage />} />
-              {/* <Route path={`${RouteType.Render}`} element={<Render />} /> */}
-              <Route path={`${RouteType.Tictactoe}`} element={<TictactoePage />} />
-              <Route path={`${RouteType.Fuelprices}`} element={<FuelPricesPage />} />
-              <Route path={`${RouteType.Property}`} element={<PropertyPage />} />
-              <Route path={`${RouteType.Mrna}`} element={<MrnaPage />} />
-              <Route path={`${RouteType.Secondary}`} element={<SecondaryPage />} />
-              <Route path={`${RouteType.Seqalign}`} element={<SeqAlignPage />} />
-              <Route path={`${RouteType.RandomBio}`} element={<RandomBioPage />} />
-              <Route path={`${RouteType.Minesweeper}`} element={<MinesweeperPage />} />
-              <Route path={`${RouteType.JsSim}`} element={<JsSimPage />} />
-              {/* <Route path={`${RouteType.Heatmap}`} element={<SeqAlignPage />} /> */}
-            </Routes>
+              <Routes>
+                <Route path={`${RouteType.Home}`} element={<HomePage />} />
+                <Route path={`${RouteType.About}`} element={<AboutPage />} />
+                <Route path={`${RouteType.Contact}`} element={<ContactPage />} />
+                <Route path={`${RouteType.Projects}`} element={<ProjectsPage />} />
+                {/* <Route path={`${RouteType.Render}`} element={<Render />} /> */}
+                <Route path={`${RouteType.Tictactoe}`} element={<TictactoePage />} />
+                <Route path={`${RouteType.Fuelprices}`} element={<FuelPricesPage />} />
+                <Route path={`${RouteType.Property}`} element={<PropertyPage />} />
+                <Route path={`${RouteType.Mrna}`} element={<MrnaPage />} />
+                <Route path={`${RouteType.Secondary}`} element={<SecondaryPage />} />
+                <Route path={`${RouteType.Seqalign}`} element={<SeqAlignPage />} />
+                <Route path={`${RouteType.RandomBio}`} element={<RandomBioPage />} />
+                <Route path={`${RouteType.Minesweeper}`} element={<MinesweeperPage />} />
+                <Route path={`${RouteType.JsSim}`} element={<JsSimPage />} />
+                {/* <Route path={`${RouteType.Heatmap}`} element={<SeqAlignPage />} /> */}
+                {/* <Route path="*" element={<NoPage />} /> */}
+                <Route path={`${RouteType.BlogHome}`} element={<BlogHomePage />} />
+                <Route path={`${RouteType.BlogRegister}`} element={<BlogRegisterPage />} />
+                <Route path={`${RouteType.BlogLogin}`} element={<BlogLoginPage />} />
+              </Routes>
         </Router>
+            </ AccessTokenProvider>
     </SchemeSettings>
   );
 }

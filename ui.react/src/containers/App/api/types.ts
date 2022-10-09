@@ -16,9 +16,21 @@ export interface ApiEndpoints {
   secondary: string;
   tictactoe: string;
   randombio: string;
+  blogHome: string;
+  // blogSearch: string;
+  blogCreate: string;
+  blogLogin: string;
+  blogPost: string;
+  // blogUser: string;
+  blogRegister: string;
 }
 
-export interface Payload {
-  data: any,
-  success: boolean
+export interface emptyPayload {
+  success: boolean;
 }
+
+export interface Payload extends emptyPayload {
+  data: any;
+}
+
+export const blogPath = 'blog'

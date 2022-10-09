@@ -66,14 +66,28 @@ create_blog_usersDB = '''create table if not exists blog_usersDB (
   date TIMESTAMP not null,
   blog_username text unique not null,
   blog_password_hash text not null,
-  blog_password_salt text not null
+  blog_password_salt text not null,
+  role_id INTEGER not null
+);'''
+
+create_blog_roleDB = '''create table if not exists blog_usersDB (
+  id integer PRIMARY KEY,
+  canPost INTEGER not null,
 );'''
 
 create_blog_refresh_tokensDB = '''create table if not exists blog_refresh_tokensDB (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
-  blog_username unique text not null
-  blog_refresh_token unique text not null
+  blog_username text unique not null,
+  blog_refresh_token text unique not null
+);'''
+
+create_blog_user_trackingDB = '''create table if not exists blog_user_trackingDB (
+  id integer PRIMARY KEY,
+  date TIMESTAMP not null,
+  blog_username text,
+  session_id text not null,
+  function_called text not null
 );'''
 
 def create():
@@ -84,6 +98,7 @@ def create():
   conn.execute(create_route_trackDB)
   conn.execute(create_blog_usersDB)
   conn.execute(create_blog_refresh_tokensDB)
+  conn.execute(create_blog_user_trackingDB)
   print('success')
 
 def insert():
