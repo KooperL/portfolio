@@ -44,7 +44,8 @@ export const post = async<T> (
     headers: {
       ...defaultOptions.headers,
       ...(noCache && noCacheHeaders),
-      ...options.headers
+      ...options.headers,
+      ...(options.hasOwnProperty('data') && {'content-type': 'application/json'})
     },
     method: 'POST',
     url: url

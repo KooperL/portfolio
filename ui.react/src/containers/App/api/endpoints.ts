@@ -1,4 +1,4 @@
-import { ApiEndpoints } from './types';
+import { ApiEndpoints, blogPath } from './types';
 import { environmentConfig } from './environmentMappings';
 
 const { apiHost } = environmentConfig();
@@ -21,5 +21,11 @@ export const endpoints: ApiEndpoints = {
   fuelprices: `${apiHost}/fuelprices`,
   tictactoe: `${apiHost}/tictactoe`,
   randombio: `${apiHost}/randombio`,
+  
+  blogRegister: `${apiHost}/${blogPath}/register`,
+  blogHome: `${apiHost}/${blogPath}/Home`,
+  blogCreate: `${apiHost}/${blogPath}/create`,
+  blogLogin: `${apiHost}/${blogPath}/login`,
+  blogPost: `${apiHost}/${blogPath}/post`
 }
 

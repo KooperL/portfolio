@@ -42,7 +42,33 @@ import scripts.utils.rgb
 
 #sys.path.insert(1, appDir + '/stocks/')
 #import pattern_detect
-    
+
+
+class DatabaseManager(object):
+  def __init__(self, db):
+    self.conn = sqlite3.connect(db, check_same_thread=False)
+    # refer to https://stackoverflow.com/questions/26629080/python-and-sqlite3-programmingerror-recursive-use-of-cursors-not-allowed
+    # https://stackoverflow.com/questions/52212844/multithreading-with-flask
+    self.conn.execute('pragma foreign_keys = on')
+    self.conn.commit()
+    self.cur = self.conn.cursor()
+    # self.queue = []
+
+  def query(self, query, vals):
+    self.cur.execute(query, vals)
+    self.conn.commit()
+    return self.cur
+  
+  # def execute(self, query, vals):
+  #   for i in self.queue:
+  #     execute
+  #   return 
+
+  def __del__(self):
+    self.conn.close()
+
+conn = DatabaseManager(f'{appDir}/data/database.db')
+
 
 def build_preflight_response():
   response = make_response()
@@ -54,6 +80,39 @@ def build_preflight_response():
 def build_actual_response(response):
   response.headers.add('Access-Control-Allow-Origin', config['ORIGIN'])
   return response
+
+def build_unauthorized():
+  kwargs = {
+    'success': False,
+    'error': 'Unauthorized'
+  }
+  res = jsonify(kwargs)
+  return build_actual_response(res), 401
+
+def build_bad_req():
+  kwargs = {
+    'success': False,
+    'error': 'Invalid syntax.'
+  }
+  res = jsonify(kwargs)
+  return build_actual_response(res), 400
+
+def buildBearerResp(jwt, expires=None):
+  kwargs = {
+    'success': True,
+    'type': 'Bearer',
+    'accessToken': jwt,
+    'expires': expires
+  }
+  return kwargs
+
+def build_unauthenticated():
+  kwargs = {
+    'success': False,
+    'error': 'Incorrect username/password'
+  }
+  res = jsonify(kwargs)
+  return build_actual_response(res), 403
 
 def errorHandle(func):
   def wrapper(*args, **kwargs):
@@ -78,18 +137,48 @@ def errorHandle(func):
   wrapper.__name__ = func.__name__
   return wrapper
 
-def base64ToString():
-  return 0
+def generateJWTHeader():
+  kwargs = {
+    'header': {
+      'alg': 'SHA256',
+      'typ': 'JWT'
+    }
+  }
+  return kwargs
+
+def trackBlogFunctionsCalled(blogUsername, session_id, fun):
+  insertQuery = """INSERT INTO blog_user_trackingDB VALUES (
+    ?, ?, ?, ?, ?
+  );"""
+  # conn.execute(insertFingerprintQuery, args)
+  # conn.commit()
+  conn.query(insertQuery, (None, datetime.datetime.now(), blogUsername, session_id, fun))
+
+def base64ToString(string):
+  decodedBytes = base64.b64decode(string)
+  decodedStr = str(decodedBytes, "utf-8")
+  return decodedStr
 
 def stringToBase64(string):
-  return 0
+  return base64.b64encode(str(string).encode("utf-8", "strict")).decode("utf-8")
+
+def generateHash(string, key):
+  signature = hmac.new(
+      binascii.unhexlify(key),
+      string.encode(),
+      hashlib.sha256,
+    ).hexdigest()
+  return signature
 
 def generateJWT(header, payload, key, expires=None):
-  if expires != None:
-    expires = str(int((datetime.datetime.now() + datetime.timedelta(minutes = 1)).timestamp() * 1000 ))
-  issuedAtRaw = datetime.datetime.now()
-  issuedAt = str(int(issuedAtRaw.timestamp() * 1000 ))
-  return 0
+  jwtEncoded = f'{stringToBase64(json.dumps(header))}.{stringToBase64(json.dumps(payload))}'
+  signature = generateHash(jwtEncoded, key)
+  # if expires != None:
+  #   expires = str(int((datetime.datetime.now() + datetime.timedelta(minutes = 1)).timestamp() * 1000 ))
+  # issuedAtRaw = datetime.datetime.now()
+  # issuedAt = str(int(issuedAtRaw.timestamp() * 1000 ))
+  jwt = f'{jwtEncoded}.{stringToBase64(signature)}'
+  return jwt
 
 def blogAuthorize(jwt, key):
   jwt = jwt.split('.')
@@ -98,9 +187,10 @@ def blogAuthorize(jwt, key):
     '.'.join(jwt[0:2]).encode(),
     hashlib.sha256,
   ).hexdigest()
-  if base64.b64encode(str(jwtSignature).encode("utf-8", "strict")).decode("utf-8") == jwt[2]:
-    jwtDecoded = [eval(str(base64.b64decode(jwt[0]), "utf-8")), eval(str(base64.b64decode(jwt[1]), "utf-8"))]
-    if jwtDecoded[1].has_key('exp'):
+  if stringToBase64(jwtSignature) == jwt[2]:
+    jwtDecoded = [eval(base64ToString(jwt[0])), eval(base64ToString(jwt[1]))]
+    # if jwtDecoded[1].has_key('exp'):
+    if 'exp' in jwtDecoded[1]:
       # tokenExpires = datetime.fromtimestamp(int(jwtDecoded[1].get('exp'))/1000, tz=None)
       timestampNow = int(datetime.datetime.now().timestamp() * 1000)
       timestampToken = int(jwtDecoded[1].get('exp'))
@@ -118,7 +208,7 @@ def blogAuthorize(jwt, key):
 
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(
-    app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
+  app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
 )
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -129,9 +219,6 @@ password = urllib.parse.quote_plus(config['MONGO_PASSWORD'])
 client = MongoClient('mongodb://%s:%s@localhost:%s/' % (username, password, config['MONGO_PORT']))
 db = client['traffic_log']
 traffic_data = db['data']
-
-
-conn = sqlite3.connect(f'{appDir}/data/database.db', check_same_thread=False)
 
 
 @app.route('/home', methods=['GET', 'OPTIONS'])
@@ -218,14 +305,18 @@ def contactHome():
     res = jsonify(kwargs)
     return build_actual_response(res)
   elif request.method == 'POST':
-    session_id = request.args.get('session_id')
-    message = request.args.get('message')
-    if not all([session_id, message]):
+    data = request.get_json()
+    # session_id = request.args.get('session_id')
+    # message = request.args.get('message')
+    # if not all([session_id, message]):
+    if 'session_id' not in data and 'message' not in data:
       raise RuntimeError('Mandatory value(s) not provided')
-
-    insertQuery = """INSERT INTO contact_messagesDB VALUES (?, ?, ?, ?);"""
-    conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, message))
-    conn.commit()
+    session_id = data.get('session_id')
+    message = data.get('message')
+    insertQuery = 'INSERT INTO contact_messagesDB VALUES (?, ?, ?, ?);'
+    # conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, message))
+    # conn.commit()
+    conn.query(insertQuery, (None, datetime.datetime.now(), session_id, message))
     # print(list(conn.execute(f'SELECT * FROM contactMessagesDB ORDER BY id DESC LIMIT 200')))
     kwargs = {
       'success': True,
@@ -438,9 +529,10 @@ def captureHome():
     insertFingerprintQuery = """INSERT INTO fingerprintDB VALUES (
       ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
     );"""
-    conn.execute(insertFingerprintQuery, args)
+    # conn.execute(insertFingerprintQuery, args)
+    # conn.commit()
+    conn.query(insertFingerprintQuery, args)
 
-    conn.commit()
     # print(list(conn.execute(f'SELECT * FROM fingerprintDB ORDER BY id DESC LIMIT 200')))
     res = jsonify({'success': True})
     return build_actual_response(res)
@@ -454,15 +546,27 @@ def captureHome():
 def blogRegisterHome():
   if request.method == 'POST':
     data = request.get_json()
+    if 'data' not in data:
+      return build_bad_req()
+    session_id = data.get('session_id')
+    data = data.get('data')
+    if 'blog_username' not in data and 'blog_password' not in data:
+      return build_bad_req()
+
+    trackBlogFunctionsCalled(data.get('blog_username'), session_id, inspect.stack()[0][3])
+
     salt = secrets.token_hex(8)
-    blog_password_hash = hmac.new(
-      binascii.unhexlify(config['blog-register-hask-key']),
-      (data.get('blog_password') + salt).encode(),
-      hashlib.sha256,
-    ).hexdigest()
-    insertBlogUserQuery = 'INSERT INTO blog_usersDB VALUES (?, ?, ?, ?, ?);'
-    conn.execute(insertBlogUserQuery, (None, datetime.datetime.now(), data.get('blog_username'), blog_password_hash, salt))
-    conn.commit()
+    blog_password_hash = generateHash((data.get('blog_password') + salt), config['blog-register-hask-key'])
+    # hmac.new(
+    #   binascii.unhexlify(config['blog-register-hask-key']),
+    #   (data.get('blog_password') + salt).encode(),
+    #   hashlib.sha256,
+    # ).hexdigest()
+    insertBlogUserQuery = 'INSERT INTO blog_usersDB VALUES (?, ?, ?, ?, ?, ?);'
+    # conn.execute(insertBlogUserQuery, (None, datetime.datetime.now(), data.get('blog_username'), blog_password_hash, salt))
+    # conn.commit()
+    conn.query(insertBlogUserQuery, (None, datetime.datetime.now(), data.get('blog_username'), blog_password_hash, salt, 1))
+    
     kwargs = {
       'success': True,
     }
@@ -479,96 +583,62 @@ def blogLoginHome():
   if request.method == 'POST':
     auth_header = request.headers.get('Authorization')
     if auth_header is None or not auth_header.startswith('Basic '):
-      kwargs = {
-        'success': False,
-        'error': 'Invalid "Authorization" header'
-      }
-      res = jsonify(kwargs)
-      return build_actual_response(res)   #401
-    basicToken = auth_header.split(' ')[1]
-    decodedBytes = base64.b64decode(basicToken)
-    decodedStr = str(decodedBytes, "utf-8").split(':')
+      return build_unauthorized()
+    decodedStr = base64ToString(auth_header.split(' ')[1]).split(':')
 
-    userSearchQuery = 'SELECT blog_password_hash, blog_password_salt FROM blog_usersDB where ? = "None" and blog_username = ?'    # expanding string when only one item in tuple ??? have to add second arg
-    userRow = conn.execute(userSearchQuery, ('None', decodedStr[0])).fetchall()
+    data = request.get_json()
+    if 'session_id' not in data:
+      return build_bad_req()
+    session_id = data.get('session_id')
+
+    trackBlogFunctionsCalled(decodedStr[0], session_id, inspect.stack()[0][3])
+
+
+    userSearchQuery = 'SELECT blog_password_hash, blog_password_salt, role_id FROM blog_usersDB where ? = "None" and blog_username = ?'    # expanding string when only one item in tuple ??? have to add second arg
+    # userRow = conn.execute(userSearchQuery, ('None', decodedStr[0])).fetchall()
+    userRow = conn.query(userSearchQuery, ('None', decodedStr[0])).fetchall()
+
     if len(userRow) != 1:
-      kwargs = {
-        'success': False,
-        'error': 'Incorrect username/password'
-      }
-      res = jsonify(kwargs)
-      return build_actual_response(res)   #403
-    blog_password_hash = hmac.new(
-      binascii.unhexlify(config['blog-register-hask-key']),
-      (decodedStr[1] + userRow[0][1]).encode(),
-      hashlib.sha256,
-    ).hexdigest()
+      return build_unauthenticated()
+    blog_password_hash = generateHash((decodedStr[1] + userRow[0][1]), config['blog-register-hask-key'])
+    # hmac.new(
+    #   binascii.unhexlify(config['blog-register-hask-key']),
+    #   (decodedStr[1] + userRow[0][1]).encode(),
+    #   hashlib.sha256,
+    # ).hexdigest()
 
     if userRow[0][0] != blog_password_hash:
-      kwargs = {
-        'success': False,
-        'error': 'Incorrect username/password'
-      }
-      res = jsonify(kwargs)
-      return build_actual_response(res)   #403
+      return build_unauthenticated()
 
     expires = str(int((datetime.datetime.now() + datetime.timedelta(minutes = 1)).timestamp() * 1000 ))
     issuedAtRaw = datetime.datetime.now()
     issuedAt = str(int(issuedAtRaw.timestamp() * 1000 ))
 
-    jwtAccessRaw = {
-      'header': {
-        'alg': 'SHA256',
-        'typ': 'JWT'
-      },
-      'payload': {
-        'username': decodedStr[0],
-        'iat': issuedAt,
-        'exp': expires
-      }
+    jwtAccessPayload = {
+      'username': decodedStr[0],
+      'iat': issuedAt,
+      'role': userRow[0][2],
+      'exp': expires
     }
-    jwtRefreshRaw = {
-      'header': {
-        'alg': 'SHA256',
-        'typ': 'JWT'
-      },
-      'payload': {
-        'username': decodedStr[0],
-        'iat': issuedAt
-      }
+    jwtRefreshPayload = {
+      'username': decodedStr[0],
+      'iat': issuedAt
     }
 
-    jwtAccessEncoded = f'{base64.b64encode(str(json.dumps(jwtAccessRaw.get("header"))).encode("utf-8", "strict")).decode("utf-8")}.{base64.b64encode(str(json.dumps(jwtAccessRaw.get("payload"))).encode("utf-8", "strict")).decode("utf-8")}'
-    jwtRefreshEncoded = f'{base64.b64encode(str(json.dumps(jwtRefreshRaw.get("header"))).encode("utf-8", "strict")).decode("utf-8")}.{base64.b64encode(str(json.dumps(jwtRefreshRaw.get("payload"))).encode("utf-8", "strict")).decode("utf-8")}'
-    jwtAccessSignature = hmac.new(
-      binascii.unhexlify(config['blog-jwt-auth-token']),
-      jwtAccessEncoded.encode(),
-      hashlib.sha256,
-    ).hexdigest()
-    jwtRefreshSignature = hmac.new(
-      binascii.unhexlify(config['blog-jwt-refresh-token']),
-      jwtRefreshEncoded.encode(),
-      hashlib.sha256,
-    ).hexdigest()
-    jwtAccess = f'{jwtAccessEncoded}.{base64.b64encode(str(jwtAccessSignature).encode("utf-8", "strict")).decode("utf-8")}'
-    jwtRefresh = f'{jwtRefreshEncoded}.{base64.b64encode(str(jwtRefreshSignature).encode("utf-8", "strict")).decode("utf-8")}'
+    jwtAccess = generateJWT(generateJWTHeader(), jwtAccessPayload, config['blog-jwt-auth-token'])
+    jwtRefresh = generateJWT(generateJWTHeader(), jwtRefreshPayload, config['blog-jwt-refresh-token'])
 
-    userRefreshTokenDelete = 'DELETE from blog_refresh_tokensDB where None = ? and blog_username = ?;'
-    conn.execute(userRefreshTokenDelete, ('None', decodedStr[0]))
-    conn.commit()
+    userRefreshTokenDelete = 'DELETE from blog_refresh_tokensDB where ? = "None" and blog_username = ?;'
+    # conn.execute(userRefreshTokenDelete, ('None', decodedStr[0]))
+    # conn.commit()
+    conn.query(userRefreshTokenDelete, ('None', decodedStr[0]))
 
     userRefreshTokenInsert = 'INSERT INTO blog_refresh_tokensDB VALUES (?, ?, ?, ?);'
-    conn.execute(userRefreshTokenInsert, (None, issuedAtRaw, decodedStr[0], jwtRefresh))
-    conn.commit()
+    # conn.execute(userRefreshTokenInsert, (None, issuedAtRaw, decodedStr[0], jwtRefresh))
+    # conn.commit()
+    conn.query(userRefreshTokenInsert, (None, issuedAtRaw, decodedStr[0], jwtRefresh))
 
-    kwargs = {
-      'success': True,
-      'type': 'Bearer',
-      'accessToken': jwtAccess,
-      'expires': expires
-    }
-
-    res = jsonify(kwargs)
+    res = jsonify(buildBearerResp(jwtAccess, expires))
     res.set_cookie('refresh_token', value = jwtRefresh, httponly = True)
     return build_actual_response(res)
   elif request.method == 'OPTIONS': 
@@ -582,18 +652,13 @@ def blogTestHome():
   if request.method == 'POST':
     auth_header = request.headers.get('Authorization')
     if auth_header is None or not auth_header.startswith('Bearer '):
-      kwargs = {
-        'success': False,
-        'error': 'Invalid "Authorization" header'
-      }
-      res = jsonify(kwargs)
-      return build_actual_response(res)   #401
+      return build_unauthorized()
     bearerToken = auth_header.split(' ')[1]
 
     outcome = blogAuthorize(bearerToken, config['blog-jwt-auth-token'])
-
+    print(outcome)
     kwargs = {
-      'success': outcome.get('succes'),
+      'success': outcome.get('success'),
     }
     res = jsonify(kwargs)
     return build_actual_response(res)
@@ -608,45 +673,29 @@ def blogRefreshHome():
   if request.method == 'POST':
     refresh_token = request.cookies.get('refresh_token')
     refreshTokenSearchQuery = 'SELECT count(*) FROM blog_refresh_tokensDB where ? = "None" and blog_refresh_token = ?'    # expanding string when only one item in tuple ??? have to add second arg
-    tokenRows = conn.execute(refreshTokenSearchQuery, ('None', refresh_token)).fetchall()
+    # tokenRows = conn.execute(refreshTokenSearchQuery, ('None', refresh_token)).fetchall()
+    tokenRows = conn.query(refreshTokenSearchQuery, ('None', refresh_token)).fetchall()
+
     if len(tokenRows) != 1:
-      kwargs = {
-        'success': False,
-        'error': 'Unauthorized'
-      }
-      res = jsonify(kwargs)
-      return build_actual_response(res)   #401
+      return build_unauthorized()
 
     outcome = blogAuthorize(refresh_token, config['blog-jwt-refresh-token'])
+
     if not outcome.get('success'):
-      kwargs = {
-        'success': False,
-        'error': 'Unauthorized'
-      }
-      res = jsonify(kwargs)
-      return build_actual_response(res)   #401
-
-
+      return build_unauthorized()
 
     expires = str(int((datetime.datetime.now() + datetime.timedelta(minutes = 1)).timestamp() * 1000 ))
     issuedAtRaw = datetime.datetime.now()
     issuedAt = str(int(issuedAtRaw.timestamp() * 1000 ))
 
-    jwtAccessRaw = {
-      'header': {
-        'alg': 'SHA256',
-        'typ': 'JWT'
-      },
-      'payload': {
-        'username': outcome.get('payload').get('username'),
-        'iat': issuedAt,
-        'exp': expires
-      }
+    jwtAccessPayload = {
+      'username': outcome.get('payload').get('username'),
+      'iat': issuedAt,
+      'exp': expires
     }
-    kwargs = {
-      'success': True,
-    }
-    res = jsonify(kwargs)
+    jwtAccess = generateJWT(generateJWTHeader(), jwtAccessPayload, config['blog-jwt-auth-token'])
+
+    res = jsonify(buildBearerResp(jwtAccess, expires))
     return build_actual_response(res)
   elif request.method == 'OPTIONS': 
     return build_preflight_response()
@@ -666,14 +715,17 @@ def monitorHome():
       raise RuntimeError('Mandatory value(s) not provided')
 
     insertMonitorQuery = 'INSERT INTO monitorDB VALUES (?, ?, ?, ?, ?);'
-    conn.execute(insertMonitorQuery, (None, datetime.datetime.now(), uuid, session_id, page))
-    conn.commit()
+    # conn.execute(insertMonitorQuery, (None, datetime.datetime.now(), uuid, session_id, page))
+    # conn.commit()
+    conn.query(insertMonitorQuery, (None, datetime.datetime.now(), uuid, session_id, page))
+
 
     if prevPage:
       insertQuery = 'INSERT INTO route_trackDB VALUES (?, ?, ?, ?, ?);'
-      conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, prevPage, page))
+      # conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, prevPage, page))
+      conn.query(insertQuery, (None, datetime.datetime.now(), session_id, prevPage, page))
 
-    conn.commit()
+    # conn.commit()
 
     kwargs = {
       # 'request': {
@@ -778,7 +830,8 @@ def heatmapHome():
 @errorHandle
 def fuelpricesHome():
   if request.method == 'GET':
-    rows = list(conn.execute(f'SELECT * FROM fuelpricesDB ORDER BY id DESC LIMIT 200'))[::-1]
+    rows = list(conn.query('SELECT * FROM fuelpricesDB where ? = "None" ORDER BY id DESC LIMIT ?', ('None', 200)))[::-1]
+
     dic = {'wholesale': [], 'min': [], 'max': [], 'average': [], }
     for key in rows:
       date = datetime.datetime.strptime(key[1], '%Y-%m-%d %H:%M:%S.%f')#.timestamp()

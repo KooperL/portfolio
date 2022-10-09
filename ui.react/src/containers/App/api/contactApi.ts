@@ -11,13 +11,13 @@ export const fetchContact = (): Promise<ContactPayload>  => {
   return get(endpoints['contact'], apiConfig);
 }
 
-export const postContact = (params: {
+export const postContact = (data: {
   session_id: string
   message: string
 }): Promise<ContactPOSTPayload>  => {
   const apiConfig = {
     headers: {},
-    params: params
+    data: data
   }
   return post(endpoints['contact'], apiConfig);
 }
