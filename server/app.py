@@ -1,6 +1,7 @@
 import base64
 import binascii
 import datetime
+from functools import wraps
 import hashlib
 import hmac
 from lib2to3.pytree import Base
@@ -89,6 +90,14 @@ def build_unauthorized():
   res = jsonify(kwargs)
   return build_actual_response(res), 401
 
+def build_not_found():
+  kwargs = {
+    'success': False,
+    'error': 'Not found'
+  }
+  res = jsonify(kwargs)
+  return build_actual_response(res), 404
+
 def build_bad_req():
   kwargs = {
     'success': False,
@@ -150,8 +159,6 @@ def trackBlogFunctionsCalled(blogUsername, session_id, fun):
   insertQuery = """INSERT INTO blog_user_trackingDB VALUES (
     ?, ?, ?, ?, ?
   );"""
-  # conn.execute(insertFingerprintQuery, args)
-  # conn.commit()
   conn.query(insertQuery, (None, datetime.datetime.now(), blogUsername, session_id, fun))
 
 def base64ToString(string):
@@ -205,6 +212,21 @@ def blogAuthorize(jwt, key):
         'payload': jwtDecoded[1]
       }
   return {'success': False}
+
+def token_required(f):
+  @wraps(f)
+  def decorated(*args, **kwargs):
+    # print(kwargs.get('id'))
+    auth_header = request.headers.get('Authorization')
+    if auth_header is None or not auth_header.startswith('Bearer '):
+      return build_unauthorized()
+    bearerToken = auth_header.split(' ')[1]
+    outcome = blogAuthorize(bearerToken, config['blog-jwt-auth-token'])
+    if outcome.get('success') == False:
+      return build_unauthorized()
+    return f(outcome, *args, **kwargs)
+  return decorated
+
 
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(
@@ -546,7 +568,7 @@ def captureHome():
 def blogRegisterHome():
   if request.method == 'POST':
     data = request.get_json()
-    if 'data' not in data:
+    if 'data' not in data and not 'session_id' in data:
       return build_bad_req()
     session_id = data.get('session_id')
     data = data.get('data')
@@ -557,14 +579,8 @@ def blogRegisterHome():
 
     salt = secrets.token_hex(8)
     blog_password_hash = generateHash((data.get('blog_password') + salt), config['blog-register-hask-key'])
-    # hmac.new(
-    #   binascii.unhexlify(config['blog-register-hask-key']),
-    #   (data.get('blog_password') + salt).encode(),
-    #   hashlib.sha256,
-    # ).hexdigest()
+
     insertBlogUserQuery = 'INSERT INTO blog_usersDB VALUES (?, ?, ?, ?, ?, ?);'
-    # conn.execute(insertBlogUserQuery, (None, datetime.datetime.now(), data.get('blog_username'), blog_password_hash, salt))
-    # conn.commit()
     conn.query(insertBlogUserQuery, (None, datetime.datetime.now(), data.get('blog_username'), blog_password_hash, salt, 1))
     
     kwargs = {
@@ -581,6 +597,7 @@ def blogRegisterHome():
 @errorHandle
 def blogLoginHome():
   if request.method == 'POST':
+    tokenLife = 10
     auth_header = request.headers.get('Authorization')
     if auth_header is None or not auth_header.startswith('Basic '):
       return build_unauthorized()
@@ -593,50 +610,47 @@ def blogLoginHome():
 
     trackBlogFunctionsCalled(decodedStr[0], session_id, inspect.stack()[0][3])
 
-
-    userSearchQuery = 'SELECT blog_password_hash, blog_password_salt, role_id FROM blog_usersDB where ? = "None" and blog_username = ?'    # expanding string when only one item in tuple ??? have to add second arg
-    # userRow = conn.execute(userSearchQuery, ('None', decodedStr[0])).fetchall()
+    userSearchQuery = 'SELECT id, blog_password_hash, blog_password_salt, role_id FROM blog_usersDB where ? = "None" and blog_username = ?'    # expanding string when only one item in tuple ??? have to add second arg
     userRow = conn.query(userSearchQuery, ('None', decodedStr[0])).fetchall()
 
     if len(userRow) != 1:
       return build_unauthenticated()
-    blog_password_hash = generateHash((decodedStr[1] + userRow[0][1]), config['blog-register-hask-key'])
-    # hmac.new(
-    #   binascii.unhexlify(config['blog-register-hask-key']),
-    #   (decodedStr[1] + userRow[0][1]).encode(),
-    #   hashlib.sha256,
-    # ).hexdigest()
 
-    if userRow[0][0] != blog_password_hash:
+    userInfo = {
+      'id': userRow[0][0],
+      'passwordHash': userRow[0][1],
+      'passwordSalt': userRow[0][2],
+      'role': userRow[0][3]
+    }
+
+    blog_password_hash = generateHash((decodedStr[1] + userInfo.get('passwordSalt')), config['blog-register-hask-key'])
+
+    if userInfo.get('passwordHash') != blog_password_hash:
       return build_unauthenticated()
 
-    expires = str(int((datetime.datetime.now() + datetime.timedelta(minutes = 1)).timestamp() * 1000 ))
+    expires = str(int((datetime.datetime.now() + datetime.timedelta(minutes = tokenLife)).timestamp() * 1000 ))
     issuedAtRaw = datetime.datetime.now()
     issuedAt = str(int(issuedAtRaw.timestamp() * 1000 ))
 
     jwtAccessPayload = {
-      'username': decodedStr[0],
+      'username': userInfo.get('id'),
       'iat': issuedAt,
-      'role': userRow[0][2],
+      'role': userInfo.get('role'),
       'exp': expires
     }
     jwtRefreshPayload = {
-      'username': decodedStr[0],
+      'username': userInfo.get('id'),
       'iat': issuedAt
     }
 
     jwtAccess = generateJWT(generateJWTHeader(), jwtAccessPayload, config['blog-jwt-auth-token'])
     jwtRefresh = generateJWT(generateJWTHeader(), jwtRefreshPayload, config['blog-jwt-refresh-token'])
 
-    userRefreshTokenDelete = 'DELETE from blog_refresh_tokensDB where ? = "None" and blog_username = ?;'
-    # conn.execute(userRefreshTokenDelete, ('None', decodedStr[0]))
-    # conn.commit()
-    conn.query(userRefreshTokenDelete, ('None', decodedStr[0]))
+    userRefreshTokenDelete = 'DELETE from blog_refresh_tokensDB where ? = "None" and blog_user_id = ?;'
+    conn.query(userRefreshTokenDelete, ('None', userInfo.get('id')))
 
     userRefreshTokenInsert = 'INSERT INTO blog_refresh_tokensDB VALUES (?, ?, ?, ?);'
-    # conn.execute(userRefreshTokenInsert, (None, issuedAtRaw, decodedStr[0], jwtRefresh))
-    # conn.commit()
-    conn.query(userRefreshTokenInsert, (None, issuedAtRaw, decodedStr[0], jwtRefresh))
+    conn.query(userRefreshTokenInsert, (None, issuedAtRaw, userInfo.get('id'), jwtRefresh))
 
     res = jsonify(buildBearerResp(jwtAccess, expires))
     res.set_cookie('refresh_token', value = jwtRefresh, httponly = True)
@@ -646,19 +660,37 @@ def blogLoginHome():
   else:
     raise RuntimeError('Method not allowed')
 
-@app.route('/blog/test', methods=['POST', 'OPTIONS'])
+@app.route('/blog/post', methods=['POST', 'OPTIONS'])
 @errorHandle
-def blogTestHome():
+@token_required
+def blogPostCreateHome(authPayload):
   if request.method == 'POST':
-    auth_header = request.headers.get('Authorization')
-    if auth_header is None or not auth_header.startswith('Bearer '):
-      return build_unauthorized()
-    bearerToken = auth_header.split(' ')[1]
+    data = request.get_json()
+    if 'data' not in data and not 'session_id' in data:
+      return build_bad_req()
+    session_id = data.get('session_id')
+    user_id = authPayload.get('payload').get('username')
+    role = authPayload.get('payload').get('role')
+    trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
 
-    outcome = blogAuthorize(bearerToken, config['blog-jwt-auth-token'])
-    print(outcome)
+    data = data.get('data')
+    if 'blog_title' not in data and 'blog_body' not in data:
+      return build_bad_req()
+
+    blog_title = data.get('blog_title')
+    blog_body = data.get('blog_body')
+
+    validatePermsQuery = 'SELECT canPost from blog_roleDB where ? = "None" and id = ?;'
+    canPost = conn.query(validatePermsQuery, ('None', role)).fetchall()[0][0]
+
+    if canPost != 1:
+      return build_unauthorized()
+
+    publishBlogQuery = 'INSERT INTO blog_postsDB VALUES (?, ?, ?, ?, ?);'
+    conn.query(publishBlogQuery, (None, datetime.datetime.now(), user_id, blog_title, blog_body))
+
     kwargs = {
-      'success': outcome.get('success'),
+      'success': True,
     }
     res = jsonify(kwargs)
     return build_actual_response(res)
@@ -667,11 +699,74 @@ def blogTestHome():
   else:
     raise RuntimeError('Method not allowed')
 
+@app.route('/blog/post/<int:id>', methods=['GET', 'OPTIONS'])   # DEL
+@errorHandle
+@token_required
+def blogPostViewHome(authPayload, *args, **kwargs):
+  if request.method == 'GET':
+    id = int(kwargs.get('id'))
+    data = request.get_json()
+    user_id = authPayload.get('payload').get('username')
+    role = authPayload.get('payload').get('role')
+
+    if 'session_id' not in data:
+      return build_bad_req()
+    session_id = data.get('session_id')
+    trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
+    
+    pullBlogQuery = 'SELECT * from blog_postsDB where ? = "None" and id = ?;'
+    postRaw = conn.query(pullBlogQuery, ('None', id)).fetchall()
+
+    if len(postRaw) != 1:
+      return build_not_found()
+
+    post = {
+      'author': postRaw[0][2],
+      'title': postRaw[0][3],
+      'body': postRaw[0][4],
+    }
+
+    # role == can view:
+      # build_not_found()
+
+    addBlogViewQuery = 'INSERT INTO blog_post_viewsDB VALUES (?, ?, ?, ?);'
+    conn.query(addBlogViewQuery, (None, datetime.datetime.now(), user_id, id))
+
+    # Distinct??    
+    pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
+    postViewsRaw = conn.query(pullBlogViewsQuery, ('None', id)).fetchall()[0][0]
+
+    post = {
+      **post,
+      'views': postViewsRaw,
+    }
+
+    kwargs = {
+      'success': True,
+      'data': post,
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
+
+
+
+
+
 @app.route('/blog/refresh', methods=['POST', 'OPTIONS'])
 @errorHandle
 def blogRefreshHome():
   if request.method == 'POST':
     refresh_token = request.cookies.get('refresh_token')
+    if not refresh_token:
+      kwargs = {
+        'success': False
+      }
+      res = jsonify(kwargs)
+      return build_actual_response(res), 204
     refreshTokenSearchQuery = 'SELECT count(*) FROM blog_refresh_tokensDB where ? = "None" and blog_refresh_token = ?'    # expanding string when only one item in tuple ??? have to add second arg
     # tokenRows = conn.execute(refreshTokenSearchQuery, ('None', refresh_token)).fetchall()
     tokenRows = conn.query(refreshTokenSearchQuery, ('None', refresh_token)).fetchall()
@@ -696,7 +791,7 @@ def blogRefreshHome():
     jwtAccess = generateJWT(generateJWTHeader(), jwtAccessPayload, config['blog-jwt-auth-token'])
 
     res = jsonify(buildBearerResp(jwtAccess, expires))
-    return build_actual_response(res)
+    return build_actual_response(res), 201
   elif request.method == 'OPTIONS': 
     return build_preflight_response()
   else:

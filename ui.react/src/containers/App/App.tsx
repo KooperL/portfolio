@@ -18,7 +18,6 @@ import { AboutPage } from '../aboutPage/loadable';
 import { Logger } from '../../components/Logger/loadable';
 import { AccessTokenProvider } from '../authContext/context';
 import { BlogHomePage } from '../blogHomePage/loadable';
-import { BlogRegisterPage } from '../blogRegisterPage/loadable';
 import { BlogLoginPage } from '../blogLoginPage/loadable';
 // import { Render } from '../renderer/renderer v3/cube/Render';
 // import { Render } from '../renderer/grid/Render';
@@ -53,7 +52,7 @@ function App() {
                 {/* <Route path={`${RouteType.Heatmap}`} element={<SeqAlignPage />} /> */}
                 {/* <Route path="*" element={<NoPage />} /> */}
                 <Route path={`${RouteType.BlogHome}`} element={<BlogHomePage />} />
-                <Route path={`${RouteType.BlogRegister}`} element={<BlogRegisterPage />} />
+                <Route path={`${RouteType.BlogRegister}`} element={<BlogLoginPage />} />
                 <Route path={`${RouteType.BlogLogin}`} element={<BlogLoginPage />} />
               </Routes>
         </Router>

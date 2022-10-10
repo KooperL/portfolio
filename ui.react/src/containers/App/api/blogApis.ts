@@ -1,30 +1,34 @@
 import { get, post } from '../../../api/restApi';
-import { ContactPayload, ContactPOSTPayload } from '../../contactPage/types';
+import { BlogLoginPOSTPayload, BlogLoginPOSTResponse, BlogRegisterPOSTPayload } from '../../blogLoginPage/types';
 import { endpoints } from './endpoints';
 import { Payload } from './types';
 
 
-export const postBlogRegister = (data: {
-  session_id: string;
-  blog_username: string;
-  blog_password: string;
-}): Promise<ContactPOSTPayload>  => {
+export const postBlogRegister = (data: BlogRegisterPOSTPayload): Promise<BlogRegisterPOSTPayload>  => {
   const apiConfig = {
     headers: {},
+    data: data
+  }
+  return post(endpoints['blogRegister'], apiConfig);
+}
+
+export const postBlogLogin = (
+  data: BlogLoginPOSTPayload,
+  authBasic: string
+): Promise<BlogLoginPOSTResponse>  => {
+  const apiConfig = {
+    headers: {'Authorization': `Basic ${authBasic}`},
     data: data
   }
   return post(endpoints['blogLogin'], apiConfig);
 }
 
-export const postBlogLogin = (
+export const postBlogRefresh = (
   data: {
     session_id: string;
   },
-  authBasic: string
-): Promise<ContactPOSTPayload>  => {
+): Promise<BlogLoginPOSTPayload>  => {
   const apiConfig = {
-    headers: {'Authorization': `Basic ${authBasic}`},
-    data: data
   }
   return post(endpoints['blogLogin'], apiConfig);
 }

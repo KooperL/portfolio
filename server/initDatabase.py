@@ -70,25 +70,47 @@ create_blog_usersDB = '''create table if not exists blog_usersDB (
   role_id INTEGER not null
 );'''
 
-create_blog_roleDB = '''create table if not exists blog_usersDB (
+create_blog_roleDB = '''create table if not exists blog_roleDB (
   id integer PRIMARY KEY,
-  canPost INTEGER not null,
+  canPost INTEGER not null
 );'''
+
+create_role = 'INSERT into blog_roleDB values (1, 1)'
 
 create_blog_refresh_tokensDB = '''create table if not exists blog_refresh_tokensDB (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
-  blog_username text unique not null,
+  blog_user_id text unique not null,
   blog_refresh_token text unique not null
 );'''
 
 create_blog_user_trackingDB = '''create table if not exists blog_user_trackingDB (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
-  blog_username text,
+  blog_user_id text,
   session_id text not null,
   function_called text not null
 );'''
+
+create_blog_postsDB = '''create table if not exists blog_postsDB (
+  id integer PRIMARY KEY,
+  date TIMESTAMP not null,
+  blog_user_id text,
+  title text not null,
+  body text not null
+);'''
+
+create_blog_post_viewsDB = '''create table if not exists blog_post_viewsDB (
+  id integer PRIMARY KEY,
+  date TIMESTAMP not null,
+  blog_user_id text,
+  blog_post_id INTEGER not null
+);'''
+
+def createRoles():
+  conn.execute(create_blog_roleDB)
+  conn.execute(create_role)
+
 
 def create():
   conn.execute(create_fuelpricesDB)
@@ -99,6 +121,9 @@ def create():
   conn.execute(create_blog_usersDB)
   conn.execute(create_blog_refresh_tokensDB)
   conn.execute(create_blog_user_trackingDB)
+  conn.execute(create_blog_postsDB)
+  conn.execute(create_blog_post_viewsDB)
+  createRoles()
   print('success')
 
 def insert():
