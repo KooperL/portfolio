@@ -59,8 +59,6 @@ function BlogLoginPage(props: Props): JSX.Element {
     setPasswordRegister(generatePassword(16))
   }, []);
 
-  console.log(token)
-
   const handleSubmitRegister = (event: React.FormEvent<HTMLFormElement>, payload: BlogRegisterPOSTPayload) => {
     if(hasRegistered) {return}
     setPOSTState({...POSTstate, loading: true});
@@ -105,7 +103,7 @@ function BlogLoginPage(props: Props): JSX.Element {
         });
         // add auth token to context
         setToken(resp.accessToken ?? '')
-        navigate(RouteType.BlogHome)
+        navigate('/blog/post/1')
       } else {
         throw new Error(resp.error);
       }

@@ -217,6 +217,9 @@ def token_required(f):
   @wraps(f)
   def decorated(*args, **kwargs):
     # print(kwargs.get('id'))
+    if request.method == 'OPTIONS':
+      return build_preflight_response()
+    print(request.get_json())
     auth_header = request.headers.get('Authorization')
     if auth_header is None or not auth_header.startswith('Bearer '):
       return build_unauthorized()
@@ -577,8 +580,12 @@ def blogRegisterHome():
 
     trackBlogFunctionsCalled(data.get('blog_username'), session_id, inspect.stack()[0][3])
 
-    salt = secrets.token_hex(8)
-    blog_password_hash = generateHash((data.get('blog_password') + salt), config['blog-register-hask-key'])
+    # check if valid username
+    # check if lower() exists
+
+
+    salt = secrets.token_hex(int(config['blog-register-salt-length']))
+    blog_password_hash = generateHash((data.get('blog_password') + salt), config['blog-register-hash-key'])
 
     insertBlogUserQuery = 'INSERT INTO blog_usersDB VALUES (?, ?, ?, ?, ?, ?);'
     conn.query(insertBlogUserQuery, (None, datetime.datetime.now(), data.get('blog_username'), blog_password_hash, salt, 1))
@@ -597,7 +604,9 @@ def blogRegisterHome():
 @errorHandle
 def blogLoginHome():
   if request.method == 'POST':
-    tokenLife = 10
+    accessTokenLife = 999 # Minutes
+    refreshTokenLife = 999 # Days
+
     auth_header = request.headers.get('Authorization')
     if auth_header is None or not auth_header.startswith('Basic '):
       return build_unauthorized()
@@ -623,13 +632,14 @@ def blogLoginHome():
       'role': userRow[0][3]
     }
 
-    blog_password_hash = generateHash((decodedStr[1] + userInfo.get('passwordSalt')), config['blog-register-hask-key'])
+    blog_password_hash = generateHash((decodedStr[1] + userInfo.get('passwordSalt')), config['blog-register-hash-key'])
 
     if userInfo.get('passwordHash') != blog_password_hash:
       return build_unauthenticated()
 
-    expires = str(int((datetime.datetime.now() + datetime.timedelta(minutes = tokenLife)).timestamp() * 1000 ))
     issuedAtRaw = datetime.datetime.now()
+    expires = str(int((issuedAtRaw + datetime.timedelta(minutes = accessTokenLife)).timestamp() * 1000 ))
+    refreshExpires = issuedAtRaw + datetime.timedelta(days = refreshTokenLife)
     issuedAt = str(int(issuedAtRaw.timestamp() * 1000 ))
 
     jwtAccessPayload = {
@@ -653,7 +663,9 @@ def blogLoginHome():
     conn.query(userRefreshTokenInsert, (None, issuedAtRaw, userInfo.get('id'), jwtRefresh))
 
     res = jsonify(buildBearerResp(jwtAccess, expires))
-    res.set_cookie('refresh_token', value = jwtRefresh, httponly = True)
+    res.headers.add('withCredentials', 'true')
+
+    res.set_cookie('refresh_token', value=jwtRefresh, expires=refreshExpires, samesite='none') # domain=config['ORIGIN'], secure, httponly=True, 
     return build_actual_response(res)
   elif request.method == 'OPTIONS': 
     return build_preflight_response()
@@ -681,16 +693,21 @@ def blogPostCreateHome(authPayload):
     blog_body = data.get('blog_body')
 
     validatePermsQuery = 'SELECT canPost from blog_roleDB where ? = "None" and id = ?;'
-    canPost = conn.query(validatePermsQuery, ('None', role)).fetchall()[0][0]
-
-    if canPost != 1:
+    canPost = conn.query(validatePermsQuery, ('None', role)).fetchall()
+    print(authPayload)
+    if canPost[0][0] != 1:
       return build_unauthorized()
 
-    publishBlogQuery = 'INSERT INTO blog_postsDB VALUES (?, ?, ?, ?, ?);'
-    conn.query(publishBlogQuery, (None, datetime.datetime.now(), user_id, blog_title, blog_body))
-
+    publishBlogQuery = 'INSERT INTO blog_postsDB VALUES (?, ?, ?, ?, ?, ?, ?, ?);'
+    conn.query(publishBlogQuery, (None, datetime.datetime.now(), user_id, blog_title, 1, blog_body, 1, 0))
+    
+    publishedBlogIdQuery = 'SELECT id from blog_postsDB where blog_user_id = ? and title = ? and  body = ?;'
+    publishedBlogId = conn.query(publishedBlogIdQuery, (user_id, blog_title, blog_body)).fetchall()
     kwargs = {
       'success': True,
+      'data': {
+        'blogPostId': publishedBlogId[0]
+      }
     }
     res = jsonify(kwargs)
     return build_actual_response(res)
@@ -699,35 +716,40 @@ def blogPostCreateHome(authPayload):
   else:
     raise RuntimeError('Method not allowed')
 
-@app.route('/blog/post/<int:id>', methods=['GET', 'OPTIONS'])   # DEL
+@app.route('/blog/post/<int:id>', methods=['POST', 'OPTIONS'])   # DEL, GET was,'t working because axios wouldn't set content length
 @errorHandle
 @token_required
 def blogPostViewHome(authPayload, *args, **kwargs):
-  if request.method == 'GET':
+  if request.method == 'POST':
     id = int(kwargs.get('id'))
     data = request.get_json()
+    print(request)
     user_id = authPayload.get('payload').get('username')
     role = authPayload.get('payload').get('role')
-
     if 'session_id' not in data:
       return build_bad_req()
     session_id = data.get('session_id')
     trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
     
-    pullBlogQuery = 'SELECT * from blog_postsDB where ? = "None" and id = ?;'
-    postRaw = conn.query(pullBlogQuery, ('None', id)).fetchall()
+    pullBlogQuery = 'SELECT * from blog_postsDB where id = ? and (visible = 1 or blog_user_id = ? or ? = "True");'
+    postRaw = conn.query(pullBlogQuery, (id, user_id, (role==999))).fetchall()
 
     if len(postRaw) != 1:
       return build_not_found()
 
     post = {
-      'author': postRaw[0][2],
+      'id' : postRaw[0][0],
+      'date' : postRaw[0][1],
+      'author_id': postRaw[0][2],
       'title': postRaw[0][3],
-      'body': postRaw[0][4],
+      'category_id': postRaw[0][4],
+      'body': postRaw[0][5],
+      'visible': postRaw[0][6],
     }
 
-    # role == can view:
-      # build_not_found()
+    # if visible != 1 or role == 999:
+    #   build_not_found()
+
 
     addBlogViewQuery = 'INSERT INTO blog_post_viewsDB VALUES (?, ?, ?, ?);'
     conn.query(addBlogViewQuery, (None, datetime.datetime.now(), user_id, id))
@@ -754,13 +776,14 @@ def blogPostViewHome(authPayload, *args, **kwargs):
 
 
 
-
-
 @app.route('/blog/refresh', methods=['POST', 'OPTIONS'])
 @errorHandle
 def blogRefreshHome():
   if request.method == 'POST':
     refresh_token = request.cookies.get('refresh_token')
+    print('----------------')
+    print(request.cookies)
+    print('----------------')
     if not refresh_token:
       kwargs = {
         'success': False
@@ -796,6 +819,9 @@ def blogRefreshHome():
     return build_preflight_response()
   else:
     raise RuntimeError('Method not allowed')
+
+
+
 
 @app.route('/monitor', methods=['POST', 'OPTIONS'])
 @errorHandle

@@ -18,11 +18,12 @@ export interface ApiEndpoints {
   randombio: string;
   blogHome: string;
   // blogSearch: string;
-  blogCreate: string;
+  blogPostCreate: string;
   blogLogin: string;
   blogPost: string;
   // blogUser: string;
   blogRegister: string;
+  blogRefresh: string;
 }
 
 export interface emptyPayload {

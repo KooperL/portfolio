@@ -17,7 +17,7 @@ export enum RouteType {
 
   BlogHome = '/blog/home',
   // BlogSearch = '/blog/search',
-  BlogCreate = '/blog/create',
+  BlogPostCreate = '/blog/post',
   BlogLogin = '/blog/login',
   BlogPost = '/blog/post/:postId',
   BlogRegister = '/blog/register',
