@@ -24,8 +24,9 @@ export const endpoints: ApiEndpoints = {
   
   blogRegister: `${apiHost}/${blogPath}/register`,
   blogHome: `${apiHost}/${blogPath}/Home`,
-  blogCreate: `${apiHost}/${blogPath}/create`,
+  blogPostCreate: `${apiHost}/${blogPath}/post`,
+  blogPost: `${apiHost}/${blogPath}/post/`,
   blogLogin: `${apiHost}/${blogPath}/login`,
-  blogPost: `${apiHost}/${blogPath}/post`
+  blogRefresh: `${apiHost}/${blogPath}/refresh`,
 }
 

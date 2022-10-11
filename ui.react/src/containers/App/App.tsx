@@ -19,6 +19,8 @@ import { Logger } from '../../components/Logger/loadable';
 import { AccessTokenProvider } from '../authContext/context';
 import { BlogHomePage } from '../blogHomePage/loadable';
 import { BlogLoginPage } from '../blogLoginPage/loadable';
+import { BlogPostCreatePage } from '../blogPostCreatePage/loadable';
+import { BlogPostViewPage } from '../blogPostViewPage/loadable';
 // import { Render } from '../renderer/renderer v3/cube/Render';
 // import { Render } from '../renderer/grid/Render';
 
@@ -35,6 +37,9 @@ function App() {
           <Navbar isVertical={false} />
             <Logger />
               <Routes>
+                {/* <Route path="/" element={<Layout />}>
+                  <Route index element={<HomePage />} />
+                </Route> */}
                 <Route path={`${RouteType.Home}`} element={<HomePage />} />
                 <Route path={`${RouteType.About}`} element={<AboutPage />} />
                 <Route path={`${RouteType.Contact}`} element={<ContactPage />} />
@@ -54,6 +59,8 @@ function App() {
                 <Route path={`${RouteType.BlogHome}`} element={<BlogHomePage />} />
                 <Route path={`${RouteType.BlogRegister}`} element={<BlogLoginPage />} />
                 <Route path={`${RouteType.BlogLogin}`} element={<BlogLoginPage />} />
+                <Route path={`${RouteType.BlogPostCreate}`} element={<BlogPostCreatePage />} />
+                <Route path={`${RouteType.BlogPost}`} element={<BlogPostViewPage />} />
               </Routes>
         </Router>
             </ AccessTokenProvider>

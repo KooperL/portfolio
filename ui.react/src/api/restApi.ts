@@ -9,8 +9,8 @@ const noCacheHeaders = {
 const defaultOptions = {
   headers: {
     // 'Accept': 'application/json',
-    // 'access-control-allow-origin': '*',
-    // 'Sec-Fetch-Site': 'same-site'
+    'access-control-allow-origin': 'http://localhost:5000',
+    'Sec-Fetch-Site': 'same-site'
   },
   // Other headers
 }
@@ -25,7 +25,8 @@ export const get = async<T> (
     headers: {
       ...defaultOptions.headers,
       ...(noCache && noCacheHeaders),
-      ...options.headers
+      ...options.headers,
+      ...(options.hasOwnProperty('data') && {'content-type': 'application/json'})
     },
     method: 'GET',
     url: url
@@ -50,5 +51,6 @@ export const post = async<T> (
     method: 'POST',
     url: url
   };
+
   return request(requestConfig);
 }
