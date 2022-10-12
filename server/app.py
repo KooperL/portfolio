@@ -73,12 +73,30 @@ conn = DatabaseManager(f'{appDir}/data/database.db')
 
 def build_preflight_response():
   response = make_response()
+  response.headers.add('Access-Control-Allow-Credentials', 'true')
   response.headers.add('Access-Control-Allow-Origin', config['ORIGIN'])
-  response.headers.add('Access-Control-Allow-Headers', '*')
-  response.headers.add('Access-Control-Allow-Methods', '*')
+  response.headers.add('Access-Control-Allow-Headers', ','.join([str(x) for x in [
+    'Access-Control-Allow-Credentials',
+    'Access-Control-Allow-Method',
+    'Access-Control-Allow-Headers',
+    'authorization',
+    'Origin',
+    'Accept',
+    'X-Requested-With',
+    'Content-Type',
+    'Access-Control-Request-Method',
+    'Access-Control-Request-Headers',
+    'access-control-request-credentials',
+    'cachecontrol'
+  ]]))
+  # response.setHeader("Access-Control-Allow-Headers", "cacheControl, Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+  # response.headers.add('Access-Control-Allow-Headers', '*')
+  response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')  
+  # response.headers.add('withCredentials', 'true')
   return response
 
 def build_actual_response(response):
+  response.headers.add('Access-Control-Allow-Credentials', 'true')    # setperate response for refresh/login??
   response.headers.add('Access-Control-Allow-Origin', config['ORIGIN'])
   return response
 
@@ -663,9 +681,11 @@ def blogLoginHome():
     conn.query(userRefreshTokenInsert, (None, issuedAtRaw, userInfo.get('id'), jwtRefresh))
 
     res = jsonify(buildBearerResp(jwtAccess, expires))
-    res.headers.add('withCredentials', 'true')
+    # res.headers.add('withCredentials', 'true')
+    # res.headers.add('Access-Control-Allow-Credentials', 'true')
+    # res.headers.add('Set-Cookie', 'refresh_token2=1eyJoZWFkZXIiOiB7ImFsZyI6ICJTSEEyNTYiLCAidHlwIjogIkpXVCJ9fQ==.eyJ1c2VybmFtZSI6IDEsICJpYXQiOiAiMTY2NTQ5MjgxMjc5NyJ9.NWY0MjI3MTM1YzkwY2RhYmI1MjczZWNjNzdkNGJjM2FmMDNlMDA0ODhhY2MyMzdhMTgyZjE0ZDliZGFiMTk4Yg==; Expires=Sun, 06 Jul 2025 23:53:32 GMT; Secure; Path=/; SameSite=None')
 
-    res.set_cookie('refresh_token', value=jwtRefresh, expires=refreshExpires, samesite='none') # domain=config['ORIGIN'], secure, httponly=True, 
+    res.set_cookie('refresh_token', value=jwtRefresh, expires=refreshExpires, httponly=False) # domain=config['ORIGIN'], samesite='None', secure=True, 
     return build_actual_response(res)
   elif request.method == 'OPTIONS': 
     return build_preflight_response()

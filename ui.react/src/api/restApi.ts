@@ -9,8 +9,8 @@ const noCacheHeaders = {
 const defaultOptions = {
   headers: {
     // 'Accept': 'application/json',
-    'access-control-allow-origin': 'http://localhost:5000',
-    'Sec-Fetch-Site': 'same-site'
+    // 'access-control-allow-origin': 'http://localhost:5000',
+    // 'Sec-Fetch-Site': 'same-site'
   },
   // Other headers
 }

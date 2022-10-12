@@ -49,7 +49,7 @@ function BlogPostViewPage(props: Props): JSX.Element {
         });
       }
     )
-  }, []);
+  }, [token]);
 
   console.log(token)
 

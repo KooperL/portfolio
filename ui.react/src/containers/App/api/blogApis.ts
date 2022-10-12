@@ -13,14 +13,16 @@ export const postBlogRegister = (data: BlogRegisterPOSTPayload): Promise<BlogReg
   }
   return post(endpoints['blogRegister'], apiConfig);
 }
+// snap send solve
 
 export const postBlogLogin = (
   data: BlogLoginPOSTPayload,
   authBasic: string
 ): Promise<BlogLoginPOSTResponse>  => {
   const apiConfig = {
-    headers: {'Authorization': `Basic ${authBasic}`, 'withCredentials': true},
-    data: data
+    headers: {'Authorization': `Basic ${authBasic}`},//, 'Access-Control-Allow-Credentials': 'true'},
+    data: data,
+    withCredentials: true,
   }
   return post(endpoints['blogLogin'], apiConfig);
 }
@@ -32,7 +34,9 @@ export const postBlogRefresh = (
 ): Promise<BlogLoginPOSTResponse>  => {
   const apiConfig = {
     data: data,
-    headers: {withCredentials: true}
+    // headers: {'Access-Control-Allow-Credentials': 'true'}
+    withCredentials: true,
+
   }
   return post(endpoints['blogRefresh'], apiConfig);
 }
