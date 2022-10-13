@@ -42,7 +42,7 @@ function HomePage(props: Props): JSX.Element {
   function typeLookup(type: string, data:string[], text?:string) {
     switch(type) {
       case 'button':
-        return <ButtonRedir destination={data[0]} label={text ?? ''} />
+        return <ButtonRedir destination={data[0]} label={text ?? ''} local={!data[0].includes('http')}/>
       case 'unorderedList':
         return <ul className={`text ${type}`}>{data.map((item:string, index:number) => <li key={index}>{item}</li>)}</ul>
       case 'body':

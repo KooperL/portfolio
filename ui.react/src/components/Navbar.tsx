@@ -2,13 +2,14 @@
 import { useContext, useEffect } from 'react';
 import { SchemeContext } from '../containers/context/colourScheme';
 import './test.css';
+import { Link } from "react-router-dom";
 
 // style="width: 100000px; transform: translateX(-3561px); animation: 12.9416s linear 0s infinite normal none running marqueeAnimation-77345020;"
 
 function Navbar(props: {isVertical: boolean}) {
   const [scheme, setScheme] = useContext(SchemeContext);
 
-  const home = <a className='px-5 hover:bg-gray-600 flex justify-center items-center' href='/' style={{height: '100%'}}>Home 🏠</a>
+  const home = <Link className='px-5 hover:bg-gray-600 flex justify-center items-center' to='/' style={{height: '100%'}}>Home 🏠</Link>
   let bannerText = [];
   // window.innerHeight window.innerWidth
   for (let i=0; i<(props.isVertical? 15 : 21); i++) {
@@ -23,7 +24,7 @@ function Navbar(props: {isVertical: boolean}) {
     <div className={`h-20 w-full fixed ${props.isVertical?'origin-top-left rotate-90 left-20 top-0': ''}`} style={{"backgroundColor": scheme.header.background, zIndex: props.isVertical ? 1 : 11}}>
         <div className="h-full flex justify-between text-back tracking-widest">
           <div className='flex justify-center items-center'>
-            {isHome?home:''}
+            {isHome?(!props.isVertical ? home : ''):''}
           </div>
           <div className='tech-slideshow grow '>
             <div className='mover-1 flex justify-center items-center text-xl' style={{height: '100%'}}>

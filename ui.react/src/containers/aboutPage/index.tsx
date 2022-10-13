@@ -9,6 +9,7 @@ import sketchWrapper from "../../components/p5/dnaAscii";
 import { ReactP5Wrapper } from "react-p5-wrapper";
 // @ts-ignore
 import dna from './dna.txt';
+import ButtonRedir from "../../components/ButtonRedir";
 
 interface Props {
   dataCall: Function; 
@@ -49,7 +50,7 @@ function AboutPage(props: Props): JSX.Element {
   function typeLookup(type: string, data:string[], text?:string) {
     switch(type) {
       case 'button':
-        return <a href={data[0]}><div style={{backgroundColor: scheme.button.bgSolid}} className={type}>{text}</div></a>
+        return <ButtonRedir destination={data[0]} label={text ?? ''} local={!data[0].includes('http')}/>
       case 'unorderedList':
         return <ul className={`text ${type}`}>{data.map((item:string, index:number) => <li key={index}>{item}</li>)}</ul>
       case 'body':
