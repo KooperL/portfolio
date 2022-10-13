@@ -96,7 +96,7 @@ def build_preflight_response():
   return response
 
 def build_actual_response(response):
-  response.headers.add('Access-Control-Allow-Credentials', 'true')    # setperate response for refresh/login??
+     # setperate response for refresh/login??
   response.headers.add('Access-Control-Allow-Origin', config['ORIGIN'])
   return response
 
@@ -330,7 +330,8 @@ def contactHome():
           'data': [
             'You should probably contact me to let me know you found this error. My preferred method of contact is LinkedIn:',
           ]
-        },        {
+        },
+        {
           'type': 'button',
           'text': 'LinkedIn',
           'data': [
@@ -440,87 +441,104 @@ def aboutHome():
 @errorHandle
 def projectsHome():
   if request.method == 'GET':
+    template = [
+      {
+        'title': 'Games',
+        'points': [
+          {
+            'address': '/tictactoe',
+            'name': 'Tictactoe',
+          },
+          {
+            'address': '/minesweeper',
+            'name': 'Minesweeper',
+          },
+          {
+            'address': '/jssimulator',
+            'name': 'Front end dev Simulator',
+          }
+        ]
+      }, {
+        'title': 'Data Storage and Analysis',
+        'points': [
+          {
+            'address': '/fuelprices',
+            'name': 'UL91 Fuel Price trends',
+          },
+          {
+            'address': '/property',
+            'name': 'Real estate data interface',
+          }
+      ],
+      }, {
+        'title': 'Bioinformatics',
+        'points': [
+          {
+            'address': '/mrna',
+            'name': 'DNA:mRNA decoder',
+          },
+          {
+            'address': '/secondary',
+            'name': 'Protein 2° Structure',
+          },
+          {
+            'address': '/seqalign',
+            'name': 'Pairwise sequence alignment',
+          },
+          {
+            'address': '/randombio',
+            'name': 'DNA sequence generator',
+          }
+        ],
+      }, {
+        'title': 'Repos',
+        'points': [
+          {
+            'address': 'https://github.com/KooperL/portfolio',
+            'name': 'This Website',
+          },
+          {
+            'address': 'https://github.com/KooperL/trafficCounter',
+            'name': 'AI Traffic Counter',
+          },
+          # {
+          #   'address': 'https://github.com/KooperL/AI-player',
+          #   'name': 'AI FPS Player',
+          # },
+          {
+            'address': 'https://github.com/KooperL/tkinter3dengine',
+            'name': 'Python/Tkinter 3d Engine',
+          },
+          # {
+          #   'address': 'https://github.com/KooperL/CV-ping-pong-ball-tracker',
+          #   'name': 'Computer Vision - Ping Pong ',
+          # },
+          {
+            'address': 'https://github.com/KooperL/tkinterAstar',
+            'name': 'A* Path finder py',
+          }
+        ]
+      }
+    ]
+    dataNew = []
+    for i in template:
+      dataNew.append({
+        'type': 'subheader',
+        'data': [
+        i.get('title'),
+        ]
+      })
+      for a in i.get('points'):
+        dataNew.append({
+          'type': 'button',
+          'text': a.get('name'),
+          'data': [
+          a.get('address'),
+          ]
+        })
     kwargs = {
       'success': True,
-      'data': [
-        {
-          'title': 'Games',
-          'points': [
-            {
-              'address': '/tictactoe',
-              'name': 'Tictactoe',
-            },
-            {
-              'address': '/minesweeper',
-              'name': 'Minesweeper',
-            },
-            {
-              'address': '/jssimulator',
-              'name': 'Javascript Programmer Simulator',
-            }
-          ]
-        }, {
-          'title': 'Data Storage and Analysis',
-          'points': [
-            {
-              'address': '/fuelprices',
-              'name': 'UL91 Fuel Price trends',
-            },
-            {
-              'address': '/property',
-              'name': 'Real estate data interface',
-            }
-        ],
-        }, {
-          'title': 'Bioinformatics',
-          'points': [
-            {
-              'address': '/mrna',
-              'name': 'DNA:mRNA decoder',
-            },
-            {
-              'address': '/secondary',
-              'name': 'Predict secondary protein structure',
-            },
-            {
-              'address': '/seqalign',
-              'name': 'Pairwise sequence alignment',
-            },
-            {
-              'address': '/randombio',
-              'name': 'Random sequence generator',
-            }
-          ],
-        }, {
-          'title': 'Repos',
-          'points': [
-            {
-              'address': 'https://github.com/KooperL/portfolio',
-              'name': 'This Website',
-            },
-            {
-              'address': 'https://github.com/KooperL/trafficCounter',
-              'name': 'AI Traffic Counter',
-            },
-            # {
-            #   'address': 'https://github.com/KooperL/AI-player',
-            #   'name': 'AI FPS Player',
-            # },
-            {
-              'address': 'https://github.com/KooperL/tkinter3dengine',
-              'name': 'Python/Tkinter 3d Engine',
-            },
-            # {
-            #   'address': 'https://github.com/KooperL/CV-ping-pong-ball-tracker',
-            #   'name': 'Computer Vision - Ping Pong ',
-            # },
-            {
-              'address': 'https://github.com/KooperL/tkinterAstar',
-              'name': 'A* Path finder py',
-            }
-          ]
-        }
-      ]
+      'data': dataNew
     }
     res = jsonify(kwargs)
     return build_actual_response(res)
@@ -681,11 +699,8 @@ def blogLoginHome():
     conn.query(userRefreshTokenInsert, (None, issuedAtRaw, userInfo.get('id'), jwtRefresh))
 
     res = jsonify(buildBearerResp(jwtAccess, expires))
-    # res.headers.add('withCredentials', 'true')
-    # res.headers.add('Access-Control-Allow-Credentials', 'true')
-    # res.headers.add('Set-Cookie', 'refresh_token2=1eyJoZWFkZXIiOiB7ImFsZyI6ICJTSEEyNTYiLCAidHlwIjogIkpXVCJ9fQ==.eyJ1c2VybmFtZSI6IDEsICJpYXQiOiAiMTY2NTQ5MjgxMjc5NyJ9.NWY0MjI3MTM1YzkwY2RhYmI1MjczZWNjNzdkNGJjM2FmMDNlMDA0ODhhY2MyMzdhMTgyZjE0ZDliZGFiMTk4Yg==; Expires=Sun, 06 Jul 2025 23:53:32 GMT; Secure; Path=/; SameSite=None')
-
     res.set_cookie('refresh_token', value=jwtRefresh, expires=refreshExpires, httponly=False) # domain=config['ORIGIN'], samesite='None', secure=True, 
+    res.headers.add('Access-Control-Allow-Credentials', 'true') 
     return build_actual_response(res)
   elif request.method == 'OPTIONS': 
     return build_preflight_response()
@@ -834,6 +849,7 @@ def blogRefreshHome():
     jwtAccess = generateJWT(generateJWTHeader(), jwtAccessPayload, config['blog-jwt-auth-token'])
 
     res = jsonify(buildBearerResp(jwtAccess, expires))
+    res.headers.add('Access-Control-Allow-Credentials', 'true') 
     return build_actual_response(res), 201
   elif request.method == 'OPTIONS': 
     return build_preflight_response()

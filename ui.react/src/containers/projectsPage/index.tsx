@@ -8,18 +8,33 @@ import './style.css';
 
 import { ReactP5Wrapper } from "react-p5-wrapper";
 import sketchWrapper from "../../components/p5/box";
+import { HomeInitialState, HomePayload } from "../homePage/types";
+import ButtonRedir from "../../components/ButtonRedir";
 
 interface Props {
   dataCall: Function; 
 }
 
 // max width 1684px
-
+function typeLookup(type: string, data:string[], text?:string) {
+  switch(type) {
+    case 'button':
+      return <ButtonRedir destination={data[0]} label={text ?? ''} local={!data[0].includes('http')}/>
+    case 'unorderedList':
+      return <ul className={`text ${type}`}>{data.map((item:string, index:number) => <li key={index}>{item}</li>)}</ul>
+    case 'body':
+      return <p className={`text ${type}`}>{data.map((item:string, index:number) => <span key={index}>{item}</span>)}</p>
+    case 'header':
+    case 'subheader':
+    case 'emoji':
+      return <div className={type}><p className={`text ${type}`}>{data[0]}</p></div>
+  }
+}
 function ProjectsPage(props: Props): JSX.Element {
-  const [state, setState] = useState({...ProjectsInitialState});
+  const [state, setState] = useState({...HomeInitialState});
   const [scheme, setScheme] = useContext(SchemeContext);
   useEffect(() => {
-    props.dataCall().then((resp: ProjectsPayload) => {
+    props.dataCall().then((resp: HomePayload) => {
       setState({
         details: resp,
         error: false,
@@ -34,6 +49,7 @@ function ProjectsPage(props: Props): JSX.Element {
       });
     })
   }, []);
+
   if(state.loading) {
    return <Spinner/>
   }
@@ -46,38 +62,22 @@ function ProjectsPage(props: Props): JSX.Element {
     );
   }
   if(state.details) {
+    const data = state.details.data
     return (
       <>
         {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
         <div className="container">
-          <div className="links">
+        <div className="links-container">
             <h2 className='main-heading' style={{color: scheme.body.h1}}>Projects</h2>
-            {state.details.data.map((topic, indexTopic) => (
-              <div className='' key={indexTopic}>
-                <div className='area-heading' style={{color: scheme.body.h2}} key={indexTopic}>
-                  <h3>{topic.title}</h3>
-                </div>
-                <div className='area'>
-                  { /**@ts-ignore */ }
-                  {topic.points.map((link, indexLink) => (
-                    // <div className="text-black w-48 m-3 p-3 hover:border rounded-3xl bg-gray-50 hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100" key={indexLink} >
-                    <div className='button' key={indexLink} style={{backgroundColor: scheme.button.bgSolid}}
-                    // onMouseOver={(e: any) => {e.target.style['backgroundImage']='linear-gradient(red, yellow)'}}
-                    // onMouseOut={(e: any) => {e.target.style['backgroundImage']=''}}
-                    >
-                      <a className='buttonInner' href={link.address} key={indexLink}>
-                        <div className=''>
-                          {link.name}
-                        </div>
-                        <div className=''>
-                          {'> Go!'}
-                        </div>
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+            <div className="links">
+              {data.map((segment, indexSegment) => (
+                // <div key={indexSegment}>
+                <>
+                  {typeLookup(segment.type, segment.data, segment?.text)}
+                {/* </div> */}
+                </>
+              ))}
+            </div>
           </div>
           <div className='render'>
             {window.outerWidth > 1000 ?

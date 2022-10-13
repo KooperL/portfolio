@@ -1,10 +1,9 @@
- // @ts-nocheck
 
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
-export default function Card(props) {
-  if (props.type == 1) {
+export default function Card(props: any) {
+  if (props.type === 1) {
     return (
       <a href={props.link} className="">
         <div className="bg-white rounded-lg shadow-2xl mt-6 mr-4 w-20% outline-1 outline hover:bg-gray-200">
@@ -15,7 +14,7 @@ export default function Card(props) {
         </div>
       </a>
     );
-  } else if (props.type == 0) {
+  } else if (props.type === 0) {
     return (
       <Link to={props.link} className="">
         <div className="bg-white rounded-lg shadow-2xl mt-6 mr-4 w-20% outline-1 outline hover:bg-gray-200">
@@ -26,7 +25,7 @@ export default function Card(props) {
         </div>
       </Link>
     );
-  } else if (props.type == 2) {
+  } else if (props.type === 2) {
     return (
       <div className="bg-white rounded-lg shadow-2xl mt-6 mr-4 outline-1 outline w-5/6">
         <header className="bg-gray-900 text-white rounded-t-lg py-3 px-8 text-xl">{props.header}</header>
