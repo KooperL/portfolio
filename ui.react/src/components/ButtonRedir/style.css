@@ -2,9 +2,9 @@
   width: 16rem;
   margin: 3px;
   padding: 20px;
-  align-items: flex-end;
+  /* align-items: flex-end; */
   border-radius: 7px;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .buttonRedir:hover {

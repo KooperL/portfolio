@@ -1,11 +1,11 @@
-.container {
+.ProjectsPage .container {
   padding: 8rem 8rem;
   width: 100vw;
   display: flex;
   flex-direction: row;
 }
 
-.links {
+.ProjectsPage .links {
   width: 100%;
   z-index: 9;
   display: grid;
@@ -16,11 +16,11 @@
   grid-row-gap: 1rem;
 }
 
-.links-container {
+.ProjectsPage .links-container {
   width: 100%;
 }
 
-.render {
+.ProjectsPage .render {
   position: fixed;
   height: 100vh;
   width: 100vw;
@@ -29,21 +29,21 @@
   z-index: 0;
 }
 
-.area {
+.ProjectsPage .area {
   display: flex;
   padding-top: 20px;
   padding-bottom: 20px;
   flex-wrap: wrap;
 }
 
-.subheader {
+.ProjectsPage .subheader {
   font-size: x-large;
   /* width: 100%; */
   grid-column: span 4;
-  padding-top: 0.5rem;
+  padding-top: 0.ProjectsPage .5rem;
 }
 
-.buttonRedir {
+.ProjectsPage .buttonRedir {
   height: 100%;
   display: flex;
   justify-content: center;
@@ -55,16 +55,16 @@ a {
   z-index: 999;
 }
 
-.area-heading {
+.ProjectsPage .area-heading {
   font-size: 2rem;
 }
 
-.main-heading {
+.ProjectsPage .main-heading {
   font-size: 3rem;
   padding-bottom: 25px;
 }
 
-.button {
+.ProjectsPage .button {
   width: 16rem;
   margin: 3px;
   padding: 12px;
@@ -72,12 +72,12 @@ a {
   border-radius: 7px;
 }
 
-.button:hover {
+.ProjectsPage .button:hover {
   background-image: linear-gradient(to right, rgb(219 234 254), #f3e8ff);
   color: black;
 }
 
-.buttonInner {
+.ProjectsPage .buttonInner {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -85,10 +85,10 @@ a {
 }
 
 @media screen and (max-width: 1000px) {
-  .container {
+  .ProjectsPage .container {
     padding: 8rem 1rem;
   }
-  .button {
+  .ProjectsPage .button {
     width: 24rem;
   }
 }

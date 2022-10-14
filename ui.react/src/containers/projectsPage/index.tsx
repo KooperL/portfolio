@@ -64,7 +64,7 @@ function ProjectsPage(props: Props): JSX.Element {
   if(state.details) {
     const data = state.details.data
     return (
-      <>
+      <div className="ProjectsPage"> {/**arguments.callee.name**/}
         {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
         <div className="container">
         <div className="links-container">
@@ -85,7 +85,7 @@ function ProjectsPage(props: Props): JSX.Element {
             }
           </div>
         </div>
-      </>
+      </div>
     );
   }
   return <></>;

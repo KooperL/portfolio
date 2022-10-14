@@ -32,38 +32,38 @@ import { BlogPostViewPage } from '../blogPostViewPage/loadable';
 function App() {
   return (
     <SchemeSettings>
-            <AccessTokenProvider>
+      <AccessTokenProvider>
         <Router>
           <Navbar isVertical={false} />
-            <Logger />
-              <Routes>
-                {/* <Route path="/" element={<Layout />}>
-                  <Route index element={<HomePage />} />
-                </Route> */}
-                <Route path={`${RouteType.Home}`} element={<HomePage />} />
-                <Route path={`${RouteType.About}`} element={<AboutPage />} />
-                <Route path={`${RouteType.Contact}`} element={<ContactPage />} />
-                <Route path={`${RouteType.Projects}`} element={<ProjectsPage />} />
-                {/* <Route path={`${RouteType.Render}`} element={<Render />} /> */}
-                <Route path={`${RouteType.Tictactoe}`} element={<TictactoePage />} />
-                <Route path={`${RouteType.Fuelprices}`} element={<FuelPricesPage />} />
-                <Route path={`${RouteType.Property}`} element={<PropertyPage />} />
-                <Route path={`${RouteType.Mrna}`} element={<MrnaPage />} />
-                <Route path={`${RouteType.Secondary}`} element={<SecondaryPage />} />
-                <Route path={`${RouteType.Seqalign}`} element={<SeqAlignPage />} />
-                <Route path={`${RouteType.RandomBio}`} element={<RandomBioPage />} />
-                <Route path={`${RouteType.Minesweeper}`} element={<MinesweeperPage />} />
-                <Route path={`${RouteType.JsSim}`} element={<JsSimPage />} />
-                {/* <Route path={`${RouteType.Heatmap}`} element={<SeqAlignPage />} /> */}
-                {/* <Route path="*" element={<NoPage />} /> */}
-                <Route path={`${RouteType.BlogHome}`} element={<BlogHomePage />} />
-                <Route path={`${RouteType.BlogRegister}`} element={<BlogLoginPage />} />
-                <Route path={`${RouteType.BlogLogin}`} element={<BlogLoginPage />} />
-                <Route path={`${RouteType.BlogPostCreate}`} element={<BlogPostCreatePage />} />
-                <Route path={`${RouteType.BlogPost}`} element={<BlogPostViewPage />} />
-              </Routes>
+          <Logger />
+          <Routes>
+            {/* <Route path="/" element={<Layout />}>
+              <Route index element={<HomePage />} />
+            </Route> */}
+            <Route path={`${RouteType.Home}`} element={<HomePage />} />
+            <Route path={`${RouteType.About}`} element={<AboutPage />} />
+            <Route path={`${RouteType.Contact}`} element={<ContactPage />} />
+            <Route path={`${RouteType.Projects}`} element={<ProjectsPage />} />
+            {/* <Route path={`${RouteType.Render}`} element={<Render />} /> */}
+            <Route path={`${RouteType.Tictactoe}`} element={<TictactoePage />} />
+            <Route path={`${RouteType.Fuelprices}`} element={<FuelPricesPage />} />
+            <Route path={`${RouteType.Property}`} element={<PropertyPage />} />
+            <Route path={`${RouteType.Mrna}`} element={<MrnaPage />} />
+            <Route path={`${RouteType.Secondary}`} element={<SecondaryPage />} />
+            <Route path={`${RouteType.Seqalign}`} element={<SeqAlignPage />} />
+            <Route path={`${RouteType.RandomBio}`} element={<RandomBioPage />} />
+            <Route path={`${RouteType.Minesweeper}`} element={<MinesweeperPage />} />
+            <Route path={`${RouteType.JsSim}`} element={<JsSimPage />} />
+            {/* <Route path={`${RouteType.Heatmap}`} element={<SeqAlignPage />} /> */}
+            {/* <Route path="*" element={<NoPage />} /> */}
+            <Route path={`${RouteType.BlogHome}`} element={<BlogHomePage />} />
+            <Route path={`${RouteType.BlogRegister}`} element={<BlogLoginPage />} />
+            <Route path={`${RouteType.BlogLogin}`} element={<BlogLoginPage />} />
+            <Route path={`${RouteType.BlogPostCreate}`} element={<BlogPostCreatePage />} />
+            <Route path={`${RouteType.BlogPost}`} element={<BlogPostViewPage />} />
+          </Routes>
         </Router>
-            </ AccessTokenProvider>
+      </ AccessTokenProvider>
     </SchemeSettings>
   );
 }
