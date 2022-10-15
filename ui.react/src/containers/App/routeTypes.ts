@@ -15,7 +15,7 @@ export enum RouteType {
   Minesweeper = '/minesweeper',
   JsSim = '/jssimulator',
 
-  BlogHome = '/blog/home',
+  BlogHome = '/blog',
   // BlogSearch = '/blog/search',
   BlogPostCreate = '/blog/post',
   BlogLogin = '/blog/login',

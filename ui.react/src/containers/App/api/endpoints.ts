@@ -23,7 +23,7 @@ export const endpoints: ApiEndpoints = {
   randombio: `${apiHost}/randombio`,
   
   blogRegister: `${apiHost}/${blogPath}/register`,
-  blogHome: `${apiHost}/${blogPath}/Home`,
+  blogHome: `${apiHost}/${blogPath}`,
   blogPostCreate: `${apiHost}/${blogPath}/post`,
   blogPost: `${apiHost}/${blogPath}/post/`,
   blogLogin: `${apiHost}/${blogPath}/login`,

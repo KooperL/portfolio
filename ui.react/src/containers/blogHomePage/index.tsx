@@ -10,36 +10,40 @@ import sketchWrapper from "../../components/p5/box";
 import { Button } from "../../components/Button";
 import { useAccessToken } from "../authContext/context";
 import { BlogHomeInitialState } from "./types";
+import { getBlogHome } from "../App/api/blogApis";
+import { BlogHomeGETInitialState, BlogHomeGETResponse, BlogRegisterPOSTResponse } from "../blogLoginPage/types";
+import { blogPath } from "../App/api/types";
+import { Link } from "react-router-dom";
 
 interface Props {
   dataCall: Function; 
-  dataPost: Function; 
 }
 
 
 function BlogHomePage(props: Props): JSX.Element {
-  const [state, setState] = useState({...BlogHomeInitialState});
+  const [state, setState] = useState({...BlogHomeGETInitialState});
   // const [POSTstate, setPOSTState] = useState({...ContactPOSTInitialState});
   const [value, setValue] = useState('');
   const [scheme, setScheme] = useContext(SchemeContext);
-  // const [token, setToken] = useContext(useAccessToken);
+  const [token, setToken] = useAccessToken();
   useAccessToken()
   useEffect(() => {
-    // props.dataCall().then((resp: ContactPayload) => {
-    //   setState({
-    //     details: resp,
-    //     error: false,
-    //     errorMessage: '',
-    //     loading: false
-    //   });
-    // }).catch((err: any) => {
-    //   setState({
-    //     error: true,
-    //     errorMessage: err,
-    //     loading: false
-    //   });
-    // })
-  }, []);
+    if(!token) {return}
+    props.dataCall({session_id: sessionStorage.getItem('session_id')}, token).then((resp: BlogHomeGETResponse) => {
+      setState({
+        details: resp,
+        error: false,
+        errorMessage: '',
+        loading: false
+      });
+    }).catch((err: any) => {
+      setState({
+        error: true,
+        errorMessage: err,
+        loading: false
+      });
+    })
+  }, [token]);
 
   // const handleSubmit = (event: React.FormEvent<HTMLFormElement>, payload: ContactPOST) => {
   //   setPOSTState({...POSTstate, loading: true});
@@ -89,12 +93,25 @@ function BlogHomePage(props: Props): JSX.Element {
         {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
         <div className="container">
           <div className="links">
-            <h2 className='main-heading' style={{color: scheme.body.h1}}>Contact</h2>
-            {data.map((segment, indexSegment) => (
-              <div key={indexSegment}>
-                Yo
-              </div>
-            ))}
+            <h2 className='main-heading' style={{color: scheme.body.h1}}>Blog Home</h2>
+            <div className="posts">
+              {Object.keys(data).map((segment, indexSegment) => (
+                <div className="category" key={indexSegment}>
+                  <p key={indexSegment**2}>{segment}</p>
+                  {/** @ts-ignore */}
+                  {data[segment].map((catPost, catPostIndex) => (
+                    <Link to={`/${blogPath}/post/${catPost['id']}`} key={catPostIndex}>
+                      <div className="post-details" key={catPostIndex + indexSegment}>
+                        <div className="post-detail" key={catPostIndex + indexSegment + 2}>{catPost['author']}</div>
+                        <div className="post-detail" key={catPostIndex + indexSegment + 1}>{catPost['title']}</div>
+                        {window.outerWidth > 1000 ? <div className="post-detail" key={catPostIndex + indexSegment + 3}>{catPost['body']}</div> : <></>}
+                        <div className="post-detail" key={catPostIndex + indexSegment + 4}>{catPost['views']}</div>
+                    </div>
+                    </Link>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </>
@@ -105,7 +122,7 @@ function BlogHomePage(props: Props): JSX.Element {
 
 const enhance = (): JSX.Element => {
   return(
-    <BlogHomePage dataCall={fetchContact} dataPost={postContact} />
+    <BlogHomePage dataCall={getBlogHome} />
   ) 
 };
 

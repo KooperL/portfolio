@@ -237,7 +237,6 @@ def token_required(f):
     # print(kwargs.get('id'))
     if request.method == 'OPTIONS':
       return build_preflight_response()
-    print(request.get_json())
     auth_header = request.headers.get('Authorization')
     if auth_header is None or not auth_header.startswith('Bearer '):
       return build_unauthorized()
@@ -290,11 +289,19 @@ def homeHome():
           'data': [
             '/contact',
           ]
-        },        {
+        },
+        {
           'type': 'button',
           'text': '/about',
           'data': [
             '/about',
+          ]
+        },
+        {
+          'type': 'button',
+          'text': '/blog',
+          'data': [
+            '/blog',
           ]
         }
       ]
@@ -441,101 +448,123 @@ def aboutHome():
 @errorHandle
 def projectsHome():
   if request.method == 'GET':
-    template = [
+    dataNew = [
       {
-        'title': 'Games',
-        'points': [
-          {
-            'address': '/tictactoe',
-            'name': 'Tictactoe',
-          },
-          {
-            'address': '/minesweeper',
-            'name': 'Minesweeper',
-          },
-          {
-            'address': '/jssimulator',
-            'name': 'Front end dev Simulator',
-          }
-        ]
-      }, {
-        'title': 'Data Storage and Analysis',
-        'points': [
-          {
-            'address': '/fuelprices',
-            'name': 'UL91 Fuel Price trends',
-          },
-          {
-            'address': '/property',
-            'name': 'Real estate data interface',
-          }
-      ],
-      }, {
-        'title': 'Bioinformatics',
-        'points': [
-          {
-            'address': '/mrna',
-            'name': 'DNA:mRNA decoder',
-          },
-          {
-            'address': '/secondary',
-            'name': 'Protein 2° Structure',
-          },
-          {
-            'address': '/seqalign',
-            'name': 'Pairwise sequence alignment',
-          },
-          {
-            'address': '/randombio',
-            'name': 'DNA sequence generator',
-          }
+        "data": [
+          "Games"
         ],
-      }, {
-        'title': 'Repos',
-        'points': [
-          {
-            'address': 'https://github.com/KooperL/portfolio',
-            'name': 'This Website',
-          },
-          {
-            'address': 'https://github.com/KooperL/trafficCounter',
-            'name': 'AI Traffic Counter',
-          },
-          # {
-          #   'address': 'https://github.com/KooperL/AI-player',
-          #   'name': 'AI FPS Player',
-          # },
-          {
-            'address': 'https://github.com/KooperL/tkinter3dengine',
-            'name': 'Python/Tkinter 3d Engine',
-          },
-          # {
-          #   'address': 'https://github.com/KooperL/CV-ping-pong-ball-tracker',
-          #   'name': 'Computer Vision - Ping Pong ',
-          # },
-          {
-            'address': 'https://github.com/KooperL/tkinterAstar',
-            'name': 'A* Path finder py',
-          }
-        ]
+        "type": "subheader"
+      },
+      {
+        "data": [
+          "/tictactoe"
+        ],
+        "text": "Tictactoe",
+        "type": "button"
+      },
+      {
+        "data": [
+          "/minesweeper"
+        ],
+        "text": "Minesweeper",
+        "type": "button"
+      },
+      {
+        "data": [
+          "/jssimulator"
+        ],
+        "text": "Front-end dev simulator",
+        "type": "button"
+      },
+      {
+        "data": [
+          "Data Storage and Analysis"
+        ],
+        "type": "subheader"
+      },
+      {
+        "data": [
+          "/fuelprices"
+        ],
+        "text": "UL91 Fuel Price trends",
+        "type": "button"
+      },
+      {
+        "data": [
+          "/property"
+        ],
+        "text": "Real estate data interface",
+        "type": "button"
+      },
+      {
+        "data": [
+          "Bioinformatics"
+        ],
+        "type": "subheader"
+      },
+      {
+        "data": [
+          "/mrna"
+        ],
+        "text": "DNA:mRNA decoder",
+        "type": "button"
+      },
+      {
+        "data": [
+          "/secondary"
+        ],
+        "text": "Protein 2° Structure",
+        "type": "button"
+      },
+      {
+        "data": [
+          "/seqalign"
+        ],
+        "text": "Pairwise sequence alignment",
+        "type": "button"
+      },
+      {
+        "data": [
+          "/randombio"
+        ],
+        "text": "DNA sequence generator",
+        "type": "button"
+      },
+      {
+        "data": [
+          "Repos"
+        ],
+        "type": "subheader"
+      },
+      {
+        "data": [
+          "https://github.com/KooperL/portfolio"
+        ],
+        "text": "This Website",
+        "type": "button"
+      },
+      {
+        "data": [
+          "https://github.com/KooperL/trafficCounter"
+        ],
+        "text": "AI Traffic Counter",
+        "type": "button"
+      },
+      {
+        "data": [
+          "https://github.com/KooperL/tkinter3dengine"
+        ],
+        "text": "Python/Tkinter 3d Engine",
+        "type": "button"
+      },
+      {
+        "data": [
+          "https://github.com/KooperL/tkinterAstar"
+        ],
+        "text": "A* Path finder py",
+        "type": "button"
       }
     ]
-    dataNew = []
-    for i in template:
-      dataNew.append({
-        'type': 'subheader',
-        'data': [
-        i.get('title'),
-        ]
-      })
-      for a in i.get('points'):
-        dataNew.append({
-          'type': 'button',
-          'text': a.get('name'),
-          'data': [
-          a.get('address'),
-          ]
-        })
     kwargs = {
       'success': True,
       'data': dataNew
@@ -707,6 +736,67 @@ def blogLoginHome():
   else:
     raise RuntimeError('Method not allowed')
 
+@app.route('/blog', methods=['GET', 'OPTIONS'])
+@errorHandle
+@token_required
+def blogHome(authPayload):
+  if request.method == 'GET':
+    session_id = request.args.get('session_id')
+    if not session_id:
+      return build_bad_req()
+    user_id = authPayload.get('payload').get('username')
+    role = authPayload.get('payload').get('role')
+    trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
+
+    categoriesQuery = 'SELECT id, name from blog_post_categoryDB limit 5;'
+    categories = conn.query(categoriesQuery, ()).fetchall()
+
+    OrganisedPosts = {}
+    for i in categories:
+      categoryPostsQuery = '''
+      SELECT 
+        blog_postsDB.id,
+        blog_postsDB.date,
+        blog_usersDB.blog_username,
+        blog_postsDB.title,
+        blog_postsDB.body
+      from blog_postsDB
+      inner join blog_usersDB on
+        blog_usersDB.id = blog_postsDB.blog_user_id
+      where
+        visible = 1 and
+        blog_postsDB.parent_blog_user_id = 0 and
+        ? = "None" and
+        blog_postsDB.category_id = ?
+      limit 5;
+      '''
+      categoryPosts = conn.query(categoryPostsQuery, ('None', i[0])).fetchall()
+      if len(categoryPosts):
+        OrganisedPosts[i[1]] = []
+      for a in categoryPosts:
+        pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
+        postViewsRaw = conn.query(pullBlogViewsQuery, ('None', a[0])).fetchall()[0][0]
+        OrganisedPosts[i[1]].append({
+          'id': a[0],
+          'date': a[1],
+          'author': a[2],
+          'title': a[3],
+          'body': a[4][:30],
+          'views': postViewsRaw
+        })
+    kwargs = {
+      'success': True,
+      'data': OrganisedPosts
+    }
+    res = jsonify(kwargs)
+    res.headers.add('Access-Control-Allow-Credentials', 'true') 
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
+
+
 @app.route('/blog/post', methods=['POST', 'OPTIONS'])
 @errorHandle
 @token_required
@@ -757,6 +847,7 @@ def blogPostCreateHome(authPayload):
 def blogPostViewHome(authPayload, *args, **kwargs):
   if request.method == 'POST':
     id = int(kwargs.get('id'))
+    print(id)
     data = request.get_json()
     print(request)
     user_id = authPayload.get('payload').get('username')
@@ -810,15 +901,11 @@ def blogPostViewHome(authPayload, *args, **kwargs):
     raise RuntimeError('Method not allowed')
 
 
-
 @app.route('/blog/refresh', methods=['POST', 'OPTIONS'])
 @errorHandle
 def blogRefreshHome():
   if request.method == 'POST':
     refresh_token = request.cookies.get('refresh_token')
-    print('----------------')
-    print(request.cookies)
-    print('----------------')
     if not refresh_token:
       kwargs = {
         'success': False
@@ -855,8 +942,6 @@ def blogRefreshHome():
     return build_preflight_response()
   else:
     raise RuntimeError('Method not allowed')
-
-
 
 
 @app.route('/monitor', methods=['POST', 'OPTIONS'])
