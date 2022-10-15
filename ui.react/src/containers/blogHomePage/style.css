@@ -6,28 +6,7 @@
 }
 
 .links {
-  width: auto;
-  z-index: 10;
-}
-
-.render {
-  position: fixed;
-  height: 100vh;
-  width: 100vw;
-  left: 50%;
-  top: 0;
-  z-index: 1;
-}
-
-.area {
-  display: flex;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.area-heading {
-  font-size: 2rem;
+  width: 100%
 }
 
 .main-heading {
@@ -35,111 +14,30 @@
   padding-bottom: 25px;
 }
 
-.button {
-  width: 16rem;
-  margin: 3px;
-  padding: 20px;
-  align-items: flex-end;
-  border-radius: 7px;
-  text-align: center;
-}
-
-.button:hover {
-  background-image: linear-gradient(to right, rgb(219 234 254), #f3e8ff);
-  color: black;
-}
-
-.text {
-  padding: 2rem 0;
-}
-
-ul.unorderedList {
-  padding-left: 40px;
-  list-style-type: circle;
-  padding-top: 0;
-}
-
-.search-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  font-size: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.inputLabel {
-  padding-right: 0.8rem;
-  padding-left: 5px;
-  width: fit-content;
-  background-color: white;
-  color: black;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  white-space: nowrap;
-  padding-top: 3px;
-}
-
-.description {
-  white-space: wrap;
-}
-
-.input {
-  margin-right: 10px;
-  color: black;
-}
-
-.inputContainer {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  width: fit-content;
-}
-
-.inputWithButton {
+.category {
+  padding-bottom: 1rem;
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
 }
 
-.submit-button {
-  width: auto;;
+.category p {
+  font-size: x-large;
+}
+
+.post-detail {
+  width: 100%;
+  text-align: center;
+  margin: 5px;
+}
+
+.post-details {
   display: flex;
   flex-direction: row;
-}
-
-.emoji {
-  font-size: xx-large;
-  display: flex;
-  justify-content: center;
-}
-
-.status {
-  padding-left: 1rem;
-  display: flex;
-  align-items: center;
+  justify-content: space-around;
 }
 
 @media screen and (max-width: 1000px) {
   .container {
     padding: 8rem 2rem;
   }
-  div.button a.button {
-    width: max-content;
-  }
 
-  .submit-button {
-    padding-top: 10px;
-    align-items: center;
-  }
-
-  .input {
-    width: 100%;
-  }
-  .emoji {
-
-  }
-
-  .status {
-    width: fit-content;
-  }
 }

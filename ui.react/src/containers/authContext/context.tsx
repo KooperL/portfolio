@@ -12,7 +12,6 @@ export function AccessTokenProvider({ children }: any) {
     // Refresh if null or time elapsed
     if(!accessToken.length){
       console.log('No access token')
-      console.log(document.cookie)
     
       postBlogRefresh({session_id: sessionStorage.getItem('session_id') ?? ''}).then((resp: BlogLoginPOSTResponse) => {
         if(resp.success && resp.accessToken) {

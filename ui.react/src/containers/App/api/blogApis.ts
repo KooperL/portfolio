@@ -1,5 +1,5 @@
 import { get, post } from '../../../api/restApi';
-import { BlogLoginPOSTPayload, BlogLoginPOSTResponse, BlogRegisterPOSTPayload, BlogRegisterPOSTResponse } from '../../blogLoginPage/types';
+import { BlogHomeGETResponse, BlogLoginPOSTPayload, BlogLoginPOSTResponse, BlogRegisterPOSTPayload, BlogRegisterPOSTResponse } from '../../blogLoginPage/types';
 import { BlogPostCreatePOSTPayload } from '../../blogPostCreatePage/types';
 import { BlogPostViewGETPayload } from '../../blogPostViewPage/types';
 import { endpoints } from './endpoints';
@@ -63,4 +63,16 @@ export const getPostView = (
     data: data,
   }
   return post(`${endpoints['blogPost']}${id}`, apiConfig);
+}
+
+export const getBlogHome = (
+  params: BlogLoginPOSTPayload,
+  authJWT: string,
+): Promise<BlogHomeGETResponse>  => {
+  const apiConfig = {
+    headers: {'Authorization': `Bearer ${authJWT}`},
+    params: params,
+    withCredentials: true
+  }
+  return get(`${endpoints['blogHome']}`, apiConfig);
 }

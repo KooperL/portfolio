@@ -56,3 +56,31 @@ export const BlogRegisterPOSTInitialState: BlogRegisterPOSTState = {
   errorMessage: '',
   loading: false
 } as const;
+
+
+export interface BlogHomeGETResponse {
+  success: boolean;
+  data: {
+    string: {
+      id: number;
+      date: string;
+      author: string;
+      title: string;
+      body: string;
+      views: number;
+    }[]
+  }
+}
+
+export interface BlogHomeGETState {
+  details?: BlogHomeGETResponse;
+  error?: boolean;
+  errorMessage?: string;
+  loading?: boolean;
+}
+
+export const BlogHomeGETInitialState: BlogHomeGETState = {
+  error: false,
+  errorMessage: '',
+  loading: false
+} as const;
