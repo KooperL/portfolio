@@ -1,28 +1,28 @@
-.screen {
+.fuelPricesPage .screen {
   padding-top: 5rem;
 }
 
-.table {
+.fuelPricesPage .table {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
 }
 
-.column {
+.fuelPricesPage .column {
   display: flex;
   flex-direction: column;
 }
 
-.cell {
+.fuelPricesPage .cell {
   padding: 1rem;
 }
 
-.header {
+.fuelPricesPage .header {
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: 1.fuelPricesPage .5rem;
 }
 
-.chart {
+.fuelPricesPage .chart {
   padding-top: 3rem;
   padding-bottom: 3rem;
   max-width: 2000px;
@@ -30,18 +30,18 @@
   overflow: visible;
 }
 
-.table-container {
+.fuelPricesPage .table-container {
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
 @media screen and (max-width: 1000px) {
-  .table {
+  .fuelPricesPage .table {
     flex-direction: column;
     padding-bottom: 1rem;
   }
-  .chart {
+  .fuelPricesPage .chart {
     width: 80%;
   }
 }

@@ -294,66 +294,67 @@ export default function Minesweeper() {
   };
 
   return (
-    <div className="parent">
-      <div className="container">
-      <div className="game-controls">
-        <div className="game-control">
-          <Modal
-            textSmall={(() => {return <img src={gear} alt={gear} style={{ width: '20px', }}></img>})()}
-            text={() => {return (
-              <div className="modal-menu">
-                <div className="">
-                  <div className="menu-item">
-                    <p>Grid size: </p>
-                    <input className='menu-input' type='text' value={gridSize} onClick={(e: any) => {e.target.select();}} onChange={((e) => {setGridSize(+e.target.value);genFreshBoard();})} />
+    <div className="minesweeperPage">
+      <div className="parent">
+        <div className="container">
+        <div className="game-controls">
+          <div className="game-control">
+            <Modal
+              textSmall={(() => {return <img src={gear} alt={gear} style={{ width: '20px', }}></img>})()}
+              text={() => {return (
+                <div className="modal-menu">
+                  <div className="">
+                    <div className="menu-item">
+                      <p>Grid size: </p>
+                      <input className='menu-input' type='text' value={gridSize} onClick={(e: any) => {e.target.select();}} onChange={((e) => {setGridSize(+e.target.value);genFreshBoard();})} />
+                    </div>
+                    <div className="menu-item">
+                      <p>Mine density: </p>
+                      <input className='menu-input' type='text' value={mineDensity} onClick={(e: any) => {e.target.select();}} onChange={((e) => {setMineDensity(+(+e.target.value/10).toFixed(3));genFreshBoard();})} />
+                    </div>    
                   </div>
-                  <div className="menu-item">
-                    <p>Mine density: </p>
-                    <input className='menu-input' type='text' value={mineDensity} onClick={(e: any) => {e.target.select();}} onChange={((e) => {setMineDensity(+(+e.target.value/10).toFixed(3));genFreshBoard();})} />
-                  </div>    
                 </div>
-              </div>
-            )}}>
-          </Modal>
-        </div>
-        <div className="game-control">{(gameStateLookup as any)[gameState]}</div>
-        <div className="game-control">
-          <span className="digits">
-            {("0" + Math.floor((timer / 60000) % 60)).slice(-2)}:
-          </span>
-          <span className="digits">
-            {("0" + Math.floor((timer / 1000) % 60)).slice(-2)}.
-          </span>
-          <span className="digits mili-sec">
-            {("0" + ((timer / 10) % 100)).slice(-2)}
-          </span>
-        </div>
+              )}}>
+            </Modal>
+          </div>
+          <div className="game-control">{(gameStateLookup as any)[gameState]}</div>
+          <div className="game-control">
+            <span className="digits">
+              {("0" + Math.floor((timer / 60000) % 60)).slice(-2)}:
+            </span>
+            <span className="digits">
+              {("0" + Math.floor((timer / 1000) % 60)).slice(-2)}.
+            </span>
+            <span className="digits mili-sec">
+              {("0" + ((timer / 10) % 100)).slice(-2)}
+            </span>
+          </div>
 
-        </div>
-        <div className="game">
-          {grid.map((gridRow, y) => (
-            <div className="row" key={y}>
-            {gridRow.map((cell: Cell, x: number) => (
-              <div className="cell" key={x}>
-                <button className="cell-button" 
-                  onContextMenu={((e) => {e.preventDefault();handleClick(y, x, 2)})}
-                  // onClick={((e) => {mhandleClick(y, x)})}
-                  onMouseDown={(e) => {setMousePressDuration(Date.now())}}
-                  onMouseUp={((e) => {if(e.button!==0){return};if((Date.now() - mousePressDuration) > 300){
-                    handleClick(y, x, 2) // mouse press held
-                  } else {
-                    handleClick(y, x, 1)
-                  }})}
-                  style={{opacity: (+cell.revealed+1)/2, backgroundColor: scheme.body.foreground}}
-                >{cell.makeup === '' ? (cell.revealed ? (cell.neighbours > 0 ? cell.neighbours : (makeupLookup as any)[cell.type.toString()]) : '') : cell.makeup}</button>
+          </div>
+          <div className="game">
+            {grid.map((gridRow, y) => (
+              <div className="row" key={y}>
+              {gridRow.map((cell: Cell, x: number) => (
+                <div className="cell" key={x}>
+                  <button className="cell-button" 
+                    onContextMenu={((e) => {e.preventDefault();handleClick(y, x, 2)})}
+                    // onClick={((e) => {mhandleClick(y, x)})}
+                    onMouseDown={(e) => {setMousePressDuration(Date.now())}}
+                    onMouseUp={((e) => {if(e.button!==0){return};if((Date.now() - mousePressDuration) > 300){
+                      handleClick(y, x, 2) // mouse press held
+                    } else {
+                      handleClick(y, x, 1)
+                    }})}
+                    style={{opacity: (+cell.revealed+1)/2, backgroundColor: scheme.body.foreground}}
+                  >{cell.makeup === '' ? (cell.revealed ? (cell.neighbours > 0 ? cell.neighbours : (makeupLookup as any)[cell.type.toString()]) : '') : cell.makeup}</button>
+                </div>
+              ))}
               </div>
             ))}
-            </div>
-          ))}
-        </div>
-        <div className="game-controls">
-          <div className="reset-button"><button onClick={(e) => {genFreshBoard()}}>reset</button></div>
-
+          </div>
+          <div className="game-controls">
+            <div className="reset-button"><button onClick={(e) => {genFreshBoard()}}>reset</button></div>
+          </div>
         </div>
       </div>
     </div>

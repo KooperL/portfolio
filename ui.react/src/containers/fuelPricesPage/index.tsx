@@ -52,57 +52,59 @@ function FuelPricesPage(props: Props): JSX.Element {
     const data = state.details.data;
     const width = Math.max(window.outerWidth, 1500);
     return (
-      <div className="screen">
-        <div className="table-container">
-          <div className="chart">
-            <Vchart
-              data={[data.fuelprices.min, data.fuelprices.max, data.fuelprices.average, data.fuelprices.wholesale]}
-              cols={['green', 'red', 'blue', 'black']}
-              width={width/2}
-              height={width/4}
-            />
-            {/* <Line data={{
-              labels: this.state.data.fuelprices.average.map(e => {return e.x}),
-              datasets: [{ 
-                data: this.state.data.fuelprices.average.map(e => {return e.y}),
-                label: "Daily growth",
-                borderColor: "#3e95cd",
-                backgroundColor: "#7bb6dd",
-                fill: false,
-              },],
-            }} options={{
-              scales: {
-                x: {
-                  ticks: {
-                    callback: function(val, index) {
-                      let temp = new Date(this.getLabelForValue(val)*1000);
-                      // console.log(temp)
-                      return temp.toDateString().slice(0,-5);
-                      // return temp;
+      <div className="fuelPricesPage">
+        <div className="screen">
+          <div className="table-container">
+            <div className="chart">
+              <Vchart
+                data={[data.fuelprices.min, data.fuelprices.max, data.fuelprices.average, data.fuelprices.wholesale]}
+                cols={['green', 'red', 'blue', 'black']}
+                width={width/2}
+                height={width/4}
+              />
+              {/* <Line data={{
+                labels: this.state.data.fuelprices.average.map(e => {return e.x}),
+                datasets: [{ 
+                  data: this.state.data.fuelprices.average.map(e => {return e.y}),
+                  label: "Daily growth",
+                  borderColor: "#3e95cd",
+                  backgroundColor: "#7bb6dd",
+                  fill: false,
+                },],
+              }} options={{
+                scales: {
+                  x: {
+                    ticks: {
+                      callback: function(val, index) {
+                        let temp = new Date(this.getLabelForValue(val)*1000);
+                        // console.log(temp)
+                        return temp.toDateString().slice(0,-5);
+                        // return temp;
+                      }
                     }
                   }
                 }
-              }
-            }} /> */}
+              }} /> */}
+            </div>
           </div>
-        </div>
-        <div className="table-container">
-          <div className="table">
-            <div className="column">
-              <div className="cell header">Today's price</div>
-              <div className="cell">{data.stats[0]}</div>
-            </div>
-            <div className="column">
-              <div className="cell header">Price distribution</div>
-              <div className="cell">{data.stats[1]}</div>
-            </div>
-            <div className="column">
-              <div className="cell header">Trend</div>
-              <div className="cell">{data.stats[3]}</div>
-            </div>
-            <div className="column">
-              <div className="cell header">Suggestion</div>
-              <div className="cell">{data.stats[2]}</div>
+          <div className="table-container">
+            <div className="table">
+              <div className="column">
+                <div className="cell header">Today's price</div>
+                <div className="cell">{data.stats[0]}</div>
+              </div>
+              <div className="column">
+                <div className="cell header">Price distribution</div>
+                <div className="cell">{data.stats[1]}</div>
+              </div>
+              <div className="column">
+                <div className="cell header">Trend</div>
+                <div className="cell">{data.stats[3]}</div>
+              </div>
+              <div className="column">
+                <div className="cell header">Suggestion</div>
+                <div className="cell">{data.stats[2]}</div>
+              </div>
             </div>
           </div>
         </div>

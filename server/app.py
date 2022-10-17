@@ -44,6 +44,9 @@ import scripts.utils.rgb
 #sys.path.insert(1, appDir + '/stocks/')
 #import pattern_detect
 
+blogPath = 'blog'
+projectsPath = 'projects'
+
 
 class DatabaseManager(object):
   def __init__(self, db):
@@ -457,21 +460,21 @@ def projectsHome():
       },
       {
         "data": [
-          "/tictactoe"
+          f"/{projectsPath}/tictactoe"
         ],
         "text": "Tictactoe",
         "type": "button"
       },
       {
         "data": [
-          "/minesweeper"
+          f"/{projectsPath}/minesweeper"
         ],
         "text": "Minesweeper",
         "type": "button"
       },
       {
         "data": [
-          "/jssimulator"
+          f"/{projectsPath}/jssimulator"
         ],
         "text": "Front-end dev simulator",
         "type": "button"
@@ -484,14 +487,14 @@ def projectsHome():
       },
       {
         "data": [
-          "/fuelprices"
+          f"/{projectsPath}/fuelprices"
         ],
         "text": "UL91 Fuel Price trends",
         "type": "button"
       },
       {
         "data": [
-          "/property"
+          f"/{projectsPath}/property"
         ],
         "text": "Real estate data interface",
         "type": "button"
@@ -504,28 +507,28 @@ def projectsHome():
       },
       {
         "data": [
-          "/mrna"
+          f"/{projectsPath}/mrna"
         ],
         "text": "DNA:mRNA decoder",
         "type": "button"
       },
       {
         "data": [
-          "/secondary"
+          f"/{projectsPath}/secondary"
         ],
         "text": "Protein 2° Structure",
         "type": "button"
       },
       {
         "data": [
-          "/seqalign"
+          f"/{projectsPath}/seqalign"
         ],
         "text": "Pairwise sequence alignment",
         "type": "button"
       },
       {
         "data": [
-          "/randombio"
+          f"/{projectsPath}/randombio"
         ],
         "text": "DNA sequence generator",
         "type": "button"
@@ -631,7 +634,7 @@ def captureHome():
   else:
     raise RuntimeError('Method not allowed')
 
-@app.route('/blog/register', methods=['POST', 'OPTIONS'])
+@app.route(f'/{blogPath}/register', methods=['POST', 'OPTIONS'])
 @errorHandle
 def blogRegisterHome():
   if request.method == 'POST':
@@ -665,7 +668,7 @@ def blogRegisterHome():
   else:
     raise RuntimeError('Method not allowed')
 
-@app.route('/blog/login', methods=['POST', 'OPTIONS'])
+@app.route(f'/{blogPath}/login', methods=['POST', 'OPTIONS'])
 @errorHandle
 def blogLoginHome():
   if request.method == 'POST':
@@ -736,7 +739,7 @@ def blogLoginHome():
   else:
     raise RuntimeError('Method not allowed')
 
-@app.route('/blog', methods=['GET', 'OPTIONS'])
+@app.route(f'/{blogPath}', methods=['GET', 'OPTIONS'])
 @errorHandle
 @token_required
 def blogHome(authPayload):
@@ -797,7 +800,7 @@ def blogHome(authPayload):
     raise RuntimeError('Method not allowed')
 
 
-@app.route('/blog/post', methods=['POST', 'OPTIONS'])
+@app.route(f'/{blogPath}/post', methods=['POST', 'OPTIONS'])
 @errorHandle
 @token_required
 def blogPostCreateHome(authPayload):
@@ -841,7 +844,7 @@ def blogPostCreateHome(authPayload):
   else:
     raise RuntimeError('Method not allowed')
 
-@app.route('/blog/post/<int:id>', methods=['POST', 'OPTIONS'])   # DEL, GET was,'t working because axios wouldn't set content length
+@app.route(f'/{blogPath}/post/<int:id>', methods=['POST', 'OPTIONS'])   # DEL, GET was,'t working because axios wouldn't set content length
 @errorHandle
 @token_required
 def blogPostViewHome(authPayload, *args, **kwargs):
@@ -901,7 +904,7 @@ def blogPostViewHome(authPayload, *args, **kwargs):
     raise RuntimeError('Method not allowed')
 
 
-@app.route('/blog/refresh', methods=['POST', 'OPTIONS'])
+@app.route(f'/{blogPath}/refresh', methods=['POST', 'OPTIONS'])
 @errorHandle
 def blogRefreshHome():
   if request.method == 'POST':
@@ -1068,7 +1071,7 @@ def heatmapHome():
 #     pattern = None
 # '''
 
-@app.route('/fuelprices', methods=['GET', 'OPTIONS'])
+@app.route(f'/{projectsPath}/fuelprices', methods=['GET', 'OPTIONS'])
 @errorHandle
 def fuelpricesHome():
   if request.method == 'GET':
@@ -1095,7 +1098,7 @@ def fuelpricesHome():
   else:
     raise RuntimeError('Method not allowed')
 
-@app.route('/mrna', methods=['GET', 'OPTIONS'])
+@app.route(f'/{projectsPath}/mrna', methods=['GET', 'OPTIONS'])
 @errorHandle
 def mrnaHome():
   if request.method == 'GET':
@@ -1133,7 +1136,7 @@ def mrnaHome():
     raise RuntimeError('Method not allowed')
 
 
-@app.route('/secondary', methods=['GET', 'OPTIONS'])
+@app.route(f'/{projectsPath}/secondary', methods=['GET', 'OPTIONS'])
 @errorHandle
 def secondaryHome():
   # log(request.remote_addr, inspect.stack()[0][3]).
@@ -1168,7 +1171,7 @@ def secondaryHome():
 
 # environment.tests['isvalidsuburb'] = isvalidsuburb
 
-@app.route('/property', methods=['GET', 'OPTIONS'])
+@app.route(f'/{projectsPath}/property', methods=['GET', 'OPTIONS'])
 @errorHandle
 def propertyHome():
   if request.method == 'GET':
@@ -1188,7 +1191,7 @@ def propertyHome():
   else:
     raise RuntimeError('Method not allowed')
 
-@app.route('/property/search', methods=['GET', 'OPTIONS'])
+@app.route(f'/{projectsPath}/property/search', methods=['GET', 'OPTIONS'])
 @errorHandle
 def propertySearchHome():
   if request.method == 'GET':
@@ -1217,7 +1220,7 @@ def propertySearchHome():
 # def propfilesHome():
 # #   return render_template('prop_files.html',files = list_files(appDir + '/property/prop_data/'))
 
-@app.route('/seqalign', methods=['GET', 'OPTIONS'])
+@app.route(f'/{projectsPath}/seqalign', methods=['GET', 'OPTIONS'])
 @errorHandle
 def seqalignHome():
   if request.method == 'GET':
@@ -1247,7 +1250,7 @@ def seqalignHome():
   else:
     raise RuntimeError('Method not allowed')
 
-@app.route('/randombio', methods=['GET', 'OPTIONS'])
+@app.route(f'/{projectsPath}/randombio', methods=['GET', 'OPTIONS'])
 @errorHandle
 def randomBioHome():
   def validate(e):

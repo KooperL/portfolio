@@ -69,7 +69,7 @@ function HomePage(props: Props): JSX.Element {
     const data = state.details.data
 
     return (
-      <>
+      <div className="homePage">
         {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
         <div className="container">
           <div className="">
@@ -88,7 +88,7 @@ function HomePage(props: Props): JSX.Element {
             }
           </div>
         </div>
-      </>
+      </div>
     );
   }
   return <></>;

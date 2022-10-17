@@ -1,11 +1,11 @@
-.ProjectsPage .container {
+.projectsPage .container {
   padding: 8rem 8rem;
   width: 100vw;
   display: flex;
   flex-direction: row;
 }
 
-.ProjectsPage .links {
+.projectsPage .links {
   width: 100%;
   z-index: 9;
   display: grid;
@@ -16,11 +16,11 @@
   grid-row-gap: 1rem;
 }
 
-.ProjectsPage .links-container {
+.projectsPage .links-container {
   width: 100%;
 }
 
-.ProjectsPage .render {
+.projectsPage .render {
   position: fixed;
   height: 100vh;
   width: 100vw;
@@ -29,21 +29,21 @@
   z-index: 0;
 }
 
-.ProjectsPage .area {
+.projectsPage .area {
   display: flex;
   padding-top: 20px;
   padding-bottom: 20px;
   flex-wrap: wrap;
 }
 
-.ProjectsPage .subheader {
+.projectsPage .subheader {
   font-size: x-large;
   /* width: 100%; */
   grid-column: span 4;
-  padding-top: 0.ProjectsPage .5rem;
+  padding-top: 0.projectsPage .5rem;
 }
 
-.ProjectsPage .buttonRedir {
+.projectsPage .buttonRedir {
   height: 100%;
   display: flex;
   justify-content: center;
@@ -55,16 +55,16 @@ a {
   z-index: 999;
 }
 
-.ProjectsPage .area-heading {
+.projectsPage .area-heading {
   font-size: 2rem;
 }
 
-.ProjectsPage .main-heading {
+.projectsPage .main-heading {
   font-size: 3rem;
   padding-bottom: 25px;
 }
 
-.ProjectsPage .button {
+.projectsPage .button {
   width: 16rem;
   margin: 3px;
   padding: 12px;
@@ -72,12 +72,12 @@ a {
   border-radius: 7px;
 }
 
-.ProjectsPage .button:hover {
+.projectsPage .button:hover {
   background-image: linear-gradient(to right, rgb(219 234 254), #f3e8ff);
   color: black;
 }
 
-.ProjectsPage .buttonInner {
+.projectsPage .buttonInner {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -85,10 +85,10 @@ a {
 }
 
 @media screen and (max-width: 1000px) {
-  .ProjectsPage .container {
+  .projectsPage .container {
     padding: 8rem 1rem;
   }
-  .ProjectsPage .button {
+  .projectsPage .button {
     width: 24rem;
   }
 }

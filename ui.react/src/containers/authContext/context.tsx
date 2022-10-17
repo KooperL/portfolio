@@ -1,13 +1,16 @@
 
 import React, { useContext, createContext, FC, useState, useEffect } from 'react'
+// import { useNavigate } from 'react-router-dom';
 import { postBlogRefresh } from '../App/api/blogApis'
+import { BlogRouteType } from '../App/routeTypes'
 import { BlogLoginPOSTPayload, BlogLoginPOSTResponse } from '../blogLoginPage/types'
 
 type AccessTokenContext = [string, React.Dispatch<React.SetStateAction<string>>]
 
 export function AccessTokenProvider({ children }: any) {
   const [accessToken, setAccessToken] = useState<string>('')
-  
+  // const navigate = useNavigate();
+
   useEffect(() => {
     // Refresh if null or time elapsed
     if(!accessToken.length){
@@ -28,6 +31,7 @@ export function AccessTokenProvider({ children }: any) {
         }
       }).catch((err: any) => {
         console.log(err)
+        window.location.href = (`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`)
         // setPOSTState({
         //   error: true,
         //   errorMessage: err,

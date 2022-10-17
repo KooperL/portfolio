@@ -1,11 +1,11 @@
-.container {
+.homePage .container {
   padding: 8rem 8rem;
   width: 100vw;
   display: flex;
   flex-direction: row;
 }
 
-.links {
+.homePage .links {
   width: 100%;
   z-index: 10;
   display: flex;
@@ -13,7 +13,7 @@
   gap: 1rem;
 }
 
-.render {
+.homePage .render {
   position: fixed;
   height: 100vh;
   width: 100vw;
@@ -22,23 +22,23 @@
   z-index: 1;
 }
 
-.area {
+.homePage .area {
   display: flex;
   padding-top: 20px;
   padding-bottom: 20px;
   flex-wrap: wrap;
 }
 
-.area-heading {
+.homePage .area-heading {
   font-size: 2rem;
 }
 
-.main-heading {
+.homePage .main-heading {
   font-size: 3rem;
   padding-bottom: 25px;
 }
 
-.button {
+.homePage .button {
   width: 16rem;
   margin: 3px;
   padding: 20px;
@@ -48,29 +48,29 @@
 }
 
 
-.button:hover {
+.homePage .button:hover {
   background-image: linear-gradient(to right, rgb(219 234 254), #f3e8ff);
   color: black;
 }
 
-.text {
+.homePage .text {
   padding: 2rem 0;
 }
 
-ul.unorderedList {
+.homePage ul.unorderedList {
   padding-left: 40px;
   list-style-type: circle;
   padding-top: 0;
 }
 
 @media screen and (max-width: 1000px) {
-  .container {
+  .homePage .container {
     padding: 8rem 2rem;
   }
-  div.button {
+  .homePage div.button {
     width: 100%;
   }
-  .render {
+  .homePage .render {
     width: 0;
   }
 }
