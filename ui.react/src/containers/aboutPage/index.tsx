@@ -87,7 +87,7 @@ function AboutPage(props: Props): JSX.Element {
     const validCharsBinary = ['1','0']
     const validCharsNucleotides = ['A','T','G','C']
     return (
-      <>
+      <div className="aboutPage">
         {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
         <div className="container">
           <div className="links">
@@ -112,7 +112,7 @@ function AboutPage(props: Props): JSX.Element {
           </div>
           <div id="test"></div>
         </div>
-      </>
+      </div>
     );
   }
   return <></>;

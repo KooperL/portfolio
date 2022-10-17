@@ -1,4 +1,4 @@
-.container {
+.blogCreatePage .container {
   padding: 8rem 8rem;
   width: 100vw;
   max-width: 100%;
@@ -7,7 +7,7 @@
   align-items: center;
 }
 
-.links {
+.blogCreatePage .links {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -17,49 +17,49 @@
   z-index: 10;
 }
 
-#form-container {
+.blogCreatePage #form-container {
   width: 100%;
   max-width: 500px;
 }
 
-#post {
+.blogCreatePage #post {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-textarea {
+.blogCreatePage textarea {
   height: 350px;
   resize: none;
 }
 
-.field {
+.blogCreatePage .field {
   width: 100%;
   margin: 1rem 0;
   color: black;
 }
 
-.main-heading {
+.blogCreatePage .main-heading {
   font-size: 3rem;
   padding-bottom: 25px;
 }
 
-#button {
+.blogCreatePage #button {
   padding-top: 1rem;
 }
 
-input {
+.blogCreatePage input {
   margin-right: 10px;
   color: black;
 }
 
 
 @media screen and (max-width: 1000px) {
-  .container {
+  .blogCreatePage .container {
     padding: 8rem 2rem;
   }
 
-  input {
+  .blogCreatePage input {
     width: 100%;
   }
 

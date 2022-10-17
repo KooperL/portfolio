@@ -1,4 +1,4 @@
-import { ApiEndpoints, blogPath } from './types';
+import { ApiEndpoints, blogPath, projectPath } from './types';
 import { environmentConfig } from './environmentMappings';
 
 const { apiHost } = environmentConfig();
@@ -12,18 +12,19 @@ export const endpoints: ApiEndpoints = {
   track: `${apiHost}/track`,
   logsInsert: `${apiHost}/logs/insert`,
   logsPull: `${apiHost}/logs/pull`,
-  projects: `${apiHost}/projects`,
-  property: `${apiHost}/property`,
-  mrna: `${apiHost}/mrna`,
-  seqalign: `${apiHost}/seqalign`,
-  render: `${apiHost}/render`,
-  secondary: `${apiHost}/secondary`,
-  fuelprices: `${apiHost}/fuelprices`,
-  tictactoe: `${apiHost}/tictactoe`,
-  randombio: `${apiHost}/randombio`,
-  
-  blogRegister: `${apiHost}/${blogPath}/register`,
+
+  projects: `${apiHost}/${projectPath}`,
+  mrna: `${apiHost}/${projectPath}/mrna`,
+  seqalign: `${apiHost}/${projectPath}/seqalign`,
+  render: `${apiHost}/${projectPath}/render`,
+  secondary: `${apiHost}/${projectPath}/secondary`,
+  fuelprices: `${apiHost}/${projectPath}/fuelprices`,
+  tictactoe: `${apiHost}/${projectPath}/tictactoe`,
+  randombio: `${apiHost}/${projectPath}/randombio`,
+  property: `${apiHost}/${projectPath}/property`,
+
   blogHome: `${apiHost}/${blogPath}`,
+  blogRegister: `${apiHost}/${blogPath}/register`,
   blogPostCreate: `${apiHost}/${blogPath}/post`,
   blogPost: `${apiHost}/${blogPath}/post/`,
   blogLogin: `${apiHost}/${blogPath}/login`,

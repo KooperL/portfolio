@@ -41,7 +41,7 @@ function ContactPage(props: Props): JSX.Element {
   }, []);
 
   function typeLookup(type: string, data:string[], text?:string) {
-    console.log(!!data[0].includes('http'))
+    // console.log(!!data[0].includes('http'))
     switch(type) {
       case 'button':
         // return <a href={data[0]}><div style={{backgroundColor: scheme.button.bgSolid}} className={type}>{text}</div></a>
@@ -88,25 +88,27 @@ function ContactPage(props: Props): JSX.Element {
 
   function SearchBar() {
     return (
-      <div className="search-container">
-        <div className="form">
-          <form onSubmit={((e) => handleSubmit(e, {
-            session_id: sessionStorage.getItem('session_id') ?? 'error',
-            message: value
-          }))}>
-            <div className="inputWithButton">
-              <div className="inputContainer">
-                <div className="inputLabel">📝: </div>
-                <input className="input" type="text" value={value} onChange={((e) => {setValue(e.target.value)})} />
-              </div>
-              <div className="submit-button">
-                <Button colours={scheme} />
-                <div className="status">
-                  {value.length ? (POSTstate.loading ? '🛫' : (POSTstate.details ? (POSTstate.details.success ? '✅' : '❌') : '✏️')) : '🗒️'}
+      <div className="contactPage">
+        <div className="search-container">
+          <div className="form">
+            <form onSubmit={((e) => handleSubmit(e, {
+              session_id: sessionStorage.getItem('session_id') ?? 'error',
+              message: value
+            }))}>
+              <div className="inputWithButton">
+                <div className="inputContainer">
+                  <div className="inputLabel">📝: </div>
+                  <input className="input" type="text" value={value} onChange={((e) => {setValue(e.target.value)})} />
+                </div>
+                <div className="submit-button">
+                  <Button colours={scheme} />
+                  <div className="status">
+                    {value.length ? (POSTstate.loading ? '🛫' : (POSTstate.details ? (POSTstate.details.success ? '✅' : '❌') : '✏️')) : '🗒️'}
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     );

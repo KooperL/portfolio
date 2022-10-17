@@ -61,17 +61,16 @@ function RandomBioPage(props: Props): JSX.Element {
           }))}>
             <div className="type">
               <div>
-              <input type="radio" id="inputtype" name="inputtype" value="1" checked={type===1} onChange={((e) => {setType(+e.target.value)})}/>
-              <label className='pl-2' htmlFor="inputtype">DNA</label>
+                <input type="radio" id="inputtype" name="inputtype" value="1" checked={type===1} onChange={((e) => {setType(+e.target.value)})}/>
+                <label className='pl-2' htmlFor="inputtype">DNA</label>
               </div>
               <div>
-              <input type="radio" id="inputtype" name="inputtype" value="2" checked={type===2} onChange={((e) => {setType(+e.target.value)})}/>
-              <label className='pl-2' htmlFor="inputtype">RNA</label>
+                <input type="radio" id="inputtype" name="inputtype" value="2" checked={type===2} onChange={((e) => {setType(+e.target.value)})}/>
+                <label className='pl-2' htmlFor="inputtype">RNA</label>
               </div>
               <div>
-              
-              <input type="radio" id="inputtype" name="inputtype" value="3" checked={type===3} onChange={((e) => {setType(+e.target.value)})}/>
-              <label className='pl-2' htmlFor="inputtype">Amino acids</label>
+                <input type="radio" id="inputtype" name="inputtype" value="3" checked={type===3} onChange={((e) => {setType(+e.target.value)})}/>
+                <label className='pl-2' htmlFor="inputtype">Amino acids</label>
             </div>
             </div>
             <div className="length">
@@ -104,29 +103,32 @@ function RandomBioPage(props: Props): JSX.Element {
     console.log(state.details)
     const data = state.details.data;
     return (
-      <div className="resultsScreen">
-        <div className="searchArea">
-          {SearchBar(window.outerWidth > 1000)}
-        </div>
-        <hr/>
-        <div className="resultsCenter">
-          <div className="resultsContainer">
-            <div>
-              <h2>Results: </h2>
+      <div className="randomBioPage">
+        <div className="resultsScreen">
+          <div className="searchArea">
+            {SearchBar(window.outerWidth > 1000)}
+          </div>
+          <hr/>
+          <div className="resultsCenter">
+            <div className="resultsContainer">
+              <div>
+                <h2>Results: </h2>
+              </div>
+                <textarea>{data.results}</textarea>
             </div>
-              <textarea>{data.results}</textarea>
           </div>
         </div>
       </div>
     );
   } else {
     return (
-      <div className="container">
-        <>{SearchBar(true)}</>
+      <div className="randomBioPage">
+        <div className="container">
+          <>{SearchBar(true)}</>
+        </div>
       </div>
     );
   }
-  return <></>;
 }
 
 

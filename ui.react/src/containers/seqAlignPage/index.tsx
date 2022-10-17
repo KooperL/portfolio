@@ -64,7 +64,6 @@ function SeqAlignPage(props: Props): JSX.Element {
             gaps: gaps,
             extgaps: extgaps
           }))}>                      
-
             <div className="searchBoxes">
               <div className="inputContainer">
                 <div className="inputLabel">DNA strand 1:</div>
@@ -124,38 +123,40 @@ function SeqAlignPage(props: Props): JSX.Element {
     const splitDrawArray = data.draw_res.map(elem => elem.split('\n'));
     console.log(state.details)
     return (
-      <div>
-        <div className="resultsScreen">
+      <div className="seqAlignPage">
+        <div>
+          <div className="resultsScreen">
               {SearchBar(window.outerWidth > 1000)}
-        </div>
-        <hr/>
-        <div className="resultTitle">Results:</div>
-        <div className="resultsContainer">
-        <div className="results">
-        {splitDrawArray.map((res, ind) => (
-            <div key={ind} className="result" >
-              <div>
-                <p key={ind} className="resultTitle">Possible result: </p>
-                {/** @ts-ignore */}
-                {/* {state.details.draw_res[ind].split('\n').map((line, lineInd) => ( */}
-                 {/* <p key={lineInd} className="resultBody">{line}</p> */}
-                {/* ))} */}
-                {/** @ts-ignore */}
-
-                  <textarea rows={5} className="resultBody">{`${res[0]}\n${res[1]}\n${res[2]}\n${res[3]}\n`}</textarea>
-
-              </div>
           </div>
-        ))}
-        </div>
+          <hr/>
+          <div className="resultTitle">Results:</div>
+            <div className="resultsContainer">
+            <div className="results">
+            {splitDrawArray.map((res, ind) => (
+              <div key={ind} className="result" >
+                <div>
+                  <p key={ind} className="resultTitle">Possible result: </p>
+                  {/** @ts-ignore */}
+                  {/* {state.details.draw_res[ind].split('\n').map((line, lineInd) => ( */}
+                  {/* <p key={lineInd} className="resultBody">{line}</p> */}
+                  {/* ))} */}
+                  {/** @ts-ignore */}
+                   <textarea rows={5} className="resultBody">{`${res[0]}\n${res[1]}\n${res[2]}\n${res[3]}\n`}</textarea>
+                </div>
+              </div>
+            ))}
+            </div>
+          </div>
         </div>
       </div>
     );
   } else {
     return (
-      <div className="container">
-        <div className="innerContainer">
-          {SearchBar(true)}
+      <div className="seqAlignPage">
+        <div className="container">
+          <div className="innerContainer">
+            {SearchBar(true)}
+          </div>
         </div>
       </div>
     );

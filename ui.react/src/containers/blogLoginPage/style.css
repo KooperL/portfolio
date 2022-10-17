@@ -1,4 +1,4 @@
-.container {
+.blogLoginPage .container {
   padding: 8rem 8rem;
   width: 100vw;
   max-width: 100%;
@@ -7,7 +7,7 @@
   align-items: center;
 }
 
-.links {
+.blogLoginPage .links {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -19,27 +19,27 @@
 
 
 
-.main-heading {
+.blogLoginPage .main-heading {
   font-size: 3rem;
   padding-bottom: 25px;
 }
 
-#button {
+.blogLoginPage #button {
   padding-top: 1rem;
 }
 
-input {
+.blogLoginPage input {
   margin-right: 10px;
   color: black;
 }
 
 
 @media screen and (max-width: 1000px) {
-  .container {
+  .blogLoginPage .container {
     padding: 8rem 2rem;
   }
 
-  input {
+  .blogLoginPage input {
     width: 100%;
   }
 

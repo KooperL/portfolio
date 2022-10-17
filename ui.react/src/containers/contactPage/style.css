@@ -1,16 +1,16 @@
-.container {
+.contactPage .container {
   padding: 8rem 8rem;
   width: 100vw;
   display: flex;
   flex-direction: row;
 }
 
-.links {
+.contactPage .links {
   width: auto;
   z-index: 10;
 }
 
-.render {
+.contactPage .render {
   position: fixed;
   height: 100vh;
   width: 100vw;
@@ -19,23 +19,23 @@
   z-index: 1;
 }
 
-.area {
+.contactPage .area {
   display: flex;
   padding-top: 20px;
   padding-bottom: 20px;
   flex-wrap: wrap;
 }
 
-.area-heading {
+.contactPage .area-heading {
   font-size: 2rem;
 }
 
-.main-heading {
+.contactPage .main-heading {
   font-size: 3rem;
   padding-bottom: 25px;
 }
 
-.button {
+.contactPage .button {
   width: 16rem;
   margin: 3px;
   padding: 20px;
@@ -44,31 +44,31 @@
   text-align: center;
 }
 
-.button:hover {
+.contactPage .button:hover {
   background-image: linear-gradient(to right, rgb(219 234 254), #f3e8ff);
   color: black;
 }
 
-.text {
+.contactPage .text {
   padding: 2rem 0;
 }
 
-ul.unorderedList {
+.contactPage ul.unorderedList {
   padding-left: 40px;
   list-style-type: circle;
   padding-top: 0;
 }
 
-.search-container {
+.contactPage .search-container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  font-size: 1.5rem;
+  font-size: 1.contactPage .5rem;
   flex-wrap: wrap;
 }
 
-.inputLabel {
-  padding-right: 0.8rem;
+.contactPage .inputLabel {
+  padding-right: 0.contactPage .8rem;
   padding-left: 5px;
   width: fit-content;
   background-color: white;
@@ -79,67 +79,67 @@ ul.unorderedList {
   padding-top: 3px;
 }
 
-.description {
+.contactPage .description {
   white-space: wrap;
 }
 
-.input {
+.contactPage .input {
   margin-right: 10px;
   color: black;
 }
 
-.inputContainer {
+.contactPage .inputContainer {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   width: fit-content;
 }
 
-.inputWithButton {
+.contactPage .inputWithButton {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
 }
 
-.submit-button {
+.contactPage .submit-button {
   width: auto;;
   display: flex;
   flex-direction: row;
 }
 
-.emoji {
+.contactPage .emoji {
   font-size: xx-large;
   display: flex;
   justify-content: center;
 }
 
-.status {
+.contactPage .status {
   padding-left: 1rem;
   display: flex;
   align-items: center;
 }
 
 @media screen and (max-width: 1000px) {
-  .container {
+  .contactPage .container {
     padding: 8rem 2rem;
   }
-  div.button a.button {
+  .contactPage div .button a .button {
     width: max-content;
   }
 
-  .submit-button {
+  .contactPage .submit-button {
     padding-top: 10px;
     align-items: center;
   }
 
-  .input {
+  .contactPage .input {
     width: 100%;
   }
-  .emoji {
+  .contactPage .emoji {
 
   }
 
-  .status {
+  .contactPage .status {
     width: fit-content;
   }
 }

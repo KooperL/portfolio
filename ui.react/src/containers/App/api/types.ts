@@ -35,3 +35,4 @@ export interface Payload extends emptyPayload {
 }
 
 export const blogPath = 'blog'
+export const projectPath = 'projects'

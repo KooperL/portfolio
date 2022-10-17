@@ -12,7 +12,7 @@ import { useAccessToken } from "../authContext/context";
 import { BlogPostViewGETInitialState, BlogPostViewGETPayload, BlogPostViewGETResponse } from "./types";
 import { getPostView, postPostCreate } from "../App/api/blogApis";
 import { blogPath } from "../App/api/types";
-import { RouteType } from "../App/routeTypes";
+
 
 interface Props {
   dataGet: Function; 
@@ -89,30 +89,32 @@ function BlogPostViewPage(props: Props): JSX.Element {
     return <>loading</>
   } 
   return (
-    <div className="container">
-      <div className="links">
-        <div id="form-container">
-          <h2 className='main-heading' style={{color: scheme.body.h1}}>Post</h2>
-            <div id="post">
-            <div className="title">
-              <p>Title</p>
-              <p className="field">{GETstate.details?.data?.title}</p>
+    <div className="blogPostViewPage">
+      <div className="container">
+        <div className="links">
+          <div id="form-container">
+            <h2 className='main-heading' style={{color: scheme.body.h1}}>Post</h2>
+              <div id="post">
+              <div className="title">
+                <p>Title</p>
+                <p className="field">{GETstate.details?.data?.title}</p>
+              </div>
+              <div className="body">
+                <p>Body</p>
+                <p className="field">{GETstate.details?.data?.body}</p>
+              </div>
+              <div id="button">
+                <Button colours={scheme} />
+              </div>
+              {/* <form onSubmit={((e) => handleSubmit(e, {
+                session_id: sessionStorage.getItem('session_id') ?? 'error',
+                data: {
+                  blog_title: title,
+                  blog_body: body
+                }
+              }))}>
+            </form> */}
             </div>
-            <div className="body">
-              <p>Body</p>
-              <p className="field">{GETstate.details?.data?.body}</p>
-            </div>
-            <div id="button">
-              <Button colours={scheme} />
-            </div>
-            {/* <form onSubmit={((e) => handleSubmit(e, {
-              session_id: sessionStorage.getItem('session_id') ?? 'error',
-              data: {
-                blog_title: title,
-                blog_body: body
-              }
-            }))}>
-          </form> */}
           </div>
         </div>
       </div>

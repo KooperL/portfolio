@@ -1,4 +1,4 @@
-.container {
+.aboutPage .container {
   padding: 8rem 8rem;
   width: 100vw;
   display: flex;
@@ -6,12 +6,12 @@
   max-width: 100%;
 }
 
-.links {
+.aboutPage .links {
   width: 100%;
   z-index: 10;
 }
 
-#render {
+.aboutPage #render {
   position: fixed;
   /* height: 100vh;
   width: 100vw; */
@@ -20,36 +20,36 @@
   z-index: 1;
 }
 
-#test {
+.aboutPage #test {
   font-size: x-small;
 }
 
-/* .nucleotide {
+/* .aboutPage .nucleotide {
   font-size: x-small;
 } */
 
-.render {
+.aboutPage .render {
   display: none;
 
 }
 
-.area {
+.aboutPage .area {
   display: flex;
   padding-top: 20px;
   padding-bottom: 20px;
   flex-wrap: wrap;
 }
 
-.area-heading {
+.aboutPage .area-heading {
   font-size: 2rem;
 }
 
-.main-heading {
+.aboutPage .main-heading {
   font-size: 3rem;
   padding-bottom: 25px;
 }
 
-.button {
+.aboutPage .button {
   width: 16rem;
   margin: 3px;
   padding: 20px;
@@ -60,26 +60,26 @@
 
 
 
-.button:hover {
+.aboutPage .button:hover {
   background-image: linear-gradient(to right, rgb(219 234 254), #f3e8ff);
   color: black;
 }
 
-.text {
+.aboutPage .text {
   padding: 2rem 0;
 }
 
-ul.unorderedList {
+ul.aboutPage .unorderedList {
   padding-left: 40px;
   list-style-type: circle;
   padding-top: 0;
 }
 
 @media screen and (max-width: 1000px) {
-  .container {
+  .aboutPage .container {
     padding: 8rem 2rem;
   }
-  div.button {
+  div.aboutPage .button {
     width: 100%;
   }
 }

@@ -12,7 +12,6 @@ import { useAccessToken } from "../authContext/context";
 import { BlogPostCreatePOSTInitialState, BlogPostCreatePOSTPayload, BlogPostCreatePOSTResponse } from "./types";
 import { postPostCreate } from "../App/api/blogApis";
 import { blogPath } from "../App/api/types";
-import { RouteType } from "../App/routeTypes";
 
 interface Props {
   dataPost: Function; 
@@ -62,29 +61,31 @@ function BlogPostCreatePage(props: Props): JSX.Element {
   }, []);
 
   return (
-    <div className="container">
-      <div className="links">
-        <div id="form-container">
-          <h2 className='main-heading' style={{color: scheme.body.h1}}>Post</h2>
-          <form onSubmit={((e) => handleSubmit(e, {
-              session_id: sessionStorage.getItem('session_id') ?? 'error',
-              data: {
-                blog_title: title,
-                blog_body: body
-              }
-            }))}>
-            <div className="title">
-              <p>Title</p>
-              <input className="field" value={title} onChange={(e) => {setTitle(e.target.value)}}></input>
-            </div>
-            <div className="body">
-              <p>Body</p>
-              <textarea className="field"  value={body} onChange={(e) => {setBody(e.target.value)}}></textarea>
-            </div>
-            <div id="button">
-              <Button colours={scheme} />
-            </div>
-          </form>
+    <div className="blogCreatePage">
+      <div className="container">
+        <div className="links">
+          <div id="form-container">
+            <h2 className='main-heading' style={{color: scheme.body.h1}}>Post</h2>
+            <form onSubmit={((e) => handleSubmit(e, {
+                session_id: sessionStorage.getItem('session_id') ?? 'error',
+                data: {
+                  blog_title: title,
+                  blog_body: body
+                }
+              }))}>
+              <div className="title">
+                <p>Title</p>
+                <input className="field" value={title} onChange={(e) => {setTitle(e.target.value)}}></input>
+              </div>
+              <div className="body">
+                <p>Body</p>
+                <textarea className="field"  value={body} onChange={(e) => {setBody(e.target.value)}}></textarea>
+              </div>
+              <div id="button">
+                <Button colours={scheme} />
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

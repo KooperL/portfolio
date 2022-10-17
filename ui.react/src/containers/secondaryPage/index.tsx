@@ -117,48 +117,52 @@ function SecondaryPage(props: Props): JSX.Element {
   if(state.details && state.details.data) {
     const data = state.details.data;
     return (
-      <div>
-        <div className="resultsScreen">
-              {SearchBar(window.outerWidth > 1000)}
-        </div>
-        <hr/>
-        <div className="resultsContainer">
-        <div className="resultsTitle">Results:</div>
-        <div className="results">
-          <div className="result" >
-            <p className="resultTitle">Amino acids: </p>
-            <textarea className="resultTextArea" name="aa" value={data.aa_field} readOnly={true} />
+      <div className="secondaryPage">
+        <div>
+          <div className="resultsScreen">
+                {SearchBar(window.outerWidth > 1000)}
           </div>
-          <div className="result" >
-            <p className="resultTitle">α helix propensities: </p>
-            <textarea className="resultTextArea" name="aa" value={data.ahm_field.toString()} readOnly={true} />
-          </div>
-          <div className="result" >
-            <p className="resultTitle">α helix μ-distributed prop.s: </p>
-            <textarea className="resultTextArea" name="aa" value={data.bsm_field.toString()} readOnly={true} />
-          </div>
-          <div className="result" >
-            <p className="resultTitle">β-pleated sheet propensities: </p>
-            <textarea className="resultTextArea" name="aa" value={data.ahl_field.toString()} readOnly={true} />
-          </div>
-          <div className="result" >
-            <p className="resultTitle">β-pleated sheet μ-dist. prop.s: </p>
-            <textarea className="resultTextArea" name="aa" value={data.bsl_field.toString()} readOnly={true} />
-          </div>
-          <div className="result" ></div>
-          </div>
+          <hr/>
+          <div className="resultsContainer">
+          <div className="resultsTitle">Results:</div>
+          <div className="results">
+            <div className="result" >
+              <p className="resultTitle">Amino acids: </p>
+              <textarea className="resultTextArea" name="aa" value={data.aa_field} readOnly={true} />
+            </div>
+            <div className="result" >
+              <p className="resultTitle">α helix propensities: </p>
+              <textarea className="resultTextArea" name="aa" value={data.ahm_field.toString()} readOnly={true} />
+            </div>
+            <div className="result" >
+              <p className="resultTitle">α helix μ-distributed prop.s: </p>
+              <textarea className="resultTextArea" name="aa" value={data.bsm_field.toString()} readOnly={true} />
+            </div>
+            <div className="result" >
+              <p className="resultTitle">β-pleated sheet propensities: </p>
+              <textarea className="resultTextArea" name="aa" value={data.ahl_field.toString()} readOnly={true} />
+            </div>
+            <div className="result" >
+              <p className="resultTitle">β-pleated sheet μ-dist. prop.s: </p>
+              <textarea className="resultTextArea" name="aa" value={data.bsl_field.toString()} readOnly={true} />
+            </div>
+            <div className="result" ></div>
+            </div>
 
-          <div className="mrna-preview" >
-            <p className="resultTitle">Calculated reconstruction: </p>
-            <textarea className="resultTextArea" name="aa" value={data.pred_str} readOnly={true} />
+            <div className="mrna-preview" >
+              <p className="resultTitle">Calculated reconstruction: </p>
+              <textarea className="resultTextArea" name="aa" value={data.pred_str} readOnly={true} />
+            </div>
           </div>
         </div>
       </div>
     );
   } else {
     return (
-      <div className="container">
-        {SearchBar(true)}
+      <div className="secondaryPage">
+        <div className="container">
+          {SearchBar(true)}
+        </div>
       </div>
     );
   }

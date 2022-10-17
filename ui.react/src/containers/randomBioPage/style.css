@@ -1,4 +1,4 @@
-.container {
+.randomBioPage .container {
   width: 100%;
   max-width: 100%;
   height: 100vh;
@@ -8,17 +8,17 @@
   align-items: center;
 }
 
-.search-continer {
+.randomBioPage .search-continer {
   display: flex;
   flex-direction: column;
   width: fit-content;
 }
 
-.description {
+.randomBioPage .description {
   text-align: center;
 }
 
-form {
+.randomBioPage form {
   width: fit-content;
   display: flex;
   align-items: center;
@@ -27,48 +27,48 @@ form {
   gap: 3rem;
 }
 
-.single {
+.randomBioPage .single {
   width: fit-content;
   display: flex;
   flex-direction: row;
   gap: 2rem;
 }
 
-.type {
+.randomBioPage .type {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.length {
+.randomBioPage .length {
   display: flex;
   flex-direction: column;
   
 }
-#length {
+.randomBioPage #length {
   color: black;
   /* ml-2 bg-gray-100 rounded w-1/2 */
 }
 
 
 
-.resultsScreen {
+.randomBioPage .resultsScreen {
   padding-top: 6rem;
   height: 100vh;
 }
 
-.searchArea {
+.randomBioPage .searchArea {
   display: flex;
   justify-content: center;
   margin-bottom: 1rem;
 }
 
-.resultsCenter {
+.randomBioPage .resultsCenter {
   display: flex;
   justify-content: center;
 }
 
-.resultsContainer {
+.randomBioPage .resultsContainer {
   padding-top: 2rem;
 }
 

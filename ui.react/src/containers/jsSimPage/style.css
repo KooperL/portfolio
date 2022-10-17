@@ -1,4 +1,4 @@
-.parent {
+.jsSimPage .parent {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -6,22 +6,22 @@
   align-items: center;
 }
 
-.container {
+.jsSimPage .container {
   width: auto;
   display: flex;
   flex-direction: column;
 }
 
-.buttons {
+.jsSimPage .buttons {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
-.button {
+.jsSimPage button {
   width: auto;
 }
 
-.info {
+.jsSimPage .info {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -29,7 +29,7 @@
   padding: 1.5rem 0;
 }
 
-.string {
+.jsSimPage .string {
   text-align: center;
   font-size: 1.4rem;
   padding: 1.5rem 0;
@@ -37,12 +37,12 @@
   font-weight: 500;
 }
 
-.instrucions {
+.jsSimPage .instrucions {
   font-size: 1.4rem;
   padding: 1.5rem 0;
 }
 
-.button {
+.jsSimPage .button {
   width: 16rem;
   margin: 3px;
   padding: 20px;
@@ -51,37 +51,37 @@
 }
 
 
-.button:hover {
+.jsSimPage .button:hover {
   background-image: linear-gradient(to right, rgb(219 234 254), #f3e8ff);
   color: black;
 }
 
 
 @media screen and (max-width: 1000px) {
-  .parent {
+ .jsSimPage .parent {
     align-items: flex-start;
   }
 
-  .container {
+ .jsSimPage .container {
     width: 100%;
     padding: 5rem 4rem;
   }
-  .buttons {
+ .jsSimPage .buttons {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  button {
+  .jsSimPage button {
     max-width: 100%;
     padding-left: 0;
   }
-  .instrucions {
+ .jsSimPage .instrucions {
     font-size: 0.9rem;
     text-align: center;
   }
 
-  .string {
+ .jsSimPage .string {
     word-wrap: break-word;
   }
 }

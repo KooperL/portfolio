@@ -25,7 +25,7 @@ function generateUniqueToken(length: number) {
 }
 
 function Logger(props: Props) {
-  useEffect(() => {
+  // useEffect(() => {
     // TODO hash all three items
     if(!localStorage.getItem('uuid')) {
       localStorage.setItem('uuid', generateUniqueToken(10));
@@ -119,7 +119,7 @@ function Logger(props: Props) {
     }).catch((err: any) => {
       console.log(err)
     })
-  }, [])
+  // }, [window.location.href])
 
 
   return (

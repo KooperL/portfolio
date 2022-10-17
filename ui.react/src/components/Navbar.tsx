@@ -21,7 +21,7 @@ function Navbar(props: {isVertical: boolean}) {
   }
   const isHome = !!window.location.href.replace(/((http)[s]?:[/]{2}(www\.)*((localhost:3000)|(kooperlingohr.com)))[/]+/g, '').length;
   return (
-    <div className={`h-20 w-full fixed ${props.isVertical?'origin-top-left rotate-90 left-20 top-0': ''}`} style={{"backgroundColor": scheme.header.background, zIndex: props.isVertical ? 1 : 11}}>
+    <nav className={`h-20 w-full fixed ${props.isVertical?'origin-top-left rotate-90 left-20 top-0': ''}`} style={{"backgroundColor": scheme.header.background, zIndex: props.isVertical ? 1 : 11}}>
         <div className="h-full flex justify-between text-back tracking-widest">
           <div className='flex justify-center items-center'>
             {isHome?(!props.isVertical ? home : ''):''}
@@ -33,7 +33,7 @@ function Navbar(props: {isVertical: boolean}) {
           </div>
         <div></div>
         </div>
-    </div>
+    </nav>
   );
 }
 

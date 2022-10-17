@@ -1,42 +1,42 @@
-.container {
+.blogHomePage .container {
   padding: 8rem 8rem;
   width: 100vw;
   display: flex;
   flex-direction: row;
 }
 
-.links {
+.blogHomePage .links {
   width: 100%
 }
 
-.main-heading {
+.blogHomePage .main-heading {
   font-size: 3rem;
   padding-bottom: 25px;
 }
 
-.category {
+.blogHomePage .category {
   padding-bottom: 1rem;
   width: 100%;
 }
 
-.category p {
+.blogHomePage .category p {
   font-size: x-large;
 }
 
-.post-detail {
+.blogHomePage .post-detail {
   width: 100%;
   text-align: center;
   margin: 5px;
 }
 
-.post-details {
+.blogHomePage .post-details {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
 
 @media screen and (max-width: 1000px) {
-  .container {
+  .blogHomePage .container {
     padding: 8rem 2rem;
   }
 
