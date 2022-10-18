@@ -1,19 +1,20 @@
 
 import React, { useContext, createContext, FC, useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 // import { useNavigate } from 'react-router-dom';
 import { postBlogRefresh } from '../App/api/blogApis'
 import { BlogRouteType } from '../App/routeTypes'
 import { BlogLoginPOSTPayload, BlogLoginPOSTResponse } from '../blogLoginPage/types'
 
-type AccessTokenContext = [string, React.Dispatch<React.SetStateAction<string>>]
+type AccessTokenContext = [string | null, React.Dispatch<React.SetStateAction<string | null>>]
 
 export function AccessTokenProvider({ children }: any) {
-  const [accessToken, setAccessToken] = useState<string>('')
+  const [accessToken, setAccessToken] = useState<string | null>(null)
   // const navigate = useNavigate();
 
   useEffect(() => {
     // Refresh if null or time elapsed
-    if(!accessToken.length){
+    if(!accessToken || !accessToken.length){
       console.log('No access token')
     
       postBlogRefresh({session_id: sessionStorage.getItem('session_id') ?? ''}).then((resp: BlogLoginPOSTResponse) => {
@@ -27,11 +28,13 @@ export function AccessTokenProvider({ children }: any) {
           // navigate(`/${blogPath}/post`)
           setAccessToken(resp.accessToken)
         } else {
+          setAccessToken('')
           throw new Error(resp.error);
         }
       }).catch((err: any) => {
         console.log(err)
-        window.location.href = (`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`)
+        // window.location.href = (`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`)
+        // navigate(`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`)
         // setPOSTState({
         //   error: true,
         //   errorMessage: err,
