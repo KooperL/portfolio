@@ -155,7 +155,7 @@ def errorHandle(func):
         'error': 'Deliberate error'
       }
       res = jsonify(kwargs)
-      return build_actual_response(res)
+      return build_actual_response(res), 500
     except:
       print('cause')
       kwargs = {
@@ -163,7 +163,7 @@ def errorHandle(func):
         'error': 'Unknown error'
       }
       res = jsonify(kwargs)
-      return build_actual_response(res)
+      return build_actual_response(res), 500
   wrapper.__name__ = func.__name__
   return wrapper
 

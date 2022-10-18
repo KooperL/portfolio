@@ -12,6 +12,9 @@ import { useAccessToken } from "../authContext/context";
 import { BlogPostCreatePOSTInitialState, BlogPostCreatePOSTPayload, BlogPostCreatePOSTResponse } from "./types";
 import { postPostCreate } from "../App/api/blogApis";
 import { blogPath } from "../App/api/types";
+import { BlogRouteType } from "../App/routeTypes";
+import Redirect from "../../components/Redirect"
+
 
 interface Props {
   dataPost: Function; 
@@ -60,6 +63,13 @@ function BlogPostCreatePage(props: Props): JSX.Element {
     document.title = `Blog Create | ${scheme.title}`;
   }, []);
 
+  if(!token?.length) {
+    return (
+      <Redirect
+        destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`}
+      />
+    )
+  }
   return (
     <div className="blogCreatePage">
       <div className="container">

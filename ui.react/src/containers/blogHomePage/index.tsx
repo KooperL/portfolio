@@ -13,12 +13,14 @@ import { BlogHomeInitialState } from "./types";
 import { getBlogHome } from "../App/api/blogApis";
 import { BlogHomeGETInitialState, BlogHomeGETResponse, BlogRegisterPOSTResponse } from "../blogLoginPage/types";
 import { blogPath } from "../App/api/types";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { BlogRouteType } from "../App/routeTypes";
+import Redirect from "../../components/Redirect"
+
 
 interface Props {
   dataCall: Function; 
 }
-
 
 function BlogHomePage(props: Props): JSX.Element {
   const [state, setState] = useState({...BlogHomeGETInitialState});
@@ -77,6 +79,13 @@ function BlogHomePage(props: Props): JSX.Element {
 
   if(state.loading) {
    return <Spinner/>
+  }
+  if(!token?.length) {
+    return (
+      <Redirect
+        destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`}
+      />
+    )
   }
   if(state.error) {
     return (

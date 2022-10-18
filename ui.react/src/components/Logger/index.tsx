@@ -5,7 +5,6 @@ import { LoggingPOSTResponse } from './types';
 
 interface Props {
   capturePost: Function; 
-  monitorPost: Function; 
 }
 
 function generateUniqueToken(length: number) {
@@ -105,20 +104,20 @@ function Logger(props: Props) {
         console.log(err);   //TODO
       })
     }
-    props.monitorPost({
-      uuid: localStorage.getItem('uuid'),
-      session_id: sessionStorage.getItem('session_id'),
-      page: window.location.pathname,
-      ...(localStorage.getItem('currentPage') && {prevPage: localStorage.getItem('currentPage')})
-    }).then((resp: LoggingPOSTResponse) => {
-      if(resp.success) {
-        localStorage.setItem('currentPage', window.location.pathname)
-      } else {
-        throw new Error(resp.error);
-      }
-    }).catch((err: any) => {
-      console.log(err)
-    })
+    // props.monitorPost({
+    //   uuid: localStorage.getItem('uuid'),
+    //   session_id: sessionStorage.getItem('session_id'),
+    //   page: window.location.pathname,
+    //   ...(localStorage.getItem('currentPage') && {prevPage: localStorage.getItem('currentPage')})
+    // }).then((resp: LoggingPOSTResponse) => {
+    //   if(resp.success) {
+    //     localStorage.setItem('currentPage', window.location.pathname)
+    //   } else {
+    //     throw new Error(resp.error);
+    //   }
+    // }).catch((err: any) => {
+    //   console.log(err)
+    // })
   // }, [window.location.href])
 
 
@@ -129,7 +128,7 @@ function Logger(props: Props) {
 
 const enhance = (): JSX.Element => {
   return(
-    <Logger capturePost={postCapture} monitorPost={postMonitor} />
+    <Logger capturePost={postCapture} />
   ) 
 };
 

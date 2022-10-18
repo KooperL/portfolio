@@ -12,6 +12,9 @@ import { useAccessToken } from "../authContext/context";
 import { BlogLoginPOSTInitialState, BlogLoginPOSTPayload, BlogLoginPOSTResponse, BlogRegisterPOSTPayload, BlogRegisterPOSTResponse } from "./types";
 import { postBlogLogin, postBlogRegister } from "../App/api/blogApis";
 import { blogPath } from "../App/api/types";
+import Redirect from "../../components/Redirect"
+import { BlogRouteType } from "../App/routeTypes";
+
 
 declare global {
   interface PasswordCredentialConstructor extends PasswordCredential {
@@ -123,6 +126,13 @@ function BlogLoginPage(props: Props): JSX.Element {
 
   const encoded = btoa(`${usernameLogin}:${passwordLogin}`)
 
+  if(token?.length) {
+    return (
+      <Redirect
+        destination={`/${BlogRouteType.BlogHome}`}
+      />
+    )
+  }
   return (
     <div className="blogLoginPage">
       <div className="container">
@@ -171,7 +181,6 @@ function BlogLoginPage(props: Props): JSX.Element {
       </div>
     </div>
   );
-
 }
 
 const enhance = (): JSX.Element => {

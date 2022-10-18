@@ -12,6 +12,8 @@ import { useAccessToken } from "../authContext/context";
 import { BlogPostViewGETInitialState, BlogPostViewGETPayload, BlogPostViewGETResponse } from "./types";
 import { getPostView, postPostCreate } from "../App/api/blogApis";
 import { blogPath } from "../App/api/types";
+import Redirect from "../../components/Redirect"
+import { BlogRouteType } from "../App/routeTypes";
 
 
 interface Props {
@@ -85,9 +87,23 @@ function BlogPostViewPage(props: Props): JSX.Element {
     // window.location.href.substring(window.location.href.lastIndexOf('/') + 1)
   }, []);
 
-  if(!GETstate.details) {
-    return <>loading</>
-  } 
+  if(GETstate.loading) {
+    return <Spinner/>
+   }
+   if(!token?.length) {
+     return (
+       <Redirect
+         destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`}
+       />
+     )
+   }
+   if(GETstate.error) {
+     return (
+       <div>
+         {JSON.stringify(GETstate.errorMessage)}
+       </div>
+     );
+   }
   return (
     <div className="blogPostViewPage">
       <div className="container">
