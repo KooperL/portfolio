@@ -5,7 +5,10 @@ from functools import wraps
 import hashlib
 import hmac
 from lib2to3.pytree import Base
+from nis import cat
 from tokenize import Number
+from threading import Lock
+from typing import final
 import urllib.parse
 import inspect
 import random
@@ -46,7 +49,7 @@ import scripts.utils.rgb
 
 blogPath = 'blog'
 projectsPath = 'projects'
-
+lock = Lock()
 
 class DatabaseManager(object):
   def __init__(self, db):
@@ -59,10 +62,23 @@ class DatabaseManager(object):
     # self.queue = []
 
   def query(self, query, vals):
+    # lock.acquire(True)
     self.cur.execute(query, vals)
     self.conn.commit()
+    # lock.release()
     return self.cur
   
+  def insert(self, query, val):
+    lock.acquire(True)
+    self.query(query, val)
+    lock.release()
+
+  def fetch(self, query, val):
+    lock.acquire(True)
+    res = self.query(query, val).fetchall()
+    lock.release()
+    return res
+
   # def execute(self, query, vals):
   #   for i in self.queue:
   #     execute
@@ -180,7 +196,7 @@ def trackBlogFunctionsCalled(blogUsername, session_id, fun):
   insertQuery = """INSERT INTO blog_user_trackingDB VALUES (
     ?, ?, ?, ?, ?
   );"""
-  conn.query(insertQuery, (None, datetime.datetime.now(), blogUsername, session_id, fun))
+  conn.insert(insertQuery, (None, datetime.datetime.now(), blogUsername, session_id, fun))
 
 def base64ToString(string):
   decodedBytes = base64.b64decode(string)
@@ -370,7 +386,7 @@ def contactHome():
     insertQuery = 'INSERT INTO contact_messagesDB VALUES (?, ?, ?, ?);'
     # conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, message))
     # conn.commit()
-    conn.query(insertQuery, (None, datetime.datetime.now(), session_id, message))
+    conn.insert(insertQuery, (None, datetime.datetime.now(), session_id, message))
     # print(list(conn.execute(f'SELECT * FROM contactMessagesDB ORDER BY id DESC LIMIT 200')))
     kwargs = {
       'success': True,
@@ -454,7 +470,7 @@ def projectsHome():
     dataNew = [
       {
         "data": [
-          "Games"
+          "React apps"
         ],
         "type": "subheader"
       },
@@ -624,7 +640,7 @@ def captureHome():
     );"""
     # conn.execute(insertFingerprintQuery, args)
     # conn.commit()
-    conn.query(insertFingerprintQuery, args)
+    conn.insert(insertFingerprintQuery, args)
 
     # print(list(conn.execute(f'SELECT * FROM fingerprintDB ORDER BY id DESC LIMIT 200')))
     res = jsonify({'success': True})
@@ -656,7 +672,7 @@ def blogRegisterHome():
     blog_password_hash = generateHash((data.get('blog_password') + salt), config['blog-register-hash-key'])
 
     insertBlogUserQuery = 'INSERT INTO blog_usersDB VALUES (?, ?, ?, ?, ?, ?);'
-    conn.query(insertBlogUserQuery, (None, datetime.datetime.now(), data.get('blog_username'), blog_password_hash, salt, 1))
+    conn.insert(insertBlogUserQuery, (None, datetime.datetime.now(), data.get('blog_username'), blog_password_hash, salt, 1))
     
     kwargs = {
       'success': True,
@@ -688,7 +704,7 @@ def blogLoginHome():
     trackBlogFunctionsCalled(decodedStr[0], session_id, inspect.stack()[0][3])
 
     userSearchQuery = 'SELECT id, blog_password_hash, blog_password_salt, role_id FROM blog_usersDB where ? = "None" and blog_username = ?'    # expanding string when only one item in tuple ??? have to add second arg
-    userRow = conn.query(userSearchQuery, ('None', decodedStr[0])).fetchall()
+    userRow = conn.fetch(userSearchQuery, ('None', decodedStr[0]))
 
     if len(userRow) != 1:
       return build_unauthenticated()
@@ -725,10 +741,10 @@ def blogLoginHome():
     jwtRefresh = generateJWT(generateJWTHeader(), jwtRefreshPayload, config['blog-jwt-refresh-token'])
 
     userRefreshTokenDelete = 'DELETE from blog_refresh_tokensDB where ? = "None" and blog_user_id = ?;'
-    conn.query(userRefreshTokenDelete, ('None', userInfo.get('id')))
+    conn.fetch(userRefreshTokenDelete, ('None', userInfo.get('id')))
 
     userRefreshTokenInsert = 'INSERT INTO blog_refresh_tokensDB VALUES (?, ?, ?, ?);'
-    conn.query(userRefreshTokenInsert, (None, issuedAtRaw, userInfo.get('id'), jwtRefresh))
+    conn.fetch(userRefreshTokenInsert, (None, issuedAtRaw, userInfo.get('id'), jwtRefresh))
 
     res = jsonify(buildBearerResp(jwtAccess, expires))
     res.set_cookie('refresh_token', value=jwtRefresh, expires=refreshExpires, httponly=False) # domain=config['ORIGIN'], samesite='None', secure=True, 
@@ -752,33 +768,54 @@ def blogHome(authPayload):
     trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
 
     categoriesQuery = 'SELECT id, name from blog_post_categoryDB limit 5;'
-    categories = conn.query(categoriesQuery, ()).fetchall()
+    categories = conn.fetch(categoriesQuery, ())
 
     OrganisedPosts = {}
     for i in categories:
+      # categoryPostsQuery = '''
+      # SELECT 
+      #   blog_postsDB.id,
+      #   blog_postsDB.date,
+      #   blog_usersDB.blog_username,
+      #   blog_postsDB.title,
+      #   blog_postsDB.body
+      # from blog_postsDB
+      # inner join blog_usersDB on
+      #   blog_usersDB.id = blog_postsDB.blog_user_id
+      # inner join blog_post_categoryDB on
+      #   blog_postsDB.category_id = blog_post_categoryDB.id
+      # where
+      #   visible = 1 and
+      #   blog_postsDB.parent_blog_user_id = 0 and
+      #   ? = "None"
+      # ORDER BY blog_postsDB.category_id
+      # limit 5;
+      # '''
+
       categoryPostsQuery = '''
-      SELECT 
-        blog_postsDB.id,
-        blog_postsDB.date,
-        blog_usersDB.blog_username,
-        blog_postsDB.title,
-        blog_postsDB.body
-      from blog_postsDB
-      inner join blog_usersDB on
-        blog_usersDB.id = blog_postsDB.blog_user_id
-      where
-        visible = 1 and
-        blog_postsDB.parent_blog_user_id = 0 and
-        ? = "None" and
-        blog_postsDB.category_id = ?
-      limit 5;
+        SELECT 
+          blog_postsDB.id,
+          blog_postsDB.date,
+          blog_usersDB.blog_username,
+          blog_postsDB.title,
+          blog_postsDB.body
+        from blog_postsDB
+        inner join blog_usersDB on
+          blog_usersDB.id = blog_postsDB.blog_user_id
+        where
+          visible = 1 and
+          blog_postsDB.parent_blog_user_id = 0 and
+          ? = "None" and
+          blog_postsDB.category_id = ?
+        limit 5;
       '''
-      categoryPosts = conn.query(categoryPostsQuery, ('None', i[0])).fetchall()
+      categoryPosts = conn.fetch(categoryPostsQuery, ('None', i[0]))
       if len(categoryPosts):
         OrganisedPosts[i[1]] = []
       for a in categoryPosts:
         pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
-        postViewsRaw = conn.query(pullBlogViewsQuery, ('None', a[0])).fetchall()[0][0]
+        postViewsRaw = conn.fetch(pullBlogViewsQuery, ('None', a[0]))[0][0]
+
         OrganisedPosts[i[1]].append({
           'id': a[0],
           'date': a[1],
@@ -821,16 +858,16 @@ def blogPostCreateHome(authPayload):
     blog_body = data.get('blog_body')
 
     validatePermsQuery = 'SELECT canPost from blog_roleDB where ? = "None" and id = ?;'
-    canPost = conn.query(validatePermsQuery, ('None', role)).fetchall()
+    canPost = conn.fetch(validatePermsQuery, ('None', role))
     print(authPayload)
     if canPost[0][0] != 1:
       return build_unauthorized()
 
     publishBlogQuery = 'INSERT INTO blog_postsDB VALUES (?, ?, ?, ?, ?, ?, ?, ?);'
-    conn.query(publishBlogQuery, (None, datetime.datetime.now(), user_id, blog_title, 1, blog_body, 1, 0))
+    conn.fetch(publishBlogQuery, (None, datetime.datetime.now(), user_id, blog_title, 1, blog_body, 1, 0))
     
     publishedBlogIdQuery = 'SELECT id from blog_postsDB where blog_user_id = ? and title = ? and  body = ?;'
-    publishedBlogId = conn.query(publishedBlogIdQuery, (user_id, blog_title, blog_body)).fetchall()
+    publishedBlogId = conn.fetch(publishedBlogIdQuery, (user_id, blog_title, blog_body))
     kwargs = {
       'success': True,
       'data': {
@@ -861,7 +898,7 @@ def blogPostViewHome(authPayload, *args, **kwargs):
     trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
     
     pullBlogQuery = 'SELECT * from blog_postsDB where id = ? and (visible = 1 or blog_user_id = ? or ? = "True");'
-    postRaw = conn.query(pullBlogQuery, (id, user_id, (role==999))).fetchall()
+    postRaw = conn.fetch(pullBlogQuery, (id, user_id, (role==999)))
 
     if len(postRaw) != 1:
       return build_not_found()
@@ -881,11 +918,11 @@ def blogPostViewHome(authPayload, *args, **kwargs):
 
 
     addBlogViewQuery = 'INSERT INTO blog_post_viewsDB VALUES (?, ?, ?, ?);'
-    conn.query(addBlogViewQuery, (None, datetime.datetime.now(), user_id, id))
+    conn.fetch(addBlogViewQuery, (None, datetime.datetime.now(), user_id, id))
 
     # Distinct??    
     pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
-    postViewsRaw = conn.query(pullBlogViewsQuery, ('None', id)).fetchall()[0][0]
+    postViewsRaw = conn.fetch(pullBlogViewsQuery, ('None', id))[0][0]
 
     post = {
       **post,
@@ -916,8 +953,8 @@ def blogRefreshHome():
       res = jsonify(kwargs)
       return build_actual_response(res), 204
     refreshTokenSearchQuery = 'SELECT count(*) FROM blog_refresh_tokensDB where ? = "None" and blog_refresh_token = ?'    # expanding string when only one item in tuple ??? have to add second arg
-    # tokenRows = conn.execute(refreshTokenSearchQuery, ('None', refresh_token)).fetchall()
-    tokenRows = conn.query(refreshTokenSearchQuery, ('None', refresh_token)).fetchall()
+    # tokenRows = conn.execute(refreshTokenSearchQuery, ('None', refresh_token))
+    tokenRows = conn.fetch(refreshTokenSearchQuery, ('None', refresh_token))
 
     if len(tokenRows) != 1:
       return build_unauthorized()
@@ -962,13 +999,13 @@ def monitorHome():
     insertMonitorQuery = 'INSERT INTO monitorDB VALUES (?, ?, ?, ?, ?);'
     # conn.execute(insertMonitorQuery, (None, datetime.datetime.now(), uuid, session_id, page))
     # conn.commit()
-    conn.query(insertMonitorQuery, (None, datetime.datetime.now(), uuid, session_id, page))
+    conn.insert(insertMonitorQuery, (None, datetime.datetime.now(), uuid, session_id, page))
 
 
     if prevPage:
       insertQuery = 'INSERT INTO route_trackDB VALUES (?, ?, ?, ?, ?);'
       # conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, prevPage, page))
-      conn.query(insertQuery, (None, datetime.datetime.now(), session_id, prevPage, page))
+      conn.insert(insertQuery, (None, datetime.datetime.now(), session_id, prevPage, page))
 
     # conn.commit()
 
@@ -1075,7 +1112,7 @@ def heatmapHome():
 @errorHandle
 def fuelpricesHome():
   if request.method == 'GET':
-    rows = list(conn.query('SELECT * FROM fuelpricesDB where ? = "None" ORDER BY id DESC LIMIT ?', ('None', 200)))[::-1]
+    rows = list(conn.fetch('SELECT * FROM fuelpricesDB where ? = "None" ORDER BY id DESC LIMIT ?', ('None', 200)))[::-1]
 
     dic = {'wholesale': [], 'min': [], 'max': [], 'average': [], }
     for key in rows:

@@ -88,27 +88,25 @@ function ContactPage(props: Props): JSX.Element {
 
   function SearchBar() {
     return (
-      <div className="contactPage">
-        <div className="search-container">
-          <div className="form">
-            <form onSubmit={((e) => handleSubmit(e, {
-              session_id: sessionStorage.getItem('session_id') ?? 'error',
-              message: value
-            }))}>
-              <div className="inputWithButton">
-                <div className="inputContainer">
-                  <div className="inputLabel">📝: </div>
-                  <input className="input" type="text" value={value} onChange={((e) => {setValue(e.target.value)})} />
-                </div>
-                <div className="submit-button">
-                  <Button colours={scheme} />
-                  <div className="status">
-                    {value.length ? (POSTstate.loading ? '🛫' : (POSTstate.details ? (POSTstate.details.success ? '✅' : '❌') : '✏️')) : '🗒️'}
-                  </div>
+      <div className="search-container">
+        <div className="form">
+          <form onSubmit={((e) => handleSubmit(e, {
+            session_id: sessionStorage.getItem('session_id') ?? 'error',
+            message: value
+          }))}>
+            <div className="inputWithButton">
+              <div className="inputContainer">
+                <div className="inputLabel">📝: </div>
+                <input className="input" type="text" value={value} onChange={((e) => {setValue(e.target.value)})} />
+              </div>
+              <div className="submit-button">
+                <Button colours={scheme} />
+                <div className="status">
+                  {value.length ? (POSTstate.loading ? '🛫' : (POSTstate.details ? (POSTstate.details.success ? '✅' : '❌') : '✏️')) : '🗒️'}
                 </div>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     );
@@ -129,20 +127,22 @@ function ContactPage(props: Props): JSX.Element {
     const data = state.details.data
 
     return (
-      <>
+      <div className="contactPage">
         {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
-        <div className="container">
-          <div className="links">
-            <h2 className='main-heading' style={{color: scheme.body.h1}}>Contact</h2>
-            {data.map((segment, indexSegment) => (
-              <div key={indexSegment}>
-                {typeLookup(segment.type, segment.data, segment?.text)}
-              </div>
-            ))}
-          {SearchBar()}
+        <div className="contactPage">
+          <div className="container">
+            <div className="links">
+              <h2 className='main-heading' style={{color: scheme.body.h1}}>Contact</h2>
+              {data.map((segment, indexSegment) => (
+                <div key={indexSegment}>
+                  {typeLookup(segment.type, segment.data, segment?.text)}
+                </div>
+              ))}
+            {SearchBar()}
+            </div>
           </div>
         </div>
-      </>
+      </div>
     );
   }
   return <></>;
