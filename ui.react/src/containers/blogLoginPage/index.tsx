@@ -105,7 +105,7 @@ function BlogLoginPage(props: Props): JSX.Element {
         });
         // add auth token to context
         setToken(resp.accessToken ?? '')
-        navigate('/blog/post/1')
+        navigate(`/${blogPath}`)
       } else {
         throw new Error(resp.error);
       }
