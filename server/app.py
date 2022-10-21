@@ -192,15 +192,16 @@ def generateJWTHeader():
   }
   return kwargs
 
-def trackBlogFunctionsCalled(blogUsername, session_id, fun):
+def trackBlogFunctionsCalled(blogUsername, session_id, funct):
   insertQuery = """INSERT INTO blog_user_trackingDB VALUES (
     ?, ?, ?, ?, ?
   );"""
-  conn.insert(insertQuery, (None, datetime.datetime.now(), blogUsername, session_id, fun))
+  conn.insert(insertQuery, (None, datetime.datetime.now(), blogUsername, session_id, funct))
 
 def base64ToString(string):
   decodedBytes = base64.b64decode(string)
   decodedStr = str(decodedBytes, "utf-8")
+  print(decodedStr)
   return decodedStr
 
 def stringToBase64(string):
@@ -213,6 +214,17 @@ def generateHash(string, key):
       hashlib.sha256,
     ).hexdigest()
   return signature
+
+
+# TODO: See pbkdf2_sha256 or Argon2
+# def generateSecureHash(string, key):
+#   timeout = 500_000
+#   signature = hashlib.pbkdf2_hmac(
+#     'sha256',
+#     string.encode,
+#     b'bad salt'*2, # No way to set key?
+#     timeout)
+#   return signature
 
 def generateJWT(header, payload, key, expires=None):
   jwtEncoded = f'{stringToBase64(json.dumps(header))}.{stringToBase64(json.dumps(payload))}'
@@ -234,6 +246,7 @@ def blogAuthorize(jwt, key):
   if stringToBase64(jwtSignature) == jwt[2]:
     jwtDecoded = [eval(base64ToString(jwt[0])), eval(base64ToString(jwt[1]))]
     # if jwtDecoded[1].has_key('exp'):
+    print(jwtDecoded)
     if 'exp' in jwtDecoded[1]:
       # tokenExpires = datetime.fromtimestamp(int(jwtDecoded[1].get('exp'))/1000, tz=None)
       timestampNow = int(datetime.datetime.now().timestamp() * 1000)
@@ -672,7 +685,7 @@ def blogRegisterHome():
     blog_password_hash = generateHash((data.get('blog_password') + salt), config['blog-register-hash-key'])
 
     insertBlogUserQuery = 'INSERT INTO blog_usersDB VALUES (?, ?, ?, ?, ?, ?);'
-    conn.insert(insertBlogUserQuery, (None, datetime.datetime.now(), data.get('blog_username'), blog_password_hash, salt, 1))
+    conn.insert(insertBlogUserQuery, (None, datetime.datetime.now(), data.get('blog_username').lower(), blog_password_hash, salt, 1))
     
     kwargs = {
       'success': True,
@@ -688,8 +701,8 @@ def blogRegisterHome():
 @errorHandle
 def blogLoginHome():
   if request.method == 'POST':
-    accessTokenLife = 999 # Minutes
-    refreshTokenLife = 999 # Days
+    accessTokenLife = int(config['blog-access-token-life']) # Minutes
+    refreshTokenLife = int(config['blog-refresh-token-life']) # Days
 
     auth_header = request.headers.get('Authorization')
     if auth_header is None or not auth_header.startswith('Basic '):
@@ -704,7 +717,8 @@ def blogLoginHome():
     trackBlogFunctionsCalled(decodedStr[0], session_id, inspect.stack()[0][3])
 
     userSearchQuery = 'SELECT id, blog_password_hash, blog_password_salt, role_id FROM blog_usersDB where ? = "None" and blog_username = ?'    # expanding string when only one item in tuple ??? have to add second arg
-    userRow = conn.fetch(userSearchQuery, ('None', decodedStr[0]))
+    userRow = conn.fetch(userSearchQuery, ('None', decodedStr[0].lower()))
+    print(userRow)
 
     if len(userRow) != 1:
       return build_unauthenticated()
@@ -713,11 +727,11 @@ def blogLoginHome():
       'id': userRow[0][0],
       'passwordHash': userRow[0][1],
       'passwordSalt': userRow[0][2],
-      'role': userRow[0][3]
+      'role': userRow[0][3],
+      'username': decodedStr[0]
     }
 
     blog_password_hash = generateHash((decodedStr[1] + userInfo.get('passwordSalt')), config['blog-register-hash-key'])
-
     if userInfo.get('passwordHash') != blog_password_hash:
       return build_unauthenticated()
 
@@ -727,13 +741,14 @@ def blogLoginHome():
     issuedAt = str(int(issuedAtRaw.timestamp() * 1000 ))
 
     jwtAccessPayload = {
-      'username': userInfo.get('id'),
+      'userId': userInfo.get('id'),
       'iat': issuedAt,
       'role': userInfo.get('role'),
+      'username': userInfo.get('username'),
       'exp': expires
     }
     jwtRefreshPayload = {
-      'username': userInfo.get('id'),
+      'userId': userInfo.get('id'),
       'iat': issuedAt
     }
 
@@ -761,37 +776,21 @@ def blogLoginHome():
 def blogHome(authPayload):
   if request.method == 'GET':
     session_id = request.args.get('session_id')
+    category = request.args.get('category')
     if not session_id:
       return build_bad_req()
-    user_id = authPayload.get('payload').get('username')
+      
+    user_id = authPayload.get('payload').get('userId')
     role = authPayload.get('payload').get('role')
     trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
 
-    categoriesQuery = 'SELECT id, name from blog_post_categoryDB limit 5;'
-    categories = conn.fetch(categoriesQuery, ())
+    if category:
+      categoryQuery = 'SELECT id from blog_post_categoryDB where "None" = ? and name = ?;'
+      categoryId = conn.fetch(categoryQuery, ("None", category))[0]
 
-    OrganisedPosts = {}
-    for i in categories:
-      # categoryPostsQuery = '''
-      # SELECT 
-      #   blog_postsDB.id,
-      #   blog_postsDB.date,
-      #   blog_usersDB.blog_username,
-      #   blog_postsDB.title,
-      #   blog_postsDB.body
-      # from blog_postsDB
-      # inner join blog_usersDB on
-      #   blog_usersDB.id = blog_postsDB.blog_user_id
-      # inner join blog_post_categoryDB on
-      #   blog_postsDB.category_id = blog_post_categoryDB.id
-      # where
-      #   visible = 1 and
-      #   blog_postsDB.parent_blog_user_id = 0 and
-      #   ? = "None"
-      # ORDER BY blog_postsDB.category_id
-      # limit 5;
-      # '''
-
+      if not len(categoryId):
+        return build_not_found()
+      
       categoryPostsQuery = '''
         SELECT 
           blog_postsDB.id,
@@ -807,16 +806,19 @@ def blogHome(authPayload):
           blog_postsDB.parent_blog_user_id = 0 and
           ? = "None" and
           blog_postsDB.category_id = ?
-        limit 5;
       '''
-      categoryPosts = conn.fetch(categoryPostsQuery, ('None', i[0]))
-      if len(categoryPosts):
-        OrganisedPosts[i[1]] = []
+      print('here')
+
+      categoryPosts = conn.fetch(categoryPostsQuery, ('None', categoryId[0]))
+      OrganisedPosts = []
+      if not len(categoryPosts):
+        return build_not_found()
+
       for a in categoryPosts:
         pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
         postViewsRaw = conn.fetch(pullBlogViewsQuery, ('None', a[0]))[0][0]
 
-        OrganisedPosts[i[1]].append({
+        OrganisedPosts.append({
           'id': a[0],
           'date': a[1],
           'author': a[2],
@@ -824,13 +826,80 @@ def blogHome(authPayload):
           'body': a[4][:30],
           'views': postViewsRaw
         })
-    kwargs = {
-      'success': True,
-      'data': OrganisedPosts
-    }
-    res = jsonify(kwargs)
-    res.headers.add('Access-Control-Allow-Credentials', 'true') 
-    return build_actual_response(res)
+      kwargs = {
+        'success': True,
+        'data': {
+          category: OrganisedPosts
+        }
+      }
+      res = jsonify(kwargs)
+      res.headers.add('Access-Control-Allow-Credentials', 'true') 
+      return build_actual_response(res)
+    else:
+      categoriesQuery = 'SELECT id, name from blog_post_categoryDB limit 5;'
+      categories = conn.fetch(categoriesQuery, ())
+
+      OrganisedPosts = {}
+      for i in categories:
+        # categoryPostsQuery = '''
+        # SELECT 
+        #   blog_postsDB.id,
+        #   blog_postsDB.date,
+        #   blog_usersDB.blog_username,
+        #   blog_postsDB.title,
+        #   blog_postsDB.body
+        # from blog_postsDB
+        # inner join blog_usersDB on
+        #   blog_usersDB.id = blog_postsDB.blog_user_id
+        # inner join blog_post_categoryDB on
+        #   blog_postsDB.category_id = blog_post_categoryDB.id
+        # where
+        #   visible = 1 and
+        #   blog_postsDB.parent_blog_user_id = 0 and
+        #   ? = "None"
+        # ORDER BY blog_postsDB.category_id
+        # limit 5;
+        # '''
+
+        categoryPostsQuery = '''
+          SELECT 
+            blog_postsDB.id,
+            blog_postsDB.date,
+            blog_usersDB.blog_username,
+            blog_postsDB.title,
+            blog_postsDB.body
+          from blog_postsDB
+          inner join blog_usersDB on
+            blog_usersDB.id = blog_postsDB.blog_user_id
+          where
+            visible = 1 and
+            blog_postsDB.parent_blog_user_id = 0 and
+            ? = "None" and
+            blog_postsDB.category_id = ?
+          limit 5;
+        '''
+        categoryPosts = conn.fetch(categoryPostsQuery, ('None', i[0]))
+        if len(categoryPosts):
+          OrganisedPosts[i[1]] = []
+        for a in categoryPosts:
+          pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
+          postViewsRaw = conn.fetch(pullBlogViewsQuery, ('None', a[0]))[0][0]
+
+          OrganisedPosts[i[1]].append({
+            'id': a[0],
+            'date': a[1],
+            'author': a[2],
+            'title': a[3],
+            'body': a[4][:30],
+            'views': postViewsRaw
+          })
+      kwargs = {
+        'success': True,
+        'data': OrganisedPosts
+      }
+      res = jsonify(kwargs)
+      res.headers.add('Access-Control-Allow-Credentials', 'true') 
+      return build_actual_response(res)
   elif request.method == 'OPTIONS': 
     return build_preflight_response()
   else:
@@ -843,10 +912,10 @@ def blogHome(authPayload):
 def blogPostCreateHome(authPayload):
   if request.method == 'POST':
     data = request.get_json()
-    if 'data' not in data and not 'session_id' in data:
+    if 'data' not in data and 'session_id' not in data:
       return build_bad_req()
     session_id = data.get('session_id')
-    user_id = authPayload.get('payload').get('username')
+    user_id = authPayload.get('payload').get('userId')
     role = authPayload.get('payload').get('role')
     trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
 
@@ -871,7 +940,7 @@ def blogPostCreateHome(authPayload):
     kwargs = {
       'success': True,
       'data': {
-        'blogPostId': publishedBlogId[0]
+        'blogPostId': publishedBlogId[0][0]
       }
     }
     res = jsonify(kwargs)
@@ -890,7 +959,7 @@ def blogPostViewHome(authPayload, *args, **kwargs):
     print(id)
     data = request.get_json()
     print(request)
-    user_id = authPayload.get('payload').get('username')
+    user_id = authPayload.get('payload').get('userId')
     role = authPayload.get('payload').get('role')
     if 'session_id' not in data:
       return build_bad_req()
@@ -946,6 +1015,7 @@ def blogPostViewHome(authPayload, *args, **kwargs):
 def blogRefreshHome():
   if request.method == 'POST':
     refresh_token = request.cookies.get('refresh_token')
+    refreshTokenLife = int(config['blog-refresh-token-life']) # Days
     if not refresh_token:
       kwargs = {
         'success': False
@@ -960,18 +1030,24 @@ def blogRefreshHome():
       return build_unauthorized()
 
     outcome = blogAuthorize(refresh_token, config['blog-jwt-refresh-token'])
+    userId = outcome.get('payload').get('userId')
 
     if not outcome.get('success'):
       return build_unauthorized()
 
-    expires = str(int((datetime.datetime.now() + datetime.timedelta(minutes = 1)).timestamp() * 1000 ))
+    userSearchQuery = 'SELECT blog_username, role_id FROM blog_usersDB where ? = "None" and id = ?'    # expanding string when only one item in tuple ??? have to add second arg
+    userRow = conn.fetch(userSearchQuery, ('None', userId))
+
+    expires = str(int((datetime.datetime.now() + datetime.timedelta(days = refreshTokenLife)).timestamp() * 1000 ))
     issuedAtRaw = datetime.datetime.now()
     issuedAt = str(int(issuedAtRaw.timestamp() * 1000 ))
 
     jwtAccessPayload = {
-      'username': outcome.get('payload').get('username'),
+      'userId': userId,
       'iat': issuedAt,
-      'exp': expires
+      'exp': expires,
+      'role': userRow[0][1],
+      'username': userRow[0][0]
     }
     jwtAccess = generateJWT(generateJWTHeader(), jwtAccessPayload, config['blog-jwt-auth-token'])
 

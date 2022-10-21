@@ -13,7 +13,7 @@ import { BlogHomeInitialState } from "./types";
 import { getBlogHome } from "../App/api/blogApis";
 import { BlogHomeGETInitialState, BlogHomeGETResponse, BlogRegisterPOSTResponse } from "../blogLoginPage/types";
 import { blogPath } from "../App/api/types";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import { BlogRouteType } from "../App/routeTypes";
 import Redirect from "../../components/Redirect"
 
@@ -25,13 +25,21 @@ interface Props {
 function BlogHomePage(props: Props): JSX.Element {
   const [state, setState] = useState({...BlogHomeGETInitialState});
   // const [POSTstate, setPOSTState] = useState({...ContactPOSTInitialState});
-  const [value, setValue] = useState('');
   const [scheme, setScheme] = useContext(SchemeContext);
   const [token, setToken] = useAccessToken();
-  useAccessToken()
+  const location = useLocation()
+
   useEffect(() => {
     if(!token) {return}
-    props.dataCall({session_id: sessionStorage.getItem('session_id')}, token).then((resp: BlogHomeGETResponse) => {
+    let paramString = window.location.href.split('?')[1];
+    let queryString = new URLSearchParams(paramString);
+
+    props.dataCall(
+      {
+        session_id: sessionStorage.getItem('session_id'),
+        category: queryString.get('category')
+      }
+    , token).then((resp: BlogHomeGETResponse) => {
       setState({
         details: resp,
         error: false,
@@ -45,7 +53,7 @@ function BlogHomePage(props: Props): JSX.Element {
         loading: false
       });
     })
-  }, [token]);
+  }, [token, location]);
 
   // const handleSubmit = (event: React.FormEvent<HTMLFormElement>, payload: ContactPOST) => {
   //   setPOSTState({...POSTstate, loading: true});
@@ -80,8 +88,11 @@ function BlogHomePage(props: Props): JSX.Element {
   if(state.loading) {
    return <Spinner/>
   }
-  if(!token?.length) {
-    return (
+  console.log(token)
+  console.log('token')
+  if(token === '') {
+  console.log('redireceting')
+  return (
       <Redirect
         destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`}
       />
@@ -105,16 +116,22 @@ function BlogHomePage(props: Props): JSX.Element {
             <div className="posts">
               {Object.keys(data).map((segment, indexSegment) => (
                 <div className="category" key={indexSegment}>
-                  <p key={indexSegment**2}>{segment}</p>
+                  <Link key={indexSegment**2} to={`/${blogPath}?category=${segment}`}>{segment}</Link>
                   {/** @ts-ignore */}
                   {data[segment].map((catPost, catPostIndex) => (
                     <Link to={`/${blogPath}/post/${catPost['id']}`} key={catPostIndex}>
                       <div className="post-details" key={catPostIndex + indexSegment}>
-                        <div className="post-detail" key={catPostIndex + indexSegment + 2}>{catPost['author']}</div>
-                        <div className="post-detail" key={catPostIndex + indexSegment + 1}>{catPost['title']}</div>
+                        <div className="post-detail" key={catPostIndex + indexSegment + 2}>
+                          {catPost['author']}
+                        </div>
+                        <div className="post-detail" key={catPostIndex + indexSegment + 1}>
+                          {catPost['title']}
+                        </div>
                         {window.outerWidth > 1000 ? <div className="post-detail" key={catPostIndex + indexSegment + 3}>{catPost['body']}</div> : <></>}
-                        <div className="post-detail" key={catPostIndex + indexSegment + 4}>{catPost['views']}</div>
-                    </div>
+                        <div className="post-detail" key={catPostIndex + indexSegment + 4}>
+                          {catPost['views']}
+                        </div>
+                      </div>
                     </Link>
                   ))}
                 </div>

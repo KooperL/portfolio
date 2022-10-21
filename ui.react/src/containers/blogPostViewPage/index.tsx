@@ -39,7 +39,6 @@ function BlogPostViewPage(props: Props): JSX.Element {
             errorMessage: '',
             loading: false
           });
-          // navigate(`/${blogPath}/post/`)
         } else {
           throw new Error(resp.error);
         }
@@ -53,8 +52,6 @@ function BlogPostViewPage(props: Props): JSX.Element {
       }
     )
   }, [token]);
-
-  console.log(token)
 
   // const handleSubmit = (event: React.FormEvent<HTMLFormElement>, payload: BlogPostViewGETPayload) => {
   //   setPOSTState({...POSTstate, loading: true});
