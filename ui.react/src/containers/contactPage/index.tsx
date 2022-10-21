@@ -96,8 +96,8 @@ function ContactPage(props: Props): JSX.Element {
           }))}>
             <div className="inputWithButton">
               <div className="inputContainer">
-                <div className="inputLabel">📝: </div>
-                <input className="input" type="text" value={value} onChange={((e) => {setValue(e.target.value)})} />
+                <div className="inputLabel"><p>📝:&nbsp;</p></div>
+                <input className="input" type="text" value={value} key={1} onChange={((e) => {setValue(e.target.value)})} />
               </div>
               <div className="submit-button">
                 <Button colours={scheme} />

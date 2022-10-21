@@ -37,14 +37,15 @@ function BlogPostCreatePage(props: Props): JSX.Element {
     setPOSTState({...POSTstate, loading: true});
     event.preventDefault();
     props.dataPost(payload, token).then((resp: BlogPostCreatePOSTResponse) => {
-      if(resp.success) {
+      if(resp.success && resp.data) {
         setPOSTState({
           details: resp,
           error: false,
           errorMessage: '',
           loading: false
         });
-        navigate(`/${blogPath}/post`)
+        console.log(resp.data.blogPostId)
+        navigate(`/${blogPath}/post/${resp.data.blogPostId}`)
       } else {
         throw new Error(resp.error);
       }
@@ -63,7 +64,7 @@ function BlogPostCreatePage(props: Props): JSX.Element {
     document.title = `Blog Create | ${scheme.title}`;
   }, []);
 
-  if(!token?.length) {
+  if(token === '') {
     return (
       <Redirect
         destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`}

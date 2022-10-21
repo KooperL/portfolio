@@ -126,7 +126,7 @@ function BlogLoginPage(props: Props): JSX.Element {
 
   const encoded = btoa(`${usernameLogin}:${passwordLogin}`)
 
-  if(token?.length) {
+  if(token !== '' && token !== null) {
     return (
       <Redirect
         destination={`/${BlogRouteType.BlogHome}`}

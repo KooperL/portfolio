@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import './style.css';
 import { SchemeContext } from '../../containers/context/colourScheme';
 import { FuncProps, Props } from './types';
@@ -9,20 +9,22 @@ import { LoggingPOSTResponse } from '../Logger/types';
 function ButtonRedir(props: FuncProps) {
   const [scheme, setScheme] = useContext(SchemeContext);
 
-  props.monitorPost({
-    uuid: localStorage.getItem('uuid'),
-    session_id: sessionStorage.getItem('session_id'),
-    page: window.location.pathname,
-    ...(localStorage.getItem('currentPage') && {prevPage: localStorage.getItem('currentPage')})
-  }).then((resp: LoggingPOSTResponse) => {
-    if(resp.success) {
-      localStorage.setItem('currentPage', window.location.pathname)
-    } else {
-      throw new Error(resp.error);
-    }
-  }).catch((err: any) => {
-    console.log(err)
-  })
+  useEffect(() => {
+    props.monitorPost({
+      uuid: localStorage.getItem('uuid'),
+      session_id: sessionStorage.getItem('session_id'),
+      page: window.location.pathname,
+      ...(localStorage.getItem('currentPage') && {prevPage: localStorage.getItem('currentPage')})
+    }).then((resp: LoggingPOSTResponse) => {
+      if(resp.success) {
+        localStorage.setItem('currentPage', window.location.pathname)
+      } else {
+        throw new Error(resp.error);
+      }
+    }).catch((err: any) => {
+      console.log(err)
+    })
+  }, [])
 
   if(props.data.local) {
     return (

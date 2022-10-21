@@ -6,7 +6,7 @@ export interface BlogLoginPOSTResponse {
   success: boolean;
   type?: string;
   accessToken?: string;
-  exprires?: number;
+  expires?: number;
   error?: string;
 }
 
@@ -57,18 +57,19 @@ export const BlogRegisterPOSTInitialState: BlogRegisterPOSTState = {
   loading: false
 } as const;
 
+interface blog_item {
+  id: number;
+  date: string;
+  author: string;
+  title: string;
+  body: string;
+  views: number;
+}
 
 export interface BlogHomeGETResponse {
   success: boolean;
   data: {
-    string: {
-      id: number;
-      date: string;
-      author: string;
-      title: string;
-      body: string;
-      views: number;
-    }[]
+    string: blog_item[]
   }
 }
 
