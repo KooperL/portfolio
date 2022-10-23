@@ -82,7 +82,7 @@ function BlogPostViewPage(props: Props): JSX.Element {
   useEffect(() => {
     document.title = `${GETstate.details ? GETstate.details?.data?.title : 'Loading'} | ${scheme.title}`;
     // window.location.href.substring(window.location.href.lastIndexOf('/') + 1)
-  }, []);
+  }, [GETstate]);
 
   if(GETstate.loading) {
     return <Spinner/>
@@ -101,24 +101,38 @@ function BlogPostViewPage(props: Props): JSX.Element {
        </div>
      );
    }
+  const data = GETstate.details?.data;
   return (
     <div className="blogPostViewPage">
       <div className="container">
         <div className="links">
           <div id="form-container">
-            <h2 className='main-heading' style={{color: scheme.body.h1}}>Post</h2>
-              <div id="post">
+            <div id="post">
+              <div className="row">
+                <p>Posted to:&nbsp;</p>
+                <p>{data?.category}</p>
+                <p>,&nbsp;</p>
+                <p>{`${Math.floor((+new Date() - +new Date(data?.date ?? 0)) / 1000 / 60 / 60 / 24)} day(s) ago`}</p>
+              </div>
               <div className="title">
-                <p>Title</p>
-                <p className="field">{GETstate.details?.data?.title}</p>
+                <p className="field">{data?.title}</p>
               </div>
-              <div className="body">
-                <p>Body</p>
-                <p className="field">{GETstate.details?.data?.body}</p>
+              <div className="metadata">
+                <div className="row">
+                  <p>By:&nbsp;</p>
+                  <p style={{color: scheme.body.h1}}>{data?.author}</p>
+                </div>
+                <div className="row">
+                  <p>{data?.views}</p>
+                  <p>&nbsp;view(s)</p>
+                </div>
               </div>
-              <div id="button">
+              <div className="body" style={{borderColor: scheme.body.foreground}}>
+                <p className="field">{data?.body}</p>
+              </div>
+              {/* <div id="button">
                 <Button colours={scheme} />
-              </div>
+              </div> */}
               {/* <form onSubmit={((e) => handleSubmit(e, {
                 session_id: sessionStorage.getItem('session_id') ?? 'error',
                 data: {

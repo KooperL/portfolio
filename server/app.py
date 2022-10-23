@@ -807,8 +807,6 @@ def blogHome(authPayload):
           ? = "None" and
           blog_postsDB.category_id = ?
       '''
-      print('here')
-
       categoryPosts = conn.fetch(categoryPostsQuery, ('None', categoryId[0]))
       OrganisedPosts = []
       if not len(categoryPosts):
@@ -928,7 +926,6 @@ def blogPostCreateHome(authPayload):
 
     validatePermsQuery = 'SELECT canPost from blog_roleDB where ? = "None" and id = ?;'
     canPost = conn.fetch(validatePermsQuery, ('None', role))
-    print(authPayload)
     if canPost[0][0] != 1:
       return build_unauthorized()
 
@@ -966,7 +963,23 @@ def blogPostViewHome(authPayload, *args, **kwargs):
     session_id = data.get('session_id')
     trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
     
-    pullBlogQuery = 'SELECT * from blog_postsDB where id = ? and (visible = 1 or blog_user_id = ? or ? = "True");'
+    pullBlogQuery = '''
+      SELECT 
+        blog_postsDB.id,
+        blog_postsDB.date,
+        blog_usersDB.blog_username,
+        blog_postsDB.title,
+        blog_postsDB.body,
+        blog_user_id,
+        blog_post_categoryDB.name
+      from blog_postsDB
+      INNER JOIN blog_post_categoryDB
+        on blog_post_categoryDB.id = blog_postsDB.category_id
+      INNER JOIN blog_usersDB
+        on blog_usersDB.id = blog_postsDB.blog_user_id
+      where
+        blog_postsDB.id = ? and
+        (blog_postsDB.visible = 1 or blog_postsDB.blog_user_id = ? or ? = "True");'''
     postRaw = conn.fetch(pullBlogQuery, (id, user_id, (role==999)))
 
     if len(postRaw) != 1:
@@ -975,11 +988,11 @@ def blogPostViewHome(authPayload, *args, **kwargs):
     post = {
       'id' : postRaw[0][0],
       'date' : postRaw[0][1],
-      'author_id': postRaw[0][2],
+      'author': postRaw[0][2],
       'title': postRaw[0][3],
-      'category_id': postRaw[0][4],
-      'body': postRaw[0][5],
-      'visible': postRaw[0][6],
+      'body': postRaw[0][4],
+      'author_id': postRaw[0][5],
+      'category': postRaw[0][6],
     }
 
     # if visible != 1 or role == 999:
@@ -989,7 +1002,7 @@ def blogPostViewHome(authPayload, *args, **kwargs):
     addBlogViewQuery = 'INSERT INTO blog_post_viewsDB VALUES (?, ?, ?, ?);'
     conn.fetch(addBlogViewQuery, (None, datetime.datetime.now(), user_id, id))
 
-    # Distinct??    
+    # Distinct views??
     pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
     postViewsRaw = conn.fetch(pullBlogViewsQuery, ('None', id))[0][0]
 
