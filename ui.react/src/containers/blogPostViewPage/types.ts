@@ -8,10 +8,10 @@ export interface BlogPostViewGETResponse {
     'id' : number;
     'date' : string;
     'author_id': number;
+    'author': string;
     'title': string;
-    'category_id': number;
     'body': string;
-    'visible': number;
+    'category': string;
     'views': number;
   }
   error?: string
