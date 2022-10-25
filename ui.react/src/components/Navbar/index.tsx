@@ -1,7 +1,7 @@
 
 import { useContext, useEffect, useState } from 'react';
 import { SchemeContext } from '../../containers/context/colourScheme';
-import './test.css';
+import './style.css';
 import { Link } from "react-router-dom";
 import ButtonRedir from '../ButtonRedir'
 import { useLocation } from 'react-router-dom'
@@ -44,10 +44,13 @@ function Navbar(props: {isVertical: boolean}) {
       } else {
         // Signed in
         // Sign out button
+        const username = JSON.parse(atob(token.split('.')[1]))['username']
         const blog_create = <ButtonRedir destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPostCreate}`} label='create' local={true} />
+        const blog_profile = <ButtonRedir destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogUser}/${username}`} label='My posts' local={true} />
+        const blog_sign_out = <ButtonRedir destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPostCreate}`} label='Log out' local={true} />
   
         // Search field?
-        setSpecialButtons([blog_create])
+        setSpecialButtons([blog_create, blog_profile, blog_sign_out])
       }
     }
   }, [location])
@@ -55,27 +58,28 @@ function Navbar(props: {isVertical: boolean}) {
   const home = <ButtonRedir  destination='/' label='Home ⬅️' local={true} />
   const back = <ButtonRedir destination={path[0]} label={`${path[0] ?? '/'} ⬅️` ?? ''} local={true} />
 
-
-
   return (
-    <nav className={`h-20 w-full fixed ${props.isVertical?'origin-top-left rotate-90 left-20 top-0': ''}`} style={{"backgroundColor": scheme.header.background, zIndex: props.isVertical ? 1 : 11}}>
-        <div className="h-full flex justify-between text-back tracking-widest">
-          <div className='flex justify-center items-center'>
-            <div className="" style={{width: 'fit-content'}}>
+    <div className="navbar">
+      <nav
+        className={`nav-container ${props.isVertical?'vertical': ''}`}
+        style={{"backgroundColor": scheme.header.background, zIndex: props.isVertical ? 1 : 11}}
+      >
+        <div className="nav-row">
+          <div className='buttons-container'>
               {!!path.length?(!props.isVertical ? home : ''):''}
-            </div>
-            <div className="">
               {path.length >= 2?(!props.isVertical ? back : ''):''}
-            </div>
           </div>
-          <div className='tech-slideshow grow '>
-            <div className='mover-1 flex justify-center items-center text-xl' style={{height: '100%'}}>
+          <div className='tech-slideshow'>
+            <div className='mover-1 text' style={{height: '100%'}}>
               {bannerText.map(jsx => jsx)}
             </div>
           </div>
-        <div>{specialButtons}</div>
+          <div className='buttons-container'>
+            {specialButtons}
+          </div>
         </div>
-    </nav>
+      </nav>
+    </div>
   );
 }
 

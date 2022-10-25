@@ -46,19 +46,18 @@
   color: black;
 }
 
-.row {
+.blogPostViewPage .row {
   display: flex;
 }
 
-.body {
+.blogPostViewPage .body {
   margin-top: 10px;
   padding: 10px 15px;
-  border-color: black;
   border-width: 2px;
   border-radius: 10px;
 }
 
-.metadata {
+.blogPostViewPage .metadata {
   display: flex;
   justify-content: space-between;
 }

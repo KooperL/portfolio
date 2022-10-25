@@ -18,6 +18,7 @@ import { AboutPage } from '../aboutPage/loadable';
 import { Logger } from '../../components/Logger/loadable';
 import { AccessTokenProvider } from '../authContext/context';
 import { BlogHomePage } from '../blogHomePage/loadable';
+import { BlogUserPage } from '../blogUserPage/loadable';
 import { BlogLoginPage } from '../blogLoginPage/loadable';
 import { BlogPostCreatePage } from '../blogPostCreatePage/loadable';
 import { BlogPostViewPage } from '../blogPostViewPage/loadable';
@@ -64,7 +65,8 @@ function App() {
               <Route path={`${BlogRouteType.BlogRegister}`} element={<BlogLoginPage />} />
               <Route path={`${BlogRouteType.BlogLogin}`} element={<BlogLoginPage />} />
               <Route path={`${BlogRouteType.BlogPostCreate}`} element={<BlogPostCreatePage />} />
-              <Route path={`${BlogRouteType.BlogPost}`} element={<BlogPostViewPage />} />
+              <Route path={`${BlogRouteType.BlogPost}/:postId`} element={<BlogPostViewPage />} />
+              <Route path={`${BlogRouteType.BlogUser}/:username`} element={<BlogUserPage />} />
             </Route>
           </Routes>
         </Router>

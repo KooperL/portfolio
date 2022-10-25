@@ -34,12 +34,10 @@ function BlogHomePage(props: Props): JSX.Element {
     let paramString = window.location.href.split('?')[1];
     let queryString = new URLSearchParams(paramString);
 
-    props.dataCall(
-      {
-        session_id: sessionStorage.getItem('session_id'),
-        category: queryString.get('category')
-      }
-    , token).then((resp: BlogHomeGETResponse) => {
+    props.dataCall({
+      session_id: sessionStorage.getItem('session_id'),
+      category: queryString.get('category')
+    }, token).then((resp: BlogHomeGETResponse) => {
       setState({
         details: resp,
         error: false,
@@ -88,11 +86,8 @@ function BlogHomePage(props: Props): JSX.Element {
   if(state.loading) {
    return <Spinner/>
   }
-  console.log(token)
-  console.log('token')
   if(token === '') {
-  console.log('redireceting')
-  return (
+    return (
       <Redirect
         destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`}
       />
@@ -105,7 +100,7 @@ function BlogHomePage(props: Props): JSX.Element {
       </div>
     );
   }
-  if(state.details) {
+  if(state.details && state.details.data) {
     const data = state.details.data
     return (
       <div className="blogHomePage">
@@ -119,7 +114,7 @@ function BlogHomePage(props: Props): JSX.Element {
                   <Link key={indexSegment**2} to={`/${blogPath}?category=${segment}`}>{segment}</Link>
                   {/** @ts-ignore */}
                   {data[segment].map((catPost, catPostIndex) => (
-                    <Link to={`/${blogPath}/post/${catPost['id']}`} key={catPostIndex}>
+                    <Link to={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPost}/${catPost['id']}`} key={catPostIndex}>
                       <div className="post-details" key={catPostIndex + indexSegment}>
                         <div className="post-detail" key={catPostIndex + indexSegment + 2}>
                           {catPost['author']}

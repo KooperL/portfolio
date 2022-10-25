@@ -9,7 +9,8 @@ export enum IndexRouteType {
     // BlogSearch = `search`,
     BlogPostCreate = `post`,
     BlogLogin = `login`,
-    BlogPost = `post/:postId`,
+    BlogPost = `post`,            // :postId
+    BlogUser = `user`,            // :username
     BlogRegister = `register`,
 }
 

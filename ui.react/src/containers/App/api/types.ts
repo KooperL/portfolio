@@ -21,6 +21,7 @@ export interface ApiEndpoints {
   blogPostCreate: string;
   blogLogin: string;
   blogPost: string;
+  blogUser: string;
   // blogUser: string;
   blogRegister: string;
   blogRefresh: string;

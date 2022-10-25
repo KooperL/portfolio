@@ -28,8 +28,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 #export FLASK_ENV=development (or production I guess)
 from jinja2 import Environment
 environment = Environment()
-
-# TODO: base64 helper and other code coverage for blog calls
+app = Flask(__name__)
 
 import pymongo
 from pymongo import MongoClient
@@ -90,6 +89,11 @@ class DatabaseManager(object):
 conn = DatabaseManager(f'{appDir}/data/database.db')
 
 
+# Use cache decorator to prevent db fetches
+# cache = Cache(app)
+# @cache.cached(timeout=60)
+
+@app.route('/')
 def build_preflight_response():
   response = make_response()
   response.headers.add('Access-Control-Allow-Credentials', 'true')
@@ -679,13 +683,24 @@ def blogRegisterHome():
 
     # check if valid username
     # check if lower() exists
-
+    blogUserExistsQuery = '''
+      SELECT 
+        count(*)
+      from blog_usersDB
+      where
+        ? = "None" and
+        lower(blog_username) = lower(?)
+      limit 5;
+    '''
+    blogUserExists = conn.fetch(blogUserExistsQuery, ('None', data.get('blog_username')))
+    if len(blogUserExists) or len(data.get('blog_username')) < 5 or len(data.get('blog_username')) > 15:
+      return build_bad_req()
 
     salt = secrets.token_hex(int(config['blog-register-salt-length']))
     blog_password_hash = generateHash((data.get('blog_password') + salt), config['blog-register-hash-key'])
 
-    insertBlogUserQuery = 'INSERT INTO blog_usersDB VALUES (?, ?, ?, ?, ?, ?);'
-    conn.insert(insertBlogUserQuery, (None, datetime.datetime.now(), data.get('blog_username').lower(), blog_password_hash, salt, 1))
+    insertBlogUserQuery = 'INSERT INTO blog_usersDB VALUES (?, ?, ?, ?, ?, ?, ?, ?);'
+    conn.insert(insertBlogUserQuery, (None, datetime.datetime.now(), data.get('blog_username').lower(), blog_password_hash, salt, 1, 1, 1))
     
     kwargs = {
       'success': True,
@@ -762,7 +777,7 @@ def blogLoginHome():
     conn.fetch(userRefreshTokenInsert, (None, issuedAtRaw, userInfo.get('id'), jwtRefresh))
 
     res = jsonify(buildBearerResp(jwtAccess, expires))
-    res.set_cookie('refresh_token', value=jwtRefresh, expires=refreshExpires, httponly=False) # domain=config['ORIGIN'], samesite='None', secure=True, 
+    res.set_cookie('refresh_token', value=jwtRefresh, expires=refreshExpires, httponly=True) # domain=config['ORIGIN'], samesite='None', secure=True, 
     res.headers.add('Access-Control-Allow-Credentials', 'true') 
     return build_actual_response(res)
   elif request.method == 'OPTIONS': 
@@ -777,6 +792,7 @@ def blogHome(authPayload):
   if request.method == 'GET':
     session_id = request.args.get('session_id')
     category = request.args.get('category')
+    search = request.args.get('search')
     if not session_id:
       return build_bad_req()
       
@@ -808,6 +824,54 @@ def blogHome(authPayload):
           blog_postsDB.category_id = ?
       '''
       categoryPosts = conn.fetch(categoryPostsQuery, ('None', categoryId[0]))
+      OrganisedPosts = []
+      if not len(categoryPosts):
+        return build_not_found()
+
+      for a in categoryPosts:
+        pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
+        postViewsRaw = conn.fetch(pullBlogViewsQuery, ('None', a[0]))[0][0]
+
+        OrganisedPosts.append({
+          'id': a[0],
+          'date': a[1],
+          'author': a[2],
+          'title': a[3],
+          'body': a[4][:30],
+          'views': postViewsRaw
+        })
+      kwargs = {
+        'success': True,
+        'data': {
+          category: OrganisedPosts
+        }
+      }
+      res = jsonify(kwargs)
+      res.headers.add('Access-Control-Allow-Credentials', 'true') 
+      return build_actual_response(res)
+
+    elif search:
+      PostsQuery = '''
+        SELECT 
+          blog_postsDB.id,
+          blog_postsDB.date,
+          blog_usersDB.blog_username,
+          blog_postsDB.title,
+          blog_postsDB.body
+        from blog_postsDB
+        inner join blog_usersDB on
+          blog_usersDB.id = blog_postsDB.blog_user_id
+        INNER JOIN blog_post_categoryDB
+          on blog_post_categoryDB.id = blog_postsDB.category_id
+        where
+          visible = 1 and
+          ? = "None" and
+          blog_post_categoryDB.name like "%?%" or 
+          blog_usersDB.blog_username.username like "%?%" or 
+          blog_postsDB.title like "%?%" or 
+          blog_postsDB.body like "%?%" 
+      '''
+      categoryPosts = conn.fetch(PostsQuery, ('None', categoryId[0]))
       OrganisedPosts = []
       if not len(categoryPosts):
         return build_not_found()
@@ -1022,6 +1086,69 @@ def blogPostViewHome(authPayload, *args, **kwargs):
   else:
     raise RuntimeError('Method not allowed')
 
+@app.route(f'/{blogPath}/user/<string:username>', methods=['GET', 'OPTIONS'])   # DEL, GET was,'t working because axios wouldn't set content length
+@errorHandle
+@token_required
+def blogUserViewHome(authPayload, *args, **kwargs):
+  if request.method == 'GET':
+    username = kwargs.get('username')
+
+    session_id = request.args.get('session_id')
+    user_id = authPayload.get('payload').get('userId')
+    role = authPayload.get('payload').get('role')
+    if not session_id:
+      return build_bad_req()
+    trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
+    
+    pullBlogQuery = '''
+      SELECT 
+        blog_postsDB.id,
+        blog_postsDB.date,
+        blog_usersDB.blog_username,
+        blog_postsDB.title,
+        blog_postsDB.body,
+        blog_user_id,
+        blog_post_categoryDB.name
+      from blog_postsDB
+      INNER JOIN blog_post_categoryDB
+        on blog_post_categoryDB.id = blog_postsDB.category_id
+      INNER JOIN blog_usersDB
+        on blog_usersDB.id = blog_postsDB.blog_user_id
+      where
+        blog_usersDB.blog_username = ? and
+        (blog_postsDB.visible = 1 or blog_postsDB.blog_user_id = ? or ? = "True");'''
+    postRaw = conn.fetch(pullBlogQuery, (username, user_id, (role==999)))
+
+    if len(postRaw) <= 0:
+      return build_not_found()
+
+    posts = []
+    for i in postRaw:
+      print(f'``````````````````````````{i}````````````````````````')
+          # Distinct views??
+      pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
+      postViewsRaw = conn.fetch(pullBlogViewsQuery, ('None', i[0]))[0][0]
+      posts.append({
+      'id' : i[0],
+      'date' : i[1],
+      'author': i[2],
+      'title': i[3],
+      'body': i[4],
+      'author_id': i[5],
+      'category': i[6],
+      'views': postViewsRaw,
+    })
+
+    kwargs = {
+      'success': True,
+      'data': posts,
+    }
+    res = jsonify(kwargs)
+    return build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
 
 @app.route(f'/{blogPath}/refresh', methods=['POST', 'OPTIONS'])
 @errorHandle

@@ -30,7 +30,8 @@ function BlogPostViewPage(props: Props): JSX.Element {
   useEffect(() => {
     if(!token) {return}
     setGETState({...GETstate, loading: true});
-    props.dataGet({session_id: sessionStorage.getItem('session_id')}, token, window.location.href.toString().slice(window.location.href.lastIndexOf('/')+1)).then(
+    const postId = window.location.href.toString().slice(window.location.href.lastIndexOf('/') + 1)
+    props.dataGet({session_id: sessionStorage.getItem('session_id')}, token, postId).then(
       (resp: BlogPostViewGETResponse) => {
         if(resp.success) {
           setGETState({

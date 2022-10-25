@@ -43,6 +43,8 @@
   margin: 0 auto;
   position: relative;
   overflow: hidden;
+  height: 5rem;
+  flex-grow: 1;
   /* border:1px solid black; */
   /* font-size:0; */
 }
@@ -71,3 +73,41 @@
     transform: translateX(-500px);  
   }
 }
+
+.navbar .nav-container {
+  height: fit-content;
+  width: 100%;
+  max-width: 100vw;
+  position: fixed;
+}
+
+.navbar .nav-container.vertical{
+  transform: rotate(90deg);
+  transform-origin: top left;
+  top: 0;
+  left: 5rem;
+}
+
+.nav-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttons-container {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+}
+
+.text {
+  letter-spacing: 0.1em;
+  font-size: 1.25rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  z-index: 10;
+}
+
