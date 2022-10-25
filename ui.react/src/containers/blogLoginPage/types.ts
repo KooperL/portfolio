@@ -63,15 +63,37 @@ interface blog_item {
   author: string;
   title: string;
   body: string;
+  author_id?: string;
+  category?: string;
   views: number;
 }
 
 export interface BlogHomeGETResponse {
   success: boolean;
-  data: {
-    string: blog_item[]
-  }
+  data?: {
+    [key: string]: blog_item[]
+  };
+  error?: string;
 }
+
+export interface BlogUserGETResponse {
+  success: boolean;
+  data?: blog_item[];
+  error?: string;
+}
+
+export interface BlogUserGETState {
+  details?: BlogUserGETResponse;
+  error?: boolean;
+  errorMessage?: string;
+  loading?: boolean;
+}
+
+export const BlogUserGETInitialState: BlogUserGETState = {
+  error: false,
+  errorMessage: '',
+  loading: false
+} as const;
 
 export interface BlogHomeGETState {
   details?: BlogHomeGETResponse;

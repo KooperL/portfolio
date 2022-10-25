@@ -67,7 +67,9 @@ create_blog_usersDB = '''create table if not exists blog_usersDB (
   blog_username text unique not null,
   blog_password_hash text not null,
   blog_password_salt text not null,
-  role_id INTEGER not null
+  role_id INTEGER not null,
+  account_standing INTEGER not null
+  account_status INTEGER not null
 );'''
 
 create_blog_roleDB = '''create table if not exists blog_roleDB (
@@ -75,14 +77,12 @@ create_blog_roleDB = '''create table if not exists blog_roleDB (
   canPost INTEGER not null
 );'''
 
-create_role = 'INSERT into blog_roleDB values (1, 1)'
 
 create_blog_post_categoryDB = '''create table if not exists blog_post_categoryDB (
   id integer PRIMARY KEY,
   name text not null
 );'''
 
-create_category = 'INSERT into blog_post_categoryDB values (1, "general")'
 
 create_blog_refresh_tokensDB = '''create table if not exists blog_refresh_tokensDB (
   id integer PRIMARY KEY,
@@ -125,12 +125,10 @@ create_blog_post_reactionsDB = '''create table if not exists blog_post_reactions
   reaction_id INTEGER not null
 );'''
 
-def createRoles():
-  conn.execute(create_blog_roleDB)
+def createDefValues():
+  create_role = 'INSERT into blog_roleDB values (1, 1)'
   conn.execute(create_role)
-
-def createCategory():
-  conn.execute(create_blog_post_categoryDB)
+  create_category = 'INSERT into blog_post_categoryDB values (1, "general")'
   conn.execute(create_category)
 
 def create():
@@ -145,8 +143,9 @@ def create():
   conn.execute(create_blog_postsDB)
   conn.execute(create_blog_post_viewsDB)
   conn.execute(create_blog_post_reactionsDB)
-  createRoles()
-  createCategory()
+  conn.execute(create_blog_post_categoryDB)
+  conn.execute(create_blog_roleDB)
+  createDefValues()
 
   print('success')
 
