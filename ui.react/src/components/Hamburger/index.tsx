@@ -9,25 +9,32 @@ import ButtonRedir from '../ButtonRedir'
 
 function Hamburger(props: Props) {
   const [scheme, setScheme] = useContext(SchemeContext);
-  const [style, setStyle] = useState({display:'none'});
+  const [open, setOpen] = useState(false);
 
-  const handleToggle = () => {
-    if(style.display === 'none') {
-      setStyle({display:'static'})
-      console.log('should appear')
-    } else {
-      setStyle({display:'none'})
-    }
+  useEffect(() => {
+
+  }, [open])
+
+  const burgerButton = <>
+    <button onClick={() => {setOpen(!open)}}>
+      <div className="icon" style={{backgroundColor: scheme.body.h1}}>
+        <p className="hamburger-icon">{open ? '×' : '≡'}</p>
+      </div>
+    </button>
+  </>
+
+  if(!open) {
+    return (
+      <div className="hamburger">
+        {burgerButton}
+      </div>
+    )
   }
 
   return (
     <div className="hamburger">
-      <button onClick={() => {handleToggle()}}>
-        <div className="icon" style={{backgroundColor: scheme.body.h1}}>
-          <p className="hamburger-icon">≡</p>
-        </div>
-      </button>
-      <div className="links" style={style}>
+      {burgerButton}
+      <div className="links" style={{backgroundColor: scheme.body.background}}>
       {/* <div className="links" style={{display: open ? 'fixed' : 'none'}}> */}
         {props.data.map((item, index) => (
           <ButtonRedir destination={item.destination} label={item.label} key={index} local={true} onClickCallback={item?.callback}/>

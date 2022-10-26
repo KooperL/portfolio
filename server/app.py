@@ -1098,7 +1098,6 @@ def blogUserViewHome(authPayload, *args, **kwargs):
     role = authPayload.get('payload').get('role')
     if not session_id:
       return build_bad_req()
-    session_id = data.get('session_id')
     trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
     
     pullBlogQuery = '''

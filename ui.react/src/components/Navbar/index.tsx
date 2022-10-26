@@ -20,7 +20,7 @@ function getPath() {
 
 function Navbar(props: {isVertical: boolean}) {
   const [scheme, setScheme] = useContext(SchemeContext);
-  const [path, setPath] = useState([''])
+  // const [path, setPath] = useState([''])
   const [token, setToken] = useAccessToken();
   const [specialButtons, setSpecialButtons] = useState<Array<JSX.Element>>([]); 
 
@@ -38,7 +38,6 @@ function Navbar(props: {isVertical: boolean}) {
 
   function buttonController(path: string[]) {
     if(path[0] && path[0].toLowerCase() === 'blog') {
-
       if(token === '') {
       } else if(token === null) {
         // No user
@@ -105,11 +104,13 @@ function Navbar(props: {isVertical: boolean}) {
   //   console.log('```````````````````````````````````````````````````')
   // }, [])
 
-  const pathTemp = getPath()
-  const aaa = buttonController(pathTemp)
+  const path = getPath()
+  const aaa = buttonController(path)
 
   const home = <ButtonRedir  destination='/' label='Home ⬅️' local={true} />
   const back = <ButtonRedir destination={path[0]} label={`${path[0] ?? '/'} ⬅️` ?? ''} local={true} />
+
+
 
   return (
     <div className="navbar">
