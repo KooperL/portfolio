@@ -111,7 +111,7 @@ function BlogHomePage(props: Props): JSX.Element {
             <div className="posts">
               {Object.keys(data).map((segment, indexSegment) => (
                 <div className="category" key={indexSegment}>
-                  <Link key={indexSegment**2} to={`/${blogPath}?category=${segment}`}>{segment}</Link>
+                  <Link key={indexSegment**2} to={`/${blogPath}?category=${segment}`}><p>{segment}</p></Link>
                   {/** @ts-ignore */}
                   {data[segment].map((catPost, catPostIndex) => (
                     <Link to={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPost}/${catPost['id']}`} key={catPostIndex}>

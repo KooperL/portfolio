@@ -22,9 +22,9 @@ export interface ApiEndpoints {
   blogLogin: string;
   blogPost: string;
   blogUser: string;
-  // blogUser: string;
   blogRegister: string;
   blogRefresh: string;
+  blogLogout: string;
 }
 
 export interface emptyPayload {

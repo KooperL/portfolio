@@ -4,10 +4,13 @@ import { SchemeContext } from '../../containers/context/colourScheme';
 import './style.css';
 import { Link } from "react-router-dom";
 import ButtonRedir from '../ButtonRedir'
+import Hamburger from '../Hamburger'
 import { useLocation } from 'react-router-dom'
 import { useAccessToken } from '../../containers/authContext/context';
 import { blogPath } from '../../containers/App/api/types';
 import { BlogRouteType } from '../../containers/App/routeTypes';
+import { postBlogLogout } from '../../containers/App/api/blogApis';
+
 
 // style="width: 100000px; transform: translateX(-3561px); animation: 12.9416s linear 0s infinite normal none running marqueeAnimation-77345020;"
 
@@ -17,7 +20,7 @@ function getPath() {
 
 function Navbar(props: {isVertical: boolean}) {
   const [scheme, setScheme] = useContext(SchemeContext);
-  const [path, setPath] = useState(getPath())
+  const [path, setPath] = useState([''])
   const [token, setToken] = useAccessToken();
   const [specialButtons, setSpecialButtons] = useState<Array<JSX.Element>>([]); 
 
@@ -33,27 +36,77 @@ function Navbar(props: {isVertical: boolean}) {
     }
   }
 
-  useEffect(() => {
-    const pathTemp = getPath()
-    setPath(pathTemp)
-    if(pathTemp[0] && pathTemp[0].toLowerCase() === 'blog') {
+  function buttonController(path: string[]) {
+    if(path[0] && path[0].toLowerCase() === 'blog') {
+
       if(token === '') {
       } else if(token === null) {
         // No user
         // Should already be redirected to login/register page
       } else {
         // Signed in
-        // Sign out button
         const username = JSON.parse(atob(token.split('.')[1]))['username']
         const blog_create = <ButtonRedir destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPostCreate}`} label='create' local={true} />
         const blog_profile = <ButtonRedir destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogUser}/${username}`} label='My posts' local={true} />
-        const blog_sign_out = <ButtonRedir destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPostCreate}`} label='Log out' local={true} />
-  
+        const blog_sign_out = <ButtonRedir destination={`/${BlogRouteType.BlogHome}`} label='Log out' local={true}
+          onClickCallback={
+            (() => {
+              postBlogLogout({session_id: sessionStorage.getItem('session_id') ?? ''}, token).then(resp => {
+                if(resp.success) {
+                  setToken(null)
+                }
+              })
+            })
+          }
+        />
+        const items = [blog_create, blog_profile, blog_sign_out]
         // Search field?
-        setSpecialButtons([blog_create, blog_profile, blog_sign_out])
+        // setSpecialButtons(items)
+        
+        const HamburgerData = <Hamburger data={[
+          {
+            destination: `/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPostCreate}`,
+            label: 'create'
+          },
+          {
+            destination: `/${BlogRouteType.BlogHome}/${BlogRouteType.BlogUser}/${username}`,
+            label: 'my posts'
+          },
+          {
+            destination: `/${BlogRouteType.BlogHome}`,
+            label: 'logout',
+            callback: (() => {
+              postBlogLogout({session_id: sessionStorage.getItem('session_id') ?? ''}, token).then(resp => {
+                if(resp.success) {
+                  setToken(null)
+                }
+              })
+            })
+          },
+        ]} />
+        return [HamburgerData]
       }
+    } else {
+      return []
     }
-  }, [location])
+    return []
+  }
+
+  // useEffect(() => {
+  //   const pathTemp = getPath()
+  //   setPath(pathTemp)
+  //   setSpecialButtons(buttonController(pathTemp))
+  // }, [location])
+
+  // useEffect(() => {
+  //   const pathTemp = getPath()
+  //   setPath(pathTemp)
+  //   setSpecialButtons(buttonController(pathTemp))
+  //   console.log('```````````````````````````````````````````````````')
+  // }, [])
+
+  const pathTemp = getPath()
+  const aaa = buttonController(pathTemp)
 
   const home = <ButtonRedir  destination='/' label='Home ⬅️' local={true} />
   const back = <ButtonRedir destination={path[0]} label={`${path[0] ?? '/'} ⬅️` ?? ''} local={true} />
@@ -65,6 +118,11 @@ function Navbar(props: {isVertical: boolean}) {
         style={{"backgroundColor": scheme.header.background, zIndex: props.isVertical ? 1 : 11}}
       >
         <div className="nav-row">
+          <div className="placeholder">
+            {aaa[0]}
+            {/* {specialButtons[0]} */}
+          </div>
+          {/* {props.isVertical ? '' : specialButtons} */}
           <div className='buttons-container'>
               {!!path.length?(!props.isVertical ? home : ''):''}
               {path.length >= 2?(!props.isVertical ? back : ''):''}
@@ -74,9 +132,9 @@ function Navbar(props: {isVertical: boolean}) {
               {bannerText.map(jsx => jsx)}
             </div>
           </div>
-          <div className='buttons-container'>
+          {/* <div className='buttons-container'>
             {specialButtons}
-          </div>
+          </div> */}
         </div>
       </nav>
     </div>

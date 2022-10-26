@@ -30,5 +30,6 @@ export const endpoints: ApiEndpoints = {
   blogUser: `${apiHost}/${blogPath}/user/`,
   blogLogin: `${apiHost}/${blogPath}/login`,
   blogRefresh: `${apiHost}/${blogPath}/refresh`,
+  blogLogout: `${apiHost}/${blogPath}/logout`,
 }
 
