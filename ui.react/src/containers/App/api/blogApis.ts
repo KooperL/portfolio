@@ -27,6 +27,18 @@ export const postBlogLogin = (
   return post(endpoints['blogLogin'], apiConfig);
 }
 
+export const postBlogLogout = (
+  data: BlogLoginPOSTPayload,
+  authJWT: string
+): Promise<BlogRegisterPOSTResponse>  => {
+  const apiConfig = {
+    headers: {'Authorization': `Bearer ${authJWT}`},//, 'Access-Control-Allow-Credentials': 'true'},
+    data: data,
+    withCredentials: true,
+  }
+  return post(endpoints['blogLogout'], apiConfig);
+}
+
 export const postBlogRefresh = (
   data: {
     session_id: string;

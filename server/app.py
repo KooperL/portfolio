@@ -1098,6 +1098,7 @@ def blogUserViewHome(authPayload, *args, **kwargs):
     role = authPayload.get('payload').get('role')
     if not session_id:
       return build_bad_req()
+    session_id = data.get('session_id')
     trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
     
     pullBlogQuery = '''
@@ -1124,8 +1125,7 @@ def blogUserViewHome(authPayload, *args, **kwargs):
 
     posts = []
     for i in postRaw:
-      print(f'``````````````````````````{i}````````````````````````')
-          # Distinct views??
+      # Distinct views??
       pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
       postViewsRaw = conn.fetch(pullBlogViewsQuery, ('None', i[0]))[0][0]
       posts.append({
@@ -1157,11 +1157,12 @@ def blogRefreshHome():
     refresh_token = request.cookies.get('refresh_token')
     refreshTokenLife = int(config['blog-refresh-token-life']) # Days
     if not refresh_token:
-      kwargs = {
-        'success': False
-      }
-      res = jsonify(kwargs)
-      return build_actual_response(res), 204
+      # kwargs = {
+      #   'success': False
+      # }
+      # res = jsonify(kwargs)
+      # return build_actual_response(res), 204
+      return build_unauthenticated()
     refreshTokenSearchQuery = 'SELECT count(*) FROM blog_refresh_tokensDB where ? = "None" and blog_refresh_token = ?'    # expanding string when only one item in tuple ??? have to add second arg
     # tokenRows = conn.execute(refreshTokenSearchQuery, ('None', refresh_token))
     tokenRows = conn.fetch(refreshTokenSearchQuery, ('None', refresh_token))
@@ -1192,6 +1193,43 @@ def blogRefreshHome():
     jwtAccess = generateJWT(generateJWTHeader(), jwtAccessPayload, config['blog-jwt-auth-token'])
 
     res = jsonify(buildBearerResp(jwtAccess, expires))
+    res.headers.add('Access-Control-Allow-Credentials', 'true') 
+    return build_actual_response(res), 201
+  elif request.method == 'OPTIONS': 
+    return build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')
+
+
+@app.route(f'/{blogPath}/logout', methods=['POST', 'OPTIONS'])
+@errorHandle
+@token_required
+def blogLogoutHome(authPayload):
+  if request.method == 'POST':
+    refresh_token = request.cookies.get('refresh_token')
+    if not refresh_token:
+      return build_unauthenticated()
+    refreshTokenSearchQuery = 'SELECT count(*) FROM blog_refresh_tokensDB where ? = "None" and blog_refresh_token = ?'    # expanding string when only one item in tuple ??? have to add second arg
+    tokenRows = conn.fetch(refreshTokenSearchQuery, ('None', refresh_token))
+
+    if len(tokenRows) != 1:
+      return build_unauthorized()
+
+    outcome = blogAuthorize(refresh_token, config['blog-jwt-refresh-token'])
+
+    if not outcome.get('success'):
+      return build_unauthorized()
+
+    user_id = authPayload.get('payload').get('userId')
+    userRefreshTokenDelete = 'DELETE from blog_refresh_tokensDB where ? = "None" and blog_user_id = ?;'
+    conn.fetch(userRefreshTokenDelete, ('None', user_id))
+
+    kwargs = {
+      'success': True
+    }
+
+    res = jsonify(kwargs)
+    res.set_cookie('refresh_token', value='', expires=0, httponly=True)
     res.headers.add('Access-Control-Allow-Credentials', 'true') 
     return build_actual_response(res), 201
   elif request.method == 'OPTIONS': 
