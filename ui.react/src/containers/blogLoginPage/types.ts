@@ -57,7 +57,7 @@ export const BlogRegisterPOSTInitialState: BlogRegisterPOSTState = {
   loading: false
 } as const;
 
-interface blog_item {
+export interface blogItem {
   id: number;
   date: string;
   author: string;
@@ -71,14 +71,14 @@ interface blog_item {
 export interface BlogHomeGETResponse {
   success: boolean;
   data?: {
-    [key: string]: blog_item[]
+    [key: string]: blogItem[]
   };
   error?: string;
 }
 
 export interface BlogUserGETResponse {
   success: boolean;
-  data?: blog_item[];
+  data?: blogItem[];
   error?: string;
 }
 
