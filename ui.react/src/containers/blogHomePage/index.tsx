@@ -8,6 +8,7 @@ import './style.css';
 import { ReactP5Wrapper } from "react-p5-wrapper";
 import sketchWrapper from "../../components/p5/box";
 import { Button } from "../../components/Button";
+import BlogItem from "../../components/BlogItem";
 import { useAccessToken } from "../authContext/context";
 import { BlogHomeInitialState } from "./types";
 import { getBlogHome } from "../App/api/blogApis";
@@ -111,23 +112,10 @@ function BlogHomePage(props: Props): JSX.Element {
             <div className="posts">
               {Object.keys(data).map((segment, indexSegment) => (
                 <div className="category" key={indexSegment}>
-                  <Link key={indexSegment**2} to={`/${blogPath}?category=${segment}`}><p>{segment}</p></Link>
+                  <Link key={indexSegment**2} to={`/${blogPath}?category=${segment}`}><p>Topic - {segment}</p></Link>
                   {/** @ts-ignore */}
                   {data[segment].map((catPost, catPostIndex) => (
-                    <Link to={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPost}/${catPost['id']}`} key={catPostIndex}>
-                      <div className="post-details" key={catPostIndex + indexSegment}>
-                        <div className="post-detail" key={catPostIndex + indexSegment + 2}>
-                          {catPost['author']}
-                        </div>
-                        <div className="post-detail" key={catPostIndex + indexSegment + 1}>
-                          {catPost['title']}
-                        </div>
-                        {window.outerWidth > 1000 ? <div className="post-detail" key={catPostIndex + indexSegment + 3}>{catPost['body']}</div> : <></>}
-                        <div className="post-detail" key={catPostIndex + indexSegment + 4}>
-                          {catPost['views']}
-                        </div>
-                      </div>
-                    </Link>
+                    <BlogItem key={catPostIndex} data={catPost}/>
                   ))}
                 </div>
               ))}

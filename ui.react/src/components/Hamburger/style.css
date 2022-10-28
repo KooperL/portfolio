@@ -8,6 +8,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  border-radius: 5px;
+  
+}
+
+.hamburger .hamburger-icon {
+  font-size: xx-large;
+}
+
+.hamburger .hover-effect {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0);
+  width: 90%;
+  height: 90%;
+  border-radius: 20px;
+  transition: 0.2s;
+}
+
+.hamburger .hover-effect:hover {
+  /* transform: scale(1.5); */
+  background-color: rgba(255, 255, 255, 0.30);
 }
 
 .hamburger .hamburger-icon {

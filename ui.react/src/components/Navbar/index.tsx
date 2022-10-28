@@ -22,7 +22,6 @@ function Navbar(props: {isVertical: boolean}) {
   const [scheme, setScheme] = useContext(SchemeContext);
   // const [path, setPath] = useState([''])
   const [token, setToken] = useAccessToken();
-  const [specialButtons, setSpecialButtons] = useState<Array<JSX.Element>>([]); 
 
   const location = useLocation()
 
@@ -83,7 +82,7 @@ function Navbar(props: {isVertical: boolean}) {
             })
           },
         ]} />
-        return [HamburgerData]
+        return [HamburgerData, items]
       }
     } else {
       return []
@@ -120,8 +119,8 @@ function Navbar(props: {isVertical: boolean}) {
       >
         <div className="nav-row">
           <div className="placeholder">
+          {/* {window.outerWidth > 1000 ? aaa[1] : aaa[0] } */}
             {aaa[0]}
-            {/* {specialButtons[0]} */}
           </div>
           {/* {props.isVertical ? '' : specialButtons} */}
           <div className='buttons-container'>

@@ -23,17 +23,6 @@
   font-size: x-large;
 }
 
-.blogHomePage .post-detail {
-  width: 100%;
-  text-align: center;
-  margin: 5px;
-}
-
-.blogHomePage .post-details {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
 
 @media screen and (max-width: 1000px) {
   .blogHomePage .container {

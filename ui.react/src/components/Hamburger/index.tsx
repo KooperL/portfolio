@@ -19,6 +19,7 @@ function Hamburger(props: Props) {
     <button onClick={() => {setOpen(!open)}}>
       <div className="icon" style={{backgroundColor: scheme.body.h1}}>
         <p className="hamburger-icon">{open ? '×' : '≡'}</p>
+        <div className="hover-effect"></div>
       </div>
     </button>
   </>
