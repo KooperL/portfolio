@@ -16,7 +16,7 @@ The conf file in `/etc/mongodb.conf` must point to `portfolio/server/data/mongod
 ## Env
 A `.env` file is required by the app. See `../setup.sh` to skip. It must provide values for the following keys:
 ```
-ENV=[development, production]
+ENV=<development | production>
 MONGO_USERNAME=<value>
 MONGO_PASSWORD=<value>
 MONGO_PORT=<value>
@@ -24,6 +24,12 @@ GOOGLE_MAPS_API_KEY=<value>
 ORIGIN=<value>
 DEV_PORT=5000
 PROD_PORT=5000
+blog-register-hash-key=<value>
+blog-register-salt-length=<value>
+blog-jwt-auth-token=<value>
+blog-jwt-refresh-token=<value>
+blog-access-token-life=<value>
+blog-refresh-token-life=<value>
 ```
 
 ## CRON

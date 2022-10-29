@@ -9,12 +9,13 @@ import { ReactP5Wrapper } from "react-p5-wrapper";
 import sketchWrapper from "../../components/p5/box";
 import { Button } from "../../components/Button";
 import BlogItem from "../../components/BlogItem";
+import ButtonRedir from "../../components/ButtonRedir";
 import { useAccessToken } from "../authContext/context";
 import { BlogHomeInitialState } from "./types";
 import { getBlogHome } from "../App/api/blogApis";
 import { BlogHomeGETInitialState, BlogHomeGETResponse, BlogRegisterPOSTResponse } from "../blogLoginPage/types";
 import { blogPath } from "../App/api/types";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { BlogRouteType } from "../App/routeTypes";
 import Redirect from "../../components/Redirect"
 
@@ -25,19 +26,22 @@ interface Props {
 
 function BlogHomePage(props: Props): JSX.Element {
   const [state, setState] = useState({...BlogHomeGETInitialState});
+  const [searchState, setSearchState] = useState('');
   // const [POSTstate, setPOSTState] = useState({...ContactPOSTInitialState});
   const [scheme, setScheme] = useContext(SchemeContext);
   const [token, setToken] = useAccessToken();
   const location = useLocation()
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if(!token) {return}
+
+  function dataFetch() {
     let paramString = window.location.href.split('?')[1];
     let queryString = new URLSearchParams(paramString);
 
     props.dataCall({
       session_id: sessionStorage.getItem('session_id'),
-      category: queryString.get('category')
+      category: queryString.get('category'),
+      search: queryString.get('search')
     }, token).then((resp: BlogHomeGETResponse) => {
       setState({
         details: resp,
@@ -52,36 +56,28 @@ function BlogHomePage(props: Props): JSX.Element {
         loading: false
       });
     })
+  }
+
+  useEffect(() => {
+    if(!token) {return}
+    dataFetch()
   }, [token, location]);
 
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>, payload: ContactPOST) => {
-  //   setPOSTState({...POSTstate, loading: true});
-  //   event.preventDefault();
-  //   props.dataPost(payload).then((resp: ContactPOSTPayload) => {
-  //     if(resp.success) {
-  //       setPOSTState({
-  //         details: resp,
-  //         error: false,
-  //         errorMessage: '',
-  //         loading: false
-  //       });
-  //     } else {
-  //       throw new Error(resp.error);
-  //     }
-  //   }).catch((err: any) => {
-  //     console.log(err)
-  //     setPOSTState({
-  //       error: true,
-  //       errorMessage: err,
-  //       loading: false
-  //     });
-  //   })
-  // }
+
+  const handleSubmit = () => {
+    navigate(`/${BlogRouteType.BlogHome}?search=${searchState}`);
+    return (
+      <Redirect
+        destination={`/${BlogRouteType.BlogHome}?search=${searchState}`}
+      />
+    )
+  }
+
+  // Todo add way to track redirects
   
   useEffect(() => {
     document.title = `Blog Home | ${scheme.title}`;
   }, []);
-
 
 
   if(state.loading) {
@@ -110,13 +106,26 @@ function BlogHomePage(props: Props): JSX.Element {
           <div className="links">
             <h2 className='main-heading' style={{color: scheme.body.h1}}>Blog Home</h2>
             <div className="posts">
+              <form onSubmit={(e) => {
+                e.preventDefault()
+                handleSubmit()
+              }}>
+
+              <div className="search">
+                <input type="text" value={searchState} onChange={(e) => {setSearchState(e.target.value)}}></input>
+                <Button colours={scheme} callBack={handleSubmit} label="search"></Button>
+                {/* <ButtonRedir destination={`/${BlogRouteType.BlogHome}?search=${searchState}`} label="Search" local={true}></ButtonRedir> */}
+              </div>
+              </form>
               {Object.keys(data).map((segment, indexSegment) => (
                 <div className="category" key={indexSegment}>
                   <Link key={indexSegment**2} to={`/${blogPath}?category=${segment}`}><p>Topic - {segment}</p></Link>
                   {/** @ts-ignore */}
-                  {data[segment].map((catPost, catPostIndex) => (
-                    <BlogItem key={catPostIndex} data={catPost}/>
-                  ))}
+                  <div className="posts">
+                    {data[segment].map((catPost, catPostIndex) => (
+                      <BlogItem key={catPostIndex} data={catPost}/>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>

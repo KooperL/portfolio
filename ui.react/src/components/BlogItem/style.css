@@ -1,8 +1,11 @@
 .post-details {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
-  padding-bottom: 1.5rem;
+  gap: 2rem;
+  border-radius: 10px;
+  border-color: white;
+  padding: 1rem;
+  border-width: 1px;
 }
 
 .post-details .icon {

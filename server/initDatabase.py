@@ -68,7 +68,7 @@ create_blog_usersDB = '''create table if not exists blog_usersDB (
   blog_password_hash text not null,
   blog_password_salt text not null,
   role_id INTEGER not null,
-  account_standing INTEGER not null
+  account_standing INTEGER not null,
   account_status INTEGER not null
 );'''
 

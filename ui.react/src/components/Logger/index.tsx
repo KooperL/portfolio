@@ -29,13 +29,14 @@ function Logger(props: Props) {
     if(!localStorage.getItem('uuid')) {
       localStorage.setItem('uuid', generateUniqueToken(10));
     }
-    if(!sessionStorage.getItem('session_id')) {
-      sessionStorage.setItem('session_id', generateUniqueToken(20));
-    }
 
     const canvasHash = document.getElementById('canvas-hash')?.innerText ?? '';
     if((!localStorage.getItem('canvas-hash')) || (localStorage.getItem('canvas-hash') !== canvasHash)) {
       localStorage.setItem('canvas-hash', canvasHash?.toString());
+    }
+
+    if(!sessionStorage.getItem('session_id')) {
+      sessionStorage.setItem('session_id', generateUniqueToken(20));
       // TODO
       // @ts-ignore 
       const [browserVar, versionVar] = (() => {
@@ -63,6 +64,7 @@ function Logger(props: Props) {
         }
         return match
       })()
+
       props.capturePost({
         canvas_hash: document.getElementById('canvas-hash')?.innerText,
         uuid: localStorage.getItem('uuid'),

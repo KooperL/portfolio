@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { BlogRouteType } from "../../containers/App/routeTypes";
 import { blogItem } from "../../containers/blogLoginPage/types";
 import { SchemeContext } from "../../containers/context/colourScheme";
+import daysAgo from "../../utils/daysAgo";
 import './style.css'
 
 
@@ -11,7 +12,7 @@ function BlogItem(props: {data: blogItem}) {
 
   return (
     <Link to={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPost}/${props.data['id']}`}>
-      <div className="post-details">
+      <div className="post-details" style={{borderColor: scheme.body.foreground}}>
         <div className="icon">
           <p>{props.data['views']} 👀</p>
         </div>
@@ -22,8 +23,8 @@ function BlogItem(props: {data: blogItem}) {
           <div className="sub-title">
             <span>By</span>
             <span style={{color: scheme.body.h1}}>&nbsp;{props.data['author']}</span>
-            <span>&nbsp;- {props.data['date']}</span>
-            {props.data.hasOwnProperty('category') ? <span>To {props.data['category']}</span> : <></>}
+            <span>&nbsp;- {daysAgo(props.data['date'])}</span>
+            {props.data.hasOwnProperty('category') ? <span>&nbsp;To {props.data['category']}</span> : <></>}
           </div>
           <div className="preview">
             {props.data['body']}
