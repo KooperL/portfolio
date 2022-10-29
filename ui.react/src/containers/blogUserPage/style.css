@@ -1,42 +1,36 @@
-.blogHomePage .container {
+.blogUserPage .container {
   padding: 8rem 8rem;
   width: 100vw;
   display: flex;
   flex-direction: row;
 }
 
-.blogHomePage .links {
+.blogUserPage .links {
   width: 100%
 }
 
-.blogHomePage .main-heading {
+.blogUserPage .main-heading {
   font-size: 3rem;
   padding-bottom: 25px;
 }
 
-.blogHomePage .category {
+.blogUserPage .category {
   padding-bottom: 1rem;
   width: 100%;
 }
 
-.blogHomePage .category p {
+.blogUserPage .category p {
   font-size: x-large;
 }
 
-.blogHomePage .post-detail {
-  width: 100%;
-  text-align: center;
-  margin: 5px;
-}
-
-.blogHomePage .post-details {
+.blogUserPage .posts {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 @media screen and (max-width: 1000px) {
-  .blogHomePage .container {
+  .blogUserPage .container {
     padding: 8rem 2rem;
   }
 

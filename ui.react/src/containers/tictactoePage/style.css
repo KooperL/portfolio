@@ -91,3 +91,10 @@ margin-top: 1.25rem;
 .tictactoePage .scoreboard-button:hover {
   background-color: #f0f0f0;
 }
+
+@media screen and (max-width: 1000px) {
+  .tictactoePage .grid {
+    height: 95vw;
+    width: 95vw;
+  }
+}

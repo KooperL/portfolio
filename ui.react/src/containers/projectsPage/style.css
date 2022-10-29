@@ -91,4 +91,8 @@ a {
   .projectsPage .button {
     width: 24rem;
   }
+
+  .projectsPage .links {
+    display: block;
+  }
 }

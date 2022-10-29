@@ -74,6 +74,8 @@ function BlogLoginPage(props: Props): JSX.Element {
           loading: false
         });
         setHasRegistered(true)
+        setUsernameLogin(usernameRegister)
+        setPasswordLogin(passwordRegister)
         if(window.hasOwnProperty('PasswordCrediential')) {
           let c = new PasswordCredential({id: usernameRegister, password: passwordRegister})
           navigator.credentials.create(c as any)
@@ -159,7 +161,7 @@ function BlogLoginPage(props: Props): JSX.Element {
               </div>
             </form>
           </div>
-            <div id="login">
+          <div id="login">
             <h2 className='main-heading' style={{color: scheme.body.h1}}>Login</h2>
             <form onSubmit={((e) => handleSubmitLogin(e, {
               session_id: sessionStorage.getItem('session_id') ?? 'error',
@@ -170,7 +172,7 @@ function BlogLoginPage(props: Props): JSX.Element {
               </div>
               <div className="field">
                 <p>Password: </p>
-                <input type="text" value={passwordLogin} autoComplete="new-password" onChange={(e) => {setPasswordLogin(e.target.value)}}></input>
+                <input type="password" value={passwordLogin} autoComplete="new-password" onChange={(e) => {setPasswordLogin(e.target.value)}}></input>
               </div>
               <div id="button">
                 <Button colours={scheme} />

@@ -1,7 +1,8 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { postMonitor } from "../../containers/App/api/loggerApi";
 import { LoggingPOSTResponse } from "../Logger/types";
 import { FuncProps, Props } from "./types";
+
 
 
 function Redirect(props: FuncProps) {
@@ -12,7 +13,7 @@ function Redirect(props: FuncProps) {
     ...(localStorage.getItem('currentPage') && {prevPage: localStorage.getItem('currentPage')})
   }).then((resp: LoggingPOSTResponse) => {
     if(resp.success) {
-      localStorage.setItem('currentPage', window.location.pathname)
+      localStorage.setItem('currentPage', window.location.pathname);
     } else {
       throw new Error(resp.error);
     }
@@ -20,10 +21,18 @@ function Redirect(props: FuncProps) {
     console.log(err)
   })
 
+  // if(props.data.programatic) {
+  //   return (
+  //     <Redirect
+  //       to={props.data.destination}
+  //     />
+  //   )
+  // }
+
   return (
     <Navigate
-    to={props.data.destination}
-  />
+      to={props.data.destination}
+    />
   )
 }
 

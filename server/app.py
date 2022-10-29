@@ -692,8 +692,9 @@ def blogRegisterHome():
         lower(blog_username) = lower(?)
       limit 5;
     '''
-    blogUserExists = conn.fetch(blogUserExistsQuery, ('None', data.get('blog_username')))
-    if len(blogUserExists) or len(data.get('blog_username')) < 5 or len(data.get('blog_username')) > 15:
+    blogUserExists = conn.fetch(blogUserExistsQuery, ('None', data.get('blog_username')))[0][0]
+    print(blogUserExists)
+    if blogUserExists != 0 or len(data.get('blog_username')) < 3 or len(data.get('blog_username')) > 15:
       return build_bad_req()
 
     salt = secrets.token_hex(int(config['blog-register-salt-length']))
@@ -797,8 +798,9 @@ def blogHome(authPayload):
       return build_bad_req()
       
     user_id = authPayload.get('payload').get('userId')
+    username = authPayload.get('payload').get('username')
     role = authPayload.get('payload').get('role')
-    trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
+    trackBlogFunctionsCalled(username, session_id, inspect.stack()[0][3])
 
     if category:
       categoryQuery = 'SELECT id from blog_post_categoryDB where "None" = ? and name = ?;'
@@ -851,7 +853,7 @@ def blogHome(authPayload):
       return build_actual_response(res)
 
     elif search:
-      PostsQuery = '''
+      generalQuery = '''
         SELECT 
           blog_postsDB.id,
           blog_postsDB.date,
@@ -865,18 +867,20 @@ def blogHome(authPayload):
           on blog_post_categoryDB.id = blog_postsDB.category_id
         where
           visible = 1 and
-          ? = "None" and
-          blog_post_categoryDB.name like "%?%" or 
-          blog_usersDB.blog_username.username like "%?%" or 
-          blog_postsDB.title like "%?%" or 
-          blog_postsDB.body like "%?%" 
+          blog_post_categoryDB.name like ? or 
+          blog_usersDB.blog_username like ? or 
+          blog_postsDB.title like ? or 
+          blog_postsDB.body like ? 
       '''
-      categoryPosts = conn.fetch(PostsQuery, ('None', categoryId[0]))
+      generalResults = conn.fetch(generalQuery, (search, search, search, search))
       OrganisedPosts = []
-      if not len(categoryPosts):
+
+      print(generalResults)
+
+      if not len(generalResults):
         return build_not_found()
 
-      for a in categoryPosts:
+      for a in generalResults:
         pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
         postViewsRaw = conn.fetch(pullBlogViewsQuery, ('None', a[0]))[0][0]
 
@@ -978,8 +982,9 @@ def blogPostCreateHome(authPayload):
       return build_bad_req()
     session_id = data.get('session_id')
     user_id = authPayload.get('payload').get('userId')
+    username = authPayload.get('payload').get('username')
     role = authPayload.get('payload').get('role')
-    trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
+    trackBlogFunctionsCalled(username, session_id, inspect.stack()[0][3])
 
     data = data.get('data')
     if 'blog_title' not in data and 'blog_body' not in data:
@@ -1021,11 +1026,12 @@ def blogPostViewHome(authPayload, *args, **kwargs):
     data = request.get_json()
     print(request)
     user_id = authPayload.get('payload').get('userId')
+    username = authPayload.get('payload').get('username')
     role = authPayload.get('payload').get('role')
     if 'session_id' not in data:
       return build_bad_req()
     session_id = data.get('session_id')
-    trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
+    trackBlogFunctionsCalled(username, session_id, inspect.stack()[0][3])
     
     pullBlogQuery = '''
       SELECT 
@@ -1095,10 +1101,11 @@ def blogUserViewHome(authPayload, *args, **kwargs):
 
     session_id = request.args.get('session_id')
     user_id = authPayload.get('payload').get('userId')
+    username = authPayload.get('payload').get('username')
     role = authPayload.get('payload').get('role')
     if not session_id:
       return build_bad_req()
-    trackBlogFunctionsCalled(user_id, session_id, inspect.stack()[0][3])
+    trackBlogFunctionsCalled(username, session_id, inspect.stack()[0][3])
     
     pullBlogQuery = '''
       SELECT 

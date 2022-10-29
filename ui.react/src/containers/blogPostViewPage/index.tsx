@@ -14,6 +14,7 @@ import { getPostView, postPostCreate } from "../App/api/blogApis";
 import { blogPath } from "../App/api/types";
 import Redirect from "../../components/Redirect"
 import { BlogRouteType } from "../App/routeTypes";
+import daysAgo from "../../utils/daysAgo";
 
 
 interface Props {
@@ -113,7 +114,7 @@ function BlogPostViewPage(props: Props): JSX.Element {
                 <p>Posted to:&nbsp;</p>
                 <p>{data?.category}</p>
                 <p>,&nbsp;</p>
-                <p>{`${Math.floor((+new Date() - +new Date(data?.date ?? 0)) / 1000 / 60 / 60 / 24)} day(s) ago`}</p>
+                <p>{daysAgo(data?.date ?? '0')}</p>
               </div>
               <div className="title">
                 <p className="field">{data?.title}</p>

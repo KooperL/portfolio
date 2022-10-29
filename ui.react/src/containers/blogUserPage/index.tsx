@@ -15,6 +15,7 @@ import { blogPath } from "../App/api/types";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { BlogRouteType } from "../App/routeTypes";
 import Redirect from "../../components/Redirect"
+import BlogItem from "../../components/BlogItem";
 
 
 interface Props {
@@ -75,28 +76,16 @@ function BlogHomePage(props: Props): JSX.Element {
     const data = state.details.data
     console.log(data)
     return (
-      <div className="blogHomePage">
+      <div className="blogUserPage">
         {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
         <div className="container">
           <div className="links">
-            <h2 className='main-heading' style={{color: scheme.body.h1}}>{user}</h2>
+            <span className='main-heading'>User -&nbsp;</span>
+            <span className='main-heading' style={{color: scheme.body.h1}}>{user}</span>
             <div className="posts">
                 {/** @ts-ignore */}
                 {data.map((catPost, catPostIndex) => (
-                  <Link to={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPost}/${catPost['id']}`} key={catPostIndex}>
-                    <div className="post-details" key={catPostIndex }>
-                      <div className="post-detail" key={catPostIndex + 2}>
-                        {catPost['author']}
-                      </div>
-                      <div className="post-detail" key={catPostIndex + 1}>
-                        {catPost['title']}
-                      </div>
-                      {window.outerWidth > 1000 ? <div className="post-detail" key={catPostIndex + 3}>{catPost['body']}</div> : <></>}
-                      <div className="post-detail" key={catPostIndex + 4}>
-                        {catPost['views']}
-                      </div>
-                    </div>
-                  </Link>
+                  <BlogItem key={catPostIndex} data={catPost}/>
                 ))}
               </div>
             </div>
