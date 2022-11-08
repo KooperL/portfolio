@@ -43,51 +43,33 @@ import scripts.utils.databaseUtils
 import scripts.fuelscrape.newdrawfuel
 import scripts.utils.rgb
 
-import views.home.home
+import views.home.homePage
+import views.home.about
+import views.home.contact
+import views.home.capture
+import views.home.monitor
+
+import views.projects.index
+import views.projects.fuelprices
+import views.projects.mrna
+import views.projects.property
+# import views.projects.property_search
+import views.projects.randomBio
+import views.projects.secondary
+import views.projects.seqAlign
+
+import views.blog.blogIndex
+import views.blog.register
+import views.blog.login
+import views.blog.logout
+import views.blog.post
+import views.blog.post_search
+import views.blog.refresh
+import views.blog.user_search
 
 #sys.path.insert(1, appDir + '/stocks/')
 #import pattern_detect
 
-
-lock = Lock()
-
-class DatabaseManager(object):
-  def __init__(self, db):
-    self.conn = sqlite3.connect(db, check_same_thread=False)
-    # refer to https://stackoverflow.com/questions/26629080/python-and-sqlite3-programmingerror-recursive-use-of-cursors-not-allowed
-    # https://stackoverflow.com/questions/52212844/multithreading-with-flask
-    self.conn.execute('pragma foreign_keys = on')
-    self.conn.commit()
-    self.cur = self.conn.cursor()
-    # self.queue = []
-
-  def query(self, query, vals):
-    # lock.acquire(True)
-    self.cur.execute(query, vals)
-    self.conn.commit()
-    # lock.release()
-    return self.cur
-  
-  def insert(self, query, val):
-    lock.acquire(True)
-    self.query(query, val)
-    lock.release()
-
-  def fetch(self, query, val):
-    lock.acquire(True)
-    res = self.query(query, val).fetchall()
-    lock.release()
-    return res
-
-  # def execute(self, query, vals):
-  #   for i in self.queue:
-  #     execute
-  #   return 
-
-  def __del__(self):
-    self.conn.close()
-
-conn = DatabaseManager(f'{appDir}/data/database.db')
 
 
 # Use cache decorator to prevent db fetches
@@ -100,8 +82,6 @@ app.wsgi_app = ProxyFix(
   app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
 )
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-# app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 username = urllib.parse.quote_plus(config['MONGO_USERNAME'])
 password = urllib.parse.quote_plus(config['MONGO_PASSWORD'])
@@ -109,7 +89,32 @@ client = MongoClient('mongodb://%s:%s@localhost:%s/' % (username, password, conf
 db = client['traffic_log']
 traffic_data = db['data']
 
-app.register_blueprint(views.home.home.home)
+app.register_blueprint(views.home.homePage.homePage)
+app.register_blueprint(views.home.monitor.monitor)
+app.register_blueprint(views.home.capture.capture)
+app.register_blueprint(views.home.about.about)
+app.register_blueprint(views.home.contact.contact)
+
+app.register_blueprint(views.projects.index.projectsIndex)
+app.register_blueprint(views.projects.fuelprices.fuelprices)
+app.register_blueprint(views.projects.mrna.mrna)
+app.register_blueprint(views.projects.property.property)
+app.register_blueprint(views.projects.randomBio.randomBio)
+app.register_blueprint(views.projects.secondary.secondary)
+app.register_blueprint(views.projects.seqAlign.seqAlign)
+
+app.register_blueprint(views.blog.blogIndex.blogIndex)
+app.register_blueprint(views.blog.login.login)
+app.register_blueprint(views.blog.register.register)
+app.register_blueprint(views.blog.refresh.refresh)
+app.register_blueprint(views.blog.logout.logout)
+app.register_blueprint(views.blog.post.post)
+app.register_blueprint(views.blog.post_search.post_search)
+app.register_blueprint(views.blog.user_search.user_search)
+
+
+
+
 
 # @app.route('/analytics', methods=['GET', 'OPTIONS'])
 # @scripts.utils.decorators.errorHandle

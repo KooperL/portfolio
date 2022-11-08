@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, jsonify, request
 import scripts.utils.decorators
 import scripts.utils.responses
 import datetime
+import controllers.database
+
 
 monitor = Blueprint('monitor', __name__)
 
@@ -18,17 +20,17 @@ def monitorHome():
       raise RuntimeError('Mandatory value(s) not provided')
 
     insertMonitorQuery = 'INSERT INTO monitorDB VALUES (?, ?, ?, ?, ?);'
-    # conn.execute(insertMonitorQuery, (None, datetime.datetime.now(), uuid, session_id, page))
-    # conn.commit()
-    conn.insert(insertMonitorQuery, (None, datetime.datetime.now(), uuid, session_id, page))
+    # controllers.database.conn.execute(insertMonitorQuery, (None, datetime.datetime.now(), uuid, session_id, page))
+    # controllers.database.conn.commit()
+    controllers.database.conn.insert(insertMonitorQuery, (None, datetime.datetime.now(), uuid, session_id, page))
 
 
     if prevPage:
       insertQuery = 'INSERT INTO route_trackDB VALUES (?, ?, ?, ?, ?);'
-      # conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, prevPage, page))
-      conn.insert(insertQuery, (None, datetime.datetime.now(), session_id, prevPage, page))
+      # controllers.database.conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, prevPage, page))
+      controllers.database.conn.insert(insertQuery, (None, datetime.datetime.now(), session_id, prevPage, page))
 
-    # conn.commit()
+    # controllers.database.conn.commit()
 
     kwargs = {
       # 'request': {

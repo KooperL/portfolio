@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, jsonify, request
 import scripts.utils.decorators
 import scripts.utils.responses
 import datetime
+import controllers.database
+
 
 contact = Blueprint('contact', __name__)
 
@@ -57,10 +59,10 @@ def contactHome():
     session_id = data.get('session_id')
     message = data.get('message')
     insertQuery = 'INSERT INTO contact_messagesDB VALUES (?, ?, ?, ?);'
-    # conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, message))
-    # conn.commit()
-    conn.insert(insertQuery, (None, datetime.datetime.now(), session_id, message))
-    # print(list(conn.execute(f'SELECT * FROM contactMessagesDB ORDER BY id DESC LIMIT 200')))
+    # controllers.database.conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, message))
+    # controllers.database.conn.commit()
+    controllers.database.conn.insert(insertQuery, (None, datetime.datetime.now(), session_id, message))
+    # print(list(controllers.database.conn.execute(f'SELECT * FROM contactMessagesDB ORDER BY id DESC LIMIT 200')))
     kwargs = {
       'success': True,
     }

@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, jsonify, request
 import scripts.utils.decorators
 import scripts.utils.responses
 import datetime
+import controllers.database
+
 
 capture = Blueprint('capture', __name__)
 
@@ -48,11 +50,11 @@ def captureHome():
     insertFingerprintQuery = """INSERT INTO fingerprintDB VALUES (
       ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
     );"""
-    # conn.execute(insertFingerprintQuery, args)
-    # conn.commit()
-    conn.insert(insertFingerprintQuery, args)
+    # controllers.database.conn.execute(insertFingerprintQuery, args)
+    # controllers.database.conn.commit()
+    controllers.database.conn.insert(insertFingerprintQuery, args)
 
-    # print(list(conn.execute(f'SELECT * FROM fingerprintDB ORDER BY id DESC LIMIT 200')))
+    # print(list(controllers.database.conn.execute(f'SELECT * FROM fingerprintDB ORDER BY id DESC LIMIT 200')))
     res = jsonify({'success': True})
     return scripts.utils.responses.build_actual_response(res)
   elif request.method == 'OPTIONS': 

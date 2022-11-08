@@ -3,6 +3,7 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import datetime
 import scripts.utils.structs
+import controllers.database
 
 
 fuelprices = Blueprint('fuelprices', __name__)
@@ -11,7 +12,7 @@ fuelprices = Blueprint('fuelprices', __name__)
 @scripts.utils.decorators.errorHandle
 def fuelpricesHome():
   if request.method == 'GET':
-    rows = list(conn.fetch('SELECT * FROM fuelpricesDB where ? = "None" ORDER BY id DESC LIMIT ?', ('None', 200)))[::-1]
+    rows = list(controllers.database.conn.fetch('SELECT * FROM fuelpricesDB where ? = "None" ORDER BY id DESC LIMIT ?', ('None', 200)))[::-1]
 
     dic = {'wholesale': [], 'min': [], 'max': [], 'average': [], }
     for key in rows:

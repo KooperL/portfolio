@@ -6,6 +6,8 @@ import scripts.utils.hashFunctions
 import secrets
 import datetime
 import inspect
+import scripts.utils.blogFuncs
+import controllers.database
 from dotenv import dotenv_values
 config = dotenv_values('.env')
 
@@ -21,7 +23,7 @@ def blogLogoutHome(authPayload):
     if not refresh_token:
       return scripts.utils.responses.build_unauthenticated()
     refreshTokenSearchQuery = 'SELECT count(*) FROM blog_refresh_tokensDB where ? = "None" and blog_refresh_token = ?'    # expanding string when only one item in tuple ??? have to add second arg
-    tokenRows = conn.fetch(refreshTokenSearchQuery, ('None', refresh_token))
+    tokenRows = controllers.database.conn.fetch(refreshTokenSearchQuery, ('None', refresh_token))
 
     if len(tokenRows) != 1:
       return scripts.utils.responses.build_unauthorized()
@@ -33,7 +35,7 @@ def blogLogoutHome(authPayload):
 
     user_id = authPayload.get('payload').get('userId')
     userRefreshTokenDelete = 'DELETE from blog_refresh_tokensDB where ? = "None" and blog_user_id = ?;'
-    conn.fetch(userRefreshTokenDelete, ('None', user_id))
+    controllers.database.conn.fetch(userRefreshTokenDelete, ('None', user_id))
 
     kwargs = {
       'success': True

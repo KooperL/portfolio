@@ -6,6 +6,8 @@ import scripts.utils.hashFunctions
 import secrets
 import datetime
 import inspect
+import scripts.utils.blogFuncs
+import controllers.database
 from dotenv import dotenv_values
 config = dotenv_values('.env')
 
@@ -25,7 +27,7 @@ def blogUserViewHome(authPayload, *args, **kwargs):
     role = authPayload.get('payload').get('role')
     if not session_id:
       return scripts.utils.responses.build_bad_req()
-    trackBlogFunctionsCalled(username, session_id, inspect.stack()[0][3])
+    scripts.utils.blogFuncs.trackBlogFunctionsCalled(username, session_id, inspect.stack()[0][3])
     
     pullBlogQuery = '''
       SELECT 
@@ -44,7 +46,7 @@ def blogUserViewHome(authPayload, *args, **kwargs):
       where
         blog_usersDB.blog_username = ? and
         (blog_postsDB.visible = 1 or blog_postsDB.blog_user_id = ? or ? = "True");'''
-    postRaw = conn.fetch(pullBlogQuery, (username, user_id, (role==999)))
+    postRaw = controllers.database.conn.fetch(pullBlogQuery, (username, user_id, (role==999)))
 
     if len(postRaw) <= 0:
       return scripts.utils.responses.build_not_found()
@@ -53,7 +55,7 @@ def blogUserViewHome(authPayload, *args, **kwargs):
     for i in postRaw:
       # Distinct views??
       pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
-      postViewsRaw = conn.fetch(pullBlogViewsQuery, ('None', i[0]))[0][0]
+      postViewsRaw = controllers.database.conn.fetch(pullBlogViewsQuery, ('None', i[0]))[0][0]
       posts.append({
       'id' : i[0],
       'date' : i[1],
