@@ -6,6 +6,8 @@ import scripts.utils.hashFunctions
 import secrets
 import datetime
 import inspect
+import scripts.utils.blogFuncs
+import controllers.database
 from dotenv import dotenv_values
 config = dotenv_values('.env')
 
@@ -28,10 +30,10 @@ def blogLoginHome():
       return scripts.utils.responses.build_bad_req()
     session_id = data.get('session_id')
 
-    trackBlogFunctionsCalled(decodedStr[0], session_id, inspect.stack()[0][3])
+    scripts.utils.blogFuncs.trackBlogFunctionsCalled(decodedStr[0], session_id, inspect.stack()[0][3])
 
     userSearchQuery = 'SELECT id, blog_password_hash, blog_password_salt, role_id FROM blog_usersDB where ? = "None" and blog_username = ?'    # expanding string when only one item in tuple ??? have to add second arg
-    userRow = conn.fetch(userSearchQuery, ('None', decodedStr[0].lower()))
+    userRow = controllers.database.conn.fetch(userSearchQuery, ('None', decodedStr[0].lower()))
     print(userRow)
 
     if len(userRow) != 1:
@@ -70,10 +72,10 @@ def blogLoginHome():
     jwtRefresh = scripts.utils.hashFunctions.generateJWT(scripts.utils.hashFunctions.generateJWTHeader(), jwtRefreshPayload, config['blog-jwt-refresh-token'])
 
     userRefreshTokenDelete = 'DELETE from blog_refresh_tokensDB where ? = "None" and blog_user_id = ?;'
-    conn.fetch(userRefreshTokenDelete, ('None', userInfo.get('id')))
+    controllers.database.conn.fetch(userRefreshTokenDelete, ('None', userInfo.get('id')))
 
     userRefreshTokenInsert = 'INSERT INTO blog_refresh_tokensDB VALUES (?, ?, ?, ?);'
-    conn.fetch(userRefreshTokenInsert, (None, issuedAtRaw, userInfo.get('id'), jwtRefresh))
+    controllers.database.conn.fetch(userRefreshTokenInsert, (None, issuedAtRaw, userInfo.get('id'), jwtRefresh))
 
     res = jsonify(scripts.utils.responses.buildBearerResp(jwtAccess, expires))
     res.set_cookie('refresh_token', value=jwtRefresh, expires=refreshExpires, httponly=True) # domain=config['ORIGIN'], samesite='None', secure=True, 

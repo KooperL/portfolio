@@ -6,6 +6,8 @@ import scripts.utils.hashFunctions
 import secrets
 import datetime
 import inspect
+import scripts.utils.blogFuncs
+import controllers.database
 from dotenv import dotenv_values
 config = dotenv_values('.env')
 
@@ -23,7 +25,7 @@ def blogPostCreateHome(authPayload):
     user_id = authPayload.get('payload').get('userId')
     username = authPayload.get('payload').get('username')
     role = authPayload.get('payload').get('role')
-    trackBlogFunctionsCalled(username, session_id, inspect.stack()[0][3])
+    scripts.utils.blogFuncs.trackBlogFunctionsCalled(username, session_id, inspect.stack()[0][3])
 
     data = data.get('data')
     if 'blog_title' not in data and 'blog_body' not in data:
@@ -33,15 +35,15 @@ def blogPostCreateHome(authPayload):
     blog_body = data.get('blog_body')
 
     validatePermsQuery = 'SELECT canPost from blog_roleDB where ? = "None" and id = ?;'
-    canPost = conn.fetch(validatePermsQuery, ('None', role))
+    canPost = controllers.database.conn.fetch(validatePermsQuery, ('None', role))
     if canPost[0][0] != 1:
       return scripts.utils.responses.build_unauthorized()
 
     publishBlogQuery = 'INSERT INTO blog_postsDB VALUES (?, ?, ?, ?, ?, ?, ?, ?);'
-    conn.fetch(publishBlogQuery, (None, datetime.datetime.now(), user_id, blog_title, 1, blog_body, 1, 0))
+    controllers.database.conn.fetch(publishBlogQuery, (None, datetime.datetime.now(), user_id, blog_title, 1, blog_body, 1, 0))
     
     publishedBlogIdQuery = 'SELECT id from blog_postsDB where blog_user_id = ? and title = ? and  body = ?;'
-    publishedBlogId = conn.fetch(publishedBlogIdQuery, (user_id, blog_title, blog_body))
+    publishedBlogId = controllers.database.conn.fetch(publishedBlogIdQuery, (user_id, blog_title, blog_body))
     kwargs = {
       'success': True,
       'data': {

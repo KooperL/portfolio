@@ -3,9 +3,9 @@ import scripts.utils.decorators
 import scripts.utils.responses
 
 
-home = Blueprint('home', __name__)
+homePage = Blueprint('homePage', __name__)
 
-@home.route('/home', methods=['GET', 'OPTIONS'])
+@homePage.route('/home', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
 def homeHome():
   if request.method == 'GET':

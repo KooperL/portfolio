@@ -6,6 +6,8 @@ import scripts.utils.hashFunctions
 import secrets
 import datetime
 import inspect
+import scripts.utils.blogFuncs
+import controllers.database
 from dotenv import dotenv_values
 config = dotenv_values('.env')
 
@@ -26,11 +28,11 @@ def blogHome(authPayload):
     user_id = authPayload.get('payload').get('userId')
     username = authPayload.get('payload').get('username')
     role = authPayload.get('payload').get('role')
-    trackBlogFunctionsCalled(username, session_id, inspect.stack()[0][3])
+    scripts.utils.blogFuncs.trackBlogFunctionsCalled(username, session_id, inspect.stack()[0][3])
 
     if category:
       categoryQuery = 'SELECT id from blog_post_categoryDB where "None" = ? and name = ?;'
-      categoryId = conn.fetch(categoryQuery, ("None", category))[0]
+      categoryId = controllers.database.conn.fetch(categoryQuery, ("None", category))[0]
 
       if not len(categoryId):
         return scripts.utils.responses.build_not_found()
@@ -51,14 +53,14 @@ def blogHome(authPayload):
           ? = "None" and
           blog_postsDB.category_id = ?
       '''
-      categoryPosts = conn.fetch(categoryPostsQuery, ('None', categoryId[0]))
+      categoryPosts = controllers.database.conn.fetch(categoryPostsQuery, ('None', categoryId[0]))
       OrganisedPosts = []
       if not len(categoryPosts):
         return scripts.utils.responses.build_not_found()
 
       for a in categoryPosts:
         pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
-        postViewsRaw = conn.fetch(pullBlogViewsQuery, ('None', a[0]))[0][0]
+        postViewsRaw = controllers.database.conn.fetch(pullBlogViewsQuery, ('None', a[0]))[0][0]
 
         OrganisedPosts.append({
           'id': a[0],
@@ -98,7 +100,7 @@ def blogHome(authPayload):
           blog_postsDB.title like ? or 
           blog_postsDB.body like ? 
       '''
-      generalResults = conn.fetch(generalQuery, (search, search, search, search))
+      generalResults = controllers.database.conn.fetch(generalQuery, (search, search, search, search))
       OrganisedPosts = []
 
       print(generalResults)
@@ -108,7 +110,7 @@ def blogHome(authPayload):
 
       for a in generalResults:
         pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
-        postViewsRaw = conn.fetch(pullBlogViewsQuery, ('None', a[0]))[0][0]
+        postViewsRaw = controllers.database.conn.fetch(pullBlogViewsQuery, ('None', a[0]))[0][0]
 
         OrganisedPosts.append({
           'id': a[0],
@@ -129,7 +131,7 @@ def blogHome(authPayload):
       return scripts.utils.responses.build_actual_response(res)
     else:
       categoriesQuery = 'SELECT id, name from blog_post_categoryDB limit 5;'
-      categories = conn.fetch(categoriesQuery, ())
+      categories = controllers.database.conn.fetch(categoriesQuery, ())
 
       OrganisedPosts = {}
       for i in categories:
@@ -170,12 +172,12 @@ def blogHome(authPayload):
             blog_postsDB.category_id = ?
           limit 5;
         '''
-        categoryPosts = conn.fetch(categoryPostsQuery, ('None', i[0]))
+        categoryPosts = controllers.database.conn.fetch(categoryPostsQuery, ('None', i[0]))
         if len(categoryPosts):
           OrganisedPosts[i[1]] = []
         for a in categoryPosts:
           pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
-          postViewsRaw = conn.fetch(pullBlogViewsQuery, ('None', a[0]))[0][0]
+          postViewsRaw = controllers.database.conn.fetch(pullBlogViewsQuery, ('None', a[0]))[0][0]
 
           OrganisedPosts[i[1]].append({
             'id': a[0],

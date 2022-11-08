@@ -6,6 +6,8 @@ import scripts.utils.hashFunctions
 import secrets
 import datetime
 import inspect
+import scripts.utils.blogFuncs
+import controllers.database
 from dotenv import dotenv_values
 config = dotenv_values('.env')
 
@@ -26,8 +28,8 @@ def blogRefreshHome():
       # return scripts.utils.responses.build_actual_response(res), 204
       return scripts.utils.responses.build_unauthenticated()
     refreshTokenSearchQuery = 'SELECT count(*) FROM blog_refresh_tokensDB where ? = "None" and blog_refresh_token = ?'    # expanding string when only one item in tuple ??? have to add second arg
-    # tokenRows = conn.execute(refreshTokenSearchQuery, ('None', refresh_token))
-    tokenRows = conn.fetch(refreshTokenSearchQuery, ('None', refresh_token))
+    # tokenRows = controllers.database.conn.execute(refreshTokenSearchQuery, ('None', refresh_token))
+    tokenRows = controllers.database.conn.fetch(refreshTokenSearchQuery, ('None', refresh_token))
 
     if len(tokenRows) != 1:
       return scripts.utils.responses.build_unauthorized()
@@ -39,7 +41,7 @@ def blogRefreshHome():
       return scripts.utils.responses.build_unauthorized()
 
     userSearchQuery = 'SELECT blog_username, role_id FROM blog_usersDB where ? = "None" and id = ?'    # expanding string when only one item in tuple ??? have to add second arg
-    userRow = conn.fetch(userSearchQuery, ('None', userId))
+    userRow = controllers.database.conn.fetch(userSearchQuery, ('None', userId))
 
     expires = str(int((datetime.datetime.now() + datetime.timedelta(days = refreshTokenLife)).timestamp() * 1000 ))
     issuedAtRaw = datetime.datetime.now()
