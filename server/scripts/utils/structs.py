@@ -1,0 +1,2 @@
+blogPath = 'blog'
+projectsPath = 'projects'
