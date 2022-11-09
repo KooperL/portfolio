@@ -1,20 +1,43 @@
-export interface BlogHomeState {
-  details?: BlogPostFetchPayload;
+// export interface BlogHomeState {
+//   details?: BlogPostFetchPayload;
+//   error?: boolean;
+//   errorMessage?: string;
+//   loading?: boolean;
+// }
+
+import { blogItem } from "../common/types";
+
+
+// export interface BlogPostFetchPayload {
+//   data: {
+//   }[]
+//   success: boolean;
+// }
+
+// export const BlogHomeInitialState: BlogHomeState = {
+//   error: false,
+//   errorMessage: '',
+//   loading: true
+// } as const;
+
+
+export interface BlogHomeGETResponse {
+  success: boolean;
+  data?: {
+    [key: string]: blogItem[]
+  };
+  error?: string;
+}
+
+export interface BlogHomeGETState {
+  details?: BlogHomeGETResponse;
   error?: boolean;
   errorMessage?: string;
   loading?: boolean;
 }
 
-
-export interface BlogPostFetchPayload {
-  data: {
-  }[]
-  success: boolean;
-}
-
-export const BlogHomeInitialState: BlogHomeState = {
+export const BlogHomeGETInitialState: BlogHomeGETState = {
   error: false,
   errorMessage: '',
-  loading: true
+  loading: false
 } as const;
-
