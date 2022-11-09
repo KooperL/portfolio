@@ -36,7 +36,17 @@
 
 @media screen and (max-width: 1000px) {
   .blogLoginPage .container {
+    max-width: 100%;
     padding: 8rem 2rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .links {
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    padding-top: 6rem;
   }
 
   .blogLoginPage input {
