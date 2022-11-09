@@ -1,5 +1,5 @@
 # Important
-This app uses python 3.x.
+This app uses python 3.9.x
 
 # Installation
 `pip install virtualenv` to download the module to use a virtual environment.
