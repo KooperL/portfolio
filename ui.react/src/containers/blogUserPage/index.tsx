@@ -10,12 +10,12 @@ import sketchWrapper from "../../components/p5/box";
 import { Button } from "../../components/Button";
 import { useAccessToken } from "../authContext/context";
 import { getBlogHome, getUserView } from "../App/api/blogApis";
-import { BlogHomeGETInitialState, BlogHomeGETResponse, BlogRegisterPOSTResponse, BlogUserGETInitialState, BlogUserGETResponse } from "../blogLoginPage/types";
 import { blogPath } from "../App/api/types";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { BlogRouteType } from "../App/routeTypes";
 import Redirect from "../../components/Redirect"
 import BlogItem from "../../components/BlogItem";
+import { BlogUserGETInitialState, BlogUserGETResponse } from "./types";
 
 
 interface Props {

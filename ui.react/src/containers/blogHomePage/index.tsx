@@ -11,13 +11,12 @@ import { Button } from "../../components/Button";
 import BlogItem from "../../components/BlogItem";
 import ButtonRedir from "../../components/ButtonRedir";
 import { useAccessToken } from "../authContext/context";
-import { BlogHomeInitialState } from "./types";
 import { getBlogHome } from "../App/api/blogApis";
-import { BlogHomeGETInitialState, BlogHomeGETResponse, BlogRegisterPOSTResponse } from "../blogLoginPage/types";
 import { blogPath } from "../App/api/types";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { BlogRouteType } from "../App/routeTypes";
 import Redirect from "../../components/Redirect"
+import { BlogHomeGETInitialState, BlogHomeGETResponse } from "./types";
 
 
 interface Props {

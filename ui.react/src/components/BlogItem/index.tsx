@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { BlogRouteType } from "../../containers/App/routeTypes";
-import { blogItem } from "../../containers/blogLoginPage/types";
+import { blogItem } from "../../containers/common/types";
 import { SchemeContext } from "../../containers/context/colourScheme";
 import daysAgo from "../../utils/daysAgo";
 import './style.css'

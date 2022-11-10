@@ -1,7 +1,9 @@
 import { get, post } from '../../../api/restApi';
-import { BlogHomeGETResponse, BlogLoginPOSTPayload, BlogLoginPOSTResponse, BlogRegisterPOSTPayload, BlogRegisterPOSTResponse, BlogUserGETResponse } from '../../blogLoginPage/types';
+import { BlogHomeGETResponse } from '../../blogHomePage/types';
+import { BlogLoginPOSTPayload, BlogLoginPOSTResponse, BlogRegisterPOSTPayload, BlogRegisterPOSTResponse } from '../../blogLoginPage/types';
 import { BlogPostCreatePOSTPayload } from '../../blogPostCreatePage/types';
 import { BlogPostViewGETPayload } from '../../blogPostViewPage/types';
+import { BlogUserGETResponse } from '../../blogUserPage/types';
 import { endpoints } from './endpoints';
 import { Payload } from './types';
 
