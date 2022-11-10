@@ -5,6 +5,15 @@ import json
 import binascii
 
 
+def generateJWTHeader():
+  kwargs = {
+    'header': {
+      'alg': 'SHA256',
+      'typ': 'JWT'
+    }
+  }
+  return kwargs
+
 def base64ToString(string):
   decodedBytes = base64.b64decode(string)
   decodedStr = str(decodedBytes, "utf-8")

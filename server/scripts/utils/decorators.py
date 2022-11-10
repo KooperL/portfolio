@@ -6,6 +6,9 @@ from flask import request, jsonify
 import binascii
 import hashlib
 import hmac
+from dotenv import dotenv_values
+config = dotenv_values('.env')
+
 
 def errorHandle(func):
   def wrapper(*args, **kwargs):
@@ -29,21 +32,6 @@ def errorHandle(func):
       return scripts.utils.responses.build_actual_response(res), 500
   wrapper.__name__ = func.__name__
   return wrapper
-
-def generateJWTHeader():
-  kwargs = {
-    'header': {
-      'alg': 'SHA256',
-      'typ': 'JWT'
-    }
-  }
-  return kwargs
-
-def trackBlogFunctionsCalled(blogUsername, session_id, funct):
-  insertQuery = """INSERT INTO blog_user_trackingDB VALUES (
-    ?, ?, ?, ?, ?
-  );"""
-  controllers.database.conn.insert(insertQuery, (None, datetime.datetime.now(), blogUsername, session_id, funct))
 
 
 

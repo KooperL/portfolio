@@ -9,8 +9,8 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  border-radius: 5px;
-  
+  border-radius: 7px;
+  border-top-left-radius: 0;
 }
 
 .hamburger .hamburger-icon {
@@ -22,7 +22,8 @@
   background-color: rgba(255, 255, 255, 0);
   width: 90%;
   height: 90%;
-  border-radius: 20px;
+  border-radius: 10px;
+  border-top-left-radius: 0;
   transition: 0.2s;
 }
 
@@ -31,9 +32,7 @@
   background-color: rgba(255, 255, 255, 0.30);
 }
 
-.hamburger .hamburger-icon {
-  font-size: xx-large;
-}
+
 
 .hamburger .links {
   position: absolute;
