@@ -1,0 +1,14 @@
+
+.type-lookup.text {
+  padding: 2rem 0;
+}
+
+ul.type-lookup.unorderedList {
+  padding-left: 40px;
+  list-style-type: circle;
+  padding-top: 0;
+}
+
+.type-lookup.text {
+  display: inline;
+}

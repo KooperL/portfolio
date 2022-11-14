@@ -22,5 +22,12 @@
   },
   "include": [
     "src"
-  ]
+  ],
+  "baseUrl": "./", // This must be specified if "paths" is.
+  "paths": {
+   "@components/*": ["./src/components/*"],
+   "@utils/*": ["./src/utils/*"],
+   "@controllers/*": ["./src/controllers/*"],
+   "@containers/*": ["./src/containers/*"]
+ }
 }
