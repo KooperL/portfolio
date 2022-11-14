@@ -29,8 +29,9 @@
 } */
 
 .aboutPage .render {
-  display: none;
-
+  /* display: none; */
+  font-size: xx-small;
+  font-family: "Fixedsys", "Courier New", Courier, mono, serif;
 }
 
 .aboutPage .area {
@@ -49,37 +50,11 @@
   padding-bottom: 25px;
 }
 
-.aboutPage .button {
-  width: 16rem;
-  margin: 3px;
-  padding: 20px;
-  align-items: flex-end;
-  border-radius: 7px;
-  text-align: center;
-}
 
-
-
-.aboutPage .button:hover {
-  background-image: linear-gradient(to right, rgb(219 234 254), #f3e8ff);
-  color: black;
-}
-
-.aboutPage .text {
-  padding: 2rem 0;
-}
-
-ul.aboutPage .unorderedList {
-  padding-left: 40px;
-  list-style-type: circle;
-  padding-top: 0;
-}
 
 @media screen and (max-width: 1000px) {
   .aboutPage .container {
     padding: 8rem 2rem;
   }
-  div.aboutPage .button {
-    width: 100%;
-  }
+
 }

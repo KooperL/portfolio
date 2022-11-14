@@ -10,22 +10,39 @@ import { ReactP5Wrapper } from "react-p5-wrapper";
 // @ts-ignore
 import dna from './dna.txt';
 import ButtonRedir from "../../components/ButtonRedir";
+import TypeLookup from "../../components/TypeLookup";
 
 interface Props {
   dataCall: Function; 
 }
 
+function newSeed(arrs: number, length: number, width: number) {
+  let arr = new Array(arrs)
+  let arrLength = new Array(length)
+  let arrWidth = new Array(width)
+  for(let i = 0; i< arr.length; i++) {
+    arr[i] = [...arrLength]
+    for(let y = 0; y< arrLength.length; y++) {
+      arr[i][y] = [...arrWidth]
+      for(let x = 0; x< arrWidth.length; x++) {
+        arr[i][y][x] = Math.ceil(Math.random()*10)
+      }
+    }
+  }
+  // arr = arr.map((subArr) => subArr.map(() => Math.ceil(Math.random()*10)))
+  return arr
+}
 
 function AboutPage(props: Props): JSX.Element {
   const [state, setState] = useState({...AboutInitialState});
-  const [seed, setSeed] = useState(Math.random());
-  const [text, setText] = useState<Array<Array<string>>>([[]]);
+  const [seed, setSeed] = useState<Array<Array<Array<number>>>>([]);
+  const [text, setText] = useState<Array<Array<number>>>([[]]);
   const [scheme, setScheme] = useContext(SchemeContext);
 
 
   useEffect(() => {
     fetch(dna).then(r => r.text()).then(textRaw => {
-      setText(textRaw.split('\n').map(item => item.split('')));
+      setText(textRaw.split('\n').map(item => item.split('').map(item => +item)));
     })
     props.dataCall().then((resp: AboutPayload) => {
       setState({
@@ -47,29 +64,20 @@ function AboutPage(props: Props): JSX.Element {
     document.title = `About | ${scheme.title}`;
   }, []);
 
-  function typeLookup(type: string, data:string[], text?:string) {
-    switch(type) {
-      case 'button':
-        return <ButtonRedir destination={data[0]} label={text ?? ''} local={!data[0].includes('http')}/>
-      case 'unorderedList':
-        return <ul className={`text ${type}`}>{data.map((item:string, index:number) => <li key={index}>{item}</li>)}</ul>
-      case 'body':
-        return <p className={`text ${type}`}>{data.map((item:string, index:number) => <span key={index}>{item}</span>)}</p>
-      case 'header':
-      case 'subheader':
-      case 'emoji':
-        return <p className={`text ${type}`}>{data[0]}</p>
-    }
-  }
+  useEffect(() => {
+    setSeed(newSeed(3, text.length, text[0].length))
+  }, [text])
 
-  function newSeed() {
-    setSeed(Math.random())
-  }
+
 
   useEffect(() => {
-    setTimeout(() => {
-      newSeed()
-    }, 500)
+      setTimeout(() => {
+        if(seed.length) {
+          let newSeed = seed
+          const last = newSeed.pop() ?? [[0]]
+          setSeed([last, ...newSeed])
+      }
+    }, 100)
   }, [seed])
 
   if(state.loading) {
@@ -82,7 +90,7 @@ function AboutPage(props: Props): JSX.Element {
       </div>
     );
   }
-  if(state.details) {
+  if(state.details && seed[0].length && seed[0][0].length) {
     const data = state.details.data
     const validCharsBinary = ['1','0']
     const validCharsNucleotides = ['A','T','G','C']
@@ -94,21 +102,24 @@ function AboutPage(props: Props): JSX.Element {
             <h2 className='main-heading' style={{color: scheme.body.h1}}>About</h2>
             {data.map((segment, indexSegment) => (
               <div key={indexSegment}>
-                {typeLookup(segment.type, segment.data, segment?.text)}
+                {TypeLookup(segment.type, segment.data, segment?.text)}
+                {/* <TypeLookup type={segment.type} data={segment.data} text={segment?.text} /> */}
               </div>
             ))}
           </div>
           <div className='render'>
-            {window.outerWidth > 1000 ? <ReactP5Wrapper sketch={sketchWrapper(scheme.body.h1)} /> : <></>}
-            {/* {text.map((row, rowindex) => (
+            {/* {window.outerWidth > 1000 ? <ReactP5Wrapper sketch={sketchWrapper(scheme.body.h1)} /> : <></>} */}
+            {text.map((row, rowindex) => (
               <div key={rowindex}>
               {row.map((col, colIndex) => (
-                <span className="nucleotide" key={colIndex} style={{opacity: `${+col*10}%`, ...(Math.ceil((colIndex+rowindex)*seed)%4 && {color: scheme.body.h1})}}>
-                  {+col < 10 ? ( Math.ceil((colIndex+rowindex)*seed)%4 ? validCharsBinary[Math.floor(Math.random()*validCharsBinary.length)] : validCharsNucleotides[Math.floor(Math.random()*validCharsNucleotides.length)]) : '&nbsp;'}
+                <span className={`nucleotide ${seed[0][rowindex][colIndex]}`} key={colIndex} style={{opacity: `${+col === 0 ? 0 : +col*10}%`, ...(seed[0][rowindex][colIndex] === 7) && {color: scheme.body.h1}}}>
+                  {+col !== 0 ? 
+                    (seed[0][rowindex][colIndex] === 7 ?
+                      validCharsBinary[Math.floor(Math.random()*validCharsBinary.length)] : validCharsNucleotides[Math.floor(Math.random()*validCharsNucleotides.length)]) : '.'}
                 </span>
               ))}
               </div>
-            ))} */}
+            ))}
           </div>
           <div id="test"></div>
         </div>

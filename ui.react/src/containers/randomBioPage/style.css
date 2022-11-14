@@ -72,16 +72,18 @@
   padding-top: 2rem;
 }
 
-textarea {
+.randomBioPage textarea {
   color: black;
   resize: both;
   width: 866px;
   height: 300px;
+  padding: 5px;
+  box-sizing: content-box;
 }
 
 
 @media screen and (max-width: 1000px) {
-  form {
+  .randomBioPage form {
     padding: 1rem;
     flex-direction: column;
     flex-wrap: wrap;
@@ -89,20 +91,20 @@ textarea {
     height: fit-content;
     gap: 1rem;
   }
-  .searchArea {
+  .randomBioPage .searchArea {
     width: 100%;
     text-align: center;
     justify-content: center;
   }
-  .search-continer {
+  .randomBioPage .search-continer {
     width: 50%;
   }
 
-  textarea {
+  .randomBioPage textarea {
     width: 80%;
     height: 300px;
   }
-  .resultsContainer {
+  .randomBioPage .resultsContainer {
     width: 80%;
     display: flex;
     flex-direction: column;
