@@ -8,13 +8,13 @@ flaskprodport="5000"
 # Run this file as a super user
 # This will not handle database creation
 
-crons="0 16 * * * /usr/bin/python3 $(pwd)/server/scripts/fuelscrape/fuelscrape.py
+crons="0 16 * * * /usr/bin/python3 $(pwd)/server/v1.flask/scripts/fuelscrape/fuelscrape.py
 
-0 9 * * * /usr/bin/python3 $(pwd)/server/scripts/fuelscrape/fuelscrape.py
+0 9 * * * /usr/bin/python3 $(pwd)/server/v1.flask/scripts/fuelscrape/fuelscrape.py
 
-0 1 * * 2 /usr/bin/python3 $(pwd)/server/scripts/property/scrape.py
+0 1 * * 2 /usr/bin/python3 $(pwd)/server/v1.flask/scripts/property/scrape.py
 
-@reboot cd $(pwd)/server/ && /usr/bin/python3 $(pwd)/server/app.py"
+@reboot cd $(pwd)/server/v1.flask/ && /usr/bin/python3 $(pwd)/server/v1.flask/app.py"
 crontab -l >> tempfile
 echo crons >> tempfile
 crontab tempfile
@@ -24,7 +24,7 @@ rm tempfile
 nxinx="server {
   listen       80;
   server_name  $(domain);
-  location /api/ {
+  location /api/v1 {
     proxy_set_header X-Real-IP \$remote_addr;
     proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     proxy_set_header X-NginX-Proxy true;

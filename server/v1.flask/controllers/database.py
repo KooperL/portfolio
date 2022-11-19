@@ -3,7 +3,7 @@ import sqlite3
 import os
 from dotenv import dotenv_values
 
-config = dotenv_values('.env')
+config =  dotenv_values('../.env')
 appDir = os.getcwd()
 lock = Lock()
 
@@ -43,4 +43,5 @@ class DatabaseManager(object):
   def __del__(self):
     self.conn.close()
 
-conn = DatabaseManager(f'{appDir}/data/database.db')
+print(appDir)
+conn = DatabaseManager(f'{appDir}/../data/database.db')

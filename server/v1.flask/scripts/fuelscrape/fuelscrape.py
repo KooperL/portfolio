@@ -14,7 +14,7 @@ def scrape():
   a = datetime.datetime.now()
   #today = '\'{}\''.format(str(a).translate({45:32}))
   today = f'\'{a}\''
-  conn = sqlite3.connect(f'{os.getcwd()}/data/database.db')
+  conn = sqlite3.connect(f'{os.getcwd()}/../data/database.db')
 
   #url = 'https://www.accc.gov.au/consumers/petrol-diesel-lpg/petrol-price-cycles'
   #url = 'https://www.racv.com.au/on-the-road/driving-maintenance/fuel-prices.html'

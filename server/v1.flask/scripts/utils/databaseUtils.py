@@ -1,7 +1,7 @@
 import pymongo
 from pymongo import MongoClient
 from dotenv import dotenv_values
-config = dotenv_values('.env')
+config =  dotenv_values('../.env')
 import urllib.parse
 
 username = urllib.parse.quote_plus(config['MONGO_USERNAME'])

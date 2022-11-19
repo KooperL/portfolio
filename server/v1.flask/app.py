@@ -21,7 +21,7 @@ import urllib.parse
 
 import os
 from dotenv import dotenv_values
-config = dotenv_values('.env')
+config = dotenv_values('../.env')
 appDir = os.getcwd()
 
 from flask import Flask, render_template, request, redirect, url_for, flash, make_response, session, jsonify
@@ -50,7 +50,6 @@ import views.home.about
 import views.home.contact
 import views.home.capture
 import views.home.monitor
-
 import views.projects.index
 import views.projects.fuelprices
 import views.projects.mrna
@@ -59,7 +58,6 @@ import views.projects.property
 import views.projects.randomBio
 import views.projects.secondary
 import views.projects.seqAlign
-
 import views.blog.blogIndex
 import views.blog.register
 import views.blog.login
@@ -72,18 +70,14 @@ import views.blog.user_search
 #sys.path.insert(1, appDir + '/stocks/')
 #import pattern_detect
 
-
-
 # Use cache decorator to prevent db fetches
 # cache = Cache(app)
 # @cache.cached(timeout=60)
-
 
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(
   app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
 )
-
 
 username = urllib.parse.quote_plus(config['MONGO_USERNAME'])
 password = urllib.parse.quote_plus(config['MONGO_PASSWORD'])

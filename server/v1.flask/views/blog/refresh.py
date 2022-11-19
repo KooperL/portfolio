@@ -9,7 +9,7 @@ import inspect
 import scripts.utils.blogFuncs
 import controllers.database
 from dotenv import dotenv_values
-config = dotenv_values('.env')
+config =  dotenv_values('../.env')
 
 
 refresh = Blueprint('refresh', __name__)

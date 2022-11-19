@@ -71,6 +71,7 @@ function AboutPage(props: Props): JSX.Element {
 
 
   useEffect(() => {
+    if(!(window.outerWidth > 1000)) {return}
       setTimeout(() => {
         if(seed.length) {
           let newSeed = seed
@@ -109,17 +110,21 @@ function AboutPage(props: Props): JSX.Element {
           </div>
           <div className='render'>
             {/* {window.outerWidth > 1000 ? <ReactP5Wrapper sketch={sketchWrapper(scheme.body.h1)} /> : <></>} */}
-            {text.map((row, rowindex) => (
-              <div key={rowindex}>
-              {row.map((col, colIndex) => (
-                <span className={`nucleotide ${seed[0][rowindex][colIndex]}`} key={colIndex} style={{opacity: `${+col === 0 ? 0 : +col*10}%`, ...(seed[0][rowindex][colIndex] === 7) && {color: scheme.body.h1}}}>
-                  {+col !== 0 ? 
-                    (seed[0][rowindex][colIndex] === 7 ?
-                      validCharsBinary[Math.floor(Math.random()*validCharsBinary.length)] : validCharsNucleotides[Math.floor(Math.random()*validCharsNucleotides.length)]) : '.'}
-                </span>
-              ))}
-              </div>
-            ))}
+            {window.outerWidth > 1000 ?  
+              <>
+                {text.map((row, rowindex) => (
+                  <div key={rowindex}>
+                  {row.map((col, colIndex) => (
+                    <span className={`nucleotide ${seed[0][rowindex][colIndex]}`} key={colIndex} style={{opacity: `${+col === 0 ? 0 : +col*10}%`, ...(seed[0][rowindex][colIndex] === 7) && {color: scheme.body.h1}}}>
+                      {+col !== 0 ? 
+                        (seed[0][rowindex][colIndex] === 7 ?
+                          validCharsBinary[Math.floor(Math.random()*validCharsBinary.length)] : validCharsNucleotides[Math.floor(Math.random()*validCharsNucleotides.length)]) : '.'}
+                    </span>
+                  ))}
+                  </div>
+                ))}
+              </>
+            : <></>}
           </div>
           <div id="test"></div>
         </div>

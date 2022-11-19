@@ -8,7 +8,7 @@ from dotenv import dotenv_values
 import scripts.utils.databaseUtils as databaseUtils
 
 appDir = os.getcwd()
-config = dotenv_values('.env')
+config =  dotenv_values('../.env')
 
 #import pymongo
 #from pymongo import MongoClient

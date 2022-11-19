@@ -9,7 +9,7 @@ import inspect
 import scripts.utils.blogFuncs
 import controllers.database
 from dotenv import dotenv_values
-config = dotenv_values('.env')
+config =  dotenv_values('../.env')
 
 post = Blueprint('post', __name__)
 

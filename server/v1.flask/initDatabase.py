@@ -5,7 +5,7 @@ import datetime
 
 appDir = os.getcwd()
 print(f'RUN THIS COMMAND TO CREATE THE FOLDER: $mkdir {appDir}/data/')
-conn = sqlite3.connect(f'{appDir}/data/database.db')
+conn = sqlite3.connect(f'{appDir}/../data/database.db')
 
 create_fuelpricesDB= '''create table if not exists fuelpricesDB (
   id integer PRIMARY KEY,

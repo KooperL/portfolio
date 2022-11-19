@@ -66,7 +66,7 @@ function ProjectsPage(props: Props): JSX.Element {
     return (
       <div className="projectsPage"> {/**arguments.callee.name**/}
         {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
-        <div className="container" style={{backgroundColor: scheme.body.background}}>
+        <div className="container" style={{backgroundColor: '' ?? scheme.body.background}}>
         <div className="links-container">
             <h2 className='main-heading' style={{color: scheme.body.h1}}>Projects</h2>
             <div className="links">

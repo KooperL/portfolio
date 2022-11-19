@@ -1,6 +1,6 @@
 from flask import make_response, jsonify
 from dotenv import dotenv_values
-config = dotenv_values('.env')
+config =  dotenv_values('../.env')
 
 
 def build_preflight_response():

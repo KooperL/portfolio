@@ -42,7 +42,11 @@
     justify-content: center;
   }
 
-  .links {
+  .blogLoginPage .submit-button {
+    width: 100%;
+  }
+    .blogLoginPage .links {
+    gap: 2rem;
     flex-direction: column;
     width: fit-content;
     height: fit-content;
