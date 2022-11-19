@@ -36,13 +36,13 @@ blog-refresh-token-life=<value>
 The app leverages scheduled webscrapers. Configure CRON with `sudo crontab -e`. Replace `/DIR/` with the repository location path. See `../setup.sh` to skip.
 
 ```
-0 16 * * * /usr/bin/python3 /DIR/portfolio/server/scripts/fuelscrape/fuelscrape.py
+0 16 * * * /usr/bin/python3 /DIR/portfolio/server/v1/scripts/fuelscrape/fuelscrape.py
 
-0 9 * * * /usr/bin/python3 /DIR/portfolio/server/scripts/fuelscrape/fuelscrape.py
+0 9 * * * /usr/bin/python3 /DIR/portfolio/server/v1/scripts/fuelscrape/fuelscrape.py
 
-0 1 * * 2 /usr/bin/python3 /DIR/portfolio/server/scripts/property/scrape.py
+0 1 * * 2 /usr/bin/python3 /DIR/portfolio/server/v1/scripts/property/scrape.py
 
-@reboot cd /DIR/portfolio/server/ && /usr/bin/python3 /DIR/portfolio/server/app.py
+@reboot cd /DIR/portfolio/server/v1/ && /usr/bin/python3 /DIR/portfolio/server/v1/app.py
 ```
 
 ## SQLITE

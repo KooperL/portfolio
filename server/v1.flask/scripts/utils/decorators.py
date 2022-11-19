@@ -7,7 +7,7 @@ import binascii
 import hashlib
 import hmac
 from dotenv import dotenv_values
-config = dotenv_values('.env')
+config =  dotenv_values('../.env')
 
 
 def errorHandle(func):

@@ -9,7 +9,7 @@ import inspect
 import scripts.utils.blogFuncs
 import controllers.database
 from dotenv import dotenv_values
-config = dotenv_values('.env')
+config =  dotenv_values('../.env')
 
 
 user_search = Blueprint('user_search', __name__)
@@ -44,10 +44,10 @@ def blogUserViewHome(authPayload, *args, **kwargs):
       INNER JOIN blog_usersDB
         on blog_usersDB.id = blog_postsDB.blog_user_id
       where
-        blog_usersDB.blog_username = ? and
+        lower(blog_usersDB.blog_username) = ? and
         (blog_postsDB.visible = 1 or blog_postsDB.blog_user_id = ? or ? = "True");'''
-    postRaw = controllers.database.conn.fetch(pullBlogQuery, (username, user_id, (role==999)))
-
+    postRaw = controllers.database.conn.fetch(pullBlogQuery, (username.lower(), user_id, (role==999)))
+    print(postRaw, username, user_id)
     if len(postRaw) <= 0:
       return scripts.utils.responses.build_not_found()
 

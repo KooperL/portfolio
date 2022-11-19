@@ -1,0 +1,843 @@
+{
+	"info": {
+		"_postman_id": "01483051-0057-43e8-8e8d-ac634c1f877c",
+		"name": "portfolio - kooperlingohr.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17975111"
+	},
+	"item": [
+		{
+			"name": "/",
+			"item": [
+				{
+					"name": "home",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/home",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"home"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "contact - GET",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/contact",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "contact - POST",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session_id\": {{test_session_id}},\n    \"message\": \"Test success!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/contact",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "about",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/about",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"about"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/projects",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{projectsPath}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{projectsPath}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fuelprices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{projectsPath}}/fuelprices",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{projectsPath}}",
+								"fuelprices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/mrna",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{projectsPath}}/mrna?dna_field_id=aatg",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{projectsPath}}",
+								"mrna"
+							],
+							"query": [
+								{
+									"key": "dna_field_id",
+									"value": "aatg",
+									"description": "DNA sequence"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/mrna",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/{{projectsPath}}/mrna?dna_field_id=aatg",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"{{projectsPath}}",
+										"mrna"
+									],
+									"query": [
+										{
+											"key": "dna_field_id",
+											"value": "aatg",
+											"description": "DNA sequence"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.2 Python/3.9.5"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 16 Nov 2022 21:26:01 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "285"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:3000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"aa\": [\n            \"leu\"\n        ],\n        \"aa_s\": \"L\",\n        \"dna_field\": \"aatg\",\n        \"gccontent\": 0.25,\n        \"molweight\": 131,\n        \"mrna_field\": \"uuac\",\n        \"rdna_field\": \"catt\",\n        \"simplecount\": [\n            1,\n            0,\n            2,\n            1\n        ],\n        \"tm\": 16\n    },\n    \"success\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "/secondary",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{projectsPath}}/secondary?aas=lllll&aaformat=s&threshold=4&avg=3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{projectsPath}}",
+								"secondary"
+							],
+							"query": [
+								{
+									"key": "aas",
+									"value": "lllll",
+									"description": "Amino acid (AA) sequence"
+								},
+								{
+									"key": "aaformat",
+									"value": "s",
+									"description": "single letters to represent AA's"
+								},
+								{
+									"key": "threshold",
+									"value": "4",
+									"description": "Sensitivity to assigning structure"
+								},
+								{
+									"key": "avg",
+									"value": "3",
+									"description": "Scope of calculation"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/seqalign",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{projectsPath}}/seqalign?sampletxt=aaaa&referencetxt=aatg&identical=1&mismatch=0&gaps=-0.5&extgaps=-0.1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{projectsPath}}",
+								"seqalign"
+							],
+							"query": [
+								{
+									"key": "sampletxt",
+									"value": "aaaa"
+								},
+								{
+									"key": "referencetxt",
+									"value": "aatg"
+								},
+								{
+									"key": "identical",
+									"value": "1",
+									"description": "Identical match score"
+								},
+								{
+									"key": "mismatch",
+									"value": "0",
+									"description": "Mismatch score"
+								},
+								{
+									"key": "gaps",
+									"value": "-0.5",
+									"description": "Penalty for beginning of gap "
+								},
+								{
+									"key": "extgaps",
+									"value": "-0.1",
+									"description": "Penalty for extending gap"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/randombio",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{projectsPath}}/randombio?type=1&length=100&single=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{projectsPath}}",
+								"randombio"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "1",
+									"description": "1 = DNA\n2 = RNA\n3 = AA's"
+								},
+								{
+									"key": "length",
+									"value": "100",
+									"description": "Length of sequence"
+								},
+								{
+									"key": "single",
+									"value": "1",
+									"description": "Whether or not to use single letters to represent AA's"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/property",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{projectsPath}}/property",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{projectsPath}}",
+								"property"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "utils",
+			"item": [
+				{
+					"name": "/capture",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/capture?uuid={{test_uuid}}&canvas_hash=-1&version=1&platform=postman_test_platform&browser=postman_test_browser&User-Agent=postman_test_useragent&darkMode=2&cookieEnabled=2&actualHeight=10&actualWidth=19&pixelDepth=1&innerHeight=9&outerHeight=11&innerWidth=18&outerWidth=20",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"capture"
+							],
+							"query": [
+								{
+									"key": "uuid",
+									"value": "{{test_uuid}}"
+								},
+								{
+									"key": "canvas_hash",
+									"value": "-1"
+								},
+								{
+									"key": "version",
+									"value": "1"
+								},
+								{
+									"key": "platform",
+									"value": "postman_test_platform"
+								},
+								{
+									"key": "browser",
+									"value": "postman_test_browser"
+								},
+								{
+									"key": "User-Agent",
+									"value": "postman_test_useragent"
+								},
+								{
+									"key": "darkMode",
+									"value": "2"
+								},
+								{
+									"key": "cookieEnabled",
+									"value": "2"
+								},
+								{
+									"key": "actualHeight",
+									"value": "10"
+								},
+								{
+									"key": "actualWidth",
+									"value": "19"
+								},
+								{
+									"key": "pixelDepth",
+									"value": "1"
+								},
+								{
+									"key": "innerHeight",
+									"value": "9"
+								},
+								{
+									"key": "outerHeight",
+									"value": "11"
+								},
+								{
+									"key": "innerWidth",
+									"value": "18"
+								},
+								{
+									"key": "outerWidth",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "monitor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/monitor?uuid={{test_uuid}}&session_id={{test_session_id}}&page=testOld&prevPage=testNew",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"monitor"
+							],
+							"query": [
+								{
+									"key": "uuid",
+									"value": "{{test_uuid}}"
+								},
+								{
+									"key": "session_id",
+									"value": "{{test_session_id}}"
+								},
+								{
+									"key": "page",
+									"value": "testOld"
+								},
+								{
+									"key": "prevPage",
+									"value": "testNew"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/blog",
+			"item": [
+				{
+					"name": "/register",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session_id\": \"{{test_session_id}}\",\n    \"data\": {\n        \"blog_username\":\"{{blog_test_username}}\",\n        \"blog_password\":\"{{blog_test_password}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/{{blogPath}}/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{blogPath}}",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonResp = JSON.parse(responseBody)",
+									"pm.collectionVariables.set('blog_login_token', jsonResp['accessToken'])"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{blog_test_password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{blog_test_username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session_id\":\"{{test_session_id}}\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/{{blogPath}}/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{blogPath}}",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonResp = JSON.parse(responseBody)",
+									"pm.collectionVariables.set('blog_test_post_id', jsonResp['data']['blogPostId'])"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{blog_login_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session_id\": \"{{test_session_id}}\",\n    \"data\": {\n        \"blog_title\": \"blog title\",\n        \"blog_body\": \"blog body\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/{{blogPath}}/post",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{blogPath}}",
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{blog_login_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{blogPath}}?session_id={{test_session_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{blogPath}}"
+							],
+							"query": [
+								{
+									"key": "category_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "session_id",
+									"value": "{{test_session_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/post/<int: postId>",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{blog_login_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"session_id\": \"{{test_session_id}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/{{blogPath}}/post/{{blog_test_post_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{blogPath}}",
+								"post",
+								"{{blog_test_post_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/<str: username>",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{blog_login_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{blogPath}}/user/{{blog_test_username}}?session_id={{test_session_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{blogPath}}",
+								"user",
+								"{{blog_test_username}}"
+							],
+							"query": [
+								{
+									"key": "session_id",
+									"value": "{{test_session_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/refresh TODO",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJoZWFkZXIiOiB7ImFsZyI6ICJTSEEyNTYiLCAidHlwIjogIkpXVCJ9fQ==.eyJ1c2VySWQiOiA0LCAiaWF0IjogIjE2Njg3MzQxNDkxMTgiLCAicm9sZSI6IDEsICJ1c2VybmFtZSI6ICJ0ZXN0QWNjdCIsICJleHAiOiAiMTY2ODc5NDA4OTExOCJ9.NTcxYWNhODVhOTdjM2I3MDY5MTViZDc3MTE1ZDI4NGQ1YzU0MzdjNWFhZjYxOGFmZTE0MWZiOTgyNWY1YmZjNQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{blogPath}}/refresh",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{blogPath}}",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/logout TODO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{blogPath}}/logout",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{blogPath}}",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "https://kooperlingohr.com",
+			"type": "string"
+		},
+		{
+			"key": "blogPath",
+			"value": "blog",
+			"type": "string"
+		},
+		{
+			"key": "projectsPath",
+			"value": "projects",
+			"type": "string"
+		},
+		{
+			"key": "blog_test_username",
+			"value": "testAcct"
+		},
+		{
+			"key": "blog_test_password",
+			"value": "aaaa"
+		},
+		{
+			"key": "blog_login_token",
+			"value": ""
+		},
+		{
+			"key": "test_session_id",
+			"value": "test123",
+			"type": "string"
+		},
+		{
+			"key": "test_uuid",
+			"value": "321test",
+			"type": "string"
+		}
+	]
+}

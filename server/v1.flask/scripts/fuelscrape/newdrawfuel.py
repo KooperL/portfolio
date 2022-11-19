@@ -12,7 +12,7 @@ from sklearn.linear_model import LinearRegression
 
 def table():
   fairp = 125.0
-  conn = sqlite3.connect(f'{os.getcwd()}/data/database.db')
+  conn = sqlite3.connect(f'{os.getcwd()}/../data/database.db')
   rows = list(conn.execute(f'SELECT * FROM fuelpricesDB ORDER BY id DESC LIMIT 3'))
   maxp = rows[0][0]
   minp = rows[0][2]
@@ -29,7 +29,7 @@ def table():
 
 
 def draw(*args):
-  conn = sqlite3.connect(f'{os.getcwd()}/data/database.db')
+  conn = sqlite3.connect(f'{os.getcwd()}/../data/database.db')
   rows = conn.execute(f'SELECT * FROM fuelpricesDB ORDER BY id DESC LIMIT {args[0]}')
   draw.df = {
       'date':[],
