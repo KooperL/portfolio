@@ -24,7 +24,6 @@ helix_propensity = {
 'val':1.06,
 'trp':1.08,
 'tyr':0.69,
-'___':0,
 'sto':0
 }
 
@@ -49,7 +48,6 @@ sheet_propensity = {
 'val':1.7,
 'trp':1.37,
 'tyr':1.47,
-'___':0,
 'sto':0
 }
 

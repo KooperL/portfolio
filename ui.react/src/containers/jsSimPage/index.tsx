@@ -197,8 +197,8 @@ export default function JsSim() {
         <div className="container">
           <div className="instrucions">
             <p>
-              <span>As a programmer, some code sequences appear more commonly than others. </span>
-              <span>Some appear hilariously often. </span>
+              {/* <span>As a programmer, some code sequences appear more commonly than others. </span>
+              <span>Some appear hilariously often. </span> */}
               <span>This is a typing challenge which measures how long it takes to write these sequences. </span>
               <span>Timer appears as soon as you press a key. </span>
             </p>

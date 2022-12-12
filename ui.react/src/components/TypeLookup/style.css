@@ -1,3 +1,18 @@
+.type-lookup.main-heading {
+  font-size: 3rem;
+  padding-bottom: 25px;
+}
+
+.type-lookup.subheader {
+  font-size: 1.5rem;
+  grid-column: span 4;
+  padding-top: 0.5rem;
+}
+
+.type-lookup.buttonArr {
+  display: flex;
+  flex-direction: row;
+}
 
 .type-lookup.text {
   padding: 2rem 0;
@@ -11,4 +26,11 @@ ul.type-lookup.unorderedList {
 
 .type-lookup.text {
   display: inline;
+}
+
+@media screen and (max-width: 1000px) {
+  .type-lookup.buttonArr {
+    display: flex;
+    flex-direction: column;
+  }
 }

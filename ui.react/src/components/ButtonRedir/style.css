@@ -7,6 +7,11 @@
   /* text-align: center; */
 }
 
+.ButtonRedir.container {
+  max-width: fit-content;
+  width: fit-content;
+}
+
 .buttonRedir:hover {
   background-image: linear-gradient(to right, rgb(219 234 254), #f3e8ff);
   color: black;
@@ -15,5 +20,9 @@
 @media screen and (max-width: 1000px) {
   div.buttonRedir {
     width: 99%;
+  }
+  div.ButtonRedir.container {
+    width: 100%;
+    max-width: 100%;
   }
 }

@@ -10,6 +10,8 @@ import { ReactP5Wrapper } from "react-p5-wrapper";
 import sketchWrapper from "../../components/p5/box";
 import { HomeInitialState, HomePayload } from "../homePage/types";
 import ButtonRedir from "../../components/ButtonRedir";
+import TypeLookup from "../../components/TypeLookup";
+import { IslandLeft } from "../../templates/IslandLeft";
 
 interface Props {
   dataCall: Function; 
@@ -64,28 +66,30 @@ function ProjectsPage(props: Props): JSX.Element {
   if(state.details) {
     const data = state.details.data
     return (
-      <div className="projectsPage"> {/**arguments.callee.name**/}
-        {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
-        <div className="container" style={{backgroundColor: '' ?? scheme.body.background}}>
-        <div className="links-container">
-            <h2 className='main-heading' style={{color: scheme.body.h1}}>Projects</h2>
-            <div className="links">
-              {data.map((segment, indexSegment) => (
-                // <div key={indexSegment}>
-                <>
-                  {typeLookup(segment.type, segment.data, segment?.text)}
-                {/* </div> */}
-                </>
-              ))}
+      <IslandLeft>
+        <div className="projectsPage"> {/**arguments.callee.name**/}
+          {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
+          <div className="container" style={{backgroundColor: '' ?? scheme.body.background}}>
+          <div className="links-container">
+              <h2 className='main-heading' style={{color: scheme.body.h1}}>Projects</h2>
+              <div className="links">
+                {data.map((segment, indexSegment) => (
+                  // <div key={indexSegment}>
+                  <>
+                    {TypeLookup({type: segment.type, data: segment.data, text: segment?.text})}
+                  {/* </div> */}
+                  </>
+                ))}
+              </div>
+            </div>
+            <div className='render'>
+              {/* {window.outerWidth > 1000 ?
+                <ReactP5Wrapper sketch={sketchWrapper(1200, 1200, scheme.body.background, scheme.body.foreground, scheme.body.h1)} /> : <></>
+              } */}
             </div>
           </div>
-          <div className='render'>
-            {window.outerWidth > 1000 ?
-              <ReactP5Wrapper sketch={sketchWrapper(1200, 1200, scheme.body.background, scheme.body.foreground, scheme.body.h1)} /> : <></>
-            }
-          </div>
         </div>
-      </div>
+      </IslandLeft>
     );
   }
   return <></>;
