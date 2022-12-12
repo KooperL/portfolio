@@ -28,16 +28,18 @@ function ButtonRedir(props: FuncProps) {
 
   if(props.data.local) {
     return (
-      <Link to={props.data.destination}>
-        <div style={{backgroundColor: scheme.button.bgSolid}} className="buttonRedir" onClick={async (e) => {
-          if(props.data.onClickCallback) {
-            props.data.onClickCallback()
-          }
-          // window.location = (window.location.host + props.data.destination)
-        }}>
-          {props.data.label}
-        </div>
-      </Link>
+      <div className="ButtonRedir container">
+        <Link to={props.data.destination}>
+          <div style={{backgroundColor: scheme.button.bgSolid}} className="buttonRedir" onClick={async (e) => {
+            if(props.data.onClickCallback) {
+              props.data.onClickCallback()
+            }
+            // window.location = (window.location.host + props.data.destination)
+          }}>
+            {props.data.label}
+          </div>
+        </Link>
+      </div>
     )
   }
   return (

@@ -9,6 +9,8 @@ import './style.css';
 import { ReactP5Wrapper } from "react-p5-wrapper";
 import sketchWrapper from "../../components/p5/box";
 import ButtonRedir from "../../components/ButtonRedir";
+import { IslandLeft } from "../../templates/IslandLeft";
+import TypeLookup from "../../components/TypeLookup";
 
 interface Props {
   dataCall: Function; 
@@ -69,6 +71,7 @@ function HomePage(props: Props): JSX.Element {
     const data = state.details.data
 
     return (
+      <IslandLeft>
       <div className="homePage">
         {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
         <div className="container">
@@ -76,19 +79,20 @@ function HomePage(props: Props): JSX.Element {
             <h2 className='main-heading' style={{color: scheme.body.h1}}>Home</h2>
             <div className="links">
               {data.map((segment, indexSegment) => (
-                <div key={indexSegment}>
-                  {typeLookup(segment.type, segment.data, segment?.text)}
-                </div>
+                  <>
+                  {TypeLookup({type: segment.type, data: segment.data, text: segment?.text})}
+                  </>
               ))}
             </div>
           </div>
           <div className='render'>
-            {window.outerWidth > 1000 ?
+            {/* {window.outerWidth > 1000 ?
               <ReactP5Wrapper sketch={sketchWrapper(1200, 1200, scheme.body.background, scheme.body.foreground, scheme.body.h1)} /> : <></>
-            }
+            } */}
           </div>
         </div>
       </div>
+      </IslandLeft>
     );
   }
   return <></>;

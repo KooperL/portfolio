@@ -33,20 +33,20 @@ blog-refresh-token-life=<value>
 ```
 
 ## CRON
-The app leverages scheduled webscrapers. Configure CRON with `sudo crontab -e`. Replace `/DIR/` with the repository location path. See `../setup.sh` to skip.
+The app leverages scheduled webscrapers. Configure CRON with `sudo crontab -e`. Replace `{{DIR}}` with the repository location path. See `../setup.sh` to skip.
 
 ```
-0 16 * * * /usr/bin/python3 /DIR/portfolio/server/v1/scripts/fuelscrape/fuelscrape.py
+0 16 * * * /usr/bin/python3 /{{DIR}}/portfolio/server/v1.flask/scripts/fuelscrape/fuelscrape.py
 
-0 9 * * * /usr/bin/python3 /DIR/portfolio/server/v1/scripts/fuelscrape/fuelscrape.py
+0 9 * * * /usr/bin/python3 /{{DIR}}/portfolio/server/v1.flask/scripts/fuelscrape/fuelscrape.py
 
-0 1 * * 2 /usr/bin/python3 /DIR/portfolio/server/v1/scripts/property/scrape.py
+0 1 * * 2 /usr/bin/python3 /{{DIR}}/portfolio/server/v1.flask/scripts/property/scrape.py
 
-@reboot cd /DIR/portfolio/server/v1/ && /usr/bin/python3 /DIR/portfolio/server/v1/app.py
+@reboot cd /{{DIR}}/portfolio/server/v1.flask/ && /usr/bin/python3 /{{DIR}}/portfolio/server/v1.flask/app.py
 ```
 
 ## SQLITE
-Tracking for the `data/` folder is now disabled, so the same applies for the databases. Run `mkdir data/` and `python initDatabase.py` to create the SQLite3 database file. The process executing the database queries is not you, so folder the database resides in must have the correct write permissions, as well as the actual database file. Edit the file to change its behaviour. By default the important functions are commented out to save me from myself.
+Tracking for the `../data/` folder is now disabled, so the same applies for the databases. Run `mkdir ../data/` and `python initDatabase.py` to create the SQLite3 database file. The process executing the database queries is not you, so folder the database resides in must have the correct write permissions, as well as the actual database file. Edit the file to change its behaviour. By default the important functions are commented out to save me from myself.
 
 ## MONGO
 Configure the mongodb daemon at `/etc/mongod.conf` and populate the following values.
