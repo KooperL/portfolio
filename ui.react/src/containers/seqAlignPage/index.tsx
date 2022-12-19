@@ -8,6 +8,7 @@ import gear from "../../assets/gear.svg";
 import { SchemeContext } from "../context/colourScheme";
 import { Button } from "../../components/Button";
 import './style.css'
+import { IslandCenter } from "../../templates/IslandCenter";
 
 interface Props {
   dataCall: Function; 
@@ -123,6 +124,7 @@ function SeqAlignPage(props: Props): JSX.Element {
     const splitDrawArray = data.draw_res.map(elem => elem.split('\n'));
     console.log(state.details)
     return (
+      <IslandCenter>
       <div className="seqAlignPage">
         <div>
           <div className="resultsScreen">
@@ -149,19 +151,19 @@ function SeqAlignPage(props: Props): JSX.Element {
           </div>
         </div>
       </div>
+      </IslandCenter>
     );
   } else {
     return (
-      <div className="seqAlignPage">
-        <div className="container">
+      <IslandCenter>
+        <div className="seqAlignPage">
           <div className="innerContainer">
             {SearchBar(true)}
           </div>
         </div>
-      </div>
+      </IslandCenter>
     );
   }
-  return <></>;
 }
 
 

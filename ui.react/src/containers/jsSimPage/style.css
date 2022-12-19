@@ -1,17 +1,3 @@
-.jsSimPage .parent {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.jsSimPage .container {
-  width: auto;
-  display: flex;
-  flex-direction: column;
-}
-
 .jsSimPage .buttons {
   display: flex;
   flex-direction: row;
@@ -58,14 +44,7 @@
 
 
 @media screen and (max-width: 1000px) {
- .jsSimPage .parent {
-    align-items: flex-start;
-  }
 
- .jsSimPage .container {
-    width: 100%;
-    padding: 5rem 4rem;
-  }
  .jsSimPage .buttons {
     width: 100%;
     display: flex;

@@ -1,9 +1,3 @@
-.tictactoePage .parent {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .tictactoePage .grid {
   display: grid;
@@ -19,9 +13,6 @@
   width: 500px;
 }
 
-.tictactoePage .sub-parent {
-  height: fit-content;
-}
 
 .tictactoePage .modal-container {
 display: flex;

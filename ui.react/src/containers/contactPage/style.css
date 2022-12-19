@@ -1,4 +1,81 @@
-.contactPage .container {
+.contactPage .input {
+  margin-right: 10px;
+  color: black;
+  width: 100%;
+}
+
+.contactPage .inputContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: auto;
+  flex-grow: 1;
+}
+
+.contactPage .inputWithButton {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.contactPage .submit-button {
+  width: auto;;
+  display: flex;
+  flex-direction: row;
+}
+
+
+.contactPage .search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 1.contactPage .5rem;
+  flex-wrap: wrap;
+}
+
+.contactPage .inputLabel {
+  padding-right: 0.contactPage .8rem;
+  padding-left: 5px;
+  width: fit-content;
+  background-color: white;
+  color: black;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  white-space: nowrap;
+  padding-top: 3px;
+}
+
+.contactPage .status {
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 1000px) {
+
+  .contactPage .submit-button {
+    padding-top: 10px;
+    align-items: center;
+  }
+
+  .contactPage .input {
+    width: 100%;
+  }
+  .contactPage .emoji {
+
+  }
+
+  .contactPage .status {
+    width: fit-content;
+  }
+
+  .contactPage .inputLabel {
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* .contactPage .container {
   padding: 8rem 8rem;
   width: 100vw;
   display: flex;
@@ -59,94 +136,14 @@
   padding-top: 0;
 }
 
-.contactPage .search-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  font-size: 1.contactPage .5rem;
-  flex-wrap: wrap;
-}
 
-.contactPage .inputLabel {
-  padding-right: 0.contactPage .8rem;
-  padding-left: 5px;
-  width: fit-content;
-  background-color: white;
-  color: black;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  white-space: nowrap;
-  padding-top: 3px;
-}
 
 .contactPage .description {
   white-space: wrap;
 }
 
-.contactPage .input {
-  margin-right: 10px;
-  color: black;
-  width: 100%;
-}
 
-.contactPage .inputContainer {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  width: auto;
-  flex-grow: 1;
-}
 
-.contactPage .inputWithButton {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-}
 
-.contactPage .submit-button {
-  width: auto;;
-  display: flex;
-  flex-direction: row;
-}
 
-.contactPage .emoji {
-  font-size: xx-large;
-  display: flex;
-  justify-content: center;
-}
-
-.contactPage .status {
-  padding-left: 1rem;
-  display: flex;
-  align-items: center;
-}
-
-@media screen and (max-width: 1000px) {
-  .contactPage .container {
-    padding: 8rem 2rem;
-  }
-  .contactPage div .button a .button {
-    width: max-content;
-  }
-
-  .contactPage .submit-button {
-    padding-top: 10px;
-    align-items: center;
-  }
-
-  .contactPage .input {
-    width: 100%;
-  }
-  .contactPage .emoji {
-
-  }
-
-  .contactPage .status {
-    width: fit-content;
-  }
-
-  .contactPage .inputLabel {
-    display: flex;
-    align-items: center;
-  }
-}
+ */

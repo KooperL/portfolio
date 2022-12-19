@@ -5,6 +5,7 @@ import { fetchFuelPrices } from "../App/api/fuelPricesApi";
 import { FuelPricesState, FuelPricesPayload, FuelPricesInitialState } from "./types";
 import './style.css';
 import { SchemeContext } from "../context/colourScheme";
+import { IslandCenter } from "../../templates/IslandCenter";
 
 interface Props {
   dataCall: Function; 
@@ -52,8 +53,8 @@ function FuelPricesPage(props: Props): JSX.Element {
     const data = state.details.data;
     const width = Math.max(window.outerWidth, 1500);
     return (
-      <div className="fuelPricesPage">
-        <div className="screen">
+      <IslandCenter>
+        <div className="fuelPricesPage">
           <div className="table-container">
             <div className="chart">
               <Vchart
@@ -87,28 +88,16 @@ function FuelPricesPage(props: Props): JSX.Element {
               }} /> */}
             </div>
           </div>
-          <div className="table-container">
             <div className="table">
-              <div className="column">
-                <div className="cell header">Today's price</div>
-                <div className="cell">{data.stats[0]}</div>
-              </div>
-              <div className="column">
-                <div className="cell header">Price distribution</div>
-                <div className="cell">{data.stats[1]}</div>
-              </div>
-              <div className="column">
-                <div className="cell header">Trend</div>
-                <div className="cell">{data.stats[3]}</div>
-              </div>
-              <div className="column">
-                <div className="cell header">Suggestion</div>
-                <div className="cell">{data.stats[2]}</div>
-              </div>
-            </div>
+              {['Today\'s price', 'Price distribution', 'Suggestion', 'Trend'].map((item, itemInd) => (
+                <div className="column" key={itemInd}>
+                  <div className="cell header">{item}</div>
+                  <div className="cell">{data.stats[itemInd]}</div>
+                </div>
+              ))}
           </div>
         </div>
-      </div>
+      </IslandCenter>
     );
   }
   return <></>;

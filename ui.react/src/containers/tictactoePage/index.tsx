@@ -6,6 +6,7 @@ import gear from "../../assets/gear.svg";
 import { Board, CalculateWinner } from "./types";
 import { SchemeContext } from "../context/colourScheme";
 import './style.css';
+import { IslandCenter } from "../../templates/IslandCenter";
 
 
 
@@ -202,9 +203,10 @@ export default function Tictactoe() {
   };
 
   return (
+    <IslandCenter>
     <div className="tictactoePage">
-      <div className="parent">
-        <div className="sub-parent">
+      {/* <div className="parent"> */}
+        {/* <div className="sub-parent"> */}
           <div className="modal-container">
             <Modal
               textSmall={(() => {return <img src={gear} alt={gear} style={{ width: '20px', }}></img>})()}
@@ -253,8 +255,8 @@ export default function Tictactoe() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+
+    </IslandCenter>
   )
 } 
 

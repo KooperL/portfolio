@@ -5,6 +5,7 @@ import Modal from "../../components/Modal/Modal";
 import gear from "../../assets/gear.svg";
 import { SchemeContext } from "../context/colourScheme";
 import './style.css';
+import { IslandCenter } from "../../templates/IslandCenter";
 
 
 
@@ -192,48 +193,46 @@ export default function JsSim() {
   }));
 
   return (
-    <div className="jsSimPage">
-      <div className="parent">
-        <div className="container">
-          <div className="instrucions">
-            <p>
-              {/* <span>As a programmer, some code sequences appear more commonly than others. </span>
-              <span>Some appear hilariously often. </span> */}
-              <span>This is a typing challenge which measures how long it takes to write these sequences. </span>
-              <span>Timer appears as soon as you press a key. </span>
+    <IslandCenter>
+      <div className="jsSimPage">
+        <div className="instrucions">
+          <p>
+            {/* <span>As a programmer, some code sequences appear more commonly than others. </span>
+            <span>Some appear hilariously often. </span> */}
+            <span>This is a typing challenge which measures how long it takes to write these sequences. </span>
+            <span>Timer appears as soon as you press a key. </span>
+          </p>
+          <p>
+            <span>Good luck 🏁</span>
             </p>
-            <p>
-              <span>Good luck 🏁</span>
-              </p>
+        </div>
+        <hr/>
+        <div className="info">
+          <div className="timer">
+            <span className="digits">
+              {("0" + Math.floor((timer / 60000) % 60)).slice(-2)}:
+            </span>
+            <span className="digits">
+              {("0" + Math.floor((timer / 1000) % 60)).slice(-2)}.
+            </span>
+            <span className="digits mili-sec">
+              {("0" + ((timer / 10) % 100)).slice(-2)}
+            </span>
           </div>
-          <hr/>
-          <div className="info">
-            <div className="timer">
-              <span className="digits">
-                {("0" + Math.floor((timer / 60000) % 60)).slice(-2)}:
-              </span>
-              <span className="digits">
-                {("0" + Math.floor((timer / 1000) % 60)).slice(-2)}.
-              </span>
-              <span className="digits mili-sec">
-                {("0" + ((timer / 10) % 100)).slice(-2)}
-              </span>
-            </div>
-            <div>{score}%</div>
-          </div>
-          <div className="string">
-            {referenceString.map((char, index) => (
-              // @ts-ignore
-              <span key={index} style={{color: typedString[index] ? scoreColourLookup[scoreTally[index]] : scoreColourLookup[0]}}>{typedString[index] ?? char}</span>
-            ))}
-          </div>
-          <div className="buttons">
-            <button className="button" style={{backgroundColor: scheme.button.bgSolid}} onClick={(e) => {selectString(referenceIndex)}}>reset</button>
-            <button className="button" style={{backgroundColor: scheme.button.bgSolid}} onClick={(e) => {selectString()}}>new</button>
-          </div>
+          <div>{score}%</div>
+        </div>
+        <div className="string">
+          {referenceString.map((char, index) => (
+            // @ts-ignore
+            <span key={index} style={{color: typedString[index] ? scoreColourLookup[scoreTally[index]] : scoreColourLookup[0]}}>{typedString[index] ?? char}</span>
+          ))}
+        </div>
+        <div className="buttons">
+          <button className="button" style={{backgroundColor: scheme.button.bgSolid}} onClick={(e) => {selectString(referenceIndex)}}>reset</button>
+          <button className="button" style={{backgroundColor: scheme.button.bgSolid}} onClick={(e) => {selectString()}}>new</button>
         </div>
       </div>
-    </div>
+    </IslandCenter>
   )
 } 
 
