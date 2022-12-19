@@ -16,13 +16,15 @@
 
 .IslandLeft.island {
   position: absolute;
-  width: 100%;
+  width: fit-content;
   padding-top: calc(80px + 40px);
-  padding-bottom: calc(80px + 40px);
+  padding-bottom: calc(80px + 80px);
   padding-left: calc(80px + 40px);
+  padding-right: calc(80px + 80px);
   /* background-color: var(--bg-color); */
   border: solid 5px var(--dot-color);
   transition: border 50ms;
+  border-radius: 25px;
 }
 
 .IslandLeft.island-background {
@@ -45,6 +47,7 @@
 .IslandLeft .main-heading {
   font-size: 3rem;
   padding-bottom: 25px;
+  width: fit-content;
 }
 
 .background {

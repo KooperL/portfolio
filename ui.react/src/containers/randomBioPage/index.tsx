@@ -5,6 +5,7 @@ import { fetchRandomBio } from "../App/api/randomBioApi";
 import { SchemeContext } from "../context/colourScheme";
 import './style.css';
 import { Button } from "../../components/Button";
+import { IslandCenter } from "../../templates/IslandCenter";
 
 
 interface Props {
@@ -103,8 +104,8 @@ function RandomBioPage(props: Props): JSX.Element {
     console.log(state.details)
     const data = state.details.data;
     return (
+      <IslandCenter>
       <div className="randomBioPage">
-        <div className="resultsScreen">
           <div className="searchArea">
             {SearchBar(window.outerWidth > 1000)}
           </div>
@@ -118,15 +119,15 @@ function RandomBioPage(props: Props): JSX.Element {
             </div>
           </div>
         </div>
-      </div>
+      </IslandCenter>
     );
   } else {
     return (
-      <div className="randomBioPage">
-        <div className="container">
+      <IslandCenter>
+        <div className="randomBioPage">
           <>{SearchBar(true)}</>
         </div>
-      </div>
+      </IslandCenter>
     );
   }
 }

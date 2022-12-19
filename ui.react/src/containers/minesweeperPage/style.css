@@ -17,7 +17,7 @@
   height: 100%;
 }
 
-.minesweeperPage .parent {
+/* .minesweeperPage .parent {
   width: 100%;
   max-width: 100%;
   height: 100vh;
@@ -30,7 +30,7 @@
   display: flex;
   flex-direction: column;
   width: auto;
-}
+} */
 
 .minesweeperPage .game-controls {
   display: flex;

@@ -5,6 +5,7 @@ import Modal from "../../components/Modal/Modal";
 import gear from "../../assets/gear.svg";
 import { SchemeContext } from "../context/colourScheme";
 import './style.css';
+import { IslandCenter } from "../../templates/IslandCenter";
 
 interface DensityMap {
   1: number;              // Mine
@@ -294,9 +295,8 @@ export default function Minesweeper() {
   };
 
   return (
-    <div className="minesweeperPage">
-      <div className="parent">
-        <div className="container">
+    <IslandCenter>
+      <div className="minesweeperPage">
         <div className="game-controls">
           <div className="game-control">
             <Modal
@@ -356,8 +356,7 @@ export default function Minesweeper() {
             <div className="reset-button"><button onClick={(e) => {genFreshBoard()}}>reset</button></div>
           </div>
         </div>
-      </div>
-    </div>
+      </IslandCenter>
   )
 } 
 

@@ -5,6 +5,7 @@ import { fetchMrna } from "../App/api/MrnaApi";
 import { SchemeContext } from "../context/colourScheme";
 import './style.css';
 import { Button } from "../../components/Button";
+import { IslandCenter } from "../../templates/IslandCenter";
 
 
 interface Props {
@@ -84,65 +85,67 @@ function MrnaPage(props: Props): JSX.Element {
     const letters = ['g', 'c', 'a', 't'];
     return (
       <div className="mrnaPage">
-        <div className="resultsScreen">
-          <div className="searchArea">
-            {SearchBar(window.outerWidth > 1000)}
-          </div>
-          <hr/>
-          <div className="resultsCenter">
-            <div className="resultsContainer">
-              <div>
-                <h2>Results: </h2>
-              </div>
-              <div className="analysisContainer">
-                <div className="result" >
-                  <p className="font-bold">Amino acids: </p>
-                  <textarea className="" name="aa" value={data.aa} readOnly={true} />
+        <IslandCenter>
+          <div className="resultsScreen">
+            <div className="searchArea">
+              {SearchBar(window.outerWidth > 1000)}
+            </div>
+            <hr/>
+            <div className="resultsCenter">
+              <div className="resultsContainer">
+                <div>
+                  <h2>Results: </h2>
                 </div>
-                <div className="result" >
-                  <p className="font-bold">Amino acids (single): </p>
-                  <textarea className="" name="aa" value={data.aa_s} readOnly={true} />
+                <div className="analysisContainer">
+                  <div className="result" >
+                    <p className="font-bold">Amino acids: </p>
+                    <textarea className="" name="aa" value={data.aa} readOnly={true} />
+                  </div>
+                  <div className="result" >
+                    <p className="font-bold">Amino acids (single): </p>
+                    <textarea className="" name="aa" value={data.aa_s} readOnly={true} />
+                  </div>
+                  <div className="result" >
+                    <p className="font-bold">mRNA: </p>
+                    <textarea className="" name="aa" value={data.mrna_field} readOnly={true} />
+                  </div>
+                  <div className="result" >
+                    <p className="font-bold">DNA: </p>
+                    <textarea className="" name="aa" value={data.dna_field} readOnly={true} />
+                  </div>
+                  <div className="result" >
+                    <p className="font-bold">Complimentary DNA: </p>
+                    <textarea className="" name="aa" value={data.rdna_field} readOnly={true} />
+                  </div>
+                  <div className="result paddingCell" ></div>
                 </div>
-                <div className="result" >
-                  <p className="font-bold">mRNA: </p>
-                  <textarea className="" name="aa" value={data.mrna_field} readOnly={true} />
-                </div>
-                <div className="result" >
-                  <p className="font-bold">DNA: </p>
-                  <textarea className="" name="aa" value={data.dna_field} readOnly={true} />
-                </div>
-                <div className="result" >
-                  <p className="font-bold">Complimentary DNA: </p>
-                  <textarea className="" name="aa" value={data.rdna_field} readOnly={true} />
-                </div>
-                <div className="result paddingCell" ></div>
-              </div>
-              <div className="analysisContainer statsContainer">
-                <div className="result" >
-                  <p className="font-bold">Stats: </p>
-                  <p>Melting temperature (Tm in °C)</p>
-                  <textarea className="" name="aa" value={data.tm} readOnly={true} />
-                  <p>GC content:</p>
-                  <textarea className="" name="aa" value={data.gccontent} readOnly={true} />
-                  <p>Molecular weight:</p>
-                  <textarea className="" name="aa" value={data.molweight} readOnly={true} />
-                  <p>Base frequency:</p>
-                  {data.simplecount.map((link, indexLink) => (
-                    <p className = "pl-2 " key={indexLink}>{letters[indexLink]}: {link}</p>
-                  ))}
+                <div className="analysisContainer statsContainer">
+                  <div className="result" >
+                    <p className="font-bold">Stats: </p>
+                    <p>Melting temperature (Tm in °C)</p>
+                    <textarea className="" name="aa" value={data.tm} readOnly={true} />
+                    <p>GC content:</p>
+                    <textarea className="" name="aa" value={data.gccontent} readOnly={true} />
+                    <p>Molecular weight:</p>
+                    <textarea className="" name="aa" value={data.molweight} readOnly={true} />
+                    <p>Base frequency:</p>
+                    {data.simplecount.map((link, indexLink) => (
+                      <p className = "pl-2 " key={indexLink}>{letters[indexLink]}: {link}</p>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </IslandCenter>
       </div>
     );
   } else {
     return (
       <div className="mrnaPage">
-        <div className="container">
+        <IslandCenter>
           <>{SearchBar(true)}</>
-        </div>
+        </IslandCenter>
       </div>
     );
   }

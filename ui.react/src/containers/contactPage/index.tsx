@@ -10,6 +10,8 @@ import { ReactP5Wrapper } from "react-p5-wrapper";
 import sketchWrapper from "../../components/p5/box";
 import { Button } from "../../components/Button";
 import ButtonRedir from "../../components/ButtonRedir";
+import { IslandCenter } from "../../templates/IslandCenter";
+import TypeLookup from "../../components/TypeLookup";
 
 interface Props {
   dataCall: Function; 
@@ -127,22 +129,23 @@ function ContactPage(props: Props): JSX.Element {
     const data = state.details.data
 
     return (
-      <div className="contactPage">
-        {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
+      // <div className="contactPage">
+      <IslandCenter>
         <div className="contactPage">
           <div className="container">
             <div className="links">
               <h2 className='main-heading' style={{color: scheme.body.h1}}>Contact</h2>
               {data.map((segment, indexSegment) => (
                 <div key={indexSegment}>
-                  {typeLookup(segment.type, segment.data, segment?.text)}
+                  {TypeLookup({type: segment.type, data: segment.data, text: segment?.text})}
                 </div>
               ))}
             {SearchBar()}
             </div>
           </div>
         </div>
-      </div>
+      </IslandCenter>
+      // </div>
     );
   }
   return <></>;

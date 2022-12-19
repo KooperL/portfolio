@@ -9,7 +9,7 @@
   width: 100vw;
   height: fit-content;
   padding-right: 40px;
-  padding-bottom: 40px;
+  /* padding-bottom: 40px; */
 }
 
 .IslandCenter.island {
@@ -71,6 +71,7 @@
   }
   .IslandCenter.child {
     border: none;
+    padding: 3rem 0 0 0;
   }
 
   .IslandCenter.island {
@@ -80,6 +81,6 @@
     padding-right: 10px;
   }
   .IslandCenter.container {
-    padding: 40px 0;
+    padding: 40px 0 0 0;
   }
 }

@@ -28,6 +28,14 @@ ul.type-lookup.unorderedList {
   display: inline;
 }
 
+.type-lookup.emoji {
+  font-size: xx-large;
+  display: flex;
+  justify-content: center;
+  /* text-align: center; */
+  width: 100%;
+}
+
 @media screen and (max-width: 1000px) {
   .type-lookup.buttonArr {
     display: flex;

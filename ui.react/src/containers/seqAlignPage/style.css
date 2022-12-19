@@ -8,9 +8,6 @@
   align-items: center;
 }
 
-.seqAlignPage .innerContainer {
-  width: 1000px;
-}
 
 .seqAlignPage .search-container {
   display: flex;
@@ -19,7 +16,6 @@
   align-items: center;
   font-size: 1.5rem;
   flex-wrap: wrap;
-  width: 1000px;
 }
 
 .seqAlignPage .searchBoxes {
