@@ -105,7 +105,7 @@ function RandomBioPage(props: Props): JSX.Element {
     const data = state.details.data;
     return (
       <IslandCenter>
-      <div className="randomBioPage">
+        <div className="randomBioPage">
           <div className="searchArea">
             {SearchBar(window.outerWidth > 1000)}
           </div>

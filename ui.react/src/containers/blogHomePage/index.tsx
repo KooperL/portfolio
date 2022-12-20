@@ -17,6 +17,8 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { BlogRouteType } from "../App/routeTypes";
 import Redirect from "../../components/Redirect"
 import { BlogHomeGETInitialState, BlogHomeGETResponse } from "./types";
+import { IslandCenter } from "../../templates/IslandCenter";
+import { IslandLeft } from "../../templates/IslandLeft";
 
 
 interface Props {
@@ -99,38 +101,38 @@ function BlogHomePage(props: Props): JSX.Element {
   if(state.details && state.details.data) {
     const data = state.details.data
     return (
-      <div className="blogHomePage">
-        {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
-        <div className="container">
-          <div className="links">
-            <h2 className='main-heading' style={{color: scheme.body.h1}}>Blog Home</h2>
-            <div className="posts">
-              <form onSubmit={(e) => {
-                e.preventDefault()
-                handleSubmit()
-              }}>
+      <IslandLeft>
+        <div className="blogHomePage">
+          {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></> }
+            <div className="links">
+              <h2 className='main-heading' style={{color: scheme.body.h1}}>Blog Home</h2>
+              <div className="posts">
+                <form onSubmit={(e) => {
+                  e.preventDefault()
+                  handleSubmit()
+                }}>
 
-              <div className="search">
-                <input type="text" value={searchState} onChange={(e) => {setSearchState(e.target.value)}}></input>
-                <Button colours={scheme} callBack={handleSubmit} label="search"></Button>
-                {/* <ButtonRedir destination={`/${BlogRouteType.BlogHome}?search=${searchState}`} label="Search" local={true}></ButtonRedir> */}
-              </div>
-              </form>
-              {Object.keys(data).map((segment, indexSegment) => (
-                <div className="category" key={indexSegment}>
-                  <Link key={indexSegment**2} to={`/${blogPath}?category=${segment}`}><p>Topic - {segment}</p></Link>
-                  {/** @ts-ignore */}
-                  <div className="posts">
-                    {data[segment].map((catPost, catPostIndex) => (
-                      <BlogItem key={catPostIndex} data={catPost}/>
-                    ))}
-                  </div>
+                <div className="search">
+                  <input type="text" value={searchState} onChange={(e) => {setSearchState(e.target.value)}}></input>
+                  <Button colours={scheme} callBack={handleSubmit} label="search"></Button>
+                  {/* <ButtonRedir destination={`/${BlogRouteType.BlogHome}?search=${searchState}`} label="Search" local={true}></ButtonRedir> */}
                 </div>
-              ))}
+                </form>
+                {Object.keys(data).map((segment, indexSegment) => (
+                  <div className="category" key={indexSegment}>
+                    <Link key={indexSegment**2} to={`/${blogPath}?category=${segment}`}><p>Topic - {segment}</p></Link>
+                    {/** @ts-ignore */}
+                    <div className="posts">
+                      {data[segment].map((catPost, catPostIndex) => (
+                        <BlogItem key={catPostIndex} data={catPost}/>
+                      ))}
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
-      </div>
+      </IslandLeft>
     );
   }
   return <></>;

@@ -1,12 +1,6 @@
-.blogHomePage .container {
-  padding: 8rem 8rem;
-  width: 100vw;
-  display: flex;
-  flex-direction: row;
-}
 
 .blogHomePage .links {
-  width: 100%
+  width: 900px;
 }
 
 .blogHomePage .main-heading {
@@ -43,8 +37,7 @@
 }
 
 @media screen and (max-width: 1000px) {
-  .blogHomePage .container {
-    padding: 8rem 2rem;
+  .blogHomePage .links {
+    width: 100%
   }
-
 }

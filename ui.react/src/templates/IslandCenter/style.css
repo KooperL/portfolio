@@ -71,7 +71,7 @@
   }
   .IslandCenter.child {
     border: none;
-    padding: 3rem 0 0 0;
+    padding: 3rem 2rem 0 2rem;
   }
 
   .IslandCenter.island {

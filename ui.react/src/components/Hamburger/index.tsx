@@ -38,7 +38,18 @@ function Hamburger(props: Props) {
       <div className="links" style={{backgroundColor: scheme.body.background}}>
       {/* <div className="links" style={{display: open ? 'fixed' : 'none'}}> */}
         {props.data.map((item, index) => (
-          <ButtonRedir destination={item.destination} label={item.label} key={index} local={true} onClickCallback={item?.callback}/>
+          <ButtonRedir
+            destination={item.destination}
+            label={item.label}
+            key={index}
+            local={true}
+            onClickCallback={
+              () => {
+                setOpen(false)
+                if (item.callback) item.callback()
+              }
+            }
+          />
         ))}
       </div>
     </div>
