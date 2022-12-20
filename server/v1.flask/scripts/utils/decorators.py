@@ -15,7 +15,7 @@ def errorHandle(func):
     try:
       return func(*args, **kwargs)
     except Exception as e:
-      print(e)
+      # print(e)
       kwargs = {
         'success': False,
         'error': 'Deliberate error'

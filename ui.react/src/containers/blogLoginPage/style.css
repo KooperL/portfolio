@@ -1,14 +1,7 @@
-.blogLoginPage .container {
-  padding: 8rem 8rem;
-  width: 100vw;
-  max-width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-}
+
 
 .blogLoginPage .links {
-  width: 100%;
+  width: 900px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -35,22 +28,15 @@
 
 
 @media screen and (max-width: 1000px) {
-  .blogLoginPage .container {
-    max-width: 100%;
-    padding: 8rem 2rem;
-    display: flex;
-    justify-content: center;
-  }
-
   .blogLoginPage .submit-button {
     width: 100%;
   }
     .blogLoginPage .links {
     gap: 2rem;
     flex-direction: column;
-    width: fit-content;
+    width: 100%;
     height: fit-content;
-    padding-top: 6rem;
+    padding: 6rem;
   }
 
   .blogLoginPage input {

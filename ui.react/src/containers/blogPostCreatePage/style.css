@@ -1,11 +1,3 @@
-.blogCreatePage .container {
-  padding: 8rem 8rem;
-  width: 100vw;
-  max-width: 100%;
-  height: 100vh;
-  display: flex;
-  /* align-items: center; */
-}
 
 .blogCreatePage .links {
   width: 100%;
@@ -55,12 +47,10 @@
 
 
 @media screen and (max-width: 1000px) {
-  .blogCreatePage .container {
-    padding: 8rem 2rem;
-  }
-
   .blogCreatePage input {
     width: 100%;
   }
-
+  .blogCreatePage .links {
+    padding: 4rem;
+  }
 }

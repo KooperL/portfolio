@@ -15,6 +15,7 @@ import { blogPath } from "../App/api/types";
 import Redirect from "../../components/Redirect"
 import { BlogRouteType } from "../App/routeTypes";
 import daysAgo from "../../utils/daysAgo";
+import { IslandCenter } from "../../templates/IslandCenter";
 
 
 interface Props {
@@ -105,8 +106,8 @@ function BlogPostViewPage(props: Props): JSX.Element {
    }
   const data = GETstate.details?.data;
   return (
+    <IslandCenter>
     <div className="blogPostViewPage">
-      <div className="container">
         <div className="links">
           <div id="form-container">
             <div id="post">
@@ -145,9 +146,9 @@ function BlogPostViewPage(props: Props): JSX.Element {
             </form> */}
             </div>
           </div>
-        </div>
       </div>
     </div>
+    </IslandCenter>
   );
 
 }

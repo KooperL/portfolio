@@ -18,6 +18,7 @@ from tokenize import Number
 from threading import Lock
 from typing import final
 import urllib.parse
+import threading
 
 import os
 from dotenv import dotenv_values
@@ -44,6 +45,8 @@ import scripts.property.draw
 import scripts.utils.databaseUtils
 import scripts.fuelscrape.newdrawfuel
 import scripts.utils.rgb
+
+import controllers.discordLogger
 
 import views.home.homePage
 import views.home.about
@@ -78,6 +81,8 @@ app = Flask(__name__)
 app.wsgi_app = ProxyFix(
   app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
 )
+
+
 
 username = urllib.parse.quote_plus(config['MONGO_USERNAME'])
 password = urllib.parse.quote_plus(config['MONGO_PASSWORD'])
@@ -189,6 +194,8 @@ app.register_blueprint(views.blog.user_search.user_search)
 # '''
 
 if __name__ == '__main__':
+  # thread = threading.Thread(target=controllers.discordLogger.start_discord_client)
+  # thread.start()
   if config['ENV'] == 'development':
     app.run(host='0.0.0.0', port=config['DEV_PORT'], debug=True)
   elif config['ENV'] == 'production':

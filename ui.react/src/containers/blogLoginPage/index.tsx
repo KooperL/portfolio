@@ -14,6 +14,7 @@ import { postBlogLogin, postBlogRegister } from "../App/api/blogApis";
 import { blogPath } from "../App/api/types";
 import Redirect from "../../components/Redirect"
 import { BlogRouteType } from "../App/routeTypes";
+import { IslandCenter } from "../../templates/IslandCenter";
 
 
 declare global {
@@ -50,7 +51,7 @@ function BlogLoginPage(props: Props): JSX.Element {
   // useAccessToken()
 
   function generateUsername() {
-    return commonNouns[Math.floor(Math.random() * commonNouns.length)]
+    return `${commonNouns[Math.floor(Math.random() * commonNouns.length)]}${new Array(4).fill(0).map((_) => Math.floor(Math.random()*10)).join('')}`
   }
   function generatePassword(length: number) {
     return Math.random().toString(16).substr(2, length);
@@ -136,52 +137,52 @@ function BlogLoginPage(props: Props): JSX.Element {
     )
   }
   return (
-    <div className="blogLoginPage">
-      <div className="container">
-        <div className="links">
-          <div id="register">
-            <h2 className='main-heading' style={{color: scheme.body.h1}}>Register</h2>
-          <form onSubmit={((e) => handleSubmitRegister(e, {
-              session_id: sessionStorage.getItem('session_id') ?? 'error',
-              data: {
-                blog_username: usernameRegister,
-                blog_password: passwordRegister
-              }
-            }))}>
-              <div className="field">
-                <p>Username: </p>
-                <input type="text" value={usernameRegister} readOnly={true} onChange={(e) => {e.target.value = usernameRegister}}></input>
-              </div>
-              <div className="field">
-                <p>Password: </p>
-                <input type="text" value={passwordRegister} readOnly={true} onChange={(e) => {e.target.value = passwordRegister}}></input>
-              </div>
-              <div id="button">
-                <Button colours={scheme} />
-              </div>
-            </form>
+    <IslandCenter>
+      <div className="blogLoginPage">
+          <div className="links">
+            <div id="register">
+              <h2 className='main-heading' style={{color: scheme.body.h1}}>Register</h2>
+            <form onSubmit={((e) => handleSubmitRegister(e, {
+                session_id: sessionStorage.getItem('session_id') ?? 'error',
+                data: {
+                  blog_username: usernameRegister,
+                  blog_password: passwordRegister
+                }
+              }))}>
+                <div className="field">
+                  <p>Username: </p>
+                  <input type="text" value={usernameRegister} readOnly={true} onChange={(e) => {e.target.value = usernameRegister}}></input>
+                </div>
+                <div className="field">
+                  <p>Password: </p>
+                  <input type="text" value={passwordRegister} readOnly={true} onChange={(e) => {e.target.value = passwordRegister}}></input>
+                </div>
+                <div id="button">
+                  <Button colours={scheme} />
+                </div>
+              </form>
+            </div>
+            <div id="login">
+              <h2 className='main-heading' style={{color: scheme.body.h1}}>Login</h2>
+              <form onSubmit={((e) => handleSubmitLogin(e, {
+                session_id: sessionStorage.getItem('session_id') ?? 'error',
+              }, encoded))}>
+                <div className="field">
+                  <p>Username: </p>
+                  <input type="text" value={usernameLogin} autoComplete="username email" onChange={(e) => {setUsernameLogin(e.target.value)}}></input>
+                </div>
+                <div className="field">
+                  <p>Password: </p>
+                  <input type="password" value={passwordLogin} autoComplete="new-password" onChange={(e) => {setPasswordLogin(e.target.value)}}></input>
+                </div>
+                <div id="button">
+                  <Button colours={scheme} />
+                </div>
+              </form>
+            </div>
           </div>
-          <div id="login">
-            <h2 className='main-heading' style={{color: scheme.body.h1}}>Login</h2>
-            <form onSubmit={((e) => handleSubmitLogin(e, {
-              session_id: sessionStorage.getItem('session_id') ?? 'error',
-            }, encoded))}>
-              <div className="field">
-                <p>Username: </p>
-                <input type="text" value={usernameLogin} autoComplete="username email" onChange={(e) => {setUsernameLogin(e.target.value)}}></input>
-              </div>
-              <div className="field">
-                <p>Password: </p>
-                <input type="password" value={passwordLogin} autoComplete="new-password" onChange={(e) => {setPasswordLogin(e.target.value)}}></input>
-              </div>
-              <div id="button">
-                <Button colours={scheme} />
-              </div>
-            </form>
-          </div>
-        </div>
       </div>
-    </div>
+    </IslandCenter>
   );
 }
 

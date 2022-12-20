@@ -14,6 +14,7 @@ import { postPostCreate } from "../App/api/blogApis";
 import { blogPath } from "../App/api/types";
 import { BlogRouteType } from "../App/routeTypes";
 import Redirect from "../../components/Redirect"
+import { IslandCenter } from "../../templates/IslandCenter";
 
 
 interface Props {
@@ -72,8 +73,8 @@ function BlogPostCreatePage(props: Props): JSX.Element {
     )
   }
   return (
+    <IslandCenter>
     <div className="blogCreatePage">
-      <div className="container">
         <div className="links">
           <div id="form-container">
             <h2 className='main-heading' style={{color: scheme.body.h1}}>Post</h2>
@@ -97,9 +98,9 @@ function BlogPostCreatePage(props: Props): JSX.Element {
               </div>
             </form>
           </div>
-        </div>
       </div>
     </div>
+    </IslandCenter>
   );
 
 }

@@ -8,8 +8,10 @@ import datetime
 import inspect
 import scripts.utils.blogFuncs
 import controllers.database
+import controllers.discordLogger
 from dotenv import dotenv_values
-config =  dotenv_values('../.env')
+
+config = dotenv_values('../.env')
 
 post = Blueprint('post', __name__)
 
@@ -39,9 +41,11 @@ def blogPostCreateHome(authPayload):
     if canPost[0][0] != 1:
       return scripts.utils.responses.build_unauthorized()
 
+
     publishBlogQuery = 'INSERT INTO blog_postsDB VALUES (?, ?, ?, ?, ?, ?, ?, ?);'
     controllers.database.conn.fetch(publishBlogQuery, (None, datetime.datetime.now(), user_id, blog_title, 1, blog_body, 1, 0))
-    
+
+    controllers.discordLogger.send_discord_message(config['DISCORD_WEBHOOK_URL'], f'BLOG POST: {user_id}, {blog_title}, {blog_body}')    
     publishedBlogIdQuery = 'SELECT id from blog_postsDB where blog_user_id = ? and title = ? and  body = ?;'
     publishedBlogId = controllers.database.conn.fetch(publishedBlogIdQuery, (user_id, blog_title, blog_body))
     kwargs = {
