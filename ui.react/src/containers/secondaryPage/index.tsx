@@ -9,6 +9,9 @@ import './style.css'
 import { SchemeContext } from "../context/colourScheme";
 import { Button } from "../../components/Button";
 import { IslandCenter } from "../../templates/IslandCenter";
+import { Input } from "../../components/Input";
+import { Radio } from "../../components/Radio";
+import { Gear } from "../../components/Gear";
 
 
 interface Props {
@@ -54,52 +57,35 @@ function SecondaryPage(props: Props): JSX.Element {
   function SearchBar(showingDesc: Boolean) {
     return (
       <div className="search-container">
-        <div className="description" style={{color: scheme.body.text}}>
-          {showingDesc?<p>Enter a sequence of amino acids in single character form to view a calculated reconstruction of the secondary protein structure according to the Chou-Fasman method (~50% accuracy).</p>:<></>}
+        <div className="description" style={{ color: scheme.body.text }}>
+          {showingDesc ? <p>Enter a sequence of amino acids in single character form to view a calculated reconstruction of the secondary protein structure according to the Chou-Fasman method (~50% accuracy).</p> : <></>}
         </div>
-        <div className="">
-          <div className="flex flex-row">
-            <form onSubmit={((e) => handleSubmit(e, {
-              aa_field_id: aa_field_id,
-              aaf_field_id: aaf_field_id,
-              detectthreshold: detectthreshold,
-              leniency: leniency
-            }))}>
-              <div className="inputWithButton">
-                <div className="inputContainer">
-                  <div className="inputLabel">🔬 Amino acids:</div>
-                  <input className='input' type='text' name='aa_field_id' id='aa_field_id' value={aa_field_id} onChange={((e) => {setAa_field_id(e.target.value)})} />
-                </div>
-                <div className="buttonWithGear">
-                  <div className="button">
-                    <Button colours={scheme} disabled={aa_field_id.length<4?true:false}/>
-                  </div>
-                  <Modal
-                    textSmall={(() => {return <img src={gear} alt={gear} style={{ width: '42px', height: '42px'}}></img>})()}
-                    text={() => {return (
-                    <div className="text-xs">
-                      <div className="p-2 w-fill">
-                        <p>Naming Convention: </p>
-                        <input type="radio" id="inputtype" name="inputtype" value="s" checked={aaf_field_id==='s'?true:false} onChange={((e) => {setAaf_field_id(e.target.value)})}/>
-                        <label className='pl-2' htmlFor="inputtype">Single letter code</label><br/>
-                        <input type="radio" id="inputtype" name="inputtype" value="t" checked={aaf_field_id==='t'?true:false} onChange={((e) => {setAaf_field_id(e.target.value)})}/>
-                        <label className='pl-2' htmlFor="inputtype"></label>Three letter code<br/>
-                      </div>
-                      <div className="p-2">
-                        <p>Leniency: </p>
-                        <input className='ml-2 bg-gray-100 rounded w-1/2' type='text' name='leniency' id='leniency' value={leniency} onChange={((e) => {setLeniency(+e.target.value)})} />
-                      </div>                    
-                      <div className="p-2">
-                        <p>Detection threshold: </p>
-                        <input className='ml-2 bg-gray-100 rounded w-1/2' type='text' name='detectthreshold' id='detectthreshold' value={detectthreshold} onChange={((e) => {setDetectthreshold(+e.target.value)})} />
-                      </div>
-                    </div>)}}>
-                  </Modal>
-                </div>
-              </div>
-            </form>
+        <form onSubmit={((e) => handleSubmit(e, {
+          aa_field_id: aa_field_id,
+          aaf_field_id: aaf_field_id,
+          detectthreshold: detectthreshold,
+          leniency: leniency
+        }))}>
+          <div className="inputWithButton">
+            <Input inputBoxLabel="🔬 Amino acids:" name='aa_field_id' id='aa_field_id' value={aa_field_id} onChange={((e) => { setAa_field_id(e.target.value) })} />
+            <div className="buttonWithGear">
+              <Button colours={scheme} disabled={aa_field_id.length < 4} />
+              <Modal
+                textSmall={<Gear />}
+                text={() => {
+                  return (
+                    <div>
+                      <Radio label="Single letter code" id="inputtype" name="inputtype" value="s" checked={aaf_field_id === 's'} onClick={((e) => { setAaf_field_id((e.target as HTMLTextAreaElement).value) })} />
+                      <Radio label="Three letter code" id="inputtype" name="inputtype" value="t" checked={aaf_field_id === 't'} onClick={((e) => { setAaf_field_id((e.target as HTMLTextAreaElement).value) })} />
+                      <Input label="Leniency:" name='leniency' id='leniency' value={leniency.toString()} onChange={((e) => { setLeniency(+e.target.value) })} />
+                      <Input label="Detection threshold:" name='detectthreshold' id='detectthreshold' value={detectthreshold.toString()} onChange={((e) => { setDetectthreshold(+e.target.value) })} />
+                    </div>
+                  )
+                }}>
+              </Modal>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     );
   }

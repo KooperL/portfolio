@@ -12,6 +12,7 @@ import { Button } from "../../components/Button";
 import ButtonRedir from "../../components/ButtonRedir";
 import { IslandCenter } from "../../templates/IslandCenter";
 import TypeLookup from "../../components/TypeLookup";
+import { Input } from "../../components/Input";
 
 interface Props {
   dataCall: Function; 
@@ -41,24 +42,6 @@ function ContactPage(props: Props): JSX.Element {
       });
     })
   }, []);
-
-  function typeLookup(type: string, data:string[], text?:string) {
-    // console.log(!!data[0].includes('http'))
-    switch(type) {
-      case 'button':
-        // return <a href={data[0]}><div style={{backgroundColor: scheme.button.bgSolid}} className={type}>{text}</div></a>
-        return <ButtonRedir destination={data[0]} label={text ?? ''} local={!data[0].includes('http')}/>
-
-      case 'unorderedList':
-        return <ul className={`text ${type}`}>{data.map((item:string, index:number) => <li key={index}>{item}</li>)}</ul>
-      case 'body':
-        return <p className={`text ${type}`}>{data.map((item:string, index:number) => <span key={index}>{item}</span>)}</p>
-      case 'header':
-      case 'subheader':
-      case 'emoji':
-        return <p className={`text ${type}`}>{data[0]}</p>
-    }
-  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>, payload: ContactPOST) => {
     setPOSTState({...POSTstate, loading: true});
@@ -97,10 +80,8 @@ function ContactPage(props: Props): JSX.Element {
             message: value
           }))}>
             <div className="inputWithButton">
-              <div className="inputContainer">
-                <div className="inputLabel"><p>📝:&nbsp;</p></div>
-                <input className="input" type="text" value={value} key={1} onChange={((e) => {setValue(e.target.value)})} />
-              </div>
+
+              <Input inputBoxLabel="📝:" value={value} onChange={((e) => {setValue(e.target.value)})}/>
               <div className="submit-button">
                 <Button colours={scheme} />
                 <div className="status">

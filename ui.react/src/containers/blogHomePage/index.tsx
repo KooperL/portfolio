@@ -19,6 +19,7 @@ import Redirect from "../../components/Redirect"
 import { BlogHomeGETInitialState, BlogHomeGETResponse } from "./types";
 import { IslandCenter } from "../../templates/IslandCenter";
 import { IslandLeft } from "../../templates/IslandLeft";
+import { Input } from "../../components/Input";
 
 
 interface Props {
@@ -74,7 +75,6 @@ function BlogHomePage(props: Props): JSX.Element {
     )
   }
 
-  // Todo add way to track redirects
   
   useEffect(() => {
     document.title = `Blog Home | ${scheme.title}`;
@@ -113,7 +113,7 @@ function BlogHomePage(props: Props): JSX.Element {
                 }}>
 
                 <div className="search">
-                  <input type="text" value={searchState} onChange={(e) => {setSearchState(e.target.value)}}></input>
+                  <Input value={searchState} onChange={(e) => {setSearchState(e.target.value)}} />
                   <Button colours={scheme} callBack={handleSubmit} label="search"></Button>
                   {/* <ButtonRedir destination={`/${BlogRouteType.BlogHome}?search=${searchState}`} label="Search" local={true}></ButtonRedir> */}
                 </div>
@@ -121,7 +121,6 @@ function BlogHomePage(props: Props): JSX.Element {
                 {Object.keys(data).map((segment, indexSegment) => (
                   <div className="category" key={indexSegment}>
                     <Link key={indexSegment**2} to={`/${blogPath}?category=${segment}`}><p>Topic - {segment}</p></Link>
-                    {/** @ts-ignore */}
                     <div className="posts">
                       {data[segment].map((catPost, catPostIndex) => (
                         <BlogItem key={catPostIndex} data={catPost}/>

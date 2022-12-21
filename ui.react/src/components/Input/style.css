@@ -1,0 +1,42 @@
+#Input p {
+  width: fit-content;
+  flex-wrap: nowrap;
+  word-wrap: 0;
+  white-space: nowrap;
+}
+
+#Input-decorator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 5px;
+  background-color: white;
+  color: black;
+  /* height: 100%; */
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+
+
+}
+
+#Input {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+#Input-container {
+  width: 100%;
+
+}
+
+
+#Input-container input {
+  width: 100%;
+  color: black;
+  background-color: white;
+  /* border-radius: 10px; */
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 5px 10px;
+}

@@ -3,7 +3,10 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import datetime
 import controllers.database
+import controllers.discordLogger
+from dotenv import dotenv_values
 
+config = dotenv_values('../.env')
 
 contact = Blueprint('contact', __name__)
 
@@ -58,6 +61,8 @@ def contactHome():
       raise RuntimeError('Mandatory value(s) not provided')
     session_id = data.get('session_id')
     message = data.get('message')
+    controllers.discordLogger.send_discord_message(config['DISCORD_WEBHOOK_URL'], f'CONTACT POST: {session_id}, {message}')    
+
     insertQuery = 'INSERT INTO contact_messagesDB VALUES (?, ?, ?, ?);'
     # controllers.database.conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, message))
     # controllers.database.conn.commit()

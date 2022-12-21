@@ -4,52 +4,30 @@
   flex-direction: column;
   gap: 1rem;
   align-items: center;
-  font-size: 1.5rem;
-  flex-wrap: wrap;
 }
 
-.secondaryPage .inputLabel {
-  padding-right: 0.8rem;
-  padding-left: 5px;
-  width: fit-content;
-  background-color: white;
-  color: black;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  white-space: nowrap;
-  padding-top: 3px;
-}
 
 .secondaryPage .description {
-  white-space: wrap;
+  font-size: 1.5rem;
 }
 
-.secondaryPage .input {
-  margin-right: 10px;
-  color: black;
+.secondaryPage form {
+  width: 100%;
 }
 
-.secondaryPage .inputContainer {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  width: fit-content;
-}
 
 .secondaryPage .inputWithButton {
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
-}
-
-.secondaryPage .button {
-  width: fit-content;
-  margin-right: 10px;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 1rem;
 }
 
 .secondaryPage .buttonWithGear {
   display: flex;
   flex-direction: row;
+  gap: 1rem;
 }
 
 /* results */
@@ -99,9 +77,10 @@
 }
 
 @media screen and (max-width: 1000px) {
-  .secondaryPage .form {
-    max-width: 500px;
+  .secondaryPage .description {
+    font-size: medium;
   }
+
   .secondaryPage .search-container {
     height: auto;
     display: flex;
@@ -114,25 +93,7 @@
     display: flex;
     flex-direction: column;
   }
-  .secondaryPage .inputContainer {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding-bottom: 10px;
-  }
-  .secondaryPage .inputLabel {
-    width: 100%;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 0;
-  }
-  .secondaryPage .input {
-    width: 100%;
-  }
 
-  .secondaryPage .button {
-    width: 100%;
-  }
   .secondaryPage .submit-button {
     width: 100%;
   }

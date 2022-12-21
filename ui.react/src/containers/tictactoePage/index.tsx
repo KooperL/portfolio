@@ -7,6 +7,8 @@ import { Board, CalculateWinner } from "./types";
 import { SchemeContext } from "../context/colourScheme";
 import './style.css';
 import { IslandCenter } from "../../templates/IslandCenter";
+import { Gear } from "../../components/Gear";
+import { Radio } from "../../components/Radio";
 
 
 
@@ -191,7 +193,7 @@ export default function Tictactoe() {
       t += 1;
       if(!calculateWinner(boardCopy)[0]) {
 
-        if(mode != 2) {
+        if(mode !== 2) {
 
           boardCopy = computerP2(boardCopy, mode, p2);
           t += 1;
@@ -204,15 +206,15 @@ export default function Tictactoe() {
 
   return (
     <IslandCenter>
-    <div className="tictactoePage">
-      {/* <div className="parent"> */}
+      <div className="tictactoePage">
+        {/* <div className="parent"> */}
         {/* <div className="sub-parent"> */}
-          <div className="modal-container">
-            <Modal
-              textSmall={(() => {return <img src={gear} alt={gear} style={{ width: '20px', }}></img>})()}
-              text={() => {return (
-                <div className="modal-menu">
-                  <div className="">
+        <div className="modal-container">
+          <Modal
+            textSmall={<Gear variant="small" />}
+            text={() => (
+              <div className="modal-menu">
+                {/* <div className="">
                     <p>Secondary player: </p>
                     <input type="radio" id="mode" name="mode" disabled={gameInProgress} value="2" checked={mode===2} onChange={(e) => {setMode(2)}}/>
                     <label className='label' htmlFor="mode"></label>Human<br/>
@@ -220,41 +222,44 @@ export default function Tictactoe() {
                     <label className='label' htmlFor="mode"></label>Randomiser<br/>
                     <input type="radio" id="mode" name="mode" disabled={gameInProgress} value="0" checked={mode===0} onChange={(e) => {setMode(0)}}/>
                     <label className='label' htmlFor="mode"></label>miniMax<br/>
-                  </div>
-                  <div className="">
-                    <input type="checkbox" id="inputtype" value="s" checked={pPlayerFirst?true:false} disabled={gameInProgress?true:false} onChange={(e) => {setPPlayerFirst(pPlayerFirst?0:1);setTicker(0);}}/>
-                    <label className='label' htmlFor="inputtype">Primary player first?</label><br/>
-                  </div>
+                  </div> */}
+                <Radio label="vs player 2" id="mode" name="mode" disabled={gameInProgress} value="2" checked={mode === 2} onClick={(e) => { setMode(2) }} />
+                {/* <Radio label="vs Randomiser" id="mode" name="mode" disabled={gameInProgress} value="1" checked={mode===1} onClick={(e) => {setMode(1)}}/> */}
+                <Radio label="vs miniMax" id="mode" name="mode" disabled={gameInProgress} value="0" checked={mode === 0} onClick={(e) => { setMode(0) }} />
+                <div className="">
+                  <input type="checkbox" id="inputtype" value="s" checked={pPlayerFirst ? true : false} disabled={gameInProgress ? true : false} onChange={(e) => { setPPlayerFirst(pPlayerFirst ? 0 : 1); setTicker(0); }} />
+                  <label className='label' htmlFor="inputtype">Primary player first?</label><br />
                 </div>
-              )}}>
-            </Modal>
-          </div>
-          <div className="grid">
-            {board.map((square, i) => (
-              // @ts-ignore
-              <div key={i} className="grid-cell" style={{backgroundColor: (winner && winner[1].includes(i))?'#BBF7D0':'white', borderColor: scheme.body.foreground}}>
-                <button className="grid-button" style={{}} onClick={() => handleClick(i)}>{square?square:'(empty)'}</button>
               </div>
-            ))}
-          </div>
+            )}>
+          </Modal>
+        </div>
+        <div className="grid">
+          {board.map((square, i) => (
+            // @ts-ignore
+            <div key={i} className="grid-cell" style={{ backgroundColor: (winner && winner[1].includes(i)) ? '#BBF7D0' : 'white', borderColor: scheme.body.foreground }}>
+              <button className="grid-button" style={{}} onClick={() => handleClick(i)}>{square ? square : '(empty)'}</button>
+            </div>
+          ))}
+        </div>
+        <div>
           <div>
-            <div>
-              <div className="scoreboard">
-                <div className="scoreboard-item scoreboard-item-right">
-                  <p>{x}'s wins</p>
-                  <p>... {pPlayerWins}</p>
-                </div>
-                <div>
-                  <button className="scoreboard-button" onClick={(e => {newGame()})}><p>Reset board</p></button>
-                </div>
-                <div className="scoreboard-item scoreboard-item-left">
-                  <p>{o}'s wins</p>
-                  <p>{sPlayerWins} ...</p>
-                </div>
+            <div className="scoreboard">
+              <div className="scoreboard-item scoreboard-item-right">
+                <p>{x}'s wins</p>
+                <p>... {pPlayerWins}</p>
+              </div>
+              <div>
+                <button className="scoreboard-button" onClick={(e => { newGame() })}><p>Reset board</p></button>
+              </div>
+              <div className="scoreboard-item scoreboard-item-left">
+                <p>{o}'s wins</p>
+                <p>{sPlayerWins} ...</p>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
     </IslandCenter>
   )

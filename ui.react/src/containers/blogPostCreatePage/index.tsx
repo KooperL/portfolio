@@ -15,6 +15,8 @@ import { blogPath } from "../App/api/types";
 import { BlogRouteType } from "../App/routeTypes";
 import Redirect from "../../components/Redirect"
 import { IslandCenter } from "../../templates/IslandCenter";
+import { Input } from "../../components/Input";
+import { Textarea } from "../../components/Textarea";
 
 
 interface Props {
@@ -85,14 +87,8 @@ function BlogPostCreatePage(props: Props): JSX.Element {
                   blog_body: body
                 }
               }))}>
-              <div className="title">
-                <p>Title</p>
-                <input className="field" value={title} onChange={(e) => {setTitle(e.target.value)}}></input>
-              </div>
-              <div className="body">
-                <p>Body</p>
-                <textarea className="field"  value={body} onChange={(e) => {setBody(e.target.value)}}></textarea>
-              </div>
+                <Input label="Title" value={title} onChange={(e) => {setTitle(e.target.value)}}/>
+                <Textarea label="Body" value={body} onChange={(e) => {setBody(e.target.value)}} resize="none" height="300px"/>
               <div id="button">
                 <Button colours={scheme} />
               </div>

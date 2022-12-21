@@ -1,12 +1,4 @@
-.randomBioPage .container {
-  width: 100%;
-  max-width: 100%;
-  height: 100vh;
-  max-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 .randomBioPage .search-continer {
   display: flex;
@@ -16,6 +8,8 @@
 
 .randomBioPage .description {
   text-align: center;
+  font-size: 1.5rem;
+  padding-bottom: 1rem;
 }
 
 .randomBioPage form {
@@ -35,9 +29,10 @@
 }
 
 .randomBioPage .type {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
   gap: 2px;
+  width: 100%;
 }
 
 .randomBioPage .length {
@@ -72,15 +67,6 @@
   padding-top: 2rem;
 }
 
-.randomBioPage textarea {
-  color: black;
-  resize: both;
-  width: 866px;
-  height: 300px;
-  padding: 5px;
-  box-sizing: content-box;
-}
-
 
 @media screen and (max-width: 1000px) {
   .randomBioPage form {
@@ -100,10 +86,6 @@
     width: 50%;
   }
 
-  .randomBioPage textarea {
-    width: 80%;
-    height: 300px;
-  }
   .randomBioPage .resultsContainer {
     width: 80%;
     display: flex;

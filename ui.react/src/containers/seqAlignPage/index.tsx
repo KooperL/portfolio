@@ -9,6 +9,9 @@ import { SchemeContext } from "../context/colourScheme";
 import { Button } from "../../components/Button";
 import './style.css'
 import { IslandCenter } from "../../templates/IslandCenter";
+import { Input } from "../../components/Input";
+import { Gear } from "../../components/Gear";
+import { Radio } from "../../components/Radio";
 
 interface Props {
   dataCall: Function; 
@@ -64,44 +67,23 @@ function SeqAlignPage(props: Props): JSX.Element {
             mismatch: mismatch,
             gaps: gaps,
             extgaps: extgaps
-          }))}>                      
+          }))}>
             <div className="searchBoxes">
-              <div className="inputContainer">
-                <div className="inputLabel">DNA strand 1:</div>
-                <input className='input' type='text' name='referencetxt' id='referencetxt' value={referencetxt} onChange={(e) => {setReferencetxt(e.target.value)}} />
-              </div>
-              <div className="inputContainer">
-                <div className="inputLabel">DNA strand 2:</div>
-                <input className='input' type='text' name='sampletxt' id='sampletxt' value={sampletxt} onChange={(e) => {setSampletxt(e.target.value)}} />
-              </div>
+              <Input inputBoxLabel="DNA strand 1:" name='referencetxt' id='referencetxt' value={referencetxt} onChange={(e) => {setReferencetxt(e.target.value)}} />
+              <Input inputBoxLabel="DNA strand 2:" name='sampletxt' id='sampletxt' value={sampletxt} onChange={(e) => {setSampletxt(e.target.value)}} />
             </div>
             <div className="buttonWithGear">
-              {/* <button className={`${(referencetxt.length>4 && sampletxt.length>4)?'bg-blue-400':'bg-gray-400'} m-5 p-1 rounded text-white`} type='submit' name='submit' value='Submit' disabled={(referencetxt.length<4 && sampletxt.length<4)?true:false}>Submit</button> */}
-              <div className="button">
-                <Button colours={scheme} disabled={(referencetxt.length<4 && sampletxt.length<4)?true:false}/>
-              </div>
+              <Button colours={scheme} disabled={(referencetxt.length<4 && sampletxt.length<4)?true:false}/>
               <Modal
-              textSmall={(() => {return <img src={gear} alt={gear} style={{ width: '42px', height: '42px'}}></img>})()}
-              text={() => {return (
-              <div className="text-xs">
-                <div className="p-2">
-                  <p>Identical base reward: </p>
-                  <input className='input' type='text' name='identical' id='identical' value={identical} onChange={(e) => {setIdentical(+e.target.value)}} />
-                </div>
-                <div className="p-2">
-                  <p>Mismatching base penalty: </p>
-                  <input className='input' type='text' name='mismatch' id='mismatch' value={mismatch} onChange={(e) => {setMismatch(+e.target.value)}} />
-                </div>
-                <div className="p-2">
-                  <p>Beginning gap penalty: </p>
-                  <input className='input' type='text' name='gaps' id='gaps' value={gaps} onChange={(e) => {setGaps(+e.target.value)}} />
-                </div>
-                <div className="p-2">
-                  <p>Extending gap penalty: </p>
-                  <input className='input' type='text' name='extgaps' id='extgaps' value={extgaps} onChange={(e) => {setExtgaps(+e.target.value)}} />
-                </div>
-              </div>
-            )}}>
+                textSmall={<Gear />}
+                text={() => (
+                  <div>
+                    <Input label="Identical base reward:" name='identical' id='identical' value={identical.toString()} onChange={(e) => {setIdentical(+e.target.value)}} />
+                    <Input label="Mismatching base penalty:" name='mismatch' id='mismatch' value={mismatch.toString()} onChange={(e) => {setMismatch(+e.target.value)}} />
+                    <Input label="Beginning gap penalty:" name='gaps' id='gaps' value={gaps.toString()} onChange={(e) => {setGaps(+e.target.value)}} />
+                    <Input label="Extending gap penalty:" name='extgaps' id='extgaps' value={extgaps.toString()} onChange={(e) => {setExtgaps(+e.target.value)}} />
+                  </div>
+                )}>
             </Modal>
           </div>
         </form>
