@@ -6,6 +6,8 @@ import gear from "../../assets/gear.svg";
 import { SchemeContext } from "../context/colourScheme";
 import './style.css';
 import { IslandCenter } from "../../templates/IslandCenter";
+import { Gear } from "../../components/Gear";
+import { Input } from "../../components/Input";
 
 interface DensityMap {
   1: number;              // Mine
@@ -300,21 +302,13 @@ export default function Minesweeper() {
         <div className="game-controls">
           <div className="game-control">
             <Modal
-              textSmall={(() => {return <img src={gear} alt={gear} style={{ width: '20px', }}></img>})()}
-              text={() => {return (
-                <div className="modal-menu">
-                  <div className="">
-                    <div className="menu-item">
-                      <p>Grid size: </p>
-                      <input className='menu-input' type='text' value={gridSize} onClick={(e: any) => {e.target.select();}} onChange={((e) => {setGridSize(+e.target.value);genFreshBoard();})} />
-                    </div>
-                    <div className="menu-item">
-                      <p>Mine density: </p>
-                      <input className='menu-input' type='text' value={mineDensity} onClick={(e: any) => {e.target.select();}} onChange={((e) => {setMineDensity(+(+e.target.value/10).toFixed(3));genFreshBoard();})} />
-                    </div>    
-                  </div>
-                </div>
-              )}}>
+              textSmall={<Gear variant="small"/>}
+              text={() => (
+                <>
+                  <Input label="Grid size:" value={gridSize.toString()} onChange={((e) => {setGridSize(+e.target.value);genFreshBoard();})} />
+                  <Input label="Mine density:" value={mineDensity.toString()} onChange={((e) => {setMineDensity(+(+e.target.value/10).toFixed(3));genFreshBoard();})} />
+                </>
+              )}>
             </Modal>
           </div>
           <div className="game-control">{(gameStateLookup as any)[gameState]}</div>

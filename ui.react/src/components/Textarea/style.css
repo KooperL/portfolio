@@ -1,0 +1,11 @@
+#Textarea textarea {
+  width: 100%;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+#Textarea {
+  width: 80%;
+}

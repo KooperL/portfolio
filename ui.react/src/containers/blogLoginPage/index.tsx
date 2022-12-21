@@ -15,6 +15,7 @@ import { blogPath } from "../App/api/types";
 import Redirect from "../../components/Redirect"
 import { BlogRouteType } from "../App/routeTypes";
 import { IslandCenter } from "../../templates/IslandCenter";
+import { Input } from "../../components/Input";
 
 
 declare global {
@@ -149,14 +150,8 @@ function BlogLoginPage(props: Props): JSX.Element {
                   blog_password: passwordRegister
                 }
               }))}>
-                <div className="field">
-                  <p>Username: </p>
-                  <input type="text" value={usernameRegister} readOnly={true} onChange={(e) => {e.target.value = usernameRegister}}></input>
-                </div>
-                <div className="field">
-                  <p>Password: </p>
-                  <input type="text" value={passwordRegister} readOnly={true} onChange={(e) => {e.target.value = passwordRegister}}></input>
-                </div>
+                <Input label="Username: " value={usernameRegister} readOnly={true} onChange={(e) => {e.target.value = usernameRegister}}/>
+                <Input label="Password: " value={passwordRegister} readOnly={true} onChange={(e) => {e.target.value = passwordRegister}}/>
                 <div id="button">
                   <Button colours={scheme} />
                 </div>
@@ -167,14 +162,8 @@ function BlogLoginPage(props: Props): JSX.Element {
               <form onSubmit={((e) => handleSubmitLogin(e, {
                 session_id: sessionStorage.getItem('session_id') ?? 'error',
               }, encoded))}>
-                <div className="field">
-                  <p>Username: </p>
-                  <input type="text" value={usernameLogin} autoComplete="username email" onChange={(e) => {setUsernameLogin(e.target.value)}}></input>
-                </div>
-                <div className="field">
-                  <p>Password: </p>
-                  <input type="password" value={passwordLogin} autoComplete="new-password" onChange={(e) => {setPasswordLogin(e.target.value)}}></input>
-                </div>
+                <Input label="Username: " value={usernameLogin} autoComplete="username email" onChange={(e) => {setUsernameLogin(e.target.value)}}/>
+                <Input label="Password: " value={passwordLogin} autoComplete="new-password" onChange={(e) => {setPasswordLogin(e.target.value)}}/>
                 <div id="button">
                   <Button colours={scheme} />
                 </div>

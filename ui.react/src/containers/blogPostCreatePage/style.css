@@ -20,16 +20,6 @@
   width: 100%;
 }
 
-.blogCreatePage textarea {
-  height: 350px;
-  resize: none;
-}
-
-.blogCreatePage .field {
-  width: 100%;
-  margin: 1rem 0;
-  color: black;
-}
 
 .blogCreatePage .main-heading {
   font-size: 3rem;
@@ -40,17 +30,8 @@
   padding-top: 1rem;
 }
 
-.blogCreatePage input {
-  margin-right: 10px;
-  color: black;
-}
 
 
 @media screen and (max-width: 1000px) {
-  .blogCreatePage input {
-    width: 100%;
-  }
-  .blogCreatePage .links {
-    padding: 4rem;
-  }
+
 }

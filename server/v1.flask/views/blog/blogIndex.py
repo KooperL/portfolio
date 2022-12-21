@@ -81,13 +81,15 @@ def blogHome(authPayload):
       return scripts.utils.responses.build_actual_response(res)
 
     elif search:
+
       generalQuery = '''
         SELECT 
           blog_postsDB.id,
           blog_postsDB.date,
           blog_usersDB.blog_username,
           blog_postsDB.title,
-          blog_postsDB.body
+          blog_postsDB.body,
+          blog_post_categoryDB.name
         from blog_postsDB
         inner join blog_usersDB on
           blog_usersDB.id = blog_postsDB.blog_user_id
@@ -101,7 +103,7 @@ def blogHome(authPayload):
           blog_postsDB.body like ? 
       '''
       generalResults = controllers.database.conn.fetch(generalQuery, (search, search, search, search))
-      OrganisedPosts = []
+      OrganisedPosts = {}
 
       print(generalResults)
 
@@ -112,19 +114,27 @@ def blogHome(authPayload):
         pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
         postViewsRaw = controllers.database.conn.fetch(pullBlogViewsQuery, ('None', a[0]))[0][0]
 
-        OrganisedPosts.append({
-          'id': a[0],
-          'date': a[1],
-          'author': a[2],
-          'title': a[3],
-          'body': a[4][:30],
-          'views': postViewsRaw
-        })
+        if a[5] not in OrganisedPosts:
+          OrganisedPosts[a[5]] = [{
+            'id': a[0],
+            'date': a[1],
+            'author': a[2],
+            'title': a[3],
+            'body': a[4][:30],
+            'views': postViewsRaw
+          }]
+        else:
+          OrganisedPosts[a[5]].append({
+            'id': a[0],
+            'date': a[1],
+            'author': a[2],
+            'title': a[3],
+            'body': a[4][:30],
+            'views': postViewsRaw
+          })
       kwargs = {
         'success': True,
-        'data': {
-          category: OrganisedPosts
-        }
+        'data': OrganisedPosts
       }
       res = jsonify(kwargs)
       res.headers.add('Access-Control-Allow-Credentials', 'true') 

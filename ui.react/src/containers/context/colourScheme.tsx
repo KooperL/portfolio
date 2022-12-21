@@ -9,7 +9,10 @@ interface PageInformation extends Scheme {
 
 type handle = [PageInformation, Function]
 
-const pageInformation = {...dark, title: 'Kooper\'s react app'};
+const pageInformation = {
+  ...dark,
+  title: 'Kooper\'s react app'
+};
 
 export const SchemeContext = createContext<handle>([pageInformation, ()=>{}]);
 

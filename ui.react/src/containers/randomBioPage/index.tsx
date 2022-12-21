@@ -6,6 +6,9 @@ import { SchemeContext } from "../context/colourScheme";
 import './style.css';
 import { Button } from "../../components/Button";
 import { IslandCenter } from "../../templates/IslandCenter";
+import { Input } from "../../components/Input";
+import { Textarea } from "../../components/Textarea";
+import { Radio } from "../../components/Radio";
 
 
 interface Props {
@@ -61,25 +64,13 @@ function RandomBioPage(props: Props): JSX.Element {
             ...(type===3 && {single: +single})
           }))}>
             <div className="type">
-              <div>
-                <input type="radio" id="inputtype" name="inputtype" value="1" checked={type===1} onChange={((e) => {setType(+e.target.value)})}/>
-                <label className='pl-2' htmlFor="inputtype">DNA</label>
-              </div>
-              <div>
-                <input type="radio" id="inputtype" name="inputtype" value="2" checked={type===2} onChange={((e) => {setType(+e.target.value)})}/>
-                <label className='pl-2' htmlFor="inputtype">RNA</label>
-              </div>
-              <div>
-                <input type="radio" id="inputtype" name="inputtype" value="3" checked={type===3} onChange={((e) => {setType(+e.target.value)})}/>
-                <label className='pl-2' htmlFor="inputtype">Amino acids</label>
+              <Radio label="DNA" id="inputtype" name="inputtype" value="1" checked={type===1} onChange={((e) => {setType(+e.target.value)})} />
+              <Radio label="RNA" id="inputtype" name="inputtype" value="2" checked={type===2} onChange={((e) => {setType(+e.target.value)})} />
+              <Radio label="Amino acids" id="inputtype" name="inputtype" value="3" checked={type===3} onClick={((e) => {setType(+(e.target as HTMLTextAreaElement).value)})} />
             </div>
-            </div>
-            <div className="length">
-              <p>Sequence length: </p>
-              <input className='' type='text' name='length' id='length' value={length} onChange={((e) => {setLength(+e.target.value)})} />
-            </div>   
+            <Input label="Sequence length:" name='length' id='length' value={length.toString()} onChange={((e) => {setLength(+e.target.value)})} />
             <div className="single">
-              <p>Single letter abbreviations : </p>
+              <p>Single letter abbreviations: </p>
               <input type="checkbox" id="inputtype" name="inputtype" value="t" disabled={type!==3} checked={single===true} onChange={((e) => {setSingle(!single)})}/>
             </div>
               <div className="button">
@@ -111,12 +102,7 @@ function RandomBioPage(props: Props): JSX.Element {
           </div>
           <hr/>
           <div className="resultsCenter">
-            <div className="resultsContainer">
-              <div>
-                <h2>Results: </h2>
-              </div>
-                <textarea>{data.results}</textarea>
-            </div>
+            <Textarea label="Results:" value={data.results} highlightOnFocus={true}/>
           </div>
         </div>
       </IslandCenter>

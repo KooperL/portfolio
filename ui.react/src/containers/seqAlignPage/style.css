@@ -1,12 +1,3 @@
-.seqAlignPage .container {
-  padding: 5rem;
-  width: 100vw;
-  max-width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 
 .seqAlignPage .search-container {
@@ -14,7 +5,6 @@
   flex-direction: column;
   gap: 1rem;
   align-items: center;
-  font-size: 1.5rem;
   flex-wrap: wrap;
 }
 
@@ -43,12 +33,7 @@
 
 .seqAlignPage .description {
   white-space: wrap;
-}
-
-.seqAlignPage .input {
-  margin-right: 10px;
-  color: black;
-  width: 100%;
+  font-size: 1.5rem;
 }
 
 .seqAlignPage .inputContainer {
@@ -58,16 +43,12 @@
   width: 100%;
 }
 
-.seqAlignPage .button {
-  width: fit-content;
-  margin-right: 10px;
-}
-
 .seqAlignPage .buttonWithGear {
   margin-top: 2rem;
   justify-content: center;
   display: flex;
   flex-direction: row;
+  gap: 1rem;
 }
 
 /* results */
@@ -135,9 +116,7 @@
   .seqAlignPage textarea.resultBody {
     width: 80%;
   }
-  .seqAlignPage .form {
-    max-width: 500px;
-  }
+
   .seqAlignPage .search-container {
     height: auto;
     display: flex;
@@ -149,27 +128,6 @@
   .seqAlignPage .inputWithButton {
     display: flex;
     flex-direction: column;
-  }
-  .seqAlignPage .inputContainer {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding-bottom: 10px;
-  }
-  .seqAlignPage .inputLabel {
-    width: 100%;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 0;
-  }
-  .seqAlignPage .input {
-    width: 100%;
-  }
-  .seqAlignPage .container {
-    padding: 5rem 1rem 5rem 1rem 
-  }
-  .seqAlignPage .button {
-    width: 100%;
   }
   .seqAlignPage .submit-button {
     width: 100%;

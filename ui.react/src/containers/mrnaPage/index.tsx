@@ -6,6 +6,7 @@ import { SchemeContext } from "../context/colourScheme";
 import './style.css';
 import { Button } from "../../components/Button";
 import { IslandCenter } from "../../templates/IslandCenter";
+import { Input } from "../../components/Input";
 
 
 interface Props {
@@ -51,21 +52,16 @@ function MrnaPage(props: Props): JSX.Element {
         <div className="description" style={{color: scheme.body.text}}>
           {showingDesc?<p>Enter a DNA sequence to see a breakdown of its components.</p>: <></>}
         </div>
-        <div className="form">
           <form onSubmit={((e) => handleSubmit(e, {
             dna_field_id: value
           }))}>
             <div className="inputWithButton">
-              <div className="inputContainer">
-                <div className="inputLabel">🧬 DNA:</div>
-                <input className="input" type="text" name="dna_field_id" id="dna_field_id" placeholder=" GATTACA..." value={value} onChange={((e) => {setValue(e.target.value)})} />
-              </div>
+              <Input inputBoxLabel="🧬 DNA:" placeholder=" GATTACA..." value={value} onChange={((e) => {setValue(e.target.value)})}/>
               <div className="button">
                 <Button colours={scheme} />
               </div>
             </div>
           </form>
-        </div>
       </div>
     );
   }

@@ -1,21 +1,9 @@
-.contactPage .input {
-  margin-right: 10px;
-  color: black;
-  width: 100%;
-}
-
-.contactPage .inputContainer {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  width: auto;
-  flex-grow: 1;
-}
-
 .contactPage .inputWithButton {
+  margin-top: 2rem;
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  gap: 1rem
 }
 
 .contactPage .submit-button {
@@ -29,21 +17,9 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  font-size: 1.contactPage .5rem;
   flex-wrap: wrap;
 }
 
-.contactPage .inputLabel {
-  padding-right: 0.contactPage .8rem;
-  padding-left: 5px;
-  width: fit-content;
-  background-color: white;
-  color: black;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  white-space: nowrap;
-  padding-top: 3px;
-}
 
 .contactPage .status {
   padding-left: 1rem;
@@ -52,98 +28,15 @@
 }
 
 @media screen and (max-width: 1000px) {
-
+  .contactPage .inputWithButton {
+    flex-wrap: wrap;
+  }
   .contactPage .submit-button {
     padding-top: 10px;
     align-items: center;
   }
 
-  .contactPage .input {
-    width: 100%;
-  }
-  .contactPage .emoji {
-
-  }
-
   .contactPage .status {
     width: fit-content;
   }
-
-  .contactPage .inputLabel {
-    display: flex;
-    align-items: center;
-  }
 }
-
-/* .contactPage .container {
-  padding: 8rem 8rem;
-  width: 100vw;
-  display: flex;
-  flex-direction: row;
-}
-
-.contactPage .links {
-  width: auto;
-  z-index: 10;
-}
-
-.contactPage .render {
-  position: fixed;
-  height: 100vh;
-  width: 100vw;
-  left: 50%;
-  top: 0;
-  z-index: 1;
-}
-
-.contactPage .area {
-  display: flex;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.contactPage .area-heading {
-  font-size: 2rem;
-}
-
-.contactPage .main-heading {
-  font-size: 3rem;
-  padding-bottom: 25px;
-}
-
-.contactPage .button {
-  width: 16rem;
-  margin: 3px;
-  padding: 20px;
-  align-items: flex-end;
-  border-radius: 7px;
-  text-align: center;
-}
-
-.contactPage .button:hover {
-  background-image: linear-gradient(to right, rgb(219 234 254), #f3e8ff);
-  color: black;
-}
-
-.contactPage .text {
-  padding: 2rem 0;
-}
-
-.contactPage ul.unorderedList {
-  padding-left: 40px;
-  list-style-type: circle;
-  padding-top: 0;
-}
-
-
-
-.contactPage .description {
-  white-space: wrap;
-}
-
-
-
-
-
- */
