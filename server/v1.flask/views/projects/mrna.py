@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, jsonify, request
 import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
-
+import scripts.mrna_files.decode
 
 mrna = Blueprint('mrna', __name__)
 
@@ -16,11 +16,11 @@ def mrnaHome():
     dna = dna_field.replace('%20','').replace('\n', '').replace('\r', '').lower()
     count = scripts.mrna_files.decode.simple_count(dna)
     mrna = scripts.mrna_files.decode.mrna_complement(dna)
-    aa_p = scripts.mrna_files.decode.amino_acids(mrna)
-    if sum(count)<13:
-      tm = 4*(count[0]+count[1])+4*(count[2]+count[3])
+    aminoAcids = scripts.mrna_files.decode.amino_acids(mrna)
+    if len(dna) < 13:
+      tm = 4*(count['g']+count['c'])+4*(count['a']+count['t'])
     else:
-      tm = 64.9+41*(count[0]+count[1]-16.4)/sum(count)
+      tm = 64.9+41 * (count['g']+count['c']-16.4) / len(dna)
     kwargs = {
       'success': True,
       'data': {
@@ -29,13 +29,12 @@ def mrnaHome():
         'rdna_field': scripts.mrna_files.decode.reverse_complement(dna),
         'simplecount': count,
         'gccontent': scripts.mrna_files.decode.gc_content(dna),
-        'aa': aa_p,
-        'aa_s': scripts.mrna_files.decode.aa_single_from_partial(aa_p),
-        'molweight': scripts.mrna_files.decode.mol_weight(aa_p),
+        'aa': aminoAcids['partial'],
+        'aa_s': aminoAcids['single'],
+        'molweight': scripts.mrna_files.decode.mol_weight(dna),
         'tm': tm
       }
     }
-      # return render_template('mrna.html', **kwargs)
     res = jsonify(kwargs)
     return scripts.utils.responses.build_actual_response(res)
   elif request.method == 'OPTIONS': 

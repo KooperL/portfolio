@@ -11,8 +11,13 @@ export interface MrnaPayload {
     'dna_field': string,
     'mrna_field': string,
     'rdna_field': string,
-    'simplecount': number[],
-    'gccontent': number,    // float??
+    'simplecount': {
+      'a': number;
+      't': number;
+      'g': number;
+      'c': number;
+    },
+    'gccontent': number,
     'aa': string,
     'aa_s': string,
     'molweight': number,

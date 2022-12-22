@@ -1,0 +1,450 @@
+[
+  {
+    "name": "alanine",
+    "three_letter_symbol": "ala",
+    "symbol": "a",
+    "side_chain": {
+      "class": "Aliphatic",
+      "polarity": "Nonpolar",
+      "net_charge": "Neutral"
+    },
+    "nucleotides": [
+      "gcu",
+      "gcc",
+      "gca",
+      "gcg"
+    ],
+    "hydropathy_index": 1.8,
+    "molecular_weight": 89.094,
+    "propensities": {
+      "alpha-helix": 1.42,
+      "beta-strand": 0.83,
+      "turn": 0.66
+    }
+  },
+  {
+    "name": "arginine",
+    "three_letter_symbol": "arg",
+    "symbol": "r",
+    "side_chain": {
+      "class": "Fixed cation",
+      "polarity": "Basic polar",
+      "net_charge": "Positive"
+    },
+    "nucleotides": [
+      "cgu",
+      "cgc",
+      "cga",
+      "cgg",
+      "aga",
+      "agg"
+    ],
+    "hydropathy_index": -4.5,
+    "molecular_weight": 174.203,
+    "propensities": {
+      "alpha-helix": 0.98,
+      "beta-strand": 0.93,
+      "turn": 0.95
+    }
+  },
+  {
+    "name": "asparagine",
+    "three_letter_symbol": "asn",
+    "symbol": "n",
+    "side_chain": {
+      "class": "Amide",
+      "polarity": "Polar",
+      "net_charge": "Neutral"
+    },
+    "nucleotides": [
+      "aau",
+      "aac"
+    ],
+    "hydropathy_index": -3.5,
+    "molecular_weight": 132.119,
+    "propensities": {
+      "alpha-helix": 0.67,
+      "beta-strand": 0.89,
+      "turn": 1.56
+    }
+  },
+  {
+    "name": "aspartate",
+    "three_letter_symbol": "asp",
+    "symbol": "d",
+    "side_chain": {
+      "class": "Anion",
+      "polarity": "Brønsted base",
+      "net_charge": "Negative"
+    },
+    "nucleotides": [
+      "gau",
+      "gac"
+    ],
+    "hydropathy_index": -3.5,
+    "molecular_weight": 133.104,
+    "propensities": {
+      "alpha-helix": 1.01,
+      "beta-strand": 0.54,
+      "turn": 1.46
+    }
+  },
+  {
+    "name": "cysteine",
+    "three_letter_symbol": "cys",
+    "symbol": "c",
+    "side_chain": {
+      "class": "Thiol",
+      "polarity": "Brønsted acid",
+      "net_charge": "Neutral"
+    },
+    "nucleotides": [
+      "ugu",
+      "ugc"
+    ],
+    "hydropathy_index": 2.5,
+    "molecular_weight": 121.154,
+    "propensities": {
+      "alpha-helix": 0.7,
+      "beta-strand": 1.19,
+      "turn": 1.19
+    }
+  },
+  {
+    "name": "glutamine",
+    "three_letter_symbol": "gln",
+    "symbol": "q",
+    "side_chain": {
+      "class": "Amide",
+      "polarity": "Polar",
+      "net_charge": "Neutral"
+    },
+    "nucleotides": [
+      "caa",
+      "cag"
+    ],
+    "hydropathy_index": -3.5,
+    "molecular_weight": 146.146,
+    "propensities": {
+      "alpha-helix": 1.11,
+      "beta-strand": 1.11,
+      "turn": 0.98
+    }
+  },
+  {
+    "name": "glutamate",
+    "three_letter_symbol": "glu",
+    "symbol": "e",
+    "side_chain": {
+      "class": "Anion",
+      "polarity": "Brønsted base",
+      "net_charge": "Negative"
+    },
+    "nucleotides": [
+      "gaa",
+      "gag"
+    ],
+    "hydropathy_index": -3.5,
+    "molecular_weight": 147.131,
+    "propensities": {
+      "alpha-helix": 1.51,
+      "beta-strand": 0.37,
+      "turn": 0.74
+    }
+  },
+  {
+    "name": "glycine",
+    "three_letter_symbol": "gly",
+    "symbol": "g",
+    "side_chain": {
+      "class": "Aliphatic",
+      "polarity": "Nonpolar",
+      "net_charge": "Neutral"
+    },
+    "nucleotides": [
+      "ggu",
+      "ggc",
+      "gga",
+      "ggg"
+    ],
+    "hydropathy_index": -0.4,
+    "molecular_weight": 75.067,
+    "propensities": {
+      "alpha-helix": 0.57,
+      "beta-strand": 0.75,
+      "turn": 1.56
+    }
+  },
+  {
+    "name": "histidine",
+    "three_letter_symbol": "his",
+    "symbol": "h",
+    "side_chain": {
+      "class": "Aromatic cation",
+      "polarity": "Brønsted acid and base",
+      "net_charge": "Positive, 10%\nNeutral, 90%"
+    },
+    "nucleotides": [
+      "cau",
+      "cac"
+    ],
+    "hydropathy_index": -3.2,
+    "molecular_weight": 155.156,
+    "propensities": {
+      "alpha-helix": 1.00,
+      "beta-strand": 0.87,
+      "turn": 0.95
+    }
+  },
+  {
+    "name": "isoleucine",
+    "three_letter_symbol": "ile",
+    "symbol": "i",
+    "side_chain": {
+      "class": "Aliphatic",
+      "polarity": "Nonpolar",
+      "net_charge": "Neutral"
+    },
+    "nucleotides": [
+      "auu",
+      "auc",
+      "aua"
+    ],
+    "hydropathy_index": 4.5,
+    "molecular_weight": 131.175,
+    "propensities": {
+      "alpha-helix": 1.08,
+      "beta-strand": 1.6,
+      "turn": 0.47
+    }
+  },
+  {
+    "name": "leucine",
+    "three_letter_symbol": "leu",
+    "symbol": "l",
+    "side_chain": {
+      "class": "Aliphatic",
+      "polarity": "Nonpolar",
+      "net_charge": "Neutral"
+    },
+    "nucleotides": [
+      "uua",
+      "uug",
+      "cuu",
+      "cuc",
+      "cua",
+      "cug"
+    ],
+    "hydropathy_index": 3.8,
+    "molecular_weight": 131.175,
+    "propensities": {
+      "alpha-helix": 1.21,
+      "beta-strand": 1.3,
+      "turn": 0.59
+    }
+  },
+  {
+    "name": "lysine",
+    "three_letter_symbol": "lys",
+    "symbol": "k",
+    "side_chain": {
+      "class": "Cation",
+      "polarity": "Brønsted acid",
+      "net_charge": "Positive"
+    },
+    "nucleotides": [
+      "aaa",
+      "aag"
+    ],
+    "hydropathy_index": -3.9,
+    "molecular_weight": 146.189,
+    "propensities": {
+      "alpha-helix": 1.14,
+      "beta-strand": 0.74,
+      "turn": 1.01
+    }
+  },
+  {
+    "name": "methionine",
+    "three_letter_symbol": "met",
+    "symbol": "m",
+    "side_chain": {
+      "class": "Thioether",
+      "polarity": "Nonpolar",
+      "net_charge": "Neutral"
+    },
+    "nucleotides": [
+      "aug"
+    ],
+    "hydropathy_index": 1.9,
+    "molecular_weight": 149.208,
+    "propensities": {
+      "alpha-helix": 1.45,
+      "beta-strand": 1.05,
+      "turn": 0.6
+    }
+  },
+  {
+    "name": "phenylalanine",
+    "three_letter_symbol": "phe",
+    "symbol": "f",
+    "side_chain": {
+      "class": "Aromatic",
+      "polarity": "Nonpolar",
+      "net_charge": "Neutral"
+    },
+    "nucleotides": [
+      "uuu",
+      "uuc"
+    ],
+    "hydropathy_index": 2.8,
+    "molecular_weight": 165.192,
+    "propensities": {
+      "alpha-helix": 1.13,
+      "beta-strand": 1.38,
+      "turn": 0.6
+    }
+  },
+  {
+    "name": "proline",
+    "three_letter_symbol": "pro",
+    "symbol": "p",
+    "side_chain": {
+      "class": "Cyclic",
+      "polarity": "Nonpolar",
+      "net_charge": "Neutral"
+    },
+    "nucleotides": [
+      "ccu",
+      "ccc",
+      "cca",
+      "ccg"
+    ],
+    "hydropathy_index": -1.6,
+    "molecular_weight": 115.132,
+    "propensities": {
+      "alpha-helix": 0.57,
+      "beta-strand": 0.55,
+      "turn": 1.52
+    }
+  },
+  {
+    "name": "serine",
+    "three_letter_symbol": "ser",
+    "symbol": "s",
+    "side_chain": {
+      "class": "Hydroxylic",
+      "polarity": "Polar",
+      "net_charge": "Neutral"
+    },
+    "nucleotides": [
+      "ucu",
+      "ucc",
+      "uca",
+      "ucg",
+      "agu",
+      "agc"
+    ],
+    "hydropathy_index": -0.8,
+    "molecular_weight": 105.093,
+    "propensities": {
+      "alpha-helix": 0.77,
+      "beta-strand": 0.75,
+      "turn": 1.43
+    }
+  },
+  {
+    "name": "threonine",
+    "three_letter_symbol": "thr",
+    "symbol": "t",
+    "side_chain": {
+      "class": "Hydroxylic",
+      "polarity": "Polar",
+      "net_charge": "Neutral"
+    },
+    "nucleotides": [
+      "acu",
+      "acc",
+      "aca",
+      "acg"
+    ],
+    "hydropathy_index": -0.7,
+    "molecular_weight": 119.119,
+    "propensities": {
+      "alpha-helix": 0.83,
+      "beta-strand": 1.19,
+      "turn": 0.96
+    }
+  },
+  {
+    "name": "tryptophan",
+    "three_letter_symbol": "trp",
+    "symbol": "w",
+    "side_chain": {
+      "class": "Aromatic",
+      "polarity": "Nonpolar",
+      "net_charge": "Neutral"
+    },
+    "nucleotides": [
+      "ugg"
+    ],
+    "hydropathy_index": -0.9,
+    "molecular_weight": 204.228,
+    "propensities": {
+      "alpha-helix": 0.83,
+      "beta-strand": 1.19,
+      "turn": 0.96
+    }
+  },
+  {
+    "name": "tyrosine",
+    "three_letter_symbol": "tyr",
+    "symbol": "y",
+    "side_chain": {
+      "class": "Aromatic",
+      "polarity": "Brønsted acid",
+      "net_charge": "Neutral"
+    },
+    "nucleotides": [
+      "uau",
+      "uac"
+    ],
+    "hydropathy_index": -1.3,
+    "molecular_weight": 181.191,
+    "propensities": {
+      "alpha-helix": 0.69,
+      "beta-strand": 1.47,
+      "turn": 1.14
+    }
+  },
+  {
+    "name": "valine",
+    "three_letter_symbol": "val",
+    "symbol": "v",
+    "side_chain": {
+      "class": "Aliphatic",
+      "polarity": "Nonpolar",
+      "net_charge": "Neutral"
+    },
+    "nucleotides": [
+      "guu",
+      "guc",
+      "gua",
+      "gug"
+    ],
+    "hydropathy_index": 4.2,
+    "molecular_weight": 117.148,
+    "propensities": {
+      "alpha-helix": 1.06,
+      "beta-strand": 1.7,
+      "turn": 0.5
+    }
+  },
+  {
+    "nucleotides": [
+      "uaa",
+      "uag",
+      "uga"
+    ]
+  }
+]
