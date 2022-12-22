@@ -1,5 +1,5 @@
 # Important
-This app uses python 3.9.x
+This app uses python 3.9.5
 
 # Installation
 `pip install virtualenv` to download the module to use a virtual environment.
@@ -30,7 +30,11 @@ blog-jwt-auth-token=<value>
 blog-jwt-refresh-token=<value>
 blog-access-token-life=<value>
 blog-refresh-token-life=<value>
+DISCORD_WEBHOOK_URL=<value>
 ```
+
+## Running
+The entry point for this app is `app.py`
 
 ## CRON
 The app leverages scheduled webscrapers. Configure CRON with `sudo crontab -e`. Replace `{{DIR}}` with the repository location path. See `../setup.sh` to skip.
@@ -59,9 +63,6 @@ setParameter:
     enableLocalhostAuthBypass: false
 bind_ip = 0.0.0.0
 ```
-
-## Running
-The entry point for this app is `app.py`
 
 # Ideas
 https://www.bioinformatics.org/sms2/random_dna.html

@@ -12,6 +12,7 @@ import { IslandCenter } from "../../templates/IslandCenter";
 import { Input } from "../../components/Input";
 import { Radio } from "../../components/Radio";
 import { Gear } from "../../components/Gear";
+import { Textarea } from "../../components/Textarea";
 
 
 interface Props {
@@ -67,10 +68,10 @@ function SecondaryPage(props: Props): JSX.Element {
           leniency: leniency
         }))}>
           <div className="inputWithButton">
-            <Input inputBoxLabel="🔬 Amino acids:" name='aa_field_id' id='aa_field_id' value={aa_field_id} onChange={((e) => { setAa_field_id(e.target.value) })} />
+            <Input inputBoxLabel="🔬 Amino acids:" name='aa_field_id' id='aa_field_id' value={aa_field_id} onChange={((e) => {setAa_field_id(e.target.value)})} />
             <div className="buttonWithGear">
               <Button colours={scheme} disabled={aa_field_id.length < 4} />
-              <Modal
+              {/* <Modal
                 textSmall={<Gear />}
                 text={() => {
                   return (
@@ -82,7 +83,7 @@ function SecondaryPage(props: Props): JSX.Element {
                     </div>
                   )
                 }}>
-              </Modal>
+              </Modal> */}
             </div>
           </div>
         </form>
@@ -112,34 +113,35 @@ function SecondaryPage(props: Props): JSX.Element {
             </div>
             <hr/>
             <div className="resultsContainer">
-            <div className="resultsTitle">Results:</div>
-            <div className="results">
-              <div className="result" >
-                <p className="resultTitle">Amino acids: </p>
-                <textarea className="resultTextArea" name="aa" value={data.aa_field} readOnly={true} />
-              </div>
-              <div className="result" >
-                <p className="resultTitle">α helix propensities: </p>
-                <textarea className="resultTextArea" name="aa" value={data.ahm_field.toString()} readOnly={true} />
-              </div>
-              <div className="result" >
-                <p className="resultTitle">α helix μ-distributed prop.s: </p>
-                <textarea className="resultTextArea" name="aa" value={data.bsm_field.toString()} readOnly={true} />
-              </div>
-              <div className="result" >
-                <p className="resultTitle">β-pleated sheet propensities: </p>
-                <textarea className="resultTextArea" name="aa" value={data.ahl_field.toString()} readOnly={true} />
-              </div>
-              <div className="result" >
-                <p className="resultTitle">β-pleated sheet μ-dist. prop.s: </p>
-                <textarea className="resultTextArea" name="aa" value={data.bsl_field.toString()} readOnly={true} />
-              </div>
-              <div className="result" ></div>
-              </div>
+              <div className="resultsTitle">Results:</div>
+              {/* <div className="results">
+                <div className="result" >
+                  <p className="resultTitle">Amino acids: </p>
+                  <textarea className="resultTextArea" name="aa" value={data.aa_field} readOnly={true} />
+                </div>
+                <div className="result" >
+                  <p className="resultTitle">α helix propensities: </p>
+                  <textarea className="resultTextArea" name="aa" value={data.ahm_field.toString()} readOnly={true} />
+                </div>
+                <div className="result" >
+                  <p className="resultTitle">α helix μ-distributed prop.s: </p>
+                  <textarea className="resultTextArea" name="aa" value={data.bsm_field.toString()} readOnly={true} />
+                </div>
+                <div className="result" >
+                  <p className="resultTitle">β-pleated sheet propensities: </p>
+                  <textarea className="resultTextArea" name="aa" value={data.ahl_field.toString()} readOnly={true} />
+                </div>
+                <div className="result" >
+                  <p className="resultTitle">β-pleated sheet μ-dist. prop.s: </p>
+                  <textarea className="resultTextArea" name="aa" value={data.bsl_field.toString()} readOnly={true} />
+                </div>
+                <div className="result" ></div>
+                </div> */}
 
               <div className="mrna-preview" >
-                <p className="resultTitle">Calculated reconstruction: </p>
-                <textarea className="resultTextArea" name="aa" value={data.pred_str} readOnly={true} />
+                {/* <p className="resultTitle">Calculated reconstruction: </p> */}
+                {/* <textarea className="resultTextArea" name="aa" value={data.pred_str} readOnly={true} /> */}
+                <Textarea name="aa" value={data} readOnly={true} />
               </div>
             </div>
           </div>

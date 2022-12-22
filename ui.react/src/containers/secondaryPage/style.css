@@ -35,7 +35,7 @@
 .secondaryPage .resultsScreen {
   margin: 1rem 0;
 }
-
+/* 
 .secondaryPage .resultsContainer {
   width: 100%;
   display: flex;
@@ -59,11 +59,16 @@
   color: black;
 }
 
-.secondaryPage .mrna-preview {
+**/
+ .secondaryPage .mrna-preview {
   padding-top: 3rem;
   padding-bottom: 2rem;
-}
-
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+} 
+/**
 .secondaryPage .result {
   max-width: 400px;
   min-width: 250px;
@@ -74,7 +79,7 @@
 
 .secondaryPage .resultTitle {
   font-weight: 500;
-}
+} */
 
 @media screen and (max-width: 1000px) {
   .secondaryPage .description {
