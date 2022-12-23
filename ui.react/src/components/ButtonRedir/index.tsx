@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import './style.css';
 import { SchemeContext } from '../../containers/context/colourScheme';
 import { FuncProps, Props } from './types';
@@ -8,8 +8,11 @@ import { LoggingPOSTResponse } from '../Logger/types';
 
 function ButtonRedir(props: FuncProps) {
   const [scheme, setScheme] = useContext(SchemeContext);
+  const ref = useRef(0)
 
-  useEffect(() => {
+  // useEffect(() => {
+  // if(ref.current === 0) {
+  function monitor() {
     props.monitorPost({
       uuid: localStorage.getItem('uuid'),
       session_id: sessionStorage.getItem('session_id'),
@@ -24,13 +27,15 @@ function ButtonRedir(props: FuncProps) {
     }).catch((err: any) => {
       console.log(err)
     })
-  }, [])
+  // }, [])
+  }
 
   if(props.data.local) {
     return (
       <div className="ButtonRedir container">
         <Link to={props.data.destination}>
           <div style={{backgroundColor: scheme.button.bgSolid}} className="buttonRedir" onClick={async (e) => {
+            monitor()
             if(props.data.onClickCallback) {
               props.data.onClickCallback()
             }
@@ -45,6 +50,7 @@ function ButtonRedir(props: FuncProps) {
   return (
     <a href={props.data.destination}>
       <div style={{backgroundColor: scheme.button.bgSolid}} className="buttonRedir" onClick={async (e) => {
+        monitor()
         if(props.data.onClickCallback) {
           props.data.onClickCallback()
         }
