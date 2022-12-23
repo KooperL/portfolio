@@ -7,6 +7,12 @@ appDir = os.getcwd()
 print(f'RUN THIS COMMAND TO CREATE THE FOLDER: $mkdir {appDir}/../data/')
 conn = sqlite3.connect(f'{appDir}/../data/database.db')
 
+create_requests= '''create table if not exists requests (
+  id integer PRIMARY KEY,
+  date TIMESTAMP not null,
+  ip_address text not null
+);'''
+
 create_fuelpricesDB= '''create table if not exists fuelpricesDB (
   id integer PRIMARY KEY,
   date TIMESTAMP not null unique,
@@ -132,6 +138,7 @@ def createDefValues():
   conn.execute(create_category)
 
 def create():
+  conn.execute(create_requests)
   conn.execute(create_fuelpricesDB)
   conn.execute(create_contact_messagesDB)
   conn.execute(create_fingerprintDB)
@@ -145,7 +152,7 @@ def create():
   conn.execute(create_blog_post_reactionsDB)
   conn.execute(create_blog_post_categoryDB)
   conn.execute(create_blog_roleDB)
-  createDefValues()
+  # createDefValues()
 
   print('success')
 

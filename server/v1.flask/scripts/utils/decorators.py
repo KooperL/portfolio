@@ -6,9 +6,45 @@ from flask import request, jsonify
 import binascii
 import hashlib
 import hmac
+import controllers.database
 from dotenv import dotenv_values
 config =  dotenv_values('../.env')
 
+
+def rateLimit(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+
+        pullRequest = 'SELECT date FROM requests VALUES where "None" = ? and ip_address = ?);'
+        pullRequestTraffic = controllers.database.conn.fetch(pullRequest, ('None', ip))
+
+        now = datetime.datetime.now
+        event_count = 0
+
+        # Iterate through the tuple of dates
+        for hist_date in pullRequestTraffic:
+          # Calculate the time difference between the current time and the date in the tuple
+          time_diff = now - hist_date[0]
+
+          # Check if the time difference is less than y minutes
+          if time_diff < datetime.timedelta(minutes=config['RATE_LIMIT_WINDOW']):
+              # Increment the event count
+              event_count += 1
+
+        # Check if the event count is greater than x
+        if event_count > config['RATE_LIMIT_REQUESTS_GENERAL']:
+          kwargs = {
+            'success': False,
+            'error': 'Too many requests'
+            }
+          res = jsonify(kwargs)
+          return scripts.utils.responses.build_actual_response(res), 503
+        else:
+          requestInsert = 'INSERT INTO requests VALUES (?, ?, ?);'
+          controllers.database.conn.fetch(requestInsert, (None, now, ip))
+          return func(*args, **kwargs)
+    return wrapper
 
 def errorHandle(func):
   def wrapper(*args, **kwargs):
