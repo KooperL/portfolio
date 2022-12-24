@@ -8,6 +8,7 @@ property_search = Blueprint('property_search', __name__)
 
 @property_search.route(f'/{scripts.utils.structs.projectsPath}/property/search', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
+@scripts.utils.decorators.rateLimit
 def propertySearchHome():
   if request.method == 'GET':
     if not request.args.get('prop_suburb'):

@@ -17,6 +17,7 @@ user_search = Blueprint('user_search', __name__)
 @user_search.route(f'/{scripts.utils.structs.blogPath}/user/<string:username>', methods=['GET', 'OPTIONS'])   # DEL, GET was,'t working because axios wouldn't set content length
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.token_required
+@scripts.utils.decorators.rateLimit
 def blogUserViewHome(authPayload, *args, **kwargs):
   if request.method == 'GET':
     username = kwargs.get('username')

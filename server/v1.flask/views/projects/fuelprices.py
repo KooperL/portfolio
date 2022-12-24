@@ -10,6 +10,7 @@ fuelprices = Blueprint('fuelprices', __name__)
 
 @fuelprices.route(f'/{scripts.utils.structs.projectsPath}/fuelprices', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
+@scripts.utils.decorators.rateLimit
 def fuelpricesHome():
   if request.method == 'GET':
     rows = list(controllers.database.conn.fetch('SELECT * FROM fuelpricesDB where ? = "None" ORDER BY id DESC LIMIT ?', ('None', 200)))[::-1]

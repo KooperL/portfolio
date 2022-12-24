@@ -8,6 +8,7 @@ seqAlign = Blueprint('seqAlign', __name__)
 
 @seqAlign.route(f'/{scripts.utils.structs.projectsPath}/seqalign', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
+@scripts.utils.decorators.rateLimit
 def seqalignHome():
   if request.method == 'GET':
     pull = [

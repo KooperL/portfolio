@@ -8,6 +8,7 @@ projectsIndex = Blueprint('projectsIndex', __name__)
 
 @projectsIndex.route(f'/{scripts.utils.structs.projectsPath}', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
+@scripts.utils.decorators.rateLimit
 def projectsHome():
   if request.method == 'GET':
     dataNew = [

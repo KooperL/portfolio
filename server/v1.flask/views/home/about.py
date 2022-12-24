@@ -7,6 +7,7 @@ about = Blueprint('about', __name__)
 
 @about.route('/about', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
+@scripts.utils.decorators.rateLimit
 def aboutHome():
   if request.method == 'GET':
     kwargs = {

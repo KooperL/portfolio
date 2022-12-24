@@ -8,6 +8,7 @@ mrna = Blueprint('mrna', __name__)
 
 @mrna.route(f'/{scripts.utils.structs.projectsPath}/mrna', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
+@scripts.utils.decorators.rateLimit
 def mrnaHome():
   if request.method == 'GET':
     dna_field = request.args.get('dna_field_id')

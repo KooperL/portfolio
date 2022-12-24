@@ -18,6 +18,7 @@ post = Blueprint('post', __name__)
 @post.route(f'/{scripts.utils.structs.blogPath}/post', methods=['POST', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.token_required
+@scripts.utils.decorators.rateLimit
 def blogPostCreateHome(authPayload):
   if request.method == 'POST':
     data = request.get_json()

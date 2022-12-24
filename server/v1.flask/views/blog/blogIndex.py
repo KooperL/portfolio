@@ -16,6 +16,7 @@ blogIndex = Blueprint('blogIndex', __name__)
 
 @blogIndex.route(f'/{scripts.utils.structs.blogPath}', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
+@scripts.utils.decorators.rateLimit
 @scripts.utils.decorators.token_required
 def blogHome(authPayload):
   if request.method == 'GET':

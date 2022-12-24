@@ -7,6 +7,7 @@ homePage = Blueprint('homePage', __name__)
 
 @homePage.route('/home', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
+@scripts.utils.decorators.rateLimit
 def homeHome():
   if request.method == 'GET':
     kwargs = {

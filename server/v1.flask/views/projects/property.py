@@ -8,6 +8,7 @@ property = Blueprint('property', __name__)
 
 @property.route(f'/{scripts.utils.structs.projectsPath}/property', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
+@scripts.utils.decorators.rateLimit
 def propertyHome():
   if request.method == 'GET':
     stats = scripts.property.draw.state_stats()

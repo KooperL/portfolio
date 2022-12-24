@@ -15,6 +15,7 @@ login = Blueprint('login', __name__)
 
 @login.route(f'/{scripts.utils.structs.blogPath}/login', methods=['POST', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
+@scripts.utils.decorators.rateLimit
 def blogLoginHome():
   if request.method == 'POST':
     accessTokenLife = int(config['blog-access-token-life']) # Minutes

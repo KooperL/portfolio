@@ -14,35 +14,54 @@ config =  dotenv_values('../.env')
 def rateLimit(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+        ip = request.remote_addr
+        # ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
-        pullRequest = 'SELECT date FROM requests VALUES where "None" = ? and ip_address = ?);'
+        pullRequest = 'SELECT date FROM requests WHERE "None" = ? and ip_address = ?;'
         pullRequestTraffic = controllers.database.conn.fetch(pullRequest, ('None', ip))
-
-        now = datetime.datetime.now
+        now = datetime.datetime.now()
         event_count = 0
+        if not len(pullRequestTraffic):
+          requestInsert = 'INSERT INTO requests VALUES (?, ?, ?);'
+          controllers.database.conn.insert(requestInsert, (None, now, ip))
+          return func(*args, **kwargs)
 
         # Iterate through the tuple of dates
         for hist_date in pullRequestTraffic:
           # Calculate the time difference between the current time and the date in the tuple
-          time_diff = now - hist_date[0]
+          time_diff = now - datetime.datetime.strptime(hist_date[0], '%Y-%m-%d %H:%M:%S.%f')
 
           # Check if the time difference is less than y minutes
-          if time_diff < datetime.timedelta(minutes=config['RATE_LIMIT_WINDOW']):
-              # Increment the event count
-              event_count += 1
+          if time_diff < datetime.timedelta(minutes=int(config['RATE_LIMIT_WINDOW'])):
+            # Increment the event count
+            event_count += 1
 
         # Check if the event count is greater than x
-        if event_count > config['RATE_LIMIT_REQUESTS_GENERAL']:
-          kwargs = {
-            'success': False,
-            'error': 'Too many requests'
-            }
-          res = jsonify(kwargs)
-          return scripts.utils.responses.build_actual_response(res), 503
+        if request.method == 'GET':
+          if event_count > int(config['RATE_LIMIT_REQUESTS_GENERAL']):
+            kwargs = {
+              'success': False,
+              'error': 'Too many requests'
+              }
+            res = jsonify(kwargs)
+            return scripts.utils.responses.build_actual_response(res), 503
+          else:
+            requestInsert = 'INSERT INTO requests VALUES (?, ?, ?);'
+            controllers.database.conn.fetch(requestInsert, (None, now, ip))
+            return func(*args, **kwargs)
+        elif request.method == 'POST':
+          if event_count > int(config['RATE_LIMIT_REQUESTS_LIMITED']):
+            kwargs = {
+              'success': False,
+              'error': 'Too many requests'
+              }
+            res = jsonify(kwargs)
+            return scripts.utils.responses.build_actual_response(res), 503
+          else:
+            requestInsert = 'INSERT INTO requests VALUES (?, ?, ?);'
+            controllers.database.conn.fetch(requestInsert, (None, now, ip))
+            return func(*args, **kwargs)
         else:
-          requestInsert = 'INSERT INTO requests VALUES (?, ?, ?);'
-          controllers.database.conn.fetch(requestInsert, (None, now, ip))
           return func(*args, **kwargs)
     return wrapper
 
