@@ -12,6 +12,7 @@ contact = Blueprint('contact', __name__)
 
 @contact.route('/contact', methods=['GET', 'POST', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
+@scripts.utils.decorators.rateLimit
 def contactHome():
   if request.method == 'GET':
     kwargs = {

@@ -8,6 +8,7 @@ randomBio = Blueprint('randomBio', __name__)
 
 @randomBio.route(f'/{scripts.utils.structs.projectsPath}/randombio', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
+@scripts.utils.decorators.rateLimit
 def randomBioHome():
   if request.method == 'GET':
     pull = [

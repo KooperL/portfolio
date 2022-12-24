@@ -17,6 +17,7 @@ post_search = Blueprint('post_search', __name__)
 @post_search.route(f'/{scripts.utils.structs.blogPath}/post/<int:id>', methods=['POST', 'OPTIONS'])   # DEL, GET was,'t working because axios wouldn't set content length
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.token_required
+@scripts.utils.decorators.rateLimit
 def blogPostViewHome(authPayload, *args, **kwargs):
   if request.method == 'POST':
     id = int(kwargs.get('id'))

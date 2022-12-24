@@ -8,6 +8,7 @@ secondary = Blueprint('secondary', __name__)
 
 @secondary.route(f'/{scripts.utils.structs.projectsPath}/secondary', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
+@scripts.utils.decorators.rateLimit
 def secondaryHome():
   # log(request.remote_addr, inspect.stack()[0][3]).
   if request.method == 'GET':

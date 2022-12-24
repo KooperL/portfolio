@@ -16,6 +16,7 @@ register = Blueprint('register', __name__)
 
 @register.route(f'/{scripts.utils.structs.blogPath}/register', methods=['POST', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
+@scripts.utils.decorators.rateLimit
 def blogRegisterHome():
   if request.method == 'POST':
     data = request.get_json()

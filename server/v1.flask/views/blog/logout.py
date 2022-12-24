@@ -17,6 +17,7 @@ logout = Blueprint('logout', __name__)
 @logout.route(f'/{scripts.utils.structs.blogPath}/logout', methods=['POST', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.token_required
+@scripts.utils.decorators.rateLimit
 def blogLogoutHome(authPayload):
   if request.method == 'POST':
     refresh_token = request.cookies.get('refresh_token')
