@@ -35,7 +35,6 @@ def blogLoginHome():
 
     userSearchQuery = 'SELECT id, blog_password_hash, blog_password_salt, role_id FROM blog_usersDB where ? = "None" and blog_username = ?'    # expanding string when only one item in tuple ??? have to add second arg
     userRow = controllers.database.conn.fetch(userSearchQuery, ('None', decodedStr[0].lower()))
-    print(userRow)
 
     if len(userRow) != 1:
       return scripts.utils.responses.build_unauthenticated()

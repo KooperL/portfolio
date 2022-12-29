@@ -106,8 +106,6 @@ def blogHome(authPayload):
       generalResults = controllers.database.conn.fetch(generalQuery, (search, search, search, search))
       OrganisedPosts = {}
 
-      print(generalResults)
-
       if not len(generalResults):
         return scripts.utils.responses.build_not_found()
 

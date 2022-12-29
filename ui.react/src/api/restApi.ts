@@ -31,7 +31,7 @@ export const get = async<T> (
     method: 'GET',
     url: url
   };
-  return request(requestConfig);
+  return request(requestConfig) as Promise<T>;
 }
 
 
@@ -52,5 +52,5 @@ export const post = async<T> (
     url: url
   };
 
-  return request(requestConfig);
+  return request(requestConfig) as Promise<T>;
 }

@@ -10,7 +10,7 @@ import controllers.database
 from dotenv import dotenv_values
 config =  dotenv_values('../.env')
 
-
+# https://stackoverflow.com/questions/16022624/examples-of-http-api-rate-limiting-http-response-headers
 def rateLimit(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -44,7 +44,7 @@ def rateLimit(func):
               'error': 'Too many requests'
               }
             res = jsonify(kwargs)
-            return scripts.utils.responses.build_actual_response(res), 503
+            return scripts.utils.responses.build_actual_response(res), 429
           else:
             requestInsert = 'INSERT INTO requests VALUES (?, ?, ?);'
             controllers.database.conn.fetch(requestInsert, (None, now, ip))
@@ -56,7 +56,7 @@ def rateLimit(func):
               'error': 'Too many requests'
               }
             res = jsonify(kwargs)
-            return scripts.utils.responses.build_actual_response(res), 503
+            return scripts.utils.responses.build_actual_response(res), 429
           else:
             requestInsert = 'INSERT INTO requests VALUES (?, ?, ?);'
             controllers.database.conn.fetch(requestInsert, (None, now, ip))
@@ -70,15 +70,13 @@ def errorHandle(func):
     try:
       return func(*args, **kwargs)
     except Exception as e:
-      # print(e)
       kwargs = {
         'success': False,
-        'error': 'Deliberate error'
+        'error': f'Deliberate error: {e}'
       }
       res = jsonify(kwargs)
       return scripts.utils.responses.build_actual_response(res), 500
     except:
-      print('cause')
       kwargs = {
         'success': False,
         'error': 'Unknown error'
@@ -100,7 +98,6 @@ def blogAuthorize(jwt, key):
   if scripts.utils.hashFunctions.stringToBase64(jwtSignature) == jwt[2]:
     jwtDecoded = [eval(scripts.utils.hashFunctions.base64ToString(jwt[0])), eval(scripts.utils.hashFunctions.base64ToString(jwt[1]))]
     # if jwtDecoded[1].has_key('exp'):
-    print(jwtDecoded)
     if 'exp' in jwtDecoded[1]:
       # tokenExpires = datetime.fromtimestamp(int(jwtDecoded[1].get('exp'))/1000, tz=None)
       timestampNow = int(datetime.datetime.now().timestamp() * 1000)
@@ -120,7 +117,6 @@ def blogAuthorize(jwt, key):
 def token_required(f):
   @wraps(f)
   def decorated(*args, **kwargs):
-    # print(kwargs.get('id'))
     if request.method == 'OPTIONS':
       return scripts.utils.responses.build_preflight_response()
     auth_header = request.headers.get('Authorization')

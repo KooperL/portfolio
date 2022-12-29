@@ -17,7 +17,6 @@ def generateJWTHeader():
 def base64ToString(string):
   decodedBytes = base64.b64decode(string)
   decodedStr = str(decodedBytes, "utf-8")
-  print(decodedStr)
   return decodedStr
 
 def stringToBase64(string):
