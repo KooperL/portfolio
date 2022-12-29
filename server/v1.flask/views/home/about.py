@@ -22,7 +22,7 @@ def aboutHome():
         {
           'type': 'subheader',
           'data': [
-            'I update it constantly to demonstrate my comprehension of programming and computer science.',
+            'I update it constantly to demonstrate my comprehension of new technologies I am learning.',
             'If you\'re just here for a quick visit, you might be more interested in browsing some of my favourite projects.',
           ]
         },

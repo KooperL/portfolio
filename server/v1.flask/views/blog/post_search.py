@@ -21,9 +21,7 @@ post_search = Blueprint('post_search', __name__)
 def blogPostViewHome(authPayload, *args, **kwargs):
   if request.method == 'POST':
     id = int(kwargs.get('id'))
-    print(id)
     data = request.get_json()
-    print(request)
     user_id = authPayload.get('payload').get('userId')
     username = authPayload.get('payload').get('username')
     role = authPayload.get('payload').get('role')

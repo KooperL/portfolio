@@ -21,7 +21,6 @@ def gc_content(dna: str) -> float:
 
 def reverse_complement(dna: str) -> str:
   # return "".join(dna_dictionary.complimentary_nucleotide.value for i in dna[::-1] if dna == dna_dictionary)
-  print('base')
   chain = []
   for base in dna:
     for potMatch in dna_dictionary:

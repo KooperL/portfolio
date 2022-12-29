@@ -43,5 +43,4 @@ class DatabaseManager(object):
   def __del__(self):
     self.conn.close()
 
-print(appDir)
 conn = DatabaseManager(f'{appDir}/../data/database.db')
