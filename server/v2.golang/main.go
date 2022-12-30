@@ -1,14 +1,19 @@
 package main
 
 import (
+	"fmt"
+	"kooperlingohr/portfolio/router"
+	"kooperlingohr/portfolio/utils"
 	"log"
 	"net/http"
-	"kooperlingohr/portfolio/router"
+	"os"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
 	mux := router.SetupRouter()
-	log.Println("Listening on port 8000...")
-	log.Fatal(http.ListenAndServe(":8000", mux))
+	utils.HandleErrorVar(godotenv.Load("../.env"))
+	log.Printf("Listening on port %v...", os.Getenv("DEV_PORT"))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", os.Getenv("DEV_PORT")), mux))
 }
-
