@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"kooperlingohr/portfolio/router/routes"
+	routes "kooperlingohr/portfolio/router/routes/projects"
 	"kooperlingohr/portfolio/utils"
 )
 

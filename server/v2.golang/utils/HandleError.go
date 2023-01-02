@@ -11,14 +11,12 @@ func HandleErrorAsResponse(w http.ResponseWriter, err error) {
 	}
 }
 
-// func HandleErrorDeconstruct[T any](data T, err error) T {
-// 	if err != nil {
-// 		// handle the error
-// 		HandleErrorVar(err)
-// 		return nil
-// 	}
-// 	return data
-// }
+func HandleErrorDeconstruct[T any](data T, err error) T {
+	if err != nil {
+		HandleErrorVar(err)
+	}
+	return data
+}
 
 func HandleErrorVar(err error) {
 	if err != nil {
