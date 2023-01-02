@@ -59,23 +59,20 @@ type AminoAcids struct {
 }
 
 func RandomBio(w http.ResponseWriter, r *http.Request) {
-	randomType, err := strconv.ParseInt(r.URL.Query().Get("type"), 10, 16)
-	utils.HandleErrorVar(err)
-	randomLength, err := strconv.ParseInt(r.URL.Query().Get("length"), 10, 16)
-	utils.HandleErrorVar(err)
+	randomType := utils.HandleErrorDeconstruct(strconv.ParseInt(r.URL.Query().Get("type"), 10, 16))
+	randomLength := utils.HandleErrorDeconstruct(strconv.ParseInt(r.URL.Query().Get("length"), 10, 16))
 
 	switch randomType {
 	case (1):
-		file, err := os.Open("data/dna.json")
-		utils.HandleErrorVar(err)
+		file := utils.HandleErrorDeconstruct(os.Open("data/dna.json"))
 		defer file.Close()
 
 		var data []Dna
 		utils.HandleErrorVar(json.NewDecoder(file).Decode(&data))
 		rand.Seed(time.Now().Unix())
 		arr := make([]string, randomLength)
-		var i int64
 
+		var i int64
 		for i = 0; i < randomLength; i++ {
 			randInd := rand.Intn(len(data))
 			arr[i] = data[randInd].Symbol
@@ -126,7 +123,7 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 			}
 		} else {
 			for i = 0; i < randomLength; i++ {
-				for true {
+				for {
 					randInd := rand.Intn(len(data))
 					chosenAA := data[randInd]
 					if chosenAA.Symbol != "STOP" {
