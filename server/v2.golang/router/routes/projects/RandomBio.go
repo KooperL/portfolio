@@ -1,62 +1,14 @@
 package routes
 
 import (
-	"encoding/json"
+	types "kooperlingohr/portfolio/Types"
 	"kooperlingohr/portfolio/router/middleware"
 	"kooperlingohr/portfolio/utils"
 	"math/rand"
 	"net/http"
-	"os"
 	"strconv"
 	"time"
 )
-
-type Base struct {
-	Name                    string
-	Symbol                  string
-	ComplimentaryNucleotide struct {
-		Reference string
-		Value     string
-	}
-}
-
-type Dna struct {
-	Base
-	MolecularMass struct {
-		Value float64
-		Unit  string
-	}
-	Density struct {
-		Value float64
-		Unit  string
-	}
-	MeltingPoint struct {
-		From float64
-		To   float64
-		Unit string
-	}
-	BoilingPoint struct {
-		From float64
-		Unit string
-	}
-
-	Solubility struct {
-		Value float64
-		Unit  string
-	}
-	PH float64
-}
-
-type AminoAcids struct {
-	Name              string             `json:"name"`
-	ThreeLetterSymbol string             `json:"three_letter_symbol"`
-	Symbol            string             `json:"symbol"`
-	SideChain         map[string]string  `json:"side_chain"`
-	Nucleotides       []string           `json:"nucleotides"`
-	HydropathyIndex   float64            `json:"hydropathy_index"`
-	MolecularWeight   float64            `json:"molecular_weight"`
-	Propensities      map[string]float64 `json:"propensities"`
-}
 
 func RandomBio(w http.ResponseWriter, r *http.Request) {
 	randomType := utils.HandleErrorDeconstruct(strconv.ParseInt(r.URL.Query().Get("type"), 10, 16))
@@ -64,11 +16,9 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 
 	switch randomType {
 	case (1):
-		file := utils.HandleErrorDeconstruct(os.Open("data/dna.json"))
-		defer file.Close()
+		var data []types.Dna
+		utils.OpenAndParseJSONFile("data/dna.json", &data)
 
-		var data []Dna
-		utils.HandleErrorVar(json.NewDecoder(file).Decode(&data))
 		rand.Seed(time.Now().Unix())
 		arr := make([]string, randomLength)
 
@@ -78,14 +28,12 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 			arr[i] = data[randInd].Symbol
 		}
 		middleware.BuildSuccessResponse(w, arr)
+		return
 		break
 	case (2):
-		file, err := os.Open("data/rna.json")
-		utils.HandleErrorVar(err)
-		defer file.Close()
+		var data []types.Rna
+		utils.OpenAndParseJSONFile("data/rna.json", &data)
 
-		var data []Base
-		utils.HandleErrorVar(json.NewDecoder(file).Decode(&data))
 		rand.Seed(time.Now().Unix())
 		arr := make([]string, randomLength)
 		var i int64
@@ -95,17 +43,14 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 			arr[i] = data[randInd].Symbol
 		}
 		middleware.BuildSuccessResponse(w, arr)
+		return
 		break
 	case (3):
-		aaFormat, err := strconv.ParseInt(r.URL.Query().Get("single"), 10, 16)
-		utils.HandleErrorVar(err)
+		aaFormat := utils.HandleErrorDeconstruct(strconv.ParseInt(r.URL.Query().Get("single"), 10, 16))
 
-		file, err := os.Open("data/aminoAcids.json")
-		utils.HandleErrorVar(err)
-		defer file.Close()
+		var data []types.AminoAcids
+		utils.OpenAndParseJSONFile("data/aminoAcids.json", &data)
 
-		var data []AminoAcids
-		utils.HandleErrorVar(json.NewDecoder(file).Decode(&data))
 		rand.Seed(time.Now().Unix())
 		arr := make([]string, randomLength)
 		var i int64
@@ -121,7 +66,9 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 					}
 				}
 			}
-		} else {
+			middleware.BuildSuccessResponse(w, arr)
+			return
+		} else if aaFormat == 0 {
 			for i = 0; i < randomLength; i++ {
 				for {
 					randInd := rand.Intn(len(data))
@@ -132,9 +79,16 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 					}
 				}
 			}
+			middleware.BuildSuccessResponse(w, arr)
+			return
+		} else {
+			middleware.BuildBadResponse(w, "Bad syntax", 400)
+			return
 		}
-		middleware.BuildSuccessResponse(w, arr)
 		break
+	default:
+		middleware.BuildBadResponse(w, "Bad syntax", 400)
+		return
+
 	}
-	middleware.BuildBadResponse(w, "Bad syntax", 400)
 }
