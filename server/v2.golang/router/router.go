@@ -1,17 +1,27 @@
 package router
 
 import (
+	"fmt"
 	"kooperlingohr/portfolio/router/middleware"
-	routes "kooperlingohr/portfolio/router/routes/projects"
+	index "kooperlingohr/portfolio/router/routes/index"
+	projects "kooperlingohr/portfolio/router/routes/projects"
 	"net/http"
 )
 
 func SetupRouter() *http.ServeMux {
 	mux := http.NewServeMux()
-	// mux.HandleFunc("/hello", middleware.CatchErrors(routes.Hello))
-	mux.HandleFunc("/projects/seqalign", middleware.CatchErrors(routes.SeqAlign))
-	mux.HandleFunc("/projects/randombio", middleware.CatchErrors(routes.RandomBio))
-	mux.HandleFunc("/projects/secondary", middleware.CatchErrors(routes.Secondary))
-	mux.HandleFunc("/projects/mrna", middleware.CatchErrors(routes.Mrna))
+
+	projectsRoute := "projects"
+
+	mux.HandleFunc("/", middleware.CatchErrors(index.Home))
+	mux.HandleFunc("/contact", middleware.CatchErrors(index.Contact))
+
+	mux.HandleFunc(fmt.Sprintf("/%s/", projectsRoute), middleware.CatchErrors(projects.Index))
+	mux.HandleFunc(fmt.Sprintf("/%s/fuelprices", projectsRoute), middleware.CatchErrors(projects.Fuelprices))
+	mux.HandleFunc(fmt.Sprintf("/%s/seqalign", projectsRoute), middleware.CatchErrors(projects.SeqAlign))
+	mux.HandleFunc(fmt.Sprintf("/%s/randombio", projectsRoute), middleware.CatchErrors(projects.RandomBio))
+	mux.HandleFunc(fmt.Sprintf("/%s/secondary", projectsRoute), middleware.CatchErrors(projects.Secondary))
+	mux.HandleFunc(fmt.Sprintf("/%s/mrna", projectsRoute), middleware.CatchErrors(projects.Mrna))
+
 	return mux
 }

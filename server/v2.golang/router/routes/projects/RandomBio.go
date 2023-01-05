@@ -1,4 +1,4 @@
-package routes
+package projects
 
 import (
 	types "kooperlingohr/portfolio/Types"

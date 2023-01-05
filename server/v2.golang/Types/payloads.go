@@ -17,3 +17,14 @@ type Mrna struct {
 	MolWeight   float64        `json:"molweight"`
 	TM          float64        `json:"tm"`
 }
+
+type PagePopulateNode struct {
+	Data []string `json:"data"`
+	Text string   `json:"text"`
+	Type string   `json:"type"`
+}
+
+type PagePopulate struct {
+	Data interface{} `json:"data"`
+	Type string      `json:"type"`
+}
