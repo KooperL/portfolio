@@ -7,10 +7,31 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+// db is a global variable that stores the database connection
+var db *sql.DB
+
+// InitDB initializes the database connection
+func InitDB() error {
+	// Open a connection to the database
+	var err error
+	db, err = sql.Open("sqlite3", "../data/database.db")
+	if err != nil {
+		return err
+	}
+
+	// Return nil to indicate success
+	return nil
+}
+
+// CloseDB closes the database connection
+func CloseDB() {
+	db.Close()
+}
+
 func ExecuteSQLiteQuery[T any](query string, args []interface{}) ([]T, error) {
 	// Open the SQLite database file
-	db := utils.HandleErrorDeconstruct(sql.Open("sqlite3", "../data/database.db"))
-	defer db.Close()
+	// db := utils.HandleErrorDeconstruct(sql.Open("sqlite3", "../data/database.db"))
+	// defer db.Close()
 
 	// Prepare the query
 	stmt := utils.HandleErrorDeconstruct(db.Prepare(query))
@@ -53,8 +74,8 @@ func ExecuteSQLiteQuery[T any](query string, args []interface{}) ([]T, error) {
 }
 
 func Insert(query string, args []interface{}) {
-	db := utils.HandleErrorDeconstruct(sql.Open("sqlite3", "../data/database.db"))
-	defer db.Close()
+	// db := utils.HandleErrorDeconstruct(sql.Open("sqlite3", "../data/database.db"))
+	// defer db.Close()
 	stmt := utils.HandleErrorDeconstruct(db.Prepare(query))
 	defer stmt.Close()
 

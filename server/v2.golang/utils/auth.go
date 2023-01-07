@@ -62,7 +62,9 @@ func DecodeJWT(jwt, secret string) (JWTbody, error) {
 	externalSignature := jwtSlice[2]
 
 	var jwtDecoded JWTbody
-	reader := strings.NewReader(jwtSlice[1])
+	jwtEncoded := jwtSlice[1]
+
+	reader := strings.NewReader(DecodeBase64(jwtEncoded))
 	HandleErrorVar(json.NewDecoder(reader).Decode(&jwtDecoded))
 	tokenExp := jwtDecoded.Exp
 
