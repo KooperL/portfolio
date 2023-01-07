@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"kooperlingohr/portfolio/controllers/database"
 	"kooperlingohr/portfolio/router"
 	"kooperlingohr/portfolio/utils"
 	"log"
@@ -12,6 +13,8 @@ import (
 )
 
 func main() {
+	utils.HandleErrorVar(database.InitDB())
+	defer database.CloseDB()
 	mux := router.SetupRouter()
 	utils.HandleErrorVar(godotenv.Load("../.env"))
 	log.Printf("Listening on port %v...", os.Getenv("DEV_PORT"))

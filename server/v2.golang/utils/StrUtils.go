@@ -4,7 +4,7 @@ import (
 	"encoding/base64"
 )
 
-func decodeBase64(encoded string) string {
+func DecodeBase64(encoded string) string {
 	decoded := HandleErrorDeconstruct(base64.StdEncoding.DecodeString(encoded))
 	return string(decoded)
 }

@@ -14,14 +14,13 @@ func TokenRequired(h http.HandlerFunc) http.HandlerFunc {
 		header := r.Header.Get("Authorization")
 		token := strings.Split(header, " ")
 		tokenDecoded, err := utils.DecodeJWT(token[1], os.Getenv("blog-register-hash-key"))
-		// auth header
 
 		if err == nil {
 			ctx := context.WithValue(r.Context(), "decodedToken", tokenDecoded)
 			r = r.WithContext(ctx)
 			h(w, r)
 		} else {
-			BuildBadResponse(w, "Too many requests", 429)
+			BuildBadResponse(w, "Unauthorized", 401)
 		}
 		return
 	}
