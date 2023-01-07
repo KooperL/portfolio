@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"math/rand"
 	"sort"
 	"strings"
@@ -32,7 +31,6 @@ func MatchScoreSimple(s1, s2 string, match, mismatch, beginningGap, extendingGap
 func InsertBlank[T any](s string) string {
 	// Generate a random position in the string
 	pos := rand.Intn(len(s) + 1)
-	fmt.Println(pos)
 	return s[:pos] + "-" + s[pos:]
 }
 

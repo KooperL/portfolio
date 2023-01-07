@@ -1,30 +1,31 @@
 package types
 
-type AppError struct {
-	Error   error
-	Message string
-	Code    int
+type ContactPayload struct {
+	SessionID string `json:"session_id"`
+	Message   string `json:"message"`
 }
 
-type Mrna struct {
-	DNAField    string         `json:"dna_field"`
-	MRNAField   string         `json:"mrna_field"`
-	RDNAField   string         `json:"rdna_field"`
-	SimpleCount map[string]int `json:"simplecount"`
-	GCContent   float64        `json:"gccontent"`
-	AA          []string       `json:"aa"`
-	AAS         string         `json:"aa_s"`
-	MolWeight   float64        `json:"molweight"`
-	TM          float64        `json:"tm"`
+type CapturePayload struct {
+	Uuid          string      `json:"uuid"`
+	CanvasHash    string      `json:"canvas_hash"`
+	Version       string      `json:"version"`
+	Platform      string      `json:"platform"`
+	Browser       string      `json:"browser"`
+	UserAgent     string      `json:"User-Agent"`
+	DarkMode      interface{} `json:"darkMode"`
+	CookieEnabled interface{} `json:"cookieEnabled"`
+	ActualHeight  interface{} `json:"actualHeight"`
+	ActualWidth   interface{} `json:"actualWidth"`
+	PixelDepth    interface{} `json:"pixelDepth"`
+	InnerHeight   interface{} `json:"innerHeight"`
+	OuterHeight   interface{} `json:"outerHeight"`
+	InnerWidth    interface{} `json:"innerWidth"`
+	OuterWidth    interface{} `json:"outerWidth"`
 }
 
-type PagePopulateNode struct {
-	Data []string `json:"data"`
-	Text string   `json:"text"`
-	Type string   `json:"type"`
-}
-
-type PagePopulate struct {
-	Data interface{} `json:"data"`
-	Type string      `json:"type"`
+type MonitorPayload struct {
+	Uuid      string `json:"uuid"`
+	SessionID string `json:"session_id"`
+	Page      string `json:"page"`
+	PrevPage  string `json:"prevPage"`
 }

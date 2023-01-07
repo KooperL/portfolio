@@ -8,7 +8,9 @@ import (
 )
 
 func Fuelprices(w http.ResponseWriter, r *http.Request) {
-	res := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[database.Fuelprices]("SELECT * FROM fuelpricesDB ORDER BY id DESC LIMIT ?", []any{200}))
+	if r.Method == http.MethodGet {
+		res := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[database.Fuelprices]("SELECT * FROM fuelpricesDB ORDER BY id DESC LIMIT ?", []any{200}))
 
-	middleware.BuildSuccessResponse(w, res)
+		middleware.BuildSuccessResponse(w, res)
+	}
 }

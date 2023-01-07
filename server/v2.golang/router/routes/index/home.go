@@ -7,32 +7,34 @@ import (
 )
 
 func Home(w http.ResponseWriter, r *http.Request) {
-	res := []types.PagePopulateNode{
-		{
-			Data: []string{"Hi 👋 I'm Kooper, welcome to my website."},
-			Type: "header",
-		},
-		{
-			Data: []string{"/projects"},
-			Text: "/projects",
-			Type: "button",
-		},
-		{
-			Data: []string{"/contact"},
-			Text: "/contact",
-			Type: "button",
-		},
-		{
-			Data: []string{"/about"},
-			Text: "/about",
-			Type: "button",
-		},
-		{
-			Data: []string{"/blog"},
-			Text: "/blog",
-			Type: "button",
-		},
-	}
+	if r.Method == http.MethodGet {
+		res := []types.PagePopulateNode{
+			{
+				Data: []string{"Hi 👋 I'm Kooper, welcome to my website."},
+				Type: "header",
+			},
+			{
+				Data: []string{"/projects"},
+				Text: "/projects",
+				Type: "button",
+			},
+			{
+				Data: []string{"/contact"},
+				Text: "/contact",
+				Type: "button",
+			},
+			{
+				Data: []string{"/about"},
+				Text: "/about",
+				Type: "button",
+			},
+			{
+				Data: []string{"/blog"},
+				Text: "/blog",
+				Type: "button",
+			},
+		}
 
-	middleware.BuildSuccessResponse(w, res)
+		middleware.BuildSuccessResponse(w, res)
+	}
 }
