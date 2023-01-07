@@ -51,3 +51,12 @@ func ExecuteSQLiteQuery[T any](query string, args []interface{}) ([]T, error) {
 	// Return the results
 	return results, nil
 }
+
+func Insert(query string, args []interface{}) {
+	db := utils.HandleErrorDeconstruct(sql.Open("sqlite3", "../data/database.db"))
+	defer db.Close()
+	stmt := utils.HandleErrorDeconstruct(db.Prepare(query))
+	defer stmt.Close()
+
+	utils.HandleErrorDeconstruct(stmt.Exec(args...))
+}
