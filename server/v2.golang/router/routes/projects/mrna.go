@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	types "kooperlingohr/portfolio/Types"
-	"kooperlingohr/portfolio/router/middleware"
+	"kooperlingohr/portfolio/router/middleware/responses"
 	"kooperlingohr/portfolio/utils"
 	"net/http"
 	"strings"
@@ -92,6 +92,6 @@ func Mrna(w http.ResponseWriter, r *http.Request) {
 			MolWeight:   molWeight,
 			TM:          tm,
 		}
-		middleware.BuildSuccessResponse(w, response)
+		responses.BuildSuccessResponse(w, response)
 	}
 }

@@ -47,7 +47,10 @@ def blogLoginHome():
       'username': decodedStr[0]
     }
 
-    blog_password_hash = scripts.utils.hashFunctions.generateHash((decodedStr[1] + userInfo.get('passwordSalt')), config['blog-register-hash-key'])
+    # blog_password_hash = scripts.utils.hashFunctions.generateHash((decodedStr[1] + userInfo.get('passwordSalt')), config['blog-register-hash-key'])
+    blog_password_hash = scripts.utils.hashFunctions.pbkdf2(bytes(decodedStr[1], 'UTF-8'), bytes(userInfo.get('passwordSalt'), 'UTF-8'))
+    
+    
     if userInfo.get('passwordHash') != blog_password_hash:
       return scripts.utils.responses.build_unauthenticated()
 

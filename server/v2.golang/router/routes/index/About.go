@@ -2,7 +2,7 @@ package index
 
 import (
 	types "kooperlingohr/portfolio/Types"
-	"kooperlingohr/portfolio/router/middleware"
+	"kooperlingohr/portfolio/router/middleware/responses"
 	"net/http"
 )
 
@@ -54,6 +54,6 @@ func About(w http.ResponseWriter, r *http.Request) {
 			},
 		}
 
-		middleware.BuildSuccessResponse(w, res)
+		responses.BuildSuccessResponse(w, res)
 	}
 }

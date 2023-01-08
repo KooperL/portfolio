@@ -28,3 +28,10 @@ type PagePopulate struct {
 	Data interface{} `json:"data"`
 	Type string      `json:"type"`
 }
+
+type BearerResp struct {
+	Success     bool   `json:"success"`
+	Type        string `json:"type"`
+	AccessToken string `json:"accessToken"`
+	Expires     int    `json:"expires"`
+}

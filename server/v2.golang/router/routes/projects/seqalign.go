@@ -3,7 +3,7 @@ package projects
 import (
 	"fmt"
 	"kooperlingohr/portfolio/controllers"
-	"kooperlingohr/portfolio/router/middleware"
+	"kooperlingohr/portfolio/router/middleware/responses"
 	"kooperlingohr/portfolio/utils"
 	"net/http"
 	"strconv"
@@ -49,6 +49,6 @@ func SeqAlign(w http.ResponseWriter, r *http.Request) {
 
 		}
 
-		middleware.BuildSuccessResponse(w, results)
+		responses.BuildSuccessResponse(w, results)
 	}
 }

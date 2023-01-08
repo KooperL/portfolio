@@ -3,7 +3,7 @@ package index
 import (
 	types "kooperlingohr/portfolio/Types"
 	"kooperlingohr/portfolio/controllers/database"
-	"kooperlingohr/portfolio/router/middleware"
+	"kooperlingohr/portfolio/router/middleware/responses"
 	"kooperlingohr/portfolio/utils"
 	"net/http"
 	"time"
@@ -17,7 +17,7 @@ func Monitor(w http.ResponseWriter, r *http.Request) {
 		insertStatement := "INSERT INTO monitorDB VALUES (?, ?, ?, ?, ?);"
 		data := append([]interface{}{nil, datetime}, utils.MapStructToSlice(body)...)
 		database.Insert(insertStatement, data)
-		middleware.BuildSuccessResponse(w, body)
+		responses.BuildSuccessResponse(w, body)
 
 	} else {
 		// 405

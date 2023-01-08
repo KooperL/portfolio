@@ -3,7 +3,7 @@ package projects
 import (
 	types "kooperlingohr/portfolio/Types"
 	"kooperlingohr/portfolio/controllers"
-	"kooperlingohr/portfolio/router/middleware"
+	"kooperlingohr/portfolio/router/middleware/responses"
 	"kooperlingohr/portfolio/utils"
 	"math"
 	"net/http"
@@ -18,7 +18,7 @@ func Secondary(w http.ResponseWriter, r *http.Request) {
 		aa_list := strings.Split(r.URL.Query().Get("aa_field_id"), "")
 
 		if len(aa_list) < 16 {
-			middleware.BuildBadResponse(w, "Bad syntax", 400)
+			responses.BuildBadResponse(w, "Bad syntax", 400)
 			return
 		}
 
@@ -90,6 +90,6 @@ func Secondary(w http.ResponseWriter, r *http.Request) {
 			}
 
 		}
-		middleware.BuildSuccessResponse(w, result)
+		responses.BuildSuccessResponse(w, result)
 	}
 }

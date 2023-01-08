@@ -50,3 +50,10 @@ def generateJWT(header, payload, key, expires=None):
   # issuedAt = str(int(issuedAtRaw.timestamp() * 1000 ))
   jwt = f'{jwtEncoded}.{stringToBase64(signature)}'
   return jwt
+
+def pbkdf2(password, salt, iterations=1000, keylen=32):
+  # Calculate the PBKDF2 function using the SHA-256 hash function
+  derived_key = hashlib.pbkdf2_hmac("sha256", password, salt, iterations, keylen)
+
+  # Return the derived key
+  return derived_key

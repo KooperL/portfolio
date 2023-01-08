@@ -1,14 +1,16 @@
-package middleware
+package responses
 
 import (
+	"fmt"
 	"net/http"
+	"os"
 )
 
 func BuildPreflight(h http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Set CORS headers for the response
 		w.Header().Set("Access-Control-Allow-Credentials", "true")
-		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Origin", os.Getenv("ORIGIN"))
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", `
 			Access-Control-Allow-Credentials,
@@ -24,10 +26,10 @@ func BuildPreflight(h http.HandlerFunc) http.HandlerFunc {
     	access-control-request-credentials,
     	cachecontrol`,
 		)
-
 		// If the request method is OPTIONS, return without calling the handler function
 		if r.Method == http.MethodOptions {
 			w.WriteHeader(http.StatusOK)
+			fmt.Println("123")
 			return
 		} else {
 			h(w, r)

@@ -63,11 +63,11 @@ function BlogLoginPage(props: Props): JSX.Element {
     setPasswordRegister(generatePassword(16))
   }, []);
 
-  const handleSubmitRegister = (event: React.FormEvent<HTMLFormElement>, payload: BlogRegisterPOSTPayload) => {
+  const handleSubmitRegister = (event: React.FormEvent<HTMLFormElement>, payload: BlogRegisterPOSTPayload, authToken: string) => {
     if(hasRegistered) {return}
     setPOSTState({...POSTstate, loading: true});
     event.preventDefault();
-    props.dataPostRegister(payload).then((resp: BlogRegisterPOSTResponse) => {
+    props.dataPostRegister(payload, authToken).then((resp: BlogRegisterPOSTResponse) => {
       if(resp.success) {
         setPOSTState({
           details: resp,
@@ -128,7 +128,8 @@ function BlogLoginPage(props: Props): JSX.Element {
     document.title = `Blog Login | ${scheme.title}`;
   }, []);
 
-  const encoded = btoa(`${usernameLogin}:${passwordLogin}`)
+  const encodedLogin = btoa(`${usernameLogin}:${passwordLogin}`)
+  const encodedRegister = btoa(`${usernameRegister}:${passwordRegister}`)
 
   if(token !== '' && token !== null) {
     return (
@@ -145,11 +146,11 @@ function BlogLoginPage(props: Props): JSX.Element {
               <h2 className='main-heading' style={{color: scheme.body.h1}}>Register</h2>
             <form onSubmit={((e) => handleSubmitRegister(e, {
                 session_id: sessionStorage.getItem('session_id') ?? 'error',
-                data: {
-                  blog_username: usernameRegister,
-                  blog_password: passwordRegister
-                }
-              }))}>
+                // data: {
+                //   blog_username: usernameRegister,
+                //   blog_password: passwordRegister
+                // }
+              }, encodedRegister))}>
                 <Input label="Username: " value={usernameRegister} readOnly={true} onChange={(e) => {e.target.value = usernameRegister}}/>
                 <Input label="Password: " value={passwordRegister} readOnly={true} onChange={(e) => {e.target.value = passwordRegister}}/>
                 <div id="button">
@@ -161,7 +162,7 @@ function BlogLoginPage(props: Props): JSX.Element {
               <h2 className='main-heading' style={{color: scheme.body.h1}}>Login</h2>
               <form onSubmit={((e) => handleSubmitLogin(e, {
                 session_id: sessionStorage.getItem('session_id') ?? 'error',
-              }, encoded))}>
+              }, encodedLogin))}>
                 <Input label="Username: " value={usernameLogin} autoComplete="username email" onChange={(e) => {setUsernameLogin(e.target.value)}}/>
                 <Input label="Password: " value={passwordLogin} autoComplete="new-password" onChange={(e) => {setPasswordLogin(e.target.value)}}/>
                 <div id="button">

@@ -1,8 +1,8 @@
 package database
 
 type BlogUsersDB struct {
-	ID               string `json:"id"`
-	BlogPasswordHash string `json:"blog_password_hash"`
+	ID               int64  `json:"id"`
+	BlogPasswordHash []byte `json:"blog_password_hash"`
 	BlogPasswordSalt string `json:"blog_password_salt"`
-	RoleID           string `json:"role_id"`
+	RoleID           int64  `json:"role_id"`
 }

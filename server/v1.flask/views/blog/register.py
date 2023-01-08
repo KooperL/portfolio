@@ -23,11 +23,25 @@ def blogRegisterHome():
     if 'data' not in data and not 'session_id' in data:
       return scripts.utils.responses.build_bad_req()
     session_id = data.get('session_id')
-    data = data.get('data')
-    if 'blog_username' not in data and 'blog_password' not in data:
-      return scripts.utils.responses.build_bad_req()
+    
+    # data = data.get('data')
+    # if 'blog_username' not in data and 'blog_password' not in data:
+    #   return scripts.utils.responses.build_bad_req()
 
-    scripts.utils.blogFuncs.trackBlogFunctionsCalled(data.get('blog_username'), session_id, inspect.stack()[0][3])
+    # username = data.get('blog_username')
+    # password = data.get('blog_password')
+
+
+
+    auth_header = request.headers.get('Authorization')
+    if auth_header is None or not auth_header.startswith('Basic '):
+      return scripts.utils.responses.build_unauthorized()
+    decodedStr = scripts.utils.hashFunctions.base64ToString(auth_header.split(' ')[1]).split(':')
+    username = decodedStr[0]
+    password = decodedStr[1]
+
+
+    scripts.utils.blogFuncs.trackBlogFunctionsCalled(username, session_id, inspect.stack()[0][3])
 
     # check if valid username
     # check if lower() exists
@@ -40,16 +54,17 @@ def blogRegisterHome():
         lower(blog_username) = lower(?)
       limit 5;
     '''
-    blogUserExists = controllers.database.conn.fetch(blogUserExistsQuery, ('None', data.get('blog_username')))[0][0]
-    print(blogUserExists)
-    if blogUserExists != 0 or len(data.get('blog_username')) < 3 or len(data.get('blog_username')) > 15:
+    blogUserExists = controllers.database.conn.fetch(blogUserExistsQuery, ('None', username))[0][0]
+    if blogUserExists != 0 or len(username) < 3 or len(username) > 15:
       return scripts.utils.responses.build_bad_req()
 
     salt = secrets.token_hex(int(config['blog-register-salt-length']))
-    blog_password_hash = scripts.utils.hashFunctions.generateHash((data.get('blog_password') + salt), config['blog-register-hash-key'])
+
+    # blog_password_hash = scripts.utils.hashFunctions.generateHash((data.get('blog_password') + salt), config['blog-register-hash-key'])
+    blog_password_hash = scripts.utils.hashFunctions.pbkdf2(bytes(password, 'UTF-8'), bytes(salt, 'UTF-8'))
 
     insertBlogUserQuery = 'INSERT INTO blog_usersDB VALUES (?, ?, ?, ?, ?, ?, ?, ?);'
-    controllers.database.conn.insert(insertBlogUserQuery, (None, datetime.datetime.now(), data.get('blog_username').lower(), blog_password_hash, salt, 1, 1, 1))
+    controllers.database.conn.insert(insertBlogUserQuery, (None, datetime.datetime.now(), username.lower(), blog_password_hash, salt, 1, 1, 1))
     
     kwargs = {
       'success': True,

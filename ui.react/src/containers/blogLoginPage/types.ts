@@ -25,7 +25,7 @@ export const BlogLoginPOSTInitialState: BlogLoginPOSTState = {
 
 
 export interface BlogRegisterPOSTPayload {
-  data: BlogRegisterState;
+  // data: BlogRegisterState;
   session_id: string;
 }
 

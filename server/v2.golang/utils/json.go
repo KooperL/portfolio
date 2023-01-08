@@ -120,20 +120,3 @@ func MapToStruct(m map[string]interface{}, target interface{}) error {
 
 	return nil
 }
-
-type JWTbody struct {
-	UserId   int    `json:"userId"`
-	Iat      int64  `json:"iat"`
-	Role     int    `json:"role"`
-	Username string `json:"username"`
-	Exp      int64  `json:"exp"`
-}
-
-type JWTheader struct {
-	Alg int   `json:"alg"`
-	Typ int64 `json:"typ"`
-}
-
-type JWT struct {
-	Header JWTheader `json:"header"`
-}
