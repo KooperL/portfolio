@@ -5,7 +5,7 @@ import (
 	types "kooperlingohr/portfolio/Types"
 	"kooperlingohr/portfolio/controllers/database"
 	"kooperlingohr/portfolio/controllers/discord"
-	"kooperlingohr/portfolio/router/middleware"
+	"kooperlingohr/portfolio/router/middleware/responses"
 	"kooperlingohr/portfolio/utils"
 	"net/http"
 	"os"
@@ -38,7 +38,7 @@ func Contact(w http.ResponseWriter, r *http.Request) {
 			},
 		}
 
-		middleware.BuildSuccessResponse(w, res)
+		responses.BuildSuccessResponse(w, res)
 	} else if r.Method == http.MethodPost {
 
 		var body types.ContactPayload
@@ -46,7 +46,7 @@ func Contact(w http.ResponseWriter, r *http.Request) {
 		discord.SendDiscordMessage(os.Getenv("DISCORD_WEBHOOK_URL"), fmt.Sprintf("%s,\n%s", body.SessionID, body.Message))
 		insertStatement := "INSERT INTO contact_messagesDB VALUES (?, ?, ?, ?);"
 		database.Insert(insertStatement, []interface{}{nil, time.Now().String(), body.SessionID, body.Message})
-		middleware.BuildSuccessResponse(w, body)
+		responses.BuildSuccessResponse(w, body)
 
 	} else {
 		// 429

@@ -1,12 +1,14 @@
 package projects
 
 import (
+	"fmt"
 	types "kooperlingohr/portfolio/Types"
-	"kooperlingohr/portfolio/router/middleware"
+	"kooperlingohr/portfolio/router/middleware/responses"
 	"net/http"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("err>")
 	if r.Method == http.MethodGet {
 		res := []types.PagePopulate{
 			{
@@ -112,6 +114,6 @@ func Index(w http.ResponseWriter, r *http.Request) {
 			},
 		}
 
-		middleware.BuildSuccessResponse(w, res)
+		responses.BuildSuccessResponse(w, res)
 	}
 }

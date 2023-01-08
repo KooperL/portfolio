@@ -3,7 +3,7 @@ package index
 import (
 	types "kooperlingohr/portfolio/Types"
 	"kooperlingohr/portfolio/controllers/database"
-	"kooperlingohr/portfolio/router/middleware"
+	"kooperlingohr/portfolio/router/middleware/responses"
 	"kooperlingohr/portfolio/utils"
 	"net/http"
 	"time"
@@ -20,10 +20,10 @@ func Capture(w http.ResponseWriter, r *http.Request) {
 		data := append([]interface{}{nil, datetime}, utils.MapStructToSlice(body)...)
 		data = append(data, utils.HandleErrorDeconstruct(utils.GetIP(r)))
 		database.Insert(insertStatement, data)
-		middleware.BuildSuccessResponse(w, body)
+		responses.BuildSuccessResponse(w, body)
 
 	} else {
-		middleware.BuildBadResponse(w, "Method not allowed", 405)
+		responses.BuildBadResponse(w, "Method not allowed", 405)
 
 	}
 }

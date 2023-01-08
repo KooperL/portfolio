@@ -8,9 +8,12 @@ import { endpoints } from './endpoints';
 import { Payload } from './types';
 
 
-export const postBlogRegister = (data: BlogRegisterPOSTPayload): Promise<BlogRegisterPOSTResponse>  => {
+export const postBlogRegister = (
+  data: BlogRegisterPOSTPayload,
+  authBasic: string
+  ): Promise<BlogRegisterPOSTResponse>  => {
   const apiConfig = {
-    headers: {},
+    headers: {'Authorization': `Basic ${authBasic}`},//, 'Access-Control-Allow-Credentials': 'true'},
     data: data
   }
   return post(endpoints['blogRegister'], apiConfig);

@@ -1,4 +1,4 @@
-package middleware
+package responses
 
 import (
 	"encoding/json"
@@ -6,12 +6,11 @@ import (
 	"net/http"
 )
 
-func BuildBadResponse(w http.ResponseWriter, err interface{}, code int) {
+func BuildSuccessResponse(w http.ResponseWriter, arr interface{}) {
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(code)
 	resp := make(map[string]any)
-	resp["success"] = false
-	resp["error"] = err
+	resp["success"] = true
+	resp["data"] = arr
 	utils.HandleErrorVar(
 		json.NewEncoder(w).Encode(resp),
 	)

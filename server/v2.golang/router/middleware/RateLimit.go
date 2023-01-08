@@ -3,6 +3,7 @@ package middleware
 import (
 	"fmt"
 	"kooperlingohr/portfolio/controllers/database"
+	"kooperlingohr/portfolio/router/middleware/responses"
 	"kooperlingohr/portfolio/utils"
 	"net/http"
 	"os"
@@ -47,11 +48,11 @@ func RateLimit(h http.HandlerFunc) http.HandlerFunc {
 		}
 
 		w.Header().Set("X-RateLimit-Limit", fmt.Sprintf("%d", bottleneck))
-		w.Header().Set("X-RateLimit-Remaining", fmt.Sprintln("%d", bottleneck-eventCount))
+		w.Header().Set("X-RateLimit-Remaining", fmt.Sprintf("%d", bottleneck-eventCount))
 		if eventCount <= bottleneck {
 			h(w, r)
 		} else {
-			BuildBadResponse(w, "Too many requests", 429)
+			responses.BuildTooManyRequests(w)
 		}
 		return
 	}

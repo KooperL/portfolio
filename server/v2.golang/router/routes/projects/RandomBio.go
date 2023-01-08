@@ -3,7 +3,7 @@ package projects
 import (
 	"fmt"
 	types "kooperlingohr/portfolio/Types"
-	"kooperlingohr/portfolio/router/middleware"
+	"kooperlingohr/portfolio/router/middleware/responses"
 	"kooperlingohr/portfolio/utils"
 	"math/rand"
 	"net/http"
@@ -31,7 +31,7 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 				randInd := rand.Intn(len(data))
 				arr[i] = data[randInd].Symbol
 			}
-			middleware.BuildSuccessResponse(w, arr)
+			responses.BuildSuccessResponse(w, arr)
 			return
 			break
 		case (2):
@@ -46,7 +46,7 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 				randInd := rand.Intn(len(data))
 				arr[i] = data[randInd].Symbol
 			}
-			middleware.BuildSuccessResponse(w, arr)
+			responses.BuildSuccessResponse(w, arr)
 			return
 			break
 		case (3):
@@ -70,7 +70,7 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 						}
 					}
 				}
-				middleware.BuildSuccessResponse(w, arr)
+				responses.BuildSuccessResponse(w, arr)
 				return
 			} else if aaFormat == 0 {
 				for i = 0; i < randomLength; i++ {
@@ -83,15 +83,15 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 						}
 					}
 				}
-				middleware.BuildSuccessResponse(w, arr)
+				responses.BuildSuccessResponse(w, arr)
 				return
 			} else {
-				middleware.BuildBadResponse(w, "Bad syntax", 400)
+				responses.BuildBadResponse(w, "Bad syntax", 400)
 				return
 			}
 			break
 		default:
-			middleware.BuildBadResponse(w, "Bad syntax", 400)
+			responses.BuildBadResponse(w, "Bad syntax", 400)
 			return
 
 		}

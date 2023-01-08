@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"kooperlingohr/portfolio/router/middleware/responses"
 	"net/http"
 )
 
@@ -8,8 +9,9 @@ func CatchErrors(h http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if err := recover(); err != nil {
-				// http.Error(w, err.(error).Error(), http.StatusInternalServerError)
-				BuildBadResponse(w, err.(error).Error(), http.StatusInternalServerError)
+				// If dev
+				errMsg := err.(error).Error()
+				responses.BuildBadResponse(w, errMsg, http.StatusInternalServerError)
 			}
 		}()
 

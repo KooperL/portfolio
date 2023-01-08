@@ -73,9 +73,7 @@ def blogHome(authPayload):
         })
       kwargs = {
         'success': True,
-        'data': {
-          category: OrganisedPosts
-        }
+        'data': OrganisedPosts
       }
       res = jsonify(kwargs)
       res.headers.add('Access-Control-Allow-Credentials', 'true') 
