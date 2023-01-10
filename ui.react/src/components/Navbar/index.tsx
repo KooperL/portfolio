@@ -22,6 +22,7 @@ function Navbar(props: {isVertical: boolean}) {
   const [scheme, setScheme] = useContext(SchemeContext);
   // const [path, setPath] = useState([''])
   const [token, setToken] = useAccessToken();
+  console.log(`%${token}`)
 
   const location = useLocation()
 
@@ -43,6 +44,7 @@ function Navbar(props: {isVertical: boolean}) {
         // Should already be redirected to login/register page
       } else {
         // Signed in
+
         const username = JSON.parse(atob(token.split('.')[1]))['username']
         const blog_create = <ButtonRedir destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPostCreate}`} label='create' local={true} />
         const blog_profile = <ButtonRedir destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogUser}/${username}`} label='My posts' local={true} />

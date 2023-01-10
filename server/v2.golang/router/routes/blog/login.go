@@ -32,7 +32,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		lib.TrackBlogFunctionsCalled(creds[0], body.SessionID, "login")
 
 		userSearchQuery := "SELECT id, blog_password_hash, blog_password_salt, role_id FROM blog_usersDB where blog_username = ?"
-		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[database.BlogUsersDB](userSearchQuery, []any{creds[0]}))
+		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[database.BlogUsersDB](userSearchQuery, []any{strings.ToLower(creds[0])}))
 
 		if len(userSearchTraffic) != 1 {
 			responses.BuildUnauthorised(w)
@@ -52,18 +52,19 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		dt := now.Format(utils.GetTimeFormat())
 
 		jwtAccessPayload := types.JWTbody{
-			UserId:   userSearchTraffic[0].ID,
+			UserID:   userSearchTraffic[0].ID,
 			Iat:      now.Unix(),
 			Role:     userSearchTraffic[0].RoleID,
 			Username: creds[0],
-			Exp:      utils.TimeOffset(now, accessTokenLife),
+			Exp:      fmt.Sprintf("%d", utils.TimeOffset(now, accessTokenLife)),
 		}
 		jwtAccess := utils.GenerateJWT(jwtAccessPayload, os.Getenv("blog-jwt-auth-token"))
 
 		jwtRefreshPayload := types.RefreshToken{
 			UserID: userSearchTraffic[0].ID,
-			Iat:    now.Unix(),
+			Exp:    fmt.Sprintf("%d", utils.TimeOffset(now, refreshTokenLife)),
 		}
+
 		jwtRefresh := utils.GenerateJWT(jwtRefreshPayload, os.Getenv("blog-jwt-refresh-token"))
 
 		cookie := &http.Cookie{

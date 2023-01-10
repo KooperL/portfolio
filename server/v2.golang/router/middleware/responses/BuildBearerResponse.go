@@ -8,6 +8,7 @@ import (
 )
 
 func BuildBearerResp(w http.ResponseWriter, jwt string, expires int) {
+	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 	resp := types.BearerResp{
 		Success:     true,

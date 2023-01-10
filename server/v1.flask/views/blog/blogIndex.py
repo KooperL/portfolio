@@ -56,8 +56,8 @@ def blogHome(authPayload):
       '''
       categoryPosts = controllers.database.conn.fetch(categoryPostsQuery, ('None', categoryId[0]))
       OrganisedPosts = []
-      if not len(categoryPosts):
-        return scripts.utils.responses.build_not_found()
+      # if not len(categoryPosts):
+      #   return scripts.utils.responses.build_not_found()
 
       for a in categoryPosts:
         pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'
@@ -104,8 +104,8 @@ def blogHome(authPayload):
       generalResults = controllers.database.conn.fetch(generalQuery, (search, search, search, search))
       OrganisedPosts = {}
 
-      if not len(generalResults):
-        return scripts.utils.responses.build_not_found()
+      # if not len(generalResults):
+      #   return scripts.utils.responses.build_not_found()
 
       for a in generalResults:
         pullBlogViewsQuery = 'SELECT count(*) from blog_post_viewsDB where ? = "None" and blog_post_id = ?;'

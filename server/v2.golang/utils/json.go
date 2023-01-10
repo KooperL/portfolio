@@ -53,12 +53,12 @@ func MapSliceToStruct(slice []interface{}, target interface{}) error {
 	// Get the type and value of the target struct
 	// targetType := targetValue.Elem().Type()
 	targetStruct := targetValue.Elem()
-
 	// Iterate over the fields of the target struct
 	for i := 0; i < targetStruct.NumField(); i++ {
 		// Get the field value and type
 		fieldValue := targetStruct.Field(i)
 		// fieldType := targetType.Field(i)
+		// fmt.Println(targetType.Field(i))
 
 		// Check if the field is exported
 		if fieldValue.CanSet() {

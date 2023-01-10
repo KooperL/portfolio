@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-func register(w http.ResponseWriter, r *http.Request) {
+func Register(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		now := time.Now()
 		dt := now.Format(utils.GetTimeFormat())
@@ -37,8 +37,10 @@ func register(w http.ResponseWriter, r *http.Request) {
         lower(blog_username) = lower(?)
       limit 5;
     `
-		userSearchExists := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[int64](blogUserExistsQuery, []any{creds[0]}))
-		if len(userSearchExists) != 0 {
+
+		// userSearchExists := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[int64](blogUserExistsQuery, []any{creds[0]}))
+		userSearchExists := database.SimpleQuery[int64](blogUserExistsQuery, []any{creds[0]})
+		if userSearchExists != 0 {
 			responses.BuildUnauthorised(w)
 			return
 		}

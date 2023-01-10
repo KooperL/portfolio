@@ -4,6 +4,11 @@ import (
 	"encoding/base64"
 )
 
+func DecodeBase64Raw(encoded string) string {
+	decoded := HandleErrorDeconstruct(base64.RawStdEncoding.DecodeString(encoded))
+	return string(decoded)
+}
+
 func DecodeBase64(encoded string) string {
 	decoded := HandleErrorDeconstruct(base64.StdEncoding.DecodeString(encoded))
 	return string(decoded)

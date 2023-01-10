@@ -8,16 +8,16 @@ type BlogIndex struct {
 
 type BlogPostDB struct {
 	ID           int64  `json:"id"`
-	Date         string `json:"date"`
+	Date         any    `json:"date"`
 	BlogUsername string `json:"blog_username"`
 	Title        string `json:"title"`
 	Body         string `json:"body"`
-	Category     string `json:"category"`
+	Category     string `json:"name"`
 }
 
 type BlogPostResponse struct {
 	ID     int64  `json:"id"`
-	Date   string `json:"date"`
+	Date   any    `json:"date"`
 	Author string `json:"author"`
 	Title  string `json:"title"`
 	Body   string `json:"body"`

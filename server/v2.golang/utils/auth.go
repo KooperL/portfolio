@@ -8,10 +8,10 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"io"
 	types "kooperlingohr/portfolio/Types"
 	"net"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -51,7 +51,8 @@ func GetIP(r *http.Request) (string, error) {
 
 func HMAC(message string, secret string) string {
 	h := hmac.New(sha256.New, []byte(secret))
-	io.WriteString(h, message)
+	// io.WriteString(h, message)
+	h.Write([]byte(message))
 	return hex.EncodeToString(h.Sum(nil))
 }
 
@@ -72,28 +73,65 @@ func GenerateSalt(x int64) string {
 	return salt
 }
 
-func DecodeJWT(jwt, secret string) (types.JWTbody, error) {
+type test interface {
+	types.JWTbody | types.RefreshToken
+}
+
+func DecodeJWT[T test](jwt, secret string) (types.JWTbody, error) {
 	jwtSlice := strings.Split(jwt, ".")
+	header := jwtSlice[0]
+	body := jwtSlice[1]
 	externalSignature := jwtSlice[2]
 
 	var jwtDecoded types.JWTbody
-	jwtEncoded := jwtSlice[1]
-
-	reader := strings.NewReader(DecodeBase64(jwtEncoded))
+	reader := strings.NewReader(DecodeBase64Raw(body))
 	HandleErrorVar(json.NewDecoder(reader).Decode(&jwtDecoded))
-	tokenExp := jwtDecoded.Exp
 
-	// exp := time.Unix(HandleErrorDeconstruct(strconv.ParseInt(tokenExp, 10, 64)), 0)
-	// exp := time.Unix(tokenExp, 0).
+	parsedExp := HandleErrorDeconstruct(strconv.ParseInt(jwtDecoded.Exp, 10, 64))
 
-	if tokenExp > time.Now().Unix() {
+	if time.Now().Unix() > parsedExp {
 		return jwtDecoded, fmt.Errorf("Expired token")
 	}
 
-	internalSignature := EncodeBase64(HMAC(
-		strings.Join(jwtSlice[:1], "."),
-		secret,
-	))
+	bundle := fmt.Sprintf(
+		"%s.%s",
+		strings.TrimRight(header, "="),
+		strings.TrimRight(body, "="),
+	)
+
+	internalSignature := generateJWTSignature(bundle, secret)
+
+	if internalSignature != externalSignature {
+		return jwtDecoded, fmt.Errorf("Invalid signature")
+	}
+
+	return jwtDecoded, nil
+}
+
+// Fuck this shitty language
+func DecodeJWTRefresh[T test](jwt, secret string) (types.RefreshToken, error) {
+	jwtSlice := strings.Split(jwt, ".")
+	header := jwtSlice[0]
+	body := jwtSlice[1]
+	externalSignature := jwtSlice[2]
+
+	var jwtDecoded types.RefreshToken
+	reader := strings.NewReader(DecodeBase64Raw(body))
+	HandleErrorVar(json.NewDecoder(reader).Decode(&jwtDecoded))
+
+	parsedExp := HandleErrorDeconstruct(strconv.ParseInt(jwtDecoded.Exp, 10, 64))
+
+	if time.Now().Unix() > parsedExp {
+		return jwtDecoded, fmt.Errorf("Expired token")
+	}
+
+	bundle := fmt.Sprintf(
+		"%s.%s",
+		strings.TrimRight(header, "="),
+		strings.TrimRight(body, "="),
+	)
+
+	internalSignature := generateJWTSignature(bundle, secret)
 
 	if internalSignature != externalSignature {
 		return jwtDecoded, fmt.Errorf("Invalid signature")
@@ -103,17 +141,31 @@ func DecodeJWT(jwt, secret string) (types.JWTbody, error) {
 }
 
 func generateJWTHeader() types.JWTheader {
-	jsonStr := `{"header":{"alg":"HS256","typ":"JWT"}}`
+	jsonStr := `{"alg":"HS256","typ":"JWT"}`
 	var header types.JWTheader
 	HandleErrorVar(json.Unmarshal([]byte(jsonStr), &header))
 
 	return header
 }
 
+func generateJWTSignature(preSig string, secret string) string {
+	signature := strings.TrimRight(EncodeBase64(HMAC(preSig, secret)), "=")
+	return signature
+}
+
+func generateJWTPreSig[T types.JWTbody | types.RefreshToken](header types.JWTheader, payload T) string {
+	headerStr := string(HandleErrorDeconstruct(json.Marshal(generateJWTHeader())))
+	bodyStr := string(HandleErrorDeconstruct(json.Marshal(payload)))
+	bundle := fmt.Sprintf(
+		"%s.%s",
+		strings.TrimRight(EncodeBase64(headerStr), "="),
+		strings.TrimRight(EncodeBase64(bodyStr), "="),
+	)
+	return bundle
+}
+
 func GenerateJWT[T types.JWTbody | types.RefreshToken](payload T, secret string) string {
-	header := EncodeBase64(string(HandleErrorDeconstruct(json.Marshal(generateJWTHeader()))))
-	body := EncodeBase64(string(HandleErrorDeconstruct(json.Marshal(payload))))
-	bundle := fmt.Sprintf("%s.%s", header, body)
-	signature := HMAC(bundle, secret)
+	bundle := generateJWTPreSig(generateJWTHeader(), payload)
+	signature := generateJWTSignature(bundle, secret)
 	return fmt.Sprintf("%s.%s", bundle, signature)
 }
