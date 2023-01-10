@@ -2,8 +2,10 @@ package middleware
 
 import (
 	"context"
+	types "kooperlingohr/portfolio/Types"
 	"kooperlingohr/portfolio/router/middleware/responses"
 	"kooperlingohr/portfolio/utils"
+
 	"net/http"
 	"os"
 	"strings"
@@ -14,7 +16,11 @@ func TokenRequired(h http.HandlerFunc) http.HandlerFunc {
 
 		header := r.Header.Get("Authorization")
 		token := strings.Split(header, " ")
-		tokenDecoded, err := utils.DecodeJWT(token[1], os.Getenv("blog-register-hash-key"))
+
+		// var jwt types.JWT
+		// utils.HandleErrorVar(json.Unmarshal([]byte(token[1]), &jwt))
+
+		tokenDecoded, err := utils.DecodeJWT[types.JWTbody](token[1], os.Getenv("blog-jwt-auth-token"))
 
 		if err == nil {
 			ctx := context.WithValue(r.Context(), "decodedToken", tokenDecoded)
@@ -22,7 +28,7 @@ func TokenRequired(h http.HandlerFunc) http.HandlerFunc {
 			// w.Header().Set("Access-Control-Allow-Credentials", "true")
 			h(w, r)
 		} else {
-			responses.BuildBadResponse(w, "Unauthorized", 401)
+			responses.BuildUnauthorised(w)
 		}
 		return
 	}

@@ -1,7 +1,6 @@
 package responses
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 )
@@ -29,7 +28,6 @@ func BuildPreflight(h http.HandlerFunc) http.HandlerFunc {
 		// If the request method is OPTIONS, return without calling the handler function
 		if r.Method == http.MethodOptions {
 			w.WriteHeader(http.StatusOK)
-			fmt.Println("123")
 			return
 		} else {
 			h(w, r)

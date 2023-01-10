@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"kooperlingohr/portfolio/router/middleware"
 	"kooperlingohr/portfolio/router/middleware/responses"
+	"kooperlingohr/portfolio/router/routes/blog"
 	index "kooperlingohr/portfolio/router/routes/index"
 	projects "kooperlingohr/portfolio/router/routes/projects"
 	"net/http"
@@ -13,6 +14,7 @@ func SetupRouter() *http.ServeMux {
 	mux := http.NewServeMux()
 
 	projectsRoute := "projects"
+	blogRoute := "blog"
 
 	mux.HandleFunc("/", middleware.CatchErrors(responses.BuildPreflight(index.Home)))
 	mux.HandleFunc("/about", middleware.CatchErrors(responses.BuildPreflight(index.About)))
@@ -25,6 +27,11 @@ func SetupRouter() *http.ServeMux {
 	mux.HandleFunc(fmt.Sprintf("/%s/randombio", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(projects.RandomBio)))
 	mux.HandleFunc(fmt.Sprintf("/%s/secondary", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(projects.Secondary)))
 	mux.HandleFunc(fmt.Sprintf("/%s/mrna", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(projects.Mrna)))
+
+	mux.HandleFunc(fmt.Sprintf("/%s", blogRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.TokenRequired(blog.Index))))
+	mux.HandleFunc(fmt.Sprintf("/%s/login", blogRoute), middleware.CatchErrors(responses.BuildPreflight(blog.Login)))
+	mux.HandleFunc(fmt.Sprintf("/%s/register", blogRoute), middleware.CatchErrors(responses.BuildPreflight(blog.Register)))
+	mux.HandleFunc(fmt.Sprintf("/%s/refresh", blogRoute), middleware.CatchErrors(responses.BuildPreflight(blog.Refresh)))
 
 	return mux
 }

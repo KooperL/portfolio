@@ -1,7 +1,6 @@
 package projects
 
 import (
-	"fmt"
 	types "kooperlingohr/portfolio/Types"
 	"kooperlingohr/portfolio/router/middleware/responses"
 	"kooperlingohr/portfolio/utils"
@@ -14,7 +13,6 @@ import (
 func RandomBio(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		params := r.URL.Query()
-		fmt.Println(params)
 		randomType := utils.HandleErrorDeconstruct(strconv.ParseInt(params.Get("type"), 10, 16))
 		randomLength := utils.HandleErrorDeconstruct(strconv.ParseInt(params.Get("length"), 10, 16))
 

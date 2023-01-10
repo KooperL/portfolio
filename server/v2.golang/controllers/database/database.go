@@ -28,6 +28,12 @@ func CloseDB() {
 	db.Close()
 }
 
+func SimpleQuery[T any](query string, args []interface{}) T {
+	var res T
+	utils.HandleErrorVar(db.QueryRow(query, args...).Scan(&res))
+	return res
+}
+
 func ExecuteSQLiteQuery[T any](query string, args []interface{}) ([]T, error) {
 	// Open the SQLite database file
 	// db := utils.HandleErrorDeconstruct(sql.Open("sqlite3", "../data/database.db"))

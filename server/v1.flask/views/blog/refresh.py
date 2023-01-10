@@ -19,7 +19,7 @@ refresh = Blueprint('refresh', __name__)
 def blogRefreshHome():
   if request.method == 'POST':
     refresh_token = request.cookies.get('refresh_token')
-    refreshTokenLife = int(config['blog-refresh-token-life']) # Days
+    accessTokenLife = int(config['blog-access-token-life']) # Days
     if not refresh_token:
       # kwargs = {
       #   'success': False
@@ -43,7 +43,7 @@ def blogRefreshHome():
     userSearchQuery = 'SELECT blog_username, role_id FROM blog_usersDB where ? = "None" and id = ?'    # expanding string when only one item in tuple ??? have to add second arg
     userRow = controllers.database.conn.fetch(userSearchQuery, ('None', userId))
 
-    expires = str(int((datetime.datetime.now() + datetime.timedelta(days = refreshTokenLife)).timestamp() * 1000 ))
+    expires = str(int((datetime.datetime.now() + datetime.timedelta(days = accessTokenLife)).timestamp() * 1000 ))
     issuedAtRaw = datetime.datetime.now()
     issuedAt = str(int(issuedAtRaw.timestamp() * 1000 ))
 

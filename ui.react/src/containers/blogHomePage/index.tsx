@@ -80,6 +80,7 @@ function BlogHomePage(props: Props): JSX.Element {
     document.title = `Blog Home | ${scheme.title}`;
   }, []);
 
+  console.log(token)
 
   if(state.loading) {
    return <Spinner/>

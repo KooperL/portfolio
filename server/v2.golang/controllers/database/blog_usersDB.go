@@ -6,3 +6,8 @@ type BlogUsersDB struct {
 	BlogPasswordSalt string `json:"blog_password_salt"`
 	RoleID           int64  `json:"role_id"`
 }
+
+type BlogUsersSimpleDB struct {
+	Username string `json:"username"`
+	RoleID   int64  `json:"role_id"`
+}
