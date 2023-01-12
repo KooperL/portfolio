@@ -23,3 +23,20 @@ type BlogPostResponse struct {
 	Body   string `json:"body"`
 	Views  int64  `json:"views"`
 }
+
+type BlogPostVerbose struct {
+	ID       int64  `json:"id"`
+	Date     any    `json:"date"`
+	Author   string `json:"author"`
+	Title    string `json:"title"`
+	Body     string `json:"body"`
+	AuthorID string `json:"author_id"`
+	Category string `json:"category"`
+}
+
+// TODO blog_postsDB.blog_user_id should be int
+
+type BlogPostResponseVerbose struct {
+	BlogPostVerbose
+	Views int64 `json:"views"`
+}

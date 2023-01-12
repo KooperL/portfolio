@@ -33,3 +33,11 @@ type MonitorPayload struct {
 type SessionId struct {
 	SessionID string `json:"session_id"`
 }
+
+type PostBlog struct {
+	SessionId
+	Data struct {
+		BlogTitle string `json:"blog_title"`
+		BlogBody  string `json:"blog_body"`
+	} `json:"data"`
+}
