@@ -100,7 +100,7 @@ create_blog_refresh_tokensDB = '''create table if not exists blog_refresh_tokens
 create_blog_user_trackingDB = '''create table if not exists blog_user_trackingDB (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
-  blog_user_id text,
+  blog_user_id integer,
   session_id text not null,
   function_called text not null
 );'''
