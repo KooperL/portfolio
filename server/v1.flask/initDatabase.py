@@ -13,7 +13,7 @@ create_requests= '''create table if not exists requests (
   ip_address text not null
 );'''
 
-create_fuelpricesDB= '''create table if not exists fuelpricesDB (
+create_fuelprices= '''create table if not exists fuelprices (
   id integer PRIMARY KEY,
   date TIMESTAMP not null unique,
   minprice text not null,
@@ -22,14 +22,14 @@ create_fuelpricesDB= '''create table if not exists fuelpricesDB (
   wholesale text not null
 );'''
 
-create_contact_messagesDB = '''create table if not exists contact_messagesDB (
+create_contact_messages = '''create table if not exists contact_messages (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
   session_id text not null,
   message text not null
 );'''
 
-create_fingerprintDB = '''create table if not exists fingerprintDB (
+create_fingerprint = '''create table if not exists fingerprint (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
   uuid text not null,
@@ -51,7 +51,7 @@ create_fingerprintDB = '''create table if not exists fingerprintDB (
 );'''
 
 
-create_monitorDB = '''create table if not exists monitorDB (
+create_monitor = '''create table if not exists monitor (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
   uuid text not null,
@@ -59,7 +59,7 @@ create_monitorDB = '''create table if not exists monitorDB (
   page text not null
 );'''
 
-create_route_trackDB = '''create table if not exists route_trackDB (
+create_route_track = '''create table if not exists route_track (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
   session_id text not null,
@@ -67,97 +67,97 @@ create_route_trackDB = '''create table if not exists route_trackDB (
   destination text not null
 );'''
 
-create_blog_usersDB = '''create table if not exists blog_usersDB (
+create_forum_users = '''create table if not exists forum_users (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
-  blog_username text unique not null,
-  blog_password_hash BLOB not null,
-  blog_password_salt text not null,
+  forum_username text unique not null,
+  forum_password_hash BLOB not null,
+  forum_password_salt text not null,
   role_id INTEGER not null,
   account_standing INTEGER not null,
   account_status INTEGER not null
 );'''
 
-create_blog_roleDB = '''create table if not exists blog_roleDB (
+create_forum_role = '''create table if not exists forum_role (
   id integer PRIMARY KEY,
   canPost INTEGER not null
 );'''
 
 
-create_blog_post_categoryDB = '''create table if not exists blog_post_categoryDB (
+create_forum_post_category = '''create table if not exists forum_post_category (
   id integer PRIMARY KEY,
   name text not null
 );'''
 
 
-create_blog_refresh_tokensDB = '''create table if not exists blog_refresh_tokensDB (
+create_forum_refresh_tokens = '''create table if not exists forum_refresh_tokens (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
-  blog_user_id text unique not null,
-  blog_refresh_token text unique not null
+  forum_user_id text unique not null,
+  forum_refresh_token text unique not null
 );'''
 
-create_blog_user_trackingDB = '''create table if not exists blog_user_trackingDB (
+create_forum_user_tracking = '''create table if not exists forum_user_tracking (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
-  blog_user_id integer,
+  forum_user_id integer,
   session_id text not null,
   function_called text not null
 );'''
 
-create_blog_postsDB = '''create table if not exists blog_postsDB (
+create_forum_posts = '''create table if not exists forum_posts (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
-  blog_user_id text,
+  forum_user_id text,
   title text not null,
   category_id integer not null,
   body text not null,
   visible INTEGER not null,
-  parent_blog_user_id INTEGER not null
+  parent_forum_user_id INTEGER not null
 );'''
 
-create_blog_post_viewsDB = '''create table if not exists blog_post_viewsDB (
+create_forum_post_views = '''create table if not exists forum_post_views (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
-  blog_user_id text,
-  blog_post_id INTEGER not null
+  forum_user_id text,
+  forum_post_id INTEGER not null
 );'''
 
-create_blog_post_reactionsDB = '''create table if not exists blog_post_reactionsDB (
+create_forum_post_reactions = '''create table if not exists forum_post_reactions (
   id integer PRIMARY KEY,
   date TIMESTAMP not null,
-  blog_user_id text,
-  blog_post_id INTEGER not null,
+  forum_user_id text,
+  forum_post_id INTEGER not null,
   reaction_id INTEGER not null
 );'''
 
 def createDefValues():
-  create_role = 'INSERT into blog_roleDB values (1, 1)'
+  create_role = 'INSERT into forum_role values (1, 1)'
   conn.execute(create_role)
-  create_category = 'INSERT into blog_post_categoryDB values (1, "general")'
+  create_category = 'INSERT into forum_post_category values (1, "general")'
   conn.execute(create_category)
 
 def create():
   conn.execute(create_requests)
-  conn.execute(create_fuelpricesDB)
-  conn.execute(create_contact_messagesDB)
-  conn.execute(create_fingerprintDB)
-  conn.execute(create_monitorDB)
-  conn.execute(create_route_trackDB)
-  conn.execute(create_blog_usersDB)
-  conn.execute(create_blog_refresh_tokensDB)
-  conn.execute(create_blog_user_trackingDB)
-  conn.execute(create_blog_postsDB)
-  conn.execute(create_blog_post_viewsDB)
-  conn.execute(create_blog_post_reactionsDB)
-  conn.execute(create_blog_post_categoryDB)
-  conn.execute(create_blog_roleDB)
+  conn.execute(create_fuelprices)
+  conn.execute(create_contact_messages)
+  conn.execute(create_fingerprint)
+  conn.execute(create_monitor)
+  conn.execute(create_route_track)
+  conn.execute(create_forum_users)
+  conn.execute(create_forum_refresh_tokens)
+  conn.execute(create_forum_user_tracking)
+  conn.execute(create_forum_posts)
+  conn.execute(create_forum_post_views)
+  conn.execute(create_forum_post_reactions)
+  conn.execute(create_forum_post_category)
+  conn.execute(create_forum_role)
   # createDefValues()
 
   print('success')
 
 def insert():
-  # query = '''INSERT INTO contactMessagesDB VALUES (?, ?, ?, ?);'''
+  # query = '''INSERT INTO contactMessages VALUES (?, ?, ?, ?);'''
   # conn.execute(query, (None, datetime.datetime.now(), 'U8YfzMdrd9AWQM9p8988', 'test'))
   print('success')
 
@@ -171,10 +171,10 @@ def close():
 
 if __name__ == '__main__':
   # insert()
-  # delete('routeTrackDB')
-  # delete('monitorDB')
-  # delete('fingerprintDB')
-  # delete('contactMessagesDB')
+  # delete('routeTrack')
+  # delete('monitor')
+  # delete('fingerprint')
+  # delete('contactMessages')
   create()
   close()
 

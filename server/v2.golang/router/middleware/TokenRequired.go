@@ -20,7 +20,7 @@ func TokenRequired(h http.HandlerFunc) http.HandlerFunc {
 		// var jwt types.JWT
 		// utils.HandleErrorVar(json.Unmarshal([]byte(token[1]), &jwt))
 
-		tokenDecoded, err := utils.DecodeJWT[types.JWTbody](token[1], os.Getenv("blog-jwt-auth-token"))
+		tokenDecoded, err := utils.DecodeJWT[types.JWTbody](token[1], os.Getenv("forum-jwt-auth-token"))
 
 		if err == nil {
 			ctx := context.WithValue(r.Context(), "decodedToken", tokenDecoded)

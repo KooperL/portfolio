@@ -5,7 +5,7 @@ export enum IndexRouteType {
 }
 
   export enum BlogRouteType {
-    BlogHome = `blog`,
+    BlogHome = `forum`,
     // BlogSearch = `search`,
     BlogPostCreate = `post`,
     BlogLogin = `login`,

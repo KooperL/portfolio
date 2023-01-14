@@ -17,11 +17,11 @@ import { ContactPage } from '../contactPage/loadable';
 import { AboutPage } from '../aboutPage/loadable';
 import { Logger } from '../../components/Logger/loadable';
 import { AccessTokenProvider } from '../authContext/context';
-import { BlogHomePage } from '../blogHomePage/loadable';
-import { BlogUserPage } from '../blogUserPage/loadable';
-import { BlogLoginPage } from '../blogLoginPage/loadable';
-import { BlogPostCreatePage } from '../blogPostCreatePage/loadable';
-import { BlogPostViewPage } from '../blogPostViewPage/loadable';
+import { BlogHomePage } from '../forumHomePage/loadable';
+import { BlogUserPage } from '../forumUserPage/loadable';
+import { BlogLoginPage } from '../forumLoginPage/loadable';
+import { BlogPostCreatePage } from '../forumPostCreatePage/loadable';
+import { BlogPostViewPage } from '../forumPostViewPage/loadable';
 // import { Render } from '../renderer/renderer v3/cube/Render';
 // import { Render } from '../renderer/grid/Render';
 

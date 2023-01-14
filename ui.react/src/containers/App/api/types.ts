@@ -16,15 +16,15 @@ export interface ApiEndpoints {
   secondary: string;
   tictactoe: string;
   randombio: string;
-  blogHome: string;
-  // blogSearch: string;
-  blogPostCreate: string;
-  blogLogin: string;
-  blogPost: string;
-  blogUser: string;
-  blogRegister: string;
-  blogRefresh: string;
-  blogLogout: string;
+  forumHome: string;
+  // forumSearch: string;
+  forumPostCreate: string;
+  forumLogin: string;
+  forumPost: string;
+  forumUser: string;
+  forumRegister: string;
+  forumRefresh: string;
+  forumLogout: string;
 }
 
 export interface emptyPayload {
@@ -35,5 +35,5 @@ export interface Payload extends emptyPayload {
   data: any;
 }
 
-export const blogPath = 'blog'
+export const forumPath = 'forum'
 export const projectPath = 'projects'

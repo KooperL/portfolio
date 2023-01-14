@@ -47,14 +47,14 @@ def captureHome():
       print(args[1:])
       raise RuntimeError('Mandatory value(s) not provided')
 
-    insertFingerprintQuery = """INSERT INTO fingerprintDB VALUES (
+    insertFingerprintQuery = """INSERT INTO fingerprint VALUES (
       ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
     );"""
     # controllers.database.conn.execute(insertFingerprintQuery, args)
     # controllers.database.conn.commit()
     controllers.database.conn.insert(insertFingerprintQuery, args)
 
-    # print(list(controllers.database.conn.execute(f'SELECT * FROM fingerprintDB ORDER BY id DESC LIMIT 200')))
+    # print(list(controllers.database.conn.execute(f'SELECT * FROM fingerprint ORDER BY id DESC LIMIT 200')))
     res = jsonify({'success': True})
     return scripts.utils.responses.build_actual_response(res)
   elif request.method == 'OPTIONS': 

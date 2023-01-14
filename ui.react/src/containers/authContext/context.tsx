@@ -2,9 +2,9 @@
 import React, { useContext, createContext, FC, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 // import { useNavigate } from 'react-router-dom';
-import { postBlogRefresh } from '../App/api/blogApis'
+import { postBlogRefresh } from '../App/api/forumApis'
 import { BlogRouteType } from '../App/routeTypes'
-import { BlogLoginPOSTPayload, BlogLoginPOSTResponse } from '../blogLoginPage/types'
+import { BlogLoginPOSTPayload, BlogLoginPOSTResponse } from '../forumLoginPage/types'
 
 type AccessTokenContext = [string | null, React.Dispatch<React.SetStateAction<string | null>>]
 
@@ -22,7 +22,7 @@ export function AccessTokenProvider({ children }: any) {
         //   errorMessage: '',
         //   loading: false
         // });
-        // navigate(`/${blogPath}/post`)
+        // navigate(`/${forumPath}/post`)
         setAccessToken(resp.accessToken)
         setAccessTokenExpires(new Date(resp.expires))
       } else {

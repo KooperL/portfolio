@@ -44,7 +44,7 @@ func Contact(w http.ResponseWriter, r *http.Request) {
 		var body types.ContactPayload
 		utils.ParseReqBody(r, &body)
 		discord.SendDiscordMessage(os.Getenv("DISCORD_WEBHOOK_URL"), fmt.Sprintf("%s,\n%s", body.SessionID, body.Message))
-		insertStatement := "INSERT INTO contact_messagesDB VALUES (?, ?, ?, ?);"
+		insertStatement := "INSERT INTO contact_messages VALUES (?, ?, ?, ?);"
 		database.Insert(insertStatement, []interface{}{nil, time.Now().String(), body.SessionID, body.Message})
 		responses.BuildSuccessResponse(w, body)
 

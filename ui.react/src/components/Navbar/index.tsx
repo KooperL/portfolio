@@ -7,9 +7,9 @@ import ButtonRedir from '../ButtonRedir'
 import Hamburger from '../Hamburger'
 import { useLocation } from 'react-router-dom'
 import { useAccessToken } from '../../containers/authContext/context';
-import { blogPath } from '../../containers/App/api/types';
+import { forumPath } from '../../containers/App/api/types';
 import { BlogRouteType } from '../../containers/App/routeTypes';
-import { postBlogLogout } from '../../containers/App/api/blogApis';
+import { postBlogLogout } from '../../containers/App/api/forumApis';
 
 
 // style="width: 100000px; transform: translateX(-3561px); animation: 12.9416s linear 0s infinite normal none running marqueeAnimation-77345020;"
@@ -37,7 +37,7 @@ function Navbar(props: {isVertical: boolean}) {
   }
 
   function buttonController(path: string[]) {
-    if(path[0] && path[0].toLowerCase() === 'blog') {
+    if(path[0] && path[0].toLowerCase() === 'forum') {
       if(token === '') {
       } else if(token === null) {
         // No user
@@ -46,9 +46,9 @@ function Navbar(props: {isVertical: boolean}) {
         // Signed in
 
         const username = JSON.parse(atob(token.split('.')[1]))['username']
-        const blog_create = <ButtonRedir destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPostCreate}`} label='create' local={true} />
-        const blog_profile = <ButtonRedir destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogUser}/${username}`} label='My posts' local={true} />
-        const blog_sign_out = <ButtonRedir destination={`/${BlogRouteType.BlogHome}`} label='Log out' local={true}
+        const forum_create = <ButtonRedir destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPostCreate}`} label='create' local={true} />
+        const forum_profile = <ButtonRedir destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogUser}/${username}`} label='My posts' local={true} />
+        const forum_sign_out = <ButtonRedir destination={`/${BlogRouteType.BlogHome}`} label='Log out' local={true}
           onClickCallback={
             (() => {
               postBlogLogout({session_id: sessionStorage.getItem('session_id') ?? ''}, token).then(resp => {
@@ -59,7 +59,7 @@ function Navbar(props: {isVertical: boolean}) {
             })
           }
         />
-        const items = [blog_create, blog_profile, blog_sign_out]
+        const items = [forum_create, forum_profile, forum_sign_out]
         // Search field?
         // setSpecialButtons(items)
         

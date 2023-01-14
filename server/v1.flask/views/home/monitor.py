@@ -19,14 +19,14 @@ def monitorHome():
     if not all([uuid, page, session_id]):
       raise RuntimeError('Mandatory value(s) not provided')
 
-    insertMonitorQuery = 'INSERT INTO monitorDB VALUES (?, ?, ?, ?, ?);'
+    insertMonitorQuery = 'INSERT INTO monitor VALUES (?, ?, ?, ?, ?);'
     # controllers.database.conn.execute(insertMonitorQuery, (None, datetime.datetime.now(), uuid, session_id, page))
     # controllers.database.conn.commit()
     controllers.database.conn.insert(insertMonitorQuery, (None, datetime.datetime.now(), uuid, session_id, page))
 
 
     if prevPage:
-      insertQuery = 'INSERT INTO route_trackDB VALUES (?, ?, ?, ?, ?);'
+      insertQuery = 'INSERT INTO route_track VALUES (?, ?, ?, ?, ?);'
       # controllers.database.conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, prevPage, page))
       controllers.database.conn.insert(insertQuery, (None, datetime.datetime.now(), session_id, prevPage, page))
 

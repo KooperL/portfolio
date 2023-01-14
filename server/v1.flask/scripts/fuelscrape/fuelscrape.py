@@ -29,7 +29,7 @@ def scrape():
   average = todays_price['AvgPrice']
   low = todays_price['LowPrice']
   high = todays_price['HighPrice']
-  conn.execute("INSERT INTO fuelpricesDB (date,minprice,maxprice,averageprice,wholesaleprice) \
+  conn.execute("INSERT INTO fuelprices (date,minprice,maxprice,averageprice,wholesaleprice) \
     VALUES ({}, {}, {}, {}, {} )".format(today,low,high,average,wholesale_price))
 
   conn.commit()

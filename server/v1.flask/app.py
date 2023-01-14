@@ -61,14 +61,14 @@ import views.projects.property
 import views.projects.randomBio
 import views.projects.secondary
 import views.projects.seqAlign
-import views.blog.blogIndex
-import views.blog.register
-import views.blog.login
-import views.blog.logout
-import views.blog.post
-import views.blog.post_search
-import views.blog.refresh
-import views.blog.user_search
+import views.forum.forumIndex
+import views.forum.register
+import views.forum.login
+import views.forum.logout
+import views.forum.post
+import views.forum.post_search
+import views.forum.refresh
+import views.forum.user_search
 
 #sys.path.insert(1, appDir + '/stocks/')
 #import pattern_detect
@@ -104,14 +104,14 @@ app.register_blueprint(views.projects.randomBio.randomBio)
 app.register_blueprint(views.projects.secondary.secondary)
 app.register_blueprint(views.projects.seqAlign.seqAlign)
 
-app.register_blueprint(views.blog.blogIndex.blogIndex)
-app.register_blueprint(views.blog.login.login)
-app.register_blueprint(views.blog.register.register)
-app.register_blueprint(views.blog.refresh.refresh)
-app.register_blueprint(views.blog.logout.logout)
-app.register_blueprint(views.blog.post.post)
-app.register_blueprint(views.blog.post_search.post_search)
-app.register_blueprint(views.blog.user_search.user_search)
+app.register_blueprint(views.forum.forumIndex.forumIndex)
+app.register_blueprint(views.forum.login.login)
+app.register_blueprint(views.forum.register.register)
+app.register_blueprint(views.forum.refresh.refresh)
+app.register_blueprint(views.forum.logout.logout)
+app.register_blueprint(views.forum.post.post)
+app.register_blueprint(views.forum.post_search.post_search)
+app.register_blueprint(views.forum.user_search.user_search)
 
 
 

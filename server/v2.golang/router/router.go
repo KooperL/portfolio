@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"kooperlingohr/portfolio/router/middleware"
 	"kooperlingohr/portfolio/router/middleware/responses"
-	"kooperlingohr/portfolio/router/routes/blog"
+	"kooperlingohr/portfolio/router/routes/forum"
 	index "kooperlingohr/portfolio/router/routes/index"
 	projects "kooperlingohr/portfolio/router/routes/projects"
 	"net/http"
@@ -26,14 +26,15 @@ func SetupRouter() *http.ServeMux {
 	mux.HandleFunc(fmt.Sprintf("/%s/secondary", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(projects.Secondary)))
 	mux.HandleFunc(fmt.Sprintf("/%s/mrna", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(projects.Mrna)))
 
-	blogRoute := "blog"
-	mux.HandleFunc(fmt.Sprintf("/%s", blogRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.TokenRequired(blog.Index))))
-	mux.HandleFunc(fmt.Sprintf("/%s/login", blogRoute), middleware.CatchErrors(responses.BuildPreflight(blog.Login)))
-	mux.HandleFunc(fmt.Sprintf("/%s/register", blogRoute), middleware.CatchErrors(responses.BuildPreflight(blog.Register)))
-	mux.HandleFunc(fmt.Sprintf("/%s/refresh", blogRoute), middleware.CatchErrors(responses.BuildPreflight(blog.Refresh)))
-	mux.HandleFunc(fmt.Sprintf("/%s/post", blogRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.TokenRequired(blog.Post))))
-	mux.HandleFunc(fmt.Sprintf("/%s/post/", blogRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.TokenRequired(blog.PostSearch))))
-	mux.HandleFunc(fmt.Sprintf("/%s/user/", blogRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.TokenRequired(blog.User))))
+	forumRoute := "forum"
+	mux.HandleFunc(fmt.Sprintf("/%s", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.TokenRequired(forum.Index))))
+	mux.HandleFunc(fmt.Sprintf("/%s/login", forumRoute), middleware.CatchErrors(responses.BuildPreflight(forum.Login)))
+	mux.HandleFunc(fmt.Sprintf("/%s/register", forumRoute), middleware.CatchErrors(responses.BuildPreflight(forum.Register)))
+	mux.HandleFunc(fmt.Sprintf("/%s/refresh", forumRoute), middleware.CatchErrors(responses.BuildPreflight(forum.Refresh)))
+	mux.HandleFunc(fmt.Sprintf("/%s/post", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.TokenRequired(forum.Post))))
+	mux.HandleFunc(fmt.Sprintf("/%s/post/", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.TokenRequired(forum.PostSearch))))
+	mux.HandleFunc(fmt.Sprintf("/%s/user/", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.TokenRequired(forum.User))))
+	mux.HandleFunc(fmt.Sprintf("/%s/logout", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.TokenRequired(forum.User))))
 
 	return mux
 }

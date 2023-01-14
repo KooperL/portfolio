@@ -1,2 +1,2 @@
-blogPath = 'blog'
+forumPath = 'forum'
 projectsPath = 'projects'

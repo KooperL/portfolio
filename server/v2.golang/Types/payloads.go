@@ -37,7 +37,7 @@ type SessionId struct {
 type PostBlog struct {
 	SessionId
 	Data struct {
-		BlogTitle string `json:"blog_title"`
-		BlogBody  string `json:"blog_body"`
+		BlogTitle string `json:"forum_title"`
+		BlogBody  string `json:"forum_body"`
 	} `json:"data"`
 }
