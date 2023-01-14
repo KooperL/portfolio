@@ -24,12 +24,12 @@ GOOGLE_MAPS_API_KEY=<value>
 ORIGIN=<value>
 DEV_PORT=5000
 PROD_PORT=5000
-blog-register-hash-key=<value>
-blog-register-salt-length=<value>
-blog-jwt-auth-token=<value>
-blog-jwt-refresh-token=<value>
-blog-access-token-life=<value>
-blog-refresh-token-life=<value>
+forum-register-hash-key=<value>
+forum-register-salt-length=<value>
+forum-jwt-auth-token=<value>
+forum-jwt-refresh-token=<value>
+forum-access-token-life=<value>
+forum-refresh-token-life=<value>
 DISCORD_WEBHOOK_URL=<value>
 ```
 

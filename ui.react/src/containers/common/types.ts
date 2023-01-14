@@ -2,7 +2,7 @@ export interface blankResp {
   success: boolean;
 }
 
-export interface blogItem {
+export interface forumItem {
   id: number;
   date: string;
   author: string;

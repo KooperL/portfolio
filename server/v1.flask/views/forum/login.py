@@ -1,0 +1,90 @@
+from flask import Blueprint, render_template, jsonify, request
+import scripts.utils.decorators
+import scripts.utils.responses
+import scripts.utils.structs
+import scripts.utils.hashFunctions
+import secrets
+import datetime
+import inspect
+import scripts.utils.forumFuncs
+import controllers.database
+from dotenv import dotenv_values
+config =  dotenv_values('../.env')
+
+login = Blueprint('login', __name__)
+
+@login.route(f'/{scripts.utils.structs.forumPath}/login', methods=['POST', 'OPTIONS'])
+@scripts.utils.decorators.errorHandle
+@scripts.utils.decorators.rateLimit
+def forumLoginHome():
+  if request.method == 'POST':
+    accessTokenLife = int(config['forum-access-token-life']) # Minutes
+    refreshTokenLife = int(config['forum-refresh-token-life']) # Days
+
+    auth_header = request.headers.get('Authorization')
+    if auth_header is None or not auth_header.startswith('Basic '):
+      return scripts.utils.responses.build_unauthorized()
+    decodedStr = scripts.utils.hashFunctions.base64ToString(auth_header.split(' ')[1]).split(':')
+
+    data = request.get_json()
+    if 'session_id' not in data:
+      return scripts.utils.responses.build_bad_req()
+    session_id = data.get('session_id')
+
+    scripts.utils.forumFuncs.trackBlogFunctionsCalled(decodedStr[0], session_id, inspect.stack()[0][3])
+
+    userSearchQuery = 'SELECT id, forum_password_hash, forum_password_salt, role_id FROM forum_users where ? = "None" and forum_username = ?'    # expanding string when only one item in tuple ??? have to add second arg
+    userRow = controllers.database.conn.fetch(userSearchQuery, ('None', decodedStr[0].lower()))
+
+    if len(userRow) != 1:
+      return scripts.utils.responses.build_unauthenticated()
+
+    userInfo = {
+      'id': userRow[0][0],
+      'passwordHash': userRow[0][1],
+      'passwordSalt': userRow[0][2],
+      'role': userRow[0][3],
+      'username': decodedStr[0]
+    }
+
+    # forum_password_hash = scripts.utils.hashFunctions.generateHash((decodedStr[1] + userInfo.get('passwordSalt')), config['forum-register-hash-key'])
+    forum_password_hash = scripts.utils.hashFunctions.pbkdf2(bytes(decodedStr[1], 'UTF-8'), bytes(userInfo.get('passwordSalt'), 'UTF-8'))
+    
+    
+    if userInfo.get('passwordHash') != forum_password_hash:
+      return scripts.utils.responses.build_unauthenticated()
+
+    issuedAtRaw = datetime.datetime.now()
+    expires = str(int((issuedAtRaw + datetime.timedelta(minutes = accessTokenLife)).timestamp() * 1000 ))
+    refreshExpires = issuedAtRaw + datetime.timedelta(days = refreshTokenLife)
+    issuedAt = str(int(issuedAtRaw.timestamp() * 1000 ))
+
+    jwtAccessPayload = {
+      'userId': userInfo.get('id'),
+      'iat': issuedAt,
+      'role': userInfo.get('role'),
+      'username': userInfo.get('username'),
+      'exp': expires
+    }
+    jwtRefreshPayload = {
+      'userId': userInfo.get('id'),
+      'iat': issuedAt
+    }
+
+    jwtAccess = scripts.utils.hashFunctions.generateJWT(scripts.utils.hashFunctions.generateJWTHeader(), jwtAccessPayload, config['forum-jwt-auth-token'])
+    jwtRefresh = scripts.utils.hashFunctions.generateJWT(scripts.utils.hashFunctions.generateJWTHeader(), jwtRefreshPayload, config['forum-jwt-refresh-token'])
+
+    userRefreshTokenDelete = 'DELETE from forum_refresh_tokens where ? = "None" and forum_user_id = ?;'
+    controllers.database.conn.fetch(userRefreshTokenDelete, ('None', userInfo.get('id')))
+
+    userRefreshTokenInsert = 'INSERT INTO forum_refresh_tokens VALUES (?, ?, ?, ?);'
+    controllers.database.conn.fetch(userRefreshTokenInsert, (None, issuedAtRaw, userInfo.get('id'), jwtRefresh))
+
+    res = jsonify(scripts.utils.responses.buildBearerResp(jwtAccess, expires))
+    res.set_cookie('refresh_token', value=jwtRefresh, expires=refreshExpires, httponly=True) # domain=config['ORIGIN'], samesite='None', secure=True, 
+    res.headers.add('Access-Control-Allow-Credentials', 'true') 
+    return scripts.utils.responses.build_actual_response(res)
+  elif request.method == 'OPTIONS': 
+    return scripts.utils.responses.build_preflight_response()
+  else:
+    raise RuntimeError('Method not allowed')

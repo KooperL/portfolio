@@ -9,7 +9,7 @@ type BlogIndex struct {
 type BlogPostDB struct {
 	ID           int64  `json:"id"`
 	Date         any    `json:"date"`
-	BlogUsername string `json:"blog_username"`
+	BlogUsername string `json:"forum_username"`
 	Title        string `json:"title"`
 	Body         string `json:"body"`
 	Category     string `json:"name"`
@@ -34,7 +34,7 @@ type BlogPostVerbose struct {
 	Category string `json:"category"`
 }
 
-// TODO blog_postsDB.blog_user_id should be int
+// TODO forum_postsDB.forum_user_id should be int
 
 type BlogPostResponseVerbose struct {
 	BlogPostVerbose

@@ -470,7 +470,7 @@
 			]
 		},
 		{
-			"name": "/blog",
+			"name": "/forum",
 			"item": [
 				{
 					"name": "/register",
@@ -493,7 +493,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"session_id\": \"{{test_session_id}}\",\n    \"data\": {\n        \"blog_username\":\"{{blog_test_username}}\",\n        \"blog_password\":\"{{blog_test_password}}\"\n    }\n}",
+							"raw": "{\n    \"session_id\": \"{{test_session_id}}\",\n    \"data\": {\n        \"forum_username\":\"{{forum_test_username}}\",\n        \"forum_password\":\"{{forum_test_password}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -501,12 +501,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/{{blogPath}}/register",
+							"raw": "{{host}}/{{forumPath}}/register",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{blogPath}}",
+								"{{forumPath}}",
 								"register"
 							]
 						}
@@ -521,7 +521,7 @@
 							"script": {
 								"exec": [
 									"const jsonResp = JSON.parse(responseBody)",
-									"pm.collectionVariables.set('blog_login_token', jsonResp['accessToken'])"
+									"pm.collectionVariables.set('forum_login_token', jsonResp['accessToken'])"
 								],
 								"type": "text/javascript"
 							}
@@ -533,12 +533,12 @@
 							"basic": [
 								{
 									"key": "password",
-									"value": "{{blog_test_password}}",
+									"value": "{{forum_test_password}}",
 									"type": "string"
 								},
 								{
 									"key": "username",
-									"value": "{{blog_test_username}}",
+									"value": "{{forum_test_username}}",
 									"type": "string"
 								}
 							]
@@ -555,12 +555,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/{{blogPath}}/login",
+							"raw": "{{host}}/{{forumPath}}/login",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{blogPath}}",
+								"{{forumPath}}",
 								"login"
 							]
 						}
@@ -575,7 +575,7 @@
 							"script": {
 								"exec": [
 									"const jsonResp = JSON.parse(responseBody)",
-									"pm.collectionVariables.set('blog_test_post_id', jsonResp['data']['blogPostId'])"
+									"pm.collectionVariables.set('forum_test_post_id', jsonResp['data']['forumPostId'])"
 								],
 								"type": "text/javascript"
 							}
@@ -587,7 +587,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{blog_login_token}}",
+									"value": "{{forum_login_token}}",
 									"type": "string"
 								}
 							]
@@ -596,7 +596,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"session_id\": \"{{test_session_id}}\",\n    \"data\": {\n        \"blog_title\": \"blog title\",\n        \"blog_body\": \"blog body\"\n    }\n}",
+							"raw": "{\n    \"session_id\": \"{{test_session_id}}\",\n    \"data\": {\n        \"forum_title\": \"forum title\",\n        \"forum_body\": \"forum body\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -604,12 +604,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/{{blogPath}}/post",
+							"raw": "{{host}}/{{forumPath}}/post",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{blogPath}}",
+								"{{forumPath}}",
 								"post"
 							]
 						}
@@ -624,7 +624,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{blog_login_token}}",
+									"value": "{{forum_login_token}}",
 									"type": "string"
 								}
 							]
@@ -632,12 +632,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/{{blogPath}}?session_id={{test_session_id}}",
+							"raw": "{{host}}/{{forumPath}}?session_id={{test_session_id}}",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{blogPath}}"
+								"{{forumPath}}"
 							],
 							"query": [
 								{
@@ -667,7 +667,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{blog_login_token}}",
+									"value": "{{forum_login_token}}",
 									"type": "string"
 								}
 							]
@@ -684,14 +684,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/{{blogPath}}/post/{{blog_test_post_id}}",
+							"raw": "{{host}}/{{forumPath}}/post/{{forum_test_post_id}}",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{blogPath}}",
+								"{{forumPath}}",
 								"post",
-								"{{blog_test_post_id}}"
+								"{{forum_test_post_id}}"
 							]
 						}
 					},
@@ -705,7 +705,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{blog_login_token}}",
+									"value": "{{forum_login_token}}",
 									"type": "string"
 								}
 							]
@@ -713,14 +713,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/{{blogPath}}/user/{{blog_test_username}}?session_id={{test_session_id}}",
+							"raw": "{{host}}/{{forumPath}}/user/{{forum_test_username}}?session_id={{test_session_id}}",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{blogPath}}",
+								"{{forumPath}}",
 								"user",
-								"{{blog_test_username}}"
+								"{{forum_test_username}}"
 							],
 							"query": [
 								{
@@ -748,12 +748,12 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/{{blogPath}}/refresh",
+							"raw": "{{host}}/{{forumPath}}/refresh",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{blogPath}}",
+								"{{forumPath}}",
 								"refresh"
 							]
 						}
@@ -766,12 +766,12 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/{{blogPath}}/logout",
+							"raw": "{{host}}/{{forumPath}}/logout",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{blogPath}}",
+								"{{forumPath}}",
 								"logout"
 							]
 						}
@@ -808,8 +808,8 @@
 			"type": "string"
 		},
 		{
-			"key": "blogPath",
-			"value": "blog",
+			"key": "forumPath",
+			"value": "forum",
 			"type": "string"
 		},
 		{
@@ -818,15 +818,15 @@
 			"type": "string"
 		},
 		{
-			"key": "blog_test_username",
+			"key": "forum_test_username",
 			"value": "testAcct"
 		},
 		{
-			"key": "blog_test_password",
+			"key": "forum_test_password",
 			"value": "aaaa"
 		},
 		{
-			"key": "blog_login_token",
+			"key": "forum_login_token",
 			"value": ""
 		},
 		{

@@ -5,11 +5,11 @@ import (
 	"time"
 )
 
-func TrackBlogFunctionsCalled(blogUsername, session_id, funct string) {
+func TrackBlogFunctionsCalled(forumUsername, session_id, funct string) {
 	datetime := time.Now().Format("2006-01-02 15:04:05.000000")
-	insert := `INSERT INTO blog_user_trackingDB VALUES (
+	insert := `INSERT INTO forum_user_tracking VALUES (
     ?, ?, ?, ?, ?
   );`
-	database.Insert(insert, []interface{}{nil, datetime, blogUsername, session_id, funct})
+	database.Insert(insert, []interface{}{nil, datetime, forumUsername, session_id, funct})
 
 }

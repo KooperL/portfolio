@@ -42,9 +42,9 @@ def homeHome():
         },
         {
           'type': 'button',
-          'text': '/blog',
+          'text': '/forum',
           'data': [
-            '/blog',
+            '/forum',
           ]
         }
       ]

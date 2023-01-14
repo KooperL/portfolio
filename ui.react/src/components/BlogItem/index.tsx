@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { BlogRouteType } from "../../containers/App/routeTypes";
-import { blogItem } from "../../containers/common/types";
+import { forumItem } from "../../containers/common/types";
 import { SchemeContext } from "../../containers/context/colourScheme";
 import daysAgo from "../../utils/daysAgo";
 import './style.css'
 
 
-function BlogItem(props: {data: blogItem}) {
+function BlogItem(props: {data: forumItem}) {
   const [scheme, setScheme] = useContext(SchemeContext);
 
   return (

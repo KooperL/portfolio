@@ -13,7 +13,7 @@ from sklearn.linear_model import LinearRegression
 def table():
   fairp = 125.0
   conn = sqlite3.connect(f'{os.getcwd()}/../data/database.db')
-  rows = list(conn.execute(f'SELECT * FROM fuelpricesDB ORDER BY id DESC LIMIT 3'))
+  rows = list(conn.execute(f'SELECT * FROM fuelprices ORDER BY id DESC LIMIT 3'))
   maxp = rows[0][0]
   minp = rows[0][2]
   averagep = rows[0][4]
@@ -30,7 +30,7 @@ def table():
 
 def draw(*args):
   conn = sqlite3.connect(f'{os.getcwd()}/../data/database.db')
-  rows = conn.execute(f'SELECT * FROM fuelpricesDB ORDER BY id DESC LIMIT {args[0]}')
+  rows = conn.execute(f'SELECT * FROM fuelprices ORDER BY id DESC LIMIT {args[0]}')
   draw.df = {
       'date':[],
       'minp':[],
@@ -48,7 +48,7 @@ def draw(*args):
   
   if args[3] == 'averagep' and len(args) == 5:
     plt.plot(draw.df['date'], draw.df['averagep'], color='green', label='average', linestyle='solid')
-    test_prices = conn.execute(f'SELECT averageprice FROM fuelpricesDB ORDER BY id DESC LIMIT 1000')
+    test_prices = conn.execute(f'SELECT averageprice FROM fuelprices ORDER BY id DESC LIMIT 1000')
     test_data = []
     for i in test_prices:
       test_data.append(float(i[0]))

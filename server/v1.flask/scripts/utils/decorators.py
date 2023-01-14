@@ -88,7 +88,7 @@ def errorHandle(func):
 
 
 
-def blogAuthorize(jwt, key):
+def forumAuthorize(jwt, key):
   jwt = jwt.split('.')
   jwtSignature = hmac.new(
     binascii.unhexlify(key),
@@ -123,7 +123,7 @@ def token_required(f):
     if auth_header is None or not auth_header.startswith('Bearer '):
       return scripts.utils.responses.build_unauthorized()
     bearerToken = auth_header.split(' ')[1]
-    outcome = blogAuthorize(bearerToken, config['blog-jwt-auth-token'])
+    outcome = forumAuthorize(bearerToken, config['forum-jwt-auth-token'])
     if outcome.get('success') == False:
       return scripts.utils.responses.build_unauthorized()
     return f(outcome, *args, **kwargs)

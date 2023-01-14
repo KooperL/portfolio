@@ -29,8 +29,8 @@ func Home(w http.ResponseWriter, r *http.Request) {
 				Type: "button",
 			},
 			{
-				Data: []string{"/blog"},
-				Text: "/blog",
+				Data: []string{"/forum"},
+				Text: "/forum",
 				Type: "button",
 			},
 		}

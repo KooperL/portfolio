@@ -14,7 +14,7 @@ func Capture(w http.ResponseWriter, r *http.Request) {
 		var body types.CapturePayload
 		datetime := time.Now().Format("2006-01-02 15:04:05.000000")
 		utils.ParseReqParams(r.URL.Query(), &body)
-		insertStatement := `INSERT INTO fingerprintDB VALUES (
+		insertStatement := `INSERT INTO fingerprint VALUES (
 		  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
 		);`
 		data := append([]interface{}{nil, datetime}, utils.MapStructToSlice(body)...)

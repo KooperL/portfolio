@@ -1,4 +1,4 @@
-import { ApiEndpoints, blogPath, projectPath } from './types';
+import { ApiEndpoints, forumPath, projectPath } from './types';
 import { environmentConfig } from './environmentMappings';
 
 const { apiHost } = environmentConfig();
@@ -23,13 +23,13 @@ export const endpoints: ApiEndpoints = {
   randombio: `${apiHost}/${projectPath}/randombio`,
   property: `${apiHost}/${projectPath}/property`,
 
-  blogHome: `${apiHost}/${blogPath}`,
-  blogRegister: `${apiHost}/${blogPath}/register`,
-  blogPostCreate: `${apiHost}/${blogPath}/post`,
-  blogPost: `${apiHost}/${blogPath}/post/`,
-  blogUser: `${apiHost}/${blogPath}/user/`,
-  blogLogin: `${apiHost}/${blogPath}/login`,
-  blogRefresh: `${apiHost}/${blogPath}/refresh`,
-  blogLogout: `${apiHost}/${blogPath}/logout`,
+  forumHome: `${apiHost}/${forumPath}`,
+  forumRegister: `${apiHost}/${forumPath}/register`,
+  forumPostCreate: `${apiHost}/${forumPath}/post`,
+  forumPost: `${apiHost}/${forumPath}/post/`,
+  forumUser: `${apiHost}/${forumPath}/user/`,
+  forumLogin: `${apiHost}/${forumPath}/login`,
+  forumRefresh: `${apiHost}/${forumPath}/refresh`,
+  forumLogout: `${apiHost}/${forumPath}/logout`,
 }
 

@@ -13,7 +13,7 @@ fuelprices = Blueprint('fuelprices', __name__)
 @scripts.utils.decorators.rateLimit
 def fuelpricesHome():
   if request.method == 'GET':
-    rows = list(controllers.database.conn.fetch('SELECT * FROM fuelpricesDB where ? = "None" ORDER BY id DESC LIMIT ?', ('None', 200)))[::-1]
+    rows = list(controllers.database.conn.fetch('SELECT * FROM fuelprices where ? = "None" ORDER BY id DESC LIMIT ?', ('None', 200)))[::-1]
 
     dic = {'wholesale': [], 'min': [], 'max': [], 'average': [], }
     for key in rows:
