@@ -8,26 +8,27 @@ import './style.css';
 import { ReactP5Wrapper } from "react-p5-wrapper";
 import sketchWrapper from "../../components/p5/box";
 import { Button } from "../../components/Button";
-import BlogItem from "../../components/BlogItem";
+import ForumItem from "../../components/ForumItem";
 import ButtonRedir from "../../components/ButtonRedir";
 import { useAccessToken } from "../authContext/context";
-import { getBlogHome } from "../App/api/forumApis";
+import { getForumHome } from "../App/api/forumApis";
 import { forumPath } from "../App/api/types";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { BlogRouteType } from "../App/routeTypes";
+import { ForumRouteType } from "../App/routeTypes";
 import Redirect from "../../components/Redirect"
-import { BlogHomeGETInitialState, BlogHomeGETResponse } from "./types";
+import { ForumHomeGETInitialState, ForumHomeGETResponse } from "./types";
 import { IslandCenter } from "../../templates/IslandCenter";
 import { IslandLeft } from "../../templates/IslandLeft";
 import { Input } from "../../components/Input";
+import ErrorPage from "../ErrorPage";
 
 
 interface Props {
   dataCall: Function; 
 }
 
-function BlogHomePage(props: Props): JSX.Element {
-  const [state, setState] = useState({...BlogHomeGETInitialState});
+function ForumHomePage(props: Props): JSX.Element {
+  const [state, setState] = useState({...ForumHomeGETInitialState});
   const [searchState, setSearchState] = useState('');
   // const [POSTstate, setPOSTState] = useState({...ContactPOSTInitialState});
   const [scheme, setScheme] = useContext(SchemeContext);
@@ -44,11 +45,11 @@ function BlogHomePage(props: Props): JSX.Element {
       session_id: sessionStorage.getItem('session_id'),
       category: queryString.get('category'),
       search: queryString.get('search')
-    }, token).then((resp: BlogHomeGETResponse) => {
+    }, token).then((resp: ForumHomeGETResponse) => {
       setState({
         details: resp,
         error: false,
-        errorMessage: '',
+        errorMessage: null,
         loading: false
       });
     }).catch((err: any) => {
@@ -67,10 +68,10 @@ function BlogHomePage(props: Props): JSX.Element {
 
 
   const handleSubmit = () => {
-    navigate(`/${BlogRouteType.BlogHome}?search=${searchState}`);
+    navigate(`/${ForumRouteType.ForumHome}?search=${searchState}`);
     return (
       <Redirect
-        destination={`/${BlogRouteType.BlogHome}?search=${searchState}`}
+        destination={`/${ForumRouteType.ForumHome}?search=${searchState}`}
       />
     )
   }
@@ -88,15 +89,13 @@ function BlogHomePage(props: Props): JSX.Element {
   if(token === '') {
     return (
       <Redirect
-        destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`}
+        destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumRegister}`}
       />
     )
   }
-  if(state.error) {
+  if(state.error && state.errorMessage) {
     return (
-      <div>
-        {JSON.stringify(state.errorMessage)}
-      </div>
+      <ErrorPage error={state.errorMessage} />
     );
   }
   if(state.details && state.details.data) {
@@ -116,7 +115,7 @@ function BlogHomePage(props: Props): JSX.Element {
                 <div className="search">
                   <Input value={searchState} onChange={(e) => {setSearchState(e.target.value)}} />
                   <Button colours={scheme} callBack={handleSubmit} label="search"></Button>
-                  {/* <ButtonRedir destination={`/${BlogRouteType.BlogHome}?search=${searchState}`} label="Search" local={true}></ButtonRedir> */}
+                  {/* <ButtonRedir destination={`/${ForumRouteType.ForumHome}?search=${searchState}`} label="Search" local={true}></ButtonRedir> */}
                 </div>
                 </form>
                 {Object.keys(data).map((segment, indexSegment) => (
@@ -124,7 +123,7 @@ function BlogHomePage(props: Props): JSX.Element {
                     <Link key={indexSegment**2} to={`/${forumPath}?category=${segment}`}><p>Topic - {segment}</p></Link>
                     <div className="posts">
                       {data[segment].map((catPost, catPostIndex) => (
-                        <BlogItem key={catPostIndex} data={catPost}/>
+                        <ForumItem key={catPostIndex} data={catPost}/>
                       ))}
                     </div>
                   </div>
@@ -140,7 +139,7 @@ function BlogHomePage(props: Props): JSX.Element {
 
 const enhance = (): JSX.Element => {
   return(
-    <BlogHomePage dataCall={getBlogHome} />
+    <ForumHomePage dataCall={getForumHome} />
   ) 
 };
 

@@ -1,27 +1,28 @@
-// export interface BlogHomeState {
-//   details?: BlogPostFetchPayload;
+// export interface ForumHomeState {
+//   details?: ForumPostFetchPayload;
 //   error?: boolean;
-//   errorMessage?: string;
+//   errorMessage?: ApiError | null;
 //   loading?: boolean;
 // }
 
+import { ApiError } from "../../api/apiErrorHandler";
 import { forumItem } from "../common/types";
 
 
-// export interface BlogPostFetchPayload {
+// export interface ForumPostFetchPayload {
 //   data: {
 //   }[]
 //   success: boolean;
 // }
 
-// export const BlogHomeInitialState: BlogHomeState = {
+// export const ForumHomeInitialState: ForumHomeState = {
 //   error: false,
-//   errorMessage: '',
+//   errorMessage: null,
 //   loading: true
 // } as const;
 
 
-export interface BlogHomeGETResponse {
+export interface ForumHomeGETResponse {
   success: boolean;
   data?: {
     [key: string]: forumItem[]
@@ -29,15 +30,15 @@ export interface BlogHomeGETResponse {
   error?: string;
 }
 
-export interface BlogHomeGETState {
-  details?: BlogHomeGETResponse;
+export interface ForumHomeGETState {
+  details?: ForumHomeGETResponse;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
-export const BlogHomeGETInitialState: BlogHomeGETState = {
+export const ForumHomeGETInitialState: ForumHomeGETState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: false
 } as const;

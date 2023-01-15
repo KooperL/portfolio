@@ -1,10 +1,11 @@
 
 import React, { useContext, createContext, FC, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ApiError } from '../../api/apiErrorHandler'
 // import { useNavigate } from 'react-router-dom';
-import { postBlogRefresh } from '../App/api/forumApis'
-import { BlogRouteType } from '../App/routeTypes'
-import { BlogLoginPOSTPayload, BlogLoginPOSTResponse } from '../forumLoginPage/types'
+import { postForumRefresh } from '../App/api/forumApis'
+import { ForumRouteType } from '../App/routeTypes'
+import { ForumLoginPOSTPayload, ForumLoginPOSTResponse } from '../forumLoginPage/types'
 
 type AccessTokenContext = [string | null, React.Dispatch<React.SetStateAction<string | null>>]
 
@@ -14,12 +15,13 @@ export function AccessTokenProvider({ children }: any) {
   // const navigate = useNavigate();
 
   function refresh() {
-    postBlogRefresh({session_id: sessionStorage.getItem('session_id') ?? ''}).then((resp: BlogLoginPOSTResponse) => {
+    postForumRefresh({session_id: sessionStorage.getItem('session_id') ?? ''}).then((resp) => {
+      resp = resp as ForumLoginPOSTResponse
       if(resp.success && resp.accessToken && resp.expires) {
         // setPOSTState({
         //   details: resp,
         //   error: false,
-        //   errorMessage: '',
+        //   errorMessage: null,
         //   loading: false
         // });
         // navigate(`/${forumPath}/post`)
@@ -33,8 +35,8 @@ export function AccessTokenProvider({ children }: any) {
       console.log('should')
       setAccessToken('')
       console.log(err)
-      // window.location.href = (`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`)
-      // navigate(`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`)
+      // window.location.href = (`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumRegister}`)
+      // navigate(`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumRegister}`)
       // setPOSTState({
       //   error: true,
       //   errorMessage: err,

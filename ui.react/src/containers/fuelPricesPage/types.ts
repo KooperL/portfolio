@@ -1,7 +1,9 @@
+import { ApiError } from "../../api/apiErrorHandler";
+
 export interface FuelPricesState {
   details?: FuelPricesPayload;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
@@ -34,6 +36,6 @@ export interface FuelPricesPayload {
 
 export const FuelPricesInitialState: FuelPricesState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: true
 } as const;

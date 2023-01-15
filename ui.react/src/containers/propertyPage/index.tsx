@@ -9,6 +9,7 @@ import {
  } from "./types";
 import { fetchProperty } from "../App/api/propertyApi";
 import Chart from "react-apexcharts";
+import ErrorPage from "../ErrorPage";
 
 interface Props {
   dataCall: Function; 
@@ -25,7 +26,7 @@ function PropertyPage(props: Props): JSX.Element {
       setState({
         details: resp,
         error: false,
-        errorMessage: '',
+        errorMessage: null,
         loading: false
       });
     }).catch((err: any) => {
@@ -44,7 +45,7 @@ function PropertyPage(props: Props): JSX.Element {
       setState({
         details: resp,
         error: false,
-        errorMessage: '',
+        errorMessage: null,
         loading: false
       });
       console.log(resp)
@@ -135,11 +136,9 @@ function PropertyPage(props: Props): JSX.Element {
   if(state.loading) {
    return <Spinner/>
   }
-  if(state.error) {
+  if(state.error && state.errorMessage) {
     return (
-      <div>
-        {JSON.stringify(state.errorMessage)}
-      </div>
+      <ErrorPage error={state.errorMessage} />
     );
   }
   if(state.details && state.details.data) {

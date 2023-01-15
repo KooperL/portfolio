@@ -21,7 +21,7 @@ crontab tempfile
 rm tempfile
 
 
-nxinx="server {
+nxinx1="server {
   listen       80;
   server_name  $(domain);
   location /api/v1 {
@@ -43,7 +43,17 @@ nxinx="server {
   }
 }"
 
-echo $nginx > /etc/nginx/conf.d/site1.conf
+nxinx2="server {
+    listen 80;
+    server_name www.$(domain);
+    return 301 $scheme://$(domain)$request_uri;
+}"
+
+echo $nginx1 > /etc/nginx/conf.d/site1.conf
+
+echo $nginx2 > /etc/nginx/conf.d/site2.conf
+
+
 mkdir $(pwd)/server/data
 
 flaskdotenv="MONGO_USERNAME=
@@ -53,8 +63,11 @@ GOOGLE_MAPS_API_KEY=
 ORIGIN=
 ENV=$environment
 DEV_PORT=$flaskdevport
-PROD_PORT=$flaskprodport"
-
+PROD_PORT=$flaskprodport
+DISCORD_WEBHOOK_URL=
+RATE_LIMIT_WINDOW=
+RATE_LIMIT_REQUESTS_LIMITED=
+RATE_LIMIT_REQUESTS_GENERAL="
 echo $flaskdotenv > $(pwd)/server/.env
 
 reactdotenv="REACT_APP_DEV_FLASK_API_PORT=$flaskdevport

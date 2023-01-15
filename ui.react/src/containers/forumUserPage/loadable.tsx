@@ -2,7 +2,7 @@ import React from 'react';
 import { lazyLoad } from '../../utils/loadable';
 import Spinner from '../../components/Spinner';
 
-export const BlogUserPage = lazyLoad(
+export const ForumUserPage = lazyLoad(
   () => import('./index'),
   module => module.default,
   {fallback: <Spinner />}

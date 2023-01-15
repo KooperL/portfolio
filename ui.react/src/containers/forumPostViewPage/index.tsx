@@ -9,11 +9,11 @@ import { ReactP5Wrapper } from "react-p5-wrapper";
 import sketchWrapper from "../../components/p5/box";
 import { Button } from "../../components/Button";
 import { useAccessToken } from "../authContext/context";
-import { BlogPostViewGETInitialState, BlogPostViewGETPayload, BlogPostViewGETResponse } from "./types";
+import { ForumPostViewGETInitialState, ForumPostViewGETPayload, ForumPostViewGETResponse } from "./types";
 import { getPostView, postPostCreate } from "../App/api/forumApis";
 import { forumPath } from "../App/api/types";
 import Redirect from "../../components/Redirect"
-import { BlogRouteType } from "../App/routeTypes";
+import { ForumRouteType } from "../App/routeTypes";
 import daysAgo from "../../utils/daysAgo";
 import { IslandCenter } from "../../templates/IslandCenter";
 
@@ -22,8 +22,8 @@ interface Props {
   dataGet: Function; 
 }
 
-function BlogPostViewPage(props: Props): JSX.Element {
-  const [GETstate, setGETState] = useState({...BlogPostViewGETInitialState})
+function ForumPostViewPage(props: Props): JSX.Element {
+  const [GETstate, setGETState] = useState({...ForumPostViewGETInitialState})
   const [scheme, setScheme] = useContext(SchemeContext);
   // const [token, setToken] = useContext(AccessToken);
   const [token, setToken] = useAccessToken();
@@ -34,12 +34,12 @@ function BlogPostViewPage(props: Props): JSX.Element {
     setGETState({...GETstate, loading: true});
     const postId = window.location.href.toString().slice(window.location.href.lastIndexOf('/') + 1)
     props.dataGet({session_id: sessionStorage.getItem('session_id')}, token, postId).then(
-      (resp: BlogPostViewGETResponse) => {
+      (resp: ForumPostViewGETResponse) => {
         if(resp.success) {
           setGETState({
             details: resp,
             error: false,
-            errorMessage: '',
+            errorMessage: null,
             loading: false
           });
         } else {
@@ -56,15 +56,15 @@ function BlogPostViewPage(props: Props): JSX.Element {
     )
   }, [token]);
 
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>, payload: BlogPostViewGETPayload) => {
+  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>, payload: ForumPostViewGETPayload) => {
   //   setPOSTState({...POSTstate, loading: true});
   //   event.preventDefault();
-  //   props.dataPost(payload).then((resp: BlogPostViewGETResponse) => {
+  //   props.dataPost(payload).then((resp: ForumPostViewGETResponse) => {
   //     if(resp.success) {
   //       setPOSTState({
   //         details: resp,
   //         error: false,
-  //         errorMessage: '',
+  //         errorMessage: null,
   //         loading: false
   //       });
   //       navigate(`/${forumPath}/post/`)
@@ -93,7 +93,7 @@ function BlogPostViewPage(props: Props): JSX.Element {
    if(!token?.length) {
      return (
        <Redirect
-         destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`}
+         destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumRegister}`}
        />
      )
    }
@@ -155,7 +155,7 @@ function BlogPostViewPage(props: Props): JSX.Element {
 
 const enhance = (): JSX.Element => {
   return(
-    <BlogPostViewPage dataGet={getPostView} />
+    <ForumPostViewPage dataGet={getPostView} />
   ) 
 };
 

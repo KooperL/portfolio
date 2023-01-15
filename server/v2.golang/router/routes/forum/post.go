@@ -16,10 +16,10 @@ import (
 func Post(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		decodedToken := r.Context().Value("decodedToken").(types.JWTbody)
-		var body types.PostBlog
+		var body types.PostForum
 		utils.ParseReqBody(r, &body)
 
-		lib.TrackBlogFunctionsCalled(decodedToken.Username, body.SessionID, "post")
+		lib.TrackForumFunctionsCalled(decodedToken.Username, body.SessionID, "post")
 
 		validatePermsQuery := "SELECT canPost from forum_role where id = ?;"
 		canPost := database.SimpleQuery[int64](validatePermsQuery, []interface{}{decodedToken.Role})
@@ -30,16 +30,16 @@ func Post(w http.ResponseWriter, r *http.Request) {
 		now := time.Now()
 		dt := now.Format(utils.GetTimeFormat())
 
-		publishBlogQuery := "INSERT INTO forum_posts VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
-		database.Insert(publishBlogQuery, []interface{}{nil, dt, decodedToken.UserID, body.Data.BlogTitle, 1, body.Data.BlogBody, 1, 0})
-		discord.SendDiscordMessage(os.Getenv("DISCORD_WEBHOOK_URL"), fmt.Sprintf("%s,\n%s", body.SessionID, body.Data.BlogTitle))
+		publishForumQuery := "INSERT INTO forum_posts VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
+		database.Insert(publishForumQuery, []interface{}{nil, dt, decodedToken.UserID, body.Data.ForumTitle, 1, body.Data.ForumBody, 1, 0})
+		discord.SendDiscordMessage(os.Getenv("DISCORD_WEBHOOK_URL"), fmt.Sprintf("%s,\n%s", body.SessionID, body.Data.ForumTitle))
 
-		publishedBlogIdQuery := "SELECT id from forum_posts where forum_user_id = ? and title = ? and  body = ?;"
-		publishedBlogId := database.SimpleQuery[int64](publishedBlogIdQuery, []interface{}{decodedToken.UserID, body.Data.BlogTitle, body.Data.BlogBody})
+		publishedForumIdQuery := "SELECT id from forum_posts where forum_user_id = ? and title = ? and  body = ?;"
+		publishedForumId := database.SimpleQuery[int64](publishedForumIdQuery, []interface{}{decodedToken.UserID, body.Data.ForumTitle, body.Data.ForumBody})
 
 		responses.BuildSuccessResponse(w, struct {
-			BlogPostId int64 `json:"forumPostId"`
-		}{BlogPostId: publishedBlogId})
+			ForumPostId int64 `json:"forumPostId"`
+		}{ForumPostId: publishedForumId})
 		return
 	} else if r.Method == http.MethodGet {
 	}

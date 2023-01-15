@@ -13,6 +13,7 @@ import { Input } from "../../components/Input";
 import { Radio } from "../../components/Radio";
 import { Gear } from "../../components/Gear";
 import { Textarea } from "../../components/Textarea";
+import ErrorPage from "../ErrorPage";
 
 
 interface Props {
@@ -39,7 +40,7 @@ function SecondaryPage(props: Props): JSX.Element {
         setState({
           details: resp,
           error: false,
-          errorMessage: '',
+          errorMessage: null,
           loading: false
         });
       } else {
@@ -95,11 +96,9 @@ function SecondaryPage(props: Props): JSX.Element {
   if(state.loading) {
    return <Spinner/>
   }
-  if(state.error) {
+  if(state.error && state.errorMessage) {
     return (
-      <div>
-        {JSON.stringify(state.errorMessage)}
-      </div>
+      <ErrorPage error={state.errorMessage} />
     );
   }
   if(state.details && state.details.data) {

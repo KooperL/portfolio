@@ -13,6 +13,7 @@ import ButtonRedir from "../../components/ButtonRedir";
 import TypeLookup from "../../components/TypeLookup";
 import { IslandLeft } from "../../templates/IslandLeft";
 import { IslandCenter } from "../../templates/IslandCenter";
+import ErrorPage from "../ErrorPage";
 
 interface Props {
   dataCall: Function; 
@@ -50,7 +51,7 @@ function AboutPage(props: Props): JSX.Element {
       setState({
         details: resp,
         error: false,
-        errorMessage: '',
+        errorMessage: null,
         loading: false
       });
     }).catch((err: any) => {
@@ -86,11 +87,9 @@ function AboutPage(props: Props): JSX.Element {
   if(state.loading) {
    return <Spinner/>
   }
-  if(state.error) {
+  if(state.error && state.errorMessage) {
     return (
-      <div>
-        {JSON.stringify(state.errorMessage)}
-      </div>
+      <ErrorPage error={state.errorMessage} />
     );
   }
   // if(state.details && seed[0].length && seed[0][0].length) {

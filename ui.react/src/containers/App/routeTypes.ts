@@ -4,14 +4,14 @@ export enum IndexRouteType {
   Contact = 'contact',
 }
 
-  export enum BlogRouteType {
-    BlogHome = `forum`,
-    // BlogSearch = `search`,
-    BlogPostCreate = `post`,
-    BlogLogin = `login`,
-    BlogPost = `post`,            // :postId
-    BlogUser = `user`,            // :username
-    BlogRegister = `register`,
+  export enum ForumRouteType {
+    ForumHome = `forum`,
+    // ForumSearch = `search`,
+    ForumPostCreate = `post`,
+    ForumLogin = `login`,
+    ForumPost = `post`,            // :postId
+    ForumUser = `user`,            // :username
+    ForumRegister = `register`,
 }
 
 export enum ProjectsRouteType {

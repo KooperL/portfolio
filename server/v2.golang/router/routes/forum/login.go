@@ -29,19 +29,19 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 		var body types.SessionId
 		utils.ParseReqBody(r, &body)
-		lib.TrackBlogFunctionsCalled(creds[0], body.SessionID, "login")
+		lib.TrackForumFunctionsCalled(creds[0], body.SessionID, "login")
 
 		userSearchQuery := "SELECT id, forum_password_hash, forum_password_salt, role_id FROM forum_users where forum_username = ?"
-		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[database.BlogUsersDB](userSearchQuery, []any{strings.ToLower(creds[0])}))
+		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[database.ForumUsersDB](userSearchQuery, []any{strings.ToLower(creds[0])}))
 
 		if len(userSearchTraffic) != 1 {
 			responses.BuildUnauthorised(w)
 			return
 		}
 
-		externalHash := utils.PBKDF2(creds[1], userSearchTraffic[0].BlogPasswordSalt, 1000, 32)
+		externalHash := utils.PBKDF2(creds[1], userSearchTraffic[0].ForumPasswordSalt, 1000, 32)
 
-		res := bytes.Compare(externalHash, userSearchTraffic[0].BlogPasswordHash)
+		res := bytes.Compare(externalHash, userSearchTraffic[0].ForumPasswordHash)
 
 		if res != 0 {
 			responses.BuildUnauthorised(w)

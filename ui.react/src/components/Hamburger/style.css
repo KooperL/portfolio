@@ -39,6 +39,12 @@
   top: 100%;
   left: 0;
   border-radius: 0.5rem;
+  height: 0;
+  transition: height 1.5s ease-in-out;
+}
+
+.links.open {
+  height: fit-content;
 }
 
 @media screen and (max-width: 1000px) {

@@ -1,6 +1,6 @@
 import { Scheme } from "../containers/context/type";
 
-export function Button(props: {colours: Scheme, disabled?: Boolean, callBack?: Function, label?: string}) {
+export function Button(props: {colours: Scheme, disabled?: Boolean, callBack?: Function, label?: string, action?: "button" | "submit" | "reset" | undefined}) {
   const style = {
     backgroundColor: props.colours.button.bgSolid,
     color: props.colours.button.text,
@@ -15,7 +15,7 @@ export function Button(props: {colours: Scheme, disabled?: Boolean, callBack?: F
     )
   }
   return (
-    <button className="submit-button" type='submit' name='submit' value={props.label ?? 'Submit'} style={style}>{props.label ?? 'Submit'}</button>
+    <button className="submit-button" type={props.action ?? 'submit'} name='submit' value={props.label ?? 'Submit'} style={style}>{props.label ?? 'Submit'}</button>
   );
 }
 

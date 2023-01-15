@@ -28,7 +28,7 @@ def forumPostCreateHome(authPayload):
     user_id = authPayload.get('payload').get('userId')
     username = authPayload.get('payload').get('username')
     role = authPayload.get('payload').get('role')
-    scripts.utils.forumFuncs.trackBlogFunctionsCalled(username, session_id, inspect.stack()[0][3])
+    scripts.utils.forumFuncs.trackForumFunctionsCalled(username, session_id, inspect.stack()[0][3])
 
     data = data.get('data')
     if 'forum_title' not in data and 'forum_body' not in data:
@@ -43,16 +43,16 @@ def forumPostCreateHome(authPayload):
       return scripts.utils.responses.build_unauthorized()
 
 
-    publishBlogQuery = 'INSERT INTO forum_posts VALUES (?, ?, ?, ?, ?, ?, ?, ?);'
-    controllers.database.conn.fetch(publishBlogQuery, (None, datetime.datetime.now(), user_id, forum_title, 1, forum_body, 1, 0))
+    publishForumQuery = 'INSERT INTO forum_posts VALUES (?, ?, ?, ?, ?, ?, ?, ?);'
+    controllers.database.conn.fetch(publishForumQuery, (None, datetime.datetime.now(), user_id, forum_title, 1, forum_body, 1, 0))
 
     controllers.discordLogger.send_discord_message(config['DISCORD_WEBHOOK_URL'], f'BLOG POST: {user_id}, {forum_title}, {forum_body}')    
-    publishedBlogIdQuery = 'SELECT id from forum_posts where forum_user_id = ? and title = ? and  body = ?;'
-    publishedBlogId = controllers.database.conn.fetch(publishedBlogIdQuery, (user_id, forum_title, forum_body))
+    publishedForumIdQuery = 'SELECT id from forum_posts where forum_user_id = ? and title = ? and  body = ?;'
+    publishedForumId = controllers.database.conn.fetch(publishedForumIdQuery, (user_id, forum_title, forum_body))
     kwargs = {
       'success': True,
       'data': {
-        'forumPostId': publishedBlogId[0][0]
+        'forumPostId': publishedForumId[0][0]
       }
     }
     res = jsonify(kwargs)

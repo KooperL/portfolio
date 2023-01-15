@@ -35,9 +35,9 @@ func User(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		lib.TrackBlogFunctionsCalled(decodedToken.Username, params.Get("session_id"), fmt.Sprintf("/post/%s", userSearched))
+		lib.TrackForumFunctionsCalled(decodedToken.Username, params.Get("session_id"), fmt.Sprintf("/post/%s", userSearched))
 
-		pullBlogQuery := `
+		pullForumQuery := `
 		SELECT 
 			forum_posts.id as id,
 			forum_posts.date as date,
@@ -54,20 +54,20 @@ func User(w http.ResponseWriter, r *http.Request) {
 		where
 		lower(forum_users.forum_username) = ? and
 		(forum_posts.visible = 1 or forum_posts.forum_user_id = ? or ? = true);`
-		postRaw := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.BlogPostVerbose](pullBlogQuery, []interface{}{strings.ToLower(userSearched), decodedToken.UserID, (decodedToken.Role == 999)}))
-		var posts []types.BlogPostResponseVerbose
+		postRaw := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumPostVerbose](pullForumQuery, []interface{}{strings.ToLower(userSearched), decodedToken.UserID, (decodedToken.Role == 999)}))
+		var posts []types.ForumPostResponseVerbose
 
 		if len(postRaw) != 1 {
 			// fail special, 206
 		}
 
 		for _, v := range postRaw {
-			pullBlogViewsQuery := "SELECT count(*) from forum_post_views where forum_post_id = ?;"
-			pullBlogViews := database.SimpleQuery[int64](pullBlogViewsQuery, []interface{}{v.ID})
+			pullForumViewsQuery := "SELECT count(*) from forum_post_views where forum_post_id = ?;"
+			pullForumViews := database.SimpleQuery[int64](pullForumViewsQuery, []interface{}{v.ID})
 
-			resp := types.BlogPostResponseVerbose{
-				Views: pullBlogViews + 1,
-				BlogPostVerbose: types.BlogPostVerbose{
+			resp := types.ForumPostResponseVerbose{
+				Views: pullForumViews + 1,
+				ForumPostVerbose: types.ForumPostVerbose{
 					ID:       v.ID,
 					Date:     v.Date,
 					Author:   v.Author,

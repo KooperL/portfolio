@@ -1,17 +1,17 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { BlogRouteType } from "../../containers/App/routeTypes";
+import { ForumRouteType } from "../../containers/App/routeTypes";
 import { forumItem } from "../../containers/common/types";
 import { SchemeContext } from "../../containers/context/colourScheme";
 import daysAgo from "../../utils/daysAgo";
 import './style.css'
 
 
-function BlogItem(props: {data: forumItem}) {
+function ForumItem(props: {data: forumItem}) {
   const [scheme, setScheme] = useContext(SchemeContext);
 
   return (
-    <Link to={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPost}/${props.data['id']}`}>
+    <Link to={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumPost}/${props.data['id']}`}>
       <div className="post-details" style={{borderColor: scheme.body.foreground}}>
         <div className="icon">
           <p>{props.data['views']} 👀</p>
@@ -35,4 +35,4 @@ function BlogItem(props: {data: forumItem}) {
   )
 }
 
-export default BlogItem;
+export default ForumItem;

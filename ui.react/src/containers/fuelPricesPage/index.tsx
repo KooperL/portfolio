@@ -6,6 +6,7 @@ import { FuelPricesState, FuelPricesPayload, FuelPricesInitialState } from "./ty
 import './style.css';
 import { SchemeContext } from "../context/colourScheme";
 import { IslandCenter } from "../../templates/IslandCenter";
+import ErrorPage from "../ErrorPage";
 
 interface Props {
   dataCall: Function; 
@@ -21,7 +22,7 @@ function FuelPricesPage(props: Props): JSX.Element {
         setState({
           details: resp,
           error: false,
-          errorMessage: '',
+          errorMessage: null,
           loading: false
         });
       } else {
@@ -42,11 +43,9 @@ function FuelPricesPage(props: Props): JSX.Element {
   if(state.loading) {
    return <Spinner/>
   }
-  if(state.error) {
+  if(state.error && state.errorMessage) {
     return (
-      <div>
-        {state.errorMessage}
-      </div>
+      <ErrorPage error={state.errorMessage} />
     );
   }
   if(state.details && state.details.data) {

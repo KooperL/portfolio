@@ -1,7 +1,9 @@
+import { ApiError } from "../../api/apiErrorHandler";
+
 export interface SecondaryState {
   details?: SecondaryPayload;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
@@ -30,7 +32,7 @@ export interface SecondaryPOST {
 
 export const SecondaryInitialState: SecondaryState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: false
 } as const;
 

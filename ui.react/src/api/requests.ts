@@ -17,14 +17,19 @@ const checkStatus = <T>(response: AxiosResponse) => {
 }
 
 const request = <T>(config: AxiosRequestConfig): Promise<T | ApiError> => {
+  return new Promise((res, rej) => {
   if(localStorage.getItem('environment') === 'Local') {
     console.log(
       `-- outgoing API request, data: ${JSON.stringify(config.data ?? {None: 'none'})}`
     );
   }
-  return axios(config)
-    .then(response => checkStatus<T>(response))
-    .catch(response => handleError(response))
+  console.log("resp")
+
+  const resp = axios(config)
+  .then(response => res(checkStatus<T>(response)))
+  .catch(response => rej(handleError(response)))
+  console.log(resp)
+  })
 }
 
 export default request;

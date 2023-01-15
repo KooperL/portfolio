@@ -1,9 +1,10 @@
+import { ApiError } from '../../../api/apiErrorHandler';
 import { get, post } from '../../../api/restApi';
 import { ContactPayload, ContactPOSTPayload } from '../../contactPage/types';
 import { endpoints } from './endpoints';
 import { Payload } from './types';
 
-export const fetchContact = (): Promise<ContactPayload>  => {
+export const fetchContact = (): Promise<ApiError | ContactPayload>  => {
   const apiConfig = {
     headers: {},
     params: {}
@@ -14,7 +15,7 @@ export const fetchContact = (): Promise<ContactPayload>  => {
 export const postContact = (data: {
   session_id: string
   message: string
-}): Promise<ContactPOSTPayload>  => {
+}): Promise<ApiError | ContactPOSTPayload>  => {
   const apiConfig = {
     headers: {},
     data: data

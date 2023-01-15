@@ -7,6 +7,7 @@ import './style.css';
 import { Button } from "../../components/Button";
 import { IslandCenter } from "../../templates/IslandCenter";
 import { Input } from "../../components/Input";
+import ErrorPage from "../ErrorPage";
 
 
 interface Props {
@@ -26,7 +27,7 @@ function MrnaPage(props: Props): JSX.Element {
         setState({
           details: resp,
           error: false,
-          errorMessage: '',
+          errorMessage: null,
           loading: false
         });
       } else {
@@ -68,11 +69,9 @@ function MrnaPage(props: Props): JSX.Element {
   if(state.loading) {
    return <Spinner/>
   }
-  if(state.error) {
+  if(state.error && state.errorMessage) {
     return (
-      <div>
-        {state.errorMessage?.toString()}
-      </div>
+      <ErrorPage error={state.errorMessage} />
     );
   }
   if(state.details && state.details.data) {

@@ -31,6 +31,9 @@ forum-jwt-refresh-token=<value>
 forum-access-token-life=<value>
 forum-refresh-token-life=<value>
 DISCORD_WEBHOOK_URL=<value>
+RATE_LIMIT_WINDOW=<value>
+RATE_LIMIT_REQUESTS_LIMITED=<value>
+RATE_LIMIT_REQUESTS_GENERAL=<value>
 ```
 
 ## Running
@@ -56,7 +59,7 @@ Tracking for the `../data/` folder is now disabled, so the same applies for the 
 Configure the mongodb daemon at `/etc/mongod.conf` and populate the following values.
 ```
 storage:
-  dbPath: /var/www/portfolio/server/data/mongodb
+  dbPath: {{DIR}}/server/data/mongodb
 security:
     authorization: enabled
 setParameter:

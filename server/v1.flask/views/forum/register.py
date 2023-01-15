@@ -41,7 +41,7 @@ def forumRegisterHome():
     password = decodedStr[1]
 
 
-    scripts.utils.forumFuncs.trackBlogFunctionsCalled(username, session_id, inspect.stack()[0][3])
+    scripts.utils.forumFuncs.trackForumFunctionsCalled(username, session_id, inspect.stack()[0][3])
 
     # check if valid username
     # check if lower() exists
@@ -63,8 +63,8 @@ def forumRegisterHome():
     # forum_password_hash = scripts.utils.hashFunctions.generateHash((data.get('forum_password') + salt), config['forum-register-hash-key'])
     forum_password_hash = scripts.utils.hashFunctions.pbkdf2(bytes(password, 'UTF-8'), bytes(salt, 'UTF-8'))
 
-    insertBlogUserQuery = 'INSERT INTO forum_users VALUES (?, ?, ?, ?, ?, ?, ?, ?);'
-    controllers.database.conn.insert(insertBlogUserQuery, (None, datetime.datetime.now(), username.lower(), forum_password_hash, salt, 1, 1, 1))
+    insertForumUserQuery = 'INSERT INTO forum_users VALUES (?, ?, ?, ?, ?, ?, ?, ?);'
+    controllers.database.conn.insert(insertForumUserQuery, (None, datetime.datetime.now(), username.lower(), forum_password_hash, salt, 1, 1, 1))
     
     kwargs = {
       'success': True,

@@ -9,10 +9,10 @@ import { ReactP5Wrapper } from "react-p5-wrapper";
 import sketchWrapper from "../../components/p5/box";
 import { Button } from "../../components/Button";
 import { useAccessToken } from "../authContext/context";
-import { BlogPostCreatePOSTInitialState, BlogPostCreatePOSTPayload, BlogPostCreatePOSTResponse } from "./types";
+import { ForumPostCreatePOSTInitialState, ForumPostCreatePOSTPayload, ForumPostCreatePOSTResponse } from "./types";
 import { postPostCreate } from "../App/api/forumApis";
 import { forumPath } from "../App/api/types";
-import { BlogRouteType } from "../App/routeTypes";
+import { ForumRouteType } from "../App/routeTypes";
 import Redirect from "../../components/Redirect"
 import { IslandCenter } from "../../templates/IslandCenter";
 import { Input } from "../../components/Input";
@@ -23,8 +23,8 @@ interface Props {
   dataPost: Function; 
 }
 
-function BlogPostCreatePage(props: Props): JSX.Element {
-  const [POSTstate, setPOSTState] = useState({...BlogPostCreatePOSTInitialState})
+function ForumPostCreatePage(props: Props): JSX.Element {
+  const [POSTstate, setPOSTState] = useState({...ForumPostCreatePOSTInitialState})
   const [scheme, setScheme] = useContext(SchemeContext);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -36,15 +36,15 @@ function BlogPostCreatePage(props: Props): JSX.Element {
 
   }, []);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>, payload: BlogPostCreatePOSTPayload) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>, payload: ForumPostCreatePOSTPayload) => {
     setPOSTState({...POSTstate, loading: true});
     event.preventDefault();
-    props.dataPost(payload, token).then((resp: BlogPostCreatePOSTResponse) => {
+    props.dataPost(payload, token).then((resp: ForumPostCreatePOSTResponse) => {
       if(resp.success && resp.data) {
         setPOSTState({
           details: resp,
           error: false,
-          errorMessage: '',
+          errorMessage: null,
           loading: false
         });
         console.log(resp.data.forumPostId)
@@ -70,7 +70,7 @@ function BlogPostCreatePage(props: Props): JSX.Element {
   if(token === '') {
     return (
       <Redirect
-        destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`}
+        destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumRegister}`}
       />
     )
   }
@@ -103,7 +103,7 @@ function BlogPostCreatePage(props: Props): JSX.Element {
 
 const enhance = (): JSX.Element => {
   return(
-    <BlogPostCreatePage dataPost={postPostCreate} />
+    <ForumPostCreatePage dataPost={postPostCreate} />
   ) 
 };
 

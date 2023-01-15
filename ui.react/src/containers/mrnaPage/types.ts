@@ -1,7 +1,9 @@
+import { ApiError } from "../../api/apiErrorHandler";
+
 export interface MrnaState {
   details?: MrnaPayload;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
@@ -32,6 +34,6 @@ export interface MrnaPOST {
 
 export const MrnaInitialState: MrnaState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: false
 } as const;

@@ -34,10 +34,10 @@ type SessionId struct {
 	SessionID string `json:"session_id"`
 }
 
-type PostBlog struct {
+type PostForum struct {
 	SessionId
 	Data struct {
-		BlogTitle string `json:"forum_title"`
-		BlogBody  string `json:"forum_body"`
+		ForumTitle string `json:"forum_title"`
+		ForumBody  string `json:"forum_body"`
 	} `json:"data"`
 }

@@ -24,20 +24,22 @@ function Hamburger(props: Props) {
     </button>
   </>
 
-  if(!open) {
-    return (
-      <div className="hamburger">
-        {burgerButton}
-      </div>
-    )
-  }
+  // if(!open) {
+  //   return (
+  //     <div className="hamburger">
+  //       {burgerButton}
+  //       <div className={`links ${open ? 'open' : ''}`} style={{backgroundColor: scheme.body.background}}></div>
+  //     </div>
+  //   )
+  // }
 
   return (
     <div className="hamburger">
       {burgerButton}
-      <div className="links" style={{backgroundColor: scheme.body.background}}>
+      <div className={`links ${open ? 'open' : ''}`} style={{backgroundColor: scheme.body.background}}>
       {/* <div className="links" style={{display: open ? 'fixed' : 'none'}}> */}
-        {props.data.map((item, index) => (
+      {open ? (
+        props.data.map((item, index) => (
           <ButtonRedir
             destination={item.destination}
             label={item.label}
@@ -50,7 +52,8 @@ function Hamburger(props: Props) {
               }
             }
           />
-        ))}
+        ))
+        ) : <></>}
       </div>
     </div>
   )

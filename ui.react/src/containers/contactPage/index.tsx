@@ -13,6 +13,7 @@ import ButtonRedir from "../../components/ButtonRedir";
 import { IslandCenter } from "../../templates/IslandCenter";
 import TypeLookup from "../../components/TypeLookup";
 import { Input } from "../../components/Input";
+import ErrorPage from "../ErrorPage";
 
 interface Props {
   dataCall: Function; 
@@ -31,7 +32,7 @@ function ContactPage(props: Props): JSX.Element {
       setState({
         details: resp,
         error: false,
-        errorMessage: '',
+        errorMessage: null,
         loading: false
       });
     }).catch((err: any) => {
@@ -51,7 +52,7 @@ function ContactPage(props: Props): JSX.Element {
         setPOSTState({
           details: resp,
           error: false,
-          errorMessage: '',
+          errorMessage: null,
           loading: false
         });
       } else {
@@ -99,11 +100,9 @@ function ContactPage(props: Props): JSX.Element {
   if(state.loading) {
    return <Spinner/>
   }
-  if(state.error) {
+  if(state.error && state.errorMessage) {
     return (
-      <div>
-        {JSON.stringify(state.errorMessage)}
-      </div>
+      <ErrorPage error={state.errorMessage} />
     );
   }
   if(state.details) {
