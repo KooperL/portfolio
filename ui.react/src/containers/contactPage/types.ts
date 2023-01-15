@@ -1,14 +1,16 @@
+import { ApiError } from "../../api/apiErrorHandler";
+
 export interface ContactState {
   details?: ContactPayload;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
 export interface ContactPOSTState {
   details?: ContactPOSTPayload;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
@@ -35,12 +37,12 @@ export interface ContactPOST {
 
 export const ContactInitialState: ContactState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: true
 } as const;
 
 export const ContactPOSTInitialState: ContactPOSTState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: false
 } as const;

@@ -1,4 +1,6 @@
-export interface BlogPostCreatePOSTPayload {
+import { ApiError } from "../../api/apiErrorHandler";
+
+export interface ForumPostCreatePOSTPayload {
   session_id: string;
   data: {
     forum_title: string;
@@ -6,7 +8,7 @@ export interface BlogPostCreatePOSTPayload {
   }
 }
 
-export interface BlogPostCreatePOSTResponse {
+export interface ForumPostCreatePOSTResponse {
   success: boolean;
   data?: {
     forumPostId: number
@@ -14,15 +16,15 @@ export interface BlogPostCreatePOSTResponse {
   error?: string;
 }
 
-export interface BlogPostCreatePOSTState {
-  details?: BlogPostCreatePOSTResponse;
+export interface ForumPostCreatePOSTState {
+  details?: ForumPostCreatePOSTResponse;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
-export const BlogPostCreatePOSTInitialState: BlogPostCreatePOSTState = {
+export const ForumPostCreatePOSTInitialState: ForumPostCreatePOSTState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: false
 } as const;

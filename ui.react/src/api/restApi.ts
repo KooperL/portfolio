@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 import { Payload } from "../containers/App/api/types";
 import request from "./requests";
+import { ApiError, handleError } from './apiErrorHandler'
 
 const noCacheHeaders = {
   'cacheControl': 'no-cache'
@@ -19,7 +20,7 @@ export const get = async<T> (
   url: string,
   options: AxiosRequestConfig,
   noCache: Boolean = true                                   // TODO
-): Promise<T> => {
+): Promise<ApiError | T> => {
   const requestConfig: AxiosRequestConfig = {
     ...options,
     headers: {
@@ -31,7 +32,8 @@ export const get = async<T> (
     method: 'GET',
     url: url
   };
-  return request(requestConfig) as Promise<T>;
+  const req = request<T>(requestConfig);
+  return req
 }
 
 
@@ -39,7 +41,7 @@ export const post = async<T> (
   url: string,
   options: AxiosRequestConfig,
   noCache: Boolean = true                                   // TODO
-): Promise<T> => {
+): Promise<ApiError | T> => {
   const requestConfig: AxiosRequestConfig = {
     ...options,
     headers: {
@@ -52,5 +54,5 @@ export const post = async<T> (
     url: url
   };
 
-  return request(requestConfig) as Promise<T>;
+  return request<T>(requestConfig);
 }

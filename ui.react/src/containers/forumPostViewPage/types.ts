@@ -1,8 +1,10 @@
-export interface BlogPostViewGETPayload {
+import { ApiError } from "../../api/apiErrorHandler";
+
+export interface ForumPostViewGETPayload {
   session_id: string;
 }
 
-export interface BlogPostViewGETResponse {
+export interface ForumPostViewGETResponse {
   success: boolean;
   data?: {
     'id' : number;
@@ -17,15 +19,15 @@ export interface BlogPostViewGETResponse {
   error?: string
 }
 
-export interface BlogPostViewGETState {
-  details?: BlogPostViewGETResponse;
+export interface ForumPostViewGETState {
+  details?: ForumPostViewGETResponse;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
-export const BlogPostViewGETInitialState: BlogPostViewGETState = {
+export const ForumPostViewGETInitialState: ForumPostViewGETState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: false
 } as const;

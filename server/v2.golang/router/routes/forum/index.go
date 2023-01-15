@@ -26,7 +26,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	lib.TrackBlogFunctionsCalled(decodedToken.Username, params.Get("session_id"), "index")
+	lib.TrackForumFunctionsCalled(decodedToken.Username, params.Get("session_id"), "index")
 	if params.Get("Category") != "" {
 		categoryQuery := "SELECT id from forum_post_category where name = ?;"
 		categoryId := database.SimpleQuery[int64](categoryQuery, []interface{}{params.Get("category")})
@@ -46,20 +46,20 @@ func Index(w http.ResponseWriter, r *http.Request) {
 				forum_posts.parent_forum_user_id = 0 and
 				forum_posts.category_id = ?
 		`
-		posts := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.BlogPostDB](categoryPostsQuery, []interface{}{categoryId}))
+		posts := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumPostDB](categoryPostsQuery, []interface{}{categoryId}))
 		fmt.Println(posts)
-		// organisedPosts := make([]types.BlogPostResponse, len(posts))
+		// organisedPosts := make([]types.ForumPostResponse, len(posts))
 		// for _, v := range posts {
-		// 	pullBlogViewsQuery := "SELECT count(*) from forum_post_views where forum_post_id = ?;"
-		// 	pullBlogViews := database.SimpleQuery[int64](pullBlogViewsQuery, []interface{}{v.ID})
+		// 	pullForumViewsQuery := "SELECT count(*) from forum_post_views where forum_post_id = ?;"
+		// 	pullForumViews := database.SimpleQuery[int64](pullForumViewsQuery, []interface{}{v.ID})
 
-		// 	post := types.BlogPostResponse{
+		// 	post := types.ForumPostResponse{
 		// 		ID:     v.ID,
 		// 		Date:   v.Date,
-		// 		Author: v.BlogUsername,
+		// 		Author: v.ForumUsername,
 		// 		Title:  v.Title,
 		// 		Body:   v.Body,
-		// 		Views:  pullBlogViews,
+		// 		Views:  pullForumViews,
 		// 	}
 		// 	organisedPosts = append(organisedPosts, post)
 		// }
@@ -88,26 +88,26 @@ func Index(w http.ResponseWriter, r *http.Request) {
 				forum_posts.title like ? or 
 				forum_posts.body like ? 
 		`
-		generalResults := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.BlogPostDB](generalQuery, []interface{}{params.Get("search"), params.Get("search"), params.Get("search"), params.Get("search")}))
+		generalResults := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumPostDB](generalQuery, []interface{}{params.Get("search"), params.Get("search"), params.Get("search"), params.Get("search")}))
 		fmt.Println(generalResults)
-		// organisedPosts := make([]types.BlogPostResponse, len(generalResults))
-		// organisedPosts := map[string][]types.BlogPostResponse{}
+		// organisedPosts := make([]types.ForumPostResponse, len(generalResults))
+		// organisedPosts := map[string][]types.ForumPostResponse{}
 		// for _, v := range generalResults {
-		// 	pullBlogViewsQuery := "SELECT count(*) from forum_post_views where forum_post_id = ?;"
-		// 	pullBlogViews := database.SimpleQuery[int64](pullBlogViewsQuery, []interface{}{v.ID})
+		// 	pullForumViewsQuery := "SELECT count(*) from forum_post_views where forum_post_id = ?;"
+		// 	pullForumViews := database.SimpleQuery[int64](pullForumViewsQuery, []interface{}{v.ID})
 
-		// 	post := types.BlogPostResponse{
+		// 	post := types.ForumPostResponse{
 		// 		ID:     v.ID,
 		// 		Date:   v.Date,
-		// 		Author: v.BlogUsername,
+		// 		Author: v.ForumUsername,
 		// 		Title:  v.Title,
 		// 		Body:   v.Body,
-		// 		Views:  pullBlogViews,
+		// 		Views:  pullForumViews,
 		// 	}
 		// 	if val, ok := organisedPosts[v.Category]; ok {
 		// 		organisedPosts[v.Category] = append(val, post)
 		// 	} else {
-		// 		organisedPosts[v.Category] = []types.BlogPostResponse{post}
+		// 		organisedPosts[v.Category] = []types.ForumPostResponse{post}
 		// 	}
 		// }
 		// responses.BuildSuccessResponse(w, organisedPosts)
@@ -136,26 +136,26 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		forum_posts.category_id = ?
 	limit 5;
 	`
-	posts := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.BlogPostDB](categoryPostsQuery, []interface{}{categoryId}))
+	posts := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumPostDB](categoryPostsQuery, []interface{}{categoryId}))
 
-	organisedPosts := map[string][]types.BlogPostResponse{}
+	organisedPosts := map[string][]types.ForumPostResponse{}
 	for _, v := range posts {
 
-		pullBlogViewsQuery := "SELECT count(*) from forum_post_views where forum_post_id = ?;"
-		pullBlogViews := database.SimpleQuery[int64](pullBlogViewsQuery, []interface{}{v.ID})
+		pullForumViewsQuery := "SELECT count(*) from forum_post_views where forum_post_id = ?;"
+		pullForumViews := database.SimpleQuery[int64](pullForumViewsQuery, []interface{}{v.ID})
 
-		post := types.BlogPostResponse{
+		post := types.ForumPostResponse{
 			ID:     v.ID,
 			Date:   v.Date,
-			Author: v.BlogUsername,
+			Author: v.ForumUsername,
 			Title:  v.Title,
 			Body:   v.Body,
-			Views:  pullBlogViews,
+			Views:  pullForumViews,
 		}
 		if val, ok := organisedPosts[v.Category]; ok {
 			organisedPosts[v.Category] = append(val, post)
 		} else {
-			organisedPosts[v.Category] = []types.BlogPostResponse{post}
+			organisedPosts[v.Category] = []types.ForumPostResponse{post}
 		}
 	}
 	responses.BuildSuccessResponse(w, organisedPosts)

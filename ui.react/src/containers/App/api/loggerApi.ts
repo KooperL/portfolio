@@ -1,3 +1,4 @@
+import { ApiError } from '../../../api/apiErrorHandler';
 import { get, post } from '../../../api/restApi';
 import { ContactPayload, ContactPOSTPayload } from '../../contactPage/types';
 import { endpoints } from './endpoints';
@@ -17,7 +18,7 @@ export const postCapture = (params: {
   platform: string;
   cookieEnabled: boolean;
   darkMode: boolean;
-}): Promise<ContactPOSTPayload>  => {
+}): Promise<ApiError | ContactPOSTPayload>  => {
   const apiConfig = {
     headers: {},
     params: params
@@ -31,7 +32,7 @@ export const postMonitor = (params: {
   page: string
   prevPage?: string
   newVisit?: string
-}): Promise<ContactPOSTPayload>  => {
+}): Promise<ApiError | ContactPOSTPayload>  => {
   const apiConfig = {
     headers: {},
     params: params

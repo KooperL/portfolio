@@ -9,21 +9,22 @@ import { ReactP5Wrapper } from "react-p5-wrapper";
 import sketchWrapper from "../../components/p5/box";
 import { Button } from "../../components/Button";
 import { useAccessToken } from "../authContext/context";
-import { getBlogHome, getUserView } from "../App/api/forumApis";
+import { getForumHome, getUserView } from "../App/api/forumApis";
 import { forumPath } from "../App/api/types";
 import { Link, Navigate, useLocation } from "react-router-dom";
-import { BlogRouteType } from "../App/routeTypes";
+import { ForumRouteType } from "../App/routeTypes";
 import Redirect from "../../components/Redirect"
-import BlogItem from "../../components/BlogItem";
-import { BlogUserGETInitialState, BlogUserGETResponse } from "./types";
+import ForumItem from "../../components/ForumItem";
+import { ForumUserGETInitialState, ForumUserGETResponse } from "./types";
+import ErrorPage from "../ErrorPage";
 
 
 interface Props {
   dataCall: Function; 
 }
 
-function BlogHomePage(props: Props): JSX.Element {
-  const [state, setState] = useState({...BlogUserGETInitialState});
+function ForumHomePage(props: Props): JSX.Element {
+  const [state, setState] = useState({...ForumUserGETInitialState});
   // const [POSTstate, setPOSTState] = useState({...ContactPOSTInitialState});
   const [scheme, setScheme] = useContext(SchemeContext);
   const [token, setToken] = useAccessToken();
@@ -34,11 +35,11 @@ function BlogHomePage(props: Props): JSX.Element {
     if(!token) {return}
     props.dataCall({
       session_id: sessionStorage.getItem('session_id'),
-    }, token, user).then((resp: BlogUserGETResponse) => {
+    }, token, user).then((resp: ForumUserGETResponse) => {
       setState({
         details: resp,
         error: false,
-        errorMessage: '',
+        errorMessage: null,
         loading: false
       });
     }).catch((err: any) => {
@@ -61,15 +62,13 @@ function BlogHomePage(props: Props): JSX.Element {
   if(token === '') {
     return (
       <Redirect
-        destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogRegister}`}
+        destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumRegister}`}
       />
     )
   }
-  if(state.error) {
+  if(state.error && state.errorMessage) {
     return (
-      <div>
-        {JSON.stringify(state.errorMessage)}
-      </div>
+      <ErrorPage error={state.errorMessage} />
     );
   }
   if(state.details && state.details.data) {
@@ -85,7 +84,7 @@ function BlogHomePage(props: Props): JSX.Element {
             <div className="posts">
                 {/** @ts-ignore */}
                 {data.map((catPost, catPostIndex) => (
-                  <BlogItem key={catPostIndex} data={catPost}/>
+                  <ForumItem key={catPostIndex} data={catPost}/>
                 ))}
               </div>
             </div>
@@ -98,7 +97,7 @@ function BlogHomePage(props: Props): JSX.Element {
 
 const enhance = (): JSX.Element => {
   return(
-    <BlogHomePage dataCall={getUserView} />
+    <ForumHomePage dataCall={getUserView} />
   ) 
 };
 

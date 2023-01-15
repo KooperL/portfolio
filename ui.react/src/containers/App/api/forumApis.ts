@@ -1,17 +1,18 @@
+import { ApiError } from '../../../api/apiErrorHandler';
 import { get, post } from '../../../api/restApi';
-import { BlogHomeGETResponse } from '../../forumHomePage/types';
-import { BlogLoginPOSTPayload, BlogLoginPOSTResponse, BlogRegisterPOSTPayload, BlogRegisterPOSTResponse } from '../../forumLoginPage/types';
-import { BlogPostCreatePOSTPayload } from '../../forumPostCreatePage/types';
-import { BlogPostViewGETPayload } from '../../forumPostViewPage/types';
-import { BlogUserGETResponse } from '../../forumUserPage/types';
+import { ForumHomeGETResponse } from '../../forumHomePage/types';
+import { ForumLoginPOSTPayload, ForumLoginPOSTResponse, ForumRegisterPOSTPayload, ForumRegisterPOSTResponse } from '../../forumLoginPage/types';
+import { ForumPostCreatePOSTPayload } from '../../forumPostCreatePage/types';
+import { ForumPostViewGETPayload } from '../../forumPostViewPage/types';
+import { ForumUserGETResponse } from '../../forumUserPage/types';
 import { endpoints } from './endpoints';
 import { Payload } from './types';
 
 
-export const postBlogRegister = (
-  data: BlogRegisterPOSTPayload,
+export const postForumRegister = (
+  data: ForumRegisterPOSTPayload,
   authBasic: string
-  ): Promise<BlogRegisterPOSTResponse>  => {
+  ): Promise<ApiError | ForumRegisterPOSTResponse>  => {
   const apiConfig = {
     headers: {'Authorization': `Basic ${authBasic}`},//, 'Access-Control-Allow-Credentials': 'true'},
     data: data
@@ -20,10 +21,10 @@ export const postBlogRegister = (
 }
 // snap send solve
 
-export const postBlogLogin = (
-  data: BlogLoginPOSTPayload,
+export const postForumLogin = (
+  data: ForumLoginPOSTPayload,
   authBasic: string
-): Promise<BlogLoginPOSTResponse>  => {
+): Promise<ApiError | ForumLoginPOSTResponse>  => {
   const apiConfig = {
     headers: {'Authorization': `Basic ${authBasic}`},//, 'Access-Control-Allow-Credentials': 'true'},
     data: data,
@@ -32,10 +33,10 @@ export const postBlogLogin = (
   return post(endpoints['forumLogin'], apiConfig);
 }
 
-export const postBlogLogout = (
-  data: BlogLoginPOSTPayload,
+export const postForumLogout = (
+  data: ForumLoginPOSTPayload,
   authJWT: string
-): Promise<BlogRegisterPOSTResponse>  => {
+): Promise<ApiError | ForumRegisterPOSTResponse>  => {
   const apiConfig = {
     headers: {'Authorization': `Bearer ${authJWT}`},//, 'Access-Control-Allow-Credentials': 'true'},
     data: data,
@@ -44,11 +45,11 @@ export const postBlogLogout = (
   return post(endpoints['forumLogout'], apiConfig);
 }
 
-export const postBlogRefresh = (
+export const postForumRefresh = (
   data: {
     session_id: string;
   },
-): Promise<BlogLoginPOSTResponse>  => {
+): Promise<ApiError | ForumLoginPOSTResponse>  => {
   const apiConfig = {
     data: data,
     // headers: {'Access-Control-Allow-Credentials': 'true'}
@@ -59,9 +60,9 @@ export const postBlogRefresh = (
 }
 
 export const postPostCreate = (
-  data: BlogPostCreatePOSTPayload,
+  data: ForumPostCreatePOSTPayload,
   authJWT: string
-): Promise<BlogLoginPOSTPayload>  => {
+): Promise<ApiError | ForumLoginPOSTPayload>  => {
   const apiConfig = {
     headers: {'Authorization': `Bearer ${authJWT}`},
     data: data
@@ -70,10 +71,10 @@ export const postPostCreate = (
 }
 
 export const getPostView = (
-  data: BlogPostViewGETPayload,
+  data: ForumPostViewGETPayload,
   authJWT: string,
   id: number
-): Promise<BlogLoginPOSTPayload>  => {
+): Promise<ApiError | ForumLoginPOSTPayload>  => {
   console.log(data)
   const apiConfig = {
     headers: {'Authorization': `Bearer ${authJWT}`, 'content-type': 'application/json', 'content-length': JSON.stringify(data).length},
@@ -82,10 +83,10 @@ export const getPostView = (
   return post(`${endpoints['forumPost']}${id}`, apiConfig);
 }
 
-export const getBlogHome = (
-  params: BlogLoginPOSTPayload,
+export const getForumHome = (
+  params: ForumLoginPOSTPayload,
   authJWT: string,
-): Promise<BlogHomeGETResponse>  => {
+): Promise<ApiError | ApiError | ForumHomeGETResponse>  => {
   const apiConfig = {
     headers: {'Authorization': `Bearer ${authJWT}`},
     params: params,
@@ -95,10 +96,10 @@ export const getBlogHome = (
 }
 
 export const getUserView = (
-  data: BlogPostViewGETPayload,
+  data: ForumPostViewGETPayload,
   authJWT: string,
   username: string
-): Promise<BlogUserGETResponse>  => {
+): Promise<ApiError | ApiError | ForumUserGETResponse>  => {
   const apiConfig = {
     headers: {'Authorization': `Bearer ${authJWT}`},
     params: data,

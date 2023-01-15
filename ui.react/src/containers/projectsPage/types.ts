@@ -1,7 +1,9 @@
+import { ApiError } from "../../api/apiErrorHandler";
+
 export interface ProjectsState {
   details?: ProjectsPayload;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
@@ -19,6 +21,6 @@ export interface ProjectsPayload {
 
 export const ProjectsInitialState: ProjectsState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: true
 } as const;

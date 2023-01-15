@@ -9,14 +9,15 @@ import { ReactP5Wrapper } from "react-p5-wrapper";
 import sketchWrapper from "../../components/p5/box";
 import { Button } from "../../components/Button";
 import { useAccessToken } from "../authContext/context";
-import { BlogLoginPOSTInitialState, BlogLoginPOSTPayload, BlogLoginPOSTResponse, BlogRegisterPOSTPayload, BlogRegisterPOSTResponse } from "./types";
-import { postBlogLogin, postBlogRegister } from "../App/api/forumApis";
+import { ForumLoginPOSTInitialState, ForumLoginPOSTPayload, ForumLoginPOSTResponse, ForumRegisterPOSTPayload, ForumRegisterPOSTResponse } from "./types";
+import { postForumLogin, postForumRegister } from "../App/api/forumApis";
 import { forumPath } from "../App/api/types";
 import Redirect from "../../components/Redirect"
-import { BlogRouteType } from "../App/routeTypes";
+import { ForumRouteType } from "../App/routeTypes";
 import { IslandCenter } from "../../templates/IslandCenter";
 import { Input } from "../../components/Input";
-
+import Modal from "../../components/Modal/Modal";
+import { termsAndConditions } from "../../assets/TermsAndConditions";
 
 declare global {
   interface PasswordCredentialConstructor extends PasswordCredential {
@@ -34,12 +35,20 @@ interface Props {
   dataPostLogin: Function; 
 }
 
+
 // https://github.com/Nooruddin-code/english-words-Json/blob/master/words_dictionary.json
 
-const commonNouns = ['time', 'year', 'people', 'way', 'day', 'man', 'thing', 'woman', 'life', 'child', 'world', 'school', 'state', 'family', 'student', 'group', 'country', 'problem', 'hand', 'part', 'place', 'case', 'week', 'company', 'system', 'program', 'question', 'work', 'government', 'number', 'night', 'point', 'home', 'water', 'room', 'mother', 'area', 'money', 'story', 'fact', 'month', 'lot', 'right', 'study', 'book', 'eye', 'job', 'word', 'business', 'issue', 'side', 'kind', 'head', 'house', 'service', 'friend', 'father', 'power', 'hour', 'game', 'line', 'end', 'member', 'law', 'car', 'city', 'community', 'Name', 'president', 'team', 'minute', 'idea', 'kid', 'body', 'information', 'back', 'parent', 'face', 'others', 'level', 'office', 'door', 'health', 'person', 'art', 'war', 'history', 'party', 'result', 'change', 'morning', 'reason', 'research', 'girl', 'guy', 'moment', 'air', 'teacher', 'force', 'education']
 
-function BlogLoginPage(props: Props): JSX.Element {
-  const [POSTstate, setPOSTState] = useState({...BlogLoginPOSTInitialState})
+function generateUsername() {
+  const adjectives = ["happy", "exciting", "adorable", "clever", "elegant"];
+  const nouns = ["otter", "penguin", "unicorn", "rainbow", "puppy", "student", "youtuber"];
+  const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+  const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
+  return `${randomAdjective}_${randomNoun}${new Array(2).fill(0).map((_) => Math.floor(Math.random()*10)).join('')}`;
+}
+
+function ForumLoginPage(props: Props): JSX.Element {
+  const [POSTstate, setPOSTState] = useState({...ForumLoginPOSTInitialState})
   const [usernameLogin, setUsernameLogin] = useState('');
   const [passwordLogin, setPasswordLogin] = useState('');
   const [usernameRegister, setUsernameRegister] = useState('');
@@ -51,9 +60,8 @@ function BlogLoginPage(props: Props): JSX.Element {
   const navigate = useNavigate();
   // useAccessToken()
 
-  function generateUsername() {
-    return `${commonNouns[Math.floor(Math.random() * commonNouns.length)]}${new Array(4).fill(0).map((_) => Math.floor(Math.random()*10)).join('')}`
-  }
+
+
   function generatePassword(length: number) {
     return Math.random().toString(16).substr(2, length);
   }
@@ -63,16 +71,16 @@ function BlogLoginPage(props: Props): JSX.Element {
     setPasswordRegister(generatePassword(16))
   }, []);
 
-  const handleSubmitRegister = (event: React.FormEvent<HTMLFormElement>, payload: BlogRegisterPOSTPayload, authToken: string) => {
+  const handleSubmitRegister = (event: React.FormEvent<HTMLFormElement>, payload: ForumRegisterPOSTPayload, authToken: string) => {
     if(hasRegistered) {return}
     setPOSTState({...POSTstate, loading: true});
     event.preventDefault();
-    props.dataPostRegister(payload, authToken).then((resp: BlogRegisterPOSTResponse) => {
+    props.dataPostRegister(payload, authToken).then((resp: ForumRegisterPOSTResponse) => {
       if(resp.success) {
         setPOSTState({
           details: resp,
           error: false,
-          errorMessage: '',
+          errorMessage: null,
           loading: false
         });
         setHasRegistered(true)
@@ -96,15 +104,15 @@ function BlogLoginPage(props: Props): JSX.Element {
   }
   
 
-  const handleSubmitLogin = (event: React.FormEvent<HTMLFormElement>, payload: BlogLoginPOSTPayload, authToken: string) => {
+  const handleSubmitLogin = (event: React.FormEvent<HTMLFormElement>, payload: ForumLoginPOSTPayload, authToken: string) => {
     setPOSTState({...POSTstate, loading: true});
     event.preventDefault();
-    props.dataPostLogin(payload, authToken).then((resp: BlogLoginPOSTResponse) => {
+    props.dataPostLogin(payload, authToken).then((resp: ForumLoginPOSTResponse) => {
       if(resp.success) {
         setPOSTState({
           details: resp,
           error: false,
-          errorMessage: '',
+          errorMessage: null,
           loading: false
         });
         // add auth token to context
@@ -123,6 +131,7 @@ function BlogLoginPage(props: Props): JSX.Element {
     })
   }
 
+  
 
   useEffect(() => {
     document.title = `Forum Login | ${scheme.title}`;
@@ -134,10 +143,11 @@ function BlogLoginPage(props: Props): JSX.Element {
   if(token !== '' && token !== null) {
     return (
       <Redirect
-        destination={`/${BlogRouteType.BlogHome}`}
+        destination={`/${ForumRouteType.ForumHome}`}
       />
     )
   }
+  const tnc = termsAndConditions()
   return (
     <IslandCenter>
       <div className="forumLoginPage">
@@ -154,10 +164,28 @@ function BlogLoginPage(props: Props): JSX.Element {
                 <Input label="Username: " value={usernameRegister} readOnly={true} onChange={(e) => {e.target.value = usernameRegister}}/>
                 <Input label="Password: " value={passwordRegister} readOnly={true} onChange={(e) => {e.target.value = passwordRegister}}/>
                 <div id="button">
-                  <Button colours={scheme} />
+                <Modal
+              textSmall={<Button colours={scheme} action="button" />}
+              text={() => (
+                <>
+                  <div>
+                      {Object.keys(tnc).map(section => (
+                          <div key={section}>
+                              <h3>{section}</h3>
+                              {Object.keys(tnc[section]).map((text, ind)=> (
+                                  <p key={text}>{`${tnc[section][ind]}`}</p>
+                              ))}
+                          </div>
+                      ))}
+                  </div>
+                  <Button colours={scheme} label="I agree"/>
+                </>
+              )}>
+            </Modal>
                 </div>
               </form>
             </div>
+
             <div id="login">
               <h2 className='main-heading' style={{color: scheme.body.h1}}>Login</h2>
               <form onSubmit={((e) => handleSubmitLogin(e, {
@@ -178,7 +206,7 @@ function BlogLoginPage(props: Props): JSX.Element {
 
 const enhance = (): JSX.Element => {
   return(
-    <BlogLoginPage dataPostLogin={postBlogLogin} dataPostRegister={postBlogRegister}/>
+    <ForumLoginPage dataPostLogin={postForumLogin} dataPostRegister={postForumRegister}/>
   ) 
 };
 

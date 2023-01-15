@@ -1,7 +1,9 @@
+import { ApiError } from "../../api/apiErrorHandler";
+
 export interface RandomBioState {
   details?: RandomBioPayload;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
@@ -21,6 +23,6 @@ export interface RandomBioPOST {
 
 export const RandomBioInitialState: RandomBioState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: false
 } as const;

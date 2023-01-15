@@ -11,6 +11,7 @@ import sketchWrapper from "../../components/p5/box";
 import ButtonRedir from "../../components/ButtonRedir";
 import { IslandLeft } from "../../templates/IslandLeft";
 import TypeLookup from "../../components/TypeLookup";
+import ErrorPage from "../ErrorPage";
 
 interface Props {
   dataCall: Function; 
@@ -29,7 +30,7 @@ function HomePage(props: Props): JSX.Element {
       setState({
         details: resp,
         error: false,
-        errorMessage: '',
+        errorMessage: null,
         loading: false
       });
     }).catch((err: any) => {
@@ -60,11 +61,9 @@ function HomePage(props: Props): JSX.Element {
   if(state.loading) {
    return <Spinner/>
   }
-  if(state.error) {
+  if(state.error && state.errorMessage) {
     return (
-      <div>
-        {JSON.stringify(state.errorMessage)}
-      </div>
+      <ErrorPage error={state.errorMessage} />
     );
   }
   if(state.details) {

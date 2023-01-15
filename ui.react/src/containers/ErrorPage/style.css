@@ -1,0 +1,31 @@
+.errorPage {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.errorPage .container {
+  min-width: 30%;
+  max-width: 50%;
+  display: flex;
+  height: 25vh;
+}
+
+.errorPage .code {
+  font-size: 25vh;
+  line-height: 25vh;
+  padding: 0px;
+  margin: 0px;
+  position: relative;
+  display: inline-block;
+}
+
+.errorPage .details {
+  font-size: 3vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: left;
+}

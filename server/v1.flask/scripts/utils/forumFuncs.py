@@ -2,7 +2,7 @@ import datetime
 import controllers.database
 
 
-def trackBlogFunctionsCalled(forumUsername, session_id, funct):
+def trackForumFunctionsCalled(forumUsername, session_id, funct):
   insertQuery = """INSERT INTO forum_user_tracking VALUES (
     ?, ?, ?, ?, ?
   );"""

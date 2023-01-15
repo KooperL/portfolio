@@ -1,7 +1,9 @@
+import { ApiError } from "../../api/apiErrorHandler";
+
 export interface PropertyState {
   details?: PropertyPayload | PropertySearchPayload;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
@@ -65,6 +67,6 @@ export interface PropertyPOST {
 
 export const PropertyInitialState: PropertyState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: false
 };

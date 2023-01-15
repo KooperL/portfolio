@@ -22,7 +22,7 @@ func Refresh(w http.ResponseWriter, r *http.Request) {
 
 		var body types.SessionId
 		utils.ParseReqBody(r, &body)
-		// lib.TrackBlogFunctionsCalled(_______, body.SessionID, "login")
+		// lib.TrackForumFunctionsCalled(_______, body.SessionID, "login")
 
 		refreshTokenSearchQuery := "SELECT count(*) FROM forum_refresh_tokens where forum_refresh_token = ?"
 		tokenRows := database.SimpleQuery[int64](refreshTokenSearchQuery, []any{refresh_token.Value})
@@ -38,7 +38,7 @@ func Refresh(w http.ResponseWriter, r *http.Request) {
 		}
 
 		userSearchQuery := "SELECT forum_username, role_id FROM forum_users where id = ?"
-		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[database.BlogUsersSimpleDB](userSearchQuery, []any{refresh_token_decoded.UserID}))
+		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[database.ForumUsersSimpleDB](userSearchQuery, []any{refresh_token_decoded.UserID}))
 
 		if len(userSearchTraffic) != 1 {
 			responses.BuildUnauthorised(w)

@@ -9,7 +9,7 @@ import { SecondaryPage } from '../secondaryPage/loadable';
 import { SeqAlignPage } from '../seqAlignPage/loadable';
 import { TictactoePage } from '../tictactoePage/loadable';
 import { RandomBioPage } from '../randomBioPage/loadable';
-import { BlogRouteType, IndexRouteType, ProjectsRouteType } from './routeTypes';
+import { ForumRouteType, IndexRouteType, ProjectsRouteType } from './routeTypes';
 import { SchemeSettings } from '../context/colourScheme';
 import { MinesweeperPage } from '../minesweeperPage/loadable';
 import { JsSimPage } from '../jsSimPage/loadable';
@@ -17,11 +17,11 @@ import { ContactPage } from '../contactPage/loadable';
 import { AboutPage } from '../aboutPage/loadable';
 import { Logger } from '../../components/Logger/loadable';
 import { AccessTokenProvider } from '../authContext/context';
-import { BlogHomePage } from '../forumHomePage/loadable';
-import { BlogUserPage } from '../forumUserPage/loadable';
-import { BlogLoginPage } from '../forumLoginPage/loadable';
-import { BlogPostCreatePage } from '../forumPostCreatePage/loadable';
-import { BlogPostViewPage } from '../forumPostViewPage/loadable';
+import { ForumHomePage } from '../forumHomePage/loadable';
+import { ForumUserPage } from '../forumUserPage/loadable';
+import { ForumLoginPage } from '../forumLoginPage/loadable';
+import { ForumPostCreatePage } from '../forumPostCreatePage/loadable';
+import { ForumPostViewPage } from '../forumPostViewPage/loadable';
 // import { Render } from '../renderer/renderer v3/cube/Render';
 // import { Render } from '../renderer/grid/Render';
 
@@ -60,13 +60,13 @@ function App() {
               {/* <Route path={`${RouteType.Heatmap}`} element={<SeqAlignPage />} /> */}
               {/* <Route path="*" element={<NoPage />} /> */}
             </Route>
-            <Route path={BlogRouteType.BlogHome} > 
-              <Route index element={<BlogHomePage />} />
-              <Route path={`${BlogRouteType.BlogRegister}`} element={<BlogLoginPage />} />
-              <Route path={`${BlogRouteType.BlogLogin}`} element={<BlogLoginPage />} />
-              <Route path={`${BlogRouteType.BlogPostCreate}`} element={<BlogPostCreatePage />} />
-              <Route path={`${BlogRouteType.BlogPost}/:postId`} element={<BlogPostViewPage />} />
-              <Route path={`${BlogRouteType.BlogUser}/:username`} element={<BlogUserPage />} />
+            <Route path={ForumRouteType.ForumHome} > 
+              <Route index element={<ForumHomePage />} />
+              <Route path={`${ForumRouteType.ForumRegister}`} element={<ForumLoginPage />} />
+              <Route path={`${ForumRouteType.ForumLogin}`} element={<ForumLoginPage />} />
+              <Route path={`${ForumRouteType.ForumPostCreate}`} element={<ForumPostCreatePage />} />
+              <Route path={`${ForumRouteType.ForumPost}/:postId`} element={<ForumPostViewPage />} />
+              <Route path={`${ForumRouteType.ForumUser}/:username`} element={<ForumUserPage />} />
             </Route>
           </Routes>
         </Router>

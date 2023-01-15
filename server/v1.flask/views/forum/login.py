@@ -31,7 +31,7 @@ def forumLoginHome():
       return scripts.utils.responses.build_bad_req()
     session_id = data.get('session_id')
 
-    scripts.utils.forumFuncs.trackBlogFunctionsCalled(decodedStr[0], session_id, inspect.stack()[0][3])
+    scripts.utils.forumFuncs.trackForumFunctionsCalled(decodedStr[0], session_id, inspect.stack()[0][3])
 
     userSearchQuery = 'SELECT id, forum_password_hash, forum_password_salt, role_id FROM forum_users where ? = "None" and forum_username = ?'    # expanding string when only one item in tuple ??? have to add second arg
     userRow = controllers.database.conn.fetch(userSearchQuery, ('None', decodedStr[0].lower()))

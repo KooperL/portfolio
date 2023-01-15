@@ -1,7 +1,9 @@
+import { ApiError } from "../../api/apiErrorHandler";
+
 export interface SeqAlignState {
   details?: SeqAlignPayload;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
@@ -31,7 +33,7 @@ export interface SeqAlignPOST {
 
 export const SeqAlignInitialState: SeqAlignState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: false
 } as const;
 

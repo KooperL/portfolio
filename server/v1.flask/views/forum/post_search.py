@@ -28,9 +28,9 @@ def forumPostViewHome(authPayload, *args, **kwargs):
     if 'session_id' not in data:
       return scripts.utils.responses.build_bad_req()
     session_id = data.get('session_id')
-    scripts.utils.forumFuncs.trackBlogFunctionsCalled(username, session_id, inspect.stack()[0][3])
+    scripts.utils.forumFuncs.trackForumFunctionsCalled(username, session_id, inspect.stack()[0][3])
     
-    pullBlogQuery = '''
+    pullForumQuery = '''
       SELECT 
         forum_posts.id,
         forum_posts.date,
@@ -47,7 +47,7 @@ def forumPostViewHome(authPayload, *args, **kwargs):
       where
         forum_posts.id = ? and
         (forum_posts.visible = 1 or forum_posts.forum_user_id = ? or ? = "True");'''
-    postRaw = controllers.database.conn.fetch(pullBlogQuery, (id, user_id, (role==999)))
+    postRaw = controllers.database.conn.fetch(pullForumQuery, (id, user_id, (role==999)))
 
     if len(postRaw) != 1:
       return scripts.utils.responses.build_not_found()
@@ -66,12 +66,12 @@ def forumPostViewHome(authPayload, *args, **kwargs):
     #   scripts.utils.responses.build_not_found()
 
 
-    addBlogViewQuery = 'INSERT INTO forum_post_views VALUES (?, ?, ?, ?);'
-    controllers.database.conn.fetch(addBlogViewQuery, (None, datetime.datetime.now(), user_id, id))
+    addForumViewQuery = 'INSERT INTO forum_post_views VALUES (?, ?, ?, ?);'
+    controllers.database.conn.fetch(addForumViewQuery, (None, datetime.datetime.now(), user_id, id))
 
     # Distinct views??
-    pullBlogViewsQuery = 'SELECT count(*) from forum_post_views where ? = "None" and forum_post_id = ?;'
-    postViewsRaw = controllers.database.conn.fetch(pullBlogViewsQuery, ('None', id))[0][0]
+    pullForumViewsQuery = 'SELECT count(*) from forum_post_views where ? = "None" and forum_post_id = ?;'
+    postViewsRaw = controllers.database.conn.fetch(pullForumViewsQuery, ('None', id))[0][0]
 
     post = {
       **post,

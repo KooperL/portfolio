@@ -1,9 +1,12 @@
  // @ts-nocheck
 
-import React from "react";
+import React, { useContext } from "react";
+import { SchemeContext } from "../../containers/context/colourScheme";
 import './Spinner.css';
 
 function Spinner() {
+  const [scheme, setScheme] = useContext(SchemeContext);
+
   return (
     <>
       <svg className="spinner" viewBox="0 0 50 50">
@@ -14,6 +17,9 @@ function Spinner() {
           r="20"
           fill="none"
           strokeWidth="5"
+          style={{
+            stroke: scheme.body.h1
+        }}
         ></circle>
       </svg>
     </>

@@ -8,8 +8,9 @@ import Hamburger from '../Hamburger'
 import { useLocation } from 'react-router-dom'
 import { useAccessToken } from '../../containers/authContext/context';
 import { forumPath } from '../../containers/App/api/types';
-import { BlogRouteType } from '../../containers/App/routeTypes';
-import { postBlogLogout } from '../../containers/App/api/forumApis';
+import { ForumRouteType } from '../../containers/App/routeTypes';
+import { postForumLogout } from '../../containers/App/api/forumApis';
+import { ForumRegisterPOSTResponse } from '../../containers/forumLoginPage/types';
 
 
 // style="width: 100000px; transform: translateX(-3561px); animation: 12.9416s linear 0s infinite normal none running marqueeAnimation-77345020;"
@@ -46,12 +47,13 @@ function Navbar(props: {isVertical: boolean}) {
         // Signed in
 
         const username = JSON.parse(atob(token.split('.')[1]))['username']
-        const forum_create = <ButtonRedir destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPostCreate}`} label='create' local={true} />
-        const forum_profile = <ButtonRedir destination={`/${BlogRouteType.BlogHome}/${BlogRouteType.BlogUser}/${username}`} label='My posts' local={true} />
-        const forum_sign_out = <ButtonRedir destination={`/${BlogRouteType.BlogHome}`} label='Log out' local={true}
+        const forum_create = <ButtonRedir destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumPostCreate}`} label='create' local={true} />
+        const forum_profile = <ButtonRedir destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumUser}/${username}`} label='My posts' local={true} />
+        const forum_sign_out = <ButtonRedir destination={`/${ForumRouteType.ForumHome}`} label='Log out' local={true}
           onClickCallback={
             (() => {
-              postBlogLogout({session_id: sessionStorage.getItem('session_id') ?? ''}, token).then(resp => {
+              postForumLogout({session_id: sessionStorage.getItem('session_id') ?? ''}, token).then(resp => {
+                resp = resp as ForumRegisterPOSTResponse
                 if(resp.success) {
                   setToken(null)
                 }
@@ -65,18 +67,19 @@ function Navbar(props: {isVertical: boolean}) {
         
         const HamburgerData = <Hamburger data={[
           {
-            destination: `/${BlogRouteType.BlogHome}/${BlogRouteType.BlogPostCreate}`,
+            destination: `/${ForumRouteType.ForumHome}/${ForumRouteType.ForumPostCreate}`,
             label: 'create'
           },
           {
-            destination: `/${BlogRouteType.BlogHome}/${BlogRouteType.BlogUser}/${username}`,
+            destination: `/${ForumRouteType.ForumHome}/${ForumRouteType.ForumUser}/${username}`,
             label: 'my posts'
           },
           {
-            destination: `/${BlogRouteType.BlogHome}`,
+            destination: `/${ForumRouteType.ForumHome}`,
             label: 'logout',
             callback: (() => {
-              postBlogLogout({session_id: sessionStorage.getItem('session_id') ?? ''}, token).then(resp => {
+              postForumLogout({session_id: sessionStorage.getItem('session_id') ?? ''}, token).then(resp => {
+                resp = resp as ForumRegisterPOSTResponse
                 if(resp.success) {
                   setToken(null)
                 }

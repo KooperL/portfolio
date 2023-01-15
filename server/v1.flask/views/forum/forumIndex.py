@@ -29,7 +29,7 @@ def forumHome(authPayload):
     user_id = authPayload.get('payload').get('userId')
     username = authPayload.get('payload').get('username')
     role = authPayload.get('payload').get('role')
-    scripts.utils.forumFuncs.trackBlogFunctionsCalled(username, session_id, inspect.stack()[0][3])
+    scripts.utils.forumFuncs.trackForumFunctionsCalled(username, session_id, inspect.stack()[0][3])
 
     if category:
       categoryQuery = 'SELECT id from forum_post_category where "None" = ? and name = ?;'
@@ -60,8 +60,8 @@ def forumHome(authPayload):
       #   return scripts.utils.responses.build_not_found()
 
       for a in categoryPosts:
-        pullBlogViewsQuery = 'SELECT count(*) from forum_post_views where ? = "None" and forum_post_id = ?;'
-        postViewsRaw = controllers.database.conn.fetch(pullBlogViewsQuery, ('None', a[0]))[0][0]
+        pullForumViewsQuery = 'SELECT count(*) from forum_post_views where ? = "None" and forum_post_id = ?;'
+        postViewsRaw = controllers.database.conn.fetch(pullForumViewsQuery, ('None', a[0]))[0][0]
 
         OrganisedPosts.append({
           'id': a[0],
@@ -108,8 +108,8 @@ def forumHome(authPayload):
       #   return scripts.utils.responses.build_not_found()
 
       for a in generalResults:
-        pullBlogViewsQuery = 'SELECT count(*) from forum_post_views where ? = "None" and forum_post_id = ?;'
-        postViewsRaw = controllers.database.conn.fetch(pullBlogViewsQuery, ('None', a[0]))[0][0]
+        pullForumViewsQuery = 'SELECT count(*) from forum_post_views where ? = "None" and forum_post_id = ?;'
+        postViewsRaw = controllers.database.conn.fetch(pullForumViewsQuery, ('None', a[0]))[0][0]
 
         if a[5] not in OrganisedPosts:
           OrganisedPosts[a[5]] = [{
@@ -183,8 +183,8 @@ def forumHome(authPayload):
         if len(categoryPosts):
           OrganisedPosts[i[1]] = []
         for a in categoryPosts:
-          pullBlogViewsQuery = 'SELECT count(*) from forum_post_views where ? = "None" and forum_post_id = ?;'
-          postViewsRaw = controllers.database.conn.fetch(pullBlogViewsQuery, ('None', a[0]))[0][0]
+          pullForumViewsQuery = 'SELECT count(*) from forum_post_views where ? = "None" and forum_post_id = ?;'
+          postViewsRaw = controllers.database.conn.fetch(pullForumViewsQuery, ('None', a[0]))[0][0]
 
           OrganisedPosts[i[1]].append({
             'id': a[0],

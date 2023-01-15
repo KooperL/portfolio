@@ -1,8 +1,10 @@
-export interface BlogLoginPOSTPayload {
+import { ApiError } from "../../api/apiErrorHandler";
+
+export interface ForumLoginPOSTPayload {
   session_id: string;
 }
 
-export interface BlogLoginPOSTResponse {
+export interface ForumLoginPOSTResponse {
   success: boolean;
   type?: string;
   accessToken?: string;
@@ -10,50 +12,50 @@ export interface BlogLoginPOSTResponse {
   error?: string;
 }
 
-export interface BlogLoginPOSTState {
-  details?: BlogLoginPOSTResponse;
+export interface ForumLoginPOSTState {
+  details?: ForumLoginPOSTResponse;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
-export const BlogLoginPOSTInitialState: BlogLoginPOSTState = {
+export const ForumLoginPOSTInitialState: ForumLoginPOSTState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: false
 } as const;
 
 
-export interface BlogRegisterPOSTPayload {
-  // data: BlogRegisterState;
+export interface ForumRegisterPOSTPayload {
+  // data: ForumRegisterState;
   session_id: string;
 }
 
-export interface BlogRegisterPOSTResponse {
+export interface ForumRegisterPOSTResponse {
   success: boolean;
   error?: string
 }
 
-export interface BlogRegisterState {
+export interface ForumRegisterState {
   forum_username: string;
   forum_password: string;
 }
 
-export const BlogRegisterInitialState: BlogRegisterState = {
+export const ForumRegisterInitialState: ForumRegisterState = {
   forum_username: '',
   forum_password: ''
 }
 
-export interface BlogRegisterPOSTState {
-  details?: BlogRegisterPOSTResponse;
+export interface ForumRegisterPOSTState {
+  details?: ForumRegisterPOSTResponse;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
-export const BlogRegisterPOSTInitialState: BlogRegisterPOSTState = {
+export const ForumRegisterPOSTInitialState: ForumRegisterPOSTState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: false
 } as const;
 

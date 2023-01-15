@@ -1,20 +1,21 @@
+import { ApiError } from "../../api/apiErrorHandler";
 import { forumItem } from "../common/types";
 
-export interface BlogUserGETResponse {
+export interface ForumUserGETResponse {
   success: boolean;
   data?: forumItem[];
   error?: string;
 }
 
-export interface BlogUserGETState {
-  details?: BlogUserGETResponse;
+export interface ForumUserGETState {
+  details?: ForumUserGETResponse;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
-export const BlogUserGETInitialState: BlogUserGETState = {
+export const ForumUserGETInitialState: ForumUserGETState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: false
 } as const;

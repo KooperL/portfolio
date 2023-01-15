@@ -27,7 +27,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 
 		var body types.SessionId
 		utils.ParseReqBody(r, &body)
-		lib.TrackBlogFunctionsCalled(creds[0], body.SessionID, "register")
+		lib.TrackForumFunctionsCalled(creds[0], body.SessionID, "register")
 
 		forumUserExistsQuery := `
       SELECT 
@@ -48,8 +48,8 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		salt := utils.GenerateSalt(utils.HandleErrorDeconstruct(strconv.ParseInt(os.Getenv("forum-register-salt-length"), 10, 32)))
 		hash := utils.PBKDF2(creds[1], salt, 1000, 32)
 
-		insertBlogUserQuery := "INSERT INTO forum_users VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
-		database.Insert(insertBlogUserQuery, []interface{}{nil, dt, strings.ToLower(creds[0]), hash, salt, 1, 1, 1})
+		insertForumUserQuery := "INSERT INTO forum_users VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
+		database.Insert(insertForumUserQuery, []interface{}{nil, dt, strings.ToLower(creds[0]), hash, salt, 1, 1, 1})
 
 		responses.BuildPlainSuccess(w)
 		return

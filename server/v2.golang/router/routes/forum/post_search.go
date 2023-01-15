@@ -34,9 +34,9 @@ func PostSearch(w http.ResponseWriter, r *http.Request) {
 		var body types.SessionId
 		utils.ParseReqBody(r, &body)
 
-		lib.TrackBlogFunctionsCalled(decodedToken.Username, body.SessionID, fmt.Sprintf("/post/%d", postId))
+		lib.TrackForumFunctionsCalled(decodedToken.Username, body.SessionID, fmt.Sprintf("/post/%d", postId))
 
-		pullBlogQuery := `
+		pullForumQuery := `
 		SELECT 
 			forum_posts.id as id,
 			forum_posts.date as date,
@@ -53,18 +53,18 @@ func PostSearch(w http.ResponseWriter, r *http.Request) {
 		where
 			forum_posts.id = ? and
 			(forum_posts.visible = 1 or forum_posts.forum_user_id = ? or ? = true);`
-		postRaw := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.BlogPostVerbose](pullBlogQuery, []interface{}{postId, decodedToken.UserID, (decodedToken.Role == 999)}))
+		postRaw := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumPostVerbose](pullForumQuery, []interface{}{postId, decodedToken.UserID, (decodedToken.Role == 999)}))
 
 		if len(postRaw) != 1 {
 			// fail special, 206
 		}
 
-		pullBlogViewsQuery := "SELECT count(*) from forum_post_views where forum_post_id = ?;"
-		pullBlogViews := database.SimpleQuery[int64](pullBlogViewsQuery, []interface{}{postId})
+		pullForumViewsQuery := "SELECT count(*) from forum_post_views where forum_post_id = ?;"
+		pullForumViews := database.SimpleQuery[int64](pullForumViewsQuery, []interface{}{postId})
 
-		resp := types.BlogPostResponseVerbose{
-			Views: pullBlogViews + 1,
-			BlogPostVerbose: types.BlogPostVerbose{
+		resp := types.ForumPostResponseVerbose{
+			Views: pullForumViews + 1,
+			ForumPostVerbose: types.ForumPostVerbose{
 				ID:       postRaw[0].ID,
 				Date:     postRaw[0].Date,
 				Author:   postRaw[0].Author,
@@ -79,8 +79,8 @@ func PostSearch(w http.ResponseWriter, r *http.Request) {
 		now := time.Now()
 		dt := now.Format(utils.GetTimeFormat())
 
-		addBlogViewQuery := `INSERT INTO forum_post_views VALUES (?, ?, ?, ?);`
-		database.Insert(addBlogViewQuery, []interface{}{nil, dt, decodedToken.UserID, postId})
+		addForumViewQuery := `INSERT INTO forum_post_views VALUES (?, ?, ?, ?);`
+		database.Insert(addForumViewQuery, []interface{}{nil, dt, decodedToken.UserID, postId})
 
 		return
 	} else if r.Method == http.MethodGet {

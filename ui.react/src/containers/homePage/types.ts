@@ -1,7 +1,9 @@
+import { ApiError } from "../../api/apiErrorHandler";
+
 export interface HomeState {
   details?: HomePayload;
   error?: boolean;
-  errorMessage?: string;
+  errorMessage?: ApiError | null;
   loading?: boolean;
 }
 
@@ -17,6 +19,6 @@ export interface HomePayload {
 
 export const HomeInitialState: HomeState = {
   error: false,
-  errorMessage: '',
+  errorMessage: null,
   loading: true
 } as const;
