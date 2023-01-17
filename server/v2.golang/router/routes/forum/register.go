@@ -51,7 +51,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		insertForumUserQuery := "INSERT INTO forum_users VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
 		database.Insert(insertForumUserQuery, []interface{}{nil, dt, strings.ToLower(creds[0]), hash, salt, 1, 1, 1})
 
-		responses.BuildPlainSuccess(w)
+		responses.BuildPlainSuccess(w, 200)
 		return
 	} else {
 	}

@@ -25,7 +25,7 @@ func Post(w http.ResponseWriter, r *http.Request) {
 		canPost := database.SimpleQuery[int64](validatePermsQuery, []interface{}{decodedToken.Role})
 
 		if canPost != 1 {
-			// fail
+			responses.BuildUnauthorised(w)
 		}
 		now := time.Now()
 		dt := now.Format(utils.GetTimeFormat())
