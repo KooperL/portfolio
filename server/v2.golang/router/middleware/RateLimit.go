@@ -17,8 +17,12 @@ func RateLimit(h http.HandlerFunc) http.HandlerFunc {
 		fmt.Sscan(os.Getenv("RATE_LIMIT_REQUESTS_GENERAL"), &RATE_LIMIT_REQUESTS_GENERAL)
 		fmt.Sscan(os.Getenv("RATE_LIMIT_REQUESTS_LIMITED"), &RATE_LIMIT_REQUESTS_LIMITED)
 		fmt.Sscan(os.Getenv("RATE_LIMIT_WINDOW"), &RATE_LIMIT_WINDOW)
-		pullRequest := "SELECT date FROM requests WHERE ip_address = ? ORDER BY id DESC LIMIT ?;"
-		pullRequestTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[[]string](pullRequest, []any{ip, RATE_LIMIT_REQUESTS_GENERAL}))
+		pullRequest := "SELECT date,ip_address FROM requests WHERE ip_address = ? ORDER BY id DESC LIMIT ?;"
+		pullRequestTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[struct {
+			Date      any `json:"date"`
+			IpAddress any `json:"ip_address"`
+		}](pullRequest, []any{ip, RATE_LIMIT_REQUESTS_GENERAL}))
+
 		now := time.Now()
 		dt := now.Format(utils.GetTimeFormat())
 		eventCount := 0
@@ -39,7 +43,7 @@ func RateLimit(h http.HandlerFunc) http.HandlerFunc {
 		}
 
 		for _, v := range pullRequestTraffic {
-			timeParsed := utils.HandleErrorDeconstruct(time.Parse(utils.GetTimeFormat(), v[0]))
+			timeParsed := utils.HandleErrorDeconstruct(time.Parse(utils.GetTimeFormat(), v.Date.(string)))
 			timeDiff := now.Sub(timeParsed)
 			// if int(timeDiff.Minutes()) < (RATE_LIMIT_WINDOW * int(time.Minute)) {
 			if int(timeDiff.Minutes()) < RATE_LIMIT_WINDOW {

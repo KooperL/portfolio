@@ -25,7 +25,8 @@ func PostSearch(w http.ResponseWriter, r *http.Request) {
 
 		// fmt.Println(routeVar)
 		if len(matches) < 1 {
-			// fail
+			responses.BuildBadRequest(w)
+			return
 		}
 
 		postId := utils.HandleErrorDeconstruct(strconv.ParseInt(matches, 10, 16))
@@ -56,7 +57,8 @@ func PostSearch(w http.ResponseWriter, r *http.Request) {
 		postRaw := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumPostVerbose](pullForumQuery, []interface{}{postId, decodedToken.UserID, (decodedToken.Role == 999)}))
 
 		if len(postRaw) != 1 {
-			// fail special, 206
+			responses.BuildPlainSuccess(w, 204)
+			return
 		}
 
 		pullForumViewsQuery := "SELECT count(*) from forum_post_views where forum_post_id = ?;"

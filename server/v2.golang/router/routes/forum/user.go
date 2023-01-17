@@ -23,7 +23,8 @@ func User(w http.ResponseWriter, r *http.Request) {
 
 		// fmt.Println(routeVar)
 		if len(matches) < 1 {
-			// fail
+			responses.BuildBadRequest(w)
+			return
 		}
 
 		userSearched := matches[1]
@@ -57,8 +58,9 @@ func User(w http.ResponseWriter, r *http.Request) {
 		postRaw := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumPostVerbose](pullForumQuery, []interface{}{strings.ToLower(userSearched), decodedToken.UserID, (decodedToken.Role == 999)}))
 		var posts []types.ForumPostResponseVerbose
 
-		if len(postRaw) != 1 {
-			// fail special, 206
+		if len(postRaw) < 1 {
+			responses.BuildPlainSuccess(w, 204)
+			return
 		}
 
 		for _, v := range postRaw {
