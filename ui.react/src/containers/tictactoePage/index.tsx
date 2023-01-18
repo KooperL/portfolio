@@ -9,6 +9,7 @@ import './style.css';
 import { IslandCenter } from "../../templates/IslandCenter";
 import { Gear } from "../../components/Gear";
 import { Radio } from "../../components/Radio";
+import { Button } from "../../components/Button";
 
 
 
@@ -242,23 +243,21 @@ export default function Tictactoe() {
             </div>
           ))}
         </div>
-        <div>
-          <div>
             <div className="scoreboard">
               <div className="scoreboard-item scoreboard-item-right">
                 <p>{x}'s wins</p>
                 <p>... {pPlayerWins}</p>
               </div>
-              <div>
-                <button className="scoreboard-button" onClick={(e => { newGame() })}><p>Reset board</p></button>
-              </div>
+
               <div className="scoreboard-item scoreboard-item-left">
                 <p>{o}'s wins</p>
                 <p>{sPlayerWins} ...</p>
               </div>
             </div>
-          </div>
-        </div>
+            <Button colours={scheme} callBack={(() => { newGame() })} label="Reset board" action="button"/>
+                        {/*   <div>
+                          <button className="scoreboard-button" onClick={(e => { newGame() })}><p>Reset board</p></button>
+                        </div> */}
       </div>
 
     </IslandCenter>

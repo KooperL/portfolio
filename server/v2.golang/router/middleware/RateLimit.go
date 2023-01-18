@@ -19,8 +19,8 @@ func RateLimit(h http.HandlerFunc) http.HandlerFunc {
 		fmt.Sscan(os.Getenv("RATE_LIMIT_WINDOW"), &RATE_LIMIT_WINDOW)
 		pullRequest := "SELECT date,ip_address FROM requests WHERE ip_address = ? ORDER BY id DESC LIMIT ?;"
 		pullRequestTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[struct {
-			Date      any `json:"date"`
-			IpAddress any `json:"ip_address"`
+			Date      time.Time `json:"date"`
+			IpAddress string    `json:"ip_address"`
 		}](pullRequest, []any{ip, RATE_LIMIT_REQUESTS_GENERAL}))
 
 		now := time.Now()
@@ -32,7 +32,6 @@ func RateLimit(h http.HandlerFunc) http.HandlerFunc {
 			*bolleneckAddr = RATE_LIMIT_REQUESTS_GENERAL
 		} else {
 			*bolleneckAddr = RATE_LIMIT_REQUESTS_LIMITED
-
 		}
 
 		if len(pullRequestTraffic) < bottleneck {
@@ -43,8 +42,12 @@ func RateLimit(h http.HandlerFunc) http.HandlerFunc {
 		}
 
 		for _, v := range pullRequestTraffic {
-			timeParsed := utils.HandleErrorDeconstruct(time.Parse(utils.GetTimeFormat(), v.Date.(string)))
-			timeDiff := now.Sub(timeParsed)
+			// fmt.Println("v.Date")
+			// fmt.Println(v.Date)
+			// timeParsed := utils.HandleErrorDeconstruct(time.Parse(fmt.Sprintf("%s -0700 MST", utils.GetTimeFormat()), fmt.Sprintf("%s", v.Date)))
+			// fmt.Println(timeParsed)
+			// timeDiff := now.Sub(timeParsed)
+			timeDiff := now.Sub(utils.CorrectSqliteParse(v.Date))
 			// if int(timeDiff.Minutes()) < (RATE_LIMIT_WINDOW * int(time.Minute)) {
 			if int(timeDiff.Minutes()) < RATE_LIMIT_WINDOW {
 				eventCount++
@@ -54,6 +57,8 @@ func RateLimit(h http.HandlerFunc) http.HandlerFunc {
 		w.Header().Set("X-RateLimit-Limit", fmt.Sprintf("%d", bottleneck))
 		w.Header().Set("X-RateLimit-Remaining", fmt.Sprintf("%d", bottleneck-eventCount))
 		if eventCount <= bottleneck {
+			insert := "INSERT INTO requests VALUES (?, ?, ?);"
+			database.Insert(insert, []interface{}{nil, dt, ip})
 			h(w, r)
 		} else {
 			responses.BuildTooManyRequests(w)

@@ -16,3 +16,8 @@ func TimeOffset(dt time.Time, offset int) int64 {
 	// Return the Unix timestamp for the future time
 	return future.Unix()
 }
+
+func CorrectSqliteParse(t time.Time) time.Time {
+	offset := -660
+	return t.Add(time.Duration(offset) * time.Minute)
+}

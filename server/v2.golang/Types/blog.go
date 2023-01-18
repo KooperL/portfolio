@@ -1,5 +1,7 @@
 package types
 
+import "time"
+
 type ForumIndex struct {
 	SessionId
 	Category string `json:"category"`
@@ -7,31 +9,31 @@ type ForumIndex struct {
 }
 
 type ForumPostDB struct {
-	ID            int64  `json:"id"`
-	Date          any    `json:"date"`
-	ForumUsername string `json:"forum_username"`
-	Title         string `json:"title"`
-	Body          string `json:"body"`
-	Category      string `json:"name"`
+	ID            int64     `json:"id"`
+	Date          time.Time `json:"date"`
+	ForumUsername string    `json:"forum_username"`
+	Title         string    `json:"title"`
+	Body          string    `json:"body"`
+	Category      string    `json:"name"`
 }
 
 type ForumPostResponse struct {
-	ID     int64  `json:"id"`
-	Date   any    `json:"date"`
-	Author string `json:"author"`
-	Title  string `json:"title"`
-	Body   string `json:"body"`
-	Views  int64  `json:"views"`
+	ID     int64     `json:"id"`
+	Date   time.Time `json:"date"`
+	Author string    `json:"author"`
+	Title  string    `json:"title"`
+	Body   string    `json:"body"`
+	Views  int64     `json:"views"`
 }
 
 type ForumPostVerbose struct {
-	ID       int64  `json:"id"`
-	Date     any    `json:"date"`
-	Author   string `json:"author"`
-	Title    string `json:"title"`
-	Body     string `json:"body"`
-	AuthorID string `json:"author_id"`
-	Category string `json:"category"`
+	ID       int64     `json:"id"`
+	Date     time.Time `json:"date"`
+	Author   string    `json:"author"`
+	Title    string    `json:"title"`
+	Body     string    `json:"body"`
+	AuthorID string    `json:"author_id"`
+	Category string    `json:"category"`
 }
 
 // TODO forum_postsDB.forum_user_id should be int

@@ -140,6 +140,8 @@ function ForumLoginPage(props: Props): JSX.Element {
   const encodedLogin = btoa(`${usernameLogin}:${passwordLogin}`)
   const encodedRegister = btoa(`${usernameRegister}:${passwordRegister}`)
 
+// TODO, modal is disconnected from the current context, need to port over existing modal component from other project which should be nested here 
+
   if(token !== '' && token !== null) {
     return (
       <Redirect

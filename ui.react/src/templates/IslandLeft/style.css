@@ -25,12 +25,12 @@
   border: solid 5px var(--dot-color);
   transition: border 50ms;
   border-radius: 25px;
+  border-bottom-left-radius: 0;
 }
 
 .IslandLeft.island-background {
   position: absolute;
   z-index: -2;
-  border-radius: 25px;
   top: 0;
   left: 0;
   width: 100%;
@@ -76,7 +76,7 @@
     border: none;
   }
   .IslandLeft.island {
-    width: 99%;
+    width: 100%;
     padding-top: 40px;
     padding-left: 10px;
     padding-right: 10px;
