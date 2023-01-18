@@ -16,7 +16,7 @@ import Redirect from "../../components/Redirect"
 import { ForumRouteType } from "../App/routeTypes";
 import { IslandCenter } from "../../templates/IslandCenter";
 import { Input } from "../../components/Input";
-import Modal from "../../components/Modal/Modal";
+import Modal from "../../components/Modal";
 import { termsAndConditions } from "../../assets/TermsAndConditions";
 
 declare global {
@@ -166,9 +166,7 @@ function ForumLoginPage(props: Props): JSX.Element {
                 <Input label="Username: " value={usernameRegister} readOnly={true} onChange={(e) => {e.target.value = usernameRegister}}/>
                 <Input label="Password: " value={passwordRegister} readOnly={true} onChange={(e) => {e.target.value = passwordRegister}}/>
                 <div id="button">
-                <Modal
-              textSmall={<Button colours={scheme} action="button" />}
-              text={() => (
+                <Modal closedChildren={<Button colours={scheme} action="button" />} >
                 <>
                   <div>
                       {Object.keys(tnc).map(section => (
@@ -182,7 +180,6 @@ function ForumLoginPage(props: Props): JSX.Element {
                   </div>
                   <Button colours={scheme} label="I agree"/>
                 </>
-              )}>
             </Modal>
                 </div>
               </form>

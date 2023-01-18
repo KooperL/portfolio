@@ -3,7 +3,7 @@ export interface Environment {
     apiHost: string;  
   }
 }
-
+// TODO
 export const environments: Environment = {
   PROD: {
     apiHost: 'https://kooperlingohr.com/api/v1'

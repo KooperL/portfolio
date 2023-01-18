@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 // import { useLocation } from "react-router-dom";
-import Modal from "../../components/Modal/Modal";
+import Modal from "../../components/Modal";
 // @ts-ignore
 import gear from "../../assets/gear.svg";
 import { SchemeContext } from "../context/colourScheme";
@@ -302,14 +302,11 @@ export default function Minesweeper() {
       <div className="minesweeperPage">
         <div className="game-controls">
           <div className="game-control">
-            <Modal
-              textSmall={<Gear variant="small"/>}
-              text={() => (
+            <Modal closedChildren={<Gear variant="small"/>} >
                 <>
                   <Input label="Grid size:" value={gridSize.toString()} onChange={((e) => {setGridSize(+e.target.value);genFreshBoard();})} />
                   <Input label="Mine density:" value={mineDensity.toString()} onChange={((e) => {setMineDensity(+(+e.target.value/10).toFixed(3));genFreshBoard();})} />
                 </>
-              )}>
             </Modal>
           </div>
           <div className="game-control">{(gameStateLookup as any)[gameState]}</div>

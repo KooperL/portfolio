@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Spinner from "../../components/Spinner";
 import { SeqAlignPayload, SeqAlignState, SeqAlignInitialState, SeqAlignPOST } from "./types";
 import { fetchSeqAlign } from "../App/api/seqAlignApi";
-import Modal from "../../components/Modal/Modal";
+import Modal from "../../components/Modal";
 // @ts-ignore
 import gear from "../../assets/gear.svg";
 import { SchemeContext } from "../context/colourScheme";
@@ -76,18 +76,16 @@ function SeqAlignPage(props: Props): JSX.Element {
             </div>
             <div className="buttonWithGear">
               <Button colours={scheme} disabled={(referencetxt.length<4 && sampletxt.length<4)?true:false}/>
-              <Modal
-                textSmall={<Gear />}
-                text={() => (
-                  <div>
-                    <Input label="Identical base reward:" name='identical' id='identical' value={identical.toString()} onChange={(e) => {setIdentical(+e.target.value)}} />
-                    <Input label="Mismatching base penalty:" name='mismatch' id='mismatch' value={mismatch.toString()} onChange={(e) => {setMismatch(+e.target.value)}} />
-                    <Input label="Beginning gap penalty:" name='gaps' id='gaps' value={gaps.toString()} onChange={(e) => {setGaps(+e.target.value)}} />
-                    <Input label="Extending gap penalty:" name='extgaps' id='extgaps' value={extgaps.toString()} onChange={(e) => {setExtgaps(+e.target.value)}} />
-                  </div>
-                )}>
+              <Modal closedChildren={<Gear />} >
+                <div>
+                  <Input label="Identical base reward:" name='identical' id='identical' value={identical.toString()} onChange={(e) => {setIdentical(+e.target.value)}} />
+                  <Input label="Mismatching base penalty:" name='mismatch' id='mismatch' value={mismatch.toString()} onChange={(e) => {setMismatch(+e.target.value)}} />
+                  <Input label="Beginning gap penalty:" name='gaps' id='gaps' value={gaps.toString()} onChange={(e) => {setGaps(+e.target.value)}} />
+                  <Input label="Extending gap penalty:" name='extgaps' id='extgaps' value={extgaps.toString()} onChange={(e) => {setExtgaps(+e.target.value)}} />
+                </div>
             </Modal>
           </div>
+          
         </form>
       </div>
     );

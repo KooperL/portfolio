@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Spinner from "../../components/Spinner";
 import { SecondaryPayload, SecondaryState, SecondaryInitialState, SecondaryPOST } from "./types";
 import { fetchSecondary } from "../App/api/SecondaryApi";
-import Modal from "../../components/Modal/Modal";
+import Modal from "../../components/Modal";
 // @ts-ignore
 import gear from "../../assets/gear.svg";
 import './style.css'
@@ -72,18 +72,13 @@ function SecondaryPage(props: Props): JSX.Element {
             <Input inputBoxLabel="🔬 Amino acids:" name='aa_field_id' id='aa_field_id' value={aa_field_id} onChange={((e) => {setAa_field_id(e.target.value)})} />
             <div className="buttonWithGear">
               <Button colours={scheme} disabled={aa_field_id.length < 4} />
-              {/* <Modal
-                textSmall={<Gear />}
-                text={() => {
-                  return (
+              {/* <Modal closedChildren={<Gear />} >
                     <div>
                       <Radio label="Single letter code" id="inputtype" name="inputtype" value="s" checked={aaf_field_id === 's'} onClick={((e) => { setAaf_field_id((e.target as HTMLTextAreaElement).value) })} />
                       <Radio label="Three letter code" id="inputtype" name="inputtype" value="t" checked={aaf_field_id === 't'} onClick={((e) => { setAaf_field_id((e.target as HTMLTextAreaElement).value) })} />
                       <Input label="Leniency:" name='leniency' id='leniency' value={leniency.toString()} onChange={((e) => { setLeniency(+e.target.value) })} />
                       <Input label="Detection threshold:" name='detectthreshold' id='detectthreshold' value={detectthreshold.toString()} onChange={((e) => { setDetectthreshold(+e.target.value) })} />
                     </div>
-                  )
-                }}>
               </Modal> */}
             </div>
           </div>
