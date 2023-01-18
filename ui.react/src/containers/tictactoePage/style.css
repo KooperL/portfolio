@@ -13,11 +13,15 @@
   width: 500px;
 }
 
+.tictactoePage {
+  display: flex;
+flex-direction: column;
+align-items: center;
+  justify-content: center;
+}
 
 .tictactoePage .modal-container {
-display: flex;
-justify-content: center;
-margin-top: 1.25rem;
+  margin: 1.25rem;
 }
 
 .tictactoePage .modal-menu {
@@ -54,14 +58,19 @@ margin-top: 1.25rem;
 
 .tictactoePage .scoreboard {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   letter-spacing: 0.2rem;
 }
 
+/* .tictactoePage .scoreboard > p{
+color: red;
+} */
+
 .tictactoePage .scoreboard-item {
   padding: 1.25rem;
   font-size: larger;
+  white-space: nowrap;
 }
 
 .tictactoePage .scoreboard-item-right {
@@ -72,12 +81,6 @@ margin-top: 1.25rem;
   text-align: left;
 }
 
-.tictactoePage .scoreboard-button {
-  padding: 1.25rem 1.5rem 1.25rem 1.5rem;
-  border-radius: 0.7rem;
-  background-color: white;
-  color: black;
-}
 
 .tictactoePage .scoreboard-button:hover {
   background-color: #f0f0f0;
@@ -85,7 +88,8 @@ margin-top: 1.25rem;
 
 @media screen and (max-width: 1000px) {
   .tictactoePage .grid {
-    height: 95vw;
-    width: 95vw;
+    height: calc(95vw - 3rem);
+    width: calc(95vw - 3rem);
+    margin: 0;
   }
 }

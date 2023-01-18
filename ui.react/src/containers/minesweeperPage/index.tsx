@@ -8,6 +8,7 @@ import './style.css';
 import { IslandCenter } from "../../templates/IslandCenter";
 import { Gear } from "../../components/Gear";
 import { Input } from "../../components/Input";
+import { Button } from "../../components/Button";
 
 interface DensityMap {
   1: number;              // Mine
@@ -325,9 +326,10 @@ export default function Minesweeper() {
           </div>
 
           </div>
-          <div className="game">
+          <div className="game" style={{display: 'grid', gridTemplateColumns: `repeat(${grid.length}, 1fr)`}}>
             {grid.map((gridRow, y) => (
-              <div className="row" key={y}>
+              // <div className="row" key={y}>
+              <>
               {gridRow.map((cell: Cell, x: number) => (
                 <div className="cell" key={x}>
                   <button className="cell-button" 
@@ -343,11 +345,14 @@ export default function Minesweeper() {
                   >{cell.makeup === '' ? (cell.revealed ? (cell.neighbours > 0 ? cell.neighbours : (makeupLookup as any)[cell.type.toString()]) : '') : cell.makeup}</button>
                 </div>
               ))}
-              </div>
+                </>
+              // </div>
             ))}
           </div>
           <div className="game-controls">
-            <div className="reset-button"><button onClick={(e) => {genFreshBoard()}}>reset</button></div>
+            {/* <div className="reset-button"><button onClick={(e) => {genFreshBoard()}}>reset</button></div> */}
+            <Button colours={scheme} callBack={(() => { genFreshBoard() })} label="Reset board" action="button"/>
+
           </div>
         </div>
       </IslandCenter>

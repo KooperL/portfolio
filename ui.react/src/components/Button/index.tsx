@@ -1,4 +1,4 @@
-import { Scheme } from "../containers/context/type";
+import { Scheme } from "../../containers/context/type";
 
 export function Button(props: {colours: Scheme, disabled?: Boolean, callBack?: Function, label?: string, action?: "button" | "submit" | "reset" | undefined}) {
   const style = {
@@ -10,8 +10,10 @@ export function Button(props: {colours: Scheme, disabled?: Boolean, callBack?: F
   } as const;
   if(props.hasOwnProperty('callBack')) {
     return (
-    // @ts-ignore - Sooo bad.... cmon ts, it exists!!!! 
-    <button className="submit-button" value={props.label ?? 'Submit'} style={style} onClick={() => {props.callBack()}}>{props.label ?? 'Submit'}</button>
+      <div className="submit-button-container">
+        {/* @ts-ignore - Sooo bad.... cmon ts, it exists!!!!  */}
+        <button className="submit-button" value={props.label ?? 'submit'} style={style} onClick={() => {props.callBack()}}>{props.label ?? 'Submit'}</button>
+      </div>
     )
   }
   return (
