@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 // import { useLocation } from "react-router-dom";
-import Modal from "../../components/Modal/Modal";
+import Modal from "../../components/Modal";
 // @ts-ignore
 import gear from "../../assets/gear.svg";
 import { SchemeContext } from "../context/colourScheme";

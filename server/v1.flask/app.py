@@ -196,6 +196,8 @@ app.register_blueprint(views.forum.user_search.user_search)
 if __name__ == '__main__':
   # thread = threading.Thread(target=controllers.discordLogger.start_discord_client)
   # thread.start()
+
+  # TODO
   if config['ENV'] == 'development':
     app.run(host='0.0.0.0', port=config['DEV_PORT'], debug=True)
   elif config['ENV'] == 'production':
