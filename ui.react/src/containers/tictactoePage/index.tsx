@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 // import { useLocation } from "react-router-dom";
-import Modal from "../../components/Modal/Modal";
+import Modal from "../../components/Modal";
 // @ts-ignore
 import gear from "../../assets/gear.svg";
 import { Board, CalculateWinner } from "./types";
@@ -211,10 +211,15 @@ export default function Tictactoe() {
         {/* <div className="parent"> */}
         {/* <div className="sub-parent"> */}
         <div className="modal-container">
+<<<<<<< HEAD
           <Modal
             textSmall={<Gear variant="small" />}
             text={() => (
               <div className="modal-menu">
+=======
+          <Modal closedChildren={<Gear variant="small" />} >
+
+>>>>>>> 2176b18186e8b843c5628fa82e2f698ebf8636b8
                 <Radio label="vs player 2" id="mode" name="mode" disabled={gameInProgress} value="2" checked={mode === 2} onClick={(e) => { setMode(2) }} />
                 {/* <Radio label="vs Randomiser" id="mode" name="mode" disabled={gameInProgress} value="1" checked={mode===1} onClick={(e) => {setMode(1)}}/> */}
                 <Radio label="vs miniMax" id="mode" name="mode" disabled={gameInProgress} value="0" checked={mode === 0} onClick={(e) => { setMode(0) }} />
@@ -222,8 +227,6 @@ export default function Tictactoe() {
                   <input type="checkbox" id="inputtype" value="s" checked={pPlayerFirst ? true : false} disabled={gameInProgress ? true : false} onChange={(e) => { setPPlayerFirst(pPlayerFirst ? 0 : 1); setTicker(0); }} />
                   <label className='label' htmlFor="inputtype">Primary player first?</label><br />
                 </div>
-              </div>
-            )}>
           </Modal>
         </div>
         <div className="grid">
