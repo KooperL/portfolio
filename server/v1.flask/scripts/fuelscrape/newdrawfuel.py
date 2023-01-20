@@ -11,7 +11,7 @@ from sklearn.linear_model import LinearRegression
 
 
 def table():
-  fairp = 125.0
+  # fairp = 125.0   # I find this hilarious
   conn = sqlite3.connect(f'{os.getcwd()}/../data/database.db')
   rows = list(conn.execute(f'SELECT * FROM fuelprices ORDER BY id DESC LIMIT 3'))
   maxp = rows[0][0]
@@ -19,12 +19,15 @@ def table():
   averagep = rows[0][4]
   rgood = ((int(minp)+int(maxp))/2)/averagep
   m = (averagep-rows[2][4])/(3-1)
-  appeal = 0
-  appeal += 3*(rgood>1)
-  appeal += 3*(m>0)
-  appeal += 4*(averagep<fairp)
-  buy = f'{"Buy"*(appeal>6)}{"Wait"*(appeal<=6)}'
-  values = [averagep, (f'Relatively {"good"*(rgood>1)}{"bad"*(rgood<=1)}'), (f'{"Un"*(averagep>fairp)}fairly priced'), (f'{"Ascending"*(m>0)}{"Descending"*(m<=0)}'),buy]
+  appeal = rgood>1 and m>0
+  # appeal += 4*(averagep<fairp)
+  values = {
+    'average': averagep,
+    'relativePrice': rgood,
+    'gradient': m,
+    'decision': appeal
+  }
+  # values = [averagep, (f'Relatively {"good"*(rgood>1)}{"bad"*(rgood<=1)}'), (f'{"Un"*(averagep>fairp)}fairly priced'), (f'{"Ascending"*(m>0)}{"Descending"*(m<=0)}'),buy]
   return values
 
 

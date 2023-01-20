@@ -32,7 +32,6 @@ export function AccessTokenProvider({ children }: any) {
         // throw new Error(resp.error);
       }
     }).catch((err: any) => {
-      console.log('should')
       setAccessToken('')
       console.log(err)
       // window.location.href = (`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumRegister}`)

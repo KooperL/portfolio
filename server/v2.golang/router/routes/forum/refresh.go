@@ -38,7 +38,7 @@ func Refresh(w http.ResponseWriter, r *http.Request) {
 		}
 
 		userSearchQuery := "SELECT forum_username, role_id FROM forum_users where id = ?"
-		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[database.ForumUsersSimpleDB](userSearchQuery, []any{refresh_token_decoded.UserID}))
+		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumUsersSimpleDB](userSearchQuery, []any{refresh_token_decoded.UserID}))
 
 		if len(userSearchTraffic) != 1 {
 			responses.BuildUnauthorised(w)

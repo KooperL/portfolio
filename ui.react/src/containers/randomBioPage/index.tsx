@@ -18,7 +18,6 @@ interface Props {
 
 function RandomBioPage(props: Props): JSX.Element {
   const [state, setState] = useState<RandomBioState>(RandomBioInitialState);
-  const [value, setValue] = useState('');
   const [scheme, setScheme] = useContext(SchemeContext);
   const [length, setLength] = useState(100);
   const [type, setType] = useState(1);
@@ -65,14 +64,14 @@ function RandomBioPage(props: Props): JSX.Element {
             ...(type===3 && {single: +single})
           }))}>
             <div className="type">
-              <Radio label="DNA" id="inputtype" name="inputtype" value="1" checked={type===1} onChange={((e) => {setType(+e.target.value)})} />
-              <Radio label="RNA" id="inputtype" name="inputtype" value="2" checked={type===2} onChange={((e) => {setType(+e.target.value)})} />
-              <Radio label="Amino acids" id="inputtype" name="inputtype" value="3" checked={type===3} onClick={((e) => {setType(+(e.target as HTMLTextAreaElement).value)})} />
+              <Radio label="DNA" id="inputtype" name="inputtype" value="1" defaultChecked={type===1} onClick={((e) => {setType(+(e.target as HTMLTextAreaElement).value)})} />
+              <Radio label="RNA" id="inputtype" name="inputtype" value="2" defaultChecked={type===2} onClick={((e) => {setType(+(e.target as HTMLTextAreaElement).value)})} />
+              <Radio label="Amino acids" id="inputtype" name="inputtype" value="3" defaultChecked={type===3} onClick={((e) => {setType(+(e.target as HTMLTextAreaElement).value)})} />
             </div>
             <Input label="Sequence length:" name='length' id='length' value={length.toString()} onChange={((e) => {setLength(+e.target.value)})} />
             <div className="single">
               <p>Single letter abbreviations: </p>
-              <input type="checkbox" id="inputtype" name="inputtype" value="t" disabled={type!==3} checked={single===true} onChange={((e) => {setSingle(!single)})}/>
+              <input type="checkbox" id="inputtype" name="inputtype" value="t" disabled={type!==3} defaultChecked={single===true} onChange={((e) => {setSingle(!single)})}/>
             </div>
               <div className="button">
                 <Button colours={scheme} />
@@ -82,16 +81,10 @@ function RandomBioPage(props: Props): JSX.Element {
       </div>
     );
   }
-  if(state.loading) {
-   return <Spinner/>
-  }
-  if(state.error && state.errorMessage) {
-    return (
-      <ErrorPage error={state.errorMessage} />
-    );
-  }
+  if(state.loading) return <Spinner/>
+  if(state.error && state.errorMessage) return <ErrorPage error={state.errorMessage} />
   if(state.details && state.details.data) {
-    console.log(state.details)
+    console.log(type)
     const data = state.details.data;
     return (
       <IslandCenter>
@@ -101,7 +94,7 @@ function RandomBioPage(props: Props): JSX.Element {
           </div>
           <hr/>
           <div className="resultsCenter">
-            <Textarea label="Results:" value={data.results} highlightOnFocus={true}/>
+            <Textarea label="Results:" value={data.join('')} highlightOnFocus={true} readOnly={true}/>
           </div>
         </div>
       </IslandCenter>

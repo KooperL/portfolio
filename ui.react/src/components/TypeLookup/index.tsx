@@ -14,7 +14,7 @@ function TypeLookup(props: ComponentType): any {
     case 'buttonArr':
       return (
         <div className="type-lookup buttonArr">
-          {(props.data as ComponentType[]).map(segment => TypeLookup({type: segment.type, data: segment.data, text: segment?.text}))}
+          {(props.data as ComponentType[]).map((segment, ind) => <TypeLookup key={ind} type={segment.type} data={segment.data} text={segment?.text} /> )}
         </div>
       )
     case 'unorderedList':

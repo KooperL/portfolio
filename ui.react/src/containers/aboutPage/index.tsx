@@ -84,14 +84,8 @@ function AboutPage(props: Props): JSX.Element {
   //   }, 100)
   // }, [seed])
 
-  if(state.loading) {
-   return <Spinner/>
-  }
-  if(state.error && state.errorMessage) {
-    return (
-      <ErrorPage error={state.errorMessage} />
-    );
-  }
+  if(state.loading) return <Spinner/>
+  if(state.error && state.errorMessage) return <ErrorPage error={state.errorMessage} />
   // if(state.details && seed[0].length && seed[0][0].length) {
   if(state.details) {
     const data = state.details.data

@@ -32,7 +32,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		lib.TrackForumFunctionsCalled(creds[0], body.SessionID, "login")
 
 		userSearchQuery := "SELECT id, forum_password_hash, forum_password_salt, role_id FROM forum_users where forum_username = ?"
-		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[database.ForumUsersDB](userSearchQuery, []any{strings.ToLower(creds[0])}))
+		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumUsersDB](userSearchQuery, []any{strings.ToLower(creds[0])}))
 
 		if len(userSearchTraffic) != 1 {
 			responses.BuildUnauthorised(w)

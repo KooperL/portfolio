@@ -83,9 +83,7 @@ function ForumHomePage(props: Props): JSX.Element {
 
   console.log(token)
 
-  if(state.loading) {
-   return <Spinner/>
-  }
+  if(state.loading) return <Spinner/>
   if(token === '') {
     return (
       <Redirect
@@ -93,11 +91,7 @@ function ForumHomePage(props: Props): JSX.Element {
       />
     )
   }
-  if(state.error && state.errorMessage) {
-    return (
-      <ErrorPage error={state.errorMessage} />
-    );
-  }
+  if(state.error && state.errorMessage) return <ErrorPage error={state.errorMessage} />
   if(state.details && state.details.data) {
     const data = state.details.data
     return (

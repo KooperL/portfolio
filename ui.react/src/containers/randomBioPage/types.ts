@@ -9,10 +9,8 @@ export interface RandomBioState {
 
 export interface RandomBioPayload {
   'success': boolean;
-  'data'?: {
-    'results': string,
-  };
-  'error'?: string
+  'data'?:  string[];
+  'error'?: string;
 }
 
 export interface RandomBioPOST {
