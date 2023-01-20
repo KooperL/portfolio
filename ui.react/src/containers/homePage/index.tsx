@@ -42,30 +42,9 @@ function HomePage(props: Props): JSX.Element {
     })
   }, []);
 
-  function typeLookup(type: string, data:string[], text?:string) {
-    switch(type) {
-      case 'button':
-        return <ButtonRedir destination={data[0]} label={text ?? ''} local={!data[0].includes('http')}/>
-      case 'unorderedList':
-        return <ul className={`text ${type}`}>{data.map((item:string, index:number) => <li key={index}>{item}</li>)}</ul>
-      case 'body':
-        return <p className={`text ${type}`}>{data.map((item:string, index:number) => <span key={index}>{item}</span>)}</p>
-      case 'header':
-      case 'subheader':
-      case 'emoji':
-        return <p className={`text ${type}`}>{data[0]}</p>
-    }
-  }
 
-
-  if(state.loading) {
-   return <Spinner/>
-  }
-  if(state.error && state.errorMessage) {
-    return (
-      <ErrorPage error={state.errorMessage} />
-    );
-  }
+  if(state.loading) return <Spinner/>
+  if(state.error && state.errorMessage) return <ErrorPage error={state.errorMessage} />
   if(state.details) {
     const data = state.details.data
 

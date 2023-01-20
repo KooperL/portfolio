@@ -7,32 +7,39 @@ export interface FuelPricesState {
   loading?: boolean;
 }
 
+export interface fuelDataPull {
+  'average': {
+    'x': string;
+    'y': number;
+  }[];
+  'max': {
+    'x': string;
+    'y': number;
+  }[];
+  'min': {
+    'x': string;
+    'y': number;
+  }[];
+  'wholesale': {
+    'x': string;
+    'y': number;
+  }[];
+}
 
 export interface FuelPricesPayload {
   'success': boolean;
   'data'?: {
-    'fuelprices': {
-      'average': {
-        'x': string;
-        'y': number;
-      }[];
-      'max': {
-        'x': string;
-        'y': number;
-      }[];
-      'min': {
-        'x': string;
-        'y': number;
-      }[];
-      'wholesale': {
-        'x': string;
-        'y': number;
-      }[];
+    'fuelprices': fuelDataPull;
+    'stats': {
+      'average': number;
+      'relativePrice': number;
+      'gradient': number;
+      'decision': string;
     };
-    'stats': [number, string, string, string, string];
   };
   'error'?: string;
 }
+
 
 export const FuelPricesInitialState: FuelPricesState = {
   error: false,

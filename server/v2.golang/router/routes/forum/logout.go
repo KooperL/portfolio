@@ -32,7 +32,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		}
 
 		userSearchQuery := "DELETE from forum_refresh_tokens where forum_user_id = ?;"
-		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[database.ForumUsersSimpleDB](userSearchQuery, []any{refresh_token_decoded.UserID}))
+		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumUsersSimpleDB](userSearchQuery, []any{refresh_token_decoded.UserID}))
 
 		if len(userSearchTraffic) != 1 {
 			responses.BuildUnauthorised(w)

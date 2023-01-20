@@ -133,14 +133,8 @@ function PropertyPage(props: Props): JSX.Element {
   }
   
   
-  if(state.loading) {
-   return <Spinner/>
-  }
-  if(state.error && state.errorMessage) {
-    return (
-      <ErrorPage error={state.errorMessage} />
-    );
-  }
+  if(state.loading) return <Spinner/>
+  if(state.error && state.errorMessage) return <ErrorPage error={state.errorMessage} />
   if(state.details && state.details.data) {
     if(Object.keys(state.details.data).includes('suburb')) {
       const data = state.details as PropertySearchPayload;

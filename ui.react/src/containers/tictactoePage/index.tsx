@@ -215,15 +215,6 @@ export default function Tictactoe() {
             textSmall={<Gear variant="small" />}
             text={() => (
               <div className="modal-menu">
-                {/* <div className="">
-                    <p>Secondary player: </p>
-                    <input type="radio" id="mode" name="mode" disabled={gameInProgress} value="2" checked={mode===2} onChange={(e) => {setMode(2)}}/>
-                    <label className='label' htmlFor="mode"></label>Human<br/>
-                    <input type="radio" id="mode" name="mode" disabled={gameInProgress} value="1" checked={mode===1} onChange={(e) => {setMode(1)}}/>
-                    <label className='label' htmlFor="mode"></label>Randomiser<br/>
-                    <input type="radio" id="mode" name="mode" disabled={gameInProgress} value="0" checked={mode===0} onChange={(e) => {setMode(0)}}/>
-                    <label className='label' htmlFor="mode"></label>miniMax<br/>
-                  </div> */}
                 <Radio label="vs player 2" id="mode" name="mode" disabled={gameInProgress} value="2" checked={mode === 2} onClick={(e) => { setMode(2) }} />
                 {/* <Radio label="vs Randomiser" id="mode" name="mode" disabled={gameInProgress} value="1" checked={mode===1} onClick={(e) => {setMode(1)}}/> */}
                 <Radio label="vs miniMax" id="mode" name="mode" disabled={gameInProgress} value="0" checked={mode === 0} onClick={(e) => { setMode(0) }} />

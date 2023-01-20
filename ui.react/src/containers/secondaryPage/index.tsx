@@ -93,14 +93,8 @@ function SecondaryPage(props: Props): JSX.Element {
   }
 
 
-  if(state.loading) {
-   return <Spinner/>
-  }
-  if(state.error && state.errorMessage) {
-    return (
-      <ErrorPage error={state.errorMessage} />
-    );
-  }
+  if(state.loading) return <Spinner/>
+  if(state.error && state.errorMessage) return <ErrorPage error={state.errorMessage} />
   if(state.details && state.details.data) {
     const data = state.details.data;
     return (
@@ -140,7 +134,7 @@ function SecondaryPage(props: Props): JSX.Element {
               <div className="mrna-preview" >
                 {/* <p className="resultTitle">Calculated reconstruction: </p> */}
                 {/* <textarea className="resultTextArea" name="aa" value={data.pred_str} readOnly={true} /> */}
-                <Textarea name="aa" value={data} readOnly={true} />
+                <Textarea name="aa" value={data.join('')} readOnly={true} />
               </div>
             </div>
           </div>

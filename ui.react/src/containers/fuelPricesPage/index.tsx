@@ -8,6 +8,7 @@ import { SchemeContext } from "../context/colourScheme";
 import { IslandCenter } from "../../templates/IslandCenter";
 import ErrorPage from "../ErrorPage";
 
+
 interface Props {
   dataCall: Function; 
 }
@@ -39,15 +40,10 @@ function FuelPricesPage(props: Props): JSX.Element {
         chart?.setAttribute('width', +chart.getAttribute('width')-100)
       }
     })
-  }, [])  
-  if(state.loading) {
-   return <Spinner/>
-  }
-  if(state.error && state.errorMessage) {
-    return (
-      <ErrorPage error={state.errorMessage} />
-    );
-  }
+  }, [])
+  
+  if(state.loading) return <Spinner/>
+  if(state.error && state.errorMessage) return <ErrorPage error={state.errorMessage} />
   if(state.details && state.details.data) {
     const data = state.details.data;
     const width = Math.max(window.outerWidth, 1500);
@@ -88,10 +84,15 @@ function FuelPricesPage(props: Props): JSX.Element {
             </div>
           </div>
             <div className="table">
-              {['Today\'s price', 'Price distribution', 'Suggestion', 'Trend'].map((item, itemInd) => (
+              {Object.entries({
+                'Today\'s price': data.stats.average.toFixed(2),
+                 'Skew': data.stats.relativePrice.toFixed(2),
+                 'Trend': data.stats.gradient.toFixed(2),
+                 'Should buy?': data.stats.decision.toString()
+                }).map((item, itemInd) => (
                 <div className="column" key={itemInd}>
-                  <div className="cell header">{item}</div>
-                  <div className="cell">{data.stats[itemInd]}</div>
+                  <div className="cell header">{item[0]}</div>
+                  <div className="cell">{item[1]}</div>
                 </div>
               ))}
           </div>

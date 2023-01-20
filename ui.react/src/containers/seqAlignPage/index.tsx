@@ -93,14 +93,8 @@ function SeqAlignPage(props: Props): JSX.Element {
     );
   }
   
-  if(state.loading) {
-   return <Spinner/>
-  }
-  if(state.error && state.errorMessage) {
-    return (
-      <ErrorPage error={state.errorMessage} />
-    );
-  }
+  if(state.loading) return <Spinner/>
+  if(state.error && state.errorMessage) return <ErrorPage error={state.errorMessage} />
   if(state.details && state.details.data) {
     const data = state.details.data;
     const splitDrawArray = data.draw_res.map(elem => elem.split('\n'));

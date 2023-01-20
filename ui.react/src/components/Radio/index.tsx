@@ -9,7 +9,8 @@ export function Radio(
     name?: string;
     id?: string;
     label?: string;
-    checked: boolean;
+    checked?: boolean;
+    defaultChecked?: boolean;
     disabled?: boolean;
   }
 ) {
@@ -24,6 +25,7 @@ export function Radio(
         onClick={props.onClick}
         checked={props.checked}
         disabled={props.disabled}
+        defaultChecked={props.defaultChecked}
       />
     </div>
   )

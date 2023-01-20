@@ -11,7 +11,7 @@ export function Textarea(
     label?: string;
     resize?: string;
     height?: string;
-    highlightOnFocus?: boolean
+    highlightOnFocus?: boolean;
   }
 ) {
   return (

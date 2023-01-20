@@ -66,16 +66,10 @@ function MrnaPage(props: Props): JSX.Element {
       </div>
     );
   }
-  if(state.loading) {
-   return <Spinner/>
-  }
-  if(state.error && state.errorMessage) {
-    return (
-      <ErrorPage error={state.errorMessage} />
-    );
-  }
+  if(state.loading) return <Spinner/>
+  if(state.error && state.errorMessage) return <ErrorPage error={state.errorMessage} />
   if(state.details && state.details.data) {
-    console.log(state.details)
+
     const data = state.details.data;
     return (
       <div className="mrnaPage">
@@ -125,7 +119,7 @@ function MrnaPage(props: Props): JSX.Element {
                     <p>Base frequency:</p>
                     {Object.keys(data.simplecount).map((link, indexLink) => (
                       // @ts-ignore, dumbest fucking error, come on ts
-                      <p className = "pl-2 " key={indexLink}>{link}: {data.simplecount[link]}</p>
+                      <p key={indexLink}>{link}: {data.simplecount[link]}</p>
                     ))}
                   </div>
                 </div>

@@ -53,14 +53,8 @@ function ProjectsPage(props: Props): JSX.Element {
     })
   }, []);
 
-  if(state.loading) {
-   return <Spinner/>
-  }
-  if(state.error && state.errorMessage) {
-    return (
-      <ErrorPage error={state.errorMessage} />
-    );
-  }
+  if(state.loading) return <Spinner/>
+  if(state.error && state.errorMessage) return <ErrorPage error={state.errorMessage} />
   if(state.details) {
     const data = state.details.data
     return (
@@ -72,11 +66,7 @@ function ProjectsPage(props: Props): JSX.Element {
               <h2 className='main-heading' style={{color: scheme.body.h1}}>Projects</h2>
               <div className="links">
                 {data.map((segment, indexSegment) => (
-                  // <div key={indexSegment}>
-                  <>
-                    {TypeLookup({type: segment.type, data: segment.data, text: segment?.text})}
-                  {/* </div> */}
-                  </>
+                  <TypeLookup key={indexSegment} type={segment.type} data={segment.data} text={segment?.text} />
                 ))}
               </div>
             </div>

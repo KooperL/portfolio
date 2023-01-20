@@ -1,4 +1,4 @@
-package database
+package types
 
 type ForumUsersDB struct {
 	ID                int64  `json:"id"`

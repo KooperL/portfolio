@@ -3,6 +3,12 @@
 import {VictoryLine, VictoryAxis, VictoryChart, VictoryLegend, VictoryVoronoiContainer, VictoryTooltip} from 'victory';
 import React from "react";
 
+interface Props {
+  data: any;
+  cols: string[];
+  width: number;
+  height: number;
+}
 
 export default function Vchart(props) {
   return (
@@ -39,6 +45,7 @@ export default function Vchart(props) {
             ticks: {stroke: "grey", size: 6},
             tickLabels: {padding: 0, fill: 'white'}
           }}
+          // tickFormat={(t) => t}
           tickFormat={(t) => `${t.slice(6,12)}`}
           tickCount={5}/>
         {props.data.map((set, ind) =>(
