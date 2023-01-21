@@ -1,11 +1,11 @@
-import { AxiosRequestConfig } from "axios";
-import { Payload } from "../containers/App/api/types";
-import request from "./requests";
-import { ApiError, handleError } from './apiErrorHandler'
+import { AxiosRequestConfig } from "axios"
+import { Payload } from "../containers/App/api/types"
+import request from "./requests"
+import { ApiError, handleError } from "./apiErrorHandler"
 
 const noCacheHeaders = {
-  'cacheControl': 'no-cache'
-};
+  cacheControl: "no-cache",
+}
 
 const defaultOptions = {
   headers: {
@@ -16,10 +16,10 @@ const defaultOptions = {
   // Other headers
 }
 
-export const get = async<T> (
+export const get = async <T>(
   url: string,
   options: AxiosRequestConfig,
-  noCache: Boolean = true                                   // TODO
+  noCache: Boolean = true, // TODO
 ): Promise<ApiError | T> => {
   const requestConfig: AxiosRequestConfig = {
     ...options,
@@ -27,20 +27,21 @@ export const get = async<T> (
       ...defaultOptions.headers,
       ...(noCache && noCacheHeaders),
       ...options.headers,
-      ...(options.hasOwnProperty('data') && {'content-type': 'application/json'})
+      ...(options.hasOwnProperty("data") && {
+        "content-type": "application/json",
+      }),
     },
-    method: 'GET',
-    url: url
-  };
-  const req = request<T>(requestConfig);
+    method: "GET",
+    url: url,
+  }
+  const req = request<T>(requestConfig)
   return req
 }
 
-
-export const post = async<T> (
+export const post = async <T>(
   url: string,
   options: AxiosRequestConfig,
-  noCache: Boolean = true                                   // TODO
+  noCache: Boolean = true, // TODO
 ): Promise<ApiError | T> => {
   const requestConfig: AxiosRequestConfig = {
     ...options,
@@ -48,11 +49,13 @@ export const post = async<T> (
       ...defaultOptions.headers,
       ...(noCache && noCacheHeaders),
       ...options.headers,
-      ...(options.hasOwnProperty('data') && {'content-type': 'application/json'})
+      ...(options.hasOwnProperty("data") && {
+        "content-type": "application/json",
+      }),
     },
-    method: 'POST',
-    url: url
-  };
+    method: "POST",
+    url: url,
+  }
 
-  return request<T>(requestConfig);
+  return request<T>(requestConfig)
 }

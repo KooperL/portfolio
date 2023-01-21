@@ -1,77 +1,112 @@
-import React, { useContext, useEffect, useState } from "react";
-import Spinner from "../../components/Spinner";
-import { SecondaryPayload, SecondaryState, SecondaryInitialState, SecondaryPOST } from "./types";
-import { fetchSecondary } from "../App/api/SecondaryApi";
-import Modal from "../../components/Modal";
+import React, { useContext, useEffect, useState } from "react"
+import Spinner from "../../components/Spinner"
+import {
+  SecondaryPayload,
+  SecondaryState,
+  SecondaryInitialState,
+  SecondaryPOST,
+} from "./types"
+import { fetchSecondary } from "../App/api/SecondaryApi"
+import Modal from "../../components/Modal"
 // @ts-ignore
-import gear from "../../assets/gear.svg";
-import './style.css'
-import { SchemeContext } from "../context/colourScheme";
-import { Button } from "../../components/Button";
-import { IslandCenter } from "../../templates/IslandCenter";
-import { Input } from "../../components/Input";
-import { Radio } from "../../components/Radio";
-import { Gear } from "../../components/Gear";
-import { Textarea } from "../../components/Textarea";
-import ErrorPage from "../ErrorPage";
-
+import gear from "../../assets/gear.svg"
+import "./style.css"
+import { SchemeContext } from "../context/colourScheme"
+import { Button } from "../../components/Button"
+import { IslandCenter } from "../../templates/IslandCenter"
+import { Input } from "../../components/Input"
+import { Radio } from "../../components/Radio"
+import { Gear } from "../../components/Gear"
+import { Textarea } from "../../components/Textarea"
+import ErrorPage from "../ErrorPage"
 
 interface Props {
-  dataCall: Function; 
+  dataCall: Function
 }
 
 function SecondaryPage(props: Props): JSX.Element {
-  const [state, setState] = useState<SecondaryState>(SecondaryInitialState);
-  const [aa_field_id, setAa_field_id] = useState('');
-  const [aaf_field_id, setAaf_field_id] = useState('s');
-  const [detectthreshold, setDetectthreshold] = useState(4);
-  const [leniency, setLeniency] = useState(3);
-  const [scheme, setScheme] = useContext(SchemeContext);
+  const [state, setState] = useState<SecondaryState>(SecondaryInitialState)
+  const [aa_field_id, setAa_field_id] = useState("")
+  const [aaf_field_id, setAaf_field_id] = useState("s")
+  const [detectthreshold, setDetectthreshold] = useState(4)
+  const [leniency, setLeniency] = useState(3)
+  const [scheme, setScheme] = useContext(SchemeContext)
 
   useEffect(() => {
-    document.title = `Protein Secondary Structure | ${scheme.title}`;
-  }, []);
+    document.title = `Protein Secondary Structure | ${scheme.title}`
+  }, [])
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>, payload: SecondaryPOST) => {
-    setState({...state, loading: true});
-    event.preventDefault();
-    props.dataCall(payload).then((resp: SecondaryPayload) => {
-      if(resp.success && resp.data) {
+  const handleSubmit = (
+    event: React.FormEvent<HTMLFormElement>,
+    payload: SecondaryPOST,
+  ) => {
+    setState({ ...state, loading: true })
+    event.preventDefault()
+    props
+      .dataCall(payload)
+      .then((resp: SecondaryPayload) => {
+        if (resp.success && resp.data) {
+          setState({
+            details: resp,
+            error: false,
+            errorMessage: null,
+            loading: false,
+          })
+        } else {
+          throw new Error(resp.error)
+        }
+      })
+      .catch((err: any) => {
         setState({
-          details: resp,
-          error: false,
-          errorMessage: null,
-          loading: false
-        });
-      } else {
-        throw new Error(resp.error);
-      }
-    }).catch((err: any) => {
-      setState({
-        error: true,
-        errorMessage: err,
-        loading: false
-      });
-    })
+          error: true,
+          errorMessage: err,
+          loading: false,
+        })
+      })
   }
-  
-  
+
   function SearchBar(showingDesc: Boolean) {
     return (
       <div className="search-container">
-        <div className="description" style={{ color: scheme.body.text }}>
-          {showingDesc ? <p>Enter a sequence of amino acids in single character form to view a calculated reconstruction of the secondary protein structure according to the Chou-Fasman method (~50% accuracy).</p> : <></>}
+        <div
+          className="description"
+          style={{ color: scheme.body.text }}
+        >
+          {showingDesc ? (
+            <p>
+              Enter a sequence of amino acids in single character form to view a
+              calculated reconstruction of the secondary protein structure
+              according to the Chou-Fasman method (~50% accuracy).
+            </p>
+          ) : (
+            <></>
+          )}
         </div>
-        <form onSubmit={((e) => handleSubmit(e, {
-          aa_field_id: aa_field_id,
-          aaf_field_id: aaf_field_id,
-          detectthreshold: detectthreshold,
-          leniency: leniency
-        }))}>
+        <form
+          onSubmit={e =>
+            handleSubmit(e, {
+              aa_field_id: aa_field_id,
+              aaf_field_id: aaf_field_id,
+              detectthreshold: detectthreshold,
+              leniency: leniency,
+            })
+          }
+        >
           <div className="inputWithButton">
-            <Input inputBoxLabel="🔬 Amino acids:" name='aa_field_id' id='aa_field_id' value={aa_field_id} onChange={((e) => {setAa_field_id(e.target.value)})} />
+            <Input
+              inputBoxLabel="🔬 Amino acids:"
+              name="aa_field_id"
+              id="aa_field_id"
+              value={aa_field_id}
+              onChange={e => {
+                setAa_field_id(e.target.value)
+              }}
+            />
             <div className="buttonWithGear">
-              <Button colours={scheme} disabled={aa_field_id.length < 4} />
+              <Button
+                colours={scheme}
+                disabled={aa_field_id.length < 4}
+              />
               {/* <Modal closedChildren={<Gear />} >
                     <div>
                       <Radio label="Single letter code" id="inputtype" name="inputtype" value="s" checked={aaf_field_id === 's'} onClick={((e) => { setAaf_field_id((e.target as HTMLTextAreaElement).value) })} />
@@ -84,22 +119,22 @@ function SecondaryPage(props: Props): JSX.Element {
           </div>
         </form>
       </div>
-    );
+    )
   }
 
-
-  if(state.loading) return <Spinner/>
-  if(state.error && state.errorMessage) return <ErrorPage error={state.errorMessage} />
-  if(state.details && state.details.data) {
-    const data = state.details.data;
+  if (state.loading) return <Spinner />
+  if (state.error && state.errorMessage)
+    return <ErrorPage error={state.errorMessage} />
+  if (state.details && state.details.data) {
+    const data = state.details.data
     return (
       <IslandCenter>
         <div className="secondaryPage">
           <div>
             <div className="resultsScreen">
-                {SearchBar(window.outerWidth > 1000)}
+              {SearchBar(window.outerWidth > 1000)}
             </div>
-            <hr/>
+            <hr />
             <div className="resultsContainer">
               <div className="resultsTitle">Results:</div>
               {/* <div className="results">
@@ -126,32 +161,31 @@ function SecondaryPage(props: Props): JSX.Element {
                 <div className="result" ></div>
                 </div> */}
 
-              <div className="mrna-preview" >
+              <div className="mrna-preview">
                 {/* <p className="resultTitle">Calculated reconstruction: </p> */}
                 {/* <textarea className="resultTextArea" name="aa" value={data.pred_str} readOnly={true} /> */}
-                <Textarea name="aa" value={data.join('')} readOnly={true} />
+                <Textarea
+                  name="aa"
+                  value={data.join("")}
+                  readOnly={true}
+                />
               </div>
             </div>
           </div>
         </div>
       </IslandCenter>
-    );
+    )
   } else {
     return (
       <IslandCenter>
-        <div className="secondaryPage">
-          {SearchBar(true)}
-        </div>
+        <div className="secondaryPage">{SearchBar(true)}</div>
       </IslandCenter>
-    );
+    )
   }
 }
 
-
 const enhance = (): JSX.Element => {
-  return(
-    <SecondaryPage dataCall={fetchSecondary} />
-  ) 
-};
+  return <SecondaryPage dataCall={fetchSecondary} />
+}
 
-export default enhance;
+export default enhance

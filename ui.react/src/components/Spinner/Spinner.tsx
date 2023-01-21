@@ -1,15 +1,18 @@
- // @ts-nocheck
+// @ts-nocheck
 
-import React, { useContext } from "react";
-import { SchemeContext } from "../../containers/context/colourScheme";
-import './Spinner.css';
+import React, { useContext } from "react"
+import { SchemeContext } from "../../containers/context/colourScheme"
+import "./Spinner.css"
 
 function Spinner() {
-  const [scheme, setScheme] = useContext(SchemeContext);
+  const [scheme, setScheme] = useContext(SchemeContext)
 
   return (
     <>
-      <svg className="spinner" viewBox="0 0 50 50">
+      <svg
+        className="spinner"
+        viewBox="0 0 50 50"
+      >
         <circle
           className="path"
           cx="25"
@@ -18,12 +21,12 @@ function Spinner() {
           fill="none"
           strokeWidth="5"
           style={{
-            stroke: scheme.body.h1
-        }}
+            stroke: scheme.body.h1,
+          }}
         ></circle>
       </svg>
     </>
-  );
+  )
 }
 
-export default Spinner;
+export default Spinner

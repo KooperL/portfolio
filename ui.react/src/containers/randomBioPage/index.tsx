@@ -1,104 +1,178 @@
-import React, { useContext, useEffect, useState } from "react";
-import Spinner from "../../components/Spinner";
-import { RandomBioPayload, RandomBioState, RandomBioInitialState, RandomBioPOST } from "./types";
-import { fetchRandomBio } from "../App/api/randomBioApi";
-import { SchemeContext } from "../context/colourScheme";
-import './style.css';
-import { Button } from "../../components/Button";
-import { IslandCenter } from "../../templates/IslandCenter";
-import { Input } from "../../components/Input";
-import { Textarea } from "../../components/Textarea";
-import { Radio } from "../../components/Radio";
-import ErrorPage from "../ErrorPage";
-
+import React, { useContext, useEffect, useState } from "react"
+import Spinner from "../../components/Spinner"
+import {
+  RandomBioPayload,
+  RandomBioState,
+  RandomBioInitialState,
+  RandomBioPOST,
+} from "./types"
+import { fetchRandomBio } from "../App/api/randomBioApi"
+import { SchemeContext } from "../context/colourScheme"
+import "./style.css"
+import { Button } from "../../components/Button"
+import { IslandCenter } from "../../templates/IslandCenter"
+import { Input } from "../../components/Input"
+import { Textarea } from "../../components/Textarea"
+import { Radio } from "../../components/Radio"
+import ErrorPage from "../ErrorPage"
 
 interface Props {
-  dataCall: Function; 
+  dataCall: Function
 }
 
 function RandomBioPage(props: Props): JSX.Element {
-  const [state, setState] = useState<RandomBioState>(RandomBioInitialState);
-  const [scheme, setScheme] = useContext(SchemeContext);
-  const [length, setLength] = useState(100);
-  const [type, setType] = useState(1);
-  const [single, setSingle] = useState(true);
+  const [state, setState] = useState<RandomBioState>(RandomBioInitialState)
+  const [scheme, setScheme] = useContext(SchemeContext)
+  const [length, setLength] = useState(100)
+  const [type, setType] = useState(1)
+  const [single, setSingle] = useState(true)
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>, payload: RandomBioPOST) => {
-    setState({...state, loading: true});
-    event.preventDefault();
-    props.dataCall(payload).then((resp: RandomBioPayload) => {
-      if(resp.success && resp.data) {
+  const handleSubmit = (
+    event: React.FormEvent<HTMLFormElement>,
+    payload: RandomBioPOST,
+  ) => {
+    setState({ ...state, loading: true })
+    event.preventDefault()
+    props
+      .dataCall(payload)
+      .then((resp: RandomBioPayload) => {
+        if (resp.success && resp.data) {
+          setState({
+            details: resp,
+            error: false,
+            errorMessage: null,
+            loading: false,
+          })
+        } else {
+          throw new Error(resp.error)
+        }
+      })
+      .catch((err: any) => {
+        console.log(err)
         setState({
-          details: resp,
-          error: false,
-          errorMessage: null,
-          loading: false
-        });
-      } else {
-        throw new Error(resp.error);
-      }
-    }).catch((err: any) => {
-      console.log(err)
-      setState({
-        error: true,
-        errorMessage: err,
-        loading: false
-      });
-    })
+          error: true,
+          errorMessage: err,
+          loading: false,
+        })
+      })
   }
-  
+
   useEffect(() => {
-    document.title = `Random generator | ${scheme.title}`;
-  }, []);
+    document.title = `Random generator | ${scheme.title}`
+  }, [])
 
   function SearchBar(showingDesc: Boolean) {
     return (
       <div className="search-container">
-        <div className="description" style={{color: scheme.body.text}}>
-          {showingDesc?<p>Generate a random sequence of nucleotides or amino acid residues.</p>: <></>}
+        <div
+          className="description"
+          style={{ color: scheme.body.text }}
+        >
+          {showingDesc ? (
+            <p>
+              Generate a random sequence of nucleotides or amino acid residues.
+            </p>
+          ) : (
+            <></>
+          )}
         </div>
         <div className="form">
-          <form onSubmit={((e) => handleSubmit(e, {
-            type: type,
-            length: length,
-            ...(type===3 && {single: +single})
-          }))}>
+          <form
+            onSubmit={e =>
+              handleSubmit(e, {
+                type: type,
+                length: length,
+                ...(type === 3 && { single: +single }),
+              })
+            }
+          >
             <div className="type">
-              <Radio label="DNA" id="inputtype" name="inputtype" value="1" defaultChecked={type===1} onClick={((e) => {setType(+(e.target as HTMLTextAreaElement).value)})} />
-              <Radio label="RNA" id="inputtype" name="inputtype" value="2" defaultChecked={type===2} onClick={((e) => {setType(+(e.target as HTMLTextAreaElement).value)})} />
-              <Radio label="Amino acids" id="inputtype" name="inputtype" value="3" defaultChecked={type===3} onClick={((e) => {setType(+(e.target as HTMLTextAreaElement).value)})} />
+              <Radio
+                label="DNA"
+                id="inputtype"
+                name="inputtype"
+                value="1"
+                defaultChecked={type === 1}
+                onClick={e => {
+                  setType(+(e.target as HTMLTextAreaElement).value)
+                }}
+              />
+              <Radio
+                label="RNA"
+                id="inputtype"
+                name="inputtype"
+                value="2"
+                defaultChecked={type === 2}
+                onClick={e => {
+                  setType(+(e.target as HTMLTextAreaElement).value)
+                }}
+              />
+              <Radio
+                label="Amino acids"
+                id="inputtype"
+                name="inputtype"
+                value="3"
+                defaultChecked={type === 3}
+                onClick={e => {
+                  setType(+(e.target as HTMLTextAreaElement).value)
+                }}
+              />
             </div>
-            <Input label="Sequence length:" name='length' id='length' value={length.toString()} onChange={((e) => {setLength(+e.target.value)})} />
+            <Input
+              label="Sequence length:"
+              name="length"
+              id="length"
+              value={length.toString()}
+              onChange={e => {
+                setLength(+e.target.value)
+              }}
+            />
             <div className="single">
               <p>Single letter abbreviations: </p>
-              <input type="checkbox" id="inputtype" name="inputtype" value="t" disabled={type!==3} defaultChecked={single===true} onChange={((e) => {setSingle(!single)})}/>
+              <input
+                type="checkbox"
+                id="inputtype"
+                name="inputtype"
+                value="t"
+                disabled={type !== 3}
+                defaultChecked={single === true}
+                onChange={e => {
+                  setSingle(!single)
+                }}
+              />
             </div>
-              <div className="button">
-                <Button colours={scheme} />
-              </div>
+            <div className="button">
+              <Button colours={scheme} />
+            </div>
           </form>
         </div>
       </div>
-    );
+    )
   }
-  if(state.loading) return <Spinner/>
-  if(state.error && state.errorMessage) return <ErrorPage error={state.errorMessage} />
-  if(state.details && state.details.data) {
+  if (state.loading) return <Spinner />
+  if (state.error && state.errorMessage)
+    return <ErrorPage error={state.errorMessage} />
+  if (state.details && state.details.data) {
     console.log(type)
-    const data = state.details.data;
+    const data = state.details.data
     return (
       <IslandCenter>
         <div className="randomBioPage">
           <div className="searchArea">
             {SearchBar(window.outerWidth > 1000)}
           </div>
-          <hr/>
+          <hr />
           <div className="resultsCenter">
-            <Textarea label="Results:" value={data.join('')} highlightOnFocus={true} readOnly={true}/>
+            <Textarea
+              label="Results:"
+              value={data.join("")}
+              highlightOnFocus={true}
+              readOnly={true}
+            />
           </div>
         </div>
       </IslandCenter>
-    );
+    )
   } else {
     return (
       <IslandCenter>
@@ -106,15 +180,12 @@ function RandomBioPage(props: Props): JSX.Element {
           <>{SearchBar(true)}</>
         </div>
       </IslandCenter>
-    );
+    )
   }
 }
 
-
 const enhance = (): JSX.Element => {
-  return(
-    <RandomBioPage dataCall={fetchRandomBio} />
-  ) 
-};
+  return <RandomBioPage dataCall={fetchRandomBio} />
+}
 
-export default enhance;
+export default enhance

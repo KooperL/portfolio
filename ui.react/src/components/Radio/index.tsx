@@ -1,19 +1,17 @@
-import React from 'react';
-import './style.css'
+import React from "react"
+import "./style.css"
 
-export function Radio(
-  props: {
-    onClick?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    value: string;
-    name?: string;
-    id?: string;
-    label?: string;
-    checked?: boolean;
-    defaultChecked?: boolean;
-    disabled?: boolean;
-  }
-) {
+export function Radio(props: {
+  onClick?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  value: string
+  name?: string
+  id?: string
+  label?: string
+  checked?: boolean
+  defaultChecked?: boolean
+  disabled?: boolean
+}) {
   return (
     <div id="Radio-container">
       <label htmlFor={props.name}>{props.label}</label>
@@ -29,4 +27,4 @@ export function Radio(
       />
     </div>
   )
-};
+}

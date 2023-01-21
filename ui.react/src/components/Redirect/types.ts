@@ -1,9 +1,9 @@
 export interface Props {
-  destination: string;
+  destination: string
   // programatic?: boolean;
 }
 
 export interface FuncProps {
-  data: Props;
-  monitorPost: Function;
+  data: Props
+  monitorPost: Function
 }

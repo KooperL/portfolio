@@ -5,9 +5,8 @@
 //   loading?: boolean;
 // }
 
-import { ApiError } from "../../api/apiErrorHandler";
-import { forumItem } from "../common/types";
-
+import { ApiError } from "../../api/apiErrorHandler"
+import { forumItem } from "../common/types"
 
 // export interface ForumPostFetchPayload {
 //   data: {
@@ -21,24 +20,23 @@ import { forumItem } from "../common/types";
 //   loading: true
 // } as const;
 
-
 export interface ForumHomeGETResponse {
-  success: boolean;
+  success: boolean
   data?: {
     [key: string]: forumItem[]
-  };
-  error?: string;
+  }
+  error?: string
 }
 
 export interface ForumHomeGETState {
-  details?: ForumHomeGETResponse;
-  error?: boolean;
-  errorMessage?: ApiError | null;
-  loading?: boolean;
+  details?: ForumHomeGETResponse
+  error?: boolean
+  errorMessage?: ApiError | null
+  loading?: boolean
 }
 
 export const ForumHomeGETInitialState: ForumHomeGETState = {
   error: false,
   errorMessage: null,
-  loading: false
-} as const;
+  loading: false,
+} as const
