@@ -1,4 +1,4 @@
 export type ModalProps = {
-  closedChildren?: React.ReactNode;
-  children?: React.ReactNode;
-};
+  closedChildren?: React.ReactNode
+  children?: React.ReactNode
+}

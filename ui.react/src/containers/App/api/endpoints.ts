@@ -1,7 +1,7 @@
-import { ApiEndpoints, forumPath, projectPath } from './types';
-import { environmentConfig } from './environmentMappings';
+import { ApiEndpoints, forumPath, projectPath } from "./types"
+import { environmentConfig } from "./environmentMappings"
 
-const { apiHost } = environmentConfig();
+const { apiHost } = environmentConfig()
 
 export const endpoints: ApiEndpoints = {
   home: `${apiHost}/home`,
@@ -32,4 +32,3 @@ export const endpoints: ApiEndpoints = {
   forumRefresh: `${apiHost}/${forumPath}/refresh`,
   forumLogout: `${apiHost}/${forumPath}/logout`,
 }
-

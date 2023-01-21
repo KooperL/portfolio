@@ -1,143 +1,158 @@
-import React, { useEffect, useState } from "react";
-import Spinner from "../../components/Spinner";
-import { 
+import React, { useEffect, useState } from "react"
+import Spinner from "../../components/Spinner"
+import {
   PropertyPayload,
   PropertyState,
   PropertyInitialState,
   PropertyPOST,
-  PropertySearchPayload
- } from "./types";
-import { fetchProperty } from "../App/api/propertyApi";
-import Chart from "react-apexcharts";
-import ErrorPage from "../ErrorPage";
+  PropertySearchPayload,
+} from "./types"
+import { fetchProperty } from "../App/api/propertyApi"
+import Chart from "react-apexcharts"
+import ErrorPage from "../ErrorPage"
 
 interface Props {
-  dataCall: Function; 
+  dataCall: Function
 }
 
 function PropertyPage(props: Props): JSX.Element {
-  const [state, setState] = useState<PropertyState>(PropertyInitialState);
-  const [value, setValue] = useState('');
-  const [options, setOptions] = useState<any>();
+  const [state, setState] = useState<PropertyState>(PropertyInitialState)
+  const [value, setValue] = useState("")
+  const [options, setOptions] = useState<any>()
 
   useEffect(() => {
-    setState({...state, loading: true});
-    props.dataCall().then((resp: PropertyPayload) => {
-      setState({
-        details: resp,
-        error: false,
-        errorMessage: null,
-        loading: false
-      });
-    }).catch((err: any) => {
-      setState({
-        error: true,
-        errorMessage: err,
-        loading: false
-      });
-    })
-  }, []);
+    setState({ ...state, loading: true })
+    props
+      .dataCall()
+      .then((resp: PropertyPayload) => {
+        setState({
+          details: resp,
+          error: false,
+          errorMessage: null,
+          loading: false,
+        })
+      })
+      .catch((err: any) => {
+        setState({
+          error: true,
+          errorMessage: err,
+          loading: false,
+        })
+      })
+  }, [])
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>, payload: PropertyPOST) => {
-    setState({...state, loading: true});
-    event.preventDefault();
-    props.dataCall(payload).then((resp: PropertySearchPayload) => {
-      setState({
-        details: resp,
-        error: false,
-        errorMessage: null,
-        loading: false
-      });
-      console.log(resp)
-      if(resp.data?.details) {
-        const means = resp.data.details.pricedata.means;
-        const stds = resp.data.details.pricedata.stds;
-        setOptions({
-          options: {
-            chart: {
-              id: "Props",
-              toolbar: {
-                show: true,
-              },
-              export: {
-                png: {
-                  filename: undefined,
-                }
-              },
-            },
-            colors: ['#008FFB', '#00E396', '#ffffff'],
-            xaxis: {
-              categories: resp.data.details.pricedata.datekey,
-              tickAmount: 4,
-            },
-            grid: {
-              yaxis: {
-                lines: {
-                  show: false
+  const handleSubmit = (
+    event: React.FormEvent<HTMLFormElement>,
+    payload: PropertyPOST,
+  ) => {
+    setState({ ...state, loading: true })
+    event.preventDefault()
+    props
+      .dataCall(payload)
+      .then((resp: PropertySearchPayload) => {
+        setState({
+          details: resp,
+          error: false,
+          errorMessage: null,
+          loading: false,
+        })
+        console.log(resp)
+        if (resp.data?.details) {
+          const means = resp.data.details.pricedata.means
+          const stds = resp.data.details.pricedata.stds
+          setOptions({
+            options: {
+              chart: {
+                id: "Props",
+                toolbar: {
+                  show: true,
                 },
-              }
-            },
-            yaxis: {
-              min: 0,
-              max: 1500000,
-              tickAmount: 3,
-            },
-            stroke: {
-              width: [2,0,0]
-            },
-            fill: {
-              type: ['solid', 'gradient', 'solid'],
-              gradient: {
-                inverseColors: false,
-                type: 'vertical',
-                opacityFrom: 0.5,
-                opacityTo: 1,
-                stops: stds.map(function(val, ind) {return means[ind]-val})
+                export: {
+                  png: {
+                    filename: undefined,
+                  },
+                },
               },
-              solid: {
-                opacity: 0,
+              colors: ["#008FFB", "#00E396", "#ffffff"],
+              xaxis: {
+                categories: resp.data.details.pricedata.datekey,
+                tickAmount: 4,
+              },
+              grid: {
+                yaxis: {
+                  lines: {
+                    show: false,
+                  },
+                },
+              },
+              yaxis: {
+                min: 0,
+                max: 1500000,
+                tickAmount: 3,
+              },
+              stroke: {
+                width: [2, 0, 0],
+              },
+              fill: {
+                type: ["solid", "gradient", "solid"],
+                gradient: {
+                  inverseColors: false,
+                  type: "vertical",
+                  opacityFrom: 0.5,
+                  opacityTo: 1,
+                  stops: stds.map(function (val, ind) {
+                    return means[ind] - val
+                  }),
+                },
+                solid: {
+                  opacity: 0,
+                },
               },
             },
-          },
-          series: [
-            {
-              name: 'means',
-              type: 'line',
-              // color: 'blue',
-              data: means
-            },
-            {
-              name: 'stdsHigh',
-              type: 'area',
-              // color: 'red',
-              data: stds.map(function(val, ind) {return val+means[ind]})
-            },
-            {
-              name: 'stdsLow',
-              type: 'area',
-              // color: 'white',
-              data: stds.map(function(val, ind) {return means[ind]-val})
-            },
-          ],
-        });
-      } else {
-        throw new Error(resp.error);
-      }
-    }).catch((err: any) => {
-      setState({
-        error: true,
-        errorMessage: err,
-        loading: false
-      });
-    })
+            series: [
+              {
+                name: "means",
+                type: "line",
+                // color: 'blue',
+                data: means,
+              },
+              {
+                name: "stdsHigh",
+                type: "area",
+                // color: 'red',
+                data: stds.map(function (val, ind) {
+                  return val + means[ind]
+                }),
+              },
+              {
+                name: "stdsLow",
+                type: "area",
+                // color: 'white',
+                data: stds.map(function (val, ind) {
+                  return means[ind] - val
+                }),
+              },
+            ],
+          })
+        } else {
+          throw new Error(resp.error)
+        }
+      })
+      .catch((err: any) => {
+        setState({
+          error: true,
+          errorMessage: err,
+          loading: false,
+        })
+      })
   }
-  
-  
-  if(state.loading) return <Spinner/>
-  if(state.error && state.errorMessage) return <ErrorPage error={state.errorMessage} />
-  if(state.details && state.details.data) {
-    if(Object.keys(state.details.data).includes('suburb')) {
-      const data = state.details as PropertySearchPayload;
+
+  if (state.loading) return <Spinner />
+  if (state.error && state.errorMessage)
+    return <ErrorPage error={state.errorMessage} />
+  if (state.details && state.details.data) {
+    if (Object.keys(state.details.data).includes("suburb")) {
+      const data = state.details as PropertySearchPayload
       // @ts-ignore
       const stats = data.data.stats
       return (
@@ -157,12 +172,12 @@ function PropertyPage(props: Props): JSX.Element {
                     </tr>
                   </thead>
                   <tr>
-                    <td className="px-2">{ stats.mean}</td>
-                    <td className="px-2">{ stats.spread }</td>
-                    <td className="px-2">{ stats.distance }</td>
-                    <td className="px-2">{ stats.listingsCaptured }</td>
-                    <td className="px-2">{ stats.linearGradient }</td>
-                    <td className="px-2">{ stats.linearGradient }</td>
+                    <td className="px-2">{stats.mean}</td>
+                    <td className="px-2">{stats.spread}</td>
+                    <td className="px-2">{stats.distance}</td>
+                    <td className="px-2">{stats.listingsCaptured}</td>
+                    <td className="px-2">{stats.linearGradient}</td>
+                    <td className="px-2">{stats.linearGradient}</td>
                   </tr>
                 </table>
               </div>
@@ -170,41 +185,72 @@ function PropertyPage(props: Props): JSX.Element {
             <div className="flex justify-center">
               <div className="w-fit">
                 <Chart
-                  options={options['options']}
-                  series={options['series']}
+                  options={options["options"]}
+                  series={options["series"]}
                   width="600"
                 />
               </div>
             </div>
             <div className="flex justify-center">
               <div className="w-fit">
-                <iframe width="600" height="450" title='iframe' src=
-                  {`https://maps.google.com/maps?width=150&amp;height=50&amp;hl=en&amp;q=${value}%20Victoria%20Australia&amp;ie=UTF8&amp;t=&amp;z=8&amp;iwloc=B&amp;output=embed`}
-                frameBorder="0" scrolling="no" marginHeight={0} marginWidth={0}></iframe>
+                <iframe
+                  width="600"
+                  height="450"
+                  title="iframe"
+                  src={`https://maps.google.com/maps?width=150&amp;height=50&amp;hl=en&amp;q=${value}%20Victoria%20Australia&amp;ie=UTF8&amp;t=&amp;z=8&amp;iwloc=B&amp;output=embed`}
+                  frameBorder="0"
+                  scrolling="no"
+                  marginHeight={0}
+                  marginWidth={0}
+                ></iframe>
               </div>
             </div>
           </div>
         </div>
-      );
+      )
     } else {
       const data = state.details as PropertyPayload
       return (
         <div className="">
           <div className="flex flex-row justify-center items-center gap-24 pb-24">
             <div>
-              <p>Enter the name of a suburb in Victoria to see a detailed profile.</p>
+              <p>
+                Enter the name of a suburb in Victoria to see a detailed
+                profile.
+              </p>
             </div>
             <div>
-              <form onSubmit={((e) => handleSubmit(e, {
-                prop_suburb: value
-              }))}>
+              <form
+                onSubmit={e =>
+                  handleSubmit(e, {
+                    prop_suburb: value,
+                  })
+                }
+              >
                 <label>Suburb:</label>
-                <input className='ml-2 bg-gray-100 rounded' type='text' name='prop_suburb' id='prop_suburb' value={value} onChange={((e) => {setValue(e.target.value)})} />
-                <button className="bg-blue-400 m-5 p-1 rounded text-white" type='submit' name='submit' placeholder="Melbourne" value='Submit'>Submit</button>
+                <input
+                  className="ml-2 bg-gray-100 rounded"
+                  type="text"
+                  name="prop_suburb"
+                  id="prop_suburb"
+                  value={value}
+                  onChange={e => {
+                    setValue(e.target.value)
+                  }}
+                />
+                <button
+                  className="bg-blue-400 m-5 p-1 rounded text-white"
+                  type="submit"
+                  name="submit"
+                  placeholder="Melbourne"
+                  value="Submit"
+                >
+                  Submit
+                </button>
               </form>
             </div>
           </div>
-          
+
           <div className="flex flex-wrap justify-evenly">
             <div className="">
               <div className="w-96 h-1/2">
@@ -236,16 +282,16 @@ function PropertyPage(props: Props): JSX.Element {
                         <th className="px-2">Calculated desirability</th>
                       </tr>
                     </thead>
-                      {data.data.highest.map((topic, indexTopic) => (
-                        <tr>
-                          <td className="px-2">{ topic.suburb }</td>
-                          <td className="px-2">{ topic.meanMeans }</td>
-                          <td className="px-2">{ topic.distcc }</td>
-                          <td className="px-2">{ topic.count }</td>
-                          <td className="px-2">{ topic.meanGradient }</td>
-                          <td className="px-2">{ topic.desirability }</td>
-                        </tr>
-                      ))}
+                    {data.data.highest.map((topic, indexTopic) => (
+                      <tr>
+                        <td className="px-2">{topic.suburb}</td>
+                        <td className="px-2">{topic.meanMeans}</td>
+                        <td className="px-2">{topic.distcc}</td>
+                        <td className="px-2">{topic.count}</td>
+                        <td className="px-2">{topic.meanGradient}</td>
+                        <td className="px-2">{topic.desirability}</td>
+                      </tr>
+                    ))}
                   </table>
                 </div>
               </div>
@@ -266,12 +312,12 @@ function PropertyPage(props: Props): JSX.Element {
                       </tr>
                     </thead>
                     <tr>
-                      <td className="px-2">{ data.data.stats.Min }</td>
-                      <td className="px-2">{ data.data.stats.Q1 }</td>
-                      <td className="px-2">{ data.data.stats.median }</td>
-                      <td className="px-2">{ data.data.stats.Q3 }</td>
-                      <td className="px-2">{ data.data.stats.Max }</td>
-                      <td className="px-2">{ data.data.stats.IQR }</td>
+                      <td className="px-2">{data.data.stats.Min}</td>
+                      <td className="px-2">{data.data.stats.Q1}</td>
+                      <td className="px-2">{data.data.stats.median}</td>
+                      <td className="px-2">{data.data.stats.Q3}</td>
+                      <td className="px-2">{data.data.stats.Max}</td>
+                      <td className="px-2">{data.data.stats.IQR}</td>
                     </tr>
                   </table>
                 </div>
@@ -279,7 +325,7 @@ function PropertyPage(props: Props): JSX.Element {
             </div>
           </div>
         </div>
-      );
+      )
     }
   } else {
     return (
@@ -288,31 +334,51 @@ function PropertyPage(props: Props): JSX.Element {
           <div className="flex justify-center">
             <div className="flex flex-wrap">
               <div className="text-xl text-center w-1/2 flex-no-shrink">
-                <p>Enter the name of a suburb in Victoria to see a detailed profile.</p>
+                <p>
+                  Enter the name of a suburb in Victoria to see a detailed
+                  profile.
+                </p>
               </div>
               <div>
-              <form onSubmit={((e) => handleSubmit(e, {
-                prop_suburb: value
-              }))}>
+                <form
+                  onSubmit={e =>
+                    handleSubmit(e, {
+                      prop_suburb: value,
+                    })
+                  }
+                >
                   <label>Suburb:</label>
-                  <input className='ml-2 bg-gray-100 rounded' type='text' name='prop_suburb' id='prop_suburb' value={value} onChange={((e) => {setValue(e.target.value)})} />
-                  <button className="bg-blue-400 m-5 p-1 rounded text-white" type='submit' name='submit' value='Submit'>Submit</button>
+                  <input
+                    className="ml-2 bg-gray-100 rounded"
+                    type="text"
+                    name="prop_suburb"
+                    id="prop_suburb"
+                    value={value}
+                    onChange={e => {
+                      setValue(e.target.value)
+                    }}
+                  />
+                  <button
+                    className="bg-blue-400 m-5 p-1 rounded text-white"
+                    type="submit"
+                    name="submit"
+                    value="Submit"
+                  >
+                    Submit
+                  </button>
                 </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-    );
+    )
   }
-  return <></>;
+  return <></>
 }
 
-
 const enhance = (): JSX.Element => {
-  return(
-    <PropertyPage dataCall={fetchProperty} />
-  ) 
-};
+  return <PropertyPage dataCall={fetchProperty} />
+}
 
-export default enhance;
+export default enhance

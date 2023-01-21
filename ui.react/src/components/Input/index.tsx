@@ -1,19 +1,17 @@
-import React from 'react';
-import './style.css'
+import React from "react"
+import "./style.css"
 
-export function Input(
-  props: {
-    value: string;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    readOnly?: boolean;
-    autoComplete?: string;
-    name?: string;
-    id?: string;
-    placeholder?: string;
-    label?: string;
-    inputBoxLabel?: string;
-  }
-) {
+export function Input(props: {
+  value: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  readOnly?: boolean
+  autoComplete?: string
+  name?: string
+  id?: string
+  placeholder?: string
+  label?: string
+  inputBoxLabel?: string
+}) {
   return (
     <div id="Input-container">
       <label htmlFor={props.name}>{props.label}</label>
@@ -44,4 +42,4 @@ export function Input(
       </div>
     </div>
   )
-};
+}

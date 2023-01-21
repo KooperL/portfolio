@@ -1,24 +1,17 @@
 export class Scene {
-  private framesPerSecond = 60;
-  private objects: any = {};
+  private framesPerSecond = 60
+  private objects: any = {}
 
-  private constructor() {
-
-  }
+  private constructor() {}
 
   fps(num: number) {
-    this.framesPerSecond = num;
+    this.framesPerSecond = num
   }
 
   addObject(obj: any) {
-    this.objects.push(obj);
+    this.objects.push(obj)
   }
 }
-
-
-
-
-
 
 // function setup() {
 //   world.fps()
@@ -28,8 +21,6 @@ export class Scene {
 
 // function draw() {
 //   world.translate()
-
-
 
 //   world.render()
 // }

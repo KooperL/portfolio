@@ -8,7 +8,6 @@
 // import {Link} from "react-router-dom";
 // import Modal from './ModalOld/Modal';
 
-
 // function GlobalFilter({
 //   preGlobalFilteredRows,
 //   globalFilter,
@@ -64,7 +63,6 @@
 // //   return matchSorter(rows, filterValue, { keys: [row => row.values[id]] })
 // // }
 // // fuzzyTextFilterFn.autoRemove = val => !val
-
 
 // function Table(props) {
 //   // const filterTypes = React.useMemo(
@@ -263,7 +261,7 @@
 //                     return (
 //                       <td className="p-2" {...cell.getCellProps()}>
 //                         <Modal
-//                         text={text()} 
+//                         text={text()}
 //                         textSmall={textSmall()} />
 //                       </td>
 //                     );
@@ -311,5 +309,4 @@
 //   );
 // }
 
-
-export default {};
+export default {}
