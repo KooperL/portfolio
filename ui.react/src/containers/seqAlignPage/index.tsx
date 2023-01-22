@@ -19,13 +19,13 @@ import { Gear } from "../../components/Gear"
 import { Radio } from "../../components/Radio"
 import { ApiError } from "../../api/apiErrorHandler"
 import ErrorPage from "../ErrorPage"
+import { useSeqAlignState } from "../../controllers/useSeqAlignState"
 
 interface Props {
   dataCall: Function
 }
 
 function SeqAlignPage(props: Props): JSX.Element {
-  const [state, setState] = useState<SeqAlignState>(SeqAlignInitialState)
   const [sampletxt, setSampletxt] = useState("")
   const [referencetxt, setReferencetxt] = useState("")
   const [identical, setIdentical] = useState(1.0)
@@ -38,34 +38,7 @@ function SeqAlignPage(props: Props): JSX.Element {
     document.title = `Protein Secondary Structure | ${scheme.title}`
   }, [])
 
-  const handleSubmit = (
-    event: React.FormEvent<HTMLFormElement>,
-    payload: SeqAlignPOST,
-  ) => {
-    setState({ ...state, loading: true })
-    event.preventDefault()
-    props
-      .dataCall(payload)
-      .then((resp: SeqAlignPayload) => {
-        if (resp.success && resp.data) {
-          setState({
-            details: resp,
-            error: false,
-            errorMessage: null,
-            loading: false,
-          })
-        } else {
-          throw new Error(resp.error)
-        }
-      })
-      .catch((err: any) => {
-        setState({
-          error: true,
-          errorMessage: err,
-          loading: false,
-        })
-      })
-  }
+  const { state, handleSubmit } = useSeqAlignState(props.dataCall)
 
   function SearchBar(showingDesc: Boolean) {
     return (
