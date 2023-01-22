@@ -8,45 +8,17 @@ import { Button } from "../../components/Button"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Input } from "../../components/Input"
 import ErrorPage from "../ErrorPage"
+import { useMrnaState } from "../../controllers/useMrnaState"
 
 interface Props {
   dataCall: Function
 }
 
 function MrnaPage(props: Props): JSX.Element {
-  const [state, setState] = useState<MrnaState>(MrnaInitialState)
   const [value, setValue] = useState("")
   const [scheme, setScheme] = useContext(SchemeContext)
 
-  const handleSubmit = (
-    event: React.FormEvent<HTMLFormElement>,
-    payload: MrnaPOST,
-  ) => {
-    setState({ ...state, loading: true })
-    event.preventDefault()
-    props
-      .dataCall(payload)
-      .then((resp: MrnaPayload) => {
-        if (resp.success && resp.data) {
-          setState({
-            details: resp,
-            error: false,
-            errorMessage: null,
-            loading: false,
-          })
-        } else {
-          throw new Error(resp.error)
-        }
-      })
-      .catch((err: any) => {
-        console.log(err)
-        setState({
-          error: true,
-          errorMessage: err,
-          loading: false,
-        })
-      })
-  }
+  const { state, handleSubmit } = useMrnaState(props.dataCall)
 
   useEffect(() => {
     document.title = `DNA decoder | ${scheme.title}`

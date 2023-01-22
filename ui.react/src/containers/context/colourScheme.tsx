@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client"
 import dark from "./dark.json"
 import { Scheme } from "./type"
 
-interface PageInformation extends Scheme {
+export interface PageInformation extends Scheme {
   title: string
 }
 

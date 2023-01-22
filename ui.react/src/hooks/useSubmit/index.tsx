@@ -1,23 +1,22 @@
-import { useCallback, useEffect, useState } from "react"
+// import { useState, useEffect, useCallback } from 'react';
+// import { ApiError } from '../../api/apiErrorHandler';
+
+import { useCallback, useState } from "react"
 import { ApiError } from "../../api/apiErrorHandler"
+import { State } from "../../types/state"
 
-interface State<T> {
-  details?: T
-  error: boolean
-  errorMessage?: ApiError | null
-  loading?: boolean
-}
-
-export const useFetch = <T, U>(
-  dataCall: (body?: U) => Promise<ApiError | T>,
+export const useSubmit = <T, U>(
+  dataCall: (body: U) => Promise<ApiError | T>,
 ) => {
   const [state, setState] = useState<State<T>>({
-    loading: true,
+    loading: false,
     details: undefined,
     error: false,
   })
-  const fetch = useCallback(
-    (payload?: U) => {
+  const handleSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>, payload: U) => {
+      event.preventDefault()
+
       dataCall(payload)
         .then(resp => {
           // if (resp.hasOwnProperty('success') && resp.hasOwnProperty('data')) {
@@ -43,5 +42,5 @@ export const useFetch = <T, U>(
     [dataCall, state],
   )
 
-  return { state, fetch }
+  return { state, handleSubmit }
 }

@@ -15,47 +15,19 @@ import { Input } from "../../components/Input"
 import { Textarea } from "../../components/Textarea"
 import { Radio } from "../../components/Radio"
 import ErrorPage from "../ErrorPage"
+import { useRandomBioState } from "../../controllers/useRandombioState"
 
 interface Props {
   dataCall: Function
 }
 
 function RandomBioPage(props: Props): JSX.Element {
-  const [state, setState] = useState<RandomBioState>(RandomBioInitialState)
   const [scheme, setScheme] = useContext(SchemeContext)
   const [length, setLength] = useState(100)
   const [type, setType] = useState(1)
   const [single, setSingle] = useState(true)
 
-  const handleSubmit = (
-    event: React.FormEvent<HTMLFormElement>,
-    payload: RandomBioPOST,
-  ) => {
-    setState({ ...state, loading: true })
-    event.preventDefault()
-    props
-      .dataCall(payload)
-      .then((resp: RandomBioPayload) => {
-        if (resp.success && resp.data) {
-          setState({
-            details: resp,
-            error: false,
-            errorMessage: null,
-            loading: false,
-          })
-        } else {
-          throw new Error(resp.error)
-        }
-      })
-      .catch((err: any) => {
-        console.log(err)
-        setState({
-          error: true,
-          errorMessage: err,
-          loading: false,
-        })
-      })
-  }
+  const { state, handleSubmit } = useRandomBioState(props.dataCall)
 
   useEffect(() => {
     document.title = `Random generator | ${scheme.title}`
