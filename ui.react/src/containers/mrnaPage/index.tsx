@@ -2,34 +2,30 @@ import React, { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
 import { MrnaPayload, MrnaState, MrnaInitialState, MrnaPOST } from "./types"
 import { fetchMrna } from "../App/api/MrnaApi"
-import { SchemeContext } from "../context/colourScheme"
+import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 import { Button } from "../../components/Button"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Input } from "../../components/Input"
 import ErrorPage from "../ErrorPage"
 import { useMrnaState } from "../../controllers/useMrnaState"
+import { State } from "../../types/state"
 
 interface Props {
-  dataCall: Function
-}
+  scheme: PageInformation;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+   state: State<MrnaPayload>;
+  }
 
 function MrnaPage(props: Props): JSX.Element {
-  const [value, setValue] = useState("")
-  const [scheme, setScheme] = useContext(SchemeContext)
-
-  const { state, handleSubmit } = useMrnaState(props.dataCall)
-
-  useEffect(() => {
-    document.title = `DNA decoder | ${scheme.title}`
-  }, [])
-
   function SearchBar(showingDesc: Boolean) {
     return (
       <div className="search-container">
         <div
           className="description"
-          style={{ color: scheme.body.text }}
+          style={{ color: props.scheme.body.text }}
         >
           {showingDesc ? (
             <p>Enter a DNA sequence to see a breakdown of its components.</p>
@@ -38,34 +34,30 @@ function MrnaPage(props: Props): JSX.Element {
           )}
         </div>
         <form
-          onSubmit={e =>
-            handleSubmit(e, {
-              dna_field_id: value,
-            })
-          }
+          onSubmit={props.onSubmit}
         >
           <div className="inputWithButton">
             <Input
               inputBoxLabel="🧬 DNA:"
               placeholder=" GATTACA..."
-              value={value}
+              value={props.value}
               onChange={e => {
-                setValue(e.target.value)
+                props.setValue(e.target.value)
               }}
             />
             <div className="button">
-              <Button colours={scheme} />
+              <Button colours={props.scheme} />
             </div>
           </div>
         </form>
       </div>
     )
   }
-  if (state.loading) return <Spinner />
-  if (state.error && state.errorMessage)
-    return <ErrorPage error={state.errorMessage} />
-  if (state.details && state.details.data) {
-    const data = state.details.data
+  if (props.state.loading) return <Spinner />
+  if (props.state.error && props.state.errorMessage)
+    return <ErrorPage error={props.state.errorMessage} />
+  if (props.state.details && props.state.details.data) {
+    const data = props.state.details.data
     return (
       <div className="mrnaPage">
         <IslandCenter>
@@ -178,8 +170,8 @@ function MrnaPage(props: Props): JSX.Element {
   return <></>
 }
 
-const enhance = (): JSX.Element => {
-  return <MrnaPage dataCall={fetchMrna} />
+const Enhance = (): JSX.Element => {
+  return <MrnaPage {...useMrnaState()} />
 }
 
-export default enhance
+export default Enhance

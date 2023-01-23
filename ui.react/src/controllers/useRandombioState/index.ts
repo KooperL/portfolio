@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect, useContext } from "react"
 import {
   RandomBioPayload,
   RandomBioState,
@@ -6,37 +6,36 @@ import {
   RandomBioPOST,
 } from "../../containers/randomBioPage/types"
 import { fetchRandomBio } from "../../containers/App/api/randomBioApi"
+import { SchemeContext } from "../../containers/context/colourScheme"
+import { useSubmit } from "../../hooks/useSubmit"
 
-export const useRandomBioState = (dataCall: Function) => {
-  const [state, setState] = useState<RandomBioState>(RandomBioInitialState)
+export const useRandomBioState = () => {
+  const [scheme, setScheme] = useContext(SchemeContext)
+  const [length, setLength] = useState(100)
+  const [type, setType] = useState(1)
+  const [single, setSingle] = useState(true)
 
-  const handleSubmit = useCallback(
-    (event: React.FormEvent<HTMLFormElement>, payload: RandomBioPOST) => {
-      setState({ ...state, loading: true })
-      event.preventDefault()
-      dataCall(payload)
-        .then((resp: RandomBioPayload) => {
-          if (resp.success && resp.data) {
-            setState({
-              details: resp,
-              error: false,
-              errorMessage: null,
-              loading: false,
-            })
-          } else {
-            throw new Error(resp.error)
-          }
-        })
-        .catch((err: any) => {
-          setState({
-            error: true,
-            errorMessage: err,
-            loading: false,
-          })
-        })
-    },
-    [dataCall, state],
-  )
+  const { state, handleSubmit } = useSubmit<RandomBioPayload, RandomBioPOST>(fetchRandomBio)
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    handleSubmit(e, {
+      type: type,
+      length: length,
+      ...(type === 3 && { single: +single }),
+    })
+  }
+  useEffect(() => {
+    document.title = `Random generator | ${scheme.title}`
+  }, [])
 
-  return { state, handleSubmit }
+  return {
+    scheme,
+    length,
+    setLength,
+    type,
+    setType,
+    single,
+    setSingle,
+    onSubmit,
+    state
+  }
 }
