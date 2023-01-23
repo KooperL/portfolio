@@ -10,7 +10,7 @@ import { fetchSeqAlign } from "../App/api/seqAlignApi"
 import Modal from "../../components/Modal"
 // @ts-ignore
 import gear from "../../assets/gear.svg"
-import { SchemeContext } from "../context/colourScheme"
+import { PageInformation, SchemeContext } from "../context/colourScheme"
 import { Button } from "../../components/Button"
 import "./style.css"
 import { IslandCenter } from "../../templates/IslandCenter"
@@ -20,32 +20,39 @@ import { Radio } from "../../components/Radio"
 import { ApiError } from "../../api/apiErrorHandler"
 import ErrorPage from "../ErrorPage"
 import { useSeqAlignState } from "../../controllers/useSeqAlignState"
+import { useSubmit } from "../../hooks/useSubmit"
+import { State } from "../../types/state"
 
 interface Props {
-  dataCall: Function
+  sampletxt: string;
+  setSampletxt: React.Dispatch<React.SetStateAction<string>>;
+  referencetxt: string;
+  setReferencetxt: React.Dispatch<React.SetStateAction<string>>;
+  identical: number;
+  setIdentical: React.Dispatch<React.SetStateAction<number>>;
+  mismatch: number;
+  setMismatch: React.Dispatch<React.SetStateAction<number>>;
+  gaps: number;
+  setGaps: React.Dispatch<React.SetStateAction<number>>;
+  extgaps: number;
+  setExtgaps: React.Dispatch<React.SetStateAction<number>>;
+  scheme: PageInformation;
+  onSubmit:  (e: React.FormEvent<HTMLFormElement>) => void ;
+  state: State<SeqAlignPayload>;
 }
 
 function SeqAlignPage(props: Props): JSX.Element {
-  const [sampletxt, setSampletxt] = useState("")
-  const [referencetxt, setReferencetxt] = useState("")
-  const [identical, setIdentical] = useState(1.0)
-  const [mismatch, setMismatch] = useState(0.0)
-  const [gaps, setGaps] = useState(-0.5)
-  const [extgaps, setExtgaps] = useState(-0.1)
-  const [scheme, setScheme] = useContext(SchemeContext)
 
-  useEffect(() => {
-    document.title = `Protein Secondary Structure | ${scheme.title}`
-  }, [])
 
-  const { state, handleSubmit } = useSeqAlignState(props.dataCall)
+
+
 
   function SearchBar(showingDesc: Boolean) {
     return (
       <div className="search-container">
         <div
           className="description"
-          style={{ color: scheme.body.text }}
+          style={{ color: props.scheme.body.text }}
         >
           {showingDesc ? (
             <p>
@@ -56,15 +63,7 @@ function SeqAlignPage(props: Props): JSX.Element {
           )}
         </div>
         <form
-          onSubmit={e =>
-            handleSubmit(e, {
-              sampletxt: sampletxt,
-              referencetxt: referencetxt,
-              identical: identical,
-              mismatch: mismatch,
-              gaps: gaps,
-              extgaps: extgaps,
-            })
+          onSubmit={props.onSubmit
           }
         >
           <div className="searchBoxes">
@@ -72,26 +71,26 @@ function SeqAlignPage(props: Props): JSX.Element {
               inputBoxLabel="DNA strand 1:"
               name="referencetxt"
               id="referencetxt"
-              value={referencetxt}
+              value={props.referencetxt}
               onChange={e => {
-                setReferencetxt(e.target.value)
+                props.setReferencetxt(e.target.value)
               }}
             />
             <Input
               inputBoxLabel="DNA strand 2:"
               name="sampletxt"
               id="sampletxt"
-              value={sampletxt}
+              value={props.sampletxt}
               onChange={e => {
-                setSampletxt(e.target.value)
+                props.setSampletxt(e.target.value)
               }}
             />
           </div>
           <div className="buttonWithGear">
             <Button
-              colours={scheme}
+              colours={props.scheme}
               disabled={
-                referencetxt.length < 4 && sampletxt.length < 4 ? true : false
+                props.referencetxt.length < 4 && props.sampletxt.length < 4 ? true : false
               }
             />
             <Modal closedChildren={<Gear />}>
@@ -100,36 +99,36 @@ function SeqAlignPage(props: Props): JSX.Element {
                   label="Identical base reward:"
                   name="identical"
                   id="identical"
-                  value={identical.toString()}
+                  value={props.identical.toString()}
                   onChange={e => {
-                    setIdentical(+e.target.value)
+                    props.setIdentical(+e.target.value)
                   }}
                 />
                 <Input
                   label="Mismatching base penalty:"
                   name="mismatch"
                   id="mismatch"
-                  value={mismatch.toString()}
+                  value={props.mismatch.toString()}
                   onChange={e => {
-                    setMismatch(+e.target.value)
+                    props.setMismatch(+e.target.value)
                   }}
                 />
                 <Input
                   label="Beginning gap penalty:"
                   name="gaps"
                   id="gaps"
-                  value={gaps.toString()}
+                  value={props.gaps.toString()}
                   onChange={e => {
-                    setGaps(+e.target.value)
+                    props.setGaps(+e.target.value)
                   }}
                 />
                 <Input
                   label="Extending gap penalty:"
                   name="extgaps"
                   id="extgaps"
-                  value={extgaps.toString()}
+                  value={props.extgaps.toString()}
                   onChange={e => {
-                    setExtgaps(+e.target.value)
+                    props.setExtgaps(+e.target.value)
                   }}
                 />
               </div>
@@ -140,13 +139,13 @@ function SeqAlignPage(props: Props): JSX.Element {
     )
   }
 
-  if (state.loading) return <Spinner />
-  if (state.error && state.errorMessage)
-    return <ErrorPage error={state.errorMessage} />
-  if (state.details && state.details.data) {
-    const data = state.details.data
+  if (props.state.loading) return <Spinner />
+  if (props.state.error && props.state.errorMessage)
+    return <ErrorPage error={props.state.errorMessage} />
+  if (props.state.details && props.state.details.data) {
+    const data = props.state.details.data
     const splitDrawArray = data.draw_res.map(elem => elem.split("\n"))
-    console.log(state.details)
+
     return (
       <IslandCenter>
         <div className="seqAlignPage">
@@ -199,8 +198,8 @@ function SeqAlignPage(props: Props): JSX.Element {
   }
 }
 
-const enhance = (): JSX.Element => {
-  return <SeqAlignPage dataCall={fetchSeqAlign} />
+const Enhance = (): JSX.Element => {
+  return <SeqAlignPage {...useSeqAlignState()} />
 }
 
-export default enhance
+export default Enhance

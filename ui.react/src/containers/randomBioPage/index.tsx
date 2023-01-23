@@ -7,7 +7,7 @@ import {
   RandomBioPOST,
 } from "./types"
 import { fetchRandomBio } from "../App/api/randomBioApi"
-import { SchemeContext } from "../context/colourScheme"
+import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 import { Button } from "../../components/Button"
 import { IslandCenter } from "../../templates/IslandCenter"
@@ -16,29 +16,27 @@ import { Textarea } from "../../components/Textarea"
 import { Radio } from "../../components/Radio"
 import ErrorPage from "../ErrorPage"
 import { useRandomBioState } from "../../controllers/useRandombioState"
+import { State } from "../../types/state"
 
 interface Props {
-  dataCall: Function
+  scheme: PageInformation;
+  length: number;
+  setLength: React.Dispatch<React.SetStateAction<number>>;
+  type: number;
+  setType: React.Dispatch<React.SetStateAction<number>>;
+  single: boolean;
+  setSingle: React.Dispatch<React.SetStateAction<boolean>>;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  state: State<RandomBioPayload>
 }
 
 function RandomBioPage(props: Props): JSX.Element {
-  const [scheme, setScheme] = useContext(SchemeContext)
-  const [length, setLength] = useState(100)
-  const [type, setType] = useState(1)
-  const [single, setSingle] = useState(true)
-
-  const { state, handleSubmit } = useRandomBioState(props.dataCall)
-
-  useEffect(() => {
-    document.title = `Random generator | ${scheme.title}`
-  }, [])
-
   function SearchBar(showingDesc: Boolean) {
     return (
       <div className="search-container">
         <div
           className="description"
-          style={{ color: scheme.body.text }}
+          style={{ color: props.scheme.body.text }}
         >
           {showingDesc ? (
             <p>
@@ -50,12 +48,7 @@ function RandomBioPage(props: Props): JSX.Element {
         </div>
         <div className="form">
           <form
-            onSubmit={e =>
-              handleSubmit(e, {
-                type: type,
-                length: length,
-                ...(type === 3 && { single: +single }),
-              })
+            onSubmit={props.onSubmit
             }
           >
             <div className="type">
@@ -64,9 +57,9 @@ function RandomBioPage(props: Props): JSX.Element {
                 id="inputtype"
                 name="inputtype"
                 value="1"
-                defaultChecked={type === 1}
+                defaultChecked={props.type === 1}
                 onClick={e => {
-                  setType(+(e.target as HTMLTextAreaElement).value)
+                  props.setType(+(e.target as HTMLTextAreaElement).value)
                 }}
               />
               <Radio
@@ -74,9 +67,9 @@ function RandomBioPage(props: Props): JSX.Element {
                 id="inputtype"
                 name="inputtype"
                 value="2"
-                defaultChecked={type === 2}
+                defaultChecked={props.type === 2}
                 onClick={e => {
-                  setType(+(e.target as HTMLTextAreaElement).value)
+                  props.setType(+(e.target as HTMLTextAreaElement).value)
                 }}
               />
               <Radio
@@ -84,9 +77,9 @@ function RandomBioPage(props: Props): JSX.Element {
                 id="inputtype"
                 name="inputtype"
                 value="3"
-                defaultChecked={type === 3}
+                defaultChecked={props.type === 3}
                 onClick={e => {
-                  setType(+(e.target as HTMLTextAreaElement).value)
+                  props.setType(+(e.target as HTMLTextAreaElement).value)
                 }}
               />
             </div>
@@ -94,9 +87,9 @@ function RandomBioPage(props: Props): JSX.Element {
               label="Sequence length:"
               name="length"
               id="length"
-              value={length.toString()}
+              value={props.length.toString()}
               onChange={e => {
-                setLength(+e.target.value)
+                props.setLength(+e.target.value)
               }}
             />
             <div className="single">
@@ -106,27 +99,26 @@ function RandomBioPage(props: Props): JSX.Element {
                 id="inputtype"
                 name="inputtype"
                 value="t"
-                disabled={type !== 3}
-                defaultChecked={single === true}
+                disabled={props.type !== 3}
+                defaultChecked={props.single === true}
                 onChange={e => {
-                  setSingle(!single)
+                  props.setSingle(!props.single)
                 }}
               />
             </div>
             <div className="button">
-              <Button colours={scheme} />
+              <Button colours={props.scheme} />
             </div>
           </form>
         </div>
       </div>
     )
   }
-  if (state.loading) return <Spinner />
-  if (state.error && state.errorMessage)
-    return <ErrorPage error={state.errorMessage} />
-  if (state.details && state.details.data) {
-    console.log(type)
-    const data = state.details.data
+  if (props.state.loading) return <Spinner />
+  if (props.state.error && props.state.errorMessage)
+    return <ErrorPage error={props.state.errorMessage} />
+  if (props.state.details && props.state.details.data) {
+    const data = props.state.details.data
     return (
       <IslandCenter>
         <div className="randomBioPage">
@@ -156,8 +148,8 @@ function RandomBioPage(props: Props): JSX.Element {
   }
 }
 
-const enhance = (): JSX.Element => {
-  return <RandomBioPage dataCall={fetchRandomBio} />
+const Enhance = (): JSX.Element => {
+  return <RandomBioPage {...useRandomBioState()} />
 }
 
-export default enhance
+export default Enhance

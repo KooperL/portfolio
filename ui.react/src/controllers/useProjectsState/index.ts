@@ -10,6 +10,7 @@ export const useProjectsState = () => {
 
   useEffect(() => {
     fetch()
+    document.title = `Projects | ${scheme.title}`
   }, [])
 
   return { scheme, state }
