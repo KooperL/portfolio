@@ -24,29 +24,24 @@ import { useSubmit } from "../../hooks/useSubmit"
 import { State } from "../../types/state"
 
 interface Props {
-  sampletxt: string;
-  setSampletxt: React.Dispatch<React.SetStateAction<string>>;
-  referencetxt: string;
-  setReferencetxt: React.Dispatch<React.SetStateAction<string>>;
-  identical: number;
-  setIdentical: React.Dispatch<React.SetStateAction<number>>;
-  mismatch: number;
-  setMismatch: React.Dispatch<React.SetStateAction<number>>;
-  gaps: number;
-  setGaps: React.Dispatch<React.SetStateAction<number>>;
-  extgaps: number;
-  setExtgaps: React.Dispatch<React.SetStateAction<number>>;
-  scheme: PageInformation;
-  onSubmit:  (e: React.FormEvent<HTMLFormElement>) => void ;
-  state: State<SeqAlignPayload>;
+  sampletxt: string
+  setSampletxt: React.Dispatch<React.SetStateAction<string>>
+  referencetxt: string
+  setReferencetxt: React.Dispatch<React.SetStateAction<string>>
+  identical: number
+  setIdentical: React.Dispatch<React.SetStateAction<number>>
+  mismatch: number
+  setMismatch: React.Dispatch<React.SetStateAction<number>>
+  gaps: number
+  setGaps: React.Dispatch<React.SetStateAction<number>>
+  extgaps: number
+  setExtgaps: React.Dispatch<React.SetStateAction<number>>
+  scheme: PageInformation
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+  state: State<SeqAlignPayload>
 }
 
 function SeqAlignPage(props: Props): JSX.Element {
-
-
-
-
-
   function SearchBar(showingDesc: Boolean) {
     return (
       <div className="search-container">
@@ -62,10 +57,7 @@ function SeqAlignPage(props: Props): JSX.Element {
             <></>
           )}
         </div>
-        <form
-          onSubmit={props.onSubmit
-          }
-        >
+        <form onSubmit={props.onSubmit}>
           <div className="searchBoxes">
             <Input
               inputBoxLabel="DNA strand 1:"
@@ -90,7 +82,9 @@ function SeqAlignPage(props: Props): JSX.Element {
             <Button
               colours={props.scheme}
               disabled={
-                props.referencetxt.length < 4 && props.sampletxt.length < 4 ? true : false
+                props.referencetxt.length < 4 && props.sampletxt.length < 4
+                  ? true
+                  : false
               }
             />
             <Modal closedChildren={<Gear />}>

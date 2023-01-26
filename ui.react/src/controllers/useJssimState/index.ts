@@ -25,7 +25,6 @@ function calcScore(arr: number[]): number {
   return Math.ceil((score / arr.length) * 100)
 }
 
-
 export const useJssimState = () => {
   const [typedString, setTypedString] = useState<Array<string>>([])
   const [referenceString, setReferenceString] = useState<Array<string>>([])
@@ -171,14 +170,14 @@ export const useJssimState = () => {
 
   return {
     timer,
-setTimer,
-score,
-referenceString,
-referenceIndex,
-typedString,
-selectString,
-scoreColourLookup,
-scoreTally,
-scheme,
+    setTimer,
+    score,
+    referenceString,
+    referenceIndex,
+    typedString,
+    selectString,
+    scoreColourLookup,
+    scoreTally,
+    scheme,
   }
 }

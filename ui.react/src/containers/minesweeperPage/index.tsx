@@ -9,21 +9,30 @@ import { IslandCenter } from "../../templates/IslandCenter"
 import { Gear } from "../../components/Gear"
 import { Input } from "../../components/Input"
 import { Button } from "../../components/Button"
-import { Cell, gameStateLookup, makeupLookup, useMinesweeperState } from "../../controllers/useMinesweeperState"
+import {
+  Cell,
+  gameStateLookup,
+  makeupLookup,
+  useMinesweeperState,
+} from "../../controllers/useMinesweeperState"
 
 interface Props {
-  gridSize: number;
-  setGridSize: React.Dispatch<React.SetStateAction<number>>;
-  mineDensity: number;
-  setMineDensity: React.Dispatch<React.SetStateAction<number>>;
-  genFreshBoard: () => void;
-  gameState: number;
-  scheme: PageInformation;
-  timer: number;
-  grid: Cell[][];
-  handleClick: (BoardIndexY: number, BoardIndexX: number, clickType: number) => void;
-  setMousePressDuration: React.Dispatch<React.SetStateAction<number>>;
-  mousePressDuration: number;
+  gridSize: number
+  setGridSize: React.Dispatch<React.SetStateAction<number>>
+  mineDensity: number
+  setMineDensity: React.Dispatch<React.SetStateAction<number>>
+  genFreshBoard: () => void
+  gameState: number
+  scheme: PageInformation
+  timer: number
+  grid: Cell[][]
+  handleClick: (
+    BoardIndexY: number,
+    BoardIndexX: number,
+    clickType: number,
+  ) => void
+  setMousePressDuration: React.Dispatch<React.SetStateAction<number>>
+  mousePressDuration: number
 }
 
 function Minesweeper(props: Props) {
@@ -137,7 +146,6 @@ function Minesweeper(props: Props) {
     </IslandCenter>
   )
 }
-
 
 const Enhance = (): JSX.Element => {
   return <Minesweeper {...useMinesweeperState()} />

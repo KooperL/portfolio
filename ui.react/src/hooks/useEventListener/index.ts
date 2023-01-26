@@ -12,7 +12,7 @@ export const useEventListener = (
   }, [handler])
 
   useEffect(() => {
-    const eventListener = <T = keyof WindowEventMap,>(event: T) =>
+    const eventListener = <T = keyof WindowEventMap>(event: T) =>
       savedHandler.current(event)
     element.addEventListener(eventName, eventListener)
     return () => {

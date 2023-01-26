@@ -6,10 +6,10 @@ import { useFetch } from "../../hooks/useFetch"
 
 export const useProjectsState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
-  const { state, fetch } = useFetch<HomePayload, undefined>(fetchProjects)
+  const { state, pull } = useFetch<HomePayload, undefined>(fetchProjects)
 
   useEffect(() => {
-    fetch()
+    pull()
     document.title = `Projects | ${scheme.title}`
   }, [])
 

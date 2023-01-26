@@ -8,7 +8,7 @@ import Spinner from "../../components/Spinner"
 import { HomeState, HomePayload, HomeInitialState } from "./types"
 import { fetchHome } from "../App/api/homeApi"
 import Navbar from "../../components/Navbar"
-import { SchemeContext } from "../context/colourScheme"
+import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 
 import { ReactP5Wrapper } from "react-p5-wrapper"
@@ -17,44 +17,20 @@ import ButtonRedir from "../../components/ButtonRedir"
 import { IslandLeft } from "../../templates/IslandLeft"
 import TypeLookup from "../../components/TypeLookup"
 import ErrorPage from "../ErrorPage"
+import { useHomeState } from "../../controllers/useHomeState"
+import { State } from "../../types/state"
 
 interface Props {
-  dataCall: Function
+  state: State<HomePayload>
+  scheme: PageInformation
 }
 
 function HomePage(props: Props): JSX.Element {
-  const [state, setState] = useState({ ...HomeInitialState })
-  const [scheme, setScheme] = useContext(SchemeContext)
-
-  useEffect(() => {
-    document.title = `Home | ${scheme.title}`
-  }, [])
-
-  useEffect(() => {
-    props
-      .dataCall()
-      .then((resp: HomePayload) => {
-        setState({
-          details: resp,
-          error: false,
-          errorMessage: null,
-          loading: false,
-        })
-      })
-      .catch((err: any) => {
-        setState({
-          error: true,
-          errorMessage: err,
-          loading: false,
-        })
-      })
-  }, [])
-
-  if (state.loading) return <Spinner />
-  if (state.error && state.errorMessage)
-    return <ErrorPage error={state.errorMessage} />
-  if (state.details) {
-    const data = state.details.data
+  if (props.state.loading) return <Spinner />
+  if (props.state.error && props.state.errorMessage)
+    return <ErrorPage error={props.state.errorMessage} />
+  if (props.state.details) {
+    const data = props.state.details.data
 
     return (
       <IslandLeft>
@@ -64,7 +40,7 @@ function HomePage(props: Props): JSX.Element {
             <div className="">
               <h2
                 className="main-heading"
-                style={{ color: scheme.body.h1 }}
+                style={{ color: props.scheme.body.h1 }}
               >
                 Home
               </h2>
@@ -93,8 +69,8 @@ function HomePage(props: Props): JSX.Element {
   return <></>
 }
 
-const enhance = (): JSX.Element => {
-  return <HomePage dataCall={fetchHome} />
+const Enhance = (): JSX.Element => {
+  return <HomePage {...useHomeState()} />
 }
 
-export default enhance
+export default Enhance

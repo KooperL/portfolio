@@ -12,12 +12,12 @@ import { useMrnaState } from "../../controllers/useMrnaState"
 import { State } from "../../types/state"
 
 interface Props {
-  scheme: PageInformation;
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
-   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-   state: State<MrnaPayload>;
-  }
+  scheme: PageInformation
+  value: string
+  setValue: React.Dispatch<React.SetStateAction<string>>
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+  state: State<MrnaPayload>
+}
 
 function MrnaPage(props: Props): JSX.Element {
   function SearchBar(showingDesc: Boolean) {
@@ -33,9 +33,7 @@ function MrnaPage(props: Props): JSX.Element {
             <></>
           )}
         </div>
-        <form
-          onSubmit={props.onSubmit}
-        >
+        <form onSubmit={props.onSubmit}>
           <div className="inputWithButton">
             <Input
               inputBoxLabel="🧬 DNA:"

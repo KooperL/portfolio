@@ -15,7 +15,7 @@ import {
 } from "./types"
 import { fetchContact, postContact } from "../App/api/contactApi"
 import Navbar from "../../components/Navbar"
-import { SchemeContext } from "../context/colourScheme"
+import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 
 import { ReactP5Wrapper } from "react-p5-wrapper"
@@ -26,70 +26,24 @@ import { IslandCenter } from "../../templates/IslandCenter"
 import TypeLookup from "../../components/TypeLookup"
 import { Input } from "../../components/Input"
 import ErrorPage from "../ErrorPage"
+import { State } from "../../types/state"
+import { useContactState } from "../../controllers/useContactState"
 
 interface Props {
-  dataCall: Function
-  dataPost: Function
+  scheme: PageInformation
+  handleSubmit: (
+    event: React.FormEvent<HTMLFormElement>,
+    payload: ContactPOST,
+  ) => void
+  value: string
+  setValue: React.Dispatch<React.SetStateAction<string>>
+  state: State<ContactPayload>
+  POSTstate: State<ContactPOSTPayload>
 }
 
 function ContactPage(props: Props): JSX.Element {
-  const [state, setState] = useState({ ...ContactInitialState })
-  const [POSTstate, setPOSTState] = useState({ ...ContactPOSTInitialState })
-  const [value, setValue] = useState("")
-  const [scheme, setScheme] = useContext(SchemeContext)
-
   useEffect(() => {
-    props
-      .dataCall()
-      .then((resp: ContactPayload) => {
-        setState({
-          details: resp,
-          error: false,
-          errorMessage: null,
-          loading: false,
-        })
-      })
-      .catch((err: any) => {
-        setState({
-          error: true,
-          errorMessage: err,
-          loading: false,
-        })
-      })
-  }, [])
-
-  const handleSubmit = (
-    event: React.FormEvent<HTMLFormElement>,
-    payload: ContactPOST,
-  ) => {
-    setPOSTState({ ...POSTstate, loading: true })
-    event.preventDefault()
-    props
-      .dataPost(payload)
-      .then((resp: ContactPOSTPayload) => {
-        if (resp.success) {
-          setPOSTState({
-            details: resp,
-            error: false,
-            errorMessage: null,
-            loading: false,
-          })
-        } else {
-          throw new Error(resp.error)
-        }
-      })
-      .catch((err: any) => {
-        console.log(err)
-        setPOSTState({
-          error: true,
-          errorMessage: err,
-          loading: false,
-        })
-      })
-  }
-
-  useEffect(() => {
-    document.title = `Contact | ${scheme.title}`
+    document.title = `Contact | ${props.scheme.title}`
   }, [])
 
   function SearchBar() {
@@ -98,28 +52,28 @@ function ContactPage(props: Props): JSX.Element {
         <div className="form">
           <form
             onSubmit={e =>
-              handleSubmit(e, {
+              props.handleSubmit(e, {
                 session_id: sessionStorage.getItem("session_id") ?? "error",
-                message: value,
+                message: props.value,
               })
             }
           >
             <div className="inputWithButton">
               <Input
                 inputBoxLabel="📝:"
-                value={value}
+                value={props.value}
                 onChange={e => {
-                  setValue(e.target.value)
+                  props.setValue(e.target.value)
                 }}
               />
               <div className="submit-button">
-                <Button colours={scheme} />
+                <Button colours={props.scheme} />
                 <div className="status">
-                  {value.length
-                    ? POSTstate.loading
+                  {props.value.length
+                    ? props.POSTstate.loading
                       ? "🛫"
-                      : POSTstate.details
-                      ? POSTstate.details.success
+                      : props.POSTstate.details
+                      ? props.POSTstate.details.success
                         ? "✅"
                         : "❌"
                       : "✏️"
@@ -133,11 +87,11 @@ function ContactPage(props: Props): JSX.Element {
     )
   }
 
-  if (state.loading) return <Spinner />
-  if (state.error && state.errorMessage)
-    return <ErrorPage error={state.errorMessage} />
-  if (state.details) {
-    const data = state.details.data
+  if (props.state.loading) return <Spinner />
+  if (props.state.error && props.state.errorMessage)
+    return <ErrorPage error={props.state.errorMessage} />
+  if (props.state.details) {
+    const data = props.state.details.data
 
     return (
       // <div className="contactPage">
@@ -147,7 +101,7 @@ function ContactPage(props: Props): JSX.Element {
             <div className="links">
               <h2
                 className="main-heading"
-                style={{ color: scheme.body.h1 }}
+                style={{ color: props.scheme.body.h1 }}
               >
                 Contact
               </h2>
@@ -171,13 +125,8 @@ function ContactPage(props: Props): JSX.Element {
   return <></>
 }
 
-const enhance = (): JSX.Element => {
-  return (
-    <ContactPage
-      dataCall={fetchContact}
-      dataPost={postContact}
-    />
-  )
+const Enhance = (): JSX.Element => {
+  return <ContactPage {...useContactState()} />
 }
 
-export default enhance
+export default Enhance
