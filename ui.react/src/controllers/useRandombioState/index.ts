@@ -15,7 +15,9 @@ export const useRandomBioState = () => {
   const [type, setType] = useState(1)
   const [single, setSingle] = useState(true)
 
-  const { state, handleSubmit } = useSubmit<RandomBioPayload, RandomBioPOST>(fetchRandomBio)
+  const { state, handleSubmit } = useSubmit<RandomBioPayload, RandomBioPOST>(
+    fetchRandomBio,
+  )
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     handleSubmit(e, {
       type: type,
@@ -36,6 +38,6 @@ export const useRandomBioState = () => {
     single,
     setSingle,
     onSubmit,
-    state
+    state,
   }
 }

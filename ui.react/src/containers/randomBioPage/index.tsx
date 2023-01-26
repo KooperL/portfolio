@@ -19,14 +19,14 @@ import { useRandomBioState } from "../../controllers/useRandombioState"
 import { State } from "../../types/state"
 
 interface Props {
-  scheme: PageInformation;
-  length: number;
-  setLength: React.Dispatch<React.SetStateAction<number>>;
-  type: number;
-  setType: React.Dispatch<React.SetStateAction<number>>;
-  single: boolean;
-  setSingle: React.Dispatch<React.SetStateAction<boolean>>;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  scheme: PageInformation
+  length: number
+  setLength: React.Dispatch<React.SetStateAction<number>>
+  type: number
+  setType: React.Dispatch<React.SetStateAction<number>>
+  single: boolean
+  setSingle: React.Dispatch<React.SetStateAction<boolean>>
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   state: State<RandomBioPayload>
 }
 
@@ -47,10 +47,7 @@ function RandomBioPage(props: Props): JSX.Element {
           )}
         </div>
         <div className="form">
-          <form
-            onSubmit={props.onSubmit
-            }
-          >
+          <form onSubmit={props.onSubmit}>
             <div className="type">
               <Radio
                 label="DNA"

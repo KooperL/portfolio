@@ -16,7 +16,7 @@ export const useFetch = <T, U>(
     details: undefined,
     error: false,
   })
-  const fetch = useCallback(
+  const pull = useCallback(
     (payload?: U) => {
       dataCall(payload)
         .then(resp => {
@@ -43,5 +43,5 @@ export const useFetch = <T, U>(
     [dataCall, state],
   )
 
-  return { state, fetch }
+  return { state, pull }
 }

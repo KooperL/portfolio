@@ -23,11 +23,11 @@ export const useMrnaState = () => {
       dna_field_id: value,
     })
   }
-  return { 
-    scheme, 
-    value, 
-    setValue, 
+  return {
+    scheme,
+    value,
+    setValue,
     onSubmit,
-    state
-   }
+    state,
+  }
 }

@@ -10,18 +10,18 @@ import { Button } from "../../components/Button"
 import { useJssimState } from "../../controllers/useJssimState"
 
 interface Props {
-  timer: number;
-  setTimer: React.Dispatch<React.SetStateAction<number>>;
-  score: number;
-  referenceString: string[];
-  referenceIndex: number;
-  typedString: string[];
-  selectString: (index?: number) => void;
+  timer: number
+  setTimer: React.Dispatch<React.SetStateAction<number>>
+  score: number
+  referenceString: string[]
+  referenceIndex: number
+  typedString: string[]
+  selectString: (index?: number) => void
   scoreColourLookup: {
-    [key: string]: string;
-  };
-  scoreTally: number[];
-  scheme: PageInformation;
+    [key: string]: string
+  }
+  scoreTally: number[]
+  scheme: PageInformation
 }
 
 function JsSim(props: Props) {

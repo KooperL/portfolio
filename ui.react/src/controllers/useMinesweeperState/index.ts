@@ -163,9 +163,8 @@ export const gameStateLookup = {
   3: "😄", // Won
 }
 
-
 export const useMinesweeperState = () => {
-    const [gridSize, setGridSize] = useState(10)
+  const [gridSize, setGridSize] = useState(10)
   const [mineDensity, setMineDensity] = useState(0.1)
   const [grid, setGrid] = useState([[new Cell(0, { x: 0, y: 0 })]])
   const [clicks, setClicks] = useState(0)
@@ -294,7 +293,8 @@ export const useMinesweeperState = () => {
       setClicks(clicks + 1)
     }
   }
-  return {  gridSize,
+  return {
+    gridSize,
     setGridSize,
     mineDensity,
     setMineDensity,
@@ -306,6 +306,6 @@ export const useMinesweeperState = () => {
     grid,
     handleClick,
     setMousePressDuration,
-    mousePressDuration
+    mousePressDuration,
   }
 }
