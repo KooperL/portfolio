@@ -5,12 +5,27 @@
   /* align-items: flex-end; */
   border-radius: 7px;
   /* text-align: center; */
-  white-space: nowrap;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 0;
+  overflow-x: hidden;
 }
 
 .ButtonRedir.container {
   max-width: fit-content;
   width: fit-content;
+}
+
+.ButtonRedir .data {
+  white-space: nowrap;
+
+}
+
+.buttonRedir img  {
+  filter: invert(100%) sepia(100%) saturate(100%) hue-rotate(86deg) brightness(118%) contrast(119%);
+  /* filter: brightness(100%) saturate(0%) */
+  max-width: 60%;
 }
 
 .buttonRedir:hover {

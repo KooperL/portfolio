@@ -7,7 +7,7 @@ import React, {
 import Spinner from "../../components/Spinner"
 import { fetchContact, postContact } from "../App/api/contactApi"
 import Navbar from "../../components/Navbar"
-import { SchemeContext } from "../context/colourScheme"
+import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 import { useNavigate } from "react-router-dom"
 import { ReactP5Wrapper } from "react-p5-wrapper"
@@ -29,158 +29,36 @@ import { IslandCenter } from "../../templates/IslandCenter"
 import { Input } from "../../components/Input"
 import Modal from "../../components/Modal"
 import { termsAndConditions } from "../../assets/TermsAndConditions"
-
-declare global {
-  interface PasswordCredentialConstructor extends PasswordCredential {
-    new ({}: PasswordCredential): PasswordCredential
-  }
-  interface PasswordCredential {
-    id: string
-    password: string
-  }
-  const PasswordCredential: PasswordCredentialConstructor
-}
+import { useForumLoginState } from "../../controllers/useForumLoginState"
 
 interface Props {
-  dataPostRegister: Function
-  dataPostLogin: Function
-}
-
-// https://github.com/Nooruddin-code/english-words-Json/blob/master/words_dictionary.json
-
-function generateUsername() {
-  const adjectives = ["happy", "exciting", "adorable", "clever", "elegant"]
-  const nouns = [
-    "otter",
-    "penguin",
-    "unicorn",
-    "rainbow",
-    "puppy",
-    "student",
-    "youtuber",
-  ]
-  const randomAdjective =
-    adjectives[Math.floor(Math.random() * adjectives.length)]
-  const randomNoun = nouns[Math.floor(Math.random() * nouns.length)]
-  return `${randomAdjective}_${randomNoun}${new Array(2)
-    .fill(0)
-    .map(_ => Math.floor(Math.random() * 10))
-    .join("")}`
+  token: string | null
+  scheme: PageInformation
+  handleSubmitRegister: (
+    e: React.FormEvent<HTMLFormElement>,
+    data: ForumRegisterPOSTPayload,
+  ) => void
+  handleSubmitLogin: (
+    e: React.FormEvent<HTMLFormElement>,
+    data: ForumLoginPOSTPayload,
+  ) => void
+  usernameRegister: string
+  setUsernameRegister: React.Dispatch<React.SetStateAction<string>>
+  passwordRegister: string
+  setPasswordRegister: React.Dispatch<React.SetStateAction<string>>
+  usernameLogin: string
+  setUsernameLogin: React.Dispatch<React.SetStateAction<string>>
+  passwordLogin: string
+  setPasswordLogin: React.Dispatch<React.SetStateAction<string>>
 }
 
 function ForumLoginPage(props: Props): JSX.Element {
-  const [POSTstate, setPOSTState] = useState({ ...ForumLoginPOSTInitialState })
-  const [usernameLogin, setUsernameLogin] = useState("")
-  const [passwordLogin, setPasswordLogin] = useState("")
-  const [usernameRegister, setUsernameRegister] = useState("")
-  const [passwordRegister, setPasswordRegister] = useState("")
-  const [hasRegistered, setHasRegistered] = useState(false)
-  const [scheme, setScheme] = useContext(SchemeContext)
-  // const [token, setToken] = useContext(AccessToken);
-  const [token, setToken] = useAccessToken()
-  const navigate = useNavigate()
-  // useAccessToken()
-
-  function generatePassword(length: number) {
-    return Math.random().toString(16).substr(2, length)
-  }
-
-  useEffect(() => {
-    setUsernameRegister(generateUsername())
-    setPasswordRegister(generatePassword(16))
-  }, [])
-
-  const handleSubmitRegister = (
-    event: React.FormEvent<HTMLFormElement>,
-    payload: ForumRegisterPOSTPayload,
-    authToken: string,
-  ) => {
-    if (hasRegistered) {
-      return
-    }
-    setPOSTState({ ...POSTstate, loading: true })
-    event.preventDefault()
-    props
-      .dataPostRegister(payload, authToken)
-      .then((resp: ForumRegisterPOSTResponse) => {
-        if (resp.success) {
-          setPOSTState({
-            details: resp,
-            error: false,
-            errorMessage: null,
-            loading: false,
-          })
-          setHasRegistered(true)
-          setUsernameLogin(usernameRegister)
-          setPasswordLogin(passwordRegister)
-          if (window.hasOwnProperty("PasswordCrediential")) {
-            let c = new PasswordCredential({
-              id: usernameRegister,
-              password: passwordRegister,
-            })
-            navigator.credentials.create(c as any)
-          }
-        } else {
-          throw new Error(resp.error)
-        }
-      })
-      .catch((err: any) => {
-        console.log(err)
-        setPOSTState({
-          error: true,
-          errorMessage: err,
-          loading: false,
-        })
-      })
-  }
-
-  const handleSubmitLogin = (
-    event: React.FormEvent<HTMLFormElement>,
-    payload: ForumLoginPOSTPayload,
-    authToken: string,
-  ) => {
-    setPOSTState({ ...POSTstate, loading: true })
-    event.preventDefault()
-    props
-      .dataPostLogin(payload, authToken)
-      .then((resp: ForumLoginPOSTResponse) => {
-        if (resp.success) {
-          setPOSTState({
-            details: resp,
-            error: false,
-            errorMessage: null,
-            loading: false,
-          })
-          // add auth token to context
-          setToken(resp.accessToken ?? "")
-          navigate(`/${forumPath}`)
-        } else {
-          throw new Error(resp.error)
-        }
-      })
-      .catch((err: any) => {
-        console.log(err)
-        setPOSTState({
-          error: true,
-          errorMessage: err,
-          loading: false,
-        })
-      })
-  }
-
-  useEffect(() => {
-    document.title = `Forum Login | ${scheme.title}`
-  }, [])
-
-  const encodedLogin = btoa(`${usernameLogin}:${passwordLogin}`)
-  const encodedRegister = btoa(`${usernameRegister}:${passwordRegister}`)
-
-  // TODO, modal is disconnected from the current context, need to port over existing modal component from other project which should be nested here
-
-  if (token !== "" && token !== null) {
+  if (props.token !== "" && props.token !== null) {
     return <Redirect destination={`/${ForumRouteType.ForumHome}`} />
   }
   const tnc = termsAndConditions()
+  console.log(props.usernameLogin)
+  console.log(props.passwordRegister)
   return (
     <IslandCenter>
       <div className="forumLoginPage">
@@ -188,51 +66,47 @@ function ForumLoginPage(props: Props): JSX.Element {
           <div id="register">
             <h2
               className="main-heading"
-              style={{ color: scheme.body.h1 }}
+              style={{ color: props.scheme.body.h1 }}
             >
               Register
             </h2>
             <form
               onSubmit={e =>
-                handleSubmitRegister(
-                  e,
-                  {
-                    session_id: sessionStorage.getItem("session_id") ?? "error",
-                    // data: {
-                    //   forum_username: usernameRegister,
-                    //   forum_password: passwordRegister
-                    // }
-                  },
-                  encodedRegister,
-                )
+                props.handleSubmitRegister(e, {
+                  session_id: sessionStorage.getItem("session_id") ?? "error",
+                })
               }
             >
               <Input
                 label="Username: "
-                value={usernameRegister}
+                value={props.usernameRegister}
                 readOnly={true}
                 onChange={e => {
-                  e.target.value = usernameRegister
+                  e.target.value = props.usernameRegister
                 }}
               />
               <Input
                 label="Password: "
-                value={passwordRegister}
+                value={props.passwordRegister}
                 readOnly={true}
                 onChange={e => {
-                  e.target.value = passwordRegister
+                  e.target.value = props.passwordRegister
                 }}
               />
               <div id="button">
-                <Modal
+                <Button
+                  colours={props.scheme}
+                  action="submit"
+                />
+                {/* <Modal
                   closedChildren={
                     <Button
-                      colours={scheme}
+                      colours={props.scheme}
                       action="button"
                     />
                   }
                 >
-                  <>
+                  <div className="modal-children">
                     <div>
                       {Object.keys(tnc).map(section => (
                         <div key={section}>
@@ -244,11 +118,13 @@ function ForumLoginPage(props: Props): JSX.Element {
                       ))}
                     </div>
                     <Button
-                      colours={scheme}
+                      colours={props.scheme}
                       label="I agree"
+                      action="submit"
+                      callBack={() => {}}
                     />
-                  </>
-                </Modal>
+                  </div>
+                </Modal> */}
               </div>
             </form>
           </div>
@@ -256,39 +132,35 @@ function ForumLoginPage(props: Props): JSX.Element {
           <div id="login">
             <h2
               className="main-heading"
-              style={{ color: scheme.body.h1 }}
+              style={{ color: props.scheme.body.h1 }}
             >
               Login
             </h2>
             <form
               onSubmit={e =>
-                handleSubmitLogin(
-                  e,
-                  {
-                    session_id: sessionStorage.getItem("session_id") ?? "error",
-                  },
-                  encodedLogin,
-                )
+                props.handleSubmitLogin(e, {
+                  session_id: sessionStorage.getItem("session_id") ?? "error",
+                })
               }
             >
               <Input
                 label="Username: "
-                value={usernameLogin}
+                value={props.usernameLogin}
                 autoComplete="username email"
                 onChange={e => {
-                  setUsernameLogin(e.target.value)
+                  props.setUsernameLogin(e.target.value)
                 }}
               />
               <Input
                 label="Password: "
-                value={passwordLogin}
+                value={props.passwordLogin}
                 autoComplete="new-password"
                 onChange={e => {
-                  setPasswordLogin(e.target.value)
+                  props.setPasswordLogin(e.target.value)
                 }}
               />
               <div id="button">
-                <Button colours={scheme} />
+                <Button colours={props.scheme} />
               </div>
             </form>
           </div>
@@ -298,13 +170,8 @@ function ForumLoginPage(props: Props): JSX.Element {
   )
 }
 
-const enhance = (): JSX.Element => {
-  return (
-    <ForumLoginPage
-      dataPostLogin={postForumLogin}
-      dataPostRegister={postForumRegister}
-    />
-  )
+const Enhance = (): JSX.Element => {
+  return <ForumLoginPage {...useForumLoginState()} />
 }
 
-export default enhance
+export default Enhance

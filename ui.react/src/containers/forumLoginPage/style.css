@@ -17,6 +17,12 @@
   padding-top: 1rem;
 }
 
+.forumLoginPage .modal-wrapper {
+  width: 30%;
+  height: 50%;
+  overflow-y: scroll;
+}
+
 @media screen and (max-width: 1000px) {
   .forumLoginPage .submit-button {
     width: 100%;
