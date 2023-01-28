@@ -5,6 +5,9 @@ import { FuncProps, Props } from "./types"
 import { Link } from "react-router-dom"
 import { postMonitor } from "../../containers/App/api/loggerApi"
 import { LoggingPOSTResponse } from "../Logger/types"
+import { Globe } from "../Globe"
+
+const letters = 'abcdefghijklmnopqrstuvwxyz'
 
 function ButtonRedir(props: FuncProps) {
   const [scheme, setScheme] = useContext(SchemeContext)
@@ -35,6 +38,27 @@ function ButtonRedir(props: FuncProps) {
     // }, [])
   }
 
+  const glitchText = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    console.log(e)
+    // @ts-ignore
+    const ogText: string = e.target.innerText
+    let iterations = 0
+    const interval = setInterval(() => {
+      // @ts-ignore
+      if (iterations >= e.target.dataset.value.length) clearInterval(interval)
+      // @ts-ignore
+      e.target.innerText = ogText.split('').map((letter, index) => {
+      // @ts-ignore
+        if (index < iterations) return e.target.dataset.value[index]
+        return letters[Math.floor(Math.random() * letters.length)]
+      }).join('')
+      iterations+=3
+    }, 60)
+
+    // @ts-ignore
+    e.target.innerText = ogText
+  }
+
   if (props.data.local) {
     return (
       <div className="ButtonRedir container">
@@ -50,8 +74,11 @@ function ButtonRedir(props: FuncProps) {
               // window.location = (window.location.host + props.data.destination)
             }}
           >
-            {props.data.label}
+            
+            <div className="data" onMouseOver={glitchText} data-value={props.data.label}>{props.data.label}</div>
+          {/* <Globe /> */}
           </div>
+
         </Link>
       </div>
     )
@@ -69,8 +96,9 @@ function ButtonRedir(props: FuncProps) {
           // window.location = (window.location.host + props.data.destination)
         }}
       >
-        {props.data.label}
-      </div>
+            <div className="data">{props.data.label}</div>
+          <Globe />
+          </div>
     </a>
   )
 }

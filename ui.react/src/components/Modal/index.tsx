@@ -1,35 +1,23 @@
 import React, { useState } from "react"
-import { ModalProps } from "./types"
+import { EnhanceProps, ModalProps } from "./types"
 import "./style.css"
+import { ModalController } from "./controller"
 
 const Modal: React.FC<ModalProps> = (props: ModalProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const openModal = () => setIsModalOpen(true)
-  const closeModal = () => setIsModalOpen(false)
-
-  if (!isModalOpen) {
-    return <div onClick={openModal}>{props.closedChildren}</div>
+  if (!props.isModalOpen) {
+    return <div onClick={props.openModal}>{props.closedChildren}</div>
   }
-  const handleClick = (event: React.MouseEvent) => {
-    const overlay = event.currentTarget as HTMLDivElement
-    const wrapper = overlay.querySelector(".modal-wrapper") as HTMLDivElement
-    if (event.target === overlay && event.target !== wrapper) {
-      closeModal()
-    }
-  }
-
   return (
     <>
       <div
         className="modal-overlay"
-        onClick={handleClick}
+        onClick={props.handleClick}
       >
         <div
           className="modal-wrapper"
           onClick={() => {}}
         >
-          <button onClick={closeModal}>Close</button>
+          <button onClick={props.closeModal}>Close</button>
           <div className="modal-content">{props.children}</div>
         </div>
       </div>
@@ -37,4 +25,14 @@ const Modal: React.FC<ModalProps> = (props: ModalProps) => {
   )
 }
 
-export default Modal
+const Enhance = (props: EnhanceProps): JSX.Element => {
+  return (
+    <Modal
+      {...ModalController()}
+      closedChildren={props.closedChildren}
+      children={props.children}
+    />
+  )
+}
+
+export default Enhance

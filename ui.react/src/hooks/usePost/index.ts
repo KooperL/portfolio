@@ -1,26 +1,26 @@
 import { useCallback, useEffect, useState } from "react"
 import { ApiError } from "../../api/apiErrorHandler"
+import { forumPost, Opts } from "../../containers/App/api/forumApis"
 import { State } from "../../types/state"
 
-export const useFetch = <T, U>(
-  dataCall: (body?: U) => Promise<ApiError | T>,
-) => {
-  const [state, setState] = useState<State<T>>({
+export const usePost = <T, U>(callback?: () => void) => {
+  const [state, setState] = useState<State<U>>({
     loading: true,
     details: undefined,
     error: false,
   })
-  const pull = useCallback(
-    (payload?: U) => {
-      dataCall(payload)
+  const post = useCallback(
+    (opts: Opts<T>) => {
+      forumPost<T, U>(opts)
         .then(resp => {
           // if (resp.hasOwnProperty('success') && resp.hasOwnProperty('data')) {
           setState({
-            details: resp as T,
+            details: resp as U,
             error: false,
             errorMessage: null,
             loading: false,
           })
+          callback && callback()
           // } else {
           //   resp = (resp as ApiError)
           //   throw new Error(resp);
@@ -29,13 +29,13 @@ export const useFetch = <T, U>(
         .catch((err: any) => {
           setState({
             error: true,
-            errorMessage: err,
+            errorMessage: err as ApiError,
             loading: false,
           })
         })
     },
-    [dataCall, state],
+    [state],
   )
 
-  return { state, pull }
+  return { state, post }
 }

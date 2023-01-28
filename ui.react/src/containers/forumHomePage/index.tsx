@@ -7,7 +7,7 @@ import React, {
 import Spinner from "../../components/Spinner"
 import { fetchContact, postContact } from "../App/api/contactApi"
 import Navbar from "../../components/Navbar"
-import { SchemeContext } from "../context/colourScheme"
+import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 
 import { ReactP5Wrapper } from "react-p5-wrapper"
@@ -26,84 +26,31 @@ import { IslandCenter } from "../../templates/IslandCenter"
 import { IslandLeft } from "../../templates/IslandLeft"
 import { Input } from "../../components/Input"
 import ErrorPage from "../ErrorPage"
+import { State } from "../../types/state"
+import { useForumHomeState } from "../../controllers/useForumHomeState"
 
 interface Props {
-  dataCall: Function
+  scheme: PageInformation
+  token: string | null
+  handleSubmit: () => void
+  state: State<ForumHomeGETResponse>
+  searchState: string
+  setSearchState: React.Dispatch<React.SetStateAction<string>>
 }
 
 function ForumHomePage(props: Props): JSX.Element {
-  const [state, setState] = useState({ ...ForumHomeGETInitialState })
-  const [searchState, setSearchState] = useState("")
-  // const [POSTstate, setPOSTState] = useState({...ContactPOSTInitialState});
-  const [scheme, setScheme] = useContext(SchemeContext)
-  const [token, setToken] = useAccessToken()
-  const location = useLocation()
-  const navigate = useNavigate()
-
-  function dataFetch() {
-    let paramString = window.location.href.split("?")[1]
-    let queryString = new URLSearchParams(paramString)
-
-    props
-      .dataCall(
-        {
-          session_id: sessionStorage.getItem("session_id"),
-          category: queryString.get("category"),
-          search: queryString.get("search"),
-        },
-        token,
-      )
-      .then((resp: ForumHomeGETResponse) => {
-        setState({
-          details: resp,
-          error: false,
-          errorMessage: null,
-          loading: false,
-        })
-      })
-      .catch((err: any) => {
-        setState({
-          error: true,
-          errorMessage: err,
-          loading: false,
-        })
-      })
-  }
-
-  useEffect(() => {
-    if (!token) {
-      return
-    }
-    dataFetch()
-  }, [token, location])
-
-  const handleSubmit = () => {
-    navigate(`/${ForumRouteType.ForumHome}?search=${searchState}`)
-    return (
-      <Redirect
-        destination={`/${ForumRouteType.ForumHome}?search=${searchState}`}
-      />
-    )
-  }
-
-  useEffect(() => {
-    document.title = `Forum Home | ${scheme.title}`
-  }, [])
-
-  console.log(token)
-
-  if (state.loading) return <Spinner />
-  if (token === "") {
+  if (props.state.loading) return <Spinner />
+  if (props.token === "" || props.token === null) {
     return (
       <Redirect
         destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumRegister}`}
       />
     )
   }
-  if (state.error && state.errorMessage)
-    return <ErrorPage error={state.errorMessage} />
-  if (state.details && state.details.data) {
-    const data = state.details.data
+  if (props.state.error && props.state.errorMessage)
+    return <ErrorPage error={props.state.errorMessage} />
+  if (props.state.details && props.state.details.data) {
+    const data = props.state.details.data
     return (
       <IslandLeft>
         <div className="forumHomePage">
@@ -111,7 +58,7 @@ function ForumHomePage(props: Props): JSX.Element {
           <div className="links">
             <h2
               className="main-heading"
-              style={{ color: scheme.body.h1 }}
+              style={{ color: props.scheme.body.h1 }}
             >
               Forum Home
             </h2>
@@ -119,19 +66,19 @@ function ForumHomePage(props: Props): JSX.Element {
               <form
                 onSubmit={e => {
                   e.preventDefault()
-                  handleSubmit()
+                  props.handleSubmit()
                 }}
               >
                 <div className="search">
                   <Input
-                    value={searchState}
+                    value={props.searchState}
                     onChange={e => {
-                      setSearchState(e.target.value)
+                      props.setSearchState(e.target.value)
                     }}
                   />
                   <Button
-                    colours={scheme}
-                    callBack={handleSubmit}
+                    colours={props.scheme}
+                    callBack={props.handleSubmit}
                     label="search"
                   ></Button>
                   {/* <ButtonRedir destination={`/${ForumRouteType.ForumHome}?search=${searchState}`} label="Search" local={true}></ButtonRedir> */}
@@ -167,8 +114,8 @@ function ForumHomePage(props: Props): JSX.Element {
   return <></>
 }
 
-const enhance = (): JSX.Element => {
-  return <ForumHomePage dataCall={getForumHome} />
+const Enhance = (): JSX.Element => {
+  return <ForumHomePage {...useForumHomeState()} />
 }
 
-export default enhance
+export default Enhance

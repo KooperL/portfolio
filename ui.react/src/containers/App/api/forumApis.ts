@@ -11,7 +11,52 @@ import { ForumPostCreatePOSTPayload } from "../../forumPostCreatePage/types"
 import { ForumPostViewGETPayload } from "../../forumPostViewPage/types"
 import { ForumUserGETResponse } from "../../forumUserPage/types"
 import { endpoints } from "./endpoints"
-import { Payload } from "./types"
+import { ApiEndpoints, Payload } from "./types"
+
+export interface Opts<T> {
+  endpoint: string
+  data?: T
+  authBasic?: string
+  authBearer?: string
+  params?:
+    | string
+    | string[][]
+    | Record<string, string>
+    | { [key: string]: any }
+    | URLSearchParams
+    | undefined
+  method?: "GET" | "POST"
+  // varRoute?: number,
+}
+
+export const forumPost = <T, U>(opts: Opts<T>): Promise<ApiError | U> => {
+  // let url = endpoints[opts.endpoint] + (opts.varRoute ?? '')
+  const apiConfig = {
+    headers: {
+      ...(opts.authBasic && {
+        Authorization: `Basic ${opts.authBasic}`,
+        // 'Access-Control-Allow-Credentials': 'true'
+      }),
+      ...(opts.authBearer && { Authorization: `Bearer ${opts.authBearer}` }),
+      ...(opts.data && {
+        "content-type": "application/json",
+        // "content-length": JSON.stringify(opts.data).length,
+      }),
+    },
+    data: opts.data,
+    withCredentials: true,
+    params: opts.params,
+  }
+  let call
+  switch (opts.method) {
+    case "GET":
+      call = get
+      break
+    default:
+      call = post
+  }
+  return call(opts.endpoint, apiConfig)
+}
 
 export const postForumRegister = (
   data: ForumRegisterPOSTPayload,
