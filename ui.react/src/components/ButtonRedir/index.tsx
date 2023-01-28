@@ -7,7 +7,7 @@ import { postMonitor } from "../../containers/App/api/loggerApi"
 import { LoggingPOSTResponse } from "../Logger/types"
 import { Globe } from "../Globe"
 
-const letters = 'abcdefghijklmnopqrstuvwxyz'
+const letters = "abcdefghijklmnopqrstuvwxyz"
 
 function ButtonRedir(props: FuncProps) {
   const [scheme, setScheme] = useContext(SchemeContext)
@@ -47,12 +47,15 @@ function ButtonRedir(props: FuncProps) {
       // @ts-ignore
       if (iterations >= e.target.dataset.value.length) clearInterval(interval)
       // @ts-ignore
-      e.target.innerText = ogText.split('').map((letter, index) => {
-      // @ts-ignore
-        if (index < iterations) return e.target.dataset.value[index]
-        return letters[Math.floor(Math.random() * letters.length)]
-      }).join('')
-      iterations+=3
+      e.target.innerText = ogText
+        .split("")
+        .map((letter, index) => {
+          // @ts-ignore
+          if (index < iterations) return e.target.dataset.value[index]
+          return letters[Math.floor(Math.random() * letters.length)]
+        })
+        .join("")
+      iterations += 3
     }, 60)
 
     // @ts-ignore
@@ -74,11 +77,15 @@ function ButtonRedir(props: FuncProps) {
               // window.location = (window.location.host + props.data.destination)
             }}
           >
-            
-            <div className="data" onMouseOver={glitchText} data-value={props.data.label}>{props.data.label}</div>
-          {/* <Globe /> */}
+            <div
+              className="data"
+              onMouseOver={glitchText}
+              data-value={props.data.label}
+            >
+              {props.data.label}
+            </div>
+            {/* <Globe /> */}
           </div>
-
         </Link>
       </div>
     )
@@ -96,9 +103,9 @@ function ButtonRedir(props: FuncProps) {
           // window.location = (window.location.host + props.data.destination)
         }}
       >
-            <div className="data">{props.data.label}</div>
-          <Globe />
-          </div>
+        <div className="data">{props.data.label}</div>
+        <Globe />
+      </div>
     </a>
   )
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"kooperlingohr/portfolio/controllers/database"
+	"kooperlingohr/portfolio/mylog"
 	"kooperlingohr/portfolio/router"
 	"kooperlingohr/portfolio/utils"
 	"log"
@@ -11,6 +12,17 @@ import (
 
 	"github.com/joho/godotenv"
 )
+
+var logger *mylog.Logger
+
+func init() {
+	var err error
+	logger, err = mylog.NewLogger("app.log")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer logger.Close()
+}
 
 func main() {
 	utils.HandleErrorVar(database.InitDB())
