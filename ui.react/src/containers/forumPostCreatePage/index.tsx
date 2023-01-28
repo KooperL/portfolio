@@ -7,7 +7,7 @@ import React, {
 import Spinner from "../../components/Spinner"
 import { fetchContact, postContact } from "../App/api/contactApi"
 import Navbar from "../../components/Navbar"
-import { SchemeContext } from "../context/colourScheme"
+import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 import { useNavigate } from "react-router-dom"
 import { ReactP5Wrapper } from "react-p5-wrapper"
@@ -26,61 +26,25 @@ import Redirect from "../../components/Redirect"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Input } from "../../components/Input"
 import { Textarea } from "../../components/Textarea"
+import { State } from "../../types/state"
+import { useForumPostCreateState } from "../../controllers/useForumPostCreateState"
 
 interface Props {
-  dataPost: Function
+  scheme: PageInformation
+  token: string | null
+  state: State<ForumPostCreatePOSTResponse>
+  body: string
+  setBody: React.Dispatch<React.SetStateAction<string>>
+  title: string
+  setTitle: React.Dispatch<React.SetStateAction<string>>
+  handleSubmit: (
+    e: React.FormEvent<HTMLFormElement>,
+    data: ForumPostCreatePOSTPayload,
+  ) => void
 }
 
 function ForumPostCreatePage(props: Props): JSX.Element {
-  const [POSTstate, setPOSTState] = useState({
-    ...ForumPostCreatePOSTInitialState,
-  })
-  const [scheme, setScheme] = useContext(SchemeContext)
-  const [title, setTitle] = useState("")
-  const [body, setBody] = useState("")
-  // const [token, setToken] = useContext(AccessToken);
-  const [token, setToken] = useAccessToken()
-  const navigate = useNavigate()
-
-  useEffect(() => {}, [])
-
-  const handleSubmit = (
-    event: React.FormEvent<HTMLFormElement>,
-    payload: ForumPostCreatePOSTPayload,
-  ) => {
-    setPOSTState({ ...POSTstate, loading: true })
-    event.preventDefault()
-    props
-      .dataPost(payload, token)
-      .then((resp: ForumPostCreatePOSTResponse) => {
-        if (resp.success && resp.data) {
-          setPOSTState({
-            details: resp,
-            error: false,
-            errorMessage: null,
-            loading: false,
-          })
-          console.log(resp.data.forumPostId)
-          navigate(`/${forumPath}/post/${resp.data.forumPostId}`)
-        } else {
-          throw new Error(resp.error)
-        }
-      })
-      .catch((err: any) => {
-        console.log(err)
-        setPOSTState({
-          error: true,
-          errorMessage: err,
-          loading: false,
-        })
-      })
-  }
-
-  useEffect(() => {
-    document.title = `Forum Create | ${scheme.title}`
-  }, [])
-
-  if (token === "") {
+  if (props.token === "") {
     return (
       <Redirect
         destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumRegister}`}
@@ -94,39 +58,39 @@ function ForumPostCreatePage(props: Props): JSX.Element {
           <div id="form-container">
             <h2
               className="main-heading"
-              style={{ color: scheme.body.h1 }}
+              style={{ color: props.scheme.body.h1 }}
             >
               Post
             </h2>
             <form
               onSubmit={e =>
-                handleSubmit(e, {
+                props.handleSubmit(e, {
                   session_id: sessionStorage.getItem("session_id") ?? "error",
                   data: {
-                    forum_title: title,
-                    forum_body: body,
+                    forum_title: props.title,
+                    forum_body: props.body,
                   },
                 })
               }
             >
               <Input
                 label="Title"
-                value={title}
+                value={props.title}
                 onChange={e => {
-                  setTitle(e.target.value)
+                  props.setTitle(e.target.value)
                 }}
               />
               <Textarea
                 label="Body"
-                value={body}
+                value={props.body}
                 onChange={e => {
-                  setBody(e.target.value)
+                  props.setBody(e.target.value)
                 }}
                 resize="none"
                 height="300px"
               />
               <div id="button">
-                <Button colours={scheme} />
+                <Button colours={props.scheme} />
               </div>
             </form>
           </div>
@@ -136,8 +100,8 @@ function ForumPostCreatePage(props: Props): JSX.Element {
   )
 }
 
-const enhance = (): JSX.Element => {
-  return <ForumPostCreatePage dataPost={postPostCreate} />
+const Enhance = (): JSX.Element => {
+  return <ForumPostCreatePage {...useForumPostCreateState()} />
 }
 
-export default enhance
+export default Enhance

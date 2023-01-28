@@ -154,5 +154,5 @@ export const getUserView = (
     headers: { Authorization: `Bearer ${authJWT}` },
     params: data,
   }
-  return get(`${endpoints["forumUser"]}${username}`, apiConfig)
+  return get(endpoints["forumUser"] + username, apiConfig)
 }

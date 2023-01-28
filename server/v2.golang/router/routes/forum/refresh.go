@@ -32,7 +32,7 @@ func Refresh(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if err != nil {
+		if err == nil {
 			responses.BuildUnauthorised(w)
 			return
 		}

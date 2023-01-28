@@ -7,7 +7,7 @@ import React, {
 import Spinner from "../../components/Spinner"
 import { fetchContact, postContact } from "../App/api/contactApi"
 import Navbar from "../../components/Navbar"
-import { SchemeContext } from "../context/colourScheme"
+import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 import { useNavigate } from "react-router-dom"
 import { ReactP5Wrapper } from "react-p5-wrapper"
@@ -25,100 +25,30 @@ import Redirect from "../../components/Redirect"
 import { ForumRouteType } from "../App/routeTypes"
 import daysAgo from "../../utils/daysAgo"
 import { IslandCenter } from "../../templates/IslandCenter"
+import { State } from "../../types/state"
+import { useForumPostViewState } from "../../controllers/useForumPostViewState"
 
 interface Props {
-  dataGet: Function
+  scheme: PageInformation
+  token: string | null
+  GETstate: State<ForumPostViewGETResponse>
 }
 
 function ForumPostViewPage(props: Props): JSX.Element {
-  const [GETstate, setGETState] = useState({ ...ForumPostViewGETInitialState })
-  const [scheme, setScheme] = useContext(SchemeContext)
-  // const [token, setToken] = useContext(AccessToken);
-  const [token, setToken] = useAccessToken()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!token) {
-      return
-    }
-    setGETState({ ...GETstate, loading: true })
-    const postId = window.location.href
-      .toString()
-      .slice(window.location.href.lastIndexOf("/") + 1)
-    props
-      .dataGet(
-        { session_id: sessionStorage.getItem("session_id") },
-        token,
-        postId,
-      )
-      .then((resp: ForumPostViewGETResponse) => {
-        if (resp.success) {
-          setGETState({
-            details: resp,
-            error: false,
-            errorMessage: null,
-            loading: false,
-          })
-        } else {
-          throw new Error(resp.error)
-        }
-      })
-      .catch((err: any) => {
-        console.log(err)
-        setGETState({
-          error: true,
-          errorMessage: err,
-          loading: false,
-        })
-      })
-  }, [token])
-
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>, payload: ForumPostViewGETPayload) => {
-  //   setPOSTState({...POSTstate, loading: true});
-  //   event.preventDefault();
-  //   props.dataPost(payload).then((resp: ForumPostViewGETResponse) => {
-  //     if(resp.success) {
-  //       setPOSTState({
-  //         details: resp,
-  //         error: false,
-  //         errorMessage: null,
-  //         loading: false
-  //       });
-  //       navigate(`/${forumPath}/post/`)
-  //     } else {
-  //       throw new Error(resp.error);
-  //     }
-  //   }).catch((err: any) => {
-  //     console.log(err)
-  //     setPOSTState({
-  //       error: true,
-  //       errorMessage: err,
-  //       loading: false
-  //     });
-  //   })
-  // }
-
-  useEffect(() => {
-    document.title = `${
-      GETstate.details ? GETstate.details?.data?.title : "Loading"
-    } | ${scheme.title}`
-    // window.location.href.substring(window.location.href.lastIndexOf('/') + 1)
-  }, [GETstate])
-
-  if (GETstate.loading) {
+  if (props.GETstate.loading) {
     return <Spinner />
   }
-  if (!token?.length) {
+  if (!props.token?.length) {
     return (
       <Redirect
         destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumRegister}`}
       />
     )
   }
-  if (GETstate.error) {
-    return <div>{JSON.stringify(GETstate.errorMessage)}</div>
+  if (props.GETstate.error) {
+    return <div>{JSON.stringify(props.GETstate.errorMessage)}</div>
   }
-  const data = GETstate.details?.data
+  const data = props.GETstate.details?.data
   return (
     <IslandCenter>
       <div className="forumPostViewPage">
@@ -137,7 +67,7 @@ function ForumPostViewPage(props: Props): JSX.Element {
               <div className="metadata">
                 <div className="row">
                   <p>By:&nbsp;</p>
-                  <p style={{ color: scheme.body.h1 }}>{data?.author}</p>
+                  <p style={{ color: props.scheme.body.h1 }}>{data?.author}</p>
                 </div>
                 <div className="row">
                   <p>{data?.views}</p>
@@ -146,7 +76,7 @@ function ForumPostViewPage(props: Props): JSX.Element {
               </div>
               <div
                 className="body"
-                style={{ borderColor: scheme.body.foreground }}
+                style={{ borderColor: props.scheme.body.foreground }}
               >
                 <p className="field">{data?.body}</p>
               </div>
@@ -169,8 +99,8 @@ function ForumPostViewPage(props: Props): JSX.Element {
   )
 }
 
-const enhance = (): JSX.Element => {
-  return <ForumPostViewPage dataGet={getPostView} />
+const Enhance = (): JSX.Element => {
+  return <ForumPostViewPage {...useForumPostViewState()} />
 }
 
-export default enhance
+export default Enhance

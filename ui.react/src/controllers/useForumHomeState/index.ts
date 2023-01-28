@@ -21,38 +21,10 @@ export const useForumHomeState = () => {
 
   const { state, post } = usePost<undefined, ForumHomeGETResponse>()
 
-  // function dataFetch() {
-  //   props
-  //     .dataCall(
-  //       {
-  //         session_id: sessionStorage.getItem("session_id"),
-  //         category: queryString.get("category"),
-  //         search: queryString.get("search"),
-  //       },
-  //       token,
-  //     )
-  //     .then((resp: ForumHomeGETResponse) => {
-  //       setState({
-  //         details: resp,
-  //         error: false,
-  //         errorMessage: null,
-  //         loading: false,
-  //       })
-  //     })
-  //     .catch((err: any) => {
-  //       setState({
-  //         error: true,
-  //         errorMessage: err,
-  //         loading: false,
-  //       })
-  //     })
-  // }
-
   useEffect(() => {
     if (!token) {
       return
     }
-    console.log(11111111111111111111111111111111111, token)
     post({
       endpoint: endpoints["forumHome"],
       authBearer: token ?? "",
