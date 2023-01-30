@@ -57,8 +57,6 @@ function ForumLoginPage(props: Props): JSX.Element {
     return <Redirect destination={`/${ForumRouteType.ForumHome}`} />
   }
   const tnc = termsAndConditions()
-  console.log(props.usernameLogin)
-  console.log(props.passwordRegister)
   return (
     <IslandCenter>
       <div className="forumLoginPage">

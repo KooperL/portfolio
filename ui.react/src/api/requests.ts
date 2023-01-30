@@ -2,7 +2,6 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import { ApiError, handleError } from "./apiErrorHandler"
 
 const checkStatus = <T>(response: AxiosResponse) => {
-  console.log("response.data")
   if (localStorage.getItem("environment") === "Local") {
     console.log(
       `-- incoming API response, status ${
@@ -27,7 +26,6 @@ const request = <T>(config: AxiosRequestConfig): Promise<T | ApiError> => {
         )}`,
       )
     }
-    console.log("resp")
 
     const resp = axios(config)
       .then(response => res(checkStatus<T>(response)))

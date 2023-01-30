@@ -119,8 +119,6 @@ export const useJssimState = () => {
 
   useEventListener("keydown", (e: KeyboardEvent) => {
     e.preventDefault()
-    console.log(typedString)
-    console.log(typedString.length, referenceString.length)
     if (typedString.length < referenceString.length) {
       handleStart()
 
@@ -155,7 +153,6 @@ export const useJssimState = () => {
           }
         }
       }
-      console.log(typedStringClone)
       setTypedString(typedStringClone)
       setScoreTally(scoreTallyClone)
       setCursor(cursorClone)

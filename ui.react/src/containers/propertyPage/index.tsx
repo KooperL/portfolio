@@ -56,7 +56,6 @@ function PropertyPage(props: Props): JSX.Element {
           errorMessage: null,
           loading: false,
         })
-        console.log(resp)
         if (resp.data?.details) {
           const means = resp.data.details.pricedata.means
           const stds = resp.data.details.pricedata.stds
@@ -163,21 +162,25 @@ function PropertyPage(props: Props): JSX.Element {
                 <table>
                   <thead>
                     <tr>
-                      <th className="px-2">Median price ($AUD)</th>
-                      <th className="px-2">Price SD ($AUD)</th>
-                      <th className="px-2">Distance (m)</th>
-                      <th className="px-2">Listing frequency</th>
-                      <th className="px-2">Trend ($AUD)</th>
-                      <th className="px-2">Calculated desirability</th>
+                      {["Median price ($AUD)",
+                      "Price SD ($AUD)",
+                      "Distance (m)",
+                      "Listing frequency",
+                      "Trend ($AUD)",
+                      "Calculated desirability"].map((item, ind) => (
+                        <th className="px-2" key={ind}>{item}</th>
+                      ))}
                     </tr>
                   </thead>
                   <tr>
-                    <td className="px-2">{stats.mean}</td>
-                    <td className="px-2">{stats.spread}</td>
-                    <td className="px-2">{stats.distance}</td>
-                    <td className="px-2">{stats.listingsCaptured}</td>
-                    <td className="px-2">{stats.linearGradient}</td>
-                    <td className="px-2">{stats.linearGradient}</td>
+                    {[stats.mean,
+                    stats.spread,
+                    stats.distance,
+                    stats.listingsCaptured,
+                    stats.linearGradient,
+                    stats.linearGradient].map((item, ind) => (
+                      <td className="px-2" key={ind}>{item}</td>
+                    ))}
                   </tr>
                 </table>
               </div>

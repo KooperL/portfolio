@@ -25,7 +25,7 @@ def monitorHome():
     controllers.database.conn.insert(insertMonitorQuery, (None, datetime.datetime.now(), uuid, session_id, page))
 
 
-    if prevPage:
+    if prevPage != "NULL":
       insertQuery = 'INSERT INTO route_track VALUES (?, ?, ?, ?, ?);'
       # controllers.database.conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, prevPage, page))
       controllers.database.conn.insert(insertQuery, (None, datetime.datetime.now(), session_id, prevPage, page))

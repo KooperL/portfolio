@@ -3,14 +3,20 @@ import { ApiError } from "../../api/apiErrorHandler"
 import { forumPost, Opts } from "../../containers/App/api/forumApis"
 import { State } from "../../types/state"
 
-export const usePost = <T, U>(callback?: () => void) => {
+export const usePost = <T, U>(callback?: (e: U) => void) => {
   const [state, setState] = useState<State<U>>({
-    loading: true,
+    loading: false,
     details: undefined,
     error: false,
   })
   const post = useCallback(
+    
     (opts: Opts<T>) => {
+      setState({
+        error: false,
+        errorMessage: null,
+        loading: true,
+      })
       forumPost<T, U>(opts)
         .then(resp => {
           // if (resp.hasOwnProperty('success') && resp.hasOwnProperty('data')) {
@@ -20,7 +26,7 @@ export const usePost = <T, U>(callback?: () => void) => {
             errorMessage: null,
             loading: false,
           })
-          callback && callback()
+          callback && callback(resp as U)
           // } else {
           //   resp = (resp as ApiError)
           //   throw new Error(resp);

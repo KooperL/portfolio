@@ -46,7 +46,6 @@ function ForumHomePage(props: Props): JSX.Element {
     return <ErrorPage error={props.state.errorMessage} />
   if (props.state.details && props.state.details.data) {
     const data = props.state.details.data
-    console.log(data)
     return (
       <IslandCenter>
       <div className="forumUserPage">

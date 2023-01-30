@@ -17,9 +17,11 @@ func SetupRouter() *http.ServeMux {
 	mux.HandleFunc("/about", middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(index.About))))
 	mux.HandleFunc("/contact", middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(index.Contact))))
 	mux.HandleFunc("/capture", middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(index.Capture))))
+	mux.HandleFunc("/monitor", middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(index.Monitor))))
 
 	projectsRoute := "projects"
 	mux.HandleFunc(fmt.Sprintf("/%s", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.Index))))
+	mux.HandleFunc(fmt.Sprintf("/%s/property", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.Property))))
 	mux.HandleFunc(fmt.Sprintf("/%s/fuelprices", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.Fuelprices))))
 	mux.HandleFunc(fmt.Sprintf("/%s/seqalign", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.SeqAlign))))
 	mux.HandleFunc(fmt.Sprintf("/%s/randombio", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.RandomBio))))
@@ -34,7 +36,7 @@ func SetupRouter() *http.ServeMux {
 	mux.HandleFunc(fmt.Sprintf("/%s/post", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(forum.Post)))))
 	mux.HandleFunc(fmt.Sprintf("/%s/post/", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(forum.PostSearch)))))
 	mux.HandleFunc(fmt.Sprintf("/%s/user/", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(forum.User)))))
-	mux.HandleFunc(fmt.Sprintf("/%s/logout", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(forum.User)))))
+	mux.HandleFunc(fmt.Sprintf("/%s/logout", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(forum.Logout)))))
 
 	return mux
 }

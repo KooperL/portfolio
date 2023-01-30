@@ -57,6 +57,8 @@ export const useForumLoginState = () => {
   const [usernameRegister, setUsernameRegister] = useState("")
   const [passwordRegister, setPasswordRegister] = useState("")
   const [hasRegistered, setHasRegistered] = useState(false)
+  const [tokenAsState, setTokenAsState] = useState("")
+
   const [scheme, setScheme] = useContext(SchemeContext)
   // const [token, setToken] = useContext(AccessToken);
   const [token, setToken] = useAccessToken()
@@ -66,10 +68,6 @@ export const useForumLoginState = () => {
   const encodedLogin = btoa(`${usernameLogin}:${passwordLogin}`)
   const encodedRegister = btoa(`${usernameRegister}:${passwordRegister}`)
 
-  useEffect(() => {
-    setUsernameRegister(generateUsername())
-    setPasswordRegister(generatePassword(16))
-  }, [])
 
   const { state, post: postRegister } = usePost<
     ForumRegisterPOSTPayload,
@@ -86,6 +84,27 @@ export const useForumLoginState = () => {
       navigator.credentials.create(c as any)
     }
   })
+  const { state: POSTState, post: postLogin } = usePost<
+    ForumLoginPOSTPayload,
+    ForumLoginPOSTResponse
+  >((e) => {
+    setToken(e.accessToken ?? "")
+    if (window.hasOwnProperty("PasswordCrediential")) {
+      let c = new PasswordCredential({
+        id: usernameLogin,
+        password: passwordLogin,
+      })
+      navigator.credentials.create(c as any)
+    }
+  })
+
+  useEffect(() => {
+    if (!hasRegistered) {
+      setUsernameRegister(generateUsername())
+      setPasswordRegister(generatePassword(16))
+    }
+  }, [])
+
 
   useEffect(() => {
     if (hasRegistered) {
@@ -95,21 +114,15 @@ export const useForumLoginState = () => {
     }
   }, [hasRegistered])
 
-  const { state: POSTState, post: postLogin } = usePost<
-    ForumLoginPOSTPayload,
-    ForumLoginPOSTResponse
-  >(() => {
-    if (window.hasOwnProperty("PasswordCrediential")) {
-      let c = new PasswordCredential({
-        id: usernameLogin,
-        password: passwordLogin,
-      })
-      navigator.credentials.create(c as any)
+  useEffect(() => {
+    if (POSTState.details && POSTState.details.success) {
+      console.log('nav about to be called')
+      navigate(`/${forumPath}`)
+      console.log("called")
     }
-    setToken(POSTState.details?.accessToken ?? "")
-    console.log(POSTState)
-    navigate(`/${forumPath}`)
-  })
+  }, [POSTState])
+
+
 
   const handleSubmitRegister = (
     e: React.FormEvent<HTMLFormElement>,
@@ -173,7 +186,6 @@ export const useForumLoginState = () => {
 
   useEffect(() => {
     document.title = `Forum Login | ${scheme.title}`
-    console.log(usernameLogin)
   }, [])
 
   return {
