@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import { Link } from "react-router-dom"
 import { ForumRouteType } from "../../containers/App/routeTypes"
+import { monitor } from "../../containers/authContext/context"
 import { forumItem } from "../../containers/common/types"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import daysAgo from "../../utils/daysAgo"
@@ -12,6 +13,7 @@ function ForumItem(props: { data: forumItem }) {
   return (
     <Link
       to={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumPost}/${props.data["id"]}`}
+      onClick={monitor}
     >
       <div
         className="post-details"

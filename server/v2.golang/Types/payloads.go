@@ -1,5 +1,9 @@
 package types
 
+type SessionId struct {
+	SessionID string `json:"session_id"`
+}
+
 type ContactPayload struct {
 	SessionId
 	Message string `json:"message"`
@@ -24,14 +28,11 @@ type CapturePayload struct {
 }
 
 type MonitorPayload struct {
-	SessionId
-	Uuid     string `json:"uuid"`
-	Page     string `json:"page"`
-	PrevPage string `json:"prevPage"`
-}
-
-type SessionId struct {
+	// SessionId
 	SessionID string `json:"session_id"`
+	Uuid      string `json:"uuid"`
+	Page      string `json:"page"`
+	PrevPage  string `json:"prevPage"`
 }
 
 type PostForum struct {

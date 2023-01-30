@@ -3,4 +3,5 @@ node_modules
 .vscode
 __pycache__
 data/
+logs/
 database.db

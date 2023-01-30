@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"kooperlingohr/portfolio/controllers/database"
-	"kooperlingohr/portfolio/mylog"
+	"kooperlingohr/portfolio/controllers/mylog"
 	"kooperlingohr/portfolio/router"
 	"kooperlingohr/portfolio/utils"
 	"log"

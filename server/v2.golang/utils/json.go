@@ -36,7 +36,7 @@ func ParseReqParams(query url.Values, target interface{}) {
 
 	m := make(map[string]interface{})
 	for key, values := range query {
-		m[key] = values[0]
+		m[key], _ = url.QueryUnescape(values[0])
 	}
 	// can add to slice here which would probably be something to look into if performance is an issue
 

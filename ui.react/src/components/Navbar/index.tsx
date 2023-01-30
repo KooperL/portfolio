@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import "./style.css"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import ButtonRedir from "../ButtonRedir"
 import Hamburger from "../Hamburger"
 import { useLocation } from "react-router-dom"
@@ -21,8 +21,7 @@ function Navbar(props: { isVertical: boolean }) {
   const [scheme, setScheme] = useContext(SchemeContext)
   // const [path, setPath] = useState([''])
   const [token, setToken] = useAccessToken()
-  console.log(`%${token}`)
-
+  const navigate = useNavigate()
   const location = useLocation()
 
   let bannerText = []
@@ -60,39 +59,40 @@ function Navbar(props: { isVertical: boolean }) {
         // Signed in
 
         const username = JSON.parse(atob(token.split(".")[1]))["username"]
-        const forum_create = (
-          <ButtonRedir
-            destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumPostCreate}`}
-            label="create"
-            local={true}
-          />
-        )
-        const forum_profile = (
-          <ButtonRedir
-            destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumUser}/${username}`}
-            label="My posts"
-            local={true}
-          />
-        )
-        const forum_sign_out = (
-          <ButtonRedir
-            destination={`/${ForumRouteType.ForumHome}`}
-            label="Log out"
-            local={true}
-            onClickCallback={() => {
-              postForumLogout(
-                { session_id: sessionStorage.getItem("session_id") ?? "" },
-                token,
-              ).then(resp => {
-                resp = resp as ForumRegisterPOSTResponse
-                if (resp.success) {
-                  setToken(null)
-                }
-              })
-            }}
-          />
-        )
-        const items = [forum_create, forum_profile, forum_sign_out]
+        // const forum_create = (
+        //   <ButtonRedir
+        //     destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumPostCreate}`}
+        //     label="create"
+        //     local={true}
+        //   />
+        // )
+        // const forum_profile = (
+        //   <ButtonRedir
+        //     destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumUser}/${username}`}
+        //     label="My posts"
+        //     local={true}
+        //   />
+        // )
+        // const forum_sign_out = (
+        //   <ButtonRedir
+        //     destination={`/${ForumRouteType.ForumHome}`}
+        //     label="Log out"
+        //     local={true}
+        //     onClickCallback={() => {
+        //       postForumLogout(
+        //         { session_id: sessionStorage.getItem("session_id") ?? "" },
+        //         token,
+        //       ).then(resp => {
+        //         resp = resp as ForumRegisterPOSTResponse
+        //         if (resp.success) {
+        //           setToken(null)
+        //         }
+        //       })
+        //     }}
+        //   />
+        // )
+        // const items = [forum_create, forum_profile, forum_sign_out]
+
         // Search field?
         // setSpecialButtons(items)
 
@@ -118,6 +118,7 @@ function Navbar(props: { isVertical: boolean }) {
                     resp = resp as ForumRegisterPOSTResponse
                     if (resp.success) {
                       setToken(null)
+                      navigate(`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumLogin}`)
                     }
                   })
                 },
@@ -125,7 +126,7 @@ function Navbar(props: { isVertical: boolean }) {
             ]}
           />
         )
-        return [HamburgerData, items]
+        return [HamburgerData, 'items']
       }
     } else {
       return []
@@ -143,7 +144,6 @@ function Navbar(props: { isVertical: boolean }) {
   //   const pathTemp = getPath()
   //   setPath(pathTemp)
   //   setSpecialButtons(buttonController(pathTemp))
-  //   console.log('```````````````````````````````````````````````````')
   // }, [])
 
   const path = getPath()

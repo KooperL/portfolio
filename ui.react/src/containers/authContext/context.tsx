@@ -7,9 +7,12 @@ import React, {
 } from "react"
 import { useNavigate } from "react-router-dom"
 import { ApiError } from "../../api/apiErrorHandler"
+import { LoggingPOSTResponse } from "../../components/Logger/types"
 // import { useNavigate } from 'react-router-dom';
 import { postForumRefresh } from "../App/api/forumApis"
+import { postMonitor } from "../App/api/loggerApi"
 import { ForumRouteType } from "../App/routeTypes"
+import { ContactPOSTPayload } from "../contactPage/types"
 import {
   ForumLoginPOSTPayload,
   ForumLoginPOSTResponse,
@@ -20,6 +23,27 @@ type AccessTokenContext = [
   React.Dispatch<React.SetStateAction<string | null>>,
 ]
 
+export function monitor() {
+  const currentPage = localStorage.getItem("currentPage")
+  postMonitor({
+      uuid: localStorage.getItem("uuid") ?? "",
+      session_id: sessionStorage.getItem("session_id") ?? "",
+      page: encodeURIComponent(window.location.pathname),
+      prevPage: encodeURIComponent(currentPage ?? "NULL"),
+    })
+    .then((resp) => {
+      if ((resp as ContactPOSTPayload).success) {
+        localStorage.setItem("currentPage", window.location.pathname)
+      // } else {
+      //   throw new Error((resp as ApiError))
+      }
+    })
+    .catch((err: any) => {
+      console.log(err)
+    })
+  // }, [])
+}
+
 export function AccessTokenProvider({ children }: any) {
   const [accessToken, setAccessToken] = useState<string | null>(null)
   const [accessTokenExpires, setAccessTokenExpires] = useState<Date | null>(
@@ -28,6 +52,7 @@ export function AccessTokenProvider({ children }: any) {
   // const navigate = useNavigate();
 
   function refresh() {
+    if (!window.location.href.includes('forum') || (accessToken && !accessToken.length)) return
     postForumRefresh({ session_id: sessionStorage.getItem("session_id") ?? "" })
       .then(resp => {
         resp = resp as ForumLoginPOSTResponse

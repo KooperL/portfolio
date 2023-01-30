@@ -119,7 +119,6 @@
 //     },
 //   ], [])
 //   columns = props.columns;
-//   // console.log(data)
 
 //   const tableInstance = useTable(
 //     { columns,

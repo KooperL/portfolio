@@ -19,12 +19,17 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		refresh_token := utils.HandleErrorDeconstruct(r.Cookie("refresh_token"))
 		refresh_token_decoded, err := utils.DecodeJWTRefresh[types.RefreshToken](refresh_token.Value, os.Getenv("forum-jwt-refresh-token"))
 
+		fmt.Println(refresh_token.Value, refresh_token_decoded, err)
+
 		if err != nil {
 			responses.BuildUnauthorised(w)
+			return
 		}
 
 		refreshTokenSearchQuery := "SELECT count(*) FROM forum_refresh_tokens where forum_refresh_token = ?"
 		tokenRows := database.SimpleQuery[int64](refreshTokenSearchQuery, []any{refresh_token.Value})
+
+		fmt.Println(tokenRows)
 
 		if tokenRows != 1 {
 			responses.BuildUnauthorised(w)

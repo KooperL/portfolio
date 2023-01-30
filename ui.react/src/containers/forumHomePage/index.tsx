@@ -15,7 +15,7 @@ import sketchWrapper from "../../components/p5/box"
 import { Button } from "../../components/Button"
 import ForumItem from "../../components/ForumItem"
 import ButtonRedir from "../../components/ButtonRedir"
-import { useAccessToken } from "../authContext/context"
+import { monitor, useAccessToken } from "../authContext/context"
 import { getForumHome } from "../App/api/forumApis"
 import { forumPath } from "../App/api/types"
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom"
@@ -90,15 +90,16 @@ function ForumHomePage(props: Props): JSX.Element {
                   key={indexSegment}
                 >
                   <Link
-                    key={indexSegment ** 2}
+                    key={`${indexSegment}-1`}
                     to={`/${forumPath}?category=${segment}`}
+                    onClick={monitor}
                   >
                     <p>Topic - {segment}</p>
                   </Link>
                   <div className="posts">
                     {data[segment].map((catPost, catPostIndex) => (
                       <ForumItem
-                        key={catPostIndex}
+                        key={`${indexSegment}-${catPostIndex}`}
                         data={catPost}
                       />
                     ))}
