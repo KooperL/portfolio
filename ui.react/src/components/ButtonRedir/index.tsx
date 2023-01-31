@@ -19,7 +19,7 @@ const glitchText = (e: HTMLDivElement) => {
 
   // const dataVal = e.target.dataset.value
   // @ts-ignore
-  const dataVal = e.attributes['data-value'].nodeValue
+  const dataVal = e.attributes["data-value"].nodeValue
 
   const interval = setInterval(() => {
     // @ts-ignore
@@ -42,11 +42,10 @@ const glitchText = (e: HTMLDivElement) => {
   e.innerText = ogText
 }
 
-
 function ButtonRedir(props: FuncProps) {
   const [scheme, setScheme] = useContext(SchemeContext)
   const [mouseOver, isMouseOver] = useState(false)
-  const ref = useRef<any>();
+  const ref = useRef<any>()
 
   useEffect(() => {
     if (mouseOver) {

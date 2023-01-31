@@ -118,7 +118,9 @@ function Navbar(props: { isVertical: boolean }) {
                     resp = resp as ForumRegisterPOSTResponse
                     if (resp.success) {
                       setToken(null)
-                      navigate(`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumLogin}`)
+                      navigate(
+                        `/${ForumRouteType.ForumHome}/${ForumRouteType.ForumLogin}`,
+                      )
                     }
                   })
                 },
@@ -126,7 +128,7 @@ function Navbar(props: { isVertical: boolean }) {
             ]}
           />
         )
-        return [HamburgerData, 'items']
+        return [HamburgerData, "items"]
       }
     } else {
       return []

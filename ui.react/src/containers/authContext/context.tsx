@@ -26,16 +26,16 @@ type AccessTokenContext = [
 export function monitor() {
   const currentPage = localStorage.getItem("currentPage")
   postMonitor({
-      uuid: localStorage.getItem("uuid") ?? "",
-      session_id: sessionStorage.getItem("session_id") ?? "",
-      page: encodeURIComponent(window.location.pathname),
-      prevPage: encodeURIComponent(currentPage ?? "NULL"),
-    })
-    .then((resp) => {
+    uuid: localStorage.getItem("uuid") ?? "",
+    session_id: sessionStorage.getItem("session_id") ?? "",
+    page: encodeURIComponent(window.location.pathname),
+    prevPage: encodeURIComponent(currentPage ?? "NULL"),
+  })
+    .then(resp => {
       if ((resp as ContactPOSTPayload).success) {
         localStorage.setItem("currentPage", window.location.pathname)
-      // } else {
-      //   throw new Error((resp as ApiError))
+        // } else {
+        //   throw new Error((resp as ApiError))
       }
     })
     .catch((err: any) => {
@@ -52,7 +52,11 @@ export function AccessTokenProvider({ children }: any) {
   // const navigate = useNavigate();
 
   function refresh() {
-    if (!window.location.href.includes('forum') || (accessToken && !accessToken.length)) return
+    if (
+      !window.location.href.includes("forum") ||
+      (accessToken && !accessToken.length)
+    )
+      return
     postForumRefresh({ session_id: sessionStorage.getItem("session_id") ?? "" })
       .then(resp => {
         resp = resp as ForumLoginPOSTResponse

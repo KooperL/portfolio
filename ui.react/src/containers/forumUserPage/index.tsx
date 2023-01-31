@@ -48,9 +48,9 @@ function ForumHomePage(props: Props): JSX.Element {
     const data = props.state.details.data
     return (
       <IslandCenter>
-      <div className="forumUserPage">
-        {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></>}
-        {/* <div className="container"> */}
+        <div className="forumUserPage">
+          {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></>}
+          {/* <div className="container"> */}
           <div className="links">
             <span className="main-heading">User -&nbsp;</span>
             <span
@@ -67,9 +67,9 @@ function ForumHomePage(props: Props): JSX.Element {
                 />
               )) ?? <>No Posts</>}
             </div>
-          {/* </div> */}
+            {/* </div> */}
+          </div>
         </div>
-      </div>
       </IslandCenter>
     )
   }

@@ -126,7 +126,7 @@ function RandomBioPage(props: Props): JSX.Element {
           <div className="resultsCenter">
             <Textarea
               label="Results:"
-              value={data.join("")}
+              value={data}
               highlightOnFocus={true}
               readOnly={true}
             />

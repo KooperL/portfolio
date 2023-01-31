@@ -67,7 +67,6 @@ export const useForumLoginState = () => {
   const encodedLogin = btoa(`${usernameLogin}:${passwordLogin}`)
   const encodedRegister = btoa(`${usernameRegister}:${passwordRegister}`)
 
-
   const { state, post: postRegister } = usePost<
     ForumRegisterPOSTPayload,
     ForumRegisterPOSTResponse
@@ -85,7 +84,7 @@ export const useForumLoginState = () => {
   const { state: POSTState, post: postLogin } = usePost<
     ForumLoginPOSTPayload,
     ForumLoginPOSTResponse
-  >((e) => {
+  >(e => {
     setToken(e.accessToken ?? "")
     if (window.hasOwnProperty("PasswordCrediential")) {
       let c = new PasswordCredential({
@@ -103,7 +102,6 @@ export const useForumLoginState = () => {
     }
   }, [])
 
-
   useEffect(() => {
     if (hasRegistered) {
       setUsernameLogin(usernameRegister)
@@ -114,13 +112,11 @@ export const useForumLoginState = () => {
 
   useEffect(() => {
     if (POSTState.details && POSTState.details.success) {
-      console.log('nav about to be called')
+      console.log("nav about to be called")
       navigate(`/${forumPath}`)
       console.log("called")
     }
   }, [POSTState])
-
-
 
   const handleSubmitRegister = (
     e: React.FormEvent<HTMLFormElement>,

@@ -9,7 +9,7 @@ export interface RandomBioState {
 
 export interface RandomBioPayload {
   success: boolean
-  data?: string[]
+  data?: string
   error?: string
 }
 
