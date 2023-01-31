@@ -26,7 +26,6 @@ import { ForumPostViewPage } from "../forumPostViewPage/loadable"
 // import { Render } from '../renderer/grid/Render';
 
 // TODO Helmet
-// TODO: https://www.w3schools.com/react/react_router.asp - proper paths and routes
 // TODO Feature toggling
 
 function App() {

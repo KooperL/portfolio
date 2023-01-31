@@ -19,7 +19,7 @@ export interface SecondaryPayload {
   //   'bsm_field': number[];    // float??
   //   'pred_str': string;
   // };
-  data?: string[]
+  data?: string
   error?: string
 }
 

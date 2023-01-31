@@ -45,7 +45,7 @@ export const useAboutState = () => {
         // setText(textRaw.split('\n').map(item => item.split('').map(item => +item)));
       })
     document.title = `About | ${scheme.title}`
-  })
+  }, [])
 
   // useEffect(() => {
   //   setSeed(newSeed(3, text.length, text[0].length))

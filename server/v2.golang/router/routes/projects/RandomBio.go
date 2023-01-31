@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -29,7 +30,7 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 				randInd := rand.Intn(len(data))
 				arr[i] = data[randInd].Symbol
 			}
-			responses.BuildSuccessResponse(w, arr)
+			responses.BuildSuccessResponse(w, strings.Join(arr, ""))
 			return
 			break
 		case (2):
@@ -44,7 +45,7 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 				randInd := rand.Intn(len(data))
 				arr[i] = data[randInd].Symbol
 			}
-			responses.BuildSuccessResponse(w, arr)
+			responses.BuildSuccessResponse(w, strings.Join(arr, ""))
 			return
 			break
 		case (3):
@@ -68,7 +69,7 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 						}
 					}
 				}
-				responses.BuildSuccessResponse(w, arr)
+				responses.BuildSuccessResponse(w, strings.Join(arr, ""))
 				return
 			} else if aaFormat == 0 {
 				for i = 0; i < randomLength; i++ {

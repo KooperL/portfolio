@@ -30,9 +30,7 @@ def randomBioHome():
       raise RuntimeError('Invalid value(s) provided')
     kwargs = {
       'success': True,
-      'data': {
-        'results':results,
-      }
+      'data': results
     }
     res = jsonify(kwargs)
     return scripts.utils.responses.build_actual_response(res)

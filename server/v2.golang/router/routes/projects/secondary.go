@@ -90,6 +90,6 @@ func Secondary(w http.ResponseWriter, r *http.Request) {
 			}
 
 		}
-		responses.BuildSuccessResponse(w, result)
+		responses.BuildSuccessResponse(w, strings.Join(result, ""))
 	}
 }

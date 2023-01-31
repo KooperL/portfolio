@@ -55,7 +55,7 @@ def forumRegisterHome():
       limit 5;
     '''
     forumUserExists = controllers.database.conn.fetch(forumUserExistsQuery, ('None', username))[0][0]
-    if forumUserExists != 0 or len(username) < 3 or len(username) > 15:
+    if forumUserExists != 0 or len(username) < 3 or len(username) > 30:
       return scripts.utils.responses.build_bad_req()
 
     salt = secrets.token_hex(int(config['forum-register-salt-length']))
