@@ -57,7 +57,6 @@ export const useForumLoginState = () => {
   const [usernameRegister, setUsernameRegister] = useState("")
   const [passwordRegister, setPasswordRegister] = useState("")
   const [hasRegistered, setHasRegistered] = useState(false)
-  const [tokenAsState, setTokenAsState] = useState("")
 
   const [scheme, setScheme] = useContext(SchemeContext)
   // const [token, setToken] = useContext(AccessToken);
@@ -75,7 +74,6 @@ export const useForumLoginState = () => {
   >(() => {
     setHasRegistered(true)
 
-    // setPasswordRegister("123123123")
     if (window.hasOwnProperty("PasswordCrediential")) {
       let c = new PasswordCredential({
         id: usernameRegister,

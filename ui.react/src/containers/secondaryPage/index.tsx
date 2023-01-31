@@ -111,7 +111,7 @@ function SecondaryPage(props: Props): JSX.Element {
               <div className="mrna-preview">
                 <Textarea
                   name="aa"
-                  value={data.join("")}
+                  value={data}
                   readOnly={true}
                 />
               </div>
