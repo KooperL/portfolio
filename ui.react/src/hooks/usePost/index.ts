@@ -10,7 +10,6 @@ export const usePost = <T, U>(callback?: (e: U) => void) => {
     error: false,
   })
   const post = useCallback(
-    
     (opts: Opts<T>) => {
       setState({
         error: false,

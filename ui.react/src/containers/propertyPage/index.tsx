@@ -162,24 +162,38 @@ function PropertyPage(props: Props): JSX.Element {
                 <table>
                   <thead>
                     <tr>
-                      {["Median price ($AUD)",
-                      "Price SD ($AUD)",
-                      "Distance (m)",
-                      "Listing frequency",
-                      "Trend ($AUD)",
-                      "Calculated desirability"].map((item, ind) => (
-                        <th className="px-2" key={ind}>{item}</th>
+                      {[
+                        "Median price ($AUD)",
+                        "Price SD ($AUD)",
+                        "Distance (m)",
+                        "Listing frequency",
+                        "Trend ($AUD)",
+                        "Calculated desirability",
+                      ].map((item, ind) => (
+                        <th
+                          className="px-2"
+                          key={ind}
+                        >
+                          {item}
+                        </th>
                       ))}
                     </tr>
                   </thead>
                   <tr>
-                    {[stats.mean,
-                    stats.spread,
-                    stats.distance,
-                    stats.listingsCaptured,
-                    stats.linearGradient,
-                    stats.linearGradient].map((item, ind) => (
-                      <td className="px-2" key={ind}>{item}</td>
+                    {[
+                      stats.mean,
+                      stats.spread,
+                      stats.distance,
+                      stats.listingsCaptured,
+                      stats.linearGradient,
+                      stats.linearGradient,
+                    ].map((item, ind) => (
+                      <td
+                        className="px-2"
+                        key={ind}
+                      >
+                        {item}
+                      </td>
                     ))}
                   </tr>
                 </table>
