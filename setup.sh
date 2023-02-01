@@ -1,20 +1,26 @@
 #!/bin/sh
 
+current_dir="$(pwd)"
 domain="kooperlingohr.com"
 environment="development"
-flaskdevport="5000"
-flaskprodport="5000"
+backendport="5000"
 
 # Run this file as a super user
 # This will not handle database creation
 
-crons="0 16 * * * /usr/bin/python3 $(pwd)/server/v1.flask/scripts/fuelscrape/fuelscrape.py
+crons="#0 16 * * * /usr/bin/python3 $current_dir/server/v1.flask/scripts/fuelscrape/fuelscrape.py
 
-0 9 * * * /usr/bin/python3 $(pwd)/server/v1.flask/scripts/fuelscrape/fuelscrape.py
+#0 9 * * * /usr/bin/python3 $current_dir/server/v1.flask/scripts/fuelscrape/fuelscrape.py
 
-0 1 * * 2 /usr/bin/python3 $(pwd)/server/v1.flask/scripts/property/scrape.py
+#0 1 * * 2 /usr/bin/python3 $current_dir/server/v1.flask/scripts/property/scrape.py
 
-@reboot cd $(pwd)/server/v1.flask/ && /usr/bin/python3 $(pwd)/server/v1.flask/app.py"
+# 0 * * * * /bin/bash $current_dir/pull_and_build.sh
+# 5 * * * * /bin/bash $current_dir/server/kill_and_exec.sh
+
+#@reboot cd $current_dir/server/v1.flask/ && /usr/bin/python3 $current_dir/server/v1.flask/app.py
+
+@reboot /bin/bash $current_dir/kill_and_exec.sh"
+
 crontab -l >> tempfile
 echo crons >> tempfile
 crontab tempfile
@@ -31,13 +37,13 @@ nxinx1="server {
     proxy_set_header X-Forwarded-Host \$host;
     proxy_set_header X-Forwarded-Prefix \$uri;
     proxy_set_header X-NginX-Proxy true;
-    proxy_pass http://127.0.0.1:$flaskprodport/;
+    proxy_pass http://127.0.0.1:$backendport/;
     proxy_ssl_session_reuse off;
     proxy_set_header Host \$http_host;
     proxy_redirect off;
   }
   location / {
-    root   $(pwd)/ui.react/build;
+    root   $current_dir/ui.react/build;
     index  index.html;
     try_files \$uri /index.html;
   }
@@ -54,23 +60,22 @@ echo $nginx1 > /etc/nginx/conf.d/site1.conf
 echo $nginx2 > /etc/nginx/conf.d/site2.conf
 
 
-mkdir $(pwd)/server/data
+mkdir $current_dir/server/data
 
-flaskdotenv="MONGO_USERNAME=
+serverdotenv="MONGO_USERNAME=
 MONGO_PASSWORD=
 MONGO_PORT=
 GOOGLE_MAPS_API_KEY=
 ORIGIN=
 ENV=$environment
-DEV_PORT=$flaskdevport
-PROD_PORT=$flaskprodport
+PROD_PORT=$backendport
 DISCORD_WEBHOOK_URL=
 RATE_LIMIT_WINDOW=
 RATE_LIMIT_REQUESTS_LIMITED=
 RATE_LIMIT_REQUESTS_GENERAL="
-echo $flaskdotenv > $(pwd)/server/.env
+echo $serverdotenv > $current_dir/server/.env
 
-reactdotenv="REACT_APP_DEV_FLASK_API_PORT=$flaskdevport
+reactdotenv="REACT_APP_DEV_FLASK_API_PORT=$backendport
 REACT_APP_NODE_ENV=$environment"
 
-echo $reactdotenv > $(pwd)/ui.react/.env
+echo $reactdotenv > $current_dir/ui.react/.env
