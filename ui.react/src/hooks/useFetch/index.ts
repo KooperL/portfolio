@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { ApiError } from "../../api/apiErrorHandler"
-import { State } from "../../types/state"
+import { State } from "../../types/State"
 
 export const useFetch = <T, U>(
   dataCall: (body?: U) => Promise<ApiError | T>,

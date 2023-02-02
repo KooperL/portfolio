@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
 import { ApiError } from "../../api/apiErrorHandler"
 import { forumPost, Opts } from "../../containers/App/api/forumApis"
-import { State } from "../../types/state"
+import { State } from "../../types/State"
 
 export const usePost = <T, U>(callback?: (e: U) => void) => {
   const [state, setState] = useState<State<U>>({

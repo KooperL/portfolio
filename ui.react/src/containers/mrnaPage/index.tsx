@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react"
-import Spinner from "../../components/Spinner"
+import Spinner from "@components/Spinner"
 import { MrnaPayload, MrnaState, MrnaInitialState, MrnaPOST } from "./types"
 import { fetchMrna } from "../App/api/MrnaApi"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
-import { Button } from "../../components/Button"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { Input } from "../../components/Input"
+import { Button } from "@components/Button"
+import { IslandCenter } from "@templates/IslandCenter"
+import { Input } from "@components/Input"
 import ErrorPage from "../ErrorPage"
-import { useMrnaState } from "../../controllers/useMrnaState"
-import { State } from "../../types/state"
+import { useMrnaState } from "@controllers/useMrnaState"
+import { State } from "../../types/State"
 
 interface Props {
   scheme: PageInformation

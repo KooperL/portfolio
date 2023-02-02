@@ -4,7 +4,7 @@ import { ForumRouteType } from "../../containers/App/routeTypes"
 import { useAccessToken } from "../../containers/authContext/context"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { ForumHomeGETResponse } from "../../containers/forumHomePage/types"
-import Redirect from "../../components/Redirect"
+import Redirect from "@components/Redirect"
 import { usePost } from "../../hooks/usePost"
 import { endpoints } from "../../containers/App/api/endpoints"
 

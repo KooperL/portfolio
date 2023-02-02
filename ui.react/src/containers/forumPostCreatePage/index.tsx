@@ -4,15 +4,15 @@ import React, {
   useEffect,
   useState,
 } from "react"
-import Spinner from "../../components/Spinner"
+import Spinner from "@components/Spinner"
 import { fetchContact, postContact } from "../App/api/contactApi"
-import Navbar from "../../components/Navbar"
+import Navbar from "@components/Navbar"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 import { useNavigate } from "react-router-dom"
 import { ReactP5Wrapper } from "react-p5-wrapper"
-import sketchWrapper from "../../components/p5/box"
-import { Button } from "../../components/Button"
+import sketchWrapper from "@components/p5/box"
+import { Button } from "@components/Button"
 import { useAccessToken } from "../authContext/context"
 import {
   ForumPostCreatePOSTInitialState,
@@ -22,12 +22,12 @@ import {
 import { postPostCreate } from "../App/api/forumApis"
 import { forumPath } from "../App/api/types"
 import { ForumRouteType } from "../App/routeTypes"
-import Redirect from "../../components/Redirect"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { Input } from "../../components/Input"
-import { Textarea } from "../../components/Textarea"
-import { State } from "../../types/state"
-import { useForumPostCreateState } from "../../controllers/useForumPostCreateState"
+import Redirect from "@components/Redirect"
+import { IslandCenter } from "@templates/IslandCenter"
+import { Input } from "@components/Input"
+import { Textarea } from "@components/Textarea"
+import { State } from "../../types/State"
+import { useForumPostCreateState } from "@controllers/useForumPostCreateState"
 
 interface Props {
   scheme: PageInformation

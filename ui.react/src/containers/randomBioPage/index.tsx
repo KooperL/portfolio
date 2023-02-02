@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import Spinner from "../../components/Spinner"
+import Spinner from "@components/Spinner"
 import {
   RandomBioPayload,
   RandomBioState,
@@ -9,14 +9,14 @@ import {
 import { fetchRandomBio } from "../App/api/randomBioApi"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
-import { Button } from "../../components/Button"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { Input } from "../../components/Input"
-import { Textarea } from "../../components/Textarea"
-import { Radio } from "../../components/Radio"
+import { Button } from "@components/Button"
+import { IslandCenter } from "@templates/IslandCenter"
+import { Input } from "@components/Input"
+import { Textarea } from "@components/Textarea"
+import { Radio } from "@components/Radio"
 import ErrorPage from "../ErrorPage"
-import { useRandomBioState } from "../../controllers/useRandombioState"
-import { State } from "../../types/state"
+import { useRandomBioState } from "@controllers/useRandombioState"
+import { State } from "../../types/State"
 
 interface Props {
   scheme: PageInformation

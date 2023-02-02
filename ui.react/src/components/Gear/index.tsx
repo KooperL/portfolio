@@ -1,5 +1,5 @@
 // @ts-ignore
-import gear from "../../assets/gear.svg"
+import gear from "@assets/gear.svg"
 import "./style.css"
 
 export function Gear(props: { variant?: "small" | "large" }) {

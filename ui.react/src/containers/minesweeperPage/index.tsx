@@ -1,20 +1,20 @@
 import React, { useContext, useEffect, useState } from "react"
 // import { useLocation } from "react-router-dom";
-import Modal from "../../components/Modal"
+import Modal from "@components/Modal"
 // @ts-ignore
-import gear from "../../assets/gear.svg"
+import gear from "@assets/gear.svg"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { Gear } from "../../components/Gear"
-import { Input } from "../../components/Input"
-import { Button } from "../../components/Button"
+import { IslandCenter } from "@templates/IslandCenter"
+import { Gear } from "@components/Gear"
+import { Input } from "@components/Input"
+import { Button } from "@components/Button"
 import {
   Cell,
   gameStateLookup,
   makeupLookup,
   useMinesweeperState,
-} from "../../controllers/useMinesweeperState"
+} from "@controllers/useMinesweeperState"
 
 interface Props {
   gridSize: number
