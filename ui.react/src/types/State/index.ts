@@ -1,4 +1,4 @@
-import { ApiError } from "../api/apiErrorHandler"
+import { ApiError } from "../../api/apiErrorHandler"
 
 export interface State<T> {
   details?: T

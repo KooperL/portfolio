@@ -1,19 +1,16 @@
 import React, { useContext, useEffect, useState } from "react"
 // import { useLocation } from "react-router-dom";
-import Modal from "../../components/Modal"
+import Modal from "@components/Modal"
 // @ts-ignore
-import gear from "../../assets/gear.svg"
+import gear from "@assets/gear.svg"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { Gear } from "../../components/Gear"
-import { Radio } from "../../components/Radio"
-import { Button } from "../../components/Button"
-import {
-  Board,
-  CalculateWinner,
-} from "../../controllers/useTictactoeState/types"
-import { o, useTictactoeState, x } from "../../controllers/useTictactoeState"
+import { IslandCenter } from "@templates/IslandCenter"
+import { Gear } from "@components/Gear"
+import { Radio } from "@components/Radio"
+import { Button } from "@components/Button"
+import { Board, CalculateWinner } from "@controllers/useTictactoeState/types"
+import { o, useTictactoeState, x } from "@controllers/useTictactoeState"
 
 interface Props {
   gameInProgress: boolean

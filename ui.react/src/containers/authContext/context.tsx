@@ -7,7 +7,7 @@ import React, {
 } from "react"
 import { useNavigate } from "react-router-dom"
 import { ApiError } from "../../api/apiErrorHandler"
-import { LoggingPOSTResponse } from "../../components/Logger/types"
+import { LoggingPOSTResponse } from "@components/Logger/types"
 // import { useNavigate } from 'react-router-dom';
 import { postForumRefresh } from "../App/api/forumApis"
 import { postMonitor } from "../App/api/loggerApi"

@@ -4,22 +4,22 @@ import React, {
   useEffect,
   useState,
 } from "react"
-import Spinner from "../../components/Spinner"
+import Spinner from "@components/Spinner"
 import { AboutState, AboutPayload, AboutInitialState } from "./types"
 import { fetchAbout } from "../App/api/aboutApi"
-import Navbar from "../../components/Navbar"
+import Navbar from "@components/Navbar"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
-import sketchWrapper from "../../components/p5/dnaAscii"
+import sketchWrapper from "@components/p5/dnaAscii"
 import { ReactP5Wrapper } from "react-p5-wrapper"
 // @ts-ignore
-import ButtonRedir from "../../components/ButtonRedir"
-import TypeLookup from "../../components/TypeLookup"
-import { IslandLeft } from "../../templates/IslandLeft"
-import { IslandCenter } from "../../templates/IslandCenter"
+import ButtonRedir from "@components/ButtonRedir"
+import TypeLookup from "@components/TypeLookup"
+import { IslandLeft } from "@templates/IslandLeft"
+import { IslandCenter } from "@templates/IslandCenter"
 import ErrorPage from "../ErrorPage"
-import { State } from "../../types/state"
-import { useAboutState } from "../../controllers/useAboutState"
+import { State } from "../../types/State"
+import { useAboutState } from "@controllers/useAboutState"
 
 interface Props {
   state: State<AboutPayload>

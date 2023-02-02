@@ -4,15 +4,15 @@ import React, {
   useEffect,
   useState,
 } from "react"
-import Spinner from "../../components/Spinner"
+import Spinner from "@components/Spinner"
 import { fetchContact, postContact } from "../App/api/contactApi"
-import Navbar from "../../components/Navbar"
+import Navbar from "@components/Navbar"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 import { useNavigate } from "react-router-dom"
 import { ReactP5Wrapper } from "react-p5-wrapper"
-import sketchWrapper from "../../components/p5/box"
-import { Button } from "../../components/Button"
+import sketchWrapper from "@components/p5/box"
+import { Button } from "@components/Button"
 import { useAccessToken } from "../authContext/context"
 import {
   ForumLoginPOSTInitialState,
@@ -23,13 +23,13 @@ import {
 } from "./types"
 import { postForumLogin, postForumRegister } from "../App/api/forumApis"
 import { forumPath } from "../App/api/types"
-import Redirect from "../../components/Redirect"
+import Redirect from "@components/Redirect"
 import { ForumRouteType } from "../App/routeTypes"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { Input } from "../../components/Input"
-import Modal from "../../components/Modal"
-import { termsAndConditions } from "../../assets/TermsAndConditions"
-import { useForumLoginState } from "../../controllers/useForumLoginState"
+import { IslandCenter } from "@templates/IslandCenter"
+import { Input } from "@components/Input"
+import Modal from "@components/Modal"
+import { termsAndConditions } from "@assets/TermsAndConditions"
+import { useForumLoginState } from "@controllers/useForumLoginState"
 
 interface Props {
   token: string | null

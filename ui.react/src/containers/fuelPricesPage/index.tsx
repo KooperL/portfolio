@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
-import Spinner from "../../components/Spinner"
-import Vchart from "../../components/Vchart"
+import Spinner from "@components/Spinner"
+import Vchart from "@components/Vchart"
 import { fetchFuelPrices } from "../App/api/fuelPricesApi"
 import {
   FuelPricesState,
@@ -9,7 +9,7 @@ import {
 } from "./types"
 import "./style.css"
 import { SchemeContext } from "../context/colourScheme"
-import { IslandCenter } from "../../templates/IslandCenter"
+import { IslandCenter } from "@templates/IslandCenter"
 import ErrorPage from "../ErrorPage"
 
 interface Props {

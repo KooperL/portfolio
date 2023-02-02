@@ -7,7 +7,7 @@ import { fetchAbout } from "../../containers/App/api/aboutApi"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useFetch } from "../../hooks/useFetch"
 import { useSubmit } from "../../hooks/useSubmit"
-import { State } from "../../types/state"
+import { State } from "../../types/State"
 // @ts-ignore
 import dna from "./dna.txt"
 

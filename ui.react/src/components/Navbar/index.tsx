@@ -17,6 +17,17 @@ function getPath() {
   return window.location.pathname.split("/").filter(item => item)
 }
 
+const site = () => {
+  let name = "kooperlingohr.com/".split("")
+  for (let i = 0; i < name.length; i++) {
+    const rand = Math.random()
+    if ((rand * 100) % 10 > 8) {
+      name[i] = name[Math.floor(rand * name.length)]
+    }
+  }
+  return name.join("")
+}
+
 function Navbar(props: { isVertical: boolean }) {
   const [scheme, setScheme] = useContext(SchemeContext)
   // const [path, setPath] = useState([''])
@@ -25,26 +36,34 @@ function Navbar(props: { isVertical: boolean }) {
   const location = useLocation()
 
   let bannerText = []
+
   // window.innerHeight window.innerWidth
-  for (let i = 0; i < (props.isVertical ? 15 : 21); i++) {
-    if (i % 2 === 0) {
+  for (
+    let i = 0;
+    i <
+    (props.isVertical
+      ? Math.floor(window.innerHeight / 60)
+      : Math.floor(window.innerWidth / 110));
+    i++
+  ) {
+    if (i % 3 === 0) {
       bannerText.push(
-        <div
+        <span
           key={i}
           style={{ color: scheme.header.text }}
         >
-          kooperlingohr.com/
-        </div>,
+          {site()}
+        </span>,
       )
     } else {
       bannerText.push(
-        <div
+        <span
           key={i}
           className=""
           style={{ color: scheme.header.background }}
         >
-          -------
-        </div>,
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>,
       )
     }
   }

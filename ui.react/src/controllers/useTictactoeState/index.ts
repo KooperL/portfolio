@@ -95,7 +95,6 @@ const computerP2 = (boardCopy: Board, mode: number, symbol: string) => {
       if (boardCopy[i] == undefined) {
         let potentialBoard: Board = [...boardCopy]
         potentialBoard[i] = symbol
-        console.log(`passing ${symbol}`)
         // @ts-ignore
         let score = miniMax(potentialBoard, 0, false, inverse.get(symbol)) //max false is p1 turn
         if (score > bestScore) {
