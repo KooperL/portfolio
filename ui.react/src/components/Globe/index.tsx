@@ -1,5 +1,5 @@
 // @ts-ignore
-import globe from "@assets/globe.svg"
+import globe from "../../assets/globe.svg"
 import "./style.css"
 
 export function Globe(props: { variant?: "small" | "large" }) {

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import Spinner from "@components/Spinner"
+import Spinner from "../../components/Spinner"
 import {
   SeqAlignPayload,
   SeqAlignState,
@@ -7,19 +7,19 @@ import {
   SeqAlignPOST,
 } from "./types"
 import { fetchSeqAlign } from "../App/api/seqAlignApi"
-import Modal from "@components/Modal"
+import Modal from "../../components/Modal"
 // @ts-ignore
-import gear from "@assets/gear.svg"
+import gear from "../../assets/gear.svg"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
-import { Button } from "@components/Button"
+import { Button } from "../../components/Button"
 import "./style.css"
-import { IslandCenter } from "@templates/IslandCenter"
-import { Input } from "@components/Input"
-import { Gear } from "@components/Gear"
-import { Radio } from "@components/Radio"
+import { IslandCenter } from "../../templates/IslandCenter"
+import { Input } from "../../components/Input"
+import { Gear } from "../../components/Gear"
+import { Radio } from "../../components/Radio"
 import { ApiError } from "../../api/apiErrorHandler"
 import ErrorPage from "../ErrorPage"
-import { useSeqAlignState } from "@controllers/useSeqAlignState"
+import { useSeqAlignState } from "../../controllers/useSeqAlignState"
 import { useSubmit } from "../../hooks/useSubmit"
 import { State } from "../../types/State"
 

@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useState,
 } from "react"
-import Spinner from "@components/Spinner"
+import Spinner from "../../components/Spinner"
 import {
   ContactState,
   ContactPayload,
@@ -14,20 +14,20 @@ import {
   ContactPOST,
 } from "./types"
 import { fetchContact, postContact } from "../App/api/contactApi"
-import Navbar from "@components/Navbar"
+import Navbar from "../../components/Navbar"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 
 import { ReactP5Wrapper } from "react-p5-wrapper"
-import sketchWrapper from "@components/p5/box"
-import { Button } from "@components/Button"
-import ButtonRedir from "@components/ButtonRedir"
-import { IslandCenter } from "@templates/IslandCenter"
-import TypeLookup from "@components/TypeLookup"
-import { Input } from "@components/Input"
+import sketchWrapper from "../../components/p5/box"
+import { Button } from "../../components/Button"
+import ButtonRedir from "../../components/ButtonRedir"
+import { IslandCenter } from "../../templates/IslandCenter"
+import TypeLookup from "../../components/TypeLookup"
+import { Input } from "../../components/Input"
 import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
-import { useContactState } from "@controllers/useContactState"
+import { useContactState } from "../../controllers/useContactState"
 
 interface Props {
   scheme: PageInformation
