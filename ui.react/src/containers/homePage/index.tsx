@@ -4,20 +4,20 @@ import React, {
   useEffect,
   useState,
 } from "react"
-import Spinner from "@components/Spinner"
+import Spinner from "../../components/Spinner"
 import { HomeState, HomePayload, HomeInitialState } from "./types"
 import { fetchHome } from "../App/api/homeApi"
-import Navbar from "@components/Navbar"
+import Navbar from "../../components/Navbar"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 
 import { ReactP5Wrapper } from "react-p5-wrapper"
-import sketchWrapper from "@components/p5/box"
-import ButtonRedir from "@components/ButtonRedir"
-import { IslandLeft } from "@templates/IslandLeft"
-import TypeLookup from "@components/TypeLookup"
+import sketchWrapper from "../../components/p5/box"
+import ButtonRedir from "../../components/ButtonRedir"
+import { IslandLeft } from "../../templates/IslandLeft"
+import TypeLookup from "../../components/TypeLookup"
 import ErrorPage from "../ErrorPage"
-import { useHomeState } from "@controllers/useHomeState"
+import { useHomeState } from "../../controllers/useHomeState"
 import { State } from "../../types/State"
 
 interface Props {

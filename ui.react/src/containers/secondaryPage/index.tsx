@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import Spinner from "@components/Spinner"
+import Spinner from "../../components/Spinner"
 import {
   SecondaryPayload,
   SecondaryState,
@@ -7,19 +7,19 @@ import {
   SecondaryPOST,
 } from "./types"
 import { fetchSecondary } from "../App/api/SecondaryApi"
-import Modal from "@components/Modal"
+import Modal from "../../components/Modal"
 // @ts-ignore
-import gear from "@assets/gear.svg"
+import gear from "../../assets/gear.svg"
 import "./style.css"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
-import { Button } from "@components/Button"
-import { IslandCenter } from "@templates/IslandCenter"
-import { Input } from "@components/Input"
-import { Radio } from "@components/Radio"
-import { Gear } from "@components/Gear"
-import { Textarea } from "@components/Textarea"
+import { Button } from "../../components/Button"
+import { IslandCenter } from "../../templates/IslandCenter"
+import { Input } from "../../components/Input"
+import { Radio } from "../../components/Radio"
+import { Gear } from "../../components/Gear"
+import { Textarea } from "../../components/Textarea"
 import ErrorPage from "../ErrorPage"
-import { useSecondaryState } from "@controllers/useSecondaryState"
+import { useSecondaryState } from "../../controllers/useSecondaryState"
 import { useSubmit } from "../../hooks/useSubmit"
 import { ApiError } from "../../api/apiErrorHandler"
 import { State } from "../../types/State"

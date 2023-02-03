@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import Navbar from "@components/Navbar"
+import Navbar from "components/Navbar"
 import { HomePage } from "../homePage/loadable"
 import { ProjectsPage } from "../projectsPage/loadable"
 import { MrnaPage } from "../mrnaPage/loadable"
@@ -15,13 +15,15 @@ import { MinesweeperPage } from "../minesweeperPage/loadable"
 import { JsSimPage } from "../jsSimPage/loadable"
 import { ContactPage } from "../contactPage/loadable"
 import { AboutPage } from "../aboutPage/loadable"
-import { Logger } from "@components/Logger/loadable"
+import { Logger } from "components/Logger/loadable"
 import { AccessTokenProvider } from "../authContext/context"
 import { ForumHomePage } from "../forumHomePage/loadable"
 import { ForumUserPage } from "../forumUserPage/loadable"
 import { ForumLoginPage } from "../forumLoginPage/loadable"
 import { ForumPostCreatePage } from "../forumPostCreatePage/loadable"
 import { ForumPostViewPage } from "../forumPostViewPage/loadable"
+import Redirect from "components/Redirect"
+
 // import { Render } from '../renderer/renderer v3/cube/Render';
 // import { Render } from '../renderer/grid/Render';
 
@@ -38,10 +40,18 @@ function App() {
           <Routes>
             {/* element={<Layout />} */}
             <Route path={IndexRouteType.Home}>
-              <Route
+            <Route
                 index
                 element={<HomePage />}
               />
+              <Route
+              path={'home'}
+              element={
+                <Redirect
+                destination={IndexRouteType.Home}
+              />
+              }
+            />
               <Route
                 path={`${IndexRouteType.About}`}
                 element={<AboutPage />}

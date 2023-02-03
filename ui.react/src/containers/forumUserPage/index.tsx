@@ -4,27 +4,27 @@ import React, {
   useEffect,
   useState,
 } from "react"
-import Spinner from "@components/Spinner"
+import Spinner from "../../components/Spinner"
 import { fetchContact, postContact } from "../App/api/contactApi"
-import Navbar from "@components/Navbar"
+import Navbar from "../../components/Navbar"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 
 import { ReactP5Wrapper } from "react-p5-wrapper"
-import sketchWrapper from "@components/p5/box"
-import { Button } from "@components/Button"
+import sketchWrapper from "../../components/p5/box"
+import { Button } from "../../components/Button"
 import { useAccessToken } from "../authContext/context"
 import { getForumHome, getUserView } from "../App/api/forumApis"
 import { forumPath } from "../App/api/types"
 import { Link, Navigate, useLocation } from "react-router-dom"
 import { ForumRouteType } from "../App/routeTypes"
-import Redirect from "@components/Redirect"
-import ForumItem from "@components/ForumItem"
+import Redirect from "../../components/Redirect"
+import ForumItem from "../../components/ForumItem"
 import { ForumUserGETInitialState, ForumUserGETResponse } from "./types"
 import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
-import { useForumUserState } from "@controllers/useForumUserState"
-import { IslandCenter } from "@templates/IslandCenter"
+import { useForumUserState } from "../../controllers/useForumUserState"
+import { IslandCenter } from "../../templates/IslandCenter"
 
 interface Props {
   scheme: PageInformation

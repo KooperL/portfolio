@@ -4,25 +4,25 @@ import React, {
   useEffect,
   useState,
 } from "react"
-import Spinner from "@components/Spinner"
+import Spinner from "../../components/Spinner"
 import { ProjectsState, ProjectsPayload, ProjectsInitialState } from "./types"
 import { fetchProjects } from "../App/api/projectsApi"
-import Navbar from "@components/Navbar"
+import Navbar from "../../components/Navbar"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 
 import { ReactP5Wrapper } from "react-p5-wrapper"
-import sketchWrapper from "@components/p5/box"
+import sketchWrapper from "../../components/p5/box"
 // import { HomeInitialState, HomePayload } from "../homePage/types"
-import ButtonRedir from "@components/ButtonRedir"
-import TypeLookup from "@components/TypeLookup"
-import { IslandLeft } from "@templates/IslandLeft"
+import ButtonRedir from "../../components/ButtonRedir"
+import TypeLookup from "../../components/TypeLookup"
+import { IslandLeft } from "../../templates/IslandLeft"
 import ErrorPage from "../ErrorPage"
 import { useFetch } from "../../hooks/useFetch"
 import { ApiError } from "../../api/apiErrorHandler"
 import { HomePayload } from "../homePage/types"
 import { State } from "../../types/State"
-import { useProjectsState } from "@controllers/useProjectsState"
+import { useProjectsState } from "../../controllers/useProjectsState"
 
 interface Props {
   scheme: PageInformation

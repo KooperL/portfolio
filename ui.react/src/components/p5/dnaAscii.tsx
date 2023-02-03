@@ -2,7 +2,7 @@ import { P5Instance } from "react-p5-wrapper"
 import { makeNoise3D } from "open-simplex-noise"
 import { Noise3D } from "open-simplex-noise/lib/3d"
 import { Image } from "p5"
-// import dna from '@assets/dna.png';
+// import dna from '../../assets/dna.png';
 
 function sketchWrapper(foreground: string) {
   function sketch(p5: P5Instance) {
