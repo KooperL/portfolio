@@ -52,3 +52,10 @@ type FuelPricesResp struct {
 	FuelPrices map[string][]XYSet `json:"fuelprices"`
 	Stats      FuelPriceStats     `json:"stats"`
 }
+
+type SiteAnalysisResp struct {
+	SiteTraffic  []SiteAnalysisRoutes    `json:"siteTraffic"`
+	Fingerprint  SiteAnalysisFingerprint `json:"fingerprint"`
+	UniqueVisits int64                   `json:"uniqueVisits"`
+	Pages        []SiteAnalysisPages     `json:"pages"`
+}

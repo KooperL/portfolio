@@ -27,6 +27,7 @@ func SetupRouter() *http.ServeMux {
 	mux.HandleFunc(fmt.Sprintf("/%s/randombio", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.RandomBio))))
 	mux.HandleFunc(fmt.Sprintf("/%s/secondary", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.Secondary))))
 	mux.HandleFunc(fmt.Sprintf("/%s/mrna", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.Mrna))))
+	mux.HandleFunc(fmt.Sprintf("/%s/siteanalysis", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.SiteAnalysis))))
 
 	forumRoute := "forum"
 	mux.HandleFunc(fmt.Sprintf("/%s", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(forum.Index)))))
