@@ -3,10 +3,9 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.125rem;
-  background-color: #374151;
+  /* background-color: #374151; */
   margin: 10px;
   border-style: solid;
-  border-color: black;
   border-radius: 0.25rem;
   border-width: 2px;
   height: 500px;
@@ -45,7 +44,7 @@ align-items: center;
 
 .tictactoePage .grid-button:hover {
   background-color: #d0d0d0;
-  border-radius: 0.5rem;
+  /* border-radius: 0.5rem; */
   opacity: 50%;
 }
 
