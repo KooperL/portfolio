@@ -61,6 +61,7 @@ import views.projects.property
 import views.projects.randomBio
 import views.projects.secondary
 import views.projects.seqAlign
+import views.projects.siteAnalysis
 import views.forum.forumIndex
 import views.forum.register
 import views.forum.login
@@ -103,6 +104,7 @@ app.register_blueprint(views.projects.property.property)
 app.register_blueprint(views.projects.randomBio.randomBio)
 app.register_blueprint(views.projects.secondary.secondary)
 app.register_blueprint(views.projects.seqAlign.seqAlign)
+app.register_blueprint(views.projects.siteAnalysis.siteAnalysis)
 
 app.register_blueprint(views.forum.forumIndex.forumIndex)
 app.register_blueprint(views.forum.login.login)
