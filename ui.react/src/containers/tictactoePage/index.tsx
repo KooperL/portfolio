@@ -35,8 +35,36 @@ function Tictactoe(props: Props) {
       <div className="tictactoePage">
         {/* <div className="parent"> */}
         {/* <div className="sub-parent"> */}
-        <div className="modal-container">
-          <Modal closedChildren={<Gear variant="small" />}>
+        <div className="grid" style={{backgroundColor: props.scheme.body.text}}>
+          {props.board.map((square, i) => (
+            // @ts-ignore
+            <div
+              key={i}
+              className="grid-cell"
+              style={{
+                backgroundColor:
+                  props.winner && props.winner[1].includes(i)
+                    ? "#BBF7D0"
+                    : props.scheme.body.foreground,
+                borderColor: props.scheme.body.foreground,
+              }}
+            >
+              <button
+                className="grid-button"
+                style={{}}
+                onClick={() => props.handleClick(i)}
+              >
+                {square ? square : "(empty)"}
+              </button>
+            </div>
+          ))}
+        </div>
+        <div className="scoreboard">
+          <div className="scoreboard-item scoreboard-item-right">
+            <p>{x}'s wins</p>
+            <p>... {props.pPlayerWins}</p>
+          </div>
+          <Modal closedChildren={<Gear variant="large" />}>
             <Radio
               label="vs player 2"
               id="mode"
@@ -81,37 +109,6 @@ function Tictactoe(props: Props) {
               <br />
             </div>
           </Modal>
-        </div>
-        <div className="grid">
-          {props.board.map((square, i) => (
-            // @ts-ignore
-            <div
-              key={i}
-              className="grid-cell"
-              style={{
-                backgroundColor:
-                  props.winner && props.winner[1].includes(i)
-                    ? "#BBF7D0"
-                    : "white",
-                borderColor: props.scheme.body.foreground,
-              }}
-            >
-              <button
-                className="grid-button"
-                style={{}}
-                onClick={() => props.handleClick(i)}
-              >
-                {square ? square : "(empty)"}
-              </button>
-            </div>
-          ))}
-        </div>
-        <div className="scoreboard">
-          <div className="scoreboard-item scoreboard-item-right">
-            <p>{x}'s wins</p>
-            <p>... {props.pPlayerWins}</p>
-          </div>
-
           <div className="scoreboard-item scoreboard-item-left">
             <p>{o}'s wins</p>
             <p>{props.sPlayerWins} ...</p>
