@@ -23,6 +23,7 @@ export enum ProjectsRouteType {
   Mrna = "mrna",
   Secondary = "secondary",
   Seqalign = "seqalign",
+  SiteAnalysis = "siteanalysis",
   Heatmap = "heatmap",
   RandomBio = "randombio",
   Minesweeper = "minesweeper",

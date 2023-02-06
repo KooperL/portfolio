@@ -9,7 +9,10 @@ import { IslandCenter } from "../../templates/IslandCenter"
 import { Gear } from "../../components/Gear"
 import { Radio } from "../../components/Radio"
 import { Button } from "../../components/Button"
-import { Board, CalculateWinner } from "../../controllers/useTictactoeState/types"
+import {
+  Board,
+  CalculateWinner,
+} from "../../controllers/useTictactoeState/types"
 import { o, useTictactoeState, x } from "../../controllers/useTictactoeState"
 
 interface Props {
@@ -35,7 +38,10 @@ function Tictactoe(props: Props) {
       <div className="tictactoePage">
         {/* <div className="parent"> */}
         {/* <div className="sub-parent"> */}
-        <div className="grid" style={{backgroundColor: props.scheme.body.text}}>
+        <div
+          className="grid"
+          style={{ backgroundColor: props.scheme.body.text }}
+        >
           {props.board.map((square, i) => (
             // @ts-ignore
             <div
