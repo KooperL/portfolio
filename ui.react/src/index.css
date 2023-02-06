@@ -8,7 +8,8 @@
 * {
     font-family: 'Ubuntu Mono', sans-serif;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;    
+    -moz-osx-font-smoothing: grayscale;
+    /* color: red; */
     /* background: radial-gradient(
         rgba(255, 255, 255, 0.2) 8%,
         transparent 8%

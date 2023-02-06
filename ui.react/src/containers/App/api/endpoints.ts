@@ -16,6 +16,7 @@ export const endpoints: ApiEndpoints = {
   projects: `${apiHost}/${projectPath}`,
   mrna: `${apiHost}/${projectPath}/mrna`,
   seqalign: `${apiHost}/${projectPath}/seqalign`,
+  siteanalysis: `${apiHost}/${projectPath}/siteanalysis`,
   render: `${apiHost}/${projectPath}/render`,
   secondary: `${apiHost}/${projectPath}/secondary`,
   fuelprices: `${apiHost}/${projectPath}/fuelprices`,

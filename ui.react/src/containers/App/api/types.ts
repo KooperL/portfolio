@@ -11,6 +11,7 @@ export interface ApiEndpoints {
   property: string
   mrna: string
   seqalign: string
+  siteanalysis: string
   render: string
   fuelprices: string
   secondary: string

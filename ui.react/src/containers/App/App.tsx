@@ -22,6 +22,7 @@ import { ForumUserPage } from "../forumUserPage/loadable"
 import { ForumLoginPage } from "../forumLoginPage/loadable"
 import { ForumPostCreatePage } from "../forumPostCreatePage/loadable"
 import { ForumPostViewPage } from "../forumPostViewPage/loadable"
+import { SiteAnalysisPage } from "../siteAnalysisPage/loadable"
 import Redirect from "../../components/Redirect"
 
 // import { Render } from '../renderer/renderer v3/cube/Render';
@@ -40,18 +41,14 @@ function App() {
           <Routes>
             {/* element={<Layout />} */}
             <Route path={IndexRouteType.Home}>
-            <Route
+              <Route
                 index
                 element={<HomePage />}
               />
               <Route
-              path={'home'}
-              element={
-                <Redirect
-                destination={IndexRouteType.Home}
+                path={"home"}
+                element={<Redirect destination={IndexRouteType.Home} />}
               />
-              }
-            />
               <Route
                 path={`${IndexRouteType.About}`}
                 element={<AboutPage />}
@@ -91,6 +88,10 @@ function App() {
               <Route
                 path={`${ProjectsRouteType.Seqalign}`}
                 element={<SeqAlignPage />}
+              />
+              <Route
+                path={`${ProjectsRouteType.SiteAnalysis}`}
+                element={<SiteAnalysisPage />}
               />
               <Route
                 path={`${ProjectsRouteType.RandomBio}`}

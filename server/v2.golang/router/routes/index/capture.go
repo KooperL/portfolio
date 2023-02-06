@@ -17,8 +17,26 @@ func Capture(w http.ResponseWriter, r *http.Request) {
 		insertStatement := `INSERT INTO fingerprint VALUES (
 		  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
 		);`
-		data := append([]interface{}{nil, datetime}, utils.MapStructToSlice(body)...)
-		data = append(data, utils.HandleErrorDeconstruct(utils.GetIP(r)))
+		data := []interface{}{
+			nil,
+			datetime,
+			body.Uuid,
+			body.CanvasHash,
+			body.Platform,
+			body.Browser,
+			body.Version,
+			r.Header.Get("User-Agent"),
+			body.DarkMode,
+			body.CookieEnabled,
+			body.ActualHeight,
+			body.ActualWidth,
+			body.PixelDepth,
+			body.InnerHeight,
+			body.InnerWidth,
+			body.OuterHeight,
+			body.OuterWidth,
+			utils.HandleErrorDeconstruct(utils.GetIP(r)),
+		}
 		database.Insert(insertStatement, data)
 		responses.BuildSuccessResponse(w, body)
 

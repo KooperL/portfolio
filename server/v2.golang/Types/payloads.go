@@ -10,12 +10,11 @@ type ContactPayload struct {
 }
 
 type CapturePayload struct {
-	Uuid          string      `json:"uuid"`
-	CanvasHash    string      `json:"canvas_hash"`
-	Version       string      `json:"version"`
-	Platform      string      `json:"platform"`
-	Browser       string      `json:"browser"`
-	UserAgent     string      `json:"User-Agent"`
+	Uuid          interface{} `json:"uuid"`
+	CanvasHash    interface{} `json:"canvas_hash"`
+	Version       interface{} `json:"version"`
+	Platform      interface{} `json:"platform"`
+	Browser       interface{} `json:"browser"`
 	DarkMode      interface{} `json:"darkMode"`
 	CookieEnabled interface{} `json:"cookieEnabled"`
 	ActualHeight  interface{} `json:"actualHeight"`

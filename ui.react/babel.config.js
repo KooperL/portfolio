@@ -1,20 +1,20 @@
-module.exports = function(api) {
-  api.cache(true);
+module.exports = function (api) {
+  api.cache(true)
 
   return {
     presets: [
       [
         "@babel/preset-env",
         {
-          "targets": {
-            "node": "current"
+          targets: {
+            node: "current",
           },
-          "useBuiltIns": "entry"
-        }
+          useBuiltIns: "entry",
+        },
       ],
       "@babel/preset-typescript",
-      "@babel/preset-react"
+      "@babel/preset-react",
     ],
-    "extends": "./tsconfig.json"
-  };
-};
+    extends: "./tsconfig.json",
+  }
+}
