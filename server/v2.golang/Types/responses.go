@@ -25,8 +25,13 @@ type PagePopulateNode struct {
 }
 
 type PagePopulate struct {
-	Data interface{} `json:"data"`
-	Type string      `json:"type"`
+	Data any    `json:"data"` // PagePopulateData
+	Type string `json:"type"`
+}
+
+type PagePopulateData struct {
+	s []string
+	p PagePopulateNode
 }
 
 type BearerResp struct {

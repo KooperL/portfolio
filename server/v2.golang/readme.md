@@ -1,4 +1,5 @@
 # Installing packages
+Add the module to `$GOPATH` with `export GOPATH=/project/gopath`
 Run `go mod tidy` to download all required packages
 
 # Compiling
@@ -23,3 +24,20 @@ WantedBy=multi-user.target
 ```
 
 Enable service starting on system reboot with: `sudo systemctl enable goweb`
+
+
+# Instantiating MySQL
+<!-- https://stackoverflow.com/questions/14098242/mysql-new-user-access-denied#14098261 -->
+Login to MySQL
+`mysql -u root -p`
+
+Create a MySQL user
+`CREATE USER 'username'@'ip' IDENTIFIED BY '*password*';`
+
+Allow full control to that user
+`GRANT ALL PRIVILEGES ON * . * TO 'username'@'ip';`
+
+Reloading the privileges tables
+`FLUSH PRIVILEGES;`
+
+Run `CREATE DATABASE chatApp; USE chatApp; source ../schema.sql;` to create the tables.

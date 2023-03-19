@@ -25,7 +25,6 @@ def build_preflight_response():
   return response
 
 def build_actual_response(response):
-     # setperate response for refresh/login??
   response.headers.add('Access-Control-Allow-Origin', config['ORIGIN'])
   return response
 
@@ -61,6 +60,15 @@ def buildBearerResp(jwt, expires=None):
     'expires': expires
   }
   return kwargs
+
+def buildSuccessResp(data):
+  kwargs = {
+    'success': True,
+    'data': data
+  }
+  res = jsonify(kwargs)
+  return build_actual_response(res)
+
 
 def build_unauthenticated():
   kwargs = {

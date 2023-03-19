@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, jsonify, request
+from flask import Blueprint, render_template, jsonify, request, json
 import scripts.utils.decorators
 import scripts.utils.responses
 import datetime
@@ -15,44 +15,9 @@ contact = Blueprint('contact', __name__)
 @scripts.utils.decorators.rateLimit
 def contactHome():
   if request.method == 'GET':
-    kwargs = {
-      'success': True,
-      'data': [
-        {
-          'type': 'emoji',
-          'data': [
-            '😵‍💫',
-          ]
-        },
-        {
-          'type': 'subheader',
-          'data': [
-            'Aw, snap! Something went wrong...',
-          ]
-        },
-        {
-          'type': 'body',
-          'data': [
-            'You should probably contact me to let me know you found this error. My preferred method of contact is LinkedIn:',
-          ]
-        },
-        {
-          'type': 'button',
-          'text': 'LinkedIn',
-          'data': [
-            'https://www.linkedin.com/in/kooper/',
-          ]
-        },
-        {
-          'type': 'body',
-          'data': [
-            'Alternatively, leave an anonymous message. If you\'re expecting a reply though, be sure to include your email too.',
-          ]
-        }
-      ]
-    }
-    res = jsonify(kwargs)
-    return scripts.utils.responses.build_actual_response(res)
+    with open('../data/responses/contactPage.json') as test_file:
+        data = json.load(test_file)
+    return scripts.utils.responses.buildSuccessResp(data)
   elif request.method == 'POST':
     data = request.get_json()
     # session_id = request.args.get('session_id')
