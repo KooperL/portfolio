@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input component it matches the snapshot 1`] = `
+<div
+  id="Input-container"
+>
+  <label
+    htmlFor="htmlName"
+  >
+    MyInput
+  </label>
+  <div
+    id="Input"
+  >
+    <div
+      id="Input-decorator"
+    >
+      <p>
+        &gt;
+         
+      </p>
+    </div>
+    <input
+      autoComplete=""
+      id="id"
+      name="htmlName"
+      onChange={[Function]}
+      placeholder="placeholder"
+      readOnly={false}
+      type="text"
+      value="placeholder"
+    />
+  </div>
+</div>
+`;

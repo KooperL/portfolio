@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Hamburger component it matches the snapshot 1`] = `
+<div
+  className="hamburger"
+>
+  <button
+    onClick={[Function]}
+  >
+    <div
+      className="icon"
+      style={
+        Object {
+          "backgroundColor": "#F66B0E",
+        }
+      }
+    >
+      <p
+        className="hamburger-icon"
+      >
+        ≡
+      </p>
+      <div
+        className="hover-effect"
+      />
+    </div>
+  </button>
+  <div
+    className="links "
+    style={
+      Object {
+        "backgroundColor": "#112B3C",
+      }
+    }
+  />
+</div>
+`;

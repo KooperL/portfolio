@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Globe component it matches the snapshot 1`] = `
+<div
+  id="globe"
+  style={
+    Object {
+      "height": 20,
+      "width": 20,
+    }
+  }
+>
+  <img
+    alt="globe.svg"
+    src="globe.svg"
+    style={
+      Object {
+        "filter": "filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(159deg) brightness(110%) contrast(101%);",
+      }
+    }
+  />
+</div>
+`;
