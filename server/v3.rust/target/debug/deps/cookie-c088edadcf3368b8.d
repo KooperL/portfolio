@@ -1,0 +1,12 @@
+/home/kooper/Documents/portfolio/server/v3.rust/target/debug/deps/cookie-c088edadcf3368b8.rmeta: /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/lib.rs /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/builder.rs /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/parse.rs /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/jar.rs /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/delta.rs /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/draft.rs
+
+/home/kooper/Documents/portfolio/server/v3.rust/target/debug/deps/libcookie-c088edadcf3368b8.rlib: /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/lib.rs /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/builder.rs /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/parse.rs /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/jar.rs /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/delta.rs /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/draft.rs
+
+/home/kooper/Documents/portfolio/server/v3.rust/target/debug/deps/cookie-c088edadcf3368b8.d: /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/lib.rs /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/builder.rs /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/parse.rs /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/jar.rs /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/delta.rs /home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/draft.rs
+
+/home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/lib.rs:
+/home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/builder.rs:
+/home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/parse.rs:
+/home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/jar.rs:
+/home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/delta.rs:
+/home/kooper/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cookie-0.11.5/src/draft.rs:
