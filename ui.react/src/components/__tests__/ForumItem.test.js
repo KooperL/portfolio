@@ -3,10 +3,12 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import dark from '../../containers/context/dark.json'
 import ForumItem from '../ForumItem';
+import { Router } from 'react-router-dom';
 
 describe('ForumItem component', () => {
   test('it matches the snapshot', () => {
     const tree = renderer.create(
+      <Router>
     <ForumItem 
       data={{
         id: 1,
@@ -19,6 +21,7 @@ describe('ForumItem component', () => {
         author_id: 123
       }}
     />
+    </Router>
     ).toJSON();
     expect(tree).toMatchSnapshot();
   });
