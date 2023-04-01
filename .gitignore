@@ -6,3 +6,4 @@ data/
 logs/
 database.db
 bin/*
+target/
