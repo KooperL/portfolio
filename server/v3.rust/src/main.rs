@@ -1,46 +1,51 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 #[macro_use]
 extern crate rocket;
-mod createRandomBioStr;
-use rocket::response::status;
 use rand::Rng;
 use std::iter;
-use serde::Deserialize;
-use rocket_contrib::json::Json;
+use rocket::{get, http::Status, serde::json::Json};
+use serde::Serialize;
 
 
-#[derive(Deserialize)]
-struct RandomBio {
-  data: String,
+#[derive(Serialize)]
+pub struct GenericResponse {
+    pub success: bool,
+    pub data: Option<String>,
+    pub errorMessage: Option<String>,
 }
-
-// https://stackoverflow.com/questions/60860046/rockets-responder-trait-is-not-implemented-for-result
 
 const DNA_CHARSET: &[u8] = b"ATGC";
 const RNA_CHARSET: &[u8] = b"AUGC";
-fn generate(CHARSET: &[u8], len: i16) -> RandomBio {
+fn generate(CHARSET: &[u8], len: i16) -> String {
     let mut rng = rand::thread_rng();
     let one_char = || CHARSET[rng.gen_range(0..CHARSET.len())] as char;
-    RandomBio {
-    data: iter::repeat_with(one_char).take(len as usize).collect(),
-    }
+    iter::repeat_with(one_char).take(len as usize).collect()
 }
 
 #[get("/projects/randombio?<typeTemp>&<length>")]
-fn index(typeTemp: i8, length: i16) -> Result<Json<RandomBio>, status::BadRequest<String>> {
-    let response = match typeTemp {
+pub async fn health_checker_handler(typeTemp: i8, length: i16) -> Result<Json<GenericResponse>, Status> {
+    let data = match typeTemp {
         1 => Ok(generate(DNA_CHARSET, length)),
         2 => Ok(generate(RNA_CHARSET, length)),
         3 => Ok(generate(DNA_CHARSET, length)),
-        _ => Err(status::BadRequest(Some(String::from("Invalid type.")))),
+        _ => Err("Invalid type".to_string()),
     };
-    match response {
-        Ok(output) => Ok(Json(output)),
-        Err(err) => Err(err),
+
+    match data {
+        Ok(output) => Ok(Json(GenericResponse {
+        success: true,
+        data: Some(output),
+            errorMessage: None,
+    })),
+        Err(err) => Ok(Json(GenericResponse {
+            success: false,
+            data: None,
+            errorMessage: Some(err)
+        }))
     }
 }
 
-fn main() {
-    rocket::ignite().mount("/", routes![index]).launch();
+#[launch]
+fn rocket() -> _ {
+    rocket::build().mount("/", routes![health_checker_handler,])
 }
-
