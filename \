@@ -1,0 +1,94 @@
+#![feature(proc_macro_hygiene, decl_macro)]
+#[macro_use]
+extern crate rocket;
+use rand::Rng;
+use std::{iter, vec};
+use rocket::{get, http::Status, serde::json::Json};
+use serde::Serialize;
+
+
+#[derive(Serialize)]
+pub struct GenericResponse {
+    pub success: bool,
+    pub data: Option<String>,
+    pub errorMessage: Option<String>,
+}
+
+
+fn match_score_simple<const N: usize>(s1: [char; N], s2: [char; N], identical: i16, mismatch: i16, extgaps: i16, gaps: i16) -> i16 {
+    let mut score: i16 = 0;
+    let mut penalty_count = 0;
+    for i in 0..N {
+        if s1[i] == s2[i] {
+        score += match;
+        penalty_count = 0;
+        } else {
+            score -= mismatch;
+            if penalty_count == 0 {
+                score -= gaps;
+            } else {
+                score -= extgaps;
+            }
+        }
+    }
+    score
+}
+
+fn draw_comparison<const N: usize>(s1: [char; N], s2: [char; N]) -> [char; N] {
+    let match_char = '|';
+    let mismatch_char = ' ';
+    let mut res: [char; N] = [mismatch_char; N];
+    for (ind, elem) in res.iter_mut().enumerate() {
+        if s1[ind] == s2[ind] {
+            *elem = match_char;
+        } 
+    }
+    res
+}
+
+
+//#[get("/projects/seqalign?<sampletxt>&<referencetxt>&<identical>&<mismatch>&<extgaps>&<gaps>")]
+//pub async fn seqAlign(sampletxt: String, referencetxt: String, identical: i16, mismatch: i16, extgaps: i16, gaps: i16) -> Result<Json<GenericResponse>, Status> {
+//    let s1Arr = sampletxt.split();
+//    let s2Arr = referencetxt.split();
+//    f len(s1Arr) == len(s2Arr) {
+//        
+//    }
+//}
+
+
+const DNA_CHARSET: &[u8] = b"ATGC";
+const RNA_CHARSET: &[u8] = b"AUGC";
+fn generate(CHARSET: &[u8], len: i16) -> String {
+    let mut rng = rand::thread_rng();
+    let one_char = || CHARSET[rng.gen_range(0..CHARSET.len())] as char;
+    iter::repeat_with(one_char).take(len as usize).collect()
+}
+
+#[get("/projects/randombio?<typeTemp>&<length>")]
+pub async fn randomBio(typeTemp: i8, length: i16) -> Result<Json<GenericResponse>, Status> {
+    let data = match typeTemp {
+        1 => Ok(generate(DNA_CHARSET, length)),
+        2 => Ok(generate(RNA_CHARSET, length)),
+        3 => Ok(generate(DNA_CHARSET, length)),
+        _ => Err("Invalid type".to_string()),
+    };
+
+    match data {
+        Ok(output) => Ok(Json(GenericResponse {
+        success: true,
+        data: Some(output),
+            errorMessage: None,
+    })),
+        Err(err) => Ok(Json(GenericResponse {
+            success: false,
+            data: None,
+            errorMessage: Some(err)
+        }))
+    }
+}
+
+#[launch]
+fn rocket() -> _ {
+    rocket::build().mount("/", routes![health_checker_handler,])
+}

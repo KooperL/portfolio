@@ -15,8 +15,8 @@ pub struct GenericResponse {
 }
 
 
-fn match_score_simple(s1: Vec<&str>, s2: Vec<&str>, identical: i16, mismatch: i16, extgaps: i16, gaps: i16) -> i16 {
-    let mut score: i16 = 0;
+fn match_score_simple(s1: Vec<&str>, s2: Vec<&str>, identical: f32, mismatch: f32, extgaps: f32, gaps: f32) -> f32 {
+    let mut score: f32 = 0.0;
     let mut penalty_count = 0;
     for i in 0..s1.len() {
         if s1[i] == s2[i] {
@@ -58,18 +58,38 @@ fn draw_comparison<'a>(s1: Vec<&'a str>, s2: Vec<&'a str>) -> Vec<&'a str> {
 
 
 #[get("/projects/seqalign?<sampletxt>&<referencetxt>&<identical>&<mismatch>&<extgaps>&<gaps>")]
-pub async fn seqAlign(sampletxt: String, referencetxt: String, identical: i16, mismatch: i16, extgaps: i16, gaps: i16) -> Result<Json<GenericResponse>, Status> {
+pub async fn seqAlign(sampletxt: String, referencetxt: String, identical: f32, mismatch: f32, extgaps: f32, gaps: f32) -> Result<Json<GenericResponse>, Status> {
     let s1Arr: Vec<&str> = sampletxt.split(char::is_alphabetic).collect();
     let s2Arr: Vec<&str> = referencetxt.split(char::is_alphabetic).collect();
     if s1Arr.len() == s2Arr.len() {
         let matches = match_score_simple(s1Arr.clone(), s2Arr.clone(), identical, mismatch, extgaps, gaps); 
         let draw = draw_comparison(s1Arr.clone(), s2Arr.clone());
-    }
 Ok(Json(GenericResponse {
         success: true,
-        data: Some(String::from("matches.join()")),
+        data: Some(draw.join("")),
             errorMessage: None,
     }))
+    } else {
+        let mut arrs: Vec<Vec<_>> = {
+            if s1Arr.len() > s2Arr.len() {
+                vec![s2Arr, s1Arr]
+            } else {
+                vec![s1Arr, s2Arr]
+            }
+        };
+        while arrs[0].len() < arrs[1].len() {
+            let mut rng = rand::thread_rng();
+            let rand_ind = rng.gen_range(0..arrs[0].len());
+            arrs[0] = [&arrs[0][0..rand_ind], &["-"], &arrs[0][rand_ind..]].concat();
+        };
+        let matches = match_score_simple(arrs[0].clone(), arrs[1].clone(), identical, mismatch, extgaps, gaps); 
+        let draw = draw_comparison(arrs[0].clone(), arrs[1].clone());
+        Ok(Json(GenericResponse {
+        success: true,
+        data: Some(draw.join("")),
+            errorMessage: None,
+    }))
+    }
 }
 
 
