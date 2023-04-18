@@ -1,17 +1,116 @@
-#![feature(proc_macro_hygiene, decl_macro)]
 #[macro_use]
 extern crate rocket;
 use rand::Rng;
 use std::{iter, vec};
 use rocket::{get, http::Status, serde::json::Json};
 use serde::Serialize;
+use std::fs;
+use std::collections::HashMap;
 
+#[derive(Serialize)]
+struct to_from_value {
+    from: f32,
+    to: f32,
+    unit: String,
+}
+
+#[derive(Serialize)]
+struct value_unit {
+    value: f32,
+    unit: String,
+}
+
+#[derive(Serialize)]
+struct ref_value {
+    reference: String,
+    value: String,
+}
+
+#[derive(Serialize)]
+struct nucleotide_list {
+    name: String,
+    symbol: String,
+    molecular_mass: value_unit,
+    density: value_unit,
+    melting_point: to_from_value, 
+    complimentary_nucleotide: ref_value,
+    solubility: value_unit,
+    ph: f32,
+}
 
 #[derive(Serialize)]
 pub struct GenericResponse {
     pub success: bool,
     pub data: Option<String>,
     pub errorMessage: Option<String>,
+}
+
+#[derive(Serialize)]
+struct propensities {
+    alpha_helix: f32,
+    beta_strand: f32,
+    turn: f32,
+}
+
+#[derive(Serialize)]
+struct side_chain {
+    class: String,
+    polarity: String,
+    net_charge: String,
+}
+
+#[derive(Serialize)]
+struct AminoAcid {
+    name: String,
+    three_letter_symbol: String,
+    symbol: String,
+    side_chain: side_chain,
+    nucleotides: Vec<String>,
+    hydropathy_index: f32,
+    molecular_weight: f32,
+    propensities: propensities,
+}
+
+fn find_nucleation_region(arr: Vec<f32>, threshold: f32, sliding_window: usize, contiguous_window: f32) -> Vec<f32> {
+    let mut nucleation_regions:Vec<f32> = Vec::new();
+    let mut start = 0;
+    let mut end = sliding_window;
+    while end <= arr.len() {
+        let slice = &arr[start..sliding_window];
+        let slice_sum = slice.iter().sum();
+        nucleation_regions.push(slice_sum);
+        start += 1;
+        end += 1;
+    }
+    return nucleation_regions;
+}
+
+fn propegate_propensities_from_symbol(symbol: &str, key: &str, memo:HashMap<String, HashMap<String, f32>>) &f32 {
+    let inner_map = memo.get(key).unwrap();
+    if inner_map.contains_key(symbol) {
+        return inner_map.get(symbol).unwrap();
+    }
+}
+
+#[get("/projects/secondary?<aas>&<aaformat>&<threshold>&<avg>")]
+pub async fn secondary(aas: String, aaformat: String, threshold: i8, avg: i8) -> Result<Json<GenericResponse>, Status> {
+    let file_contents = fs::read_to_string("../data/aminoAcids.json").expect("File should have been opened");
+    let parsed_file = serde::Deserializer(file_contents);
+
+    let alpha_helix_threshold = 1.03;
+    let alpha_helix_sliding_window = 6;
+	let alpha_helix_contiguous_window = 4.0;
+    let alpha_helix_error = 6.0;
+    let	beta_sheet_threshold = 1.0;
+	let beta_sheet_sliding_window = 5;
+    let beta_sheet_contiguous_window = 3.0;
+	let beta_sheet_error = 4.0;
+
+    let mut memo = HashMap::new();
+    let mut alpha_helix_map = HashMap::new();
+    let mut beta_strand_map = HashMap::new();
+    memo.insert("alpha_helix", alpha_helix_map); 
+    memo.insert("beta_strand", beta_strand_map);
 }
 
 
@@ -92,7 +191,7 @@ Ok(Json(GenericResponse {
     }
 }
 
-
+// TODO: Move to ../data.json
 const DNA_CHARSET: &[u8] = b"ATGC";
 const RNA_CHARSET: &[u8] = b"AUGC";
 fn generate(CHARSET: &[u8], len: i16) -> String {

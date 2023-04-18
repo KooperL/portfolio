@@ -13,7 +13,7 @@ import (
 func Secondary(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		var data []types.AminoAcids
-		utils.OpenAndParseJSONFile("data/aminoAcids.json", &data)
+		utils.OpenAndParseJSONFile("../data/aminoAcids.json", &data)
 
 		aa_list := strings.Split(r.URL.Query().Get("aa_field_id"), "")
 
@@ -37,7 +37,7 @@ func Secondary(w http.ResponseWriter, r *http.Request) {
 
 		hPropensities := make([]float64, len(aa_list))
 		for i, v := range aa_list {
-			hPropensities[i] = controllers.PopulatePropensitiesFromSymbol(v, &memo, "alpha-helix", data)
+			hPropensities[i] = controllers.PopulatePropensitiesFromSymbol(v, &memo, "alpha_helix", data)
 		}
 		hNucleationRegions := controllers.FindNucleationRegion(
 			hPropensities,
@@ -49,7 +49,7 @@ func Secondary(w http.ResponseWriter, r *http.Request) {
 
 		ePropensities := make([]float64, len(aa_list))
 		for i, v := range aa_list {
-			ePropensities[i] = controllers.PopulatePropensitiesFromSymbol(v, &memo, "beta-strand", data)
+			ePropensities[i] = controllers.PopulatePropensitiesFromSymbol(v, &memo, "beta_strand", data)
 		}
 		eNucleationRegions := controllers.FindNucleationRegion(
 			ePropensities,

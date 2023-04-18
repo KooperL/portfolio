@@ -2,21 +2,18 @@ import json
 
 def aminoAcids():
   aminoAcids = None
-  with open('scripts/mrna_files/aminoAcids.json', 'r') as openfile:
-      # Reading from json file
+  with open('../data/aminoAcids.json', 'r') as openfile:
       aminoAcids = json.load(openfile)
   return aminoAcids
 
 def dna():
   dna_dictionary = None
-  with open('scripts/mrna_files/dna.json', 'r') as openfile:
-      # Reading from json file
+  with open('../data/dna.json', 'r') as openfile:
       dna_dictionary = json.load(openfile)
   return dna_dictionary
 
 def rna():
   rna = None
-  with open('scripts/mrna_files/rna.json', 'r') as openfile:
-      # Reading from json file
+  with open('../data/rna.json', 'r') as openfile:
       rna = json.load(openfile)
   return rna
