@@ -13,8 +13,8 @@ amino_acid_dictionary = scripts.mrna_files.data.aminoAcids()
 def secondary_predict(aa_list='llllllllll'):
   aa_list = np.array([c for c in aa_list]) 
   memo = {
-    'alpha-helix': {},
-    'beta-strand': {}
+    'alpha_helix': {},
+    'beta_strand': {}
   }
   def findNucleationRegion(arr, threshold, sliding_window, contiguous_window):
     # slices = []
@@ -57,8 +57,8 @@ def secondary_predict(aa_list='llllllllll'):
   beta_sheet_sliding_window = 5
   beta_sheet_contiguous_window = 3
 
-  hPropensities = findNucleationRegion([populatePropensitiesFromSymbol(x, 'alpha-helix') for x in aa_list], alpha_helix_threshold, alpha_helix_sliding_window, alpha_helix_contiguous_window)
-  ePropensities = findNucleationRegion([populatePropensitiesFromSymbol(x, 'beta-strand') for x in aa_list], beta_sheet_threshold, beta_sheet_sliding_window, beta_sheet_contiguous_window)
+  hPropensities = findNucleationRegion([populatePropensitiesFromSymbol(x, 'alpha_helix') for x in aa_list], alpha_helix_threshold, alpha_helix_sliding_window, alpha_helix_contiguous_window)
+  ePropensities = findNucleationRegion([populatePropensitiesFromSymbol(x, 'beta_strand') for x in aa_list], beta_sheet_threshold, beta_sheet_sliding_window, beta_sheet_contiguous_window)
   result = []
   isStalemated = []
   for ind in range(len(hPropensities)):

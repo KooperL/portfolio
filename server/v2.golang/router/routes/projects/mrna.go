@@ -17,13 +17,13 @@ func Mrna(w http.ResponseWriter, r *http.Request) {
 		sourceSize := len(dnaSource)
 
 		var dnaDict []types.Dna
-		utils.OpenAndParseJSONFile("data/dna.json", &dnaDict)
+		utils.OpenAndParseJSONFile("../data/dna.json", &dnaDict)
 
 		var rnaDict []types.Rna
-		utils.OpenAndParseJSONFile("data/rna.json", &rnaDict)
+		utils.OpenAndParseJSONFile("../data/rna.json", &rnaDict)
 
 		var aaDict []types.AminoAcids
-		utils.OpenAndParseJSONFile("data/aminoAcids.json", &aaDict)
+		utils.OpenAndParseJSONFile("../data/aminoAcids.json", &aaDict)
 
 		sourceAsBytes := []byte(strings.Join(dnaSource, ""))
 

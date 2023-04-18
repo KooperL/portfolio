@@ -20,7 +20,7 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 		switch randomType {
 		case (1):
 			var data []types.Dna
-			utils.OpenAndParseJSONFile("data/dna.json", &data)
+			utils.OpenAndParseJSONFile("../data/dna.json", &data)
 
 			rand.Seed(time.Now().Unix())
 			arr := make([]string, randomLength)
@@ -32,10 +32,9 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 			}
 			responses.BuildSuccessResponse(w, strings.Join(arr, ""))
 			return
-			break
 		case (2):
 			var data []types.Rna
-			utils.OpenAndParseJSONFile("data/rna.json", &data)
+			utils.OpenAndParseJSONFile("../data/rna.json", &data)
 
 			rand.Seed(time.Now().Unix())
 			arr := make([]string, randomLength)
@@ -52,7 +51,7 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 			aaFormat := utils.HandleErrorDeconstruct(strconv.ParseInt(params.Get("single"), 10, 16))
 
 			var data []types.AminoAcids
-			utils.OpenAndParseJSONFile("data/aminoAcids.json", &data)
+			utils.OpenAndParseJSONFile("../data/aminoAcids.json", &data)
 
 			rand.Seed(time.Now().Unix())
 			arr := make([]string, randomLength)
