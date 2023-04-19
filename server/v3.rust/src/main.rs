@@ -3,38 +3,40 @@ extern crate rocket;
 use rand::Rng;
 use std::{iter, vec};
 use rocket::{get, http::Status, serde::json::Json};
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use std::fs;
 use std::collections::HashMap;
+//use serde_json::{Value};
 
-#[derive(Serialize)]
-struct to_from_value {
+
+#[derive(Serialize, Deserialize)]
+struct ToFromValue {
     from: f32,
     to: f32,
     unit: String,
 }
 
-#[derive(Serialize)]
-struct value_unit {
+#[derive(Serialize, Deserialize)]
+struct ValueUnit {
     value: f32,
     unit: String,
 }
 
-#[derive(Serialize)]
-struct ref_value {
+#[derive(Serialize, Deserialize)]
+struct RefValue {
     reference: String,
     value: String,
 }
 
-#[derive(Serialize)]
-struct nucleotide_list {
+#[derive(Serialize, Deserialize)]
+struct NucleotideList {
     name: String,
     symbol: String,
-    molecular_mass: value_unit,
-    density: value_unit,
-    melting_point: to_from_value, 
-    complimentary_nucleotide: ref_value,
-    solubility: value_unit,
+    molecular_mass: ValueUnit,
+    density: ValueUnit,
+    melting_point: ToFromValue, 
+    complimentary_nucleotide: RefValue,
+    solubility: ValueUnit,
     ph: f32,
 }
 
@@ -45,21 +47,21 @@ pub struct GenericResponse {
     pub errorMessage: Option<String>,
 }
 
-#[derive(Serialize)]
-struct propensities {
+#[derive(Serialize, Deserialize)]
+struct Propensities {
     alpha_helix: f32,
     beta_strand: f32,
     turn: f32,
 }
 
-#[derive(Serialize)]
-struct side_chain {
+#[derive(Serialize, Deserialize)]
+struct SideChain {
     class: String,
     polarity: String,
     net_charge: String,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 struct AminoAcid {
     name: String,
     three_letter_symbol: String,
@@ -85,17 +87,33 @@ fn find_nucleation_region(arr: Vec<f32>, threshold: f32, sliding_window: usize, 
     return nucleation_regions;
 }
 
-fn propegate_propensities_from_symbol(symbol: &str, key: &str, memo:HashMap<String, HashMap<String, f32>>) &f32 {
-    let inner_map = memo.get(key).unwrap();
-    if inner_map.contains_key(symbol) {
-        return inner_map.get(symbol).unwrap();
+fn populate_propensities_from_symbol<'a>(
+    symbol: &str,
+    key: &str,
+    memo: &'a HashMap<String, HashMap<String, f32>>,
+    file: &[AminoAcid],
+) -> Option<&'a f32> {
+    let inner_map = memo.get(key)?;
+    if let Some(value) = inner_map.get(symbol) {
+        return Some(value);
     }
+    for amino_acid in file {
+        if amino_acid.symbol == symbol {
+            memo
+                .entry(key.to_string())
+                .or_insert(HashMap::new())
+                .insert(symbol.to_string(), amino_acid.propensities[key]);
+            return Some(&amino_acid.propensities[key]);
+        }
+    }
+    None
 }
 
 #[get("/projects/secondary?<aas>&<aaformat>&<threshold>&<avg>")]
 pub async fn secondary(aas: String, aaformat: String, threshold: i8, avg: i8) -> Result<Json<GenericResponse>, Status> {
     let file_contents = fs::read_to_string("../data/aminoAcids.json").expect("File should have been opened");
-    let parsed_file = serde::Deserializer(file_contents);
+    //let parsed_file = serde::Deserializer(file_contents);
+    let parsed_file: Vec<AminoAcid> = serde_json::from_str(&file_contents).unwrap();
 
     let alpha_helix_threshold = 1.03;
     let alpha_helix_sliding_window = 6;
@@ -111,6 +129,13 @@ pub async fn secondary(aas: String, aaformat: String, threshold: i8, avg: i8) ->
     let mut beta_strand_map = HashMap::new();
     memo.insert("alpha_helix", alpha_helix_map); 
     memo.insert("beta_strand", beta_strand_map);
+
+    let hPropensities: Vec<&f32> = Vec::new();
+    for amino_acid in aas.chars() {
+        let prop = populate_propensities_from_symbol(amino_acid, "alpha_helix", &memo, &parsed_file).unwrap();
+        hPropensities.push(prop);
+    };
+    
 }
 
 
