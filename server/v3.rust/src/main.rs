@@ -124,23 +124,20 @@ fn find_nucleation_region(arr: Vec<f32>, threshold: f32, sliding_window: usize, 
     return nucleation_regions;
 }
 
-fn populate_propensities_from_symbol<'a>(
+fn populate_propensities_from_symbol(
     symbol: &str,
     key: &str,
-    memo: &'a HashMap<String, HashMap<String, f32>>,
+    memo: &mut HashMap<String, f32>,
     file: &Vec<AminoAcid>,
-) -> Option<&'a f32> {
-    let inner_map = memo.get(key)?;
-    if let Some(value) = inner_map.get(symbol) {
-        return Some(value);
+) -> Option<f32> {
+    if let Some(value) = memo.get(symbol) {
+        return Some(value.clone());
     }
     for amino_acid in file {
         if amino_acid.symbol == symbol {
             memo
-                .entry(key.to_string())
-                .or_insert(HashMap::new())
                 .insert(symbol.to_string(), amino_acid.propensities[key]);
-            return Some(&amino_acid.propensities[key]);
+            return Some(amino_acid.propensities[key]);
         }
     }
     None
@@ -161,19 +158,16 @@ pub async fn secondary(aas: String, aaformat: String, threshold: i32, avg: i32) 
     let beta_sheet_contiguous_window = 3;
 	let beta_sheet_error = 4;
 
-    let mut memo = HashMap::new();
-    let mut alpha_helix_map = HashMap::new();
-    let mut beta_strand_map = HashMap::new();
-    memo.insert(String::from("alpha_helix"), alpha_helix_map); 
-    memo.insert(String::from("beta_strand"), beta_strand_map);
+    let mut alpha_helix_memo = HashMap::new();
+    let mut beta_strand_memo = HashMap::new();
 
     let mut hPropensities: Vec<f32> = Vec::new();
     let mut ePropensities: Vec<f32> = Vec::new();
     for amino_acid in aas.chars() {
-        let proph = populate_propensities_from_symbol(&amino_acid.to_string(), "alpha_helix", &memo, &parsed_file).unwrap();
-        hPropensities.push(*proph);
-        let prope = populate_propensities_from_symbol(&amino_acid.to_string(), "beta_strand", &memo, &parsed_file).unwrap();
-        ePropensities.push(*prope);
+        let proph = populate_propensities_from_symbol(&amino_acid.to_string(), "alpha_helix", &mut alpha_helix_memo, &parsed_file).unwrap();
+        hPropensities.push(proph);
+        let prope = populate_propensities_from_symbol(&amino_acid.to_string(), "beta_strand", &mut beta_strand_memo, &parsed_file).unwrap();
+        ePropensities.push(prope);
     };
     
     let hNucleationRegions = find_nucleation_region(hPropensities, alpha_helix_threshold, alpha_helix_sliding_window, alpha_helix_contiguous_window, alpha_helix_error);
