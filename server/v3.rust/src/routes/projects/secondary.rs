@@ -17,7 +17,6 @@ fn find_nucleation_region(arr: Vec<f32>, threshold: f32, sliding_window: usize, 
     while end <= arr.len() {
         let slice = &arr[start..sliding_window];
         let slice_sum: f32 = slice.iter().sum();
-        // nucleation_regions.push(slice_sum);
         let isValid: bool = slice_sum > (contiguous_window as f32 * threshold);
 
         if isValid {
@@ -65,7 +64,7 @@ fn populate_propensities_from_symbol(
 
 #[get("/projects/secondary?<aas>&<aaformat>&<threshold>&<avg>")]
 pub async fn secondaryRouteGet(aas: String, aaformat: String, threshold: i32, avg: i32) -> Result<Json<response::GenericResponse>, Status> {
-    let file_contents = fs::read_to_string("../data/aminoAcids.json").expect("File should have been opened");
+    let file_contents = std::fs::read_to_string("../data/aminoAcids.json").expect("File should have been opened");
     //let parsed_file = serde::Deserializer(file_contents);
     let parsed_file: Vec<mrna::AminoAcid> = serde_json::from_str(&file_contents).unwrap();
 
