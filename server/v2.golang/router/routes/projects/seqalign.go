@@ -10,6 +10,14 @@ import (
 	"strings"
 )
 
+type SeqAlignRes struct {
+	String1         string `json:"s1"`
+	String2         string `json:"s2"`
+	Score           int64  `json:"score"`
+	BeginMatchIndex int64  `json:"begin"`
+	LastMatchIndex  int64  `json:"end"`
+}
+
 func SeqAlign(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		params := r.URL.Query()
@@ -24,14 +32,20 @@ func SeqAlign(w http.ResponseWriter, r *http.Request) {
 
 		results := map[string]any{
 			"draw_res": []string{},
-			"results":  []any{},
+			"results":  []SeqAlignRes{},
 		}
 
 		if len(s1) == len(s2) {
 			matches := controllers.MatchScoreSimple(s1, s2, match, mismatch, extendingGap, beginningGap)
 			draw := controllers.DrawComparison(s1, s2)
 			results["draw_res"] = append(results["draw_res"].([]string), fmt.Sprintf("%s\nScore=%.1f", draw, float32(matches)/float32(len(s1))*10))
-			results["results"] = append(results["results"].([]any), []any{s1, s2, matches, 0, len(s1)})
+			results["results"] = append(results["results"].([]any), SeqAlignRes{
+				String1:         s1,
+				String2:         s2,
+				Score:           matches,
+				BeginMatchIndex: 0,
+				LastMatchIndex:  int64(len(s1)),
+			})
 		} else {
 			for i := 0; i < 3; i++ {
 				shorterArr, longerArr := utils.ShortestArray(s1Arr, s2Arr)
@@ -44,7 +58,13 @@ func SeqAlign(w http.ResponseWriter, r *http.Request) {
 				matches := controllers.MatchScoreSimple(shorterStr, longerStr, match, mismatch, extendingGap, beginningGap)
 				draw := controllers.DrawComparison(shorterStr, longerStr)
 				results["draw_res"] = append(results["draw_res"].([]string), fmt.Sprintf("%s\nScore=%.1f", draw, float32(matches)/float32(len(longerArr))*10))
-				results["results"] = append(results["results"].([]any), []any{shorterStr, longerStr, matches, 0, len(s1)})
+				results["results"] = append(results["results"].([]any), SeqAlignRes{
+					String1:         shorterStr,
+					String2:         longerStr,
+					Score:           matches,
+					BeginMatchIndex: 0,
+					LastMatchIndex:  int64(len(s1)),
+				})
 			}
 
 		}

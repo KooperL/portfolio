@@ -14,6 +14,11 @@ pub struct GenericResponse {
     pub errorMessage: Option<String>,
 }
 
+struct SeqAlignRes {
+    draw_res: String,
+    result: i32,
+}
+
 
 fn match_score_simple(s1: Vec<&str>, s2: Vec<&str>, identical: f32, mismatch: f32, extgaps: f32, gaps: f32) -> f32 {
     let mut score: f32 = 0.0;
@@ -70,6 +75,7 @@ Ok(Json(GenericResponse {
             errorMessage: None,
     }))
     } else {
+        for _ in 0..3 {
         let mut arrs: Vec<Vec<_>> = {
             if s1Arr.len() > s2Arr.len() {
                 vec![s2Arr, s1Arr]
@@ -88,7 +94,8 @@ Ok(Json(GenericResponse {
         success: true,
         data: Some(draw.join("")),
             errorMessage: None,
-    }))
+        }))
+        }
     }
 }
 
