@@ -48,7 +48,7 @@ fn draw_comparison<'a>(s1: Vec<&'a str>, s2: Vec<&'a str>) -> Vec<&'a str> {
 
 
 #[get("/projects/seqalign?<sampletxt>&<referencetxt>&<identical>&<mismatch>&<extgaps>&<gaps>")]
-pub async fn seqAlignRouteGet(sampletxt: String, referencetxt: String, identical: f32, mismatch: f32, extgaps: f32, gaps: f32) -> Result<Json<response::GenericResponse>, Status> {
+pub async fn seqAlignRouteGet(sampletxt: String, referencetxt: String, identical: f32, mismatch: f32, extgaps: f32, gaps: f32) -> Result<Json<response::GenericResponse<String>>, Status> {
     let s1Arr: Vec<&str> = sampletxt.split(char::is_alphabetic).collect();
     let s2Arr: Vec<&str> = referencetxt.split(char::is_alphabetic).collect();
     if s1Arr.len() == s2Arr.len() {

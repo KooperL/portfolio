@@ -5,11 +5,6 @@ use std::fs;
 #[path = "../../types/response.rs"] mod response;
 use std::collections::HashMap;
 
-struct Amino_acid {
-    tla: String,
-    symbol: String,
-}
-
 struct Count {
     g: i32,
     c: i32,
@@ -17,8 +12,26 @@ struct Count {
     t: i32,
 }
 
+struct Response {
+        aa: Vec<String>,
+        aa_s: Vec<String>, 
+        dna_field: String,
+        gccontent: f32,
+        molweight: f32,
+        mrna_field: String,
+        rdna_field: String,
+        simplecount: Count, 
+        tm: f32,  
+}
+
+struct Amino_acid {
+    tla: String,
+    symbol: String,
+}
+
+
 #[get("/projects/mrna?<dna_field_id>")]                                                                            
-pub async fn mrnaRouteGet(dna_field_id: String) -> Result<Json<response::GenericResponse>, Status> {
+pub async fn mrnaRouteGet(dna_field_id: String) -> Result<Json<response::GenericResponse<String>>, Status> {
     let dna = str::replace(&dna_field_id, "\r", "");
     let mut reversed: Vec<char> = vec!['_'; dna.len()];
     // let mut c_dna: Vec<String> = vec![String::from("_"); dna.len()];
@@ -65,11 +78,15 @@ pub async fn mrnaRouteGet(dna_field_id: String) -> Result<Json<response::Generic
         a: 0,
         t: 0,
     };
-
+    let mut amino_acid_symbols: Vec<String> = Vec::new();
+    let mut amino_acid_symbols_long: Vec<String> = Vec::new();
+    
     let mut tripletBuilder: Vec<String> = Vec::new();
     for (i, char) in dna_arr.enumerate() {
         if i % 3 == 0 {
-            let triplet = tripletBuilder.join("");
+            let triplet: String = tripletBuilder.join("");
+            let symbol = amino_acid_map.get(triplet).unwrap();
+            amino_acid_symbols.push("asdf".to_string());
             tripletBuilder = Vec::new();
         } else {
             tripletBuilder.push(char.to_string());
