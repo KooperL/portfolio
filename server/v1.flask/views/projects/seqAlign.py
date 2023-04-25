@@ -26,7 +26,7 @@ def seqalignHome():
     kwargs = {
       'success': True,
       'data': {
-        'results':results,
+        'results': dict(zip(['s1', 's2', 'score', 'begin', 'end'], results)),
         'draw_res':draw_res,
       }
     }
