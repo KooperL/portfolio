@@ -12,7 +12,7 @@ fn generate(CHARSET: &[u8], len: i16) -> String {
 }
 
 #[get("/projects/randombio?<typeTemp>&<length>")]
-pub async fn randomBioRouteGet(typeTemp: i8, length: i16) -> Result<Json<response::GenericResponse>, Status> {
+pub async fn randomBioRouteGet(typeTemp: i8, length: i16) -> Result<Json<response::GenericResponse<String>>, Status> {
 
     let data = match typeTemp {
         1 => {
