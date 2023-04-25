@@ -1,0 +1,104 @@
+[
+  {
+    "name": "adenine",
+    "symbol": "a",
+    "molecular_mass": {
+      "value": 135.13,
+      "unit": "g/mol"
+    },
+    "density": {
+      "value": 1.6,
+      "unit": "g/cm^3"
+    },
+    "melting_point": {
+      "from": 360,
+      "to": 365,
+      "unit": "c"
+    },
+    "complimentary_nucleotide": {
+      "reference": "symbol",
+      "value": "t"
+    },
+    "solubility": {
+      "value": 1.03,
+      "unit": "g/L"
+    },
+    "ph": 4.9
+  },
+  {
+    "name": "thymine",
+    "symbol": "t",
+    "molecular_mass": {
+      "value": 126.115,
+      "unit": "g/mol"
+    },
+    "density": {
+      "value": 1.223,
+      "unit": "g/cm^3"
+    },
+    "melting_point": {
+      "from": 316,
+      "to": 317,
+      "unit": "c"
+    },
+    "boilingPoint": {
+      "from": 335,
+      "unit": "c"
+    },
+    "complimentary_nucleotide": {
+      "reference": "symbol",
+      "value": "a"
+    },
+    "solubility": {
+      "value": 3.82,
+      "unit": "g/L"
+    },
+    "ph": 9.7  
+  },
+  {
+    "name": "guanine",
+    "symbol": "g",
+    "molecular_mass": {
+      "value": 151.13,
+      "unit": "g/mol"
+    },
+    "density": {
+      "value": 2.2,
+      "unit": "g/cm^3"
+    },
+    "melting_point": {
+      "from": 360,
+      "unit": "c"
+    },
+    "boilingPoint": null,
+    "complimentary_nucleotide": {
+      "reference": "symbol",
+      "value": "c"
+    },
+    "solubility": null,
+    "ph": 12.3  
+  },
+  {
+    "name": "cytosine",
+    "symbol": "c",
+    "molecular_mass": {
+      "value": 110.1,
+      "unit": "g/mol"
+    },
+    "density": {
+      "value": 1.55,
+      "unit": "g/cm^3"
+    },
+    "melting_point": {
+      "from": 320,
+      "to": 325,
+      "unit": "c"
+    },
+    "complimentary_nucleotide": {
+      "reference": "symbol",
+      "value": "g"
+    },
+    "solubility": null,
+    "ph": 6 
+  }
+]
