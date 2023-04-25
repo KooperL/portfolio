@@ -44,7 +44,7 @@ func FindNucleationRegion(arr []float64, threshold float64, sliding_window int, 
 
 func PopulatePropensitiesFromSymbol(symbol string, memo *types.AaMemo, key string, dict []types.AminoAcids) float64 {
 	var m map[string]float64
-	if key == "alpha-helix" {
+	if key == "alpha_helix" {
 		m = memo.AlphaHelix
 	} else {
 		m = memo.BetaStrand
