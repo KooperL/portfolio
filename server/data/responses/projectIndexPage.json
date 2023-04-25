@@ -1,0 +1,137 @@
+[
+  {
+      "data": [
+          "React apps"
+      ],
+      "type": "subheader"
+  },
+  {
+      "data": [
+          {
+              "data": [
+                  "/projects/tictactoe"
+              ],
+              "text": "Tictactoe",
+              "type": "button"
+          },
+          {
+              "data": [
+                  "/projects/minesweeper"
+              ],
+              "text": "Minesweeper",
+              "type": "button"
+          },
+          {
+              "data": [
+                  "/projects/jssimulator"
+              ],
+              "text": "Front-end dev simulator",
+              "type": "button"
+          }
+      ],
+      "type": "buttonArr"
+  },
+  {
+      "data": [
+          "Data Storage and Analysis"
+      ],
+      "type": "subheader"
+  },
+  {
+      "data": [
+          {
+              "data": [
+                  "/projects/fuelprices"
+              ],
+              "text": "UL91 Fuel Price trends",
+              "type": "button"
+          },
+          {
+              "data": [
+                  "/projects/property"
+              ],
+              "text": "Real estate data interface",
+              "type": "button"
+          }
+      ],
+      "type": "buttonArr"
+  },
+  {
+      "data": [
+          "Bioinformatics"
+      ],
+      "type": "subheader"
+  },
+  {
+      "data": [
+          {
+              "data": [
+                  "/projects/mrna"
+              ],
+              "text": "DNA:mRNA decoder",
+              "type": "button"
+          },
+          {
+              "data": [
+                  "/projects/secondary"
+              ],
+              "text": "Protein 2° Structure",
+              "type": "button"
+          },
+          {
+              "data": [
+                  "/projects/seqalign"
+              ],
+              "text": "Pairwise sequence alignment",
+              "type": "button"
+          },
+          {
+              "data": [
+                  "/projects/randombio"
+              ],
+              "text": "DNA sequence generator",
+              "type": "button"
+          }
+      ],
+      "type": "buttonArr"
+  },
+  {
+      "data": [
+          "Repos"
+      ],
+      "type": "subheader"
+  },
+  {
+      "data": [
+          {
+              "data": [
+                  "https://github.com/KooperL/portfolio"
+              ],
+              "text": "This Website",
+              "type": "button"
+          },
+          {
+              "data": [
+                  "https://github.com/KooperL/trafficCounter"
+              ],
+              "text": "AI Traffic Counter",
+              "type": "button"
+          },
+          {
+              "data": [
+                  "https://github.com/KooperL/tkinter3dengine"
+              ],
+              "text": "Python/Tkinter 3d Engine",
+              "type": "button"
+          },
+          {
+              "data": [
+                  "https://github.com/KooperL/tkinterAstar"
+              ],
+              "text": "A* Path finder py",
+              "type": "button"
+          }
+      ],
+      "type": "buttonArr"
+  }
+]

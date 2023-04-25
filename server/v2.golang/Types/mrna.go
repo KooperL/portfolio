@@ -56,6 +56,6 @@ type AminoAcids struct {
 }
 
 type AaMemo struct {
-	AlphaHelix map[string]float64 `json:"alpha-helix"`
-	BetaStrand map[string]float64 `json:"beta-strand"`
+	AlphaHelix map[string]float64 `json:"alpha_helix"`
+	BetaStrand map[string]float64 `json:"beta_strand"`
 }

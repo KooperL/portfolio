@@ -1,0 +1,36 @@
+[
+  {
+    "type": "header",
+    "data": [
+      "Hi 👋 I'm Kooper, welcome to my website."
+    ]
+  },
+  {
+    "type": "button",
+    "text": "/projects",
+    "data": [
+      "/projects"
+    ]
+  },
+  {
+    "type": "button",
+    "text": "/contact",
+    "data": [
+      "/contact"
+    ]
+  },
+  {
+    "type": "button",
+    "text": "/about",
+    "data": [
+      "/about"
+    ]
+  },
+  {
+    "type": "button",
+    "text": "/forum",
+    "data": [
+      "/forum"
+    ]
+  }
+]
