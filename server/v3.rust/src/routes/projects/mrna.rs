@@ -17,27 +17,9 @@ struct Count {
     t: i32,
 }
 
-fn simple_count(dna: String) -> Count {
-    let mut count = Count {
-        g: 0,
-        c: 0,
-        a: 0,
-        t: 0,
-    };
-    for i in dna.chars() {
-        match i {
-            'g' => count.g += 1,
-            'c' => count.c += 1,
-            'a' => count.a += 1,
-            't' => count.t += 1,
-            _ => panic!("Unaccepted character found."),
-        };
-    }
-    return count;
-}
-
-fn reverse_compliment(dna: String) -> String {
-
+#[get("/projects/mrna?<dna_field_id>")]                                                                            
+pub async fn mrnaRouteGet(dna_field_id: String) -> Result<Json<response::GenericResponse>, Status> {
+    let dna = str::replace(&dna_field_id, "\r", "");
     let mut reversed: Vec<char> = vec!['_'; dna.len()];
     // let mut c_dna: Vec<String> = vec![String::from("_"); dna.len()];
     let mut rna: Vec<String> = vec![String::from("_"); dna.len()];
@@ -132,13 +114,6 @@ fn reverse_compliment(dna: String) -> String {
         tm = 64.9 + (41.0 * (count.g as f32 + count.c as f32 - 16.4)) / dna.len() as f32;
     }
     let gccontent = (count.g + count.c) as usize / dna.len();
-
-    String::from("asf")
-}
-
-#[get("/projects/mrna?<dna_field_id>")]                                                                            
-pub async fn mrnaRouteGet(dna_field_id: String) -> Result<Json<response::GenericResponse>, Status> {
-    // let dna = str.replace(dna_field_id, "\r", "");
 
     Ok(Json(response::GenericResponse {
         success: true,

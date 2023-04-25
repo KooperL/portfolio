@@ -10,14 +10,14 @@ pub struct ToFromValue {
 
 #[derive(Serialize, Deserialize)]
 pub struct ValueUnit {
-    value: f32,
-    unit: String,
+    pub value: f32,
+    pub unit: String,
 }
 
 #[derive(Serialize, Deserialize)]
 pub struct RefValue {
-    reference: String,
-    value: String,
+    pub reference: String,
+    pub value: String,
 }
 
 #[derive(Serialize, Deserialize)]
