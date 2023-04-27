@@ -6,9 +6,9 @@ use std::fs;
 use std::collections::HashMap;
 
 
-#[get("/projects")]                                                                            
-pub async fn projectIndexRouteGet() -> Result<Json<response::GenericResponse<Vec<json_content::json_response>>>, Status> {
-    let file_contents = std::fs::read_to_string("../data/responses/projectIndexPage.json").expect("File should have been opened");
+#[get("/")]                                                                            
+pub async fn indexRouteGet() -> Result<Json<response::GenericResponse<Vec<json_content::json_response>>>, Status> {
+    let file_contents = std::fs::read_to_string("../data/responses/homePage.json").expect("File should have been opened");
     let parsed_file: Vec<json_content::json_response> = serde_json::from_str(&file_contents).unwrap();
     Ok(Json(response::GenericResponse {
         success: true,

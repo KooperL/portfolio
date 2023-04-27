@@ -1,10 +1,12 @@
 use rocket::{get, http::Status, serde::json::Json};
+use serde::{Serialize, Deserialize};
 use std::fs;
 //use std::{str,fs};
 #[path = "../../types/mrna.rs"] mod mrna;
 #[path = "../../types/response.rs"] mod response;
 use std::collections::HashMap;
 
+#[derive(Serialize, Deserialize)]
 struct Count {
     g: i32,
     c: i32,
@@ -12,41 +14,41 @@ struct Count {
     t: i32,
 }
 
+#[derive(Serialize, Deserialize)]
 struct Response {
         aa: Vec<String>,
         aa_s: Vec<String>, 
         dna_field: String,
-        gccontent: f32,
-        molweight: f32,
+        gccontent: f64,
+        molweight: f64,
         mrna_field: String,
         rdna_field: String,
         simplecount: Count, 
-        tm: f32,  
+        tm: f64,  
 }
 
-struct Amino_acid {
+struct Amino_acid_symbol_map {
     tla: String,
     symbol: String,
 }
 
 
 #[get("/projects/mrna?<dna_field_id>")]                                                                            
-pub async fn mrnaRouteGet(dna_field_id: String) -> Result<Json<response::GenericResponse<String>>, Status> {
+pub async fn mrnaRouteGet(dna_field_id: String) -> Result<Json<response::GenericResponse<Response>>, Status> {
     let dna = str::replace(&dna_field_id, "\r", "");
-    let mut reversed: Vec<char> = vec!['_'; dna.len()];
+    let mut reversed: Vec<String> = vec!["_".to_string(); dna.len()];
     // let mut c_dna: Vec<String> = vec![String::from("_"); dna.len()];
     let mut rna: Vec<String> = vec![String::from("_"); dna.len()];
 
-    let dna_file_contents = std::fs::read_to_string("../data/dna.json").expect("File should have been opened");
-    let dna_parsed_file: Vec<mrna::NucleotideList> = serde_json::from_str(&dna_file_contents).unwrap();
-
+    // let dna_file_contents = std::fs::read_to_string("server/data/dna.json").expect("File should have been opened");
+    // let dna_parsed_file: Vec<mrna::NucleotideList> = serde_json::from_str(&dna_file_contents).unwrap();
+    let dna_parsed_file = mrna::open_and_parse(1).dna.unwrap();
     // let mut dna_map: HashMap<String, String> = HashMap::new(); 
-    let mut dna_molweight_map: HashMap<String, f32> = HashMap::new(); 
+    let mut dna_molweight_map: HashMap<String, f64> = HashMap::new(); 
     for item in dna_parsed_file {
         // dna_map.insert(item.symbol, item.complimentary_nucleotide.value);
         dna_molweight_map.insert(item.symbol, item.molecular_mass.value);
     }
-
 
     // let rna_file_contents = std::fs::read_to_string("../data/rna.json").expect("File should have been opened");
     // let rna_parsed_file: Vec<mrna::NucleotideList> = serde_json::from_str(&rna_file_contents).unwrap();
@@ -57,13 +59,14 @@ pub async fn mrnaRouteGet(dna_field_id: String) -> Result<Json<response::Generic
     // }
 
 
-    let amino_acid_file_contents = std::fs::read_to_string("../data/aminoAcids.json").expect("File should have been opened");
-    let amino_acid_parsed_file: Vec<mrna::AminoAcid> = serde_json::from_str(&amino_acid_file_contents).unwrap();
+   //  let amino_acid_file_contents = std::fs::read_to_string("../data/aminoAcids.json").expect("File should have been opened");
+   //  let amino_acid_parsed_file: Vec<mrna::AminoAcid> = serde_json::from_str(&amino_acid_file_contents).unwrap();
 
-    let mut amino_acid_map: HashMap<String, Amino_acid> = HashMap::new(); 
+    let amino_acid_parsed_file = mrna::open_and_parse(3).amino_acids.unwrap();
+    let mut amino_acid_map: HashMap<String, Amino_acid_symbol_map> = HashMap::new(); 
     for item in amino_acid_parsed_file {
         for nucleotide in item.nucleotides {
-        amino_acid_map.insert(nucleotide, Amino_acid {
+        amino_acid_map.insert(nucleotide, Amino_acid_symbol_map {
             symbol: item.symbol.clone(),
             tla: item.three_letter_symbol.clone(),
         });
@@ -83,15 +86,7 @@ pub async fn mrnaRouteGet(dna_field_id: String) -> Result<Json<response::Generic
     
     let mut tripletBuilder: Vec<String> = Vec::new();
     for (i, char) in dna_arr.enumerate() {
-        if i % 3 == 0 {
-            let triplet: String = tripletBuilder.join("");
-            let symbol = amino_acid_map.get(triplet).unwrap();
-            amino_acid_symbols.push("asdf".to_string());
-            tripletBuilder = Vec::new();
-        } else {
-            tripletBuilder.push(char.to_string());
-        }
-        reversed[i] = dna.chars().nth(dna.len()-1-i).unwrap();
+        reversed[i] = dna.chars().nth(dna.len()-1-i).unwrap().to_string();
         match char {
             'a' => {
                 // c_dna[i] = dna_map.get(&char.to_string()).unwrap().clone();
@@ -120,21 +115,41 @@ pub async fn mrnaRouteGet(dna_field_id: String) -> Result<Json<response::Generic
             },
                 _ => panic!("Unacceped character found"),
         };
+        if i % 3 == 0 && i > 0 {
+            let triplet: String = tripletBuilder.join("");
+            let symbol = amino_acid_map.get(&triplet.clone()).unwrap();
+            amino_acid_symbols.push(symbol.symbol.clone());
+            amino_acid_symbols_long.push(symbol.tla.clone());
+            tripletBuilder = vec![rna[i].to_string()];
+        } else {
+            tripletBuilder.push(rna[i].to_string());
+        }
     }
 
     let mut tm = 0.0;
     if dna.len() == 0 {
         panic!("Too short");
     } else if dna.len() < 13 {
-        tm = 4.0 * (count.g as f32 + count.c as f32) + 4.0 * (count.a as f32 + count.t as f32);
+        tm = 4.0 * (count.g as f64 + count.c as f64) + 4.0 * (count.a as f64 + count.t as f64);
     } else {
-        tm = 64.9 + (41.0 * (count.g as f32 + count.c as f32 - 16.4)) / dna.len() as f32;
+        tm = 64.9 + (41.0 * (count.g as f64 + count.c as f64 - 16.4)) / dna.len() as f64;
     }
-    let gccontent = (count.g + count.c) as usize / dna.len();
+    let gccontent = (count.g + count.c) as f64 / dna.len() as f64;
 
     Ok(Json(response::GenericResponse {
         success: true,
-        data: Some(String::from("test")),
+        data: Some(Response {
+            molweight: molweight,
+            rdna_field: reversed.join(""),
+            aa: amino_acid_symbols,
+            aa_s: amino_acid_symbols_long,
+            tm: tm,
+            gccontent: gccontent,
+            dna_field: dna,
+            mrna_field: rna.join(""),
+            simplecount: count
+
+        }),
         errorMessage: None,
     }))
 }

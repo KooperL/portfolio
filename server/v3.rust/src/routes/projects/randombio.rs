@@ -13,23 +13,21 @@ fn generate(CHARSET: &[u8], len: i16) -> String {
 
 #[get("/projects/randombio?<typeTemp>&<length>")]
 pub async fn randomBioRouteGet(typeTemp: i8, length: i16) -> Result<Json<response::GenericResponse<String>>, Status> {
-
     let data = match typeTemp {
         1 => {
-            let file_contents = std::fs::read_to_string("../data/dna.json").expect("File should have been opened");                                                                                                                           
-            let parsed_file: Vec<mrna::NucleotideList> = serde_json::from_str(&file_contents).unwrap();
+            // let file_contents = std::fs::read_to_string("../data/dna.json").expect("File should have been opened");
+            // let parsed_file: Vec<mrna::NucleotideList> = serde_json::from_str(&file_contents).unwrap();
+            let parsed_file = mrna::open_and_parse(1).dna.unwrap();
             let charset: Vec<_> = parsed_file.iter().map(|item| item.symbol.clone()).collect();
             Ok(generate(charset.join("").as_bytes(), length))
         },
         2 => {
-            let file_contents = std::fs::read_to_string("../data/rna.json").expect("File should have been opened");                                                                                                                           
-            let parsed_file: Vec<mrna::NucleotideList> = serde_json::from_str(&file_contents).unwrap();
+            let parsed_file = mrna::open_and_parse(2).rna.unwrap();
             let charset: Vec<_> = parsed_file.iter().map(|item| item.symbol.clone()).collect();
             Ok(generate(charset.join("").as_bytes(), length))
         },
         3 => {
-            let file_contents = std::fs::read_to_string("../data/aminoAcids.json").expect("File should have been opened");                                                                                                                           
-            let parsed_file: Vec<mrna::AminoAcid> = serde_json::from_str(&file_contents).unwrap();
+            let parsed_file = mrna::open_and_parse(3).amino_acids.unwrap();
             let charset: Vec<_> = parsed_file.iter().map(|item| item.symbol.clone()).collect();
             Ok(generate(charset.join("").as_bytes(), length))
         },
