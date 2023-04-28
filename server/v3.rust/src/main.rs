@@ -19,7 +19,6 @@ fn rocket() -> _ {
         Ok(_) => println!("Environment variables loaded successfully!"),
         Err(e) => eprintln!("Error: {}", e),
     };
-    let mut f = File::create("foo.txt").ok().unwrap();
     rocket::build().mount("/", routes![
         secondary::secondaryRouteGet, seqalign::seqAlignRouteGet, randombio::randomBioRouteGet, mrna::mrnaRouteGet, projectsIndex::projectIndexRouteGet,
         index::indexRouteGet, contact::contactRouteGet, about::aboutRouteGet,
