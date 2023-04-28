@@ -8,16 +8,18 @@ use std::collections::HashMap;
 #[path = "../../types/response.rs"] mod response;
 #[path = "../../types/mrna.rs"] mod mrna;
 
-fn find_nucleation_region(arr: Vec<f64>, threshold: f64, sliding_window: usize, contiguous_window: usize, sError: usize) -> Vec<bool> {
-    let mut returnArrLen = arr.len() - sliding_window - 1;
+fn find_nucleation_region(arr: Vec<f64>, threshold: f64, sliding_window: usize, contiguous_window: usize, sError: i32) -> Vec<bool> {
+    let mut returnArrLen = arr.len() - 1;
     let mut nucleation_regions = vec![false; returnArrLen];
 
-    let mut validNucleationLength = 0;
+    let mut validNucleationLength: i32 = 0;
     let mut start = 0;
     let mut end = sliding_window;
 
-    while end <= arr.len() {
-        let slice = &arr[start..sliding_window];
+    while end < arr.len() - 1 {
+        println!("{}", arr.len());
+        println!("{}, {}", start, end);
+        let slice = &arr[start..end];
         let slice_sum: f64 = slice.iter().sum();
         let isValid: bool = slice_sum > (contiguous_window as f64 * threshold);
 
@@ -27,7 +29,7 @@ fn find_nucleation_region(arr: Vec<f64>, threshold: f64, sliding_window: usize, 
             validNucleationLength-=1;
         };
 
-		if validNucleationLength > contiguous_window {
+		if validNucleationLength > contiguous_window as i32 {
 			validNucleationLength -= 1;
 			for i in start..end {
 				nucleation_regions[i] = true;
@@ -99,9 +101,9 @@ pub async fn secondaryRouteGet(aas: String, aaformat: String, threshold: i32, av
     let hNucleationRegions = find_nucleation_region(hPropensities, alpha_helix_threshold, alpha_helix_sliding_window, alpha_helix_contiguous_window, alpha_helix_error);
     let eNucleationRegions = find_nucleation_region(ePropensities, beta_sheet_threshold, beta_sheet_sliding_window, beta_sheet_contiguous_window, beta_sheet_error);
 
-    let mut result = Vec::new();
+    let mut result = vec!["_"; aas.len()-1];
     let mut stalemate_slice = Vec::new();
-    for ind in 0..aas.len() {
+    for ind in 0..aas.len()-1 {
         if hNucleationRegions[ind] && !eNucleationRegions[ind] {
             result[ind] = "h";
             if stalemate_slice.len() > 0 {

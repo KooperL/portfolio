@@ -28,7 +28,7 @@ pub async fn randomBioRouteGet(typeTemp: i8, length: i16) -> Result<Json<respons
         },
         3 => {
             let parsed_file = mrna::open_and_parse(3).amino_acids.unwrap();
-            let charset: Vec<_> = parsed_file.iter().map(|item| item.symbol.clone()).collect();
+            let charset: Vec<_> = parsed_file.iter().filter(|item| item.symbol != "STOP").map(|item| item.symbol.clone()).collect();
             Ok(generate(charset.join("").as_bytes(), length))
         },
         _ => Err("Invalid type".to_string()),
