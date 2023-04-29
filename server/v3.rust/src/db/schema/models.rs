@@ -1,8 +1,7 @@
 use chrono::NaiveDateTime;
-use diesel::{Insertable, Queryable};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Queryable, Insertable, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, sqlx::FromRow, Serialize, Deserialize)]
 #[table_name = "contact_messages"]
 pub struct ContactMessage {
     pub id: i32,
@@ -11,7 +10,7 @@ pub struct ContactMessage {
     pub message: String,
 }
 
-#[derive(Debug, Queryable, Insertable, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, sqlx::FromRow, Serialize, Deserialize)]
 #[table_name = "fingerprint"]
 pub struct Fingerprint {
     pub id: i32,
@@ -34,7 +33,7 @@ pub struct Fingerprint {
     pub ip: String,
 }
 
-#[derive(Debug, Queryable, Insertable, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, sqlx::FromRow, Serialize, Deserialize)]
 #[table_name = "forum_posts"]
 pub struct ForumPost {
     pub id: i32,
@@ -47,14 +46,14 @@ pub struct ForumPost {
     pub parent_forum_user_id: i32,
 }
 
-#[derive(Debug, Queryable, Insertable, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, sqlx::FromRow, Serialize, Deserialize)]
 #[table_name = "forum_post_category"]
 pub struct ForumPostCategory {
     pub id: i32,
     pub name: String,
 }
 
-#[derive(Debug, Queryable, Insertable, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, sqlx::FromRow, Serialize, Deserialize)]
 #[table_name = "forum_post_reactions"]
 pub struct ForumPostReaction {
     pub id: i32,
@@ -64,7 +63,7 @@ pub struct ForumPostReaction {
     pub reaction_id: i32,
 }
 
-#[derive(Debug, Queryable, Insertable, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, sqlx::FromRow, Serialize, Deserialize)]
 #[table_name = "forum_post_views"]
 pub struct ForumPostView {
     pub id: i32,
@@ -73,7 +72,7 @@ pub struct ForumPostView {
     pub forum_post_id: i32,
 }
 
-#[derive(Debug, Queryable, Insertable, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, sqlx::FromRow, Serialize, Deserialize)]
 #[table_name = "forum_refresh_tokens"]
 pub struct ForumRefreshToken {
     pub id: i32,
@@ -83,13 +82,13 @@ pub struct ForumRefreshToken {
 }
 
 
-#[derive(Debug, Serialize, Deserialize, Queryable)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, sqlx::FromRow)]
 struct ForumRole {
     id: i32,
     can_post: i32,
 }
 
-#[derive(Debug, Serialize, Deserialize, Queryable)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, sqlx::FromRow)]
 struct ForumUserTracking {
     id: i32,
     date: NaiveDateTime,
@@ -98,7 +97,7 @@ struct ForumUserTracking {
     function_called: String,
 }
 
-#[derive(Debug, Serialize, Deserialize, Queryable)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, sqlx::FromRow)]
 struct FuelPrices {
     id: i32,
     date: NaiveDateTime,
@@ -108,7 +107,7 @@ struct FuelPrices {
     wholesale: String,
 }
 
-#[derive(Debug, Serialize, Deserialize, Queryable)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, sqlx::FromRow)]
 struct FuelPricesDB {
     id: i32,
     date: NaiveDateTime,
@@ -118,7 +117,7 @@ struct FuelPricesDB {
     wholesale: String,
 }
 
-#[derive(Debug, Serialize, Deserialize, Queryable)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, sqlx::FromRow)]
 struct Monitor {
     id: i32,
     date: NaiveDateTime,
@@ -127,14 +126,14 @@ struct Monitor {
     page: String,
 }
 
-#[derive(Debug, Serialize, Deserialize, Queryable)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, sqlx::FromRow)]
 struct Requests {
     id: i32,
     date: NaiveDateTime,
     ip_address: String,
 }
 
-#[derive(Debug, Serialize, Deserialize, Queryable)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, sqlx::FromRow)]
 struct RouteTrack {
     id: i32,
     date: NaiveDateTime,
