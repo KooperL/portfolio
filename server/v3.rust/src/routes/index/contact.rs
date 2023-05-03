@@ -28,18 +28,17 @@ pub struct contact_message {
 #[post("/contact", data = "<input>")]                                                                            
 pub async fn contactRoutePost(input: Json<contact_message>) -> Result<Json<response::GenericResponse<String>>, Status> {
 		discordLogging::discord_post(format!("{}\n{}", input.session_id, input.message));
-	//	discordLogging::discord_post(format!("{a},\n{b}", a=input.session_id, b=input.message));
-	let insertStatement = "INSERT INTO contact_messages VALUES (?, ?, ?, ?);";
+	let insertStatement = "INSERT INTO contact_messages VALUES (NULL, ?, ?, ?);";
     const DB_URL: &str = "sqlite://server/data/database.db";
     let db = SqlitePool::connect(DB_URL).await.unwrap();
     let time = format!("{}", chrono::Local::now().format("%Y-%m-%d %H:%M:%S"));
-    let result = sqlx::query("INSERT INTO contact_messages VALUES (NULL, ?, ?, ?);").bind(time).bind(&input.session_id).bind(&input.message)
+    let result = sqlx::query(insertStatement).bind(time).bind(&input.session_id).bind(&input.message)
     .execute(&db)
     .await
     .unwrap();
     Ok(Json(response::GenericResponse {
         success: true,
-        data: Some(String::from("parsed_file")),
+        data: None,
         errorMessage: None,
     }))
 }
