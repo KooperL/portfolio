@@ -30,10 +30,7 @@ def contactHome():
     controllers.discordLogger.send_discord_message(config['DISCORD_WEBHOOK_URL'], f'CONTACT POST: {session_id}, {message}')    
 
     insertQuery = 'INSERT INTO contact_messages VALUES (?, ?, ?, ?);'
-    # controllers.database.conn.execute(insertQuery, (None, datetime.datetime.now(), session_id, message))
-    # controllers.database.conn.commit()
     controllers.database.conn.insert(insertQuery, (None, datetime.datetime.now(), session_id, message))
-    # print(list(controllers.database.conn.execute(f'SELECT * FROM contactMessages ORDER BY id DESC LIMIT 200')))
     kwargs = {
       'success': True,
     }
