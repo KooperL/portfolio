@@ -10,7 +10,12 @@ import (
 	"strings"
 )
 
-type SeqAlignRes struct {
+type SeqAlignRes {
+  DrawRes []string `json:"draw_res"`
+  Results  []SeqAlignRes `json:"results"`
+}
+
+type SeqAlign struct {
 	String1         string `json:"s1"`
 	String2         string `json:"s2"`
 	Score           int64  `json:"score"`
@@ -30,16 +35,16 @@ func SeqAlign(w http.ResponseWriter, r *http.Request) {
 		extendingGap, _ := strconv.ParseInt(params.Get("extgaps"), 10, 8)
 		beginningGap, _ := strconv.ParseInt(params.Get("gaps"), 10, 8)
 
-		results := map[string]any{
-			"draw_res": []string{},
-			"results":  []SeqAlignRes{},
+		results := SeqAlignRes {
+			DrawRes: []string{},
+			Results:  []SeqAlign{},
 		}
 
 		if len(s1) == len(s2) {
 			matches := controllers.MatchScoreSimple(s1, s2, match, mismatch, extendingGap, beginningGap)
 			draw := controllers.DrawComparison(s1, s2)
-			results["draw_res"] = append(results["draw_res"].([]string), fmt.Sprintf("%s\nScore=%.1f", draw, float32(matches)/float32(len(s1))*10))
-			results["results"] = append(results["results"].([]any), SeqAlignRes{
+			results.DrawRes = append(results.DrawRes.([]string), fmt.Sprintf("%s\nScore=%.1f", draw, float32(matches)/float32(len(s1))*10))
+			results.Results = append(results.Results.([]any), SeqAlignRes{
 				String1:         s1,
 				String2:         s2,
 				Score:           matches,
@@ -57,8 +62,8 @@ func SeqAlign(w http.ResponseWriter, r *http.Request) {
 				}
 				matches := controllers.MatchScoreSimple(shorterStr, longerStr, match, mismatch, extendingGap, beginningGap)
 				draw := controllers.DrawComparison(shorterStr, longerStr)
-				results["draw_res"] = append(results["draw_res"].([]string), fmt.Sprintf("%s\nScore=%.1f", draw, float32(matches)/float32(len(longerArr))*10))
-				results["results"] = append(results["results"].([]any), SeqAlignRes{
+				results.DrawRes = append(results.DrawRes.([]string), fmt.Sprintf("%s\nScore=%.1f", draw, float32(matches)/float32(len(longerArr))*10))
+				results.Results = append(results.Results.([]any), SeqAlignRes{
 					String1:         shorterStr,
 					String2:         longerStr,
 					Score:           matches,

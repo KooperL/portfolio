@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package myapp;
+
+message mrnaGetResponse {
+  string DNAField = 1;
+  string MRNAField = 2;
+  string RDNAField = 3;
+  map<string, int32> SimpleCount = 4;
+  double GCContent = 5;
+  repeated string AA = 6;
+  string AAS = 7;
+  double MolWeight = 8;
+  double TM = 9;
+}

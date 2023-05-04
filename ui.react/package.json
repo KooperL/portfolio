@@ -21,6 +21,7 @@
     "react-scripts": "5.0.1",
     "reactjs-popup": "^2.0.5",
     "victory": "^36.5.0",
+    "google-protobuf": "^3.17.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -28,7 +29,8 @@
     "build": "REACT_APP_NODE_ENV=${REACT_APP_NODE_ENV:=production} && react-scripts build && $REACT_APP_NODE_ENV",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "pretty": "prettier --write \"./**/*.{js,jsx,json,ts,tsx}\""
+    "pretty": "prettier --write \"./**/*.{js,jsx,json,ts,tsx}\"",
+    "generate-protobuf": "npx protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --js_out=import_style=commonjs,binary:./src/generated --ts_out=service=true:./src/generated proto/state.proto proto/api_error.proto"
   },
   "eslintConfig": {
     "extends": [
