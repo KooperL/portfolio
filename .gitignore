@@ -6,3 +6,4 @@ logs/
 database.db
 bin/*
 target/
+.DS_Store
