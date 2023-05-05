@@ -11,6 +11,8 @@ use sqlx::{migrate::MigrateDatabase, Row, Sqlite, SqlitePool};
 #[path = "routes/index/index.rs"] mod index;
 #[path = "routes/index/contact.rs"] mod contact;
 #[path = "routes/index/about.rs"] mod about;
+#[path = "routes/index/capture.rs"] mod capture;
+#[path = "routes/index/monitor.rs"] mod monitor;
 #[path = "utils/dotenv.rs"] mod dotenv;
 
 #[launch]
@@ -33,7 +35,7 @@ async fn rocket() -> _ {
 
     rocket::build().mount("/", routes![
         secondary::secondaryRouteGet, seqalign::seqAlignRouteGet, randombio::randomBioRouteGet, mrna::mrnaRouteGet, projectsIndex::projectIndexRouteGet, fuelprices::fuelpricesRouteGet,
-        index::indexRouteGet, contact::contactRouteGet, about::aboutRouteGet,
+        index::indexRouteGet, contact::contactRouteGet, about::aboutRouteGet, contact::contactRoutePost, monitor::monitorRoutePost,
         forumIndex::forumIndexRouteGet
     ])
 }
