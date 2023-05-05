@@ -27,7 +27,7 @@ pub struct contact_message {
 
 #[post("/contact", data = "<input>")]                                                                            
 pub async fn contactRoutePost(input: Json<contact_message>) -> Result<Json<response::GenericResponse<String>>, Status> {
-		discordLogging::discord_post(format!("{}\n{}", input.session_id, input.message));
+	discordLogging::discord_post(format!("{}\n{}", input.session_id, input.message));
 	let insertStatement = "INSERT INTO contact_messages VALUES (NULL, ?, ?, ?);";
     const DB_URL: &str = "sqlite://server/data/database.db";
     let db = SqlitePool::connect(DB_URL).await.unwrap();
