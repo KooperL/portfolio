@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+message Data {
+  Fuelprices fuelprices = 1;
+  Stats stats = 2;
+}
+
+message Fuelprices {
+  repeated Average average = 1;
+  repeated Max max = 2;
+  repeated Min min = 3;
+  repeated Wholesale wholesale = 4;
+}
+
+message Average {
+  string x = 1;
+  double y = 2;
+}
+
+message Max {
+  string x = 1;
+  double y = 2;
+}
+
+message Min {
+  string x = 1;
+  double y = 2;
+}
+
+message Wholesale {
+  string x = 1;
+  double y = 2;
+}
+
+message Stats {
+  double average = 1;
+  bool decision = 2;
+  double gradient = 3;
+  double relativePrice = 4;
+}

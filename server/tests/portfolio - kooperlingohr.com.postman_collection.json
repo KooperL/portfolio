@@ -50,7 +50,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"session_id\": {{test_session_id}},\n    \"message\": \"Test success!\"\n}",
+							"raw": "{\n    \"session_id\": \"{{test_session_id}}\",\n    \"message\": \"Test success!\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -213,7 +213,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/{{projectsPath}}/secondary?aas=lllll&aaformat=s&threshold=4&avg=3",
+							"raw": "{{host}}/{{projectsPath}}/secondary?aa_field_id=vkklfhwlekhmrttalynsynamrscqnimrayrkhhiqvgeathakyksdpnfgmarasqcykgeytmwpwvdrhmpehakwrtqvknilyashpywr",
 							"host": [
 								"{{host}}"
 							],
@@ -223,24 +223,27 @@
 							],
 							"query": [
 								{
-									"key": "aas",
-									"value": "lllll",
+									"key": "aa_field_id",
+									"value": "vkklfhwlekhmrttalynsynamrscqnimrayrkhhiqvgeathakyksdpnfgmarasqcykgeytmwpwvdrhmpehakwrtqvknilyashpywr",
 									"description": "Amino acid (AA) sequence"
 								},
 								{
-									"key": "aaformat",
+									"key": "aaf_field_id",
 									"value": "s",
-									"description": "single letters to represent AA's"
+									"description": "single letters to represent AA's",
+									"disabled": true
 								},
 								{
-									"key": "threshold",
+									"key": "detectthreshold",
 									"value": "4",
-									"description": "Sensitivity to assigning structure"
+									"description": "Sensitivity to assigning structure",
+									"disabled": true
 								},
 								{
-									"key": "avg",
+									"key": "leniency",
 									"value": "3",
-									"description": "Scope of calculation"
+									"description": "Scope of calculation",
+									"disabled": true
 								}
 							]
 						}
@@ -343,6 +346,30 @@
 							"path": [
 								"{{projectsPath}}",
 								"property"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/siteanalysis",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{projectsPath}}/siteanalysis?uuid=jtvYO9ltn9",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{projectsPath}}",
+								"siteanalysis"
+							],
+							"query": [
+								{
+									"key": "uuid",
+									"value": "jtvYO9ltn9"
+								}
 							]
 						}
 					},
@@ -470,7 +497,7 @@
 			]
 		},
 		{
-			"name": "/forum",
+			"name": "/blog",
 			"item": [
 				{
 					"name": "/register",
@@ -487,13 +514,25 @@
 					],
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{blog_test_password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{blog_test_username}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"session_id\": \"{{test_session_id}}\",\n    \"data\": {\n        \"forum_username\":\"{{forum_test_username}}\",\n        \"forum_password\":\"{{forum_test_password}}\"\n    }\n}",
+							"raw": "{\n    \"session_id\": \"{{test_session_id}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -501,12 +540,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/{{forumPath}}/register",
+							"raw": "{{host}}/{{blogPath}}/register",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{forumPath}}",
+								"{{blogPath}}",
 								"register"
 							]
 						}
@@ -521,7 +560,7 @@
 							"script": {
 								"exec": [
 									"const jsonResp = JSON.parse(responseBody)",
-									"pm.collectionVariables.set('forum_login_token', jsonResp['accessToken'])"
+									"pm.collectionVariables.set('blog_login_token', jsonResp['accessToken'])"
 								],
 								"type": "text/javascript"
 							}
@@ -533,12 +572,12 @@
 							"basic": [
 								{
 									"key": "password",
-									"value": "{{forum_test_password}}",
+									"value": "{{blog_test_password}}",
 									"type": "string"
 								},
 								{
 									"key": "username",
-									"value": "{{forum_test_username}}",
+									"value": "{{blog_test_username}}",
 									"type": "string"
 								}
 							]
@@ -555,12 +594,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/{{forumPath}}/login",
+							"raw": "{{host}}/{{blogPath}}/login",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{forumPath}}",
+								"{{blogPath}}",
 								"login"
 							]
 						}
@@ -575,7 +614,7 @@
 							"script": {
 								"exec": [
 									"const jsonResp = JSON.parse(responseBody)",
-									"pm.collectionVariables.set('forum_test_post_id', jsonResp['data']['forumPostId'])"
+									"pm.collectionVariables.set('blog_test_post_id', jsonResp['data']['blogPostId'])"
 								],
 								"type": "text/javascript"
 							}
@@ -587,7 +626,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{forum_login_token}}",
+									"value": "{{blog_login_token}}",
 									"type": "string"
 								}
 							]
@@ -596,7 +635,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"session_id\": \"{{test_session_id}}\",\n    \"data\": {\n        \"forum_title\": \"forum title\",\n        \"forum_body\": \"forum body\"\n    }\n}",
+							"raw": "{\n    \"session_id\": \"{{test_session_id}}\",\n    \"data\": {\n        \"blog_title\": \"blog title\",\n        \"blog_body\": \"blog body\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -604,12 +643,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/{{forumPath}}/post",
+							"raw": "{{host}}/{{blogPath}}/post",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{forumPath}}",
+								"{{blogPath}}",
 								"post"
 							]
 						}
@@ -624,7 +663,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{forum_login_token}}",
+									"value": "{{blog_login_token}}",
 									"type": "string"
 								}
 							]
@@ -632,12 +671,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/{{forumPath}}?session_id={{test_session_id}}",
+							"raw": "{{host}}/{{apiVersion}}/{{blogPath}}?session_id={{test_session_id}}",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{forumPath}}"
+								"{{apiVersion}}",
+								"{{blogPath}}"
 							],
 							"query": [
 								{
@@ -667,7 +707,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{forum_login_token}}",
+									"value": "{{blog_login_token}}",
 									"type": "string"
 								}
 							]
@@ -684,14 +724,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/{{forumPath}}/post/{{forum_test_post_id}}",
+							"raw": "{{host}}/{{blogPath}}/post/{{blog_test_post_id}}",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{forumPath}}",
+								"{{blogPath}}",
 								"post",
-								"{{forum_test_post_id}}"
+								"{{blog_test_post_id}}"
 							]
 						}
 					},
@@ -705,7 +745,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{forum_login_token}}",
+									"value": "{{blog_login_token}}",
 									"type": "string"
 								}
 							]
@@ -713,14 +753,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/{{forumPath}}/user/{{forum_test_username}}?session_id={{test_session_id}}",
+							"raw": "{{host}}/{{blogPath}}/user/{{blog_test_username}}?session_id={{test_session_id}}",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{forumPath}}",
+								"{{blogPath}}",
 								"user",
-								"{{forum_test_username}}"
+								"{{blog_test_username}}"
 							],
 							"query": [
 								{
@@ -733,7 +773,19 @@
 					"response": []
 				},
 				{
-					"name": "/refresh TODO",
+					"name": "/refresh",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonResp = JSON.parse(responseBody)",
+									"pm.collectionVariables.set('blog_login_token', jsonResp['accessToken'])"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -747,13 +799,22 @@
 						},
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"session_id\": \"{{test_session_id}}\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{host}}/{{forumPath}}/refresh",
+							"raw": "{{host}}/{{blogPath}}/refresh",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{forumPath}}",
+								"{{blogPath}}",
 								"refresh"
 							]
 						}
@@ -761,17 +822,27 @@
 					"response": []
 				},
 				{
-					"name": "/logout TODO",
+					"name": "/logout",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{blog_login_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/{{forumPath}}/logout",
+							"raw": "{{host}}/{{blogPath}}/logout",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{forumPath}}",
+								"{{blogPath}}",
 								"logout"
 							]
 						}
@@ -803,13 +874,8 @@
 	],
 	"variable": [
 		{
-			"key": "host",
-			"value": "https://kooperlingohr.com",
-			"type": "string"
-		},
-		{
-			"key": "forumPath",
-			"value": "forum",
+			"key": "blogPath",
+			"value": "blog",
 			"type": "string"
 		},
 		{
@@ -818,15 +884,15 @@
 			"type": "string"
 		},
 		{
-			"key": "forum_test_username",
+			"key": "blog_test_username",
 			"value": "testAcct"
 		},
 		{
-			"key": "forum_test_password",
+			"key": "blog_test_password",
 			"value": "aaaa"
 		},
 		{
-			"key": "forum_login_token",
+			"key": "blog_login_token",
 			"value": ""
 		},
 		{
@@ -838,6 +904,15 @@
 			"key": "test_uuid",
 			"value": "321test",
 			"type": "string"
+		},
+		{
+			"key": "apiVersion",
+			"value": "v1",
+			"type": "string"
+		},
+		{
+			"key": "blog_test_post_id",
+			"value": ""
 		}
 	]
 }
