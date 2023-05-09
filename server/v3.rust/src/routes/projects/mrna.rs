@@ -37,30 +37,14 @@ struct Amino_acid_symbol_map {
 pub async fn mrnaRouteGet(dna_field_id: String) -> Result<Json<response::GenericResponse<Response>>, Status> {
     let dna = str::replace(&dna_field_id, "\r", "");
     let mut reversed: Vec<String> = vec!["_".to_string(); dna.len()];
-    // let mut c_dna: Vec<String> = vec![String::from("_"); dna.len()];
     let mut rna: Vec<String> = vec![String::from("_"); dna.len()];
 
-    // let dna_file_contents = std::fs::read_to_string("server/data/dna.json").expect("File should have been opened");
-    // let dna_parsed_file: Vec<mrna::NucleotideList> = serde_json::from_str(&dna_file_contents).unwrap();
     let dna_parsed_file = mrna::open_and_parse(1).dna.unwrap();
-    // let mut dna_map: HashMap<String, String> = HashMap::new(); 
     let mut dna_molweight_map: HashMap<String, f64> = HashMap::new(); 
     for item in dna_parsed_file {
         // dna_map.insert(item.symbol, item.complimentary_nucleotide.value);
         dna_molweight_map.insert(item.symbol, item.molecular_mass.value);
     }
-
-    // let rna_file_contents = std::fs::read_to_string("../data/rna.json").expect("File should have been opened");
-    // let rna_parsed_file: Vec<mrna::NucleotideList> = serde_json::from_str(&rna_file_contents).unwrap();
-
-    // let mut rna_map: HashMap<String, String> = HashMap::new(); 
-    // for item in rna_parsed_file {
-    //     rna_map.insert(item.symbol as String, item.complimentary_nucleotide.value);
-    // }
-
-
-   //  let amino_acid_file_contents = std::fs::read_to_string("../data/aminoAcids.json").expect("File should have been opened");
-   //  let amino_acid_parsed_file: Vec<mrna::AminoAcid> = serde_json::from_str(&amino_acid_file_contents).unwrap();
 
     let amino_acid_parsed_file = mrna::open_and_parse(3).amino_acids.unwrap();
     let mut amino_acid_map: HashMap<String, Amino_acid_symbol_map> = HashMap::new(); 
