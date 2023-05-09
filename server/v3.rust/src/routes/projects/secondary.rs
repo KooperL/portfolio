@@ -2,9 +2,6 @@ use std::{vec};
 use rocket::{get, http::Status, serde::json::Json};
 use std::fs;
 use std::collections::HashMap;
-
-
-//use serde_json::{Value};
 #[path = "../../types/response.rs"] mod response;
 #[path = "../../types/mrna.rs"] mod mrna;
 

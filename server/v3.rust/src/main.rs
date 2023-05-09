@@ -8,6 +8,7 @@ use sqlx::{migrate::MigrateDatabase, Row, Sqlite, SqlitePool};
 #[path = "routes/projects/index.rs"] mod projectsIndex;
 #[path = "routes/projects/fuelprices.rs"] mod fuelprices;
 #[path = "routes/forum/index.rs"] mod forumIndex;
+#[path = "routes/forum/register.rs"] mod forumRegister;
 #[path = "routes/index/index.rs"] mod index;
 #[path = "routes/index/contact.rs"] mod contact;
 #[path = "routes/index/about.rs"] mod about;
@@ -36,6 +37,6 @@ async fn rocket() -> _ {
     rocket::build().mount("/", routes![
         secondary::secondaryRouteGet, seqalign::seqAlignRouteGet, randombio::randomBioRouteGet, mrna::mrnaRouteGet, projectsIndex::projectIndexRouteGet, fuelprices::fuelpricesRouteGet,
         index::indexRouteGet, contact::contactRouteGet, about::aboutRouteGet, contact::contactRoutePost, monitor::monitorRoutePost,
-        forumIndex::forumIndexRouteGet
+        forumIndex::forumIndexRouteGet, forumRegister::registerRoutePost, 
     ])
 }
