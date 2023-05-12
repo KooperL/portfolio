@@ -6,7 +6,8 @@ use rand::Rng;
 use base64::{Engine as _, engine::general_purpose};
 #[path = "../../types/response.rs"] mod response;
 use ring::{digest, pbkdf2};
-use std::sync::{Arc, Mutex};
+// use std::sync::{Arc, Mutex};
+use tokio::sync::{Mutex};
 
 static PBKDF2_ALG: pbkdf2::Algorithm = pbkdf2::PBKDF2_HMAC_SHA256;
 
@@ -19,7 +20,6 @@ pub struct BasicAuthHeader {
 #[rocket::async_trait]
 impl<'r> request::FromRequest<'r> for BasicAuthHeader {
     type Error = ();
-
     async fn from_request(request: &'r request::Request<'_>) -> request::Outcome<Self, Self::Error> {
         request.headers().get_one("Authorization")
             .map(|header_text| {
@@ -39,19 +39,20 @@ impl<'r> request::FromRequest<'r> for BasicAuthHeader {
 pub async fn registerRoutePost(auth_header: BasicAuthHeader) -> Result<Json<response::GenericResponse<String>>, Status> {
     const DB_URL: &str = "sqlite://server/data/database.db";
     let db = SqlitePool::connect(DB_URL).await.unwrap();
-    let db = Arc::new(Mutex::new(db));
+    // let db = Arc::new(Mutex::new(db));
+    let db = Mutex::new(Mutex::new(db));
     let time = format!("{}", chrono::Local::now().format("%Y-%m-%d %H:%M:%S"));
 	let forumUserExistsQuery = "
       SELECT 
-        count(*)
+       id 
       from forum_users
       where
         lower(forum_username) = lower(?)
-      limit 5;
+      limit 1;
     ";
     let userExists = sqlx::query(forumUserExistsQuery)
         .bind(&auth_header.Username)
-        .execute(&*db.lock().unwrap())
+        .execute(&db.lock().await)
         .await
         .unwrap();
     
@@ -79,7 +80,10 @@ pub async fn registerRoutePost(auth_header: BasicAuthHeader) -> Result<Json<resp
             .bind(&auth_header.Username.to_lowercase())
             .bind(&cred.to_ascii_lowercase())
             .bind(&salt)
-        .execute(&*db.lock().unwrap())
+            // .execute(&db)
+            //.execute(db.lock().await)
+            //.execute(&*db.lock().unwrap())
+            .execute(db)
             .await
             .unwrap();
     }
