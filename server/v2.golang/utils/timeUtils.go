@@ -10,10 +10,7 @@ func GetTimeFormat() string {
 
 // UnixTimestampForMinutes returns the Unix timestamp for x minutes from now
 func TimeOffset(dt time.Time, offset int) int64 {
-	// Add x minutes to the current time
 	future := dt.Add(time.Duration(offset) * time.Minute)
-
-	// Return the Unix timestamp for the future time
 	return future.Unix()
 }
 
