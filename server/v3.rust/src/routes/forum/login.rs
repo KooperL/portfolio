@@ -1,8 +1,8 @@
 use chrono::{Local, Duration};
-use rocket::{get, post, http::Status, serde::json::Json, request};
+use rocket::{get, post, http::Status, serde::json::Json, request, futures::TryStreamExt};
 use serde::Deserialize;
 use std::{fs, io::Read};
-use sqlx::{migrate::MigrateDatabase, Row, Sqlite, SqlitePool, SqlitePoolOptions};
+use sqlx::{migrate::MigrateDatabase, Row, Sqlite, SqlitePool};
 use rand::Rng;
 use base64::{Engine as _, engine::general_purpose};
 #[path = "../../types/response.rs"] mod response;
@@ -45,16 +45,19 @@ impl<'r> request::FromRequest<'r> for BasicAuthHeader {
     }
 }
 
+
+// #[derive(Debug, sqlx::FromRow, Ord, PartialOrd, Eq, PartialEq)]
+#[derive(Debug, sqlx::FromRow)]
+struct ForumUser {
+    id: i64,
+    forum_password_hash: Vec<u8>,
+    forum_password_salt: String,
+    role_id: i64,
+}
 #[post("/forum/login")]
 async fn loginRoutePost(auth_header: BasicAuthHeader) -> Result<Json<response::GenericResponse<String>>, Status> {
-//     const DB_URL: &str = "sqlite://server/data/database.db";
-//     let pool = SqlitePoolOptions::new()
-//         .max_connections(5)
-//         //.connect("sqlite::memory:")
-//         .connect(DB_URL)
-//         .await?;
-// 
     const DB_URL: &str = "sqlite://server/data/database.db";
+    // TODO: Don't you dare ignore me
     let pool = sqlx::sqlite::SqlitePoolOptions::new()
         .max_connections(5)
         .connect("sqlite://server/data/database.db?mode=rwc").await.unwrap();
@@ -62,9 +65,6 @@ async fn loginRoutePost(auth_header: BasicAuthHeader) -> Result<Json<response::G
     let mut connection = pool.acquire()
         .await
         .unwrap();
-    //let db = SqlitePool::connect(DB_URL).await.unwrap();
-    // let db = Arc::new(Mutex::new(db));
-    // let db = Mutex::new(db);
     let time = format!("{}", chrono::Local::now().format("%Y-%m-%d %H:%M:%S"));
 	let forumUserQuery = "
       SELECT 
@@ -74,32 +74,21 @@ async fn loginRoutePost(auth_header: BasicAuthHeader) -> Result<Json<response::G
         lower(forum_username) = lower(?)
       LIMIT 1;
     ";
-    let mut user_res = sqlx::query(forumUserQuery)
+
+    let mut user_res = sqlx::query_as::<_, ForumUser>(forumUserQuery)
         .bind(&auth_header.Username)
-        //.execute(db.lock().await)
-        //.execute(&pool)
-        .fetch(&pool)
-        .await.unwrap();
+        .fetch(&pool);
     
 
     if let Some(row) = user_res.try_next().await.unwrap() {
-        return Ok(Json(response::GenericResponse {
-            success: false,
-            data: None,
-            errorMessage: Some(String::from("User not found")),
-        }));
-    } else {
-        if let Some(row) = user_res {
         // let salt = row[0].forum_password_salt;
-        let salt = row.get("forum_password_salt");
+        let salt = row.forum_password_salt;
         let its: std::num::NonZeroU32 = std::num::NonZeroU32::new(1000).unwrap();
 
-        let mut cred: [u8; 16] = [0u8; 16];
-        let external_hash = pbkdf2::derive(PBKDF2_ALG, its, &salt,
-            &auth_header.Password.as_bytes(), &mut cred);       
-        if cred != user_res[0].forum_password_hash {
-            // throw new error("Incorrect username/password")
-        }
+        let password_has_as_bytes: [u8; 16] = row.forum_password_hash.try_into().unwrap();
+        let external_hash = pbkdf2::verify(PBKDF2_ALG, its, &salt.as_bytes(),
+            &auth_header.Password.as_bytes(), &password_has_as_bytes);
+       
         let access_token_life = dotenvy::var("forum-access-token-life").expect("forum-access-token-life must be set").parse::<i64>().unwrap();
         let refresh_token_life = dotenvy::var("forum-refresh-token-life").expect("forum-refresh-token-life must be set").parse::<i64>().unwrap();
 
@@ -115,21 +104,20 @@ async fn loginRoutePost(auth_header: BasicAuthHeader) -> Result<Json<response::G
         let refresh_token_exp = date.clone() + Duration::minutes(refresh_token_life);
 
         // generate access token
-        let access_token_body = auth::access_token_body {
-            user_id: user_res[0].id,
+        let access_token_body = auth::jwt_access_token_body {
+            user_id: row.id,
             iat: date.timestamp(), 
             exp: access_token_exp.timestamp(),
-            role: user_res[0].role,
-            username: user_res[0].username
+            role: row.role_id,
+            username: auth_header.Username.clone()
         };
         // sign access token
-        let access_token_hash = hmac::sign(&access_token_hmac_key, format!("{head}.{body}", head = token_header, body = access_token_body.to_string()).as_bytes());
+        let access_token_hash = hmac::sign(&access_token_hmac_key, format!("{head}.{body}", head = token_header, body = serde_json::to_string(&access_token_body).unwrap()).as_bytes());
         // generate refresh token
-        let refresh_token_body = auth::access_token_body {
-            user_id: user_res[0].id,
+        let refresh_token_body = auth::jwt_refresh_token_body {
+            user_id: row.id,
             exp: refresh_token_exp.timestamp()
         };
-;
         // sign refresh token
         // Add cookie/header
         // Delete old refresh token
@@ -137,17 +125,16 @@ async fn loginRoutePost(auth_header: BasicAuthHeader) -> Result<Json<response::G
         // Store refresh token in refresh database
         let instert_new_refresh_query = "INSERT INTO forum_refresh_tokens VALUES (?, ?, ?, ?);";
 
-    Ok(Json(response::GenericResponse {
-        success: true,
-        data: None,
-        errorMessage: None,
-    }))
-        } else {
-    return Ok(Json(response::GenericResponse {
-        success: false,
-        data: None,
-        errorMessage: Some(String::from("Error fetching row")),
-    }));
-    }
+        return Ok(Json(response::GenericResponse {
+            success: true,
+            data: None,
+            errorMessage: None,
+        }));
+    } else {
+        return Ok(Json(response::GenericResponse {
+            success: false,
+            data: None,
+            errorMessage: Some(String::from("User not found")),
+        }));
 }
 }
