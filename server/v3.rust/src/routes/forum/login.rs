@@ -47,13 +47,17 @@ impl<'r> request::FromRequest<'r> for BasicAuthHeader {
 
 #[post("/forum/login")]
 async fn loginRoutePost(auth_header: BasicAuthHeader) -> Result<Json<response::GenericResponse<String>>, Status> {
+//     const DB_URL: &str = "sqlite://server/data/database.db";
+//     let pool = SqlitePoolOptions::new()
+//         .max_connections(5)
+//         //.connect("sqlite::memory:")
+//         .connect(DB_URL)
+//         .await?;
+// 
     const DB_URL: &str = "sqlite://server/data/database.db";
-    let pool = SqlitePoolOptions::new()
+    let pool = sqlx::sqlite::SqlitePoolOptions::new()
         .max_connections(5)
-        //.connect("sqlite::memory:")
-        .connect(DB_URL)
-        .await?;
-
+        .connect("sqlite://server/data/database.db?mode=rwc").await.unwrap();
 
     let mut connection = pool.acquire()
         .await
@@ -73,8 +77,9 @@ async fn loginRoutePost(auth_header: BasicAuthHeader) -> Result<Json<response::G
     let mut user_res = sqlx::query(forumUserQuery)
         .bind(&auth_header.Username)
         //.execute(db.lock().await)
-        // .execute(&db)
-        .fetch(&connection).await;
+        //.execute(&pool)
+        .fetch(&pool)
+        .await.unwrap();
     
 
     if let Some(row) = user_res.try_next().await.unwrap() {

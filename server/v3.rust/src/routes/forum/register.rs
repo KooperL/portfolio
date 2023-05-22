@@ -35,12 +35,14 @@ impl<'r> request::FromRequest<'r> for BasicAuthHeader {
             .unwrap_or_else(|| request::Outcome::Failure((Status::BadRequest, ())))
     }
 }
+
+#[tokio::main]
 #[post("/forum/register")]                                                                            
 pub async fn registerRoutePost(auth_header: BasicAuthHeader) -> Result<Json<response::GenericResponse<String>>, Status> {
     const DB_URL: &str = "sqlite://server/data/database.db";
-    let db = SqlitePool::connect(DB_URL).await.unwrap();
-    // let db = Arc::new(Mutex::new(db));
-    let db = Mutex::new(Mutex::new(db));
+    let pool = sqlx::sqlite::SqlitePoolOptions::new()
+        .max_connections(5)
+        .connect("sqlite://server/data/database.db?mode=rwc").await.unwrap();
     let time = format!("{}", chrono::Local::now().format("%Y-%m-%d %H:%M:%S"));
 	let forumUserExistsQuery = "
       SELECT 
@@ -50,11 +52,14 @@ pub async fn registerRoutePost(auth_header: BasicAuthHeader) -> Result<Json<resp
         lower(forum_username) = lower(?)
       limit 1;
     ";
+    //let mut tx = pool.begin().await.expect("begin tx");
     let userExists = sqlx::query(forumUserExistsQuery)
         .bind(&auth_header.Username)
-        .execute(&db.lock().await)
+        //.execute(&db.acquire())
+        .execute(&pool)
         .await
         .unwrap();
+    // db.close();
     
     if userExists.rows_affected() == 1 {
         return Ok(Json(response::GenericResponse {
@@ -74,18 +79,18 @@ pub async fn registerRoutePost(auth_header: BasicAuthHeader) -> Result<Json<resp
         // let hash = crypto::pbkdf2::pbkdf2();
         let mut cred: [u8; 16] = [0u8; 16];
         let hash = pbkdf2::derive(PBKDF2_ALG, its, &salt,
-            &auth_header.Password.as_bytes(), &mut cred);       
+            &auth_header.Password.as_bytes(), &mut cred);
+        // let db = SqlitePool::connect(DB_URL).await.unwrap();
+        let mut tx = pool.begin().await.expect("begin tx");
         let userExists = sqlx::query(forumUserExistsQuery)
             .bind(&time)
             .bind(&auth_header.Username.to_lowercase())
             .bind(&cred.to_ascii_lowercase())
             .bind(&salt)
-            // .execute(&db)
-            //.execute(db.lock().await)
-            //.execute(&*db.lock().unwrap())
-            .execute(db)
+            .execute(&mut tx)
             .await
             .unwrap();
+        tx.commit().await.expect("tx commit");
     }
 
     Ok(Json(response::GenericResponse {
