@@ -32,10 +32,11 @@ impl<'r> request::FromRequest<'r> for BasicAuthHeader {
     async fn from_request(request: &'r request::Request<'_>) -> request::Outcome<Self, Self::Error> {
         request.headers().get_one("Authorization")
             .map(|header_text| {
-                let decoded: Vec<&str> = String::from_utf8(general_purpose::STANDARD_NO_PAD.decode(header_text)
-                    .unwrap()).unwrap().split(":").collect();
-                let username: String = String::from(decoded[0]);
-                let password: String = String::from(decoded[1]);
+                let encoded = general_purpose::STANDARD_NO_PAD.decode(header_text).unwrap();
+                let decoded = String::from_utf8(encoded).unwrap();
+                let split_string: Vec<&str> = decoded.split(":").collect();
+                let username: String = String::from(split_string[0]);
+                let password: String = String::from(split_string[1]);
                 BasicAuthHeader {
                     Username: username,
                     Password: password
@@ -48,14 +49,14 @@ impl<'r> request::FromRequest<'r> for BasicAuthHeader {
 
 // #[derive(Debug, sqlx::FromRow, Ord, PartialOrd, Eq, PartialEq)]
 #[derive(Debug, sqlx::FromRow)]
-struct ForumUser {
+pub struct ForumUser {
     id: i64,
     forum_password_hash: Vec<u8>,
     forum_password_salt: String,
     role_id: i64,
 }
 #[post("/forum/login")]
-async fn loginRoutePost(auth_header: BasicAuthHeader) -> Result<Json<response::GenericResponse<String>>, Status> {
+pub async fn loginRoutePost(auth_header: BasicAuthHeader) -> Result<Json<response::GenericResponse<String>>, Status> {
     const DB_URL: &str = "sqlite://server/data/database.db";
     // TODO: Don't you dare ignore me
     let pool = sqlx::sqlite::SqlitePoolOptions::new()
@@ -107,16 +108,16 @@ async fn loginRoutePost(auth_header: BasicAuthHeader) -> Result<Json<response::G
         let access_token_body = auth::jwt_access_token_body {
             user_id: row.id,
             iat: date.timestamp(), 
-            exp: access_token_exp.timestamp(),
             role: row.role_id,
-            username: auth_header.Username.clone()
+            username: auth_header.Username.clone(),
+            expires: access_token_exp.timestamp(),
         };
         // sign access token
         let access_token_hash = hmac::sign(&access_token_hmac_key, format!("{head}.{body}", head = token_header, body = serde_json::to_string(&access_token_body).unwrap()).as_bytes());
         // generate refresh token
         let refresh_token_body = auth::jwt_refresh_token_body {
             user_id: row.id,
-            exp: refresh_token_exp.timestamp()
+            expires: refresh_token_exp.timestamp()
         };
         // sign refresh token
         // Add cookie/header

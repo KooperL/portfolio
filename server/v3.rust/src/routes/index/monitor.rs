@@ -5,7 +5,7 @@ use sqlx::{migrate::MigrateDatabase, Row, Sqlite, SqlitePool};
 #[path = "../../types/response.rs"] mod response;
 
 #[derive(Deserialize)]
-struct MonitorPayload {
+pub struct MonitorPayload {
 	session_id: String, 
 	uuid: String,
 	page: String,
