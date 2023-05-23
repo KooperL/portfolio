@@ -15,7 +15,7 @@ struct Count {
 }
 
 #[derive(Serialize, Deserialize)]
-struct Response {
+pub struct Response {
         aa: Vec<String>,
         aa_s: Vec<String>, 
         dna_field: String,

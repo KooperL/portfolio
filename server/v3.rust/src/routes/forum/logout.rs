@@ -5,47 +5,58 @@ use sqlx::{migrate::MigrateDatabase, Row, Sqlite, SqlitePool};
 use rand::Rng;
 use base64::{Engine as _, engine::general_purpose};
 #[path = "../../types/response.rs"] mod response;
+#[path = "../../types/auth.rs"] mod auth;
 use ring::{digest, pbkdf2};
 // use std::sync::{Arc, Mutex};
 use tokio::sync::{Mutex};
 
-static PBKDF2_ALG: pbkdf2::Algorithm = pbkdf2::PBKDF2_HMAC_SHA256;
 
-#[derive(Debug)]
-pub struct BasicAuthHeader {
-    Username: String,
-    Password: String,
+pub struct bearer_token {
+    header: auth::jwt_header,
+    body: auth::jwt_access_token_body,
+    signature: String
 }
 
 #[rocket::async_trait]
-impl<'r> request::FromRequest<'r> for BasicAuthHeader {
+impl<'r> request::FromRequest<'r> for bearer_token {
     type Error = ();
     async fn from_request(request: &'r request::Request<'_>) -> request::Outcome<Self, Self::Error> {
-        request.headers().get_one("Authorization")
-            .map(|header_text| {
+        let header_body = request.headers().get_one("Authorization");
+            header_body.map(|header_text| {
                 let encoded = general_purpose::STANDARD_NO_PAD.decode(header_text).unwrap();
                 let decoded = String::from_utf8(encoded).unwrap();
-                let split_string: Vec<&str> = decoded.split(":").collect();
-                let username: String = String::from(split_string[0]);
-                let password: String = String::from(split_string[1]);
-                BasicAuthHeader {
+                let split_header: Vec<&str> = decoded.split(" ").collect();
+                let auth_type: String = String::from(split_header[0]);
+
+                if auth_type != "Bearer" {
+                    // Throw 401
+                }
+
+                let auth_token: String = String::from(split_header[1]);
+                let split_token: Vec<&str> = decoded.split(".").collect();
+                serde_json::parse::<jwt_header>(split_token[0]);
+                let parsed_header = jwt_header {
+                };
+                let parsed_body = jwt_access_token_body {
                     Username: username,
                     Password: password
-            }})
+                };
+            })
             .map(request::Outcome::Success)
             .unwrap_or_else(|| request::Outcome::Failure((Status::BadRequest, ())))
     }
 }
 
+
 #[tokio::main]
-#[post("/forum/register")]                                                                            
-pub async fn registerRoutePost(auth_header: BasicAuthHeader) -> Result<Json<response::GenericResponse<String>>, Status> {
+#[post("/forum/logout")]                                                                            
+pub async fn logoutRoutePost(auth_header: bearer_token) -> Result<Json<response::GenericResponse<String>>, Status> {
     const DB_URL: &str = "sqlite://server/data/database.db";
     let pool = sqlx::sqlite::SqlitePoolOptions::new()
         .max_connections(5)
         .connect("sqlite://server/data/database.db?mode=rwc").await.unwrap();
     let time = format!("{}", chrono::Local::now().format("%Y-%m-%d %H:%M:%S"));
-	let forumUserExistsQuery = "
+    let forumUserExistsQuery = "
       SELECT 
        id 
       from forum_users
@@ -70,7 +81,7 @@ pub async fn registerRoutePost(auth_header: BasicAuthHeader) -> Result<Json<resp
         }));
     } else {
         let salt_length = dotenvy::var("forum-register-salt-length").expect("FORUM-REGISTER-SALT-LENGTH must be set").parse::<i32>().unwrap();
-		let insertForumUserQuery = "INSERT INTO forum_users VALUES (NULL, ?, ?, ?, ?, 1, 1, 1);";
+        let insertForumUserQuery = "INSERT INTO forum_users VALUES (NULL, ?, ?, ?, ?, 1, 1, 1);";
         let random = rand::thread_rng();
         let mut salt: Vec<u8> = Vec::new();
         for i in 0..salt_length {
@@ -100,3 +111,4 @@ pub async fn registerRoutePost(auth_header: BasicAuthHeader) -> Result<Json<resp
         errorMessage: None,
     }))
 }
+
