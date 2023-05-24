@@ -1,4 +1,3 @@
-use chrono::{Local, Duration};
 use rocket::{get, post, http::Status, serde::json::Json, request, futures::TryStreamExt};
 use serde::Deserialize;
 use std::{fs, io::Read};
@@ -8,17 +7,18 @@ use base64::{Engine as _, engine::general_purpose};
 #[path = "../../types/response.rs"] mod response;
 #[path = "../../types/auth.rs"] mod auth;
 use ring::{digest, pbkdf2, hmac};
+use chrono::{Local, Duration};
 // use std::sync::{Arc, Mutex};
 use std::sync::{Mutex};
 // use tokio::sync::{Mutex};
 
 static PBKDF2_ALG: pbkdf2::Algorithm = pbkdf2::PBKDF2_HMAC_SHA256;
 
-#[derive(Debug)]
-pub struct AccessTokenResponse {
-    AccessToken: String,
-    Password: String,
-}
+// #[derive(Debug)]
+// pub struct AccessTokenResponse {
+//     AccessToken: String,
+//     Password: String,
+// }
 
 #[derive(Debug)]
 pub struct BasicAuthHeader {
@@ -33,14 +33,15 @@ impl<'r> request::FromRequest<'r> for BasicAuthHeader {
         request.headers().get_one("Authorization")
             .map(|header_text| {
                 let encoded = general_purpose::STANDARD_NO_PAD.decode(header_text).unwrap();
-                let decoded = String::from_utf8(encoded).unwrap();
+                let decoded: String = String::from_utf8(encoded).unwrap();
                 let split_string: Vec<&str> = decoded.split(":").collect();
                 let username: String = String::from(split_string[0]);
                 let password: String = String::from(split_string[1]);
                 BasicAuthHeader {
                     Username: username,
                     Password: password
-            }})
+                }
+            })
             .map(request::Outcome::Success)
             .unwrap_or_else(|| request::Outcome::Failure((Status::BadRequest, ())))
     }
@@ -49,7 +50,7 @@ impl<'r> request::FromRequest<'r> for BasicAuthHeader {
 
 // #[derive(Debug, sqlx::FromRow, Ord, PartialOrd, Eq, PartialEq)]
 #[derive(Debug, sqlx::FromRow)]
-pub struct ForumUser {
+pub struct forum_user_row {
     id: i64,
     forum_password_hash: Vec<u8>,
     forum_password_salt: String,
@@ -66,6 +67,7 @@ pub async fn loginRoutePost(auth_header: BasicAuthHeader) -> Result<Json<respons
     let mut connection = pool.acquire()
         .await
         .unwrap();
+
     let time = format!("{}", chrono::Local::now().format("%Y-%m-%d %H:%M:%S"));
 	let forumUserQuery = "
       SELECT 
@@ -76,10 +78,9 @@ pub async fn loginRoutePost(auth_header: BasicAuthHeader) -> Result<Json<respons
       LIMIT 1;
     ";
 
-    let mut user_res = sqlx::query_as::<_, ForumUser>(forumUserQuery)
+    let mut user_res = sqlx::query_as::<_, forum_user_row>(forumUserQuery)
         .bind(&auth_header.Username)
         .fetch(&pool);
-    
 
     if let Some(row) = user_res.try_next().await.unwrap() {
         // let salt = row[0].forum_password_salt;
@@ -113,7 +114,9 @@ pub async fn loginRoutePost(auth_header: BasicAuthHeader) -> Result<Json<respons
             expires: access_token_exp.timestamp(),
         };
         // sign access token
-        let access_token_hash = hmac::sign(&access_token_hmac_key, format!("{head}.{body}", head = token_header, body = serde_json::to_string(&access_token_body).unwrap()).as_bytes());
+        // TODO trim??
+        let token_as_string = format!("{head}.{body}", head = token_header, body = serde_json::to_string(&access_token_body).unwrap());
+        let access_token_hash = hmac::sign(&access_token_hmac_key, token_as_string.as_bytes());
         // generate refresh token
         let refresh_token_body = auth::jwt_refresh_token_body {
             user_id: row.id,
