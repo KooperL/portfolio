@@ -70,7 +70,6 @@ pub async fn registerRoutePost(auth_header: BasicAuthHeader) -> Result<Json<resp
         }));
     } else {
         let salt_length = dotenvy::var("forum-register-salt-length").expect("FORUM-REGISTER-SALT-LENGTH must be set").parse::<i32>().unwrap();
-		let insertForumUserQuery = "INSERT INTO forum_users VALUES (NULL, ?, ?, ?, ?, 1, 1, 1);";
         let random = rand::thread_rng();
         let mut salt: Vec<u8> = Vec::new();
         for i in 0..salt_length {
@@ -83,7 +82,8 @@ pub async fn registerRoutePost(auth_header: BasicAuthHeader) -> Result<Json<resp
             &auth_header.Password.as_bytes(), &mut cred);
         // let db = SqlitePool::connect(DB_URL).await.unwrap();
         let mut tx = pool.begin().await.expect("begin tx");
-        let userExists = sqlx::query(forumUserExistsQuery)
+		let insertForumUserQuery = "INSERT INTO forum_users VALUES (NULL, ?, ?, ?, ?, 1, 1, 1);";
+        let insert_user = sqlx::query(insertForumUserQuery)
             .bind(&time)
             .bind(&auth_header.Username.to_lowercase())
             .bind(&cred.to_ascii_lowercase())
