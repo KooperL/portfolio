@@ -8,52 +8,26 @@ import {
   FuelPricesInitialState,
 } from "./types"
 import "./style.css"
-import { SchemeContext } from "../context/colourScheme"
+import { PageInformation, SchemeContext } from "../context/colourScheme"
 import { IslandCenter } from "../../templates/IslandCenter"
 import ErrorPage from "../ErrorPage"
+import { State } from "../../types/State"
+import useFuelPricesState from "@controllers/useFuelPricesState"
 
 interface Props {
-  dataCall: Function
+  state: State<FuelPricesPayload>
+  scheme: PageInformation
 }
 
 function FuelPricesPage(props: Props): JSX.Element {
-  const [state, setState] = useState<FuelPricesState>(FuelPricesInitialState)
-  const [scheme, setScheme] = useContext(SchemeContext)
+  if (props.state.loading) return <Spinner />
+  if (props.state.error && props.state.errorMessage)
+    return <ErrorPage error={props.state.errorMessage} />
 
-  useEffect(() => {
-    props
-      .dataCall()
-      .then((resp: FuelPricesPayload) => {
-        if (resp.success && resp.data) {
-          setState({
-            details: resp,
-            error: false,
-            errorMessage: null,
-            loading: false,
-          })
-        } else {
-          throw new Error(resp.error)
-        }
-      })
-      .catch((err: any) => {
-        setState({
-          error: true,
-          errorMessage: err,
-          loading: false,
-        })
-        let chart: any = document.querySelector("svg")
-        if (chart) {
-          chart?.setAttribute("width", +chart.getAttribute("width") - 100)
-        }
-      })
-  }, [])
-
-  if (state.loading) return <Spinner />
-  if (state.error && state.errorMessage)
-    return <ErrorPage error={state.errorMessage} />
-  if (state.details && state.details.data) {
-    const data = state.details.data
+  if (props.state.details && props.state.details.data) {
+    const data = props.state.details.data
     const width = Math.max(window.outerWidth, 1500)
+
     return (
       <IslandCenter>
         <div className="fuelPricesPage">
@@ -119,7 +93,7 @@ function FuelPricesPage(props: Props): JSX.Element {
 }
 
 const enhance = (): JSX.Element => {
-  return <FuelPricesPage dataCall={fetchFuelPrices} />
+  return <FuelPricesPage {...useFuelPricesState()} />
 }
 
 export default enhance

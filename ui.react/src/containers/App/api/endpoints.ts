@@ -23,6 +23,7 @@ export const endpoints: ApiEndpoints = {
   tictactoe: `${apiHost}/${projectPath}/tictactoe`,
   randombio: `${apiHost}/${projectPath}/randombio`,
   property: `${apiHost}/${projectPath}/property`,
+  propertySearch: `${apiHost}/${projectPath}/property/search`,
 
   forumHome: `${apiHost}/${forumPath}`,
   forumRegister: `${apiHost}/${forumPath}/register`,

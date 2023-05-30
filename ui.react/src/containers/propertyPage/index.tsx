@@ -10,250 +10,121 @@ import {
 import { fetchProperty } from "../App/api/propertyApi"
 import Chart from "react-apexcharts"
 import ErrorPage from "../ErrorPage"
+import { PageInformation } from "@containers/context/colourScheme"
+import { HomePayload } from "@containers/homePage/types"
+import { State } from "../../types/State"
+import usePropertyState from "@controllers/usePropertyState"
 
 interface Props {
-  dataCall: Function
+  scheme: PageInformation
+  state: State<PropertyPayload>
+  ref: any
+  handleSubmit: () => void
 }
 
 function PropertyPage(props: Props): JSX.Element {
-  const [state, setState] = useState<PropertyState>(PropertyInitialState)
-  const [value, setValue] = useState("")
-  const [options, setOptions] = useState<any>()
-
-  useEffect(() => {
-    setState({ ...state, loading: true })
-    props
-      .dataCall()
-      .then((resp: PropertyPayload) => {
-        setState({
-          details: resp,
-          error: false,
-          errorMessage: null,
-          loading: false,
-        })
-      })
-      .catch((err: any) => {
-        setState({
-          error: true,
-          errorMessage: err,
-          loading: false,
-        })
-      })
-  }, [])
-
-  const handleSubmit = (
-    event: React.FormEvent<HTMLFormElement>,
-    payload: PropertyPOST,
-  ) => {
-    setState({ ...state, loading: true })
-    event.preventDefault()
-    props
-      .dataCall(payload)
-      .then((resp: PropertySearchPayload) => {
-        setState({
-          details: resp,
-          error: false,
-          errorMessage: null,
-          loading: false,
-        })
-        if (resp.data?.details) {
-          const means = resp.data.details.pricedata.means
-          const stds = resp.data.details.pricedata.stds
-          setOptions({
-            options: {
-              chart: {
-                id: "Props",
-                toolbar: {
-                  show: true,
-                },
-                export: {
-                  png: {
-                    filename: undefined,
-                  },
-                },
-              },
-              colors: ["#008FFB", "#00E396", "#ffffff"],
-              xaxis: {
-                categories: resp.data.details.pricedata.datekey,
-                tickAmount: 4,
-              },
-              grid: {
-                yaxis: {
-                  lines: {
-                    show: false,
-                  },
-                },
-              },
-              yaxis: {
-                min: 0,
-                max: 1500000,
-                tickAmount: 3,
-              },
-              stroke: {
-                width: [2, 0, 0],
-              },
-              fill: {
-                type: ["solid", "gradient", "solid"],
-                gradient: {
-                  inverseColors: false,
-                  type: "vertical",
-                  opacityFrom: 0.5,
-                  opacityTo: 1,
-                  stops: stds.map(function (val, ind) {
-                    return means[ind] - val
-                  }),
-                },
-                solid: {
-                  opacity: 0,
-                },
-              },
+  if (props.state.loading) return <Spinner />
+  if (props.state.error && props.state.errorMessage)
+    return <ErrorPage error={props.state.errorMessage} />
+  if (props.state.details && props.state.details.data) {
+    const options = {
+      options: {
+        chart: {
+          id: "Props",
+          toolbar: {
+            show: true,
+          },
+          export: {
+            png: {
+              filename: undefined,
             },
-            series: [
-              {
-                name: "means",
-                type: "line",
-                // color: 'blue',
-                data: means,
-              },
-              {
-                name: "stdsHigh",
-                type: "area",
-                // color: 'red',
-                data: stds.map(function (val, ind) {
-                  return val + means[ind]
-                }),
-              },
-              {
-                name: "stdsLow",
-                type: "area",
-                // color: 'white',
-                data: stds.map(function (val, ind) {
-                  return means[ind] - val
-                }),
-              },
-            ],
-          })
-        } else {
-          throw new Error(resp.error)
-        }
-      })
-      .catch((err: any) => {
-        setState({
-          error: true,
-          errorMessage: err,
-          loading: false,
-        })
-      })
-  }
-
-  if (state.loading) return <Spinner />
-  if (state.error && state.errorMessage)
-    return <ErrorPage error={state.errorMessage} />
-  if (state.details && state.details.data) {
-    if (Object.keys(state.details.data).includes("suburb")) {
-      const data = state.details as PropertySearchPayload
-      // @ts-ignore
-      const stats = data.data.stats
-      return (
-        <div className="flex justify-center">
-          <div className="w-fit flex flex-col">
-            <div className="flex justify-center">
-              <div className="p-5">
-                <table>
-                  <thead>
-                    <tr>
-                      {[
-                        "Median price ($AUD)",
-                        "Price SD ($AUD)",
-                        "Distance (m)",
-                        "Listing frequency",
-                        "Trend ($AUD)",
-                        "Calculated desirability",
-                      ].map((item, ind) => (
-                        <th
-                          className="px-2"
-                          key={ind}
-                        >
-                          {item}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tr>
-                    {[
-                      stats.mean,
-                      stats.spread,
-                      stats.distance,
-                      stats.listingsCaptured,
-                      stats.linearGradient,
-                      stats.linearGradient,
-                    ].map((item, ind) => (
-                      <td
-                        className="px-2"
-                        key={ind}
-                      >
-                        {item}
-                      </td>
-                    ))}
-                  </tr>
-                </table>
-              </div>
-            </div>
-            <div className="flex justify-center">
-              <div className="w-fit">
-                <Chart
-                  options={options["options"]}
-                  series={options["series"]}
-                  width="600"
-                />
-              </div>
-            </div>
-            <div className="flex justify-center">
-              <div className="w-fit">
-                <iframe
-                  width="600"
-                  height="450"
-                  title="iframe"
-                  src={`https://maps.google.com/maps?width=150&amp;height=50&amp;hl=en&amp;q=${value}%20Victoria%20Australia&amp;ie=UTF8&amp;t=&amp;z=8&amp;iwloc=B&amp;output=embed`}
-                  frameBorder="0"
-                  scrolling="no"
-                  marginHeight={0}
-                  marginWidth={0}
-                ></iframe>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    } else {
-      const data = state.details as PropertyPayload
-      return (
+          },
+        },
+        colors: ["#008FFB", "#00E396", "#ffffff"],
+        xaxis: {
+          categories: props.state.details.data.pricedata.datekey,
+          tickAmount: 4,
+        },
+        grid: {
+          yaxis: {
+            lines: {
+              show: false,
+            },
+          },
+        },
+        yaxis: {
+          min: 0,
+          max: 1500000,
+          tickAmount: 3,
+        },
+        stroke: {
+          width: [2, 0, 0],
+        },
+        fill: {
+          type: ["solid", "gradient", "solid"],
+          gradient: {
+            inverseColors: false,
+            type: "vertical",
+            opacityFrom: 0.5,
+            opacityTo: 1,
+            stops: stds.map(function (val, ind) {
+              return means[ind] - val
+            }),
+          },
+          solid: {
+            opacity: 0,
+          },
+        },
+      },
+      series: [
+        {
+          name: "means",
+          type: "line",
+          // color: 'blue',
+          data: means,
+        },
+        {
+          name: "stdsHigh",
+          type: "area",
+          // color: 'red',
+          data: stds.map(function (val, ind) {
+            return val + means[ind]
+          }),
+        },
+        {
+          name: "stdsLow",
+          type: "area",
+          // color: 'white',
+          data: stds.map(function (val, ind) {
+            return means[ind] - val
+          }),
+        },
+      ],
+    }
+    const data = props.state.details
+    return (
+      <div>
         <div className="">
           <div className="flex flex-row justify-center items-center gap-24 pb-24">
             <div>
               <p>
-                Enter the name of a suburb in Victoria to see a detailed
-                profile.
+                Enter the name of a suburb in Victoria to see a curated profile.
               </p>
             </div>
             <div>
               <form
-                onSubmit={e =>
-                  handleSubmit(e, {
-                    prop_suburb: value,
-                  })
-                }
+                onSubmit={e => {
+                  e.preventDefault()
+                  props.handleSubmit()
+                }}
               >
                 <label>Suburb:</label>
                 <input
                   className="ml-2 bg-gray-100 rounded"
                   type="text"
+                  ref={props.ref}
                   name="prop_suburb"
                   id="prop_suburb"
-                  value={value}
-                  onChange={e => {
-                    setValue(e.target.value)
-                  }}
                 />
                 <button
                   className="bg-blue-400 m-5 p-1 rounded text-white"
@@ -342,52 +213,6 @@ function PropertyPage(props: Props): JSX.Element {
             </div>
           </div>
         </div>
-      )
-    }
-  } else {
-    return (
-      <div className="w-fill h-full">
-        <div className="h-screen grid grid-cols-1 gap-1 content-center">
-          <div className="flex justify-center">
-            <div className="flex flex-wrap">
-              <div className="text-xl text-center w-1/2 flex-no-shrink">
-                <p>
-                  Enter the name of a suburb in Victoria to see a detailed
-                  profile.
-                </p>
-              </div>
-              <div>
-                <form
-                  onSubmit={e =>
-                    handleSubmit(e, {
-                      prop_suburb: value,
-                    })
-                  }
-                >
-                  <label>Suburb:</label>
-                  <input
-                    className="ml-2 bg-gray-100 rounded"
-                    type="text"
-                    name="prop_suburb"
-                    id="prop_suburb"
-                    value={value}
-                    onChange={e => {
-                      setValue(e.target.value)
-                    }}
-                  />
-                  <button
-                    className="bg-blue-400 m-5 p-1 rounded text-white"
-                    type="submit"
-                    name="submit"
-                    value="Submit"
-                  >
-                    Submit
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     )
   }
@@ -395,7 +220,7 @@ function PropertyPage(props: Props): JSX.Element {
 }
 
 const enhance = (): JSX.Element => {
-  return <PropertyPage dataCall={fetchProperty} />
+  return <PropertyPage {...usePropertyState()} />
 }
 
 export default enhance
