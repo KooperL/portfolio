@@ -98,8 +98,8 @@ function SiteAnalysisPage(props: Props): JSX.Element {
           <div className="allPageInfo">
             <p className="h2">All page redirects</p>
             <GenerateHeatmap
-            // @ts-ignore typescript demonstrating it has the mental capacity of a carboard box
-            data={(data.data as siteAnalysisResp["data"]).siteTraffic.map(
+              // @ts-ignore typescript demonstrating it has the mental capacity of a carboard box
+              data={(data.data as siteAnalysisResp["data"]).siteTraffic.map(
                 item => ({
                   x: item.source,
                   y: item.destination,

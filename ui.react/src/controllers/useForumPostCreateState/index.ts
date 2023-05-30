@@ -23,7 +23,6 @@ export const useForumPostCreateState = () => {
     ForumPostCreatePOSTPayload,
     ForumPostCreatePOSTResponse
   >(() => {
-    console.log(this)
     setHasPosted(true)
   })
 

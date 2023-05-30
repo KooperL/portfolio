@@ -9,6 +9,7 @@ export interface ApiEndpoints {
   logsPull: string
   projects: string
   property: string
+  propertySearch: string
   mrna: string
   seqalign: string
   siteanalysis: string
