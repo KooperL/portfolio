@@ -10,12 +10,12 @@ import (
 	"strings"
 )
 
-type SeqAlignRes {
+type SeqAlignRes struct {
   DrawRes []string `json:"draw_res"`
-  Results  []SeqAlignRes `json:"results"`
+  Results  []SeqAlignScore `json:"results"`
 }
 
-type SeqAlign struct {
+type SeqAlignScore struct {
 	String1         string `json:"s1"`
 	String2         string `json:"s2"`
 	Score           int64  `json:"score"`
@@ -37,14 +37,14 @@ func SeqAlign(w http.ResponseWriter, r *http.Request) {
 
 		results := SeqAlignRes {
 			DrawRes: []string{},
-			Results:  []SeqAlign{},
+			Results:  []SeqAlignScore{},
 		}
 
 		if len(s1) == len(s2) {
 			matches := controllers.MatchScoreSimple(s1, s2, match, mismatch, extendingGap, beginningGap)
 			draw := controllers.DrawComparison(s1, s2)
-			results.DrawRes = append(results.DrawRes.([]string), fmt.Sprintf("%s\nScore=%.1f", draw, float32(matches)/float32(len(s1))*10))
-			results.Results = append(results.Results.([]any), SeqAlignRes{
+			results.DrawRes = append(results.DrawRes, fmt.Sprintf("%s\nScore=%.1f", draw, float32(matches)/float32(len(s1))*10))
+			results.Results = append(results.Results, SeqAlignScore{
 				String1:         s1,
 				String2:         s2,
 				Score:           matches,
@@ -62,8 +62,8 @@ func SeqAlign(w http.ResponseWriter, r *http.Request) {
 				}
 				matches := controllers.MatchScoreSimple(shorterStr, longerStr, match, mismatch, extendingGap, beginningGap)
 				draw := controllers.DrawComparison(shorterStr, longerStr)
-				results.DrawRes = append(results.DrawRes.([]string), fmt.Sprintf("%s\nScore=%.1f", draw, float32(matches)/float32(len(longerArr))*10))
-				results.Results = append(results.Results.([]any), SeqAlignRes{
+				results.DrawRes = append(results.DrawRes, fmt.Sprintf("%s\nScore=%.1f", draw, float32(matches)/float32(len(longerArr))*10))
+				results.Results = append(results.Results, SeqAlignScore{
 					String1:         shorterStr,
 					String2:         longerStr,
 					Score:           matches,

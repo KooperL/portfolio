@@ -1,11 +1,11 @@
-import { fetchProperty } from "@containers/App/api/propertyApi"
-import { projectPath } from "@containers/App/api/types"
-import { SchemeContext } from "@containers/context/colourScheme"
+import { fetchProperty } from "../../containers/App/api/propertyApi"
+import { projectPath } from "../../containers/App/api/types"
+import { SchemeContext } from "../../containers/context/colourScheme"
 import {
   PropertyPayload,
   PropertyPOST,
   PropertySearchPayload,
-} from "@containers/propertyPage/types"
+} from "../../containers/propertyPage/types"
 import { useContext, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { useFetch } from "src/hooks/useFetch"

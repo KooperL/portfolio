@@ -11,6 +11,10 @@ import (
 func Fuelprices(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		res := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.Fuelprices]("SELECT * FROM fuelprices ORDER BY id DESC LIMIT ?", []any{200}))
+    if len(res) < 200 {
+      responses.BuildBadResponse(w, "Resources not found", 500)
+      return
+    }
 
 		rgood := ((res[0].Minprice + res[0].Maxprice) / 2) / res[0].Averageprice
 		m := (res[0].Averageprice - res[2].Averageprice) / (3 - 1)

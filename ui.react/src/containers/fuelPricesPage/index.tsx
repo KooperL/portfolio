@@ -12,7 +12,7 @@ import { PageInformation, SchemeContext } from "../context/colourScheme"
 import { IslandCenter } from "../../templates/IslandCenter"
 import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
-import useFuelPricesState from "@controllers/useFuelPricesState"
+import useFuelPricesState from "../../controllers/useFuelPricesState"
 
 interface Props {
   state: State<FuelPricesPayload>
@@ -92,8 +92,8 @@ function FuelPricesPage(props: Props): JSX.Element {
   return <></>
 }
 
-const enhance = (): JSX.Element => {
+const Enhance = (): JSX.Element => {
   return <FuelPricesPage {...useFuelPricesState()} />
 }
 
-export default enhance
+export default Enhance
