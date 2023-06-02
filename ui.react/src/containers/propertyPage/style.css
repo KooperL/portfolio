@@ -1,0 +1,20 @@
+.search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 12rem;
+  padding-bottom: 12rem;
+}
+
+.search-input {
+  margin-left: 1rem;
+  background-color: #161616;
+  border-radius: 10px;
+}
+
+.content {
+  display: flex;
+  flex-wrap: 1;
+  flex-direction: justify-evenly;
+}

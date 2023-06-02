@@ -1,14 +1,13 @@
 import { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
 import Vchart from "../../components/Vchart"
-import { fetchFuelPrices } from "@containers/App/api/fuelPricesApi"
-import "./style.css"
+import { fetchFuelPrices } from "../../containers/App/api/fuelPricesApi"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import {
   FuelPricesInitialState,
   FuelPricesPayload,
   FuelPricesState,
-} from "@containers/fuelPricesPage/types"
+} from "../../containers/fuelPricesPage/types"
 import { useFetch } from "src/hooks/useFetch"
 
 function useFuelPricesState() {
