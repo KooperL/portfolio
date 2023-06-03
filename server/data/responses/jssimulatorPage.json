@@ -1,0 +1,15 @@
+[
+  {
+    "type": "header",
+    "data": [
+      "Front-end dev simulator"
+    ]
+  },
+  {
+    "type": "subheader",
+    "data": [
+      "This is a typing challenge which measures how long it takes to write these sequences. Timer appears as soon as you press a key.",
+      "Good luck 🏁."
+    ]
+  }
+]

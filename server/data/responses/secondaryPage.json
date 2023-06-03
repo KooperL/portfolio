@@ -1,0 +1,14 @@
+[
+  {
+    "type": "header",
+    "data": [
+      "Protein 2° Structure"
+    ]
+  },
+  {
+    "type": "subheader",
+    "data": [
+      "Enter a sequence of amino acids in single character form to view a calculated reconstruction of the secondary protein structure according to the Chou-Fasman method (~50% accuracy)."
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "type": "header",
+    "data": [
+      "Real estate data interface"
+    ]
+  }
+  {
+    "type": "subheader",
+    "data": [
+      "Enter the name of a suburb in Victoria to see a detailed profile.",
+      "The scraper for this project has been frozen but historic data is still presented."
+    ]
+  }
+]
