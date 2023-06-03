@@ -1,0 +1,15 @@
+[
+  {
+    "type": "header",
+    "data": [
+      "DNA:mRNA decoder"
+    ]
+  },
+  {
+    "type": "subheader",
+    "data": [
+      "This is a tool to see what meaning can be derived from a strand of DNA.",
+      "Enter a DNA sequence to see a breakdown of its components..."
+    ]
+  }
+]

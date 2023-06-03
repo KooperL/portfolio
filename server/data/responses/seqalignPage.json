@@ -1,0 +1,16 @@
+
+[
+  {
+    "type": "header",
+    "data": [
+      "Pairwise sequence alignment"
+    ]
+  },
+  {
+    "type": "subheader",
+    "data": [
+      "Compare DNA sequences nucleotide by nucleotide and assign a score.",
+      "Enter two sequences of DNA to see how well they physically align."
+    ]
+  }
+]

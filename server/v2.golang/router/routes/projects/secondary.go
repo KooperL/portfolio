@@ -15,7 +15,7 @@ func Secondary(w http.ResponseWriter, r *http.Request) {
 		var data []types.AminoAcids
 		utils.OpenAndParseJSONFile("../data/aminoAcids.json", &data)
 
-		aa_list := strings.Split(r.URL.Query().Get("aa_field_id"), "")
+		aa_list := strings.Split(r.URL.Query().Get("aas"), "")
 
 		if len(aa_list) < 16 {
 			responses.BuildBadResponse(w, "Bad syntax", 400)
