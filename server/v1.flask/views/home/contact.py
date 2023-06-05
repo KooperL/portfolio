@@ -14,11 +14,7 @@ contact = Blueprint('contact', __name__)
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
 def contactHome():
-  if request.method == 'GET':
-    with open('../data/responses/contactPage.json') as test_file:
-        data = json.load(test_file)
-    return scripts.utils.responses.buildSuccessResp(data)
-  elif request.method == 'POST':
+  if request.method == 'POST':
     data = request.get_json()
     # session_id = request.args.get('session_id')
     # message = request.args.get('message')

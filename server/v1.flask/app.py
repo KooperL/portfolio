@@ -48,12 +48,23 @@ import scripts.utils.rgb
 
 import controllers.discordLogger
 
-import views.home.homePage
-import views.home.about
+import views.cms.aboutPage
+import views.cms.contactPage
+import views.cms.fuelpricesPage
+import views.cms.homePage
+import views.cms.jssimulatorPage
+import views.cms.minesweeperPage
+import views.cms.mrnaPage
+import views.cms.projectsPage
+import views.cms.propertyPage
+import views.cms.randombioPage
+import views.cms.secondaryPage
+import views.cms.seqalignPage
+import views.cms.tictactoePage
+
 import views.home.contact
 import views.home.capture
 import views.home.monitor
-import views.projects.index
 import views.projects.fuelprices
 import views.projects.mrna
 import views.projects.property
@@ -91,13 +102,24 @@ client = MongoClient('mongodb://%s:%s@localhost:%s/' % (username, password, conf
 db = client['traffic_log']
 traffic_data = db['data']
 
-app.register_blueprint(views.home.homePage.homePage)
 app.register_blueprint(views.home.monitor.monitor)
 app.register_blueprint(views.home.capture.capture)
-app.register_blueprint(views.home.about.about)
 app.register_blueprint(views.home.contact.contact)
 
-app.register_blueprint(views.projects.index.projectsIndex)
+app.register_blueprint(views.cms.aboutPage.aboutCms)
+app.register_blueprint(views.cms.contactPage.contactCms)
+app.register_blueprint(views.cms.fuelpricesPage.fuelpricesCms)
+app.register_blueprint(views.cms.homePage.homeCms)
+app.register_blueprint(views.cms.jssimulatorPage.jssimulatorCmsHome)
+app.register_blueprint(views.cms.minesweeperPage.minesweeperCmsHome)
+app.register_blueprint(views.cms.mrnaPage.mrnaCmsHome)
+app.register_blueprint(views.cms.projectsPage.projectsHome)
+app.register_blueprint(views.cms.propertyPage.propertyCmsHome)
+app.register_blueprint(views.cms.randombioPage.randombioCmsHome)
+app.register_blueprint(views.cms.secondaryPage.secondaryCmsHome)
+app.register_blueprint(views.cms.seqalignPage.seqalignCmsHome)
+app.register_blueprint(views.cms.tictactoePage.tictactoeCmsHome)
+
 app.register_blueprint(views.projects.fuelprices.fuelprices)
 app.register_blueprint(views.projects.mrna.mrna)
 app.register_blueprint(views.projects.property.property)

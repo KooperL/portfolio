@@ -1,16 +1,16 @@
 from flask import Blueprint, render_template, jsonify, request, json
 import scripts.utils.decorators
 import scripts.utils.responses
+import scripts.utils.structs
 
+propertyCms = Blueprint('about', __name__)
 
-homePage = Blueprint('homePage', __name__)
-
-@homePage.route('/home', methods=['GET', 'OPTIONS'])
+@propertyCms.route(f'/{scripts.utils.structs.cmsPath}/property', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
-def homeHome():
+def propertyCmsHome():
   if request.method == 'GET':
-    with open('../data/responses/homePage.json') as test_file:
+    with open('../data/responses/propertyPage.json') as test_file:
         data = json.load(test_file)
     return scripts.utils.responses.buildSuccessResp(data)
   elif request.method == 'OPTIONS': 
