@@ -3,7 +3,7 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
 
-seqalignCms = Blueprint('about', __name__)
+seqalignCms = Blueprint('seqalignCms', __name__)
 
 @seqalignCms.route(f'/{scripts.utils.structs.cmsPath}/seqalign', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle

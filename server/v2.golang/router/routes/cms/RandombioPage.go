@@ -1,4 +1,4 @@
-package index
+package cms 
 
 import (
 	types "kooperlingohr/portfolio/Types"
@@ -7,10 +7,10 @@ import (
 	"net/http"
 )
 
-func About(w http.ResponseWriter, r *http.Request) {
+func RandombioPage(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		var res []types.PagePopulateNode
-		utils.OpenAndParseJSONFile("../data/responses/aboutPage.json", &res)
+		utils.OpenAndParseJSONFile("../data/responses/randombioPage.json", &res)
 		responses.BuildSuccessResponse(w, res)
 	}
 }

@@ -3,7 +3,7 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
 
-randombioCms = Blueprint('about', __name__)
+randombioCms = Blueprint('randombioCms', __name__)
 
 @randombioCms.route(f'/{scripts.utils.structs.cmsPath}/randombio', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle

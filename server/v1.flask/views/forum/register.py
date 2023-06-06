@@ -31,8 +31,6 @@ def forumRegisterHome():
     # username = data.get('forum_username')
     # password = data.get('forum_password')
 
-
-
     auth_header = request.headers.get('Authorization')
     if auth_header is None or not auth_header.startswith('Basic '):
       return scripts.utils.responses.build_unauthorized()

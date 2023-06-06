@@ -3,7 +3,7 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
 
-tictactoeCms = Blueprint('about', __name__)
+tictactoeCms = Blueprint('tictactoeCms', __name__)
 
 @tictactoeCms.route(f'/{scripts.utils.structs.cmsPath}/tictactoe', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle

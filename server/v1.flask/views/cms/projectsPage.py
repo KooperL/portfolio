@@ -4,14 +4,14 @@ import scripts.utils.responses
 import scripts.utils.structs
 
 
-projectsIndex = Blueprint('projectsIndex', __name__)
+projectsCms = Blueprint('projectsCms', __name__)
 
-@projectsIndex.route(f'/{scripts.utils.structs.projectsPath}', methods=['GET', 'OPTIONS'])
+@projectsCms.route(f'/{scripts.utils.structs.projectsPath}/projects', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
-def projectsHome():
+def projectsCmsHome():
   if request.method == 'GET':
-    with open('../data/responses/projectIndexPage.json') as test_file:
+    with open('../data/responses/projectsPage.json') as test_file:
         data = json.load(test_file)
     return scripts.utils.responses.buildSuccessResp(data)
   elif request.method == 'OPTIONS': 
