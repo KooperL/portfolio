@@ -3,7 +3,7 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
 
-propertyCms = Blueprint('about', __name__)
+propertyCms = Blueprint('propertyCms', __name__)
 
 @propertyCms.route(f'/{scripts.utils.structs.cmsPath}/property', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle

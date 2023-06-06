@@ -3,7 +3,7 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
 
-mrnaCms = Blueprint('about', __name__)
+mrnaCms = Blueprint('mrnaCms', __name__)
 
 @mrnaCms.route(f'/{scripts.utils.structs.cmsPath}/mrna', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle

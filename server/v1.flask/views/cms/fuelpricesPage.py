@@ -3,9 +3,9 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
 
-fuelpricesCms = Blueprint('about', __name__)
+fuelpricesCms = Blueprint('fuelpricesCms', __name__)
 
-@fuelpricesCms.route(f'/{scripts.utils.structs.cmsPath}/about', methods=['GET', 'OPTIONS'])
+@fuelpricesCms.route(f'/{scripts.utils.structs.cmsPath}/fuelprices', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
 def fuelpricesCmsHome():

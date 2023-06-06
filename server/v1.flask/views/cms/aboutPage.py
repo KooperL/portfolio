@@ -3,7 +3,7 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
 
-aboutCms = Blueprint('about', __name__)
+aboutCms = Blueprint('aboutCms', __name__)
 
 @aboutCms.route(f'/{scripts.utils.structs.cmsPath}/about', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle

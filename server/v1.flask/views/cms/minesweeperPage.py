@@ -3,7 +3,7 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
 
-minesweeperCms = Blueprint('about', __name__)
+minesweeperCms = Blueprint('minesweeperCms', __name__)
 
 @minesweeperCms.route(f'/{scripts.utils.structs.cmsPath}/minesweeper', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle

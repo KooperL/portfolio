@@ -13,12 +13,7 @@ import (
 )
 
 func Contact(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet {
-		var res []types.PagePopulateNode
-		utils.OpenAndParseJSONFile("../data/responses/contactPage.json", &res)
-		responses.BuildSuccessResponse(w, res)
-	} else if r.Method == http.MethodPost {
-
+ if r.Method == http.MethodPost {
 		var body types.ContactPayload
 		utils.ParseReqBody(r, &body)
 		discord.SendDiscordMessage(os.Getenv("DISCORD_WEBHOOK_URL"), fmt.Sprintf("%s,\n%s", body.SessionID, body.Message))

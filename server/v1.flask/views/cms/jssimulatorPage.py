@@ -3,7 +3,7 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
 
-jssimulatorCms = Blueprint('about', __name__)
+jssimulatorCms = Blueprint('jssimulatorCms', __name__)
 
 @jssimulatorCms.route(f'/{scripts.utils.structs.cmsPath}/jssimulator', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
