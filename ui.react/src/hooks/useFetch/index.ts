@@ -1,38 +1,44 @@
+import { GenericResponse } from "@containers/App/api/types"
 import { useCallback, useEffect, useState } from "react"
 import { ApiError } from "../../api/apiErrorHandler"
 import { State } from "../../types/State"
 
 export const useFetch = <T, U>(
-  dataCall: (body?: U) => Promise<ApiError | T>,
+  dataCall: (body: T) => Promise<GenericResponse<U, ApiError>>,
 ) => {
-  const [state, setState] = useState<State<T>>({
+  const [state, setState] = useState<State<U>>({
     loading: true,
-    details: undefined,
+    details:  null,
+    errorMessage: null,
     error: false,
   })
   const pull = useCallback(
-    (payload?: U) => {
+    (payload: T) => {
       dataCall(payload)
-        .then(resp => {
-          // if (resp.hasOwnProperty('success') && resp.hasOwnProperty('data')) {
-          setState({
-            details: resp as T,
-            error: false,
-            errorMessage: null,
-            loading: false,
-          })
-          // } else {
-          //   resp = (resp as ApiError)
-          //   throw new Error(resp);
-          // }
+        .then((resp: GenericResponse<U, ApiError>) => {
+          if (resp.hasOwnProperty('success') && resp.success) {
+            setState({
+              details: resp?.data || null,
+              error: false,
+              errorMessage: null,
+              loading: false,
+            })
+          } else {
+            setState({
+              details: null,
+              error: true,
+              errorMessage: resp.error,
+              loading: false,
+            })
+          }
         })
-        .catch((err: any) => {
-          setState({
-            error: true,
-            errorMessage: err,
-            loading: false,
-          })
-        })
+        // .catch((err: any) => {
+        //   setState({
+        //     error: true,
+        //     errorMessage: err,
+        //     loading: false,
+        //   })
+        // })
     },
     [dataCall, state],
   )

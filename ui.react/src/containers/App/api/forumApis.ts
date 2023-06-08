@@ -11,7 +11,7 @@ import { ForumPostCreatePOSTPayload } from "../../forumPostCreatePage/types"
 import { ForumPostViewGETPayload } from "../../forumPostViewPage/types"
 import { ForumUserGETResponse } from "../../forumUserPage/types"
 import { endpoints } from "./endpoints"
-import { ApiEndpoints, Payload } from "./types"
+import { ApiEndpoints, GenericResponse } from "./types"
 
 export interface Opts<T> {
   endpoint: string
@@ -29,7 +29,7 @@ export interface Opts<T> {
   // varRoute?: number,
 }
 
-export const forumPost = <T, U>(opts: Opts<T>): Promise<ApiError | U> => {
+export const forumPost = <T, U>(opts: Opts<T>): Promise<GenericResponse<U, ApiError>> => {
   // let url = endpoints[opts.endpoint] + (opts.varRoute ?? '')
   const apiConfig = {
     headers: {

@@ -1,16 +1,7 @@
 import { ApiError } from "../../../api/apiErrorHandler"
 import { get, post } from "../../../api/restApi"
-import { ContactPayload, ContactPOSTPayload } from "../../contactPage/types"
+import { ContactPOSTPayload } from "../../contactPage/types"
 import { endpoints } from "./endpoints"
-import { Payload } from "./types"
-
-export const fetchContact = (): Promise<ApiError | ContactPayload> => {
-  const apiConfig = {
-    headers: {},
-    params: {},
-  }
-  return get(endpoints["contact"], apiConfig)
-}
 
 export const postContact = (data: {
   session_id: string

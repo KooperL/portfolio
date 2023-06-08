@@ -1,5 +1,7 @@
+import { fetchCMSData } from "@containers/App/api/genericCMSApi"
+import { cmsData, CmsEndpoints, GenericResponse } from "@containers/App/api/types"
 import { useContext, useEffect, useState } from "react"
-import { fetchHome } from "../../containers/App/api/homeApi"
+import { ApiError } from "src/api/apiErrorHandler"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { HomePayload } from "../../containers/homePage/types"
 import { useFetch } from "../../hooks/useFetch"
@@ -7,11 +9,11 @@ import { useFetch } from "../../hooks/useFetch"
 export const useHomeState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
 
-  const { state, pull } = useFetch<HomePayload, undefined>(fetchHome)
+  const { state, pull } = useFetch<keyof CmsEndpoints, cmsData[]>(fetchCMSData)
 
   useEffect(() => {
     document.title = `Home | ${scheme.title}`
-    pull()
+    pull('homeCms')
   }, [])
 
   return {

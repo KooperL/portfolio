@@ -1,11 +1,11 @@
-import { ApiEndpoints, forumPath, projectPath } from "./types"
+import { ApiEndpoints, CmsEndpoints, cmsPath, forumPath, projectPath } from "./types"
 import { environmentConfig } from "./environmentMappings"
 
 const { apiHost } = environmentConfig()
 
-export const endpoints: ApiEndpoints = {
-  home: `${apiHost}/home`,
-  about: `${apiHost}/about`,
+export const endpoints: {
+  [k in keyof ApiEndpoints | keyof CmsEndpoints]: string
+} = {
   contact: `${apiHost}/contact`,
   monitor: `${apiHost}/monitor`,
   capture: `${apiHost}/capture`,
@@ -13,7 +13,6 @@ export const endpoints: ApiEndpoints = {
   logsInsert: `${apiHost}/logs/insert`,
   logsPull: `${apiHost}/logs/pull`,
 
-  projects: `${apiHost}/${projectPath}`,
   mrna: `${apiHost}/${projectPath}/mrna`,
   seqalign: `${apiHost}/${projectPath}/seqalign`,
   siteanalysis: `${apiHost}/${projectPath}/siteanalysis`,
@@ -33,4 +32,18 @@ export const endpoints: ApiEndpoints = {
   forumLogin: `${apiHost}/${forumPath}/login`,
   forumRefresh: `${apiHost}/${forumPath}/refresh`,
   forumLogout: `${apiHost}/${forumPath}/logout`,
+
+  aboutCms: `${apiHost}/${cmsPath}/about`,
+  contactCms: `${apiHost}/${cmsPath}/contact`,
+  fuelpricesCms: `${apiHost}/${cmsPath}/fuelprices`,
+  homeCms: `${apiHost}/${cmsPath}/home`,
+  jssimulatorCms: `${apiHost}/${cmsPath}/jssimulator`,
+  minesweeperCms: `${apiHost}/${cmsPath}/minesweeper`,
+  mrnaCms: `${apiHost}/${cmsPath}/mrna`,
+  propertyCms: `${apiHost}/${cmsPath}/property`,
+  projectsCms: `${apiHost}/${cmsPath}/projects`,
+  randombioCms: `${apiHost}/${cmsPath}/randombio`,
+  secondaryCms: `${apiHost}/${cmsPath}/secondary`,
+  seqalignCms: `${apiHost}/${cmsPath}/seqalign`,
+  tictactoeCms: `${apiHost}/${cmsPath}/tictactoe`,
 }

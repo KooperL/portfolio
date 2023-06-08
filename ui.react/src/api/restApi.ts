@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from "axios"
-import { Payload } from "../containers/App/api/types"
+import { GenericResponse } from "../containers/App/api/types"
 import request from "./requests"
 import { ApiError, handleError } from "./apiErrorHandler"
 
@@ -20,7 +20,7 @@ export const get = async <T>(
   url: string,
   options: AxiosRequestConfig,
   noCache: Boolean = true, // TODO
-): Promise<ApiError | T> => {
+): Promise<GenericResponse<T, ApiError>> => {
   const requestConfig: AxiosRequestConfig = {
     ...options,
     headers: {
@@ -42,7 +42,7 @@ export const post = async <T>(
   url: string,
   options: AxiosRequestConfig,
   noCache: Boolean = true, // TODO
-): Promise<ApiError | T> => {
+): Promise<GenericResponse<T, ApiError>> => {
   const requestConfig: AxiosRequestConfig = {
     ...options,
     headers: {

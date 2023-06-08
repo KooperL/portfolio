@@ -1,13 +1,16 @@
+import { ApiError } from "src/api/apiErrorHandler"
+
+export const forumPath = "forum"
+export const projectPath = "projects"
+export const cmsPath = "cms"
+
 export interface ApiEndpoints {
-  home: string
-  about: string
   contact: string
   capture: string
   monitor: string
   track: string
   logsInsert: string
   logsPull: string
-  projects: string
   property: string
   propertySearch: string
   mrna: string
@@ -29,13 +32,35 @@ export interface ApiEndpoints {
   forumLogout: string
 }
 
+export interface CmsEndpoints {
+  aboutCms: string
+  contactCms: string
+  fuelpricesCms: string
+  homeCms: string
+  jssimulatorCms: string
+  minesweeperCms: string
+  mrnaCms: string
+  projectsCms: string
+  propertyCms: string
+  randombioCms: string
+  secondaryCms: string
+  seqalignCms: string
+  tictactoeCms: string
+}
+
+
+export interface cmsData {
+  type: string
+  data: string[]
+  text: string
+}
+
 export interface emptyPayload {
   success: boolean
 }
 
-export interface Payload extends emptyPayload {
-  data: any
+export interface GenericResponse<T, U extends string | ApiError> {
+  data: T | null,
+  success: boolean
+  error: U | null
 }
-
-export const forumPath = "forum"
-export const projectPath = "projects"
