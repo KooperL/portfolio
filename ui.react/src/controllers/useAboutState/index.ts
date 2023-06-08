@@ -1,3 +1,5 @@
+import { fetchCMSData } from "@containers/App/api/genericCMSApi"
+import { cmsData, CmsEndpoints } from "@containers/App/api/types"
 import { useContext, useEffect, useRef, useState } from "react"
 import {
   AboutInitialState,
@@ -34,10 +36,10 @@ export const useAboutState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
   // let state: State<AboutPayload>;
 
-  const { state, pull } = useFetch<AboutPayload, undefined>(fetchAbout)
+  const { state, pull } = useFetch<cmsData[], keyof CmsEndpoints>(fetchCMSData)
 
   useEffect(() => {
-    pull()
+    pull('aboutCms')
 
     fetch(dna)
       .then(r => r.text())

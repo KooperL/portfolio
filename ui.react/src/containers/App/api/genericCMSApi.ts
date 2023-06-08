@@ -2,12 +2,12 @@ import { ApiError } from "../../../api/apiErrorHandler"
 import { get } from "../../../api/restApi"
 import { AboutPayload } from "../../aboutPage/types"
 import { endpoints } from "./endpoints"
-import { Payload } from "./types"
+import { cmsData, CmsEndpoints, GenericResponse } from "./types"
 
-export const fetchAbout = (): Promise<ApiError | AboutPayload> => {
+export const fetchCMSData = (route: keyof CmsEndpoints): Promise<GenericResponse<cmsData[], ApiError>> => {
   const apiConfig = {
     headers: {},
     params: {},
   }
-  return get(endpoints["about"], apiConfig)
+  return get(endpoints[route], apiConfig)
 }

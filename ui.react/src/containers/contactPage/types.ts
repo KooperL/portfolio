@@ -14,15 +14,6 @@ export interface ContactPOSTState {
   loading?: boolean
 }
 
-export interface ContactPayload {
-  data: {
-    type: string
-    data: string[]
-    text: string
-  }[]
-  success: boolean
-}
-
 export interface ContactPOSTPayload {
   success: boolean
   error?: string

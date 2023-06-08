@@ -54,7 +54,7 @@ function PropertyPage(props: Props): JSX.Element {
                type="text"
                name="prop_suburb"
                id="prop_suburb"
-                ref={props.ref}
+                ref={React.forwardRef(props.ref)}
              />
              <Button
                 colours={props.scheme}
@@ -65,79 +65,74 @@ function PropertyPage(props: Props): JSX.Element {
 
        <div className="content">
          <div className="">
-           <div className="w-96 h-1/2">
-             <div className="flex justify-between">
+           <div className="spectrum-container">
+             <div className="spectrum-legend">
                <div>$200k</div>
                <div>$750k</div>
                <div>$2000k</div>
              </div>
-             <div className="bg-gradient-to-r from-blue-500 via-green-500 to-red-500 p-2"></div>
-             <div className="bg-gray-200 w-full h-96 mt-24">
+             <div className="spectrum"></div>
+          </div>
+             <div className="map-container">
                {/* <iframe className="w-full h-full" src="https://api.kooperlingohr.com/heatmap"/> */}
              </div>
           </div>
-         </div>
-         <div className="content-around">
-           <div className="py-10">
-             <div className="pb-5">
-               <p>My picks</p>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th className="table-row">Suburb</th>
+                    <th className="table-row">Median price ($AUD)</th>
+                    <th className="table-row">Distance (m)</th>
+                    <th className="table-row">Listing frequency</th>
+                    <th className="table-row">Trend/Week ($AUD)</th>
+                    <th className="table-row">Calculated desirability</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {data.data.highest.map((topic, indexTopic) => (
+                  <tr>
+                    <td className="table-row">{topic.suburb}</td>
+                    <td className="table-row">{topic.meanMeans}</td>
+                    <td className="table-row">{topic.distcc}</td>
+                    <td className="table-row">{topic.count}</td>
+                    <td className="table-row">{topic.meanGradient}</td>
+                    <td className="table-row">{topic.desirability}</td>
+                  </tr>
+                ))}
+                </tbody>
+              </table>
              </div>
-             <div>
-               <table>
-                 <thead>
-                   <tr>
-                     <th className="px-2">Suburb</th>
-                     <th className="px-2">Median price ($AUD)</th>
-                     <th className="px-2">Distance (m)</th>
-                     <th className="px-2">Listing frequency</th>
-                     <th className="px-2">Trend/Week ($AUD)</th>
-                     <th className="px-2">Calculated desirability</th>
-                   </tr>
-                 </thead>
-                 {data.data.highest.map((topic, indexTopic) => (
-                   <tr>
-                     <td className="px-2">{topic.suburb}</td>
-                     <td className="px-2">{topic.meanMeans}</td>
-                     <td className="px-2">{topic.distcc}</td>
-                     <td className="px-2">{topic.count}</td>
-                     <td className="px-2">{topic.meanGradient}</td>
-                     <td className="px-2">{topic.desirability}</td>
-                   </tr>
-                 ))}
-               </table>
-             </div>
-           </div>
-           <div className="py-10">
-             <div className="pb-5">
+             <div className="table-legend">
                <p>State Stats</p>
-             </div>
-             <div>
-               <table>
-                 <thead>
-                   <tr>
-                     <th className="px-2">Min</th>
-                     <th className="px-2">Q1</th>
-                     <th className="px-2">Median</th>
-                     <th className="px-2">Q3</th>
-                     <th className="px-2">Max</th>
-                     <th className="px-2">IQR</th>
-                   </tr>
-                 </thead>
-                 <tr>
-                   <td className="px-2">{data.data.stats.Min}</td>
-                   <td className="px-2">{data.data.stats.Q1}</td>
-                   <td className="px-2">{data.data.stats.median}</td>
-                   <td className="px-2">{data.data.stats.Q3}</td>
-                   <td className="px-2">{data.data.stats.Max}</td>
-                   <td className="px-2">{data.data.stats.IQR}</td>
-                 </tr>
-               </table>
-             </div>
-           </div>
-         </div>
-       </div>
+            </div>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th className="table-row">Min</th>
+                    <th className="table-row">Q1</th>
+                    <th className="table-row">Median</th>
+                    <th className="table-row">Q3</th>
+                    <th className="table-row">Max</th>
+                    <th className="table-row">IQR</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td className="table-row">{data.data.stats.Min}</td>
+                  <td className="table-row">{data.data.stats.Q1}</td>
+                  <td className="table-row">{data.data.stats.median}</td>
+                  <td className="table-row">{data.data.stats.Q3}</td>
+                  <td className="table-row">{data.data.stats.Max}</td>
+                  <td className="table-row">{data.data.stats.IQR}</td>
+                </tr>
+                </tbody>
+              </table>
+          </div>
+        </div>
       </IslandCenter>
-     </div>
+    </div>
    )
   }
   return <></>

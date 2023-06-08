@@ -3,41 +3,47 @@ import { ApiError } from "../../api/apiErrorHandler"
 import { forumPost, Opts } from "../../containers/App/api/forumApis"
 import { State } from "../../types/State"
 
-export const usePost = <T, U>(callback?: (e: U) => void) => {
+export const usePost = <T, U>(callback?: (e: U | null) => void) => {
   const [state, setState] = useState<State<U>>({
     loading: false,
-    details: undefined,
+    details: null,
+    errorMessage: null,
     error: false,
   })
   const post = useCallback(
     (opts: Opts<T>) => {
       setState({
+        loading: true,
+        details: null,
         error: false,
         errorMessage: null,
-        loading: true,
       })
       forumPost<T, U>(opts)
         .then(resp => {
-          // if (resp.hasOwnProperty('success') && resp.hasOwnProperty('data')) {
-          setState({
-            details: resp as U,
-            error: false,
-            errorMessage: null,
-            loading: false,
-          })
-          callback && callback(resp as U)
-          // } else {
-          //   resp = (resp as ApiError)
-          //   throw new Error(resp);
-          // }
+          if (resp.hasOwnProperty('success') && resp.success) {
+            setState({
+              details: resp?.data || null,
+              error: false,
+              errorMessage: null,
+              loading: false,
+            })
+            callback && callback(resp.data)
+             } else {
+            setState({
+              details: null,
+              error: true,
+              errorMessage: resp.error,
+              loading: false,
+            })
+             }
         })
-        .catch((err: any) => {
-          setState({
-            error: true,
-            errorMessage: err as ApiError,
-            loading: false,
-          })
-        })
+        // .catch((err: any) => {
+        //   setState({
+        //     error: true,
+        //     errorMessage: err as ApiError,
+        //     loading: false,
+        //   })
+        // })
     },
     [state],
   )
