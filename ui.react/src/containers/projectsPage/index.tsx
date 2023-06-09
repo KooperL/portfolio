@@ -5,8 +5,6 @@ import React, {
   useState,
 } from "react"
 import Spinner from "../../components/Spinner"
-import { ProjectsState, ProjectsPayload, ProjectsInitialState } from "./types"
-import { fetchProjects } from "../App/api/projectsApi"
 import Navbar from "../../components/Navbar"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
@@ -20,21 +18,21 @@ import { IslandLeft } from "../../templates/IslandLeft"
 import ErrorPage from "../ErrorPage"
 import { useFetch } from "../../hooks/useFetch"
 import { ApiError } from "../../api/apiErrorHandler"
-import { HomePayload } from "../homePage/types"
 import { State } from "../../types/State"
 import { useProjectsState } from "../../controllers/useProjectsState"
+import { cmsData } from "@containers/App/api/types"
 
 interface Props {
   scheme: PageInformation
-  state: State<HomePayload>
+  stateCMS: State<cmsData[]>
 }
 
 function ProjectsPage(props: Props): JSX.Element {
-  if (props.state.loading) return <Spinner />
-  if (props.state.error && props.state.errorMessage)
-    return <ErrorPage error={props.state.errorMessage} />
-  if (props.state.details) {
-    const data = props.state.details.data
+  if (props.stateCMS.loading) return <Spinner />
+  if (props.stateCMS.error && props.stateCMS.errorMessage)
+    return <ErrorPage error={props.stateCMS.errorMessage} />
+  if (props.stateCMS.details) {
+    const data = props.stateCMS.details
     return (
       <IslandLeft>
         <div className="projectsPage">

@@ -1,14 +1,6 @@
 import { ApiError } from "../../api/apiErrorHandler"
 
-export interface SecondaryState {
-  details?: SecondaryPayload
-  error?: boolean
-  errorMessage?: ApiError | null
-  loading?: boolean
-}
-
-export interface SecondaryPayload {
-  success: boolean
+// export interface SecondaryResponse {
   // 'data'?: {
   //   'aa_field': string;
   //   'ahp_field': number[];    // float??
@@ -19,19 +11,14 @@ export interface SecondaryPayload {
   //   'bsm_field': number[];    // float??
   //   'pred_str': string;
   // };
-  data?: string
-  error?: string
-}
 
-export interface SecondaryPOST {
+// }
+//
+
+export type SecondaryResponse = string
+export interface SecondaryRequest {
   aa_field_id: string
   aaf_field_id?: string
   detectthreshold?: number
   leniency?: number
 }
-
-export const SecondaryInitialState: SecondaryState = {
-  error: false,
-  errorMessage: null,
-  loading: false,
-} as const

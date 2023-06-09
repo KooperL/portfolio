@@ -1,11 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
-import {
-  SecondaryPayload,
-  SecondaryState,
-  SecondaryInitialState,
-  SecondaryPOST,
-} from "./types"
 import { fetchSecondary } from "../App/api/SecondaryApi"
 import Modal from "../../components/Modal"
 // @ts-ignore
@@ -23,6 +17,8 @@ import { useSecondaryState } from "../../controllers/useSecondaryState"
 import { useSubmit } from "../../hooks/useSubmit"
 import { ApiError } from "../../api/apiErrorHandler"
 import { State } from "../../types/State"
+import { SecondaryResponse } from "./types"
+import { cmsData } from "@containers/App/api/types"
 
 interface Props {
   aa_field_id: string
@@ -34,7 +30,8 @@ interface Props {
   leniency: number
   setLeniency: React.Dispatch<React.SetStateAction<number>>
   scheme: PageInformation
-  state: State<SecondaryPayload>
+  statePOST: State<SecondaryResponse>
+  stateCMS: State<cmsData[]>
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
@@ -93,11 +90,11 @@ function SecondaryPage(props: Props): JSX.Element {
     )
   }
 
-  if (props.state.loading) return <Spinner />
-  if (props.state.error && props.state.errorMessage)
-    return <ErrorPage error={props.state.errorMessage} />
-  if (props.state.details && props.state.details.data) {
-    const data = props.state.details.data
+  if (props.statePOST.loading) return <Spinner />
+  if (props.statePOST.error && props.statePOST.errorMessage)
+    return <ErrorPage error={props.statePOST.errorMessage} />
+  if (props.statePOST.details && props.statePOST.details) {
+    const data = props.statePOST.details
     return (
       <IslandCenter>
         <div className="secondaryPage">

@@ -1,8 +1,8 @@
 import { ApiError } from "../../../api/apiErrorHandler"
 import { get, post } from "../../../api/restApi"
-import { ContactPayload, ContactPOSTPayload } from "../../contactPage/types"
+import { ContactPOSTPayload } from "../../contactPage/types"
 import { endpoints } from "./endpoints"
-import { Payload } from "./types"
+import { GenericResponse } from "./types"
 
 export const postCapture = (params: {
   canvas_hash: string
@@ -17,7 +17,7 @@ export const postCapture = (params: {
   platform: string
   cookieEnabled: boolean
   darkMode: boolean
-}): Promise<ApiError | ContactPOSTPayload> => {
+}): Promise<GenericResponse<ContactPOSTPayload, ApiError>> => {
   const apiConfig = {
     headers: {},
     params: params,
@@ -31,7 +31,7 @@ export const postMonitor = (params: {
   page: string
   prevPage: string
   newVisit?: string
-}): Promise<ApiError | ContactPOSTPayload> => {
+}): Promise<GenericResponse<ContactPOSTPayload, ApiError>> => {
   const apiConfig = {
     headers: {},
     params: params,

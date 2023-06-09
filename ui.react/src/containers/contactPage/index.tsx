@@ -5,15 +5,8 @@ import React, {
   useState,
 } from "react"
 import Spinner from "../../components/Spinner"
-import {
-  ContactState,
-  ContactPayload,
-  ContactInitialState,
-  ContactPOSTPayload,
-  ContactPOSTInitialState,
-  ContactPOST,
-} from "./types"
-import { fetchContact, postContact } from "../App/api/contactApi"
+import { ContactRequestPayload } from "./types"
+import { postContact } from "../App/api/contactApi"
 import Navbar from "../../components/Navbar"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
@@ -28,23 +21,22 @@ import { Input } from "../../components/Input"
 import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
 import { useContactState } from "../../controllers/useContactState"
+import { cmsData, GenericResponse } from "@containers/App/api/types"
+import { ApiError } from "src/api/apiErrorHandler"
 
 interface Props {
   scheme: PageInformation
   handleSubmit: (
     event: React.FormEvent<HTMLFormElement>,
-    payload: ContactPOST,
+    payload: ContactRequestPayload,
   ) => void
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
-  state: State<ContactPayload>
-  POSTstate: State<ContactPOSTPayload>
+  stateCMS: State<cmsData[]>
+  POSTstate: State<null>
 }
 
 function ContactPage(props: Props): JSX.Element {
-  useEffect(() => {
-    document.title = `Contact | ${props.scheme.title}`
-  }, [])
 
   function SearchBar() {
     return (
@@ -73,7 +65,7 @@ function ContactPage(props: Props): JSX.Element {
                     ? props.POSTstate.loading
                       ? "🛫"
                       : props.POSTstate.details
-                      ? props.POSTstate.details.success
+                      ? !props.POSTstate.error
                         ? "✅"
                         : "❌"
                       : "✏️"
@@ -87,14 +79,13 @@ function ContactPage(props: Props): JSX.Element {
     )
   }
 
-  if (props.state.loading) return <Spinner />
-  if (props.state.error && props.state.errorMessage)
-    return <ErrorPage error={props.state.errorMessage} />
-  if (props.state.details) {
-    const data = props.state.details.data
+  if (props.stateCMS.loading) return <Spinner />
+  if (props.stateCMS.error && props.stateCMS.errorMessage)
+    return <ErrorPage error={props.stateCMS.errorMessage} />
+  if (props.stateCMS.details) {
+    const data = props.stateCMS.details
 
     return (
-      // <div className="contactPage">
       <IslandCenter>
         <div className="contactPage">
           <div className="container">
@@ -119,7 +110,6 @@ function ContactPage(props: Props): JSX.Element {
           </div>
         </div>
       </IslandCenter>
-      // </div>
     )
   }
   return <></>

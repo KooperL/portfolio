@@ -1,4 +1,7 @@
+import { fetchCMSData } from "@containers/App/api/genericCMSApi"
+import { cmsData, CmsEndpoints } from "@containers/App/api/types"
 import { useContext, useEffect, useState } from "react"
+import { useFetch } from "src/hooks/useFetch"
 import { SchemeContext } from "../../containers/context/colourScheme"
 
 interface DensityMap {
@@ -174,9 +177,11 @@ export const useMinesweeperState = () => {
   const [mousePressDuration, setMousePressDuration] = useState(-1)
   const [gameState, setGameState] = useState(0)
   const [scheme, setScheme] = useContext(SchemeContext)
+  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, cmsData[]>(fetchCMSData)
 
   useEffect(() => {
     document.title = `Minesweeper | ${scheme.title}`
+    pull('minesweeperCms')
   }, [])
 
   function genFreshBoard() {
@@ -307,5 +312,6 @@ export const useMinesweeperState = () => {
     handleClick,
     setMousePressDuration,
     mousePressDuration,
+    stateCMS
   }
 }

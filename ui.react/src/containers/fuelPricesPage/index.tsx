@@ -2,20 +2,18 @@ import { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
 import Vchart from "../../components/Vchart"
 import { fetchFuelPrices } from "../App/api/fuelPricesApi"
-import {
-  FuelPricesState,
-  FuelPricesPayload,
-  FuelPricesInitialState,
-} from "./types"
 import "./style.css"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import { IslandCenter } from "../../templates/IslandCenter"
 import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
 import useFuelPricesState from "../../controllers/useFuelPricesState"
+import { FuelPricesResponse } from "./types"
+import { cmsData } from "@containers/App/api/types"
 
 interface Props {
-  state: State<FuelPricesPayload>
+  state: State<FuelPricesResponse>
+  stateCMS: State<cmsData[]>
   scheme: PageInformation
 }
 
@@ -24,8 +22,8 @@ function FuelPricesPage(props: Props): JSX.Element {
   if (props.state.error && props.state.errorMessage)
     return <ErrorPage error={props.state.errorMessage} />
 
-  if (props.state.details && props.state.details.data) {
-    const data = props.state.details.data
+  if (props.state.details && props.state.details) {
+    const data = props.state.details
     const width = Math.max(window.outerWidth, 1500)
 
     return (

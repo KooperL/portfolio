@@ -1,13 +1,7 @@
 import { ApiError } from "../../api/apiErrorHandler"
 
-export interface FuelPricesState {
-  details?: FuelPricesPayload
-  error?: boolean
-  errorMessage?: ApiError | null
-  loading?: boolean
-}
 
-export interface fuelDataPull {
+export interface fuelpricesData {
   average: {
     x: string
     y: number
@@ -26,22 +20,12 @@ export interface fuelDataPull {
   }[]
 }
 
-export interface FuelPricesPayload {
-  success: boolean
-  data?: {
-    fuelprices: fuelDataPull
+export interface FuelPricesResponse {
+    fuelprices: fuelpricesData 
     stats: {
       average: number
       relativePrice: number
       gradient: number
       decision: string
     }
-  }
-  error?: string
 }
-
-export const FuelPricesInitialState: FuelPricesState = {
-  error: false,
-  errorMessage: null,
-  loading: true,
-} as const

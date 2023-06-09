@@ -8,6 +8,8 @@ import "./style.css"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Button } from "../../components/Button"
 import { useJssimState } from "../../controllers/useJssimState"
+import { cmsData } from "@containers/App/api/types"
+import { State } from "../../types/State"
 
 interface Props {
   timer: number
@@ -22,6 +24,7 @@ interface Props {
   }
   scoreTally: number[]
   scheme: PageInformation
+  stateCMS: State<cmsData[]>
 }
 
 function JsSim(props: Props) {

@@ -15,6 +15,8 @@ import {
   makeupLookup,
   useMinesweeperState,
 } from "../../controllers/useMinesweeperState"
+import { State } from "../../types/State"
+import { cmsData } from "@containers/App/api/types"
 
 interface Props {
   gridSize: number
@@ -33,6 +35,7 @@ interface Props {
   ) => void
   setMousePressDuration: React.Dispatch<React.SetStateAction<number>>
   mousePressDuration: number
+  stateCMS: State<cmsData[]>
 }
 
 function Minesweeper(props: Props) {

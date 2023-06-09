@@ -1,13 +1,7 @@
 import { ApiError } from "../../api/apiErrorHandler"
 
-export interface MrnaState {
-  details?: MrnaPayload
-  error?: boolean
-  errorMessage?: ApiError | null
-  loading?: boolean
-}
 
-interface MrnaData {
+interface MrnaResponse {
   dna_field: string
   mrna_field: string
   rdna_field: string
@@ -24,13 +18,6 @@ interface MrnaData {
   tm: number
 }
 
-
-export interface MrnaPOST {
+export interface MrnaRequest {
   dna_field_id: string
 }
-
-export const MrnaInitialState: MrnaState = {
-  error: false,
-  errorMessage: null,
-  loading: false,
-} as const

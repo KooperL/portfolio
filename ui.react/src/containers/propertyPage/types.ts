@@ -1,15 +1,7 @@
 import { ApiError } from "../../api/apiErrorHandler"
 
-export interface PropertyState {
-  details?: PropertyPayload | PropertySearchPayload
-  error?: boolean
-  errorMessage?: ApiError | null
-  loading?: boolean
-}
 
-export interface PropertyPayload {
-  success: boolean
-  data: {
+export interface PropertyIndexResponse{
     highest: {
       suburb: string
       meanMeans: number
@@ -26,13 +18,9 @@ export interface PropertyPayload {
       Max: number
       IQR: number
     }
-  }
-  error?: string
 }
 
-export interface PropertySearchPayload {
-  success: boolean
-  data?: {
+export interface PropertySearchResponse {
     suburb: string
     stats: {
       mean: number
@@ -56,16 +44,8 @@ export interface PropertySearchPayload {
         stds: number[]
       }
     }
-  }
-  error?: string
 }
 
-export interface PropertyPOST {
+export interface PropertySearchRequest {
   prop_suburb: string
-}
-
-export const PropertyInitialState: PropertyState = {
-  error: false,
-  errorMessage: null,
-  loading: false,
 }

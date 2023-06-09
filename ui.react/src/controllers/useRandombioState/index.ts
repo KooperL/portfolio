@@ -1,10 +1,8 @@
+import { fetchCMSData } from "@containers/App/api/genericCMSApi"
+import { cmsData, CmsEndpoints } from "@containers/App/api/types"
+import { RandombioRequest } from "@containers/randomBioPage/types"
 import { useState, useCallback, useEffect, useContext } from "react"
-import {
-  RandomBioPayload,
-  RandomBioState,
-  RandomBioInitialState,
-  RandomBioPOST,
-} from "../../containers/randomBioPage/types"
+import { useFetch } from "src/hooks/useFetch"
 import { fetchRandomBio } from "../../containers/App/api/randomBioApi"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useSubmit } from "../../hooks/useSubmit"
@@ -14,8 +12,8 @@ export const useRandomBioState = () => {
   const [length, setLength] = useState(100)
   const [type, setType] = useState(1)
   const [single, setSingle] = useState(true)
-
-  const { state, handleSubmit } = useSubmit<RandomBioPayload, RandomBioPOST>(
+  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, cmsData[]>(fetchCMSData)
+  const { state: statePOST, handleSubmit } = useSubmit<RandombioRequest, string>(
     fetchRandomBio,
   )
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -38,6 +36,7 @@ export const useRandomBioState = () => {
     single,
     setSingle,
     onSubmit,
-    state,
+    statePOST,
+    stateCMS
   }
 }
