@@ -1,11 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
-import {
-  SeqAlignPayload,
-  SeqAlignState,
-  SeqAlignInitialState,
-  SeqAlignPOST,
-} from "./types"
 import { fetchSeqAlign } from "../App/api/seqAlignApi"
 import Modal from "../../components/Modal"
 // @ts-ignore
@@ -22,6 +16,8 @@ import ErrorPage from "../ErrorPage"
 import { useSeqAlignState } from "../../controllers/useSeqAlignState"
 import { useSubmit } from "../../hooks/useSubmit"
 import { State } from "../../types/State"
+import { SeqAlignResponse } from "./types"
+import { cmsData } from "@containers/App/api/types"
 
 interface Props {
   sampletxt: string
@@ -38,7 +34,8 @@ interface Props {
   setExtgaps: React.Dispatch<React.SetStateAction<number>>
   scheme: PageInformation
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  state: State<SeqAlignPayload>
+  stateSubmit: State<SeqAlignResponse>
+  stateCMS: State<cmsData[]>
 }
 
 function SeqAlignPage(props: Props): JSX.Element {
@@ -133,11 +130,11 @@ function SeqAlignPage(props: Props): JSX.Element {
     )
   }
 
-  if (props.state.loading) return <Spinner />
-  if (props.state.error && props.state.errorMessage)
-    return <ErrorPage error={props.state.errorMessage} />
-  if (props.state.details && props.state.details.data) {
-    const data = props.state.details.data
+  if (props.stateSubmit.loading) return <Spinner />
+  if (props.stateSubmit.error && props.stateSubmit.errorMessage)
+    return <ErrorPage error={props.stateSubmit.errorMessage} />
+  if (props.stateSubmit.details && props.stateSubmit.details) {
+    const data = props.stateSubmit.details
     const splitDrawArray = data.draw_res.map(elem => elem.split("\n"))
 
     return (

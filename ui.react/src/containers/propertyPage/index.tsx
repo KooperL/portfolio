@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
-import {
-  PropertyPayload,
-  PropertyState,
-  PropertyInitialState,
-  PropertyPOST,
-  PropertySearchPayload,
-} from "./types"
 import { fetchProperty } from "../App/api/propertyApi"
 import Chart from "react-apexcharts"
 import ErrorPage from "../ErrorPage"
@@ -16,11 +9,14 @@ import usePropertyState from "../../controllers/usePropertyState"
 import './style.css'
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Button } from "../../components/Button"
+import { PropertyIndexResponse } from "./types"
+import { cmsData } from "@containers/App/api/types"
 
 
 interface Props {
   scheme: PageInformation
-  state: State<PropertyPayload>
+  state: State<PropertyIndexResponse>
+  stateCMS: State<cmsData[]>
   ref: any
   handleSubmit: () => void
 }
@@ -29,8 +25,8 @@ function PropertyPage(props: Props): JSX.Element {
   if (props.state.loading) return <Spinner />
   if (props.state.error && props.state.errorMessage)
     return <ErrorPage error={props.state.errorMessage} />
-  if (props.state.details && props.state.details.data) {
-    const data = props.state.details as PropertyPayload
+  if (props.state.details && props.state.details) {
+    const data = props.state.details
     return (
       <div className="propertypage">
         <IslandCenter>
@@ -90,7 +86,7 @@ function PropertyPage(props: Props): JSX.Element {
                   </tr>
                 </thead>
                 <tbody>
-                {data.data.highest.map((topic, indexTopic) => (
+                {data.highest.map((topic, indexTopic) => (
                   <tr>
                     <td className="table-row">{topic.suburb}</td>
                     <td className="table-row">{topic.meanMeans}</td>
@@ -120,12 +116,12 @@ function PropertyPage(props: Props): JSX.Element {
                 </thead>
                 <tbody>
                 <tr>
-                  <td className="table-row">{data.data.stats.Min}</td>
-                  <td className="table-row">{data.data.stats.Q1}</td>
-                  <td className="table-row">{data.data.stats.median}</td>
-                  <td className="table-row">{data.data.stats.Q3}</td>
-                  <td className="table-row">{data.data.stats.Max}</td>
-                  <td className="table-row">{data.data.stats.IQR}</td>
+                  <td className="table-row">{data.stats.Min}</td>
+                  <td className="table-row">{data.stats.Q1}</td>
+                  <td className="table-row">{data.stats.median}</td>
+                  <td className="table-row">{data.stats.Q3}</td>
+                  <td className="table-row">{data.stats.Max}</td>
+                  <td className="table-row">{data.stats.IQR}</td>
                 </tr>
                 </tbody>
               </table>

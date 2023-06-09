@@ -1,13 +1,11 @@
 import { useState, useCallback, useContext, useEffect } from "react"
-import {
-  SeqAlignPayload,
-  SeqAlignState,
-  SeqAlignInitialState,
-  SeqAlignPOST,
-} from "../../containers/seqAlignPage/types"
 import { fetchSeqAlign } from "../../containers/App/api/seqAlignApi"
 import { useSubmit } from "../../hooks/useSubmit"
 import { SchemeContext } from "../../containers/context/colourScheme"
+import { SeqAlignRequest, SeqAlignResponse } from "@containers/seqAlignPage/types"
+import { useFetch } from "src/hooks/useFetch"
+import { cmsData, CmsEndpoints } from "@containers/App/api/types"
+import { fetchCMSData } from "@containers/App/api/genericCMSApi"
 
 export const useSeqAlignState = () => {
   const [sampletxt, setSampletxt] = useState("")
@@ -17,7 +15,8 @@ export const useSeqAlignState = () => {
   const [gaps, setGaps] = useState(-0.5)
   const [extgaps, setExtgaps] = useState(-0.1)
   const [scheme, setScheme] = useContext(SchemeContext)
-  const { state, handleSubmit } = useSubmit<SeqAlignPayload, SeqAlignPOST>(
+  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, cmsData[]>(fetchCMSData)
+  const { state: stateSubmit, handleSubmit } = useSubmit<SeqAlignRequest, SeqAlignResponse>(
     fetchSeqAlign,
   )
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,6 +32,7 @@ export const useSeqAlignState = () => {
 
   useEffect(() => {
     document.title = `Protein Secondary Structure | ${scheme.title}`
+    pull('seqalignCms')
   }, [])
 
   return {
@@ -50,6 +50,7 @@ export const useSeqAlignState = () => {
     setExtgaps,
     scheme,
     onSubmit,
-    state,
+    stateSubmit,
+    stateCMS
   }
 }

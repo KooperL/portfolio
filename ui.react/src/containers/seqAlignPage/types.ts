@@ -1,15 +1,6 @@
 import { ApiError } from "../../api/apiErrorHandler"
 
-export interface SeqAlignState {
-  details?: SeqAlignPayload
-  error?: boolean
-  errorMessage?: ApiError | null
-  loading?: boolean
-}
-
-export interface SeqAlignPayload {
-  success: boolean
-  data?: {
+export interface SeqAlignResponse {
     results: {
       end: number
       score: number
@@ -18,11 +9,9 @@ export interface SeqAlignPayload {
       start: number
     }[]
     draw_res: string[]
-  }
-  error?: string
 }
 
-export interface SeqAlignPOST {
+export interface SeqAlignRequest {
   sampletxt: string
   referencetxt: string
   identical?: number
@@ -30,9 +19,3 @@ export interface SeqAlignPOST {
   gaps?: number
   extgaps?: number
 }
-
-export const SeqAlignInitialState: SeqAlignState = {
-  error: false,
-  errorMessage: null,
-  loading: false,
-} as const

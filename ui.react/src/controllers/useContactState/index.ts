@@ -1,11 +1,8 @@
+import { postContact } from "@containers/App/api/contactApi"
+import { fetchCMSData } from "@containers/App/api/genericCMSApi"
+import { cmsData, CmsEndpoints } from "@containers/App/api/types"
+import { ContactRequestPayload } from "@containers/contactPage/types"
 import { useContext, useEffect, useState } from "react"
-import { fetchContact } from "../../containers/App/api/contactApi"
-import {
-  ContactPayload,
-  ContactPOST,
-  ContactPOSTInitialState,
-  ContactPOSTPayload,
-} from "../../containers/contactPage/types"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useFetch } from "../../hooks/useFetch"
 import { useSubmit } from "../../hooks/useSubmit"
@@ -15,15 +12,16 @@ export const useContactState = () => {
   const [value, setValue] = useState("")
   const [scheme, setScheme] = useContext(SchemeContext)
 
-  const { state, pull } = useFetch<ContactPayload, undefined>(fetchContact)
+  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, cmsData[]>(fetchCMSData)
 
   const { state: POSTstate, handleSubmit } = useSubmit<
-    ContactPOSTPayload,
-    ContactPOST
-  >(fetchContact)
+    ContactRequestPayload,
+    null 
+  >(postContact)
 
   useEffect(() => {
-    pull()
+    document.title = `Contact | ${scheme.title}`
+    pull('contactCms')
   }, [])
 
   return {
@@ -31,7 +29,7 @@ export const useContactState = () => {
     handleSubmit,
     value,
     setValue,
-    state,
+    stateCMS,
     POSTstate,
   }
 }

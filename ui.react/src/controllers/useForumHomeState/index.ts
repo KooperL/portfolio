@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { ForumRouteType } from "../../containers/App/routeTypes"
 import { useAccessToken } from "../../containers/authContext/context"
 import { SchemeContext } from "../../containers/context/colourScheme"
-import { ForumHomeGETResponse } from "../../containers/forumHomePage/types"
+import { ForumHomeResponse } from "../../containers/forumHomePage/types"
 import Redirect from "../../components/Redirect"
 import { usePost } from "../../hooks/usePost"
 import { endpoints } from "../../containers/App/api/endpoints"
@@ -19,7 +19,7 @@ export const useForumHomeState = () => {
   let paramString = window.location.href.split("?")[1]
   let queryString = new URLSearchParams(paramString)
 
-  const { state, post } = usePost<undefined, ForumHomeGETResponse>()
+  const { state, post } = usePost<undefined, ForumHomeResponse>()
 
   useEffect(() => {
     if (!token) {

@@ -5,7 +5,6 @@ import {
   AboutInitialState,
   AboutPayload,
 } from "../../containers/aboutPage/types"
-import { fetchAbout } from "../../containers/App/api/aboutApi"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useFetch } from "../../hooks/useFetch"
 import { useSubmit } from "../../hooks/useSubmit"
@@ -36,17 +35,17 @@ export const useAboutState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
   // let state: State<AboutPayload>;
 
-  const { state, pull } = useFetch<cmsData[], keyof CmsEndpoints>(fetchCMSData)
+  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, cmsData[]>(fetchCMSData)
 
   useEffect(() => {
+    document.title = `About | ${scheme.title}`
     pull('aboutCms')
-
+    
     fetch(dna)
       .then(r => r.text())
       .then(textRaw => {
         // setText(textRaw.split('\n').map(item => item.split('').map(item => +item)));
       })
-    document.title = `About | ${scheme.title}`
   }, [])
 
   // useEffect(() => {
@@ -65,7 +64,7 @@ export const useAboutState = () => {
   // }, [seed])
 
   return {
-    state,
+    stateCMS,
     scheme,
   }
 }

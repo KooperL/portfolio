@@ -3,25 +3,26 @@ import Spinner from "../../components/Spinner"
 import Vchart from "../../components/Vchart"
 import { fetchFuelPrices } from "../../containers/App/api/fuelPricesApi"
 import { SchemeContext } from "../../containers/context/colourScheme"
-import {
-  FuelPricesInitialState,
-  FuelPricesPayload,
-  FuelPricesState,
-} from "../../containers/fuelPricesPage/types"
 import { useFetch } from "src/hooks/useFetch"
+import { FuelPricesResponse } from "@containers/fuelPricesPage/types"
+import { cmsData, CmsEndpoints } from "@containers/App/api/types"
+import { fetchCMSData } from "@containers/App/api/genericCMSApi"
 
 function useFuelPricesState() {
   const [scheme, setScheme] = useContext(SchemeContext)
-  const { state, pull } = useFetch<FuelPricesPayload, undefined>(
+  const { state, pull } = useFetch<null, FuelPricesResponse>(
     fetchFuelPrices,
   )
+  const { state: stateCMS, pull: pullCMS } = useFetch<keyof CmsEndpoints, cmsData[]>(fetchCMSData)
 
   useEffect(() => {
-    pull()
+    pull(null)
+    pullCMS('fuelpricesCms')
     document.title = `Fuelprices | ${scheme.title}`
   }, [])
   return {
     state,
+    stateCMS,
     scheme,
   }
 }

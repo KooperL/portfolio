@@ -5,8 +5,6 @@ import React, {
   useState,
 } from "react"
 import Spinner from "../../components/Spinner"
-import { AboutState, AboutPayload, AboutInitialState } from "./types"
-import { fetchAbout } from "../App/api/aboutApi"
 import Navbar from "../../components/Navbar"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
@@ -20,19 +18,20 @@ import { IslandCenter } from "../../templates/IslandCenter"
 import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
 import { useAboutState } from "../../controllers/useAboutState"
+import { cmsData } from "@containers/App/api/types"
 
 interface Props {
-  state: State<AboutPayload>
+  stateCMS: State<cmsData[]>
   scheme: PageInformation
 }
 
 function AboutPage(props: Props): JSX.Element {
-  if (props.state.loading) return <Spinner />
-  if (props.state.error && props.state.errorMessage)
-    return <ErrorPage error={props.state.errorMessage} />
+  if (props.stateCMS.loading) return <Spinner />
+  if (props.stateCMS.error && props.stateCMS.errorMessage)
+    return <ErrorPage error={props.stateCMS.errorMessage} />
   // if(props.state.details && seed[0].length && seed[0][0].length) {
-  if (props.state.details) {
-    const data = props.state.details.data
+  if (props.stateCMS.details) {
+    const data = props.stateCMS.details
     const validCharsBinary = ["1", "0"]
     const validCharsNucleotides = ["A", "T", "G", "C"]
     return (

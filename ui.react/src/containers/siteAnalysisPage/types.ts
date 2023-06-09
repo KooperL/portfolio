@@ -1,6 +1,4 @@
-export interface siteAnalysisResp {
-  success: boolean
-  data?: {
+export interface siteAnalysisResponse {
     siteTraffic: {
       source: string
       destination: string
@@ -20,5 +18,4 @@ export interface siteAnalysisResp {
       page: string
       count: number
     }[]
-  }
 }

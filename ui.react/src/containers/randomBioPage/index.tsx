@@ -1,11 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
-import {
-  RandomBioPayload,
-  RandomBioState,
-  RandomBioInitialState,
-  RandomBioPOST,
-} from "./types"
 import { fetchRandomBio } from "../App/api/randomBioApi"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
@@ -17,6 +11,8 @@ import { Radio } from "../../components/Radio"
 import ErrorPage from "../ErrorPage"
 import { useRandomBioState } from "../../controllers/useRandombioState"
 import { State } from "../../types/State"
+import { cmsData } from "@containers/App/api/types"
+import { RandombioRequest } from "./types"
 
 interface Props {
   scheme: PageInformation
@@ -27,7 +23,8 @@ interface Props {
   single: boolean
   setSingle: React.Dispatch<React.SetStateAction<boolean>>
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  state: State<RandomBioPayload>
+  statePOST: State<string>
+  stateCMS: State<cmsData[]>
 }
 
 function RandomBioPage(props: Props): JSX.Element {
@@ -111,11 +108,11 @@ function RandomBioPage(props: Props): JSX.Element {
       </div>
     )
   }
-  if (props.state.loading) return <Spinner />
-  if (props.state.error && props.state.errorMessage)
-    return <ErrorPage error={props.state.errorMessage} />
-  if (props.state.details && props.state.details.data) {
-    const data = props.state.details.data
+  if (props.statePOST.loading) return <Spinner />
+  if (props.statePOST.error && props.statePOST.errorMessage)
+    return <ErrorPage error={props.statePOST.errorMessage} />
+  if (props.statePOST.details && props.statePOST.details) {
+    const data = props.statePOST.details
     return (
       <IslandCenter>
         <div className="randomBioPage">

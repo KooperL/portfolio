@@ -5,8 +5,6 @@ import React, {
   useState,
 } from "react"
 import Spinner from "../../components/Spinner"
-import { HomeState, HomePayload, HomeInitialState } from "./types"
-import { fetchHome } from "../App/api/homeApi"
 import Navbar from "../../components/Navbar"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
@@ -19,18 +17,19 @@ import TypeLookup from "../../components/TypeLookup"
 import ErrorPage from "../ErrorPage"
 import { useHomeState } from "../../controllers/useHomeState"
 import { State } from "../../types/State"
+import { cmsData } from "@containers/App/api/types"
 
 interface Props {
-  state: State<HomePayload>
+  stateCMS: State<cmsData[]>
   scheme: PageInformation
 }
 
 function HomePage(props: Props): JSX.Element {
-  if (props.state.loading) return <Spinner />
-  if (props.state.error && props.state.errorMessage)
-    return <ErrorPage error={props.state.errorMessage} />
-  if (props.state.details) {
-    const data = props.state.details.data
+  if (props.stateCMS.loading) return <Spinner />
+  if (props.stateCMS.error && props.stateCMS.errorMessage)
+    return <ErrorPage error={props.stateCMS.errorMessage} />
+  if (props.stateCMS.details) {
+    const data = props.stateCMS.details
 
     return (
       <IslandLeft>

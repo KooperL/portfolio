@@ -10,6 +10,7 @@ import { Input } from "../../components/Input"
 import ErrorPage from "../ErrorPage"
 import { useMrnaState } from "../../controllers/useMrnaState"
 import { State } from "../../types/State"
+import { cmsData } from "@containers/App/api/types"
 
 interface Props {
   scheme: PageInformation
@@ -17,6 +18,7 @@ interface Props {
   setValue: React.Dispatch<React.SetStateAction<string>>
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   state: State<MrnaPayload>
+  stateCMS: State<cmsData[]>
 }
 
 function MrnaPage(props: Props): JSX.Element {

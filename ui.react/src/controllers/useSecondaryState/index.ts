@@ -1,14 +1,12 @@
 import { useState, useCallback, useContext, useEffect } from "react"
-import {
-  SecondaryPayload,
-  SecondaryState,
-  SecondaryInitialState,
-  SecondaryPOST,
-} from "../../containers/secondaryPage/types"
 import { fetchSecondary } from "../../containers/App/api/SecondaryApi"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useSubmit } from "../../hooks/useSubmit"
 import { ApiError } from "../../api/apiErrorHandler"
+import { SecondaryRequest, SecondaryResponse } from "@containers/secondaryPage/types"
+import { useFetch } from "src/hooks/useFetch"
+import { cmsData, CmsEndpoints } from "@containers/App/api/types"
+import { fetchCMSData } from "@containers/App/api/genericCMSApi"
 
 export const useSecondaryState = () => {
   // dataCall: (body: SecondaryPOST) => Promise<ApiError | SecondaryPayload>
@@ -17,8 +15,8 @@ export const useSecondaryState = () => {
   const [detectthreshold, setDetectthreshold] = useState(4)
   const [leniency, setLeniency] = useState(3)
   const [scheme, setScheme] = useContext(SchemeContext)
-
-  const { state, handleSubmit } = useSubmit<SecondaryPayload, SecondaryPOST>(
+  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, cmsData[]>(fetchCMSData)
+  const { state: statePOST, handleSubmit } = useSubmit<SecondaryRequest, SecondaryResponse>(
     fetchSecondary,
   )
 
@@ -33,6 +31,7 @@ export const useSecondaryState = () => {
 
   useEffect(() => {
     document.title = `Protein Secondary Structure | ${scheme.title}`
+    pull('secondaryCms')
   }, [])
 
   return {
@@ -45,7 +44,8 @@ export const useSecondaryState = () => {
     leniency,
     setLeniency,
     scheme,
-    state,
+    statePOST,
     onSubmit,
+    stateCMS
   }
 }
