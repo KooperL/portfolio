@@ -1,10 +1,6 @@
-import { fetchCMSData } from "@containers/App/api/genericCMSApi"
+import { fetchCMSData } from "../../containers/App/api/genericCMSApi"
 import { cmsData, CmsEndpoints } from "@containers/App/api/types"
 import { useContext, useEffect, useRef, useState } from "react"
-import {
-  AboutInitialState,
-  AboutPayload,
-} from "../../containers/aboutPage/types"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useFetch } from "../../hooks/useFetch"
 import { useSubmit } from "../../hooks/useSubmit"

@@ -4,9 +4,9 @@ import Vchart from "../../components/Vchart"
 import { fetchFuelPrices } from "../../containers/App/api/fuelPricesApi"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useFetch } from "src/hooks/useFetch"
-import { FuelPricesResponse } from "@containers/fuelPricesPage/types"
-import { cmsData, CmsEndpoints } from "@containers/App/api/types"
-import { fetchCMSData } from "@containers/App/api/genericCMSApi"
+import { FuelPricesResponse } from "../../containers/fuelPricesPage/types"
+import { cmsData, CmsEndpoints } from "../../containers/App/api/types"
+import { fetchCMSData } from "../../containers/App/api/genericCMSApi"
 
 function useFuelPricesState() {
   const [scheme, setScheme] = useContext(SchemeContext)

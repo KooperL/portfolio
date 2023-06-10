@@ -3,8 +3,8 @@ import { fetchMrna } from "../../containers/App/api/MrnaApi"
 import { useSubmit } from "../../hooks/useSubmit"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useFetch } from "src/hooks/useFetch"
-import { cmsData, CmsEndpoints } from "@containers/App/api/types"
-import { fetchCMSData } from "@containers/App/api/genericCMSApi"
+import { cmsData, CmsEndpoints } from "../../containers/App/api/types"
+import { fetchCMSData } from "../../containers/App/api/genericCMSApi"
 
 export const useMrnaState = () => {
   const [value, setValue] = useState("")

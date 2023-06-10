@@ -85,7 +85,7 @@ export const useForumLoginState = () => {
     ForumLoginPOSTPayload,
     ForumLoginPOSTResponse
   >(e => {
-    setToken(e.accessToken ?? "")
+    setToken(e?.accessToken ?? "")
     if (window.hasOwnProperty("PasswordCrediential")) {
       let c = new PasswordCredential({
         id: usernameLogin,

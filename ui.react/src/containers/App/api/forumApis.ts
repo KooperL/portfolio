@@ -1,6 +1,6 @@
 import { ApiError } from "../../../api/apiErrorHandler"
 import { get, post } from "../../../api/restApi"
-import { ForumHomeGETResponse } from "../../forumHomePage/types"
+import { ForumHomeResponse } from "../../forumHomePage/types"
 import {
   ForumLoginPOSTPayload,
   ForumLoginPOSTResponse,
@@ -61,7 +61,7 @@ export const forumPost = <T, U>(opts: Opts<T>): Promise<GenericResponse<U, ApiEr
 export const postForumRegister = (
   data: ForumRegisterPOSTPayload,
   authBasic: string,
-): Promise<ApiError | ForumRegisterPOSTResponse> => {
+): Promise<GenericResponse<ForumRegisterPOSTResponse, ApiError>> => {
   const apiConfig = {
     headers: { Authorization: `Basic ${authBasic}` }, //, 'Access-Control-Allow-Credentials': 'true'},
     data: data,
@@ -73,7 +73,7 @@ export const postForumRegister = (
 export const postForumLogin = (
   data: ForumLoginPOSTPayload,
   authBasic: string,
-): Promise<ApiError | ForumLoginPOSTResponse> => {
+): Promise<GenericResponse<ForumLoginPOSTResponse, ApiError>> => {
   const apiConfig = {
     headers: { Authorization: `Basic ${authBasic}` }, //, 'Access-Control-Allow-Credentials': 'true'},
     data: data,
@@ -85,7 +85,7 @@ export const postForumLogin = (
 export const postForumLogout = (
   data: ForumLoginPOSTPayload,
   authJWT: string,
-): Promise<ApiError | ForumRegisterPOSTResponse> => {
+): Promise<GenericResponse<ForumRegisterPOSTResponse, ApiError>> => {
   const apiConfig = {
     headers: { Authorization: `Bearer ${authJWT}` }, //, 'Access-Control-Allow-Credentials': 'true'},
     data: data,
@@ -96,7 +96,7 @@ export const postForumLogout = (
 
 export const postForumRefresh = (data: {
   session_id: string
-}): Promise<ApiError | ForumLoginPOSTResponse> => {
+}): Promise<GenericResponse<ForumLoginPOSTResponse, ApiError>> => {
   const apiConfig = {
     data: data,
     // headers: {'Access-Control-Allow-Credentials': 'true'}
@@ -108,7 +108,7 @@ export const postForumRefresh = (data: {
 export const postPostCreate = (
   data: ForumPostCreatePOSTPayload,
   authJWT: string,
-): Promise<ApiError | ForumLoginPOSTPayload> => {
+): Promise<GenericResponse<ForumLoginPOSTPayload, ApiError>> => {
   const apiConfig = {
     headers: { Authorization: `Bearer ${authJWT}` },
     data: data,
@@ -120,7 +120,7 @@ export const getPostView = (
   data: ForumPostViewGETPayload,
   authJWT: string,
   id: number,
-): Promise<ApiError | ForumLoginPOSTPayload> => {
+): Promise<GenericResponse<ForumLoginPOSTPayload, ApiError>> => {
   console.log(data)
   const apiConfig = {
     headers: {
@@ -136,7 +136,7 @@ export const getPostView = (
 export const getForumHome = (
   params: ForumLoginPOSTPayload,
   authJWT: string,
-): Promise<ApiError | ApiError | ForumHomeGETResponse> => {
+): Promise<GenericResponse<ForumHomeResponse, ApiError>> => {
   const apiConfig = {
     headers: { Authorization: `Bearer ${authJWT}` },
     params: params,
@@ -149,7 +149,7 @@ export const getUserView = (
   data: ForumPostViewGETPayload,
   authJWT: string,
   username: string,
-): Promise<ApiError | ApiError | ForumUserGETResponse> => {
+): Promise<GenericResponse<ForumUserGETResponse, ApiError>> => {
   const apiConfig = {
     headers: { Authorization: `Bearer ${authJWT}` },
     params: data,

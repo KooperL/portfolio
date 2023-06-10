@@ -1,11 +1,10 @@
-import { siteAnalysisResp } from "../../siteAnalysisPage/types"
+import { siteAnalysisResponse } from "@containers/siteAnalysisPage/types"
 import { ApiError } from "../../../api/apiErrorHandler"
 import { get } from "../../../api/restApi"
-import { AboutPayload } from "../../aboutPage/types"
 import { endpoints } from "./endpoints"
-import { Payload } from "./types"
+import { GenericResponse } from "./types"
 
-export const fetchSiteAnalysis = (): Promise<ApiError | siteAnalysisResp> => {
+export const fetchSiteAnalysis = (): Promise<GenericResponse<siteAnalysisResponse, ApiError>> => {
   const apiConfig = {
     headers: {},
     params: { uuid: localStorage.getItem("uuid") },

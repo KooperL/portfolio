@@ -2,10 +2,10 @@ import { useState, useCallback, useContext, useEffect } from "react"
 import { fetchSeqAlign } from "../../containers/App/api/seqAlignApi"
 import { useSubmit } from "../../hooks/useSubmit"
 import { SchemeContext } from "../../containers/context/colourScheme"
-import { SeqAlignRequest, SeqAlignResponse } from "@containers/seqAlignPage/types"
+import { SeqAlignRequest, SeqAlignResponse } from "../../containers/seqAlignPage/types"
 import { useFetch } from "src/hooks/useFetch"
-import { cmsData, CmsEndpoints } from "@containers/App/api/types"
-import { fetchCMSData } from "@containers/App/api/genericCMSApi"
+import { cmsData, CmsEndpoints } from "../../containers/App/api/types"
+import { fetchCMSData } from "../../containers/App/api/genericCMSApi"
 
 export const useSeqAlignState = () => {
   const [sampletxt, setSampletxt] = useState("")

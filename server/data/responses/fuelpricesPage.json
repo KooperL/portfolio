@@ -1,15 +1,21 @@
-[
-  {
-    "type": "header",
-    "data": [
-      "UL91 Fuel Price trends"
-    ]
-  },
-  {
-    "type": "subheader",
-    "data": [
-      "View aggregated historic unleaded 91 fuel price data.",
-      "The scraper for this project has been frozen but historic data is still presented."
+{
+  "id": "__unused__",
+  "title": "__unused__",
+  "slug": "__unused__",
+  "sections": [
+    "id": "__unused__",
+    "title": "__unused__",
+    "components": [
+      {
+        "type": "TextContent",
+        "content": {
+          "title": "UL91 Fuel Price trends",
+          "body": [
+            "View aggregated historic unleaded 91 fuel price data.",
+            "The scraper for this project has been frozen but historic data is still presented."
+          ]
+        }
+      }
     ]
   }
 ]

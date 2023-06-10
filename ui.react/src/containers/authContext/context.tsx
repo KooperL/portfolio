@@ -12,7 +12,6 @@ import { LoggingPOSTResponse } from "../../components/Logger/types"
 import { postForumRefresh } from "../App/api/forumApis"
 import { postMonitor } from "../App/api/loggerApi"
 import { ForumRouteType } from "../App/routeTypes"
-import { ContactPOSTPayload } from "../contactPage/types"
 import {
   ForumLoginPOSTPayload,
   ForumLoginPOSTResponse,
@@ -32,7 +31,7 @@ export function monitor() {
     prevPage: encodeURIComponent(currentPage ?? "NULL"),
   })
     .then(resp => {
-      if ((resp as ContactPOSTPayload).success) {
+      if (resp.success) {
         localStorage.setItem("currentPage", window.location.pathname)
         // } else {
         //   throw new Error((resp as ApiError))
@@ -59,8 +58,7 @@ export function AccessTokenProvider({ children }: any) {
       return
     postForumRefresh({ session_id: sessionStorage.getItem("session_id") ?? "" })
       .then(resp => {
-        resp = resp as ForumLoginPOSTResponse
-        if (resp.success && resp.accessToken && resp.expires) {
+        if (resp.success && resp.data?.accessToken && resp.data.expires) {
           // setPOSTState({
           //   details: resp,
           //   error: false,
@@ -68,8 +66,8 @@ export function AccessTokenProvider({ children }: any) {
           //   loading: false
           // });
           // navigate(`/${forumPath}/post`)
-          setAccessToken(resp.accessToken)
-          setAccessTokenExpires(new Date(resp.expires))
+          setAccessToken(resp.data.accessToken)
+          setAccessTokenExpires(new Date(resp.data.expires))
         } else {
           // RIP genuinely invalid
           // throw new Error(resp.error);

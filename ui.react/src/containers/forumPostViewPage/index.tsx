@@ -5,7 +5,6 @@ import React, {
   useState,
 } from "react"
 import Spinner from "../../components/Spinner"
-import { fetchContact, postContact } from "../App/api/contactApi"
 import Navbar from "../../components/Navbar"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
