@@ -17,7 +17,9 @@ const checkStatus = <T>(response: AxiosResponse) => {
   throw new Error()
 }
 
-const request = <T>(config: AxiosRequestConfig): Promise<GenericResponse<T, ApiError>> => {
+const request = <T>(
+  config: AxiosRequestConfig,
+): Promise<GenericResponse<T, ApiError>> => {
   return new Promise((res, rej) => {
     if (localStorage.getItem("environment") === "Local") {
       console.log(

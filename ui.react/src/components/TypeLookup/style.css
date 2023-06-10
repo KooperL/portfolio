@@ -1,34 +1,37 @@
-.type-lookup.main-heading {
+.type-lookup {
+  width: 100%;
+  height: 100%;
+}
+
+.section {
+  width: 100%;
+  height: 100%;
+}
+
+.section > h1 {
   font-size: 3rem;
   padding-bottom: 25px;
 }
 
-.type-lookup.subheader {
+.section > h3 {
   font-size: 1.5rem;
   grid-column: span 4;
   padding-top: 0.5rem;
 }
 
-.type-lookup.buttonArr {
+.section > .button-list {
   display: flex;
   flex-direction: row;
+  flex-wrap: 1;
 }
 
-.type-lookup.text {
-  /* padding: 2rem 0; */
-}
-
-ul.type-lookup.unorderedList {
+.section > .unordered-list {
   padding-left: 40px;
   list-style-type: circle;
   padding-top: 0;
 }
 
-.type-lookup.text {
-  display: inline;
-}
-
-.type-lookup.emoji {
+.section > .emoji {
   font-size: xx-large;
   display: flex;
   justify-content: center;
@@ -37,7 +40,7 @@ ul.type-lookup.unorderedList {
 }
 
 @media screen and (max-width: 1000px) {
-  .type-lookup.buttonArr {
+  .section > .button-list {
     display: flex;
     flex-direction: column;
   }

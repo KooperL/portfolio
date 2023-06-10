@@ -1,137 +1,136 @@
-[
-  {
-      "data": [
-          "React apps"
-      ],
-      "type": "subheader"
-  },
-  {
-      "data": [
-          {
-              "data": [
-                  "/projects/tictactoe"
-              ],
-              "text": "Tictactoe",
-              "type": "button"
-          },
-          {
-              "data": [
-                  "/projects/minesweeper"
-              ],
-              "text": "Minesweeper",
-              "type": "button"
-          },
-          {
-              "data": [
-                  "/projects/jssimulator"
-              ],
-              "text": "Front-end dev simulator",
-              "type": "button"
+{
+  "id": "__unused__",
+  "title": "__unused__",
+  "slug": "__unused__",
+  "sections": [
+    {
+      "id": "__unused__",
+      "title": "__unused__",
+      "components": [
+        {
+          "type": "text",
+          "content": {
+            "title": "Projects"
           }
-      ],
-      "type": "buttonArr"
-  },
-  {
-      "data": [
-          "Data Storage and Analysis"
-      ],
-      "type": "subheader"
-  },
-  {
-      "data": [
-          {
-              "data": [
-                  "/projects/fuelprices"
-              ],
-              "text": "UL91 Fuel Price trends",
-              "type": "button"
-          },
-          {
-              "data": [
-                  "/projects/property"
-              ],
-              "text": "Real estate data interface",
-              "type": "button"
+        },
+        {
+          "type": "text",
+          "content": {
+            "subTitle": "React apps"
           }
-      ],
-      "type": "buttonArr"
-  },
-  {
-      "data": [
-          "Bioinformatics"
-      ],
-      "type": "subheader"
-  },
-  {
-      "data": [
-          {
-              "data": [
-                  "/projects/mrna"
-              ],
-              "text": "DNA:mRNA decoder",
-              "type": "button"
-          },
-          {
-              "data": [
-                  "/projects/secondary"
-              ],
-              "text": "Protein 2° Structure",
-              "type": "button"
-          },
-          {
-              "data": [
-                  "/projects/seqalign"
-              ],
-              "text": "Pairwise sequence alignment",
-              "type": "button"
-          },
-          {
-              "data": [
-                  "/projects/randombio"
-              ],
-              "text": "DNA sequence generator",
-              "type": "button"
+        },
+        {
+          "type": "button-list",
+          "content": {
+            "buttons": [
+              {
+                "text": "tictactoe",
+                "url": "/projects/tictactoe",
+                "local": true 
+              },
+              {
+                "text": "minesweeper",
+                "url": "/projects/minesweeper",
+                "local": true 
+              },
+              {
+                "text": "Typing challenge",
+                "url": "/projects/jssimulator",
+                "local": true 
+              }
+            ]
           }
-      ],
-      "type": "buttonArr"
-  },
-  {
-      "data": [
-          "Repos"
-      ],
-      "type": "subheader"
-  },
-  {
-      "data": [
-          {
-              "data": [
-                  "https://github.com/KooperL/portfolio"
-              ],
-              "text": "This Website",
-              "type": "button"
-          },
-          {
-              "data": [
-                  "https://github.com/KooperL/trafficCounter"
-              ],
-              "text": "AI Traffic Counter",
-              "type": "button"
-          },
-          {
-              "data": [
-                  "https://github.com/KooperL/tkinter3dengine"
-              ],
-              "text": "Python/Tkinter 3d Engine",
-              "type": "button"
-          },
-          {
-              "data": [
-                  "https://github.com/KooperL/tkinterAstar"
-              ],
-              "text": "A* Path finder py",
-              "type": "button"
+        },
+        {
+          "type": "text",
+          "content": {
+            "subTitle": "Data storage & analysis"
           }
-      ],
-      "type": "buttonArr"
-  }
-]
+        },
+        {
+          "type": "button-list",
+          "content": {
+            "buttons": [
+              {
+                "text": "UL91 Fuel Price trends",
+                "url": "/projects/fuelprices",
+                "local": true 
+              },
+              {
+                "text": "Real estate data interface",
+                "url": "/projects/property",
+                "local": true 
+              }
+            ]
+          }
+        },
+        {
+          "type": "text",
+          "content": {
+            "title": "Bioinformatics"
+          }
+        },
+        {
+          "type": "button-list",
+          "content": {
+            "buttons": [
+              {
+                "text": "DNA:mRNA decoder",
+                "url": "/projects/mrna",
+                "local": true 
+              },
+              {
+                "text": "Protein 2° Structure",
+                "url": "/projects/secondary",
+                "local": true 
+              },
+              {
+                "text": "Pairwise sequence alignment",
+                "url": "/projects/seqalign",
+                "local": true 
+              },
+              {
+                "text": "DNA sequence generator",
+                "url": "/projects/randombio",
+                "local": true 
+              }
+            ]
+          }
+        },
+        {
+          "type": "text",
+          "content": {
+            "title": "Repos"
+          }
+        },
+        {
+          "type": "button-list",
+          "content": {
+            "buttons": [
+              {
+                "text": "This Website",
+                "url": "https://github.com/KooperL/portfolio",
+                "local": false 
+              },
+              {
+                "text": "AI Traffic Counter",
+                "url": "https://github.com/KooperL/trafficCounter",
+                "local": false 
+              },
+              {
+                "text": "3D Engine",
+                "url": "https://github.com/KooperL/tkinter3dengine",
+                "local": false 
+              },
+              {
+                "text": "A* Path Finder",
+                "url": "https://github.com/KooperL/tkinterAstar",
+                "local": false 
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -16,7 +16,8 @@ import {
   useMinesweeperState,
 } from "../../controllers/useMinesweeperState"
 import { State } from "../../types/State"
-import { cmsData } from "@containers/App/api/types"
+import TypeLookup from "../../components/TypeLookup"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 interface Props {
   gridSize: number
@@ -35,13 +36,14 @@ interface Props {
   ) => void
   setMousePressDuration: React.Dispatch<React.SetStateAction<number>>
   mousePressDuration: number
-  stateCMS: State<cmsData[]>
+  stateCMS: State<CMSPage>
 }
 
 function Minesweeper(props: Props) {
   return (
     <IslandCenter>
       <div className="minesweeperPage">
+        {/**<TypeLookup {...data} />**/}
         <div className="game-controls">
           <div className="game-control">
             <Modal closedChildren={<Gear variant="small" />}>

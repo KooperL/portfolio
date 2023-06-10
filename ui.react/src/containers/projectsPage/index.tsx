@@ -20,11 +20,11 @@ import { useFetch } from "../../hooks/useFetch"
 import { ApiError } from "../../api/apiErrorHandler"
 import { State } from "../../types/State"
 import { useProjectsState } from "../../controllers/useProjectsState"
-import { cmsData } from "@containers/App/api/types"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 interface Props {
   scheme: PageInformation
-  stateCMS: State<cmsData[]>
+  stateCMS: State<CMSPage>
 }
 
 function ProjectsPage(props: Props): JSX.Element {
@@ -49,14 +49,7 @@ function ProjectsPage(props: Props): JSX.Element {
                 Projects
               </h2>
               <div className="links">
-                {data.map((segment, indexSegment) => (
-                  <TypeLookup
-                    key={indexSegment}
-                    type={segment.type}
-                    data={segment.data}
-                    text={segment?.text}
-                  />
-                ))}
+                <TypeLookup {...data} />
               </div>
             </div>
             <div className="render">

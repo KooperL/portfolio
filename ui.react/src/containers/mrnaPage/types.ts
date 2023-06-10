@@ -1,6 +1,5 @@
 import { ApiError } from "../../api/apiErrorHandler"
 
-
 export interface MrnaResponse {
   dna_field: string
   mrna_field: string

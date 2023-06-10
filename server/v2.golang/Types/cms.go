@@ -3,6 +3,7 @@ package types
 type CMSPage struct {
 	ID       string      `json:"id"`
 	Title    string      `json:"title"`
+	Slug    string      `json:"slug"`
 	Sections []CMSSection `json:"sections"`
 }
 
@@ -13,7 +14,6 @@ type CMSSection struct {
 }
 
 type CMSComponent struct {
-	ID      string                 `json:"id"`
 	Type    string                 `json:"type"`
-	Data    map[string]interface{} `json:"data"`
+	Content    map[string]interface{} `json:"content"`
 }

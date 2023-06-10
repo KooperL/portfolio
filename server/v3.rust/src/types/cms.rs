@@ -58,9 +58,9 @@ enum CMSComponent {
 
 #[derive(Debug, Deserialize, Serialize)]
 struct TextContent {
-    title: Option(String),
-    subTitle: Option(String),
-    body: String,
+    title: Option<String>,
+    subTitle: Option<String>,
+    body: Option<Vec<String>>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]

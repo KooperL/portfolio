@@ -48,19 +48,12 @@ export interface CmsEndpoints {
   tictactoeCms: string
 }
 
-
-export interface cmsData {
-  type: string
-  data: string[]
-  text: string
-}
-
 export interface emptyPayload {
   success: boolean
 }
 
 export interface GenericResponse<T, U extends string | ApiError> {
-  data: T | null,
+  data: T | null
   success: boolean
   error: U | null
 }

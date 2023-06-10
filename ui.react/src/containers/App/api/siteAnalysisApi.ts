@@ -4,7 +4,9 @@ import { get } from "../../../api/restApi"
 import { endpoints } from "./endpoints"
 import { GenericResponse } from "./types"
 
-export const fetchSiteAnalysis = (): Promise<GenericResponse<siteAnalysisResponse, ApiError>> => {
+export const fetchSiteAnalysis = (): Promise<
+  GenericResponse<siteAnalysisResponse, ApiError>
+> => {
   const apiConfig = {
     headers: {},
     params: { uuid: localStorage.getItem("uuid") },

@@ -18,32 +18,31 @@ export const usePost = <T, U>(callback?: (e: U | null) => void) => {
         error: false,
         errorMessage: null,
       })
-      forumPost<T, U>(opts)
-        .then(resp => {
-          if (resp.hasOwnProperty('success') && resp.success) {
-            setState({
-              details: resp?.data || null,
-              error: false,
-              errorMessage: null,
-              loading: false,
-            })
-            callback && callback(resp.data)
-             } else {
-            setState({
-              details: null,
-              error: true,
-              errorMessage: resp.error,
-              loading: false,
-            })
-             }
-        })
-        // .catch((err: any) => {
-        //   setState({
-        //     error: true,
-        //     errorMessage: err as ApiError,
-        //     loading: false,
-        //   })
-        // })
+      forumPost<T, U>(opts).then(resp => {
+        if (resp.hasOwnProperty("success") && resp.success) {
+          setState({
+            details: resp?.data || null,
+            error: false,
+            errorMessage: null,
+            loading: false,
+          })
+          callback && callback(resp.data)
+        } else {
+          setState({
+            details: null,
+            error: true,
+            errorMessage: resp.error,
+            loading: false,
+          })
+        }
+      })
+      // .catch((err: any) => {
+      //   setState({
+      //     error: true,
+      //     errorMessage: err as ApiError,
+      //     loading: false,
+      //   })
+      // })
     },
     [state],
   )

@@ -9,11 +9,12 @@ import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
 import useFuelPricesState from "../../controllers/useFuelPricesState"
 import { FuelPricesResponse } from "./types"
-import { cmsData } from "@containers/App/api/types"
+import TypeLookup from "../../components/TypeLookup"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 interface Props {
   state: State<FuelPricesResponse>
-  stateCMS: State<cmsData[]>
+  stateCMS: State<CMSPage>
   scheme: PageInformation
 }
 
@@ -29,6 +30,7 @@ function FuelPricesPage(props: Props): JSX.Element {
     return (
       <IslandCenter>
         <div className="fuelPricesPage">
+          {/**<TypeLookup {...data} />**/}
           <div className="table-container">
             <div className="chart">
               <Vchart

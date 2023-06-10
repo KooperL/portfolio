@@ -9,7 +9,7 @@ import (
 
 func ContactPage(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		var res []types.PagePopulateNode
+		var res types.CMSPage
 		utils.OpenAndParseJSONFile("../data/responses/ContactPage.json", &res)
 		responses.BuildSuccessResponse(w, res)
 	}

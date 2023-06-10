@@ -18,10 +18,10 @@ import { IslandCenter } from "../../templates/IslandCenter"
 import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
 import { useAboutState } from "../../controllers/useAboutState"
-import { cmsData } from "@containers/App/api/types"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 interface Props {
-  stateCMS: State<cmsData[]>
+  stateCMS: State<CMSPage>
   scheme: PageInformation
 }
 
@@ -46,16 +46,17 @@ function AboutPage(props: Props): JSX.Element {
               >
                 About
               </h2>
-              {data.map((segment, indexSegment) => (
+              {/**{data.map((segment, indexSegment) => (
                 <div key={indexSegment}>
                   {TypeLookup({
                     type: segment.type,
                     data: segment.data,
                     text: segment?.text,
                   })}
-                  {/* <TypeLookup type={segment.type} data={segment.data} text={segment?.text} /> */}
+                  <TypeLookup type={segment.type} data={segment.data} text={segment?.text} />
                 </div>
-              ))}
+              ))}**/}
+              <TypeLookup {...data} />
             </div>
             <div className="render">
               {/* {window.outerWidth > 1000 ? <ReactP5Wrapper sketch={sketchWrapper(props.scheme.body.h1)} /> : <></>} */}

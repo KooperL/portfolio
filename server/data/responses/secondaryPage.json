@@ -1,14 +1,22 @@
-[
-  {
-    "type": "header",
-    "data": [
-      "Protein 2° Structure"
-    ]
-  },
-  {
-    "type": "subheader",
-    "data": [
-      "Enter a sequence of amino acids in single character form to view a calculated reconstruction of the secondary protein structure according to the Chou-Fasman method (~50% accuracy)."
-    ]
-  }
-]
+{
+  "id": "__unused__",
+  "title": "__unused__",
+  "slug": "__unused__",
+  "sections": [
+    {
+      "id": "__unused__",
+      "title": "__unused__",
+      "components": [
+        {
+          "type": "text",
+          "content": {
+            "title": "Protein 2° Structure",
+            "body": [
+              "Enter a sequence of amino acids in single character form to view a calculated reconstruction of the secondary protein structure according to the Chou-Fasman method (~50% accuracy)."
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

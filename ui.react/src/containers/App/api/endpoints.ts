@@ -1,4 +1,10 @@
-import { ApiEndpoints, CmsEndpoints, cmsPath, forumPath, projectPath } from "./types"
+import {
+  ApiEndpoints,
+  CmsEndpoints,
+  cmsPath,
+  forumPath,
+  projectPath,
+} from "./types"
 import { environmentConfig } from "./environmentMappings"
 
 const { apiHost } = environmentConfig()

@@ -1,5 +1,5 @@
 import { fetchCMSData } from "../../containers/App/api/genericCMSApi"
-import { cmsData, CmsEndpoints } from "@containers/App/api/types"
+import { CmsEndpoints } from "../../containers/App/api/types"
 import { useContext, useEffect, useRef, useState } from "react"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useFetch } from "../../hooks/useFetch"
@@ -7,6 +7,7 @@ import { useSubmit } from "../../hooks/useSubmit"
 import { State } from "../../types/State"
 // @ts-ignore
 import dna from "./dna.txt"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 function newSeed(arrs: number, length: number, width: number) {
   let arr = new Array(arrs)
@@ -31,12 +32,14 @@ export const useAboutState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
   // let state: State<AboutPayload>;
 
-  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, cmsData[]>(fetchCMSData)
+  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, CMSPage>(
+    fetchCMSData,
+  )
 
   useEffect(() => {
     document.title = `About | ${scheme.title}`
-    pull('aboutCms')
-    
+    pull("aboutCms")
+
     fetch(dna)
       .then(r => r.text())
       .then(textRaw => {

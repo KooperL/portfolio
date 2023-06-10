@@ -8,8 +8,8 @@ import "./style.css"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Button } from "../../components/Button"
 import { useJssimState } from "../../controllers/useJssimState"
-import { cmsData } from "@containers/App/api/types"
 import { State } from "../../types/State"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 interface Props {
   timer: number
@@ -24,13 +24,14 @@ interface Props {
   }
   scoreTally: number[]
   scheme: PageInformation
-  stateCMS: State<cmsData[]>
+  stateCMS: State<CMSPage>
 }
 
 function JsSim(props: Props) {
   return (
     <IslandCenter>
       <div className="jsSimPage">
+        {/**<TypeLookup {...data} />**/}
         <div className="instrucions">
           <p>
             <span>

@@ -8,7 +8,7 @@
       "title": "__unused__",
       "components": [
         {
-          "type": "TextContent",
+          "type": "text",
           "content": {
             "title": "hi 👋 i\"m kooper, welcome to my website.", 
             "subtitle": "I update it constantly to demonstrate my comprehension of new technologies i am learning.",
@@ -26,22 +26,22 @@
           }
         },
         {
-          "type": "TextContent",
+          "type": "text",
           "content": {
             "body": [
               "Initially created in july 2020 during my honours year, this started from scratch as a hobby, secondary only to my studies. as i learned more, it ate more of my free time and continued to evolve. ",
               "It is designed with functionality and design over speed and seo. this was a deliberate trade off to demonstrate experience with many technologies. ",
               "This is the perfect place for me to apply the skills and techniques i learn both recreationally and professionally. ",
               "Above all, creating this website, and making projects for it has taught me two things: 1) each component of a website stack/cs domain is deep enough to spend an entire career to perfect, and 2) i want to spend my career in the frontend. ",
-              "This is my roadmap's destination and ultimately this webiste will reflect where i place on that roadmap. "
-            "Here\"s some information on what is being used to serve this website to you:"
+              "This is my roadmap's destination and ultimately this webiste will reflect where i place on that roadmap. ",
+              "Here\"s some information on what is being used to serve this website to you:"
             ]
           }
         },
         {
           "type": "unordered-list",
           "content": {
-            items: [
+            "items": [
               "domain registration and namespace mapping through godaddy 📝",
               "servers are deployed and hosted on a vps 🖥️",
               "version control and storage managed with git/github 📆",

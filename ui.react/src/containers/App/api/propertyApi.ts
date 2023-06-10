@@ -1,10 +1,15 @@
-import { PropertyIndexResponse, PropertySearchRequest } from "@containers/propertyPage/types"
+import {
+  PropertyIndexResponse,
+  PropertySearchRequest,
+} from "@containers/propertyPage/types"
 import { ApiError } from "../../../api/apiErrorHandler"
 import { get } from "../../../api/restApi"
 import { endpoints } from "./endpoints"
 import { GenericResponse } from "./types"
 
-export const fetchProperty = (): Promise<GenericResponse<PropertyIndexResponse, ApiError>> => {
+export const fetchProperty = (): Promise<
+  GenericResponse<PropertyIndexResponse, ApiError>
+> => {
   const apiConfig = {
     headers: {},
     params: {},

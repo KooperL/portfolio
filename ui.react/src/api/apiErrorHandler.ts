@@ -24,7 +24,7 @@ export const handleError = (error: any): GenericResponse<null, ApiError> => {
   const returnVal: GenericResponse<null, ApiError> = {
     success: false,
     data: null,
-    error: apiError
+    error: apiError,
   }
-  return returnVal 
+  return returnVal
 }

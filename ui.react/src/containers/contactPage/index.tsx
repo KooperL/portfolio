@@ -21,8 +21,9 @@ import { Input } from "../../components/Input"
 import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
 import { useContactState } from "../../controllers/useContactState"
-import { cmsData, GenericResponse } from "@containers/App/api/types"
+import { GenericResponse } from "@containers/App/api/types"
 import { ApiError } from "src/api/apiErrorHandler"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 interface Props {
   scheme: PageInformation
@@ -32,12 +33,11 @@ interface Props {
   ) => void
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
-  stateCMS: State<cmsData[]>
+  stateCMS: State<CMSPage>
   POSTstate: State<null>
 }
 
 function ContactPage(props: Props): JSX.Element {
-
   function SearchBar() {
     return (
       <div className="search-container">
@@ -96,15 +96,7 @@ function ContactPage(props: Props): JSX.Element {
               >
                 Contact
               </h2>
-              {data.map((segment, indexSegment) => (
-                <div key={indexSegment}>
-                  {TypeLookup({
-                    type: segment.type,
-                    data: segment.data,
-                    text: segment?.text,
-                  })}
-                </div>
-              ))}
+              <TypeLookup {...data} />
               {SearchBar()}
             </div>
           </div>
