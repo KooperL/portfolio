@@ -29,7 +29,9 @@ export interface Opts<T> {
   // varRoute?: number,
 }
 
-export const forumPost = <T, U>(opts: Opts<T>): Promise<GenericResponse<U, ApiError>> => {
+export const forumPost = <T, U>(
+  opts: Opts<T>,
+): Promise<GenericResponse<U, ApiError>> => {
   // let url = endpoints[opts.endpoint] + (opts.varRoute ?? '')
   const apiConfig = {
     headers: {

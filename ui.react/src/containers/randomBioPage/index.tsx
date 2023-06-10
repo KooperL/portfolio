@@ -11,8 +11,8 @@ import { Radio } from "../../components/Radio"
 import ErrorPage from "../ErrorPage"
 import { useRandomBioState } from "../../controllers/useRandombioState"
 import { State } from "../../types/State"
-import { cmsData } from "@containers/App/api/types"
 import { RandombioRequest } from "./types"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 interface Props {
   scheme: PageInformation
@@ -24,7 +24,7 @@ interface Props {
   setSingle: React.Dispatch<React.SetStateAction<boolean>>
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   statePOST: State<string>
-  stateCMS: State<cmsData[]>
+  stateCMS: State<CMSPage>
 }
 
 function RandomBioPage(props: Props): JSX.Element {

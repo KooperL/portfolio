@@ -1,9 +1,12 @@
+import { CMSPage } from "@components/TypeLookup/types"
 import { ApiError } from "../../../api/apiErrorHandler"
 import { get } from "../../../api/restApi"
 import { endpoints } from "./endpoints"
-import { cmsData, CmsEndpoints, GenericResponse } from "./types"
+import { CmsEndpoints, GenericResponse } from "./types"
 
-export const fetchCMSData = (route: keyof CmsEndpoints): Promise<GenericResponse<cmsData[], ApiError>> => {
+export const fetchCMSData = (
+  route: keyof CmsEndpoints,
+): Promise<GenericResponse<CMSPage, ApiError>> => {
   const apiConfig = {
     headers: {},
     params: {},

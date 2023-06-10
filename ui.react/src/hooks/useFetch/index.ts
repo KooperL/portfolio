@@ -8,37 +8,36 @@ export const useFetch = <T, U>(
 ) => {
   const [state, setState] = useState<State<U>>({
     loading: true,
-    details:  null,
+    details: null,
     errorMessage: null,
     error: false,
   })
   const pull = useCallback(
     (payload: T) => {
-      dataCall(payload)
-        .then((resp: GenericResponse<U, ApiError>) => {
-          if (resp.hasOwnProperty('success') && resp.success) {
-            setState({
-              details: resp?.data || null,
-              error: false,
-              errorMessage: null,
-              loading: false,
-            })
-          } else {
-            setState({
-              details: null,
-              error: true,
-              errorMessage: resp.error,
-              loading: false,
-            })
-          }
-        })
-        // .catch((err: any) => {
-        //   setState({
-        //     error: true,
-        //     errorMessage: err,
-        //     loading: false,
-        //   })
-        // })
+      dataCall(payload).then((resp: GenericResponse<U, ApiError>) => {
+        if (resp.hasOwnProperty("success") && resp.success) {
+          setState({
+            details: resp?.data || null,
+            error: false,
+            errorMessage: null,
+            loading: false,
+          })
+        } else {
+          setState({
+            details: null,
+            error: true,
+            errorMessage: resp.error,
+            loading: false,
+          })
+        }
+      })
+      // .catch((err: any) => {
+      //   setState({
+      //     error: true,
+      //     errorMessage: err,
+      //     loading: false,
+      //   })
+      // })
     },
     [dataCall, state],
   )

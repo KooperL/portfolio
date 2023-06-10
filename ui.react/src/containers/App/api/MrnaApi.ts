@@ -4,7 +4,9 @@ import { MrnaRequest, MrnaResponse } from "../../mrnaPage/types"
 import { endpoints } from "./endpoints"
 import { GenericResponse } from "./types"
 
-export const fetchMrna = (body: MrnaRequest): Promise<GenericResponse<MrnaResponse, ApiError>> => {
+export const fetchMrna = (
+  body: MrnaRequest,
+): Promise<GenericResponse<MrnaResponse, ApiError>> => {
   const apiConfig = {
     headers: {},
     params: {

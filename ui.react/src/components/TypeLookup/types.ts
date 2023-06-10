@@ -1,72 +1,70 @@
 export interface CMSPage {
-  id: string,
-  title: string,
-  slug: string,
-  sections: CMSSection[],
+  id: string
+  title: string
+  slug: string
+  sections: CMSSection[]
 }
 
 interface CMSSection {
-  id: string,
-  title: string,
+  id: string
+  title: string
   components: (
-    ImageComponent |
-    TextComponent |
-    ButtonListComponent |
-    UnorderedListComponent |
-    OrderedListComponent | 
-    EmojiComponent | 
-    ButtonComponent
-  )[],
+    | ImageComponent
+    | TextComponent
+    | ButtonListComponent
+    | UnorderedListComponent
+    | OrderedListComponent
+    | EmojiComponent
+    | ButtonComponent
+  )[]
 }
 
 interface ImageComponent {
-  type: "image";
+  type: "image"
   content: {
-    src: string;
-    alt: string;
-  };
+    src: string
+    alt: string
+  }
 }
 interface TextComponent {
-  type: "text";
+  type: "text"
   content: {
-    title?: string;
+    title?: string
     subTitle?: string
-    body: string[];
-  };
+    body?: string[]
+  }
 }
 interface ButtonListComponent {
-  type: "button-list";
+  type: "button-list"
   content: {
-    buttons: ButtonActual[];
-  };
+    buttons: ButtonActual[]
+  }
 }
 interface UnorderedListComponent {
-  type: "unordered-list";
+  type: "unordered-list"
   content: {
-    items: string[];
-  };
+    items: string[]
+  }
 }
 interface OrderedListComponent {
-  type: "ordered-list";
+  type: "ordered-list"
   content: {
-    items: string[];
-  };
+    items: string[]
+  }
 }
 interface EmojiComponent {
-  type: "emoji";
+  type: "emoji"
   content: {
-    emoji: string;
-  };
+    emoji: string
+  }
 }
 interface ButtonComponent {
-  type: "button";
-  content: ButtonActual;
+  type: "button"
+  content: ButtonActual
 }
 
-
-
 interface ButtonActual {
-  text: string;
-  url: string;
+  text: string
+  url: string
   local: boolean
 }

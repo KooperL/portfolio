@@ -1,6 +1,5 @@
 import { ApiError } from "../../api/apiErrorHandler"
 
-
 export interface fuelpricesData {
   average: {
     x: string
@@ -21,11 +20,11 @@ export interface fuelpricesData {
 }
 
 export interface FuelPricesResponse {
-    fuelprices: fuelpricesData 
-    stats: {
-      average: number
-      relativePrice: number
-      gradient: number
-      decision: string
-    }
+  fuelprices: fuelpricesData
+  stats: {
+    average: number
+    relativePrice: number
+    gradient: number
+    decision: string
+  }
 }

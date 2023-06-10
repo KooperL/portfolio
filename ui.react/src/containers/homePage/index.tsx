@@ -17,10 +17,10 @@ import TypeLookup from "../../components/TypeLookup"
 import ErrorPage from "../ErrorPage"
 import { useHomeState } from "../../controllers/useHomeState"
 import { State } from "../../types/State"
-import { cmsData } from "@containers/App/api/types"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 interface Props {
-  stateCMS: State<cmsData[]>
+  stateCMS: State<CMSPage>
   scheme: PageInformation
 }
 
@@ -44,15 +44,7 @@ function HomePage(props: Props): JSX.Element {
                 Home
               </h2>
               <div className="links">
-                {data.map((segment, indexSegment) => (
-                  <>
-                    {TypeLookup({
-                      type: segment.type,
-                      data: segment.data,
-                      text: segment?.text,
-                    })}
-                  </>
-                ))}
+                <TypeLookup {...data} />
               </div>
             </div>
             <div className="render">

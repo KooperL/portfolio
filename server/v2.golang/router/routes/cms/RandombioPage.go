@@ -9,7 +9,7 @@ import (
 
 func RandombioPage(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		var res []types.PagePopulateNode
+		var res types.CMSPage
 		utils.OpenAndParseJSONFile("../data/responses/randombioPage.json", &res)
 		responses.BuildSuccessResponse(w, res)
 	}

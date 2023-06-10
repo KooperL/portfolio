@@ -4,7 +4,9 @@ import { get } from "../../../api/restApi"
 import { endpoints } from "./endpoints"
 import { GenericResponse } from "./types"
 
-export const fetchFuelPrices = (): Promise<GenericResponse< FuelPricesResponse, ApiError>> => {
+export const fetchFuelPrices = (): Promise<
+  GenericResponse<FuelPricesResponse, ApiError>
+> => {
   const apiConfig = {
     headers: {},
     params: {},

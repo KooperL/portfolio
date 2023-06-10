@@ -1,4 +1,7 @@
-import { SeqAlignRequest, SeqAlignResponse } from "@containers/seqAlignPage/types"
+import {
+  SeqAlignRequest,
+  SeqAlignResponse,
+} from "@containers/seqAlignPage/types"
 import { ApiError } from "../../../api/apiErrorHandler"
 import { get } from "../../../api/restApi"
 import { endpoints } from "./endpoints"

@@ -17,7 +17,7 @@ import { useSeqAlignState } from "../../controllers/useSeqAlignState"
 import { useSubmit } from "../../hooks/useSubmit"
 import { State } from "../../types/State"
 import { SeqAlignResponse } from "./types"
-import { cmsData } from "@containers/App/api/types"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 interface Props {
   sampletxt: string
@@ -35,7 +35,7 @@ interface Props {
   scheme: PageInformation
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   stateSubmit: State<SeqAlignResponse>
-  stateCMS: State<cmsData[]>
+  stateCMS: State<CMSPage>
 }
 
 function SeqAlignPage(props: Props): JSX.Element {

@@ -9,8 +9,8 @@ import { Input } from "../../components/Input"
 import ErrorPage from "../ErrorPage"
 import { useMrnaState } from "../../controllers/useMrnaState"
 import { State } from "../../types/State"
-import { cmsData } from "@containers/App/api/types"
 import { MrnaRequest, MrnaResponse } from "./types"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 interface Props {
   scheme: PageInformation
@@ -18,7 +18,7 @@ interface Props {
   setValue: React.Dispatch<React.SetStateAction<string>>
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   statePOST: State<MrnaResponse>
-  stateCMS: State<cmsData[]>
+  stateCMS: State<CMSPage>
 }
 
 function MrnaPage(props: Props): JSX.Element {
@@ -29,6 +29,7 @@ function MrnaPage(props: Props): JSX.Element {
           className="description"
           style={{ color: props.scheme.body.text }}
         >
+          {/**<TypeLookup {...data} />**/}
           {showingDesc ? (
             <p>Enter a DNA sequence to see a breakdown of its components.</p>
           ) : (

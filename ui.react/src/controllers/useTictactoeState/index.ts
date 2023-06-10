@@ -1,10 +1,11 @@
 import { fetchCMSData } from "../../containers/App/api/genericCMSApi"
-import { cmsData, CmsEndpoints } from "../../containers/App/api/types"
+import { CmsEndpoints } from "../../containers/App/api/types"
 import { useContext, useEffect, useState } from "react"
 import { useFetch } from "src/hooks/useFetch"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useEventListener } from "../../hooks/useEventListener"
 import { Board, CalculateWinner } from "./types"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 export const x = "❌"
 export const o = "🟢"
@@ -154,7 +155,9 @@ export const useTictactoeState = () => {
   const [sPlayerWins, setSPlayerWins] = useState(0)
   const [gameInProgress, setGameInProgress] = useState(false)
   const [scheme, setScheme] = useContext(SchemeContext)
-  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, cmsData[]>(fetchCMSData)
+  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, CMSPage>(
+    fetchCMSData,
+  )
 
   const p1 = pPlayerFirst ? x : o
   const p2 = pPlayerFirst ? o : x
@@ -230,6 +233,6 @@ export const useTictactoeState = () => {
     sPlayerWins,
     pPlayerWins,
     scheme,
-    stateCMS
+    stateCMS,
   }
 }

@@ -1,4 +1,7 @@
-import { SecondaryRequest, SecondaryResponse } from "@containers/secondaryPage/types"
+import {
+  SecondaryRequest,
+  SecondaryResponse,
+} from "@containers/secondaryPage/types"
 import { ApiError } from "../../../api/apiErrorHandler"
 import { get } from "../../../api/restApi"
 import { endpoints } from "./endpoints"

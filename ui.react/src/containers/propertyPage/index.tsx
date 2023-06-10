@@ -6,17 +6,16 @@ import ErrorPage from "../ErrorPage"
 import { PageInformation } from "../../containers/context/colourScheme"
 import { State } from "../../types/State"
 import usePropertyState from "../../controllers/usePropertyState"
-import './style.css'
+import "./style.css"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Button } from "../../components/Button"
 import { PropertyIndexResponse } from "./types"
-import { cmsData } from "@containers/App/api/types"
-
+import { CMSPage } from "../../components/TypeLookup/types"
 
 interface Props {
   scheme: PageInformation
   state: State<PropertyIndexResponse>
-  stateCMS: State<cmsData[]>
+  stateCMS: State<CMSPage>
   ref: any
   handleSubmit: () => void
 }
@@ -30,49 +29,47 @@ function PropertyPage(props: Props): JSX.Element {
     return (
       <div className="propertypage">
         <IslandCenter>
-       <div className="search-container">
-         <div>
-           <p>
-             Enter the name of a suburb in Victoria to see a detailed
-             profile.
-           </p>
-         </div>
-         <div>
-           <form
-              onSubmit={e => {
-                e.preventDefault()
-                props.handleSubmit()
-              }}
-           >
-             <label>Suburb:</label>
-             <input
-               className="search-input"
-               type="text"
-               name="prop_suburb"
-               id="prop_suburb"
-                ref={React.forwardRef(props.ref)}
-             />
-             <Button
-                colours={props.scheme}
-             />
-           </form>
-         </div>
-       </div>
+          <div className="search-container">
+            <div>
+              <p>
+                Enter the name of a suburb in Victoria to see a detailed
+                profile.
+              </p>
+            </div>
+            <div>
+              <form
+                onSubmit={e => {
+                  e.preventDefault()
+                  props.handleSubmit()
+                }}
+              >
+                <label>Suburb:</label>
+                <input
+                  className="search-input"
+                  type="text"
+                  name="prop_suburb"
+                  id="prop_suburb"
+                  ref={React.forwardRef(props.ref)}
+                />
+                <Button colours={props.scheme} />
+              </form>
+            </div>
+          </div>
 
-       <div className="content">
-         <div className="">
-           <div className="spectrum-container">
-             <div className="spectrum-legend">
-               <div>$200k</div>
-               <div>$750k</div>
-               <div>$2000k</div>
-             </div>
-             <div className="spectrum"></div>
-          </div>
-             <div className="map-container">
-               {/* <iframe className="w-full h-full" src="https://api.kooperlingohr.com/heatmap"/> */}
-             </div>
-          </div>
+          <div className="content">
+            <div className="">
+              <div className="spectrum-container">
+                <div className="spectrum-legend">
+                  <div>$200k</div>
+                  <div>$750k</div>
+                  <div>$2000k</div>
+                </div>
+                <div className="spectrum"></div>
+              </div>
+              <div className="map-container">
+                {/* <iframe className="w-full h-full" src="https://api.kooperlingohr.com/heatmap"/> */}
+              </div>
+            </div>
             <div>
               <table>
                 <thead>
@@ -86,21 +83,21 @@ function PropertyPage(props: Props): JSX.Element {
                   </tr>
                 </thead>
                 <tbody>
-                {data.highest.map((topic, indexTopic) => (
-                  <tr>
-                    <td className="table-row">{topic.suburb}</td>
-                    <td className="table-row">{topic.meanMeans}</td>
-                    <td className="table-row">{topic.distcc}</td>
-                    <td className="table-row">{topic.count}</td>
-                    <td className="table-row">{topic.meanGradient}</td>
-                    <td className="table-row">{topic.desirability}</td>
-                  </tr>
-                ))}
+                  {data.highest.map((topic, indexTopic) => (
+                    <tr>
+                      <td className="table-row">{topic.suburb}</td>
+                      <td className="table-row">{topic.meanMeans}</td>
+                      <td className="table-row">{topic.distcc}</td>
+                      <td className="table-row">{topic.count}</td>
+                      <td className="table-row">{topic.meanGradient}</td>
+                      <td className="table-row">{topic.desirability}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
-             </div>
-             <div className="table-legend">
-               <p>State Stats</p>
+            </div>
+            <div className="table-legend">
+              <p>State Stats</p>
             </div>
             <div>
               <table>
@@ -115,21 +112,21 @@ function PropertyPage(props: Props): JSX.Element {
                   </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td className="table-row">{data.stats.Min}</td>
-                  <td className="table-row">{data.stats.Q1}</td>
-                  <td className="table-row">{data.stats.median}</td>
-                  <td className="table-row">{data.stats.Q3}</td>
-                  <td className="table-row">{data.stats.Max}</td>
-                  <td className="table-row">{data.stats.IQR}</td>
-                </tr>
+                  <tr>
+                    <td className="table-row">{data.stats.Min}</td>
+                    <td className="table-row">{data.stats.Q1}</td>
+                    <td className="table-row">{data.stats.median}</td>
+                    <td className="table-row">{data.stats.Q3}</td>
+                    <td className="table-row">{data.stats.Max}</td>
+                    <td className="table-row">{data.stats.IQR}</td>
+                  </tr>
                 </tbody>
               </table>
+            </div>
           </div>
-        </div>
-      </IslandCenter>
-    </div>
-   )
+        </IslandCenter>
+      </div>
+    )
   }
   return <></>
 }

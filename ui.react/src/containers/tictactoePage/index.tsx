@@ -15,7 +15,7 @@ import {
 } from "../../controllers/useTictactoeState/types"
 import { o, useTictactoeState, x } from "../../controllers/useTictactoeState"
 import { State } from "../../types/State"
-import { cmsData } from "@containers/App/api/types"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 interface Props {
   gameInProgress: boolean
@@ -32,7 +32,7 @@ interface Props {
   sPlayerWins: number
   pPlayerWins: number
   scheme: PageInformation
-  stateCMS: State<cmsData[]>
+  stateCMS: State<CMSPage>
 }
 
 function Tictactoe(props: Props) {

@@ -3,10 +3,14 @@ import { fetchSecondary } from "../../containers/App/api/SecondaryApi"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useSubmit } from "../../hooks/useSubmit"
 import { ApiError } from "../../api/apiErrorHandler"
-import { SecondaryRequest, SecondaryResponse } from "../../containers/secondaryPage/types"
+import {
+  SecondaryRequest,
+  SecondaryResponse,
+} from "../../containers/secondaryPage/types"
 import { useFetch } from "src/hooks/useFetch"
-import { cmsData, CmsEndpoints } from "@containers/App/api/types"
+import { CmsEndpoints } from "../../containers/App/api/types"
 import { fetchCMSData } from "../../containers/App/api/genericCMSApi"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 export const useSecondaryState = () => {
   // dataCall: (body: SecondaryPOST) => Promise<ApiError | SecondaryPayload>
@@ -15,10 +19,13 @@ export const useSecondaryState = () => {
   const [detectthreshold, setDetectthreshold] = useState(4)
   const [leniency, setLeniency] = useState(3)
   const [scheme, setScheme] = useContext(SchemeContext)
-  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, cmsData[]>(fetchCMSData)
-  const { state: statePOST, handleSubmit } = useSubmit<SecondaryRequest, SecondaryResponse>(
-    fetchSecondary,
+  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, CMSPage>(
+    fetchCMSData,
   )
+  const { state: statePOST, handleSubmit } = useSubmit<
+    SecondaryRequest,
+    SecondaryResponse
+  >(fetchSecondary)
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     handleSubmit(e, {
@@ -31,7 +38,7 @@ export const useSecondaryState = () => {
 
   useEffect(() => {
     document.title = `Protein Secondary Structure | ${scheme.title}`
-    pull('secondaryCms')
+    pull("secondaryCms")
   }, [])
 
   return {
@@ -46,6 +53,6 @@ export const useSecondaryState = () => {
     scheme,
     statePOST,
     onSubmit,
-    stateCMS
+    stateCMS,
   }
 }

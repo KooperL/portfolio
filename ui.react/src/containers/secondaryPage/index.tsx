@@ -18,7 +18,7 @@ import { useSubmit } from "../../hooks/useSubmit"
 import { ApiError } from "../../api/apiErrorHandler"
 import { State } from "../../types/State"
 import { SecondaryResponse } from "./types"
-import { cmsData } from "@containers/App/api/types"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 interface Props {
   aa_field_id: string
@@ -31,7 +31,7 @@ interface Props {
   setLeniency: React.Dispatch<React.SetStateAction<number>>
   scheme: PageInformation
   statePOST: State<SecondaryResponse>
-  stateCMS: State<cmsData[]>
+  stateCMS: State<CMSPage>
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 

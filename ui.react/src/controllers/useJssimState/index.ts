@@ -1,9 +1,10 @@
 import { fetchCMSData } from "../../containers/App/api/genericCMSApi"
-import { cmsData, CmsEndpoints } from "../../containers/App/api/types"
+import { CmsEndpoints } from "../../containers/App/api/types"
 import { useContext, useEffect, useState } from "react"
 import { useFetch } from "src/hooks/useFetch"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useEventListener } from "../../hooks/useEventListener"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 function calcScore(arr: number[]): number {
   let score = 0
@@ -39,7 +40,9 @@ export const useJssimState = () => {
   const [timer, setTimer] = useState(0)
   const [timerIsActive, setTimerIsActive] = useState(false)
   const [timerIsPaused, setTimerIsPaused] = useState(true)
-  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, cmsData[]>(fetchCMSData)
+  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, CMSPage>(
+    fetchCMSData,
+  )
 
   const scoreColourLookup: { [key: string]: string } = {
     "0": scheme.body.text, // Unpicked
@@ -58,7 +61,7 @@ export const useJssimState = () => {
 
   useEffect(() => {
     document.title = `JS Sim | ${scheme.title}`
-    pull('jssimulatorCms')
+    pull("jssimulatorCms")
   }, [])
 
   function selectString(index?: number) {
@@ -181,6 +184,6 @@ export const useJssimState = () => {
     scoreColourLookup,
     scoreTally,
     scheme,
-    stateCMS
+    stateCMS,
   }
 }

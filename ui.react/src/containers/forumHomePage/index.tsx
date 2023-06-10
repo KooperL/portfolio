@@ -84,29 +84,34 @@ function ForumHomePage(props: Props): JSX.Element {
                   {/* <ButtonRedir destination={`/${ForumRouteType.ForumHome}?search=${searchState}`} label="Search" local={true}></ButtonRedir> */}
                 </div>
               </form>
-              {Object.keys(data).map((segment: string, indexSegment: number) => {
-              return (
-                <div
-                  className="category"
-                  key={indexSegment}
-                >
-                  <Link
-                    key={`${indexSegment}-1`}
-                    to={`/${forumPath}?category=${segment}`}
-                    onClick={monitor}
-                  >
-                    <p>{`Topic - ${segment}`}</p>
-                  </Link>
-                  <div className="posts">
-                    {data[segment].map((catPost: forumItem, catPostIndex: number) => (
-                      <ForumItem
-                        key={`${indexSegment}-${catPostIndex}`}
-                        data={catPost}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )})}
+              {Object.keys(data).map(
+                (segment: string, indexSegment: number) => {
+                  return (
+                    <div
+                      className="category"
+                      key={indexSegment}
+                    >
+                      <Link
+                        key={`${indexSegment}-1`}
+                        to={`/${forumPath}?category=${segment}`}
+                        onClick={monitor}
+                      >
+                        <p>{`Topic - ${segment}`}</p>
+                      </Link>
+                      <div className="posts">
+                        {data[segment].map(
+                          (catPost: forumItem, catPostIndex: number) => (
+                            <ForumItem
+                              key={`${indexSegment}-${catPostIndex}`}
+                              data={catPost}
+                            />
+                          ),
+                        )}
+                      </div>
+                    </div>
+                  )
+                },
+              )}
             </div>
           </div>
         </div>

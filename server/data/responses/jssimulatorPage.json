@@ -1,15 +1,23 @@
-[
-  {
-    "type": "header",
-    "data": [
-      "Front-end dev simulator"
-    ]
-  },
-  {
-    "type": "subheader",
-    "data": [
-      "This is a typing challenge which measures how long it takes to write these sequences. Timer appears as soon as you press a key.",
-      "Good luck 🏁."
-    ]
-  }
-]
+{
+  "id": "__unused__",
+  "title": "__unused__",
+  "slug": "__unused__",
+  "sections": [
+    {
+      "id": "__unused__",
+      "title": "__unused__",
+      "components": [
+        {
+          "type": "text",
+          "content": {
+            "title": "Front-end dev simulator",
+            "body": [
+              "This is a typing challenge which measures how long it takes to write these sequences. Timer appears as soon as you press a key.",
+              "Good luck 🏁."
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
