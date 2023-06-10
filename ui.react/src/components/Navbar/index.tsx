@@ -134,7 +134,6 @@ function Navbar(props: { isVertical: boolean }) {
                     { session_id: sessionStorage.getItem("session_id") ?? "" },
                     token,
                   ).then(resp => {
-                    resp = resp as ForumRegisterPOSTResponse
                     if (resp.success) {
                       setToken(null)
                       navigate(

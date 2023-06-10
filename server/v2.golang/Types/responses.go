@@ -18,22 +18,6 @@ type Mrna struct {
 	TM          float64        `json:"tm"`
 }
 
-type PagePopulateNode struct {
-	Data []string `json:"data"`
-	Text string   `json:"text"`
-	Type string   `json:"type"`
-}
-
-type PagePopulate struct {
-	Data any    `json:"data"` // PagePopulateData
-	Type string `json:"type"`
-}
-
-type PagePopulateData struct {
-	s []string
-	p PagePopulateNode
-}
-
 type BearerResp struct {
 	Success     bool   `json:"success"`
 	Type        string `json:"type"`

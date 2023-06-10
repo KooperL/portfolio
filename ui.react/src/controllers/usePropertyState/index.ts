@@ -5,8 +5,8 @@ import { useContext, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { useFetch } from "src/hooks/useFetch"
 import { useSubmit } from "src/hooks/useSubmit"
-import { fetchCMSData } from "@containers/App/api/genericCMSApi"
-import { PropertyIndexResponse } from "@containers/propertyPage/types"
+import { fetchCMSData } from "../../containers/App/api/genericCMSApi"
+import { PropertyIndexResponse } from "../../containers/propertyPage/types"
 
 function usePropertyState() {
   const ref = useRef()

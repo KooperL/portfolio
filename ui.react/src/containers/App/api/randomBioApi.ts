@@ -1,11 +1,12 @@
+import { RandombioRequest } from "@containers/randomBioPage/types"
 import { ApiError } from "../../../api/apiErrorHandler"
 import { get } from "../../../api/restApi"
-import { RandomBioPayload, RandomBioPOST } from "../../randomBioPage/types"
 import { endpoints } from "./endpoints"
+import { GenericResponse } from "./types"
 
 export const fetchRandomBio = (
-  body: RandomBioPOST,
-): Promise<ApiError | RandomBioPayload> => {
+  body: RandombioRequest,
+): Promise<GenericResponse<string, ApiError>> => {
   const apiConfig = {
     headers: {},
     params: { ...body },

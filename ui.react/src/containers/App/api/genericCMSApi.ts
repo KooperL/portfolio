@@ -1,6 +1,5 @@
 import { ApiError } from "../../../api/apiErrorHandler"
 import { get } from "../../../api/restApi"
-import { AboutPayload } from "../../aboutPage/types"
 import { endpoints } from "./endpoints"
 import { cmsData, CmsEndpoints, GenericResponse } from "./types"
 

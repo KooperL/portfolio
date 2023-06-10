@@ -1,10 +1,10 @@
 import { ApiError } from "../../../api/apiErrorHandler"
 import { get } from "../../../api/restApi"
-import { MrnaPOST } from "../../mrnaPage/types"
+import { MrnaRequest, MrnaResponse } from "../../mrnaPage/types"
 import { endpoints } from "./endpoints"
 import { GenericResponse } from "./types"
 
-export const fetchMrna = (body: MrnaPOST): Promise<GenericResponse<MrnaPayload, ApiError>> => {
+export const fetchMrna = (body: MrnaRequest): Promise<GenericResponse<MrnaResponse, ApiError>> => {
   const apiConfig = {
     headers: {},
     params: {

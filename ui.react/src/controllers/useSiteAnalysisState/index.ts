@@ -18,7 +18,7 @@ declare module "react" {
 
 export const useSiteAnalysisState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
-  const { state, pull } = useFetch<siteAnalysisResp, undefined>(
+  const { state, pull } = useFetch<null, siteAnalysisResponse>(
     fetchSiteAnalysis,
   )
   const [loaded, setLoaded] = useState(false)

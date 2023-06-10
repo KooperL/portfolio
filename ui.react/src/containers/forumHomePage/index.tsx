@@ -5,7 +5,6 @@ import React, {
   useState,
 } from "react"
 import Spinner from "../../components/Spinner"
-import { fetchContact, postContact } from "../App/api/contactApi"
 import Navbar from "../../components/Navbar"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
@@ -21,19 +20,20 @@ import { forumPath } from "../App/api/types"
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom"
 import { ForumRouteType } from "../App/routeTypes"
 import Redirect from "../../components/Redirect"
-import { ForumHomeGETInitialState, ForumHomeGETResponse } from "./types"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { IslandLeft } from "../../templates/IslandLeft"
 import { Input } from "../../components/Input"
 import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
 import { useForumHomeState } from "../../controllers/useForumHomeState"
+import { ForumHomeResponse } from "./types"
+import { forumItem } from "@containers/common/types"
 
 interface Props {
   scheme: PageInformation
   token: string | null
   handleSubmit: () => void
-  state: State<ForumHomeGETResponse>
+  state: State<ForumHomeResponse>
   searchState: string
   setSearchState: React.Dispatch<React.SetStateAction<string>>
 }
@@ -50,7 +50,7 @@ function ForumHomePage(props: Props): JSX.Element {
   if (props.state.error && props.state.errorMessage)
     return <ErrorPage error={props.state.errorMessage} />
   if (props.state.details && props.state.details.data) {
-    const data = props.state.details.data
+    const data = props.state.details
     return (
       <IslandLeft>
         <div className="forumHomePage">
@@ -84,7 +84,8 @@ function ForumHomePage(props: Props): JSX.Element {
                   {/* <ButtonRedir destination={`/${ForumRouteType.ForumHome}?search=${searchState}`} label="Search" local={true}></ButtonRedir> */}
                 </div>
               </form>
-              {Object.keys(data).map((segment, indexSegment) => (
+              {Object.keys(data).map((segment: string, indexSegment: number) => {
+              return (
                 <div
                   className="category"
                   key={indexSegment}
@@ -94,10 +95,10 @@ function ForumHomePage(props: Props): JSX.Element {
                     to={`/${forumPath}?category=${segment}`}
                     onClick={monitor}
                   >
-                    <p>Topic - {segment}</p>
+                    <p>{`Topic - ${segment}`}</p>
                   </Link>
                   <div className="posts">
-                    {data[segment].map((catPost, catPostIndex) => (
+                    {data[segment].map((catPost: forumItem, catPostIndex: number) => (
                       <ForumItem
                         key={`${indexSegment}-${catPostIndex}`}
                         data={catPost}
@@ -105,7 +106,7 @@ function ForumHomePage(props: Props): JSX.Element {
                     ))}
                   </div>
                 </div>
-              ))}
+              )})}
             </div>
           </div>
         </div>

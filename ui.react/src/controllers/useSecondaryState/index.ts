@@ -3,10 +3,10 @@ import { fetchSecondary } from "../../containers/App/api/SecondaryApi"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useSubmit } from "../../hooks/useSubmit"
 import { ApiError } from "../../api/apiErrorHandler"
-import { SecondaryRequest, SecondaryResponse } from "@containers/secondaryPage/types"
+import { SecondaryRequest, SecondaryResponse } from "../../containers/secondaryPage/types"
 import { useFetch } from "src/hooks/useFetch"
 import { cmsData, CmsEndpoints } from "@containers/App/api/types"
-import { fetchCMSData } from "@containers/App/api/genericCMSApi"
+import { fetchCMSData } from "../../containers/App/api/genericCMSApi"
 
 export const useSecondaryState = () => {
   // dataCall: (body: SecondaryPOST) => Promise<ApiError | SecondaryPayload>

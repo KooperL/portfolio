@@ -1,9 +1,10 @@
+import { PropertyIndexResponse, PropertySearchRequest } from "@containers/propertyPage/types"
 import { ApiError } from "../../../api/apiErrorHandler"
 import { get } from "../../../api/restApi"
-import { PropertyPayload, PropertyPOST } from "../../propertyPage/types"
 import { endpoints } from "./endpoints"
+import { GenericResponse } from "./types"
 
-export const fetchProperty = (): Promise<ApiError | PropertyPayload> => {
+export const fetchProperty = (): Promise<GenericResponse<PropertyIndexResponse, ApiError>> => {
   const apiConfig = {
     headers: {},
     params: {},
@@ -12,8 +13,8 @@ export const fetchProperty = (): Promise<ApiError | PropertyPayload> => {
 }
 
 export const fetchPropertySearch = (
-  body: PropertyPOST,
-): Promise<ApiError | PropertyPayload> => {
+  body: PropertySearchRequest,
+): Promise<GenericResponse<PropertyIndexResponse, ApiError>> => {
   const apiConfig = {
     headers: {},
     params: {

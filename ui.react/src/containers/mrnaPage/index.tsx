@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
-import { MrnaPayload, MrnaState, MrnaInitialState, MrnaPOST } from "./types"
 import { fetchMrna } from "../App/api/MrnaApi"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
@@ -11,13 +10,14 @@ import ErrorPage from "../ErrorPage"
 import { useMrnaState } from "../../controllers/useMrnaState"
 import { State } from "../../types/State"
 import { cmsData } from "@containers/App/api/types"
+import { MrnaRequest, MrnaResponse } from "./types"
 
 interface Props {
   scheme: PageInformation
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  state: State<MrnaPayload>
+  statePOST: State<MrnaResponse>
   stateCMS: State<cmsData[]>
 }
 
@@ -53,11 +53,11 @@ function MrnaPage(props: Props): JSX.Element {
       </div>
     )
   }
-  if (props.state.loading) return <Spinner />
-  if (props.state.error && props.state.errorMessage)
-    return <ErrorPage error={props.state.errorMessage} />
-  if (props.state.details && props.state.details.data) {
-    const data = props.state.details.data
+  if (props.statePOST.loading) return <Spinner />
+  if (props.statePOST.error && props.statePOST.errorMessage)
+    return <ErrorPage error={props.statePOST.errorMessage} />
+  if (props.statePOST.details && props.statePOST.details) {
+    const data = props.statePOST.details
     return (
       <div className="mrnaPage">
         <IslandCenter>
@@ -167,7 +167,6 @@ function MrnaPage(props: Props): JSX.Element {
       </div>
     )
   }
-  return <></>
 }
 
 const Enhance = (): JSX.Element => {
