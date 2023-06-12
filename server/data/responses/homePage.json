@@ -10,7 +10,8 @@
         {
           "type": "text",
           "content": {
-            "title": "Hi 👋 I'm Kooper, welcome to my website."
+            "title": "Home",
+            "subtitle": "Hi 👋 I'm Kooper, welcome to my website."
           }
         },
         {

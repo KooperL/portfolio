@@ -32,6 +32,8 @@ function AboutPage(props: Props): JSX.Element {
   // if(props.state.details && seed[0].length && seed[0][0].length) {
   if (props.stateCMS.details) {
     const data = props.stateCMS.details
+    console.log(data.sections[0].components[0].content)
+
     const validCharsBinary = ["1", "0"]
     const validCharsNucleotides = ["A", "T", "G", "C"]
     return (
@@ -40,22 +42,6 @@ function AboutPage(props: Props): JSX.Element {
           {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></>}
           <div className="container">
             <div className="links">
-              <h2
-                className="main-heading"
-                style={{ color: props.scheme.body.h1 }}
-              >
-                About
-              </h2>
-              {/**{data.map((segment, indexSegment) => (
-                <div key={indexSegment}>
-                  {TypeLookup({
-                    type: segment.type,
-                    data: segment.data,
-                    text: segment?.text,
-                  })}
-                  <TypeLookup type={segment.type} data={segment.data} text={segment?.text} />
-                </div>
-              ))}**/}
               <TypeLookup {...data} />
             </div>
             <div className="render">

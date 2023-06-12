@@ -10,8 +10,11 @@
         {
           "type": "text",
           "content": {
+            "title": "Contact", 
             "subtitle": "Aw, snap! Something went wrong...",
-            "body": "You should probably contact me to let me know you found this error. My preferred method of contact is LinkedIn:"
+            "body": [
+              "You should probably contact me to let me know you found this error. My preferred method of contact is LinkedIn:"
+            ]
           }
         },
         {
@@ -31,7 +34,9 @@
         {
           "type": "text",
           "content": {
-            "body": "Alternatively, leave an anonymous message. If you're expecting a reply though, be sure to include your email too."
+            "body": [
+              "Alternatively, leave an anonymous message. If you're expecting a reply though, be sure to include your email too."
+            ]
           }
         }
       ]

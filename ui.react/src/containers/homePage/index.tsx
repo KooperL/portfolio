@@ -37,12 +37,6 @@ function HomePage(props: Props): JSX.Element {
           {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></>}
           <div className="container">
             <div className="">
-              <h2
-                className="main-heading"
-                style={{ color: props.scheme.body.h1 }}
-              >
-                Home
-              </h2>
               <div className="links">
                 <TypeLookup {...data} />
               </div>

@@ -42,12 +42,6 @@ function ProjectsPage(props: Props): JSX.Element {
             style={{ backgroundColor: "" ?? props.scheme.body.background }}
           >
             <div className="links-container">
-              <h2
-                className="main-heading"
-                style={{ color: props.scheme.body.h1 }}
-              >
-                Projects
-              </h2>
               <div className="links">
                 <TypeLookup {...data} />
               </div>

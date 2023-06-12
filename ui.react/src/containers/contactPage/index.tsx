@@ -90,12 +90,6 @@ function ContactPage(props: Props): JSX.Element {
         <div className="contactPage">
           <div className="container">
             <div className="links">
-              <h2
-                className="main-heading"
-                style={{ color: props.scheme.body.h1 }}
-              >
-                Contact
-              </h2>
               <TypeLookup {...data} />
               {SearchBar()}
             </div>

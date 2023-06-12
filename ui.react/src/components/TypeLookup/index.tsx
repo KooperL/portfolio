@@ -52,12 +52,12 @@ function TypeLookup(props: CMSPage): JSX.Element {
                   )
                 case "text":
                   return (
-                    <p className={`type-lookup text ${component.type}`}>
-                      {component.content.title && (
+                    <>
+                      {component.content?.title && (
                         <h1>{component.content.title}</h1>
                       )}
-                      {component.content.subTitle && (
-                        <h3>{component.content.subTitle}</h3>
+                      {component.content?.subtitle && (
+                        <h3>{component.content.subtitle}</h3>
                       )}
                       {component.content?.body &&
                         component.content.body.map(
@@ -67,7 +67,7 @@ function TypeLookup(props: CMSPage): JSX.Element {
                             </p>
                           ),
                         )}
-                    </p>
+                    </>
                   )
                 case "emoji":
                   return (
