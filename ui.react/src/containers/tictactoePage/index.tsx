@@ -16,6 +16,7 @@ import {
 import { o, useTictactoeState, x } from "../../controllers/useTictactoeState"
 import { State } from "../../types/State"
 import { CMSPage } from "../../components/TypeLookup/types"
+import TypeLookup from "../../components/TypeLookup"
 
 interface Props {
   gameInProgress: boolean
@@ -39,8 +40,7 @@ function Tictactoe(props: Props) {
   return (
     <IslandCenter>
       <div className="tictactoePage">
-        {/* <div className="parent"> */}
-        {/* <div className="sub-parent"> */}
+        <TypeLookup {...props.stateCMS} />
         <div
           className="grid"
           style={{ backgroundColor: props.scheme.body.text }}

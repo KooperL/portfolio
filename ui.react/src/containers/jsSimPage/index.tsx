@@ -10,6 +10,7 @@ import { Button } from "../../components/Button"
 import { useJssimState } from "../../controllers/useJssimState"
 import { State } from "../../types/State"
 import { CMSPage } from "../../components/TypeLookup/types"
+import TypeLookup from "../../components/TypeLookup"
 
 interface Props {
   timer: number
@@ -31,18 +32,8 @@ function JsSim(props: Props) {
   return (
     <IslandCenter>
       <div className="jsSimPage">
-        {/**<TypeLookup {...data} />**/}
         <div className="instrucions">
-          <p>
-            <span>
-              This is a typing challenge which measures how long it takes to
-              write these sequences.{" "}
-            </span>
-            <span>Timer appears as soon as you press a key. </span>
-          </p>
-          <p>
-            <span>Good luck 🏁</span>
-          </p>
+          <TypeLookup {...props.stateCMS} />
         </div>
         <hr />
         <div className="info">

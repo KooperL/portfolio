@@ -46,6 +46,7 @@ export interface CmsEndpoints {
   secondaryCms: string
   seqalignCms: string
   tictactoeCms: string
+  siteanalysisCms: string
 }
 
 export interface emptyPayload {

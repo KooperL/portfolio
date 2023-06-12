@@ -18,6 +18,7 @@ import { useSubmit } from "../../hooks/useSubmit"
 import { State } from "../../types/State"
 import { SeqAlignResponse } from "./types"
 import { CMSPage } from "../../components/TypeLookup/types"
+import TypeLookup from "../../components/TypeLookup"
 
 interface Props {
   sampletxt: string
@@ -46,13 +47,7 @@ function SeqAlignPage(props: Props): JSX.Element {
           className="description"
           style={{ color: props.scheme.body.text }}
         >
-          {showingDesc ? (
-            <p>
-              Enter two sequences of DNA to see how well they physically align.
-            </p>
-          ) : (
-            <></>
-          )}
+          {showingDesc ? <TypeLookup {...props.stateCMS} /> : <></>}
         </div>
         <form onSubmit={props.onSubmit}>
           <div className="searchBoxes">

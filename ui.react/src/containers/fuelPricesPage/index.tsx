@@ -30,7 +30,7 @@ function FuelPricesPage(props: Props): JSX.Element {
     return (
       <IslandCenter>
         <div className="fuelPricesPage">
-          {/**<TypeLookup {...data} />**/}
+          <TypeLookup {...props.stateCMS} />
           <div className="table-container">
             <div className="chart">
               <Vchart

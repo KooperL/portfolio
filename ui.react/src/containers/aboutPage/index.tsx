@@ -26,28 +26,20 @@ interface Props {
 }
 
 function AboutPage(props: Props): JSX.Element {
-  if (props.stateCMS.loading) return <Spinner />
-  if (props.stateCMS.error && props.stateCMS.errorMessage)
-    return <ErrorPage error={props.stateCMS.errorMessage} />
-  // if(props.state.details && seed[0].length && seed[0][0].length) {
-  if (props.stateCMS.details) {
-    const data = props.stateCMS.details
-    console.log(data.sections[0].components[0].content)
+  const validCharsBinary = ["1", "0"]
+  const validCharsNucleotides = ["A", "T", "G", "C"]
+  return (
+    <IslandCenter>
+      <div className="aboutPage">
+        {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></>}
+        <div className="container">
+          <div className="links">
+            <TypeLookup {...props.stateCMS} />
+          </div>
+          <div className="render">
+            {/* {window.outerWidth > 1000 ? <ReactP5Wrapper sketch={sketchWrapper(props.scheme.body.h1)} /> : <></>} */}
 
-    const validCharsBinary = ["1", "0"]
-    const validCharsNucleotides = ["A", "T", "G", "C"]
-    return (
-      <IslandCenter>
-        <div className="aboutPage">
-          {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></>}
-          <div className="container">
-            <div className="links">
-              <TypeLookup {...data} />
-            </div>
-            <div className="render">
-              {/* {window.outerWidth > 1000 ? <ReactP5Wrapper sketch={sketchWrapper(props.scheme.body.h1)} /> : <></>} */}
-
-              {/* {window.outerWidth > 1000 ?  
+            {/* {window.outerWidth > 1000 ?  
                 <>
                   {text.map((row, rowindex) => (
                     <div key={rowindex}>
@@ -62,14 +54,12 @@ function AboutPage(props: Props): JSX.Element {
                   ))}
                 </>
               : <></>} */}
-            </div>
-            <div id="test"></div>
           </div>
+          <div id="test"></div>
         </div>
-      </IslandCenter>
-    )
-  }
-  return <></>
+      </div>
+    </IslandCenter>
+  )
 }
 
 const Enhance = (): JSX.Element => {

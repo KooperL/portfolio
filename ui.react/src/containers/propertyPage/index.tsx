@@ -11,6 +11,7 @@ import { IslandCenter } from "../../templates/IslandCenter"
 import { Button } from "../../components/Button"
 import { PropertyIndexResponse } from "./types"
 import { CMSPage } from "../../components/TypeLookup/types"
+import TypeLookup from "../../components/TypeLookup"
 
 interface Props {
   scheme: PageInformation
@@ -31,10 +32,7 @@ function PropertyPage(props: Props): JSX.Element {
         <IslandCenter>
           <div className="search-container">
             <div>
-              <p>
-                Enter the name of a suburb in Victoria to see a detailed
-                profile.
-              </p>
+              <TypeLookup {...props.stateCMS} />
             </div>
             <div>
               <form

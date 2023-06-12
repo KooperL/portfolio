@@ -79,26 +79,18 @@ function ContactPage(props: Props): JSX.Element {
     )
   }
 
-  if (props.stateCMS.loading) return <Spinner />
-  if (props.stateCMS.error && props.stateCMS.errorMessage)
-    return <ErrorPage error={props.stateCMS.errorMessage} />
-  if (props.stateCMS.details) {
-    const data = props.stateCMS.details
-
-    return (
-      <IslandCenter>
-        <div className="contactPage">
-          <div className="container">
-            <div className="links">
-              <TypeLookup {...data} />
-              {SearchBar()}
-            </div>
+  return (
+    <IslandCenter>
+      <div className="contactPage">
+        <div className="container">
+          <div className="links">
+            <TypeLookup {...props.stateCMS} />
+            {SearchBar()}
           </div>
         </div>
-      </IslandCenter>
-    )
-  }
-  return <></>
+      </div>
+    </IslandCenter>
+  )
 }
 
 const Enhance = (): JSX.Element => {

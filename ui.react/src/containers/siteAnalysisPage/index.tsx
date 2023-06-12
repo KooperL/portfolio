@@ -12,6 +12,8 @@ import { BoxSvg } from "../../controllers/utils/SVGBox"
 import ReactApexChart from "react-apexcharts"
 import GenerateHeatmap from "../../controllers/utils/heatmap"
 import "./style.css"
+import TypeLookup from "../../components/TypeLookup"
+import { CMSPage } from "../../components/TypeLookup/types"
 
 function generateData(count: number, yrange: { max: number; min: number }) {
   var i = 0
@@ -34,7 +36,7 @@ interface Props {
   state: State<siteAnalysisResponse>
   scheme: PageInformation
   setLoaded: React.Dispatch<React.SetStateAction<boolean>>
-
+  stateCMS: State<CMSPage>
   // ref: any
 }
 
@@ -48,12 +50,7 @@ function SiteAnalysisPage(props: Props): JSX.Element {
     return (
       <IslandCenter>
         <div className="siteAnalysis">
-          <h1
-            className="h1"
-            style={{ color: props.scheme.body.h2 }}
-          >
-            Site analysis
-          </h1>
+          <TypeLookup {...props.stateCMS} />
           <p className="h2">Current visitor: {data?.fingerprint.uuid}</p>
           <div className="canvasInfo">
             <canvas
