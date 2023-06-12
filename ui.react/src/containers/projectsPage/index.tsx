@@ -28,35 +28,28 @@ interface Props {
 }
 
 function ProjectsPage(props: Props): JSX.Element {
-  if (props.stateCMS.loading) return <Spinner />
-  if (props.stateCMS.error && props.stateCMS.errorMessage)
-    return <ErrorPage error={props.stateCMS.errorMessage} />
-  if (props.stateCMS.details) {
-    const data = props.stateCMS.details
-    return (
-      <IslandLeft>
-        <div className="projectsPage">
-          {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></>}
-          <div
-            className="container"
-            style={{ backgroundColor: "" ?? props.scheme.body.background }}
-          >
-            <div className="links-container">
-              <div className="links">
-                <TypeLookup {...data} />
-              </div>
-            </div>
-            <div className="render">
-              {/* {window.outerWidth > 1000 ?
-                <ReactP5Wrapper sketch={sketchWrapper(1200, 1200, scheme.body.background, scheme.body.foreground, scheme.body.h1)} /> : <></>
-              } */}
+  return (
+    <IslandLeft>
+      <div className="projectsPage">
+        {window.outerWidth > 1000 ? <Navbar isVertical={true} /> : <></>}
+        <div
+          className="container"
+          style={{ backgroundColor: "" ?? props.scheme.body.background }}
+        >
+          <div className="links-container">
+            <div className="links">
+              <TypeLookup {...props.stateCMS} />
             </div>
           </div>
+          <div className="render">
+            {/* {window.outerWidth > 1000 ?
+                <ReactP5Wrapper sketch={sketchWrapper(1200, 1200, scheme.body.background, scheme.body.foreground, scheme.body.h1)} /> : <></>
+              } */}
+          </div>
         </div>
-      </IslandLeft>
-    )
-  }
-  return <></>
+      </div>
+    </IslandLeft>
+  )
 }
 
 const Enhance = (): JSX.Element => {

@@ -19,6 +19,7 @@ import { ApiError } from "../../api/apiErrorHandler"
 import { State } from "../../types/State"
 import { SecondaryResponse } from "./types"
 import { CMSPage } from "../../components/TypeLookup/types"
+import TypeLookup from "../../components/TypeLookup"
 
 interface Props {
   aa_field_id: string
@@ -47,17 +48,7 @@ function SecondaryPage(props: Props): JSX.Element {
         >
           <h1>Protein secondary structure preditction</h1>
           <br />
-          {showingDesc ? (
-            <>
-              <p>
-                Enter a sequence of amino acids in single character form to view
-                a calculated reconstruction of the secondary protein structure
-                according to the Chou-Fasman method (~50% accuracy).
-              </p>
-            </>
-          ) : (
-            <></>
-          )}
+          {showingDesc ? <TypeLookup {...props.stateCMS} /> : <></>}
         </div>
         <form onSubmit={props.onSubmit}>
           <div className="inputWithButton">

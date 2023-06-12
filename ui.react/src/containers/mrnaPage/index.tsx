@@ -11,6 +11,7 @@ import { useMrnaState } from "../../controllers/useMrnaState"
 import { State } from "../../types/State"
 import { MrnaRequest, MrnaResponse } from "./types"
 import { CMSPage } from "../../components/TypeLookup/types"
+import TypeLookup from "../../components/TypeLookup"
 
 interface Props {
   scheme: PageInformation
@@ -29,12 +30,8 @@ function MrnaPage(props: Props): JSX.Element {
           className="description"
           style={{ color: props.scheme.body.text }}
         >
-          {/**<TypeLookup {...data} />**/}
-          {showingDesc ? (
-            <p>Enter a DNA sequence to see a breakdown of its components.</p>
-          ) : (
-            <></>
-          )}
+          <TypeLookup {...props.stateCMS} />
+          {showingDesc ? <TypeLookup {...props.stateCMS} /> : <></>}
         </div>
         <form onSubmit={props.onSubmit}>
           <div className="inputWithButton">

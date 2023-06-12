@@ -51,5 +51,6 @@ export const endpoints: {
   randombioCms: `${apiHost}/${cmsPath}/randombio`,
   secondaryCms: `${apiHost}/${cmsPath}/secondary`,
   seqalignCms: `${apiHost}/${cmsPath}/seqalign`,
+  siteanalysisCms: `${apiHost}/${cmsPath}/siteanalysis`,
   tictactoeCms: `${apiHost}/${cmsPath}/tictactoe`,
 }

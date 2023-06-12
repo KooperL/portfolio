@@ -18,33 +18,41 @@ export const useSubmit = <T, U>(
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>, payload: T) => {
       event.preventDefault()
-      dataCall(payload).then(resp => {
-        if (
-          resp.hasOwnProperty("success") &&
-          resp.success &&
-          resp.hasOwnProperty("data")
-        ) {
-          setState({
-            details: resp?.data || null,
-            error: false,
-            errorMessage: null,
-            loading: false,
-          })
-        } else {
+      dataCall(payload)
+        .then(resp => {
+          if (
+            resp.hasOwnProperty("success") &&
+            resp.success &&
+            resp.hasOwnProperty("data")
+          ) {
+            setState({
+              details: resp?.data || null,
+              error: false,
+              errorMessage: null,
+              loading: false,
+            })
+          } else {
+            setState({
+              details: null,
+              error: true,
+              errorMessage: resp.error,
+              loading: false,
+            })
+          }
+        })
+        .catch((err: any) => {
+          const error: ApiError = {
+            name: "React Error",
+            code: -1,
+            message: "Uncaught error",
+          }
           setState({
             details: null,
             error: true,
-            errorMessage: resp.error,
+            errorMessage: error,
             loading: false,
           })
-        }
-      })
-      // .catch((err: any) => {
-      //   setState({
-      //     error: true,
-      //     errorMessage: err,
-      //     loading: false,
-      //   })
+        })
     },
     [dataCall, state],
   )

@@ -43,7 +43,7 @@ function Minesweeper(props: Props) {
   return (
     <IslandCenter>
       <div className="minesweeperPage">
-        {/**<TypeLookup {...data} />**/}
+        <TypeLookup {...props.stateCMS} />
         <div className="game-controls">
           <div className="game-control">
             <Modal closedChildren={<Gear variant="small" />}>

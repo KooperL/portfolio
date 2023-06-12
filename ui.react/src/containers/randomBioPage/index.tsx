@@ -13,6 +13,7 @@ import { useRandomBioState } from "../../controllers/useRandombioState"
 import { State } from "../../types/State"
 import { RandombioRequest } from "./types"
 import { CMSPage } from "../../components/TypeLookup/types"
+import TypeLookup from "../../components/TypeLookup"
 
 interface Props {
   scheme: PageInformation
@@ -35,13 +36,7 @@ function RandomBioPage(props: Props): JSX.Element {
           className="description"
           style={{ color: props.scheme.body.text }}
         >
-          {showingDesc ? (
-            <p>
-              Generate a random sequence of nucleotides or amino acid residues.
-            </p>
-          ) : (
-            <></>
-          )}
+          {showingDesc ? <TypeLookup {...props.stateCMS} /> : <></>}
         </div>
         <div className="form">
           <form onSubmit={props.onSubmit}>

@@ -26,11 +26,11 @@ export function SchemeSettings({ children }: any) {
 
   // document.documentElement.setAttribute("style", "--main-background-color: green");
   // document.documentElement.style.cssText = "--main-background-color: red";
-  document.documentElement.style.setProperty("--color-background", "#112B3C");
-  document.documentElement.style.setProperty("--color-foreground", "#205375");
-  document.documentElement.style.setProperty("--color-text", "#F2F2F2");
-  document.documentElement.style.setProperty("--color-accent", "#F66B0E");
-  
+  document.documentElement.style.setProperty("--color-background", "#112B3C")
+  document.documentElement.style.setProperty("--color-foreground", "#205375")
+  document.documentElement.style.setProperty("--color-text", "#F2F2F2")
+  document.documentElement.style.setProperty("--color-accent", "#F66B0E")
+
   return (
     <SchemeContext.Provider value={scheme}>{children}</SchemeContext.Provider>
   )
