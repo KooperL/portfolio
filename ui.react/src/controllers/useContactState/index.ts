@@ -12,7 +12,6 @@ export const useContactState = () => {
   // const [state, setState] = useState({ ...ContactInitialState })
   const [value, setValue] = useState("")
   const [scheme, setScheme] = useContext(SchemeContext)
-
   const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, CMSPage>(
     fetchCMSData,
   )

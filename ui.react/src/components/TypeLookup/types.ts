@@ -30,7 +30,7 @@ interface TextComponent {
   type: "text"
   content: {
     title?: string
-    subTitle?: string
+    subtitle?: string
     body?: string[]
   }
 }

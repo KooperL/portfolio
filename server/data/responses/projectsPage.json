@@ -16,7 +16,7 @@
         {
           "type": "text",
           "content": {
-            "subTitle": "React apps"
+            "subtitle": "React apps"
           }
         },
         {
@@ -44,7 +44,7 @@
         {
           "type": "text",
           "content": {
-            "subTitle": "Data storage & analysis"
+            "subtitle": "Data storage & analysis"
           }
         },
         {
@@ -67,7 +67,7 @@
         {
           "type": "text",
           "content": {
-            "title": "Bioinformatics"
+            "subtitle": "Bioinformatics"
           }
         },
         {
@@ -100,7 +100,7 @@
         {
           "type": "text",
           "content": {
-            "title": "Repos"
+            "subtitle": "Repos"
           }
         },
         {
