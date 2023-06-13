@@ -22,6 +22,7 @@ function useFuelPricesState() {
     pullCMS("fuelpricesCms")
     document.title = `Fuelprices | ${scheme.title}`
   }, [])
+
   return {
     state,
     stateCMS,

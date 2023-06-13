@@ -9,7 +9,6 @@ function TypeLookup(props: State<CMSPage>): JSX.Element {
   if (props.loading) return <Spinner />
   if (props.error && props.errorMessage)
     return <ErrorPage error={props.errorMessage} />
-  // if(props.state.details && seed[0].length && seed[0][0].length) {
   if (props.details) {
     return (
       <div className="type-lookup">
@@ -27,27 +26,28 @@ function TypeLookup(props: State<CMSPage>): JSX.Element {
                         destination={component.content.url}
                         label={component.content.text ?? ""}
                         local={component.content.local}
+                        key={`${sectionIndex}-${componentIndex}`}
                       />
                     )
                   case "button-list":
                     return (
-                      <div className="button-list">
+                      <div className="button-list" key={`${sectionIndex}-${componentIndex}`}>
                         {component.content.buttons.map((segment, ind) => (
                           <ButtonRedir
                             destination={segment.url}
                             label={segment.text ?? ""}
                             local={segment.local}
-                            key={`${sectionIndex}-${ind}`}
+                            key={`${sectionIndex}-${componentIndex}-${ind}`}
                           />
                         ))}
                       </div>
                     )
                   case "unordered-list":
                     return (
-                      <ul className="unordered-list">
+                      <ul className="unordered-list" key={`${sectionIndex}-${componentIndex}`}>
                         {component.content.items.map(
                           (item: string, index: number) => (
-                            <li key={`${sectionIndex}-${index}`}>{item}</li>
+                            <li key={`${sectionIndex}-${componentIndex}-${index}`}>{item}</li>
                           ),
                         )}
                       </ul>
@@ -56,15 +56,15 @@ function TypeLookup(props: State<CMSPage>): JSX.Element {
                     return (
                       <>
                         {component.content?.title && (
-                          <h1>{component.content.title}</h1>
+                          <h1 key={`${sectionIndex}-${componentIndex}`}>{component.content.title}</h1>
                         )}
                         {component.content?.subtitle && (
-                          <h3>{component.content.subtitle}</h3>
+                          <h3 key={`${sectionIndex}-${componentIndex}`}>{component.content.subtitle}</h3>
                         )}
                         {component.content?.body &&
                           component.content.body.map(
                             (bodyText, bodyTextIndex) => (
-                              <p key={`${sectionIndex}-${bodyTextIndex}`}>
+                              <p key={`${sectionIndex}-${componentIndex}-${bodyTextIndex}`}>
                                 {bodyText}
                               </p>
                             ),
@@ -73,7 +73,7 @@ function TypeLookup(props: State<CMSPage>): JSX.Element {
                     )
                   case "emoji":
                     return (
-                      <p className={`type-lookup text ${component.type}`}>
+                      <p className={`type-lookup text ${component.type}`} key={`${sectionIndex}-${componentIndex}`}>
                         {component.content.emoji}
                       </p>
                     )
@@ -86,9 +86,8 @@ function TypeLookup(props: State<CMSPage>): JSX.Element {
         })}
       </div>
     )
-  } else {
-    return <></>
   }
+  return <></>
 }
 
 export default TypeLookup

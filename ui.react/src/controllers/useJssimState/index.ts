@@ -60,7 +60,7 @@ export const useJssimState = () => {
   ]
 
   useEffect(() => {
-    document.title = `JS Sim | ${scheme.title}`
+    document.title = `Typing challenge | ${scheme.title}`
     pull("jssimulatorCms")
   }, [])
 

@@ -12,15 +12,16 @@ const checkStatus = <T>(response: AxiosResponse) => {
   }
 
   if (response.status >= 200 && response.status < 300) {
-    return Promise.resolve(response.data)
+    return response.data
   }
   throw new Error()
+  // Promise.reject(response.data)
 }
 
 const request = <T>(
   config: AxiosRequestConfig,
 ): Promise<GenericResponse<T, ApiError>> => {
-  return new Promise((res, rej) => {
+  return new Promise((res) => {
     if (localStorage.getItem("environment") === "Local") {
       console.log(
         `-- outgoing API request, data: ${JSON.stringify(
@@ -31,7 +32,7 @@ const request = <T>(
 
     const resp = axios(config)
       .then(response => res(checkStatus<GenericResponse<T, string>>(response)))
-      .catch(response => rej(handleError(response)))
+      .catch(response => res(handleError(response)))
   })
 }
 
