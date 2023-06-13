@@ -195,6 +195,11 @@ export const useTictactoeState = () => {
       }
     }
   }, [ticker])
+  
+  useEffect(() => {
+    document.title = `Ttictactoe | ${scheme.title}`
+    pull("tictactoeCms")
+  }, [])
 
   const handleClick = (BoardIndex: number) => {
     if (winner) {

@@ -10,7 +10,7 @@
         {
           "type": "text",
           "content": {
-            "title": "Front-end dev simulator",
+            "title": "Typing challenge",
             "body": [
               "This is a typing challenge which measures how long it takes to write these sequences. Timer appears as soon as you press a key.",
               "Good luck 🏁."

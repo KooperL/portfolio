@@ -18,10 +18,6 @@ struct CMSSection {
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(tag = "type")]
 enum CMSComponent {
-    #[serde(rename = "text")]
-    Text {
-        content: TextContent,
-    },
     #[serde(rename = "image")]
     Image {
         content: ImageContent,
@@ -29,10 +25,6 @@ enum CMSComponent {
     #[serde(rename = "text")]
     Text {
         content: TextContent,
-    },
-    #[serde(rename = "image")]
-    Image {
-        content: ImageContent,
     },
     #[serde(rename = "button")]
     Button {
@@ -59,7 +51,7 @@ enum CMSComponent {
 #[derive(Debug, Deserialize, Serialize)]
 struct TextContent {
     title: Option<String>,
-    subTitle: Option<String>,
+    subtitle: Option<String>,
     body: Option<Vec<String>>,
 }
 
@@ -93,12 +85,5 @@ struct UnorderedListContent {
 
 #[derive(Debug, Deserialize, Serialize)]
 struct ButtonListContent {
-    buttons: Vec<ButtonListButton>,
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-struct ButtonListButton {
-    text: String,
-    url: String,
-    color: String,
+    buttons: Vec<ButtonContent>,
 }
