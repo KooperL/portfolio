@@ -54,7 +54,7 @@ export interface emptyPayload {
 }
 
 export interface GenericResponse<T, U extends string | ApiError> {
-  data: T | null
+  data: (T | null)
   success: boolean
-  error: U | null
+  error: (U | null)
 }

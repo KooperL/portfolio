@@ -74,6 +74,7 @@ Ok(Json(response::GenericResponse {
         };
         let matches = match_score_simple(arrs[0].clone(), arrs[1].clone(), identical, mismatch, extgaps, gaps); 
         let draw = draw_comparison(arrs[0].clone(), arrs[1].clone());
+
         Ok(Json(response::GenericResponse {
         success: true,
         data: Some(draw.join("")),

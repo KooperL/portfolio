@@ -5,6 +5,7 @@ import (
 	"kooperlingohr/portfolio/router/middleware/responses"
 	"kooperlingohr/portfolio/utils"
 	"math/rand"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -17,10 +18,11 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 		randomType := utils.HandleErrorDeconstruct(strconv.ParseInt(params.Get("type"), 10, 16))
 		randomLength := utils.HandleErrorDeconstruct(strconv.ParseInt(params.Get("length"), 10, 16))
 
+    dataDir := "../data"
 		switch randomType {
 		case (1):
 			var data []types.Dna
-			utils.OpenAndParseJSONFile("../data/dna.json", &data)
+			utils.OpenAndParseJSONFile(fmt.Sprintf("%s/dna.json", dataDir), &data)
 
 			rand.Seed(time.Now().Unix())
 			arr := make([]string, randomLength)
@@ -34,7 +36,7 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 			return
 		case (2):
 			var data []types.Rna
-			utils.OpenAndParseJSONFile("../data/rna.json", &data)
+			utils.OpenAndParseJSONFile(fmt.Sprintf("%s/rna.json", dataDir), &data)
 
 			rand.Seed(time.Now().Unix())
 			arr := make([]string, randomLength)
@@ -46,12 +48,11 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 			}
 			responses.BuildSuccessResponse(w, strings.Join(arr, ""))
 			return
-			break
 		case (3):
 			aaFormat := utils.HandleErrorDeconstruct(strconv.ParseInt(params.Get("single"), 10, 16))
 
 			var data []types.AminoAcids
-			utils.OpenAndParseJSONFile("../data/aminoAcids.json", &data)
+			utils.OpenAndParseJSONFile(fmt.Sprintf("%s/aminoAcids.json", dataDir), &data)
 
 			rand.Seed(time.Now().Unix())
 			arr := make([]string, randomLength)
@@ -87,7 +88,6 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 				responses.BuildBadResponse(w, "Bad syntax", 400)
 				return
 			}
-			break
 		default:
 			responses.BuildBadResponse(w, "Bad syntax", 400)
 			return

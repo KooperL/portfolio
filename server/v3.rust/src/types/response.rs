@@ -6,5 +6,3 @@ pub struct GenericResponse<T> {
     pub data: Option<T>,
     pub errorMessage: Option<String>,
 }
-
-
