@@ -3,7 +3,6 @@ use serde::Deserialize;
 use std::{fs};
 use sqlx::{migrate::MigrateDatabase, Row, Sqlite, SqlitePool};
 #[path = "../../types/response.rs"] mod response;
-#[path = "../../types/jsonContent.rs"] mod json_content;
 #[path = "../../utils/discordLogging.rs"] mod discordLogging;
 use std::collections::HashMap;
 

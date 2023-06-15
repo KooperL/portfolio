@@ -1,18 +1,18 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize)]
-struct CMSPage {
-    id: String,
-    title: String,
-    slug: String,
-    sections: Vec<CMSSection>,
+pub struct CMSPage {
+    pub id: String,
+    pub title: String,
+    pub slug: String,
+    pub sections: Vec<CMSSection>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 struct CMSSection {
-    id: String,
-    title: String,
-    components: Vec<CMSComponent>,
+   pub id: String,
+   pub title: String,
+   pub components: Vec<CMSComponent>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -50,40 +50,40 @@ enum CMSComponent {
 
 #[derive(Debug, Deserialize, Serialize)]
 struct TextContent {
-    title: Option<String>,
-    subtitle: Option<String>,
-    body: Option<Vec<String>>,
+    pub title: Option<String>,
+    pub subtitle: Option<String>,
+    pub body: Option<Vec<String>>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 struct ImageContent {
-    src: String,
-    alt: String,
+   pub src: String,
+   pub alt: String,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 struct ButtonContent {
-    text: String,
-    url: String,
-    local: Boolean,
+   pub text: String,
+   pub url: String,
+   pub local: bool,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 struct EmojiContent {
-    emoji: String,
+    pub emoji: String,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 struct OrderedListContent {
-    items: Vec<String>,
+    pub items: Vec<String>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 struct UnorderedListContent {
-    items: Vec<String>,
+    pub items: Vec<String>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 struct ButtonListContent {
-    buttons: Vec<ButtonContent>,
+    pub buttons: Vec<ButtonContent>,
 }

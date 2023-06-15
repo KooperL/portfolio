@@ -1,4 +1,4 @@
-use rocket::{get, post, http::Status, serde::json::Json, request, futures::TryStreamExt};
+use rocket::{get, post, http::Status, serde::json::Json, request, futures::TryStreamExt, http::Cookie, http::Cookies};
 use serde::Deserialize;
 use std::{fs, io::Read};
 use sqlx::{migrate::MigrateDatabase, Row, Sqlite, SqlitePool};
@@ -57,7 +57,7 @@ pub struct forum_user_row {
     role_id: i64,
 }
 #[post("/forum/login")]
-pub async fn loginRoutePost(auth_header: BasicAuthHeader) -> Result<Json<response::GenericResponse<String>>, Status> {
+pub async fn loginRoutePost(auth_header: BasicAuthHeader, cookies: Coookies) -> Result<Json<response::GenericResponse<String>>, Status> {
     const DB_URL: &str = "sqlite://server/data/database.db";
     // TODO: Don't you dare ignore me
     let pool = sqlx::sqlite::SqlitePoolOptions::new()
@@ -114,18 +114,25 @@ pub async fn loginRoutePost(auth_header: BasicAuthHeader) -> Result<Json<respons
             expires: access_token_exp.timestamp(),
         };
         // sign access token
-        // TODO trim??
-        let token_as_string = format!("{head}.{body}", head = token_header, body = serde_json::to_string(&access_token_body).unwrap());
-        let access_token_hash = hmac::sign(&access_token_hmac_key, token_as_string.as_bytes());
+        let access_token_as_string = format!("{head}.{body}", head = token_header, body = serde_json::to_string(&access_token_body).unwrap());
+        let access_token_hash = hmac::sign(&access_token_hmac_key, access_token_as_string.as_bytes());
+        // TODO trim == ??
+
         // generate refresh token
         let refresh_token_body = auth::jwt_refresh_token_body {
             user_id: row.id,
             expires: refresh_token_exp.timestamp()
         };
         // sign refresh token
-        // Add cookie/header
+        let refresh_token_as_string = format!("{head}.{body}", head = token_header, body = serde_json::to_string(&access_token_body).unwrap());
+        let access_token_hash = hmac::sign(&refresh_token_hmac_key, refresh_token_as_string.as_bytes());
+
+        // Add cookie/header TODO
+        cookies.add_private(Cookies::new("refresh-token", refresh_token_as_string));
+
         // Delete old refresh token
         let delete_old_refresh_query = "DELETE from forum_refresh_tokens where forum_user_id = ?;";
+
         // Store refresh token in refresh database
         let instert_new_refresh_query = "INSERT INTO forum_refresh_tokens VALUES (?, ?, ?, ?);";
 

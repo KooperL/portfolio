@@ -1,4 +1,4 @@
-use rocket::{get, post, http::Status, serde::json::Json, request, futures::StreamExt};
+use rocket::{get, post, http::Status, serde::json::Json, request, futures::StreamExt, http::Cookie, http::Cookies};
 use serde::Deserialize;
 use std::{fs, io::Read};
 use sqlx::{migrate::MigrateDatabase, Row, Sqlite, SqlitePool};
@@ -65,11 +65,11 @@ impl<'r> request::FromRequest<'r> for bearer_token {
                     return request::Outcome::Failure((Status::Unauthorized, ()));
                 }
                 
-                return request::Outcome::Success((Status::Ok, bearer_token {
+                bearer_token {
                     header: parsed_header, 
                     body: parsed_body
                     // signature: String::from_utf8(signature_internal.).unwrap()
-                }));
+                }
             })
             .map(request::Outcome::Success)
             .unwrap_or_else(|| request::Outcome::Failure((Status::BadRequest, ())));
@@ -79,7 +79,7 @@ impl<'r> request::FromRequest<'r> for bearer_token {
 
 #[tokio::main]
 #[post("/forum/logout")]                                                                            
-pub async fn logoutRoutePost(auth_header: bearer_token) -> Result<Json<response::GenericResponse<String>>, Status> {
+pub async fn logoutRoutePost(auth_header: bearer_token,  cookies: Cookies) -> Result<Json<response::GenericResponse<String>>, Status> {
     const DB_URL: &str = "sqlite://server/data/database.db";
     let pool = sqlx::sqlite::SqlitePoolOptions::new()
         .max_connections(5)
@@ -116,8 +116,11 @@ pub async fn logoutRoutePost(auth_header: bearer_token) -> Result<Json<response:
                 errorMessage: None,
             }));
         } else {
-            // Delete all records in refresh token table
-            // Set cookie to nothing
+        // Remove cookie
+        cookies.remove_private(Cookie::named("refresh-token"));
+
+        // Delete old refresh token
+        let delete_old_refresh_query = "DELETE from forum_refresh_tokens where forum_user_id = ?;";
             Ok(Json(response::GenericResponse {
                 success: false,
                 data: None,
