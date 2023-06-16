@@ -124,9 +124,9 @@ pub async fn mrnaRouteGet(dna_field_id: String) -> Result<Json<response::Generic
         success: true,
         data: Some(Response {
             molweight,
-            dna_field: format!("5' - %s - 3'", dna),
-            rdna_field: format!("5' - %s - 3'", reversed.join("")),
-            mrna_field: format!("3' - %s - 5'", rna.join("")),
+            dna_field: format!("5' - {} - 3'", dna),
+            rdna_field: format!("5' - {} - 3'", reversed.join("")),
+            mrna_field: format!("3' - {} - 5'", rna.join("")),
             aa: amino_acid_symbols,
             aa_s: amino_acid_symbols_long,
             tm,

@@ -1,4 +1,4 @@
-use rocket::{get, post, http::Status, serde::json::Json, request, futures::TryStreamExt, http::Cookie, http::Cookies};
+use rocket::{get, post, http::Status, serde::json::Json, request, futures::TryStreamExt, http::CookieJar, http::Cookie};
 use serde::Deserialize;
 use std::{fs, io::Read};
 use sqlx::{migrate::MigrateDatabase, Row, Sqlite, SqlitePool};
@@ -14,39 +14,37 @@ use std::sync::{Mutex};
 
 static PBKDF2_ALG: pbkdf2::Algorithm = pbkdf2::PBKDF2_HMAC_SHA256;
 
-// #[derive(Debug)]
-// pub struct AccessTokenResponse {
-//     AccessToken: String,
-//     Password: String,
-// }
-
 #[derive(Debug)]
 pub struct BasicAuthHeader {
     Username: String,
     Password: String,
 }
 
-#[rocket::async_trait]
-impl<'r> request::FromRequest<'r> for BasicAuthHeader {
-    type Error = ();
-    async fn from_request(request: &'r request::Request<'_>) -> request::Outcome<Self, Self::Error> {
-        request.headers().get_one("Authorization")
-            .map(|header_text| {
-                let encoded = general_purpose::STANDARD_NO_PAD.decode(header_text).unwrap();
-                let decoded: String = String::from_utf8(encoded).unwrap();
-                let split_string: Vec<&str> = decoded.split(":").collect();
-                let username: String = String::from(split_string[0]);
-                let password: String = String::from(split_string[1]);
-                BasicAuthHeader {
-                    Username: username,
-                    Password: password
-                }
-            })
-            .map(request::Outcome::Success)
-            .unwrap_or_else(|| request::Outcome::Failure((Status::BadRequest, ())))
-    }
+struct ApiKey<'r>(&'r str);
+
+#[derive(Debug)]
+enum ApiKeyError {
+    Missing,
+    Invalid,
 }
 
+#[rocket::async_trait]
+impl<'r> request::FromRequest<'r> for ApiKey<'r> {
+    type Error = ApiKeyError;
+
+    async fn from_request(req: &'r request::Request<'_>) -> request::Outcome<Self, Self::Error> {
+        /// Returns true if `key` is a valid API key string.
+        fn is_valid(key: &str) -> bool {
+            key.len() > 1
+        }
+
+        match req.headers().get_one("x-api-key") {
+            None => request::Outcome::Failure((Status::BadRequest, ApiKeyError::Missing)),
+            Some(key) if is_valid(key) => request::Outcome::Success(ApiKey(key)),
+            Some(_) => request::Outcome::Failure((Status::BadRequest, ApiKeyError::Invalid)),
+        }
+    }
+}
 
 // #[derive(Debug, sqlx::FromRow, Ord, PartialOrd, Eq, PartialEq)]
 #[derive(Debug, sqlx::FromRow)]
@@ -57,7 +55,17 @@ pub struct forum_user_row {
     role_id: i64,
 }
 #[post("/forum/login")]
-pub async fn loginRoutePost(auth_header: BasicAuthHeader, cookies: Coookies) -> Result<Json<response::GenericResponse<String>>, Status> {
+pub async fn loginRoutePost(header_text: ApiKey<'_>, cookies: &CookieJar<'_>) -> Result<Json<response::GenericResponse<String>>, Status> {
+    let encoded = general_purpose::STANDARD_NO_PAD.decode(header_text.0).unwrap();
+    let decoded: String = String::from_utf8(encoded).unwrap();
+    let split_string: Vec<&str> = decoded.split(":").collect();
+    let username: String = String::from(split_string[0]);
+    let password: String = String::from(split_string[1]);
+    let creds = BasicAuthHeader {
+        Username: username,
+        Password: password
+    };
+
     const DB_URL: &str = "sqlite://server/data/database.db";
     // TODO: Don't you dare ignore me
     let pool = sqlx::sqlite::SqlitePoolOptions::new()
@@ -79,7 +87,7 @@ pub async fn loginRoutePost(auth_header: BasicAuthHeader, cookies: Coookies) -> 
     ";
 
     let mut user_res = sqlx::query_as::<_, forum_user_row>(forumUserQuery)
-        .bind(&auth_header.Username)
+        .bind(&creds.Username)
         .fetch(&pool);
 
     if let Some(row) = user_res.try_next().await.unwrap() {
@@ -89,7 +97,7 @@ pub async fn loginRoutePost(auth_header: BasicAuthHeader, cookies: Coookies) -> 
 
         let password_has_as_bytes: [u8; 16] = row.forum_password_hash.try_into().unwrap();
         let external_hash = pbkdf2::verify(PBKDF2_ALG, its, &salt.as_bytes(),
-            &auth_header.Password.as_bytes(), &password_has_as_bytes);
+            &creds.Password.as_bytes(), &password_has_as_bytes);
        
         let access_token_life = dotenvy::var("forum-access-token-life").expect("forum-access-token-life must be set").parse::<i64>().unwrap();
         let refresh_token_life = dotenvy::var("forum-refresh-token-life").expect("forum-refresh-token-life must be set").parse::<i64>().unwrap();
@@ -110,7 +118,7 @@ pub async fn loginRoutePost(auth_header: BasicAuthHeader, cookies: Coookies) -> 
             user_id: row.id,
             iat: date.timestamp(), 
             role: row.role_id,
-            username: auth_header.Username.clone(),
+            username: creds.Username.clone(),
             expires: access_token_exp.timestamp(),
         };
         // sign access token
@@ -128,7 +136,7 @@ pub async fn loginRoutePost(auth_header: BasicAuthHeader, cookies: Coookies) -> 
         let access_token_hash = hmac::sign(&refresh_token_hmac_key, refresh_token_as_string.as_bytes());
 
         // Add cookie/header TODO
-        cookies.add_private(Cookies::new("refresh-token", refresh_token_as_string));
+        cookies.add(Cookie::new("refresh-token", refresh_token_as_string));
 
         // Delete old refresh token
         let delete_old_refresh_query = "DELETE from forum_refresh_tokens where forum_user_id = ?;";

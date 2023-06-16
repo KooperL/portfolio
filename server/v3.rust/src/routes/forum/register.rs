@@ -17,29 +17,46 @@ pub struct BasicAuthHeader {
     Password: String,
 }
 
+struct ApiKey<'r>(&'r str);
+
+#[derive(Debug)]
+enum ApiKeyError {
+    Missing,
+    Invalid,
+}
+
 #[rocket::async_trait]
-impl<'r> request::FromRequest<'r> for BasicAuthHeader {
-    type Error = ();
-    async fn from_request(request: &'r request::Request<'_>) -> request::Outcome<Self, Self::Error> {
-        request.headers().get_one("Authorization")
-            .map(|header_text| {
-                let encoded = general_purpose::STANDARD_NO_PAD.decode(header_text).unwrap();
-                let decoded = String::from_utf8(encoded).unwrap();
-                let split_string: Vec<&str> = decoded.split(":").collect();
-                let username: String = String::from(split_string[0]);
-                let password: String = String::from(split_string[1]);
-                BasicAuthHeader {
-                    Username: username,
-                    Password: password
-            }})
-            .map(request::Outcome::Success)
-            .unwrap_or_else(|| request::Outcome::Failure((Status::BadRequest, ())))
+impl<'r> request::FromRequest<'r> for ApiKey<'r> {
+    type Error = ApiKeyError;
+
+    async fn from_request(req: &'r request::Request<'_>) -> request::Outcome<Self, Self::Error> {
+        /// Returns true if `key` is a valid API key string.
+        fn is_valid(key: &str) -> bool {
+            key.len() > 1
+        }
+
+        match req.headers().get_one("x-api-key") {
+            None => request::Outcome::Failure((Status::BadRequest, ApiKeyError::Missing)),
+            Some(key) if is_valid(key) => request::Outcome::Success(ApiKey(key)),
+            Some(_) => request::Outcome::Failure((Status::BadRequest, ApiKeyError::Invalid)),
+        }
     }
 }
 
+
 #[tokio::main]
 #[post("/forum/register")]                                                                            
-pub async fn registerRoutePost(auth_header: BasicAuthHeader) -> Result<Json<response::GenericResponse<String>>, Status> {
+pub async fn registerRoutePost(header_text: ApiKey<'_>) -> Result<Json<response::GenericResponse<String>>, Status> {
+    let encoded = general_purpose::STANDARD_NO_PAD.decode(header_text.0).unwrap();
+    let decoded: String = String::from_utf8(encoded).unwrap();
+    let split_string: Vec<&str> = decoded.split(":").collect();
+    let username: String = String::from(split_string[0]);
+    let password: String = String::from(split_string[1]);
+    let creds = BasicAuthHeader {
+        Username: username,
+        Password: password
+    };
+
     const DB_URL: &str = "sqlite://server/data/database.db";
     let pool = sqlx::sqlite::SqlitePoolOptions::new()
         .max_connections(5)
@@ -55,7 +72,7 @@ pub async fn registerRoutePost(auth_header: BasicAuthHeader) -> Result<Json<resp
     ";
     //let mut tx = pool.begin().await.expect("begin tx");
     let userExists = sqlx::query(forumUserExistsQuery)
-        .bind(&auth_header.Username)
+        .bind(&creds.Username)
         //.execute(&db.acquire())
         .execute(&pool)
         .await
@@ -79,13 +96,13 @@ pub async fn registerRoutePost(auth_header: BasicAuthHeader) -> Result<Json<resp
         // let hash = crypto::pbkdf2::pbkdf2();
         let mut cred: [u8; 16] = [0u8; 16];
         let hash = pbkdf2::derive(PBKDF2_ALG, its, &salt,
-            &auth_header.Password.as_bytes(), &mut cred);
+            &creds.Password.as_bytes(), &mut cred);
         // let db = SqlitePool::connect(DB_URL).await.unwrap();
         let mut tx = pool.begin().await.expect("begin tx");
 		let insertForumUserQuery = "INSERT INTO forum_users VALUES (NULL, ?, ?, ?, ?, 1, 1, 1);";
         let insert_user = sqlx::query(insertForumUserQuery)
             .bind(&time)
-            .bind(&auth_header.Username.to_lowercase())
+            .bind(&creds.Username.to_lowercase())
             .bind(&cred.to_ascii_lowercase())
             .bind(&salt)
             .execute(&mut tx)
