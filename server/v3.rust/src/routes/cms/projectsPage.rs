@@ -6,7 +6,7 @@ use std::collections::HashMap;
 
 
 #[get("/cms/projects")]                                                                            
-pub async fn projectCmssRouteGet() -> Result<Json<response::GenericResponse<cms_content::CMSPage>>, Status> {
+pub async fn projectsCmsRouteGet() -> Result<Json<response::GenericResponse<cms_content::CMSPage>>, Status> {
     let file_contents = std::fs::read_to_string("../data/responses/projectsPage.json").expect("File should have been opened");
     let parsed_file: cms_content::CMSPage = serde_json::from_str(&file_contents).unwrap();
     Ok(Json(response::GenericResponse {

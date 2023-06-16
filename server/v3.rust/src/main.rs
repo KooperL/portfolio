@@ -45,6 +45,6 @@ async fn rocket() -> _ {
         secondary::secondaryRouteGet, seqalign::seqAlignRouteGet, randombio::randomBioRouteGet, mrna::mrnaRouteGet, fuelprices::fuelpricesRouteGet,
         contact::contactRoutePost, monitor::monitorRoutePost, capture::captureRoutePost,
         forumIndex::forumIndexRouteGet, forumRegister::registerRoutePost, forumLogin::loginRoutePost, forumLogout::logoutRoutePost,
-        aboutCms::aboutCmsRouteGet, contactCms::contactCmsRouteGet, projectsCms::projectCmsRouteGet, indexCms::homeCmsRouteGet
+        aboutCms::aboutCmsRouteGet, contactCms::contactCmsRouteGet, projectsCms::projectsCmsRouteGet, indexCms::homeCmsRouteGet
     ])
 }
