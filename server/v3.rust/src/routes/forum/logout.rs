@@ -26,10 +26,10 @@ pub struct bearer_token {
     // signature: String
 }
 
-struct ApiKey<'r>(&'r str);
+pub struct ApiKey<'r>(&'r str);
 
 #[derive(Debug)]
-enum ApiKeyError {
+pub enum ApiKeyError {
     Missing,
     Invalid,
 }
@@ -76,11 +76,12 @@ pub async fn logoutRoutePost(header_text: ApiKey<'_>, mut cookies: &CookieJar<'_
     let string_of_token =  format!("{head}.{body}",
         head = serde_json::to_string(&parsed_header).unwrap(), 
         body = serde_json::to_string(&parsed_body).unwrap()
-    ).as_bytes();
-    let signature_internal = hmac::sign(&access_token_hmac_key, string_of_token);
+    );
+    let string_of_token_as_bytes = string_of_token.as_bytes();
+    let signature_internal = hmac::sign(&access_token_hmac_key, string_of_token_as_bytes);
 
     // TODO: if jwt_header.typ is tampered? Should be tracked in db
-    let tokens_match = hmac::verify(&access_token_hmac_key, string_of_token, signature_external);
+    let tokens_match = hmac::verify(&access_token_hmac_key, string_of_token_as_bytes, signature_external);
     if tokens_match.is_err() {
         // return request::Outcome::Failure((Status::Unauthorized, ()));
     };
@@ -136,12 +137,12 @@ pub async fn logoutRoutePost(header_text: ApiKey<'_>, mut cookies: &CookieJar<'_
 
         // Delete old refresh token
         let delete_old_refresh_query = "DELETE from forum_refresh_tokens where forum_user_id = ?;";
-            Ok(Json(response::GenericResponse {
-                success: false,
-                data: None,
-                errorMessage: Some(String::from("User is not logged in")),
-            }))
-        }
+        Ok(Json(response::GenericResponse {
+            success: false,
+            data: None,
+            errorMessage: Some(String::from("User is not logged in")),
+        }))
     }
+}
 
 

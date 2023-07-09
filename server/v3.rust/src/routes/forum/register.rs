@@ -17,10 +17,10 @@ pub struct BasicAuthHeader {
     Password: String,
 }
 
-struct ApiKey<'r>(&'r str);
+pub struct ApiKey<'r>(&'r str);
 
 #[derive(Debug)]
-enum ApiKeyError {
+pub enum ApiKeyError {
     Missing,
     Invalid,
 }

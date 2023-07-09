@@ -9,7 +9,7 @@ pub struct CMSPage {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-struct CMSSection {
+pub struct CMSSection {
    pub id: String,
    pub title: String,
    pub components: Vec<CMSComponent>,
@@ -17,7 +17,7 @@ struct CMSSection {
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(tag = "type")]
-enum CMSComponent {
+pub enum CMSComponent {
     #[serde(rename = "image")]
     Image {
         content: ImageContent,
