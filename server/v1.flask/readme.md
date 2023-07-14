@@ -7,7 +7,7 @@ Create a new venv with `virtualenv flask` and then `source flask/bin/activate` t
 
 `pip install -r requirements.txt` to download modules.
 
-This does not install `mongoDB` so that should be done seperately with the instructions on `https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/`
+This does not install `mongoDB` so that should be done separately with the instructions on `https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/`
 
 The conf file in `/etc/mongodb.conf` must point to `portfolio/server/data/mongodb` instead of its default.
 
@@ -40,7 +40,7 @@ RATE_LIMIT_REQUESTS_GENERAL=<value>
 The entry point for this app is `app.py`
 
 ## CRON
-The app leverages scheduled webscrapers. Configure CRON with `sudo crontab -e`. Replace `{{DIR}}` with the repository location path. See `../setup.sh` to skip.
+The app leverages scheduled web scrapers. Configure CRON with `sudo crontab -e`. Replace `{{DIR}}` with the repository location path. See `../setup.sh` to skip.
 
 ```
 0 16 * * * /usr/bin/python3 /{{DIR}}/portfolio/server/v1.flask/scripts/fuelscrape/fuelscrape.py
