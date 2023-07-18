@@ -46,8 +46,6 @@ function SecondaryPage(props: Props): JSX.Element {
           className="description"
           style={{ color: props.scheme.body.text }}
         >
-          <h1>Protein secondary structure preditction</h1>
-          <br />
           {showingDesc ? <TypeLookup {...props.stateCMS} /> : <></>}
         </div>
         <form onSubmit={props.onSubmit}>
