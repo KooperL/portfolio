@@ -6,7 +6,7 @@ import scripts.utils.structs
 
 projectsCms = Blueprint('projectsCms', __name__)
 
-@projectsCms.route(f'/{scripts.utils.structs.projectsPath}/projects', methods=['GET', 'OPTIONS'])
+@projectsCms.route(f'/{scripts.utils.structs.cmsPath}/projects', methods=['GET', 'OPTIONS'])
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
 def projectsCmsHome():
