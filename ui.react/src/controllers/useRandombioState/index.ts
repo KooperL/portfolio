@@ -28,6 +28,7 @@ export const useRandomBioState = () => {
     })
   }
   useEffect(() => {
+    pull("randombioCms")
     document.title = `Random generator | ${scheme.title}`
   }, [])
 

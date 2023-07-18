@@ -30,7 +30,6 @@ function MrnaPage(props: Props): JSX.Element {
           className="description"
           style={{ color: props.scheme.body.text }}
         >
-          <TypeLookup {...props.stateCMS} />
           {showingDesc ? <TypeLookup {...props.stateCMS} /> : <></>}
         </div>
         <form onSubmit={props.onSubmit}>
