@@ -52,9 +52,11 @@ interface Props {
 }
 
 function ForumLoginPage(props: Props): JSX.Element {
+
   if (props.token !== "" && props.token !== null) {
     return <Redirect destination={`/${ForumRouteType.ForumHome}`} />
   }
+
   const tnc = termsAndConditions()
   return (
     <IslandCenter>

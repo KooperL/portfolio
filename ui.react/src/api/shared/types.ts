@@ -1,8 +1,7 @@
-import { ApiError } from "src/api/apiErrorHandler"
+import { ApiError } from "../apiErrorHandler"
 
 export const forumPath = "forum"
 export const projectPath = "projects"
-export const cmsPath = "cms"
 
 export interface ApiEndpoints {
   contact: string
@@ -30,23 +29,6 @@ export interface ApiEndpoints {
   forumRegister: string
   forumRefresh: string
   forumLogout: string
-}
-
-export interface CmsEndpoints {
-  aboutCms: string
-  contactCms: string
-  fuelpricesCms: string
-  homeCms: string
-  jssimulatorCms: string
-  minesweeperCms: string
-  mrnaCms: string
-  projectsCms: string
-  propertyCms: string
-  randombioCms: string
-  secondaryCms: string
-  seqalignCms: string
-  tictactoeCms: string
-  siteanalysisCms: string
 }
 
 export interface emptyPayload {

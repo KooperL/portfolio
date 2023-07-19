@@ -65,8 +65,12 @@ export const postForumRegister = (
   authBasic: string,
 ): Promise<GenericResponse<ForumRegisterPOSTResponse, ApiError>> => {
   const apiConfig = {
-    headers: { Authorization: `Basic ${authBasic}` }, //, 'Access-Control-Allow-Credentials': 'true'},
+    headers: {
+      Authorization: `Basic ${authBasic}`,
+      // 'Access-Control-Allow-Credentials': 'true',
+    },
     data: data,
+    // withCredentials: true,
   }
   return post(endpoints["forumRegister"], apiConfig)
 }
@@ -77,7 +81,7 @@ export const postForumLogin = (
   authBasic: string,
 ): Promise<GenericResponse<ForumLoginPOSTResponse, ApiError>> => {
   const apiConfig = {
-    headers: { Authorization: `Basic ${authBasic}` }, //, 'Access-Control-Allow-Credentials': 'true'},
+    headers: { Authorization: `Basic ${authBasic}` },
     data: data,
     withCredentials: true,
   }

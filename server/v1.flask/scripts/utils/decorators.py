@@ -128,3 +128,11 @@ def token_required(f):
       return scripts.utils.responses.build_unauthorized()
     return f(outcome, *args, **kwargs)
   return decorated
+
+def handlePreflight(f):
+  @wraps(f)
+  def decorated(*args, **kwargs):
+    if request.method == 'OPTIONS':
+      return scripts.utils.responses.build_preflight_response()
+    return f(*args, **kwargs)
+  return decorated
