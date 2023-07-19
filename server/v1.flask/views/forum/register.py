@@ -68,6 +68,8 @@ def forumRegisterHome():
       'success': True,
     }
     res = jsonify(kwargs)
+    # res.headers.add('withCredentials', 'true')
+    res.headers.add('Access-Control-Allow-Credentials', 'true') 
     return scripts.utils.responses.build_actual_response(res)
   elif request.method == 'OPTIONS': 
     return scripts.utils.responses.build_preflight_response()
