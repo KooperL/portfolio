@@ -1,4 +1,3 @@
-import { GenericResponse } from "@containers/App/api/types"
 import { useCallback, useEffect, useState } from "react"
 import { ApiError } from "../../api/apiErrorHandler"
 import { State } from "../../types/State"

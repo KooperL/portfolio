@@ -13,7 +13,7 @@ const routes = {
   seqalignCms: 'seqalign',
   siteanalysisCms: 'siteanalysis',
   tictactoeCms: 'tictactoe',
-}
+} as const
 
 export const cmsPath = "cms"
 

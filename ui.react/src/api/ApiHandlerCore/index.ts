@@ -15,7 +15,14 @@ class ApiHandlerCore {
     this.instance = axios.create(config)
     this.retryTimeSeconds = retryTimeSeconds
     this.defaultCacheMode = defaultCacheMode
-  }
+
+    this.instance.interceptors.response.use((response) => {}, (error) => {
+      if (error.config && error.response && error.response.status !== 429) {
+          return axios.request(error.config);
+      }
+      return Promise.reject(error);
+    }
+  });
 
   async request<T>(
     config: AxiosRequestConfig<T>,
@@ -27,8 +34,8 @@ class ApiHandlerCore {
         this.instance.request(config).then(resp => {
           this.store.set(cacheKey.CacheKey, resp)
         })
-
         return cachedData
+
       case CacheMode.NetworkFirst:
         const resp = await this.instance.request(config)
         this.store.set(cacheKey.CacheKey, resp)
