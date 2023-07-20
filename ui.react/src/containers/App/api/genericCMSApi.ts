@@ -2,7 +2,6 @@ import { CMSPage } from "@components/TypeLookup/types"
 import { ApiError } from "../../../api/apiErrorHandler"
 import { get } from "../../../api/restApi"
 import { endpoints } from "./endpoints"
-import { CmsEndpoints, GenericResponse } from "./types"
 
 export const fetchCMSData = (
   route: keyof CmsEndpoints,
@@ -13,3 +12,4 @@ export const fetchCMSData = (
   }
   return get(endpoints[route], apiConfig)
 }
+

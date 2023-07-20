@@ -2,14 +2,14 @@ import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { fetchCMS } from "../instance";
 import { cmsPath, routes } from "../types";
 
-function fetchCmsGeneric(route: keyof typeof routes) {
+function fetchCmsGeneric(route: typeof routes) {
   const path = `${cmsPath}/${route}`
   const config = {
     url: path 
   }
   const cacheKey: CacheKey = {
     CacheMode: CacheMode.CacheFirst,
-    CacheKey: route
+    CacheKey: route.toString()
   }
   return fetchCMS.request(
     config,

@@ -8,6 +8,7 @@ import { State } from "../../types/State"
 // @ts-ignore
 import dna from "./dna.txt"
 import { CMSPage } from "../../components/TypeLookup/types"
+import { fetchCmsGeneric } from "src/api/clients/fetchCMS/routes/generic"
 
 function newSeed(arrs: number, length: number, width: number) {
   let arr = new Array(arrs)
@@ -33,7 +34,8 @@ export const useAboutState = () => {
   // let state: State<AboutPayload>;
 
   const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, CMSPage>(
-    fetchCMSData,
+    fetchCmsGeneric,
+    // fetchCMSData,
   )
 
   useEffect(() => {
