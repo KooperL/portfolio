@@ -31,12 +31,18 @@ export interface ApiEndpoints {
   forumLogout: string
 }
 
-export interface emptyPayload {
-  success: boolean
+// export interface GenericResponse<T, U extends string | ApiError> {
+//   data: (T | null)
+//   success: boolean
+//   error: (U | null)
+// }
+
+interface genericApiResponse<T> {
+  success: boolean,
+  data: T | null,
+  errorMessage: string | null,
 }
 
-export interface GenericResponse<T, U extends string | ApiError> {
-  data: (T | null)
-  success: boolean
-  error: (U | null)
+export type {
+  genericApiResponse
 }
