@@ -19,7 +19,7 @@ export interface fuelpricesData {
   }[]
 }
 
-export interface FuelPricesResponse {
+export interface FuelPricesResponsePayload {
   fuelprices: fuelpricesData
   stats: {
     average: number
@@ -28,3 +28,5 @@ export interface FuelPricesResponse {
     decision: string
   }
 }
+
+export interface FuelPricesRequestPayload {}
