@@ -37,12 +37,21 @@ export interface ApiEndpoints {
 //   error: (U | null)
 // }
 
-interface genericApiResponse<T> {
+interface genericApiDataResponse<T> {
   success: boolean,
   data: T | null,
   errorMessage: string | null,
 }
 
+interface genericApiTokenResponse {
+  success: boolean
+  type?: string
+  accessToken?: string
+  expires?: number
+  error?: string
+}
+
 export type {
-  genericApiResponse
+  genericApiTokenResponse,
+  genericApiDataResponse
 }

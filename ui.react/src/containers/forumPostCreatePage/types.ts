@@ -1,6 +1,6 @@
 import { ApiError } from "../../api/apiErrorHandler"
 
-export interface ForumPostCreatePOSTPayload {
+export interface ForumPostCreateRequestPayload {
   session_id: string
   data: {
     forum_title: string
@@ -8,23 +8,6 @@ export interface ForumPostCreatePOSTPayload {
   }
 }
 
-export interface ForumPostCreatePOSTResponse {
-  success: boolean
-  data?: {
-    forumPostId: number
-  }
-  error?: string
+export interface ForumPostCreateResponsePayload {
+  forumPostId: number
 }
-
-export interface ForumPostCreatePOSTState {
-  details?: ForumPostCreatePOSTResponse
-  error?: boolean
-  errorMessage?: ApiError | null
-  loading?: boolean
-}
-
-export const ForumPostCreatePOSTInitialState: ForumPostCreatePOSTState = {
-  error: false,
-  errorMessage: null,
-  loading: false,
-} as const
