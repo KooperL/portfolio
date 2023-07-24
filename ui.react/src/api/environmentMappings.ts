@@ -1,5 +1,5 @@
 // import { env } from "process";
-import { environments, Environment } from "../../../config/environments"
+import { environments, Environment } from "../config/environments"
 
 const environmentalKeys = {
   production: "Prod",

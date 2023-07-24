@@ -1,11 +1,29 @@
-export const getUserView = (
-  data: ForumPostViewGETPayload,
-  authJWT: string,
-  username: string,
-): Promise<GenericResponse<ForumUserGETResponse, ApiError>> => {
-  const apiConfig = {
-    headers: { Authorization: `Bearer ${authJWT}` },
-    params: data,
+import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
+import { fetchForum } from "../instance";
+import { forumPath, routes } from "../types";
+import { AxiosRequestConfig } from "axios";
+import { ForumUserResponsePayload } from "./../../../../containers/forumUserPage/types";
+
+function sendForumPostView(data: {}, creds: string, username: string): Promise<ForumUserResponsePayload[]> {
+  const path = `${forumPath}/${routes.forumUser}/${username}`
+  const config: AxiosRequestConfig = {
+    url: path,
+    data: data,
+    headers: { Authorization: `Bearer ${creds}` },
+    withCredentials: true,
+    method: 'POST'
   }
-  return get(endpoints["forumUser"] + username, apiConfig)
+  const cacheKey: CacheKey = {
+    CacheMode: CacheMode.NetworkFirst,
+    CacheKey: routes.forumUser
+  }
+  return fetchForum.request(
+    config,
+    cacheKey,
+  )
 }
+
+export {
+  sendForumPostView
+}
+

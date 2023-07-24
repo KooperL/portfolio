@@ -1,8 +1,8 @@
 const routes = {
   forumRegister: 'register',
   forumPostCreate: 'post',
-  forumPost: 'post/',
-  forumUser: 'user/',
+  forumPost: 'post',
+  forumUser: 'user',
   forumLogin: 'login',
   forumRefresh: 'refresh',
   forumLogout: 'logout',

@@ -4,7 +4,7 @@ import { routes } from "../types";
 import { ApiConsumer } from "../instance";
 
 
-export const fetchFuelPrices = (body: {}): Promise<PropertyIndexResponse> => {
+export const fetchPropertyIndex = (body: {}): Promise<PropertyIndexResponse> => {
   const path = `${routes.property}`
   const config = {
     url: path,
