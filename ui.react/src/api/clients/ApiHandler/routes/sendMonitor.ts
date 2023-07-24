@@ -1,0 +1,31 @@
+import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
+import { ApiConsumer } from "../instance";
+import { routes } from "../types";
+
+interface MonitorRequestPayload {
+  uuid: string
+  session_id: string
+  page: string
+  prevPage: string
+  newVisit?: string
+}
+
+export const sendCapture = (data: MonitorRequestPayload): Promise<null> => {
+  const path = `${routes.monitor}`
+  const config = {
+    url: path,
+    params: data,
+  }
+  const cacheKey: CacheKey = {
+    CacheMode: CacheMode.NetworkFirst,
+    CacheKey: path
+  }
+  return ApiConsumer.request(
+    config,
+    cacheKey,
+  )
+}
+
+export {
+}
+

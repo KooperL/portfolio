@@ -15,7 +15,7 @@ function sendForumPostCreate(data: ForumPostCreateRequestPayload, creds: string)
   }
   const cacheKey: CacheKey = {
     CacheMode: CacheMode.NetworkFirst,
-    CacheKey: routes.forumLogin
+    CacheKey: routes.forumPostCreate
   }
   return fetchForum.request(
     config,
@@ -24,5 +24,5 @@ function sendForumPostCreate(data: ForumPostCreateRequestPayload, creds: string)
 }
 
 export {
-  sendForumRefresh
+  sendForumPostCreate
 }
