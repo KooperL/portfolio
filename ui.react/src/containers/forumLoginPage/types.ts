@@ -1,59 +1,24 @@
-import { ApiError } from "../../api/apiErrorHandler"
+import { genericApiDataResponse, genericApiTokenResponse } from "src/api/shared/types"
 
-export interface ForumLoginPOSTPayload {
+// Login component
+export interface ForumLoginRequestPayload {
   session_id: string
 }
 
-export interface ForumLoginPOSTResponse {
-  success: boolean
-  type?: string
-  accessToken?: string
-  expires?: number
-  error?: string
-}
+export interface ForumLoginResponsePayload extends genericApiTokenResponse {}
 
-export interface ForumLoginPOSTState {
-  details?: ForumLoginPOSTResponse
-  error?: boolean
-  errorMessage?: ApiError | null
-  loading?: boolean
-}
-
-export const ForumLoginPOSTInitialState: ForumLoginPOSTState = {
-  error: false,
-  errorMessage: null,
-  loading: false,
-} as const
-
-export interface ForumRegisterPOSTPayload {
-  // data: ForumRegisterState;
+// Register component
+export interface ForumRegisterRequstPayload {
   session_id: string
 }
 
-export interface ForumRegisterPOSTResponse {
-  success: boolean
-  error?: string
+export interface ForumRegisterResponsepayload extends genericApiDataResponse<null> {
 }
 
-export interface ForumRegisterState {
-  forum_username: string
-  forum_password: string
+// Refresh component
+export interface ForumRefreshRequestPayload {
+  session_id: string
 }
 
-export const ForumRegisterInitialState: ForumRegisterState = {
-  forum_username: "",
-  forum_password: "",
-}
+export interface ForumRefreshResponsePayload extends genericApiTokenResponse {}
 
-export interface ForumRegisterPOSTState {
-  details?: ForumRegisterPOSTResponse
-  error?: boolean
-  errorMessage?: ApiError | null
-  loading?: boolean
-}
-
-export const ForumRegisterPOSTInitialState: ForumRegisterPOSTState = {
-  error: false,
-  errorMessage: null,
-  loading: false,
-} as const
