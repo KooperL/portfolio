@@ -1,28 +1,28 @@
 import { useState, useCallback, useContext, useEffect } from "react"
-import { fetchMrna } from "../../containers/App/api/MrnaApi"
-import { useSubmit } from "../../hooks/useSubmit"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useFetch } from "src/hooks/useFetch"
-import { CmsEndpoints } from "../../containers/App/api/types"
-import { fetchCMSData } from "../../containers/App/api/genericCMSApi"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { CMSPageResponse } from "../../components/TypeLookup/types"
+import { sendMrna } from "src/api/clients/ApiHandler/routes/sendMrna"
+import { MrnaRequest, MrnaResponse } from "src/containers/mrnaPage/types"
+import { useCms } from "src/hooks/useCms"
 
 export const useMrnaState = () => {
   const [value, setValue] = useState("")
   const [scheme, setScheme] = useContext(SchemeContext)
-  const { state: statePOST, handleSubmit } = useSubmit(fetchMrna)
-  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, CMSPage>(
-    fetchCMSData,
-  )
+  const { state: statePOST, pull: handleSubmit } = useFetch<MrnaRequest, MrnaResponse>()
+  const { state: stateCMS, pull } = useCms()
 
   useEffect(() => {
     document.title = `DNA decoder | ${scheme.title}`
-    pull("mrnaCms")
+    pull('mrnaCms')
   }, [])
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    handleSubmit(e, {
-      dna_field_id: value,
+    handleSubmit({
+      ApiImpl: sendMrna,
+      payload: {
+        dna_field_id: value,
+      }
     })
   }
   return {

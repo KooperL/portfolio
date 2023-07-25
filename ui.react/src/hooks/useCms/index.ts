@@ -1,32 +1,25 @@
+import { CMSPageResponse } from "src/components/TypeLookup/types"
 import { AxiosRequestConfig } from "axios"
 import { useCallback, useEffect, useState } from "react"
 import { genericApiDataResponse } from "src/api/shared/types"
 import { State } from "../../types/State"
+import { fetchCmsGeneric } from "src/api/clients/CmsHandler/routes/generic"
+import { routes } from "src/api/clients/CmsHandler/types"
 
-interface useFetchOptions<T, U> {
-  ApiImpl: (config: T, auth?: string, varRoute?: string) => Promise<genericApiDataResponse<U>> 
-  payload: T
-  auth?: string
-  varRoute?: string
-}
 
-export const useFetch = <T, U>(
+export const useCms = (
 ) => {
-  const [state, setState] = useState<State<U>>({
+  const [state, setState] = useState<State<CMSPageResponse>>({
     loading: true,
     details: null,
     errorMessage: null,
     error: false,
   })
   const pull = useCallback(
-    (props: useFetchOptions<T, U>) => {
-      props.ApiImpl(
-        props.payload,
-        props?.auth,
-        props?.varRoute
-      )
+    (route: keyof typeof routes) => {
+      fetchCmsGeneric(route)
         .then((resp) => {
-          if (resp.hasOwnProperty("success") && resp.success) {
+          if (resp.data.hasOwnProperty("id")) {
             setState({
               details: resp?.data || null,
               error: false,
@@ -37,7 +30,7 @@ export const useFetch = <T, U>(
             setState({
               details: null,
               error: true,
-              errorMessage: resp?.errorMessage ?? null,
+              errorMessage: resp?.status.toString() ?? null,
               loading: false,
             })
           }

@@ -1,11 +1,11 @@
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
-import { fetchForum } from "../instance";
-import { forumPath, routes } from "../types";
 import { AxiosRequestConfig } from "axios";
-import { ForumPostViewRequestPayload, ForumPostViewResponsePayload } from "./../../../../containers/forumPostViewPage/types";
+import { ForumUserResponsePayload } from "./types";
+import { forumPath, routes } from "../../types";
+import { fetchForum } from "../../instance";
 
-function sendForumPostView(data: ForumPostViewRequestPayload, creds: string, id: string): Promise<ForumPostViewResponsePayload> {
-  const path = `${forumPath}/${routes.forumPost}/${id}`
+function sendForumPostView(data: {}, creds: string, username: string): Promise<ForumUserResponsePayload[]> {
+  const path = `${forumPath}/${routes.forumUser}/${username}`
   const config: AxiosRequestConfig = {
     url: path,
     data: data,
@@ -15,7 +15,7 @@ function sendForumPostView(data: ForumPostViewRequestPayload, creds: string, id:
   }
   const cacheKey: CacheKey = {
     CacheMode: CacheMode.NetworkFirst,
-    CacheKey: routes.forumPost
+    CacheKey: routes.forumUser
   }
   return fetchForum.request(
     config,
@@ -26,3 +26,4 @@ function sendForumPostView(data: ForumPostViewRequestPayload, creds: string, id:
 export {
   sendForumPostView
 }
+

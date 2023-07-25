@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
-import { fetchMrna } from "../App/api/MrnaApi"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 import { Button } from "../../components/Button"
@@ -10,7 +9,7 @@ import ErrorPage from "../ErrorPage"
 import { useMrnaState } from "../../controllers/useMrnaState"
 import { State } from "../../types/State"
 import { MrnaRequest, MrnaResponse } from "./types"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
 
 interface Props {
@@ -19,7 +18,7 @@ interface Props {
   setValue: React.Dispatch<React.SetStateAction<string>>
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   statePOST: State<MrnaResponse>
-  stateCMS: State<CMSPage>
+  stateCMS: State<CMSPageResponse>
 }
 
 function MrnaPage(props: Props): JSX.Element {

@@ -1,5 +1,3 @@
-import { ApiError } from "../../api/apiErrorHandler"
-
 export interface ForumPostCreateRequestPayload {
   session_id: string
   data: {
