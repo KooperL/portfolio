@@ -1,8 +1,8 @@
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
-import { fetchForum } from "../instance";
-import { forumPath, routes } from "../types";
+import { fetchForum } from "../../instance";
+import { forumPath, routes } from "../../types";
 import { AxiosRequestConfig } from "axios";
-import { ForumRefreshRequestPayload, ForumRefreshResponsePayload } from "./../../../../containers/forumLoginPage/types";
+import { ForumRefreshRequestPayload, ForumRefreshResponsePayload } from "./types";
 
 function sendForumRefresh(data: ForumRefreshRequestPayload): Promise<ForumRefreshResponsePayload> {
   const path = `${forumPath}/${routes.forumRefresh}`
@@ -14,7 +14,7 @@ function sendForumRefresh(data: ForumRefreshRequestPayload): Promise<ForumRefres
   }
   const cacheKey: CacheKey = {
     CacheMode: CacheMode.NetworkFirst,
-    CacheKey: routes.forumLogin
+    CacheKey: routes.forumRefresh
   }
   return fetchForum.request(
     config,

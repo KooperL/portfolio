@@ -1,4 +1,4 @@
-export interface CMSPage {
+export interface CMSPageResponse {
   id: string
   title: string
   slug: string

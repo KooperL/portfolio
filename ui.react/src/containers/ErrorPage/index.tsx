@@ -1,13 +1,13 @@
 import { useContext } from "react"
-import { ApiError } from "../../api/apiErrorHandler"
+import { State } from "src/types/State"
 import { SchemeContext } from "../context/colourScheme"
 import "./style.css"
 
-interface Props {
-  error: ApiError
+interface Props <T> {
+  error: State<T>
 }
 
-function ErrorPage(props: Props): JSX.Element {
+function ErrorPage<T>(props: Props<T>): JSX.Element {
   const [scheme, setScheme] = useContext(SchemeContext)
 
   return (
@@ -17,11 +17,10 @@ function ErrorPage(props: Props): JSX.Element {
           className="code"
           style={{ color: scheme.body.h1 }}
         >
-          {props.error.code}
+          123 TODO HI KOOPER
         </div>
         <div className="details">
-          <div className="name">{props.error.name}</div>
-          <div className="message">{props.error.message}</div>
+          <div className="message">{props.error.errorMessage}</div>
         </div>
       </div>
     </div>

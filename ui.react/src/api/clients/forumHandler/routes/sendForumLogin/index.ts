@@ -1,10 +1,10 @@
-import { ForumLoginRequestPayload, ForumRegisterResponsepayload } from "../../../../containers/forumLoginPage/types";
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
-import { fetchForum } from "../instance";
-import { forumPath, routes } from "../types";
 import { AxiosRequestConfig } from "axios";
+import { ForumLoginRequestPayload, ForumLoginResponsePayload } from "./types";
+import { forumPath, routes } from "../../types";
+import { fetchForum } from "../../instance";
 
-function sendForumLogin(data: ForumLoginRequestPayload, creds: string): Promise<ForumRegisterResponsepayload> {
+function sendForumLogin(data: ForumLoginRequestPayload, creds: string): Promise<ForumLoginResponsePayload> {
   const path = `${forumPath}/${routes.forumLogin}`
   const config: AxiosRequestConfig = {
     url: path,
