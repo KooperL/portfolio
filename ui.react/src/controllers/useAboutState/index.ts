@@ -1,12 +1,12 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useFetch } from "../../hooks/useFetch"
-import { useSubmit } from "../../hooks/useSubmit"
 import { State } from "../../types/State"
 // @ts-ignore
 import dna from "./dna.txt"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { CMSPageResponse } from "../../components/TypeLookup/types"
 import { fetchCmsGeneric } from "src/api/clients/CmsHandler/routes/generic"
+import { useCms } from "src/hooks/useCms"
 
 function newSeed(arrs: number, length: number, width: number) {
   let arr = new Array(arrs)
@@ -31,9 +31,7 @@ export const useAboutState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
   // let state: State<AboutPayload>;
 
-  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, CMSPage>(
-    fetchCmsGeneric,
-  )
+  const { state: stateCMS, pull } = useCms()
 
   useEffect(() => {
     document.title = `About | ${scheme.title}`

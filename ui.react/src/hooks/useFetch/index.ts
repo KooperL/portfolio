@@ -4,7 +4,11 @@ import { genericApiDataResponse } from "src/api/shared/types"
 import { State } from "../../types/State"
 
 interface useFetchOptions<T, U> {
-  ApiImpl: (config: T, auth?: string, varRoute?: string) => Promise<genericApiDataResponse<U>> 
+  ApiImpl: (
+    config: T,
+    auth?: string | undefined,
+    varRoute?: string
+  ) => Promise<genericApiDataResponse<U>> 
   payload: T
   auth?: string
   varRoute?: string

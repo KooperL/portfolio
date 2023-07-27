@@ -2,9 +2,10 @@ import { FuelPricesRequestPayload, FuelPricesResponsePayload } from "./../../../
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { ApiConsumer } from "../instance";
 import { routes } from "../types";
+import { genericApiDataResponse } from "src/api/shared/types";
 
 
-export const fetchFuelPrices = (data: FuelPricesRequestPayload): Promise<FuelPricesResponsePayload> => {
+export const fetchFuelPrices = (data: FuelPricesRequestPayload): Promise<genericApiDataResponse<FuelPricesResponsePayload>> => {
   const path = `${routes.fuelprices}`
   const config = {
     url: path,

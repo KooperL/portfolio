@@ -2,9 +2,11 @@ import { ContactRequestPayload, ContactResponsePayload } from "./../../../../con
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { ApiConsumer } from "../instance";
 import { routes } from "../types";
+import { genericApiDataResponse } from "src/api/shared/types";
+import { MrnaResponse } from "src/containers/mrnaPage/types";
 
 
-export const sendContact = (data: ContactRequestPayload): Promise<ContactResponsePayload> => {
+export const sendContact = (data: ContactRequestPayload): Promise<genericApiDataResponse<ContactResponsePayload>> => {
   const path = `${routes.contact}`
   const config = {
     url: path,

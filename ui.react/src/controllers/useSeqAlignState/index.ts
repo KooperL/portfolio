@@ -1,15 +1,12 @@
 import { useState, useCallback, useContext, useEffect } from "react"
-import { fetchSeqAlign } from "../../containers/App/api/seqAlignApi"
-import { useSubmit } from "../../hooks/useSubmit"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import {
   SeqAlignRequest,
   SeqAlignResponse,
 } from "../../containers/seqAlignPage/types"
 import { useFetch } from "src/hooks/useFetch"
-import { CmsEndpoints } from "../../containers/App/api/types"
-import { fetchCMSData } from "../../containers/App/api/genericCMSApi"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { useCms } from "src/hooks/useCms"
+import { sendSeqAlign } from "src/api/clients/ApiHandler/routes/sendSeqAlign"
 
 export const useSeqAlignState = () => {
   const [sampletxt, setSampletxt] = useState("")
@@ -19,21 +16,22 @@ export const useSeqAlignState = () => {
   const [gaps, setGaps] = useState(-0.5)
   const [extgaps, setExtgaps] = useState(-0.1)
   const [scheme, setScheme] = useContext(SchemeContext)
-  const { state: stateCMS, pull } = useFetch<keyof CmsEndpoints, CMSPage>(
-    fetchCMSData,
-  )
-  const { state: stateSubmit, handleSubmit } = useSubmit<
+  const { state: stateCMS, pull } = useCms()
+  const { state: stateSubmit, pull: handleSubmit } = useFetch<
     SeqAlignRequest,
     SeqAlignResponse
-  >(fetchSeqAlign)
+  >()
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    handleSubmit(e, {
+    handleSubmit({
+      ApiImpl: sendSeqAlign,
+      payload: {
       sampletxt: sampletxt,
       referencetxt: referencetxt,
       identical: identical,
       mismatch: mismatch,
       gaps: gaps,
       extgaps: extgaps,
+    }
     })
   }
 

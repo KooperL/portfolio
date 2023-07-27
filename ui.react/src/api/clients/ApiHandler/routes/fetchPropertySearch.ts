@@ -2,9 +2,10 @@ import { PropertyIndexResponse } from "./../../../../containers/propertyPage/typ
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { routes } from "../types";
 import { ApiConsumer } from "../instance";
+import { genericApiDataResponse } from "src/api/shared/types";
 
 
-export const fetchPropertySearch = (body: {}, suburb: string): Promise<PropertyIndexResponse> => {
+export const fetchPropertySearch = (body: {}, suburb: string): Promise<genericApiDataResponse<PropertyIndexResponse>> => {
   const path = `${routes.property}/${suburb}`
   const config = {
     url: path,

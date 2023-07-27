@@ -6,7 +6,6 @@ import React, {
 } from "react"
 import Spinner from "../../components/Spinner"
 import { ContactRequestPayload } from "./types"
-import { postContact } from "../App/api/contactApi"
 import Navbar from "../../components/Navbar"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
@@ -21,9 +20,8 @@ import { Input } from "../../components/Input"
 import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
 import { useContactState } from "../../controllers/useContactState"
-import { GenericResponse } from "@containers/App/api/types"
 import { ApiError } from "src/api/apiErrorHandler"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { CMSPageResponse } from "../../components/TypeLookup/types"
 
 interface Props {
   scheme: PageInformation
@@ -33,7 +31,7 @@ interface Props {
   ) => void
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
-  stateCMS: State<CMSPage>
+  stateCMS: State<CMSPageResponse>
   POSTstate: State<null>
 }
 

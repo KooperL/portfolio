@@ -1,4 +1,5 @@
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
+import { genericApiDataResponse } from "src/api/shared/types";
 import { ApiConsumer } from "../instance";
 import { routes } from "../types";
 
@@ -16,7 +17,7 @@ interface CaptureRequestPayload {
   cookieEnabled: boolean
   darkMode: boolean
 }
-export const sendCapture = (data: CaptureRequestPayload): Promise<null> => {
+export const sendCapture = (data: CaptureRequestPayload): Promise<genericApiDataResponse<null>> => {
   const path = `${routes.capture}`
   const config = {
     url: path,

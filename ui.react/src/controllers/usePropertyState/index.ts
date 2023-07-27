@@ -1,27 +1,26 @@
-import { fetchProperty } from "../../containers/App/api/propertyApi"
-import { CmsEndpoints, projectPath } from "../../containers/App/api/types"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useContext, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { useFetch } from "src/hooks/useFetch"
-import { useSubmit } from "src/hooks/useSubmit"
-import { fetchCMSData } from "../../containers/App/api/genericCMSApi"
-import { PropertyIndexResponse } from "../../containers/propertyPage/types"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { PropertyIndexRequest, PropertyIndexResponse } from "../../containers/propertyPage/types"
+import { useCms } from "src/hooks/useCms"
+import { fetchFuelPrices } from "src/api/clients/ApiHandler/routes/fetchFuelPrices"
+import { fetchPropertyIndex } from "src/api/clients/ApiHandler/routes/fetchPropertyIndex"
+import { projectPath } from "src/api/shared/types"
 
 function usePropertyState() {
   const ref = useRef()
   const [scheme, setScheme] = useContext(SchemeContext)
   const navigate = useNavigate()
-  const { state: stateCMS, pull: pullCMS } = useFetch<
-    keyof CmsEndpoints,
-    CMSPage
-  >(fetchCMSData)
-  const { state, pull } = useFetch<null, PropertyIndexResponse>(fetchProperty)
+  const { state: stateCMS, pull: pullCMS } = useCms()
+  const { state, pull } = useFetch<PropertyIndexRequest, PropertyIndexResponse>()
 
   useEffect(() => {
     pullCMS("propertyCms")
-    pull(null)
+    pull({
+      ApiImpl: fetchPropertyIndex,
+      payload: {}
+    })
     document.title = `Property | ${scheme.title}`
   }, [])
 

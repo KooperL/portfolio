@@ -2,8 +2,9 @@ import { ForumRegisterRequstPayload, ForumRegisterResponsepayload } from "./type
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { fetchForum } from "../../instance";
 import { forumPath, routes } from "../../types";
+import { genericApiDataResponse } from "src/api/shared/types";
 
-function sendForumRegister(data: ForumRegisterRequstPayload, creds: string): Promise<ForumRegisterResponsepayload> {
+function sendForumRegister(data: ForumRegisterRequstPayload, creds?: string): Promise<genericApiDataResponse<ForumRegisterResponsepayload>> {
   const path = `${forumPath}/${routes.forumRegister}`
   const config = {
     url: path,

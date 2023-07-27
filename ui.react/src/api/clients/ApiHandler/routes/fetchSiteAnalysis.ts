@@ -2,9 +2,10 @@ import { siteAnalysisResponse } from "./../../../../containers/siteAnalysisPage/
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { ApiConsumer } from "../instance";
 import { routes } from "../types";
+import { genericApiDataResponse } from "src/api/shared/types";
 
 
-export const fetchSiteAnalysis = (data: {}): Promise<siteAnalysisResponse> => {
+export const fetchSiteAnalysis = (data: {}): Promise<genericApiDataResponse<siteAnalysisResponse>> => {
   const path = `${routes.logsPull}`
   const config = {
     url: path,
