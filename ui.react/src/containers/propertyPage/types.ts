@@ -45,6 +45,8 @@ export interface PropertySearchResponse {
   }
 }
 
+export interface PropertyIndexRequest {}
+
 export interface PropertySearchRequest {
   prop_suburb: string
 }

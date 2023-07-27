@@ -1,4 +1,5 @@
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
+import { genericApiDataResponse } from "src/api/shared/types";
 import { ApiConsumer } from "../instance";
 import { routes } from "../types";
 
@@ -10,7 +11,7 @@ interface MonitorRequestPayload {
   newVisit?: string
 }
 
-export const sendCapture = (data: MonitorRequestPayload): Promise<null> => {
+export const sendCapture = (data: MonitorRequestPayload): Promise<genericApiDataResponse<null>> => {
   const path = `${routes.monitor}`
   const config = {
     url: path,

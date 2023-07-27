@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import { ForumRouteType } from "../../containers/App/routeTypes"
 import { useAccessToken } from "../../containers/authContext/context"
 import { SchemeContext } from "../../containers/context/colourScheme"
-import { ForumHomeResponse } from "../../containers/forumHomePage/types"
 import Redirect from "../../components/Redirect"
-import { usePost } from "../../hooks/usePost"
-import { endpoints } from "../../containers/App/api/endpoints"
+import { useFetch } from "src/hooks/useFetch"
+import { fetchForumHome } from "src/api/clients/forumHandler/routes/fetchForumHome"
+import { routes } from "src/api/clients/forumHandler/types"
+import { forumPath } from "src/api/shared/types"
+import { ForumHomeRequestPayload } from "src/api/clients/forumHandler/routes/fetchForumHome/types"
 
 export const useForumHomeState = () => {
   const [searchState, setSearchState] = useState("")
@@ -19,26 +20,25 @@ export const useForumHomeState = () => {
   let paramString = window.location.href.split("?")[1]
   let queryString = new URLSearchParams(paramString)
 
-  const { state, post } = usePost<undefined, ForumHomeResponse>()
+  const { state, pull: post } = useFetch<ForumHomeRequestPayload, ForumHomeResponse>()
 
   useEffect(() => {
     if (!token) {
       return
     }
     post({
-      endpoint: endpoints["forumHome"],
-      authBearer: token ?? "",
-      method: "GET",
-      params: {
-        session_id: sessionStorage.getItem("session_id"),
-        category: queryString.get("category"),
-        search: queryString.get("search"),
+      ApiImpl: fetchForumHome,
+      auth: `Bearer ${token ?? ""}`,
+      payload: {
+        session_id: sessionStorage.getItem("session_id") ?? "",
+        category: queryString.get("category") ?? "",
+        search: queryString.get("search") ?? "",
       },
     })
   }, [token, location])
 
   const handleSubmit = () => {
-    navigate(`/${ForumRouteType.ForumHome}?search=${searchState}`)
+    navigate(`${forumPath}?search=${searchState}`)
     // return (
     //   <Redirect
     //     destination={`/${ForumRouteType.ForumHome}?search=${searchState}`}

@@ -2,9 +2,10 @@ import { SecondaryRequest, SecondaryResponse } from "./../../../../containers/se
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { ApiConsumer } from "../instance";
 import { routes } from "../types";
+import { genericApiDataResponse } from "src/api/shared/types";
 
 
-export const sendSecondary = (data: SecondaryRequest): Promise<SecondaryResponse> => {
+export const sendSecondary = (data: SecondaryRequest): Promise<genericApiDataResponse<SecondaryResponse>> => {
   const path = `${routes.secondary}`
   const config = {
     url: path,

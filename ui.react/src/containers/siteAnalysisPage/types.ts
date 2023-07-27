@@ -1,3 +1,5 @@
+export interface siteAnalysisRequest {}
+
 export interface siteAnalysisResponse {
   siteTraffic: {
     source: string

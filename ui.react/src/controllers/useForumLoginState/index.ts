@@ -2,19 +2,15 @@
 
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { endpoints } from "../../containers/App/api/endpoints"
-import { postForumRegister } from "../../containers/App/api/forumApis"
-import { forumPath } from "../../containers/App/api/types"
+import { routes } from "src/api/clients/forumHandler/types"
+import { ForumLoginRequestPayload, ForumLoginResponsePayload } from "src/api/clients/forumHandler/routes/sendForumLogin/types"
+import { ForumRegisterRequstPayload, ForumRegisterResponsepayload } from "src/api/clients/forumHandler/routes/sendForumRegister/types"
+import { forumPath } from "src/api/shared/types"
+import { useFetch } from "src/hooks/useFetch"
 import { useAccessToken } from "../../containers/authContext/context"
 import { SchemeContext } from "../../containers/context/colourScheme"
-import {
-  ForumLoginPOSTPayload,
-  ForumLoginPOSTResponse,
-  ForumRegisterPOSTPayload,
-  ForumRegisterPOSTResponse,
-} from "../../containers/forumLoginPage/types"
-import { usePost } from "../../hooks/usePost"
-import { useSubmit } from "../../hooks/useSubmit"
+import { sendForumRegister } from "src/api/clients/forumHandler/routes/sendForumRegister"
+import { sendForumLogin } from "src/api/clients/forumHandler/routes/sendForumLogin"
 
 declare global {
   interface PasswordCredentialConstructor extends PasswordCredential {
@@ -67,10 +63,12 @@ export const useForumLoginState = () => {
   const encodedLogin = btoa(`${usernameLogin}:${passwordLogin}`)
   const encodedRegister = btoa(`${usernameRegister}:${passwordRegister}`)
 
-  const { state, post: postRegister } = usePost<
-    ForumRegisterPOSTPayload,
-    ForumRegisterPOSTResponse
-  >(() => {
+  const { state, pull: postRegister } = useFetch<
+    ForumRegisterRequstPayload,
+  ForumRegisterResponsepayload
+  >()
+
+  const registerCallback = () => {
     setHasRegistered(true)
 
     if (window.hasOwnProperty("PasswordCrediential")) {
@@ -80,11 +78,9 @@ export const useForumLoginState = () => {
       })
       navigator.credentials.create(c as any)
     }
-  })
-  const { state: POSTState, post: postLogin } = usePost<
-    ForumLoginPOSTPayload,
-    ForumLoginPOSTResponse
-  >(e => {
+  }
+
+  const loginCallback = (e) => {
     setToken(e?.accessToken ?? "")
     if (window.hasOwnProperty("PasswordCrediential")) {
       let c = new PasswordCredential({
@@ -93,7 +89,12 @@ export const useForumLoginState = () => {
       })
       navigator.credentials.create(c as any)
     }
-  })
+  }
+
+  const { state: POSTState, pull: postLogin } = useFetch<
+    ForumLoginRequestPayload,
+    ForumLoginResponsePayload 
+  >()
 
   useEffect(() => {
     if (!hasRegistered) {
@@ -120,63 +121,29 @@ export const useForumLoginState = () => {
 
   const handleSubmitRegister = (
     e: React.FormEvent<HTMLFormElement>,
-    data: ForumRegisterPOSTPayload,
+    data: ForumRegisterRequstPayload,
   ) => {
     e.preventDefault()
     if (hasRegistered) return
     postRegister({
-      endpoint: endpoints["forumRegister"],
-      authBasic: encodedRegister,
-      data,
+      ApiImpl: sendForumRegister,
+      auth: !encodedRegister ? undefined : `Basic ${encodedRegister}`,
+      payload: data,
     })
   }
 
   const handleSubmitLogin = (
     e: React.FormEvent<HTMLFormElement>,
-    data: ForumLoginPOSTPayload,
+    data: ForumLoginRequestPayload,
   ) => {
     e.preventDefault()
     // if (hasRegistered) return
     postLogin({
-      endpoint: endpoints["forumLogin"],
-      authBasic: encodedLogin,
-      data,
+      ApiImpl: sendForumLogin,
+      auth: !encodedRegister ? undefined : `Basic ${encodedLogin}`,
+      payload: data,
     })
   }
-
-  // const handleSubmitLogin = (
-  //   event: React.FormEvent<HTMLFormElement>,
-  //   payload: ForumLoginPOSTPayload,
-  //   authToken: string,
-  // ) => {
-  //   setPOSTState({ ...POSTstate, loading: true })
-  //   event.preventDefault()
-  //   props
-  //     .dataPostLogin(payload, authToken)
-  //     .then((resp: ForumLoginPOSTResponse) => {
-  //       if (resp.success) {
-  //         setPOSTState({
-  //           details: resp,
-  //           error: false,
-  //           errorMessage: null,
-  //           loading: false,
-  //         })
-  //         // add auth token to context
-  //         setToken(resp.accessToken ?? "")
-  //         navigate(`/${forumPath}`)
-  //       } else {
-  //         throw new Error(resp.error)
-  //       }
-  //     })
-  //     .catch((err: any) => {
-  //       console.log(err)
-  //       setPOSTState({
-  //         error: true,
-  //         errorMessage: err,
-  //         loading: false,
-  //       })
-  //     })
-  // }
 
   useEffect(() => {
     document.title = `Forum Login | ${scheme.title}`

@@ -1,13 +1,11 @@
-import { fetchSiteAnalysis } from "../../containers/App/api/siteAnalysisApi"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useContext, useEffect, useRef, useState } from "react"
 import { useFetch } from "src/hooks/useFetch"
 
 import React from "react"
-import { CmsEndpoints } from "../../containers/App/api/types"
-import { CMSPage } from "../../components/TypeLookup/types"
-import { fetchCMSData } from "../../containers/App/api/genericCMSApi"
-import { siteAnalysisResponse } from "../../containers/siteAnalysisPage/types"
+import { siteAnalysisRequest, siteAnalysisResponse } from "../../containers/siteAnalysisPage/types"
+import { useCms } from "src/hooks/useCms"
+import { fetchSiteAnalysis } from "src/api/clients/ApiHandler/routes/fetchSiteAnalysis"
 
 declare module "react" {
   interface SVGElement extends React.ReactElement<SVGElement> {}
@@ -20,19 +18,18 @@ declare module "react" {
 
 export const useSiteAnalysisState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
-  const { state, pull } = useFetch<null, siteAnalysisResponse>(
-    fetchSiteAnalysis,
-  )
-  const { state: stateCMS, pull: pullCMS } = useFetch<
-    keyof CmsEndpoints,
-    CMSPage
-  >(fetchCMSData)
+  const { state, pull } = useFetch<siteAnalysisRequest, siteAnalysisResponse>()
+
+  const { state: stateCMS, pull: pullCMS } = useCms()
   const [loaded, setLoaded] = useState(false)
   const ref = useRef<any>(null)
 
   useEffect(() => {
     document.title = `Site analysis | ${scheme.title}`
-    pull(null)
+    pull({
+      ApiImpl: fetchSiteAnalysis,
+      payload: {}
+    })
     pullCMS("siteanalysisCms")
     // ref.current && ref.current.getContext('2d').drawImage(document.getElementById("myCanvas"), 0, 0);
   }, [])
