@@ -1,14 +1,11 @@
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { endpoints } from "../../containers/App/api/endpoints"
-import { forumPath } from "../../containers/App/api/types"
+import { sendForumPostCreate } from "src/api/clients/forumHandler/routes/sendPostCreate"
+import { ForumPostCreateRequestPayload, ForumPostCreateResponsePayload } from "src/api/clients/forumHandler/routes/sendPostCreate/types"
+import { useFetch } from "src/hooks/useFetch"
 import { useAccessToken } from "../../containers/authContext/context"
 import { SchemeContext } from "../../containers/context/colourScheme"
-import {
-  ForumPostCreatePOSTPayload,
-  ForumPostCreatePOSTResponse,
-} from "../../containers/forumPostCreatePage/types"
-import { usePost } from "../../hooks/usePost"
+
 
 export const useForumPostCreateState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
@@ -19,22 +16,24 @@ export const useForumPostCreateState = () => {
   const [title, setTitle] = useState("")
   const [hasPosted, setHasPosted] = useState(false)
 
-  const { state, post } = usePost<
-    ForumPostCreatePOSTPayload,
-    ForumPostCreatePOSTResponse
-  >(() => {
-    setHasPosted(true)
-  })
+  const { state, pull: post } = useFetch<
+    ForumPostCreateRequestPayload,
+    ForumPostCreateResponsePayload 
+  >(
+  //  () => {
+  //  setHasPosted(true)
+  //}
+  )
 
   const handleSubmit = (
     e: React.FormEvent<HTMLFormElement>,
-    data: ForumPostCreatePOSTPayload,
+    data: ForumPostCreateRequestPayload,
   ) => {
     e.preventDefault()
     post({
-      endpoint: endpoints["forumPostCreate"],
-      authBearer: token ?? "",
-      data,
+      ApiImpl: sendForumPostCreate,
+      auth: `Bearer ${token ?? ""}`,
+      payload: data,
     })
   }
 
@@ -44,7 +43,7 @@ export const useForumPostCreateState = () => {
 
   useEffect(() => {
     if (hasPosted) {
-      navigate(`/${forumPath}/post/${state?.details?.data?.forumPostId}`)
+      navigate(`/${forumPath}/post/${state?.details?.forumPostId ?? 1}`)
     }
   }, [hasPosted])
 

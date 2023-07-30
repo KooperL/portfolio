@@ -1,10 +1,10 @@
 import { useContext, useEffect } from "react"
 import { useLocation } from "react-router-dom"
-import { endpoints } from "../../containers/App/api/endpoints"
+import { fetchForumUser } from "src/api/clients/forumHandler/routes/fetchForumUser"
+import { ForumUserRequestPayload, ForumUserResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumUser/types"
+import { useFetch } from "src/hooks/useFetch"
 import { useAccessToken } from "../../containers/authContext/context"
 import { SchemeContext } from "../../containers/context/colourScheme"
-import { ForumUserGETResponse } from "../../containers/forumUserPage/types"
-import { usePost } from "../../hooks/usePost"
 
 export const useForumUserState = () => {
   // const [POSTstate, setPOSTState] = useState({...ContactPOSTInitialState});
@@ -15,13 +15,13 @@ export const useForumUserState = () => {
     .toString()
     .slice(window.location.href.lastIndexOf("/") + 1)
 
-  const { state, post } = usePost<undefined, ForumUserGETResponse>()
+  const { state, pull: post } = useFetch<ForumUserRequestPayload, ForumUserResponsePayload>()
   useEffect(() => {
     post({
-      endpoint: endpoints["forumUser"] + user,
-      method: "GET",
-      authBearer: token ?? "",
-      params: {
+      endpoint: fetchForumUser,
+      auth: `Bearer ${token ?? ""}`,
+      varRoute: user,
+      payload: {
         session_id: sessionStorage.getItem("session_id") ?? "error",
       },
     })

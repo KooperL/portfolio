@@ -3,8 +3,9 @@ import { AxiosRequestConfig } from "axios";
 import { ForumPostViewRequestPayload, ForumPostViewResponsePayload } from "./types";
 import { forumPath, routes } from "../../types";
 import { fetchForum } from "../../instance";
+import { genericApiDataResponse, genericApiTokenResponse } from "src/api/shared/types";
 
-function sendForumPostView(data: ForumPostViewRequestPayload, creds: string, id: string): Promise<ForumPostViewResponsePayload> {
+function fetchForumPostView(data: ForumPostViewRequestPayload, creds?: string, id?: string): Promise<genericApiDataResponse<ForumPostViewResponsePayload>> {
   const path = `${forumPath}/${routes.forumPost}/${id}`
   const config: AxiosRequestConfig = {
     url: path,
@@ -24,5 +25,5 @@ function sendForumPostView(data: ForumPostViewRequestPayload, creds: string, id:
 }
 
 export {
-  sendForumPostView
+  fetchForumPostView
 }
