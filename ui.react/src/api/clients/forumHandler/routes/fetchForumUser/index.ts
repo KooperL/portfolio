@@ -4,7 +4,7 @@ import { ForumUserResponsePayload } from "./types";
 import { forumPath, routes } from "../../types";
 import { fetchForum } from "../../instance";
 
-function sendForumPostView(data: {}, creds: string, username: string): Promise<ForumUserResponsePayload[]> {
+function fetchForumUser(data: ForumUserResponsePayload, creds?: string, username?: string): Promise<ForumUserResponsePayload[]> {
   const path = `${forumPath}/${routes.forumUser}/${username}`
   const config: AxiosRequestConfig = {
     url: path,
@@ -24,6 +24,6 @@ function sendForumPostView(data: {}, creds: string, username: string): Promise<F
 }
 
 export {
-  sendForumPostView
+  fetchForumUser 
 }
 
