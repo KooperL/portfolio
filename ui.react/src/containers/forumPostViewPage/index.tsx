@@ -13,24 +13,19 @@ import { ReactP5Wrapper } from "react-p5-wrapper"
 import sketchWrapper from "../../components/p5/box"
 import { Button } from "../../components/Button"
 import { useAccessToken } from "../authContext/context"
-import {
-  ForumPostViewGETInitialState,
-  ForumPostViewGETPayload,
-  ForumPostViewGETResponse,
-} from "./types"
-import { getPostView, postPostCreate } from "../App/api/forumApis"
-import { forumPath } from "../App/api/types"
 import Redirect from "../../components/Redirect"
-import { ForumRouteType } from "../App/routeTypes"
 import daysAgo from "../../utils/daysAgo"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { State } from "../../types/State"
 import { useForumPostViewState } from "../../controllers/useForumPostViewState"
+import { ForumPostViewResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumPostView/types"
+import { forumPath } from "src/api/shared/types"
+import { routes } from "src/api/clients/forumHandler/types"
 
 interface Props {
   scheme: PageInformation
   token: string | null
-  GETstate: State<ForumPostViewGETResponse>
+  GETstate: State<ForumPostViewResponsePayload>
 }
 
 function ForumPostViewPage(props: Props): JSX.Element {
@@ -40,14 +35,14 @@ function ForumPostViewPage(props: Props): JSX.Element {
   if (!props.token?.length) {
     return (
       <Redirect
-        destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumRegister}`}
+        destination={`/${forumPath}/${routes.forumRegister}`}
       />
     )
   }
   if (props.GETstate.error) {
     return <div>{JSON.stringify(props.GETstate.errorMessage)}</div>
   }
-  const data = props.GETstate.details?.data
+  const data = props.GETstate.details
   return (
     <IslandCenter>
       <div className="forumPostViewPage">

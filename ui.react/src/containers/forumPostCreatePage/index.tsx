@@ -13,32 +13,27 @@ import { ReactP5Wrapper } from "react-p5-wrapper"
 import sketchWrapper from "../../components/p5/box"
 import { Button } from "../../components/Button"
 import { useAccessToken } from "../authContext/context"
-import {
-  ForumPostCreatePOSTInitialState,
-  ForumPostCreatePOSTPayload,
-  ForumPostCreatePOSTResponse,
-} from "./types"
-import { postPostCreate } from "../App/api/forumApis"
-import { forumPath } from "../App/api/types"
-import { ForumRouteType } from "../App/routeTypes"
 import Redirect from "../../components/Redirect"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Input } from "../../components/Input"
 import { Textarea } from "../../components/Textarea"
 import { State } from "../../types/State"
 import { useForumPostCreateState } from "../../controllers/useForumPostCreateState"
+import { ForumPostCreateRequestPayload, ForumPostCreateResponsePayload } from "src/api/clients/forumHandler/routes/sendPostCreate/types"
+import { forumPath } from "src/api/shared/types"
+import { routes } from "src/api/clients/forumHandler/types"
 
 interface Props {
   scheme: PageInformation
   token: string | null
-  state: State<ForumPostCreatePOSTResponse>
+  state: State<ForumPostCreateResponsePayload>
   body: string
   setBody: React.Dispatch<React.SetStateAction<string>>
   title: string
   setTitle: React.Dispatch<React.SetStateAction<string>>
   handleSubmit: (
     e: React.FormEvent<HTMLFormElement>,
-    data: ForumPostCreatePOSTPayload,
+    data: ForumPostCreateRequestPayload,
   ) => void
 }
 
@@ -46,7 +41,7 @@ function ForumPostCreatePage(props: Props): JSX.Element {
   if (props.token === "") {
     return (
       <Redirect
-        destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumRegister}`}
+        destination={`/${forumPath}/${routes.forumRegister}`}
       />
     )
   }

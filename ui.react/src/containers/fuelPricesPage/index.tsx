@@ -1,20 +1,19 @@
 import { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
 import Vchart from "../../components/Vchart"
-import { fetchFuelPrices } from "../App/api/fuelPricesApi"
 import "./style.css"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import { IslandCenter } from "../../templates/IslandCenter"
 import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
 import useFuelPricesState from "../../controllers/useFuelPricesState"
-import { FuelPricesResponse } from "./types"
+import { FuelPricesResponsePayload } from "./types"
 import TypeLookup from "../../components/TypeLookup"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { CMSPageResponse } from "../../components/TypeLookup/types"
 
 interface Props {
-  state: State<FuelPricesResponse>
-  stateCMS: State<CMSPage>
+  state: State<FuelPricesResponsePayload>
+  stateCMS: State<CMSPageResponse>
   scheme: PageInformation
 }
 

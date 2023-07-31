@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
-import { fetchSecondary } from "../App/api/SecondaryApi"
 import Modal from "../../components/Modal"
 // @ts-ignore
 import gear from "../../assets/gear.svg"
@@ -14,11 +13,10 @@ import { Gear } from "../../components/Gear"
 import { Textarea } from "../../components/Textarea"
 import ErrorPage from "../ErrorPage"
 import { useSecondaryState } from "../../controllers/useSecondaryState"
-import { useSubmit } from "../../hooks/useSubmit"
 import { ApiError } from "../../api/apiErrorHandler"
 import { State } from "../../types/State"
 import { SecondaryResponse } from "./types"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
 
 interface Props {
@@ -32,7 +30,7 @@ interface Props {
   setLeniency: React.Dispatch<React.SetStateAction<number>>
   scheme: PageInformation
   statePOST: State<SecondaryResponse>
-  stateCMS: State<CMSPage>
+  stateCMS: State<CMSPageResponse>
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 

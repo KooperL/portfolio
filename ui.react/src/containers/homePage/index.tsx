@@ -17,10 +17,10 @@ import TypeLookup from "../../components/TypeLookup"
 import ErrorPage from "../ErrorPage"
 import { useHomeState } from "../../controllers/useHomeState"
 import { State } from "../../types/State"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { CMSPageResponse } from "../../components/TypeLookup/types"
 
 interface Props {
-  stateCMS: State<CMSPage>
+  stateCMS: State<CMSPageResponse>
   scheme: PageInformation
 }
 

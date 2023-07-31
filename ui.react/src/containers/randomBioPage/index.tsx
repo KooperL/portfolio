@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
-import { fetchRandomBio } from "../App/api/randomBioApi"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
 import "./style.css"
 import { Button } from "../../components/Button"
@@ -12,7 +11,7 @@ import ErrorPage from "../ErrorPage"
 import { useRandomBioState } from "../../controllers/useRandombioState"
 import { State } from "../../types/State"
 import { RandombioRequest } from "./types"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
 
 interface Props {
@@ -25,7 +24,7 @@ interface Props {
   setSingle: React.Dispatch<React.SetStateAction<boolean>>
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   statePOST: State<string>
-  stateCMS: State<CMSPage>
+  stateCMS: State<CMSPageResponse>
 }
 
 function RandomBioPage(props: Props): JSX.Element {

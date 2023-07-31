@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
 import { siteAnalysisResponse } from "./types"
-import { fetchProperty } from "../App/api/propertyApi"
 import Chart from "react-apexcharts"
 import ErrorPage from "../ErrorPage"
 import { useSiteAnalysisState } from "../../controllers/useSiteAnalysisState"
@@ -13,7 +12,7 @@ import ReactApexChart from "react-apexcharts"
 import GenerateHeatmap from "../../controllers/utils/heatmap"
 import "./style.css"
 import TypeLookup from "../../components/TypeLookup"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { CMSPageResponse } from "../../components/TypeLookup/types"
 
 function generateData(count: number, yrange: { max: number; min: number }) {
   var i = 0
@@ -36,7 +35,7 @@ interface Props {
   state: State<siteAnalysisResponse>
   scheme: PageInformation
   setLoaded: React.Dispatch<React.SetStateAction<boolean>>
-  stateCMS: State<CMSPage>
+  stateCMS: State<CMSPageResponse>
   // ref: any
 }
 
