@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
-import { fetchProperty } from "../App/api/propertyApi"
 import Chart from "react-apexcharts"
 import ErrorPage from "../ErrorPage"
 import { PageInformation } from "../../containers/context/colourScheme"
@@ -10,13 +9,13 @@ import "./style.css"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Button } from "../../components/Button"
 import { PropertyIndexResponse } from "./types"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
 
 interface Props {
   scheme: PageInformation
   state: State<PropertyIndexResponse>
-  stateCMS: State<CMSPage>
+  stateCMS: State<CMSPageResponse>
   ref: any
   handleSubmit: () => void
 }

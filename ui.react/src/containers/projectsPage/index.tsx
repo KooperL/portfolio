@@ -20,11 +20,11 @@ import { useFetch } from "../../hooks/useFetch"
 import { ApiError } from "../../api/apiErrorHandler"
 import { State } from "../../types/State"
 import { useProjectsState } from "../../controllers/useProjectsState"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { CMSPageResponse } from "../../components/TypeLookup/types"
 
 interface Props {
   scheme: PageInformation
-  stateCMS: State<CMSPage>
+  stateCMS: State<CMSPageResponse>
 }
 
 function ProjectsPage(props: Props): JSX.Element {

@@ -21,8 +21,8 @@ class ApiHandlerCore {
           return axios.request(error.config);
       }
       return Promise.reject(error);
-    }
-  });
+    })
+  };
 
   async request<T>(
     config: AxiosRequestConfig<T>,

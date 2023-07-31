@@ -13,33 +13,26 @@ import { ReactP5Wrapper } from "react-p5-wrapper"
 import sketchWrapper from "../../components/p5/box"
 import { Button } from "../../components/Button"
 import { useAccessToken } from "../authContext/context"
-import {
-  ForumLoginPOSTInitialState,
-  ForumLoginPOSTPayload,
-  ForumLoginPOSTResponse,
-  ForumRegisterPOSTPayload,
-  ForumRegisterPOSTResponse,
-} from "./types"
-import { postForumLogin, postForumRegister } from "../App/api/forumApis"
-import { forumPath } from "../App/api/types"
 import Redirect from "../../components/Redirect"
-import { ForumRouteType } from "../App/routeTypes"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Input } from "../../components/Input"
 import Modal from "../../components/Modal"
 import { termsAndConditions } from "../../assets/TermsAndConditions"
 import { useForumLoginState } from "../../controllers/useForumLoginState"
+import { ForumRegisterRequstPayload } from "src/api/clients/forumHandler/routes/sendForumRegister/types"
+import { ForumLoginRequestPayload } from "src/api/clients/forumHandler/routes/sendForumLogin/types"
+import { forumPath } from "src/api/shared/types"
 
 interface Props {
   token: string | null
   scheme: PageInformation
   handleSubmitRegister: (
     e: React.FormEvent<HTMLFormElement>,
-    data: ForumRegisterPOSTPayload,
+    data: ForumRegisterRequstPayload,
   ) => void
   handleSubmitLogin: (
     e: React.FormEvent<HTMLFormElement>,
-    data: ForumLoginPOSTPayload,
+    data: ForumLoginRequestPayload,
   ) => void
   usernameRegister: string
   setUsernameRegister: React.Dispatch<React.SetStateAction<string>>
@@ -54,7 +47,7 @@ interface Props {
 function ForumLoginPage(props: Props): JSX.Element {
 
   if (props.token !== "" && props.token !== null) {
-    return <Redirect destination={`/${ForumRouteType.ForumHome}`} />
+    return <Redirect destination={`/${forumPath}`} />
   }
 
   const tnc = termsAndConditions()

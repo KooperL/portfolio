@@ -15,10 +15,7 @@ import { Button } from "../../components/Button"
 import ForumItem from "../../components/ForumItem"
 import ButtonRedir from "../../components/ButtonRedir"
 import { monitor, useAccessToken } from "../authContext/context"
-import { getForumHome } from "../App/api/forumApis"
-import { forumPath } from "../App/api/types"
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom"
-import { ForumRouteType } from "../App/routeTypes"
 import Redirect from "../../components/Redirect"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { IslandLeft } from "../../templates/IslandLeft"
@@ -26,14 +23,15 @@ import { Input } from "../../components/Input"
 import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
 import { useForumHomeState } from "../../controllers/useForumHomeState"
-import { ForumHomeResponse } from "./types"
-import { forumItem } from "@containers/common/types"
+import { ForumHomeResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumHome/types"
+import { forumPath } from "src/api/shared/types"
+import { routes } from "src/api/clients/forumHandler/types"
 
 interface Props {
   scheme: PageInformation
   token: string | null
   handleSubmit: () => void
-  state: State<ForumHomeResponse>
+  state: State<ForumHomeResponsePayload>
   searchState: string
   setSearchState: React.Dispatch<React.SetStateAction<string>>
 }
@@ -43,7 +41,7 @@ function ForumHomePage(props: Props): JSX.Element {
   if (props.token === "" || props.token === null) {
     return (
       <Redirect
-        destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumRegister}`}
+        destination={`/${forumPath}/${routes.forumRegister}`}
       />
     )
   }

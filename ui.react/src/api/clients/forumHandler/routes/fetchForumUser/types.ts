@@ -5,5 +5,5 @@ export interface ForumUserRequestPayload {
 }
 
 export interface ForumUserResponsePayload extends ForumItem {
-}
+}[]
 

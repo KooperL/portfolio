@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
-import { fetchSeqAlign } from "../App/api/seqAlignApi"
 import Modal from "../../components/Modal"
 // @ts-ignore
 import gear from "../../assets/gear.svg"
@@ -14,10 +13,9 @@ import { Radio } from "../../components/Radio"
 import { ApiError } from "../../api/apiErrorHandler"
 import ErrorPage from "../ErrorPage"
 import { useSeqAlignState } from "../../controllers/useSeqAlignState"
-import { useSubmit } from "../../hooks/useSubmit"
 import { State } from "../../types/State"
 import { SeqAlignResponse } from "./types"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
 
 interface Props {
@@ -36,7 +34,7 @@ interface Props {
   scheme: PageInformation
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   stateSubmit: State<SeqAlignResponse>
-  stateCMS: State<CMSPage>
+  stateCMS: State<CMSPageResponse>
 }
 
 function SeqAlignPage(props: Props): JSX.Element {

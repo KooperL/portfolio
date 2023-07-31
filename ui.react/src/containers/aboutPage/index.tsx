@@ -18,10 +18,10 @@ import { IslandCenter } from "../../templates/IslandCenter"
 import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
 import { useAboutState } from "../../controllers/useAboutState"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { CMSPageResponse } from "src/components/TypeLookup/types"
 
 interface Props {
-  stateCMS: State<CMSPage>
+  stateCMS: State<CMSPageResponse>
   scheme: PageInformation
 }
 

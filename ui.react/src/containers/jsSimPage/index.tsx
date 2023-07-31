@@ -9,7 +9,7 @@ import { IslandCenter } from "../../templates/IslandCenter"
 import { Button } from "../../components/Button"
 import { useJssimState } from "../../controllers/useJssimState"
 import { State } from "../../types/State"
-import { CMSPage } from "../../components/TypeLookup/types"
+import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
 
 interface Props {
@@ -25,7 +25,7 @@ interface Props {
   }
   scoreTally: number[]
   scheme: PageInformation
-  stateCMS: State<CMSPage>
+  stateCMS: State<CMSPageResponse>
 }
 
 function JsSim(props: Props) {
