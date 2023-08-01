@@ -7,7 +7,7 @@ import { useFetch } from "src/hooks/useFetch"
 import { fetchForumHome } from "src/api/clients/forumHandler/routes/fetchForumHome"
 import { routes } from "src/api/clients/forumHandler/types"
 import { forumPath } from "src/api/shared/types"
-import { ForumHomeRequestPayload } from "src/api/clients/forumHandler/routes/fetchForumHome/types"
+import { ForumHomeRequestPayload, ForumHomeResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumHome/types"
 
 export const useForumHomeState = () => {
   const [searchState, setSearchState] = useState("")
@@ -20,7 +20,7 @@ export const useForumHomeState = () => {
   let paramString = window.location.href.split("?")[1]
   let queryString = new URLSearchParams(paramString)
 
-  const { state, pull: post } = useFetch<ForumHomeRequestPayload, ForumHomeResponse>()
+  const { state, pull: post } = useFetch<ForumHomeRequestPayload, ForumHomeResponsePayload>()
 
   useEffect(() => {
     if (!token) {

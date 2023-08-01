@@ -1,21 +1,13 @@
 import React, {
   useContext,
   createContext,
-  FC,
   useState,
   useEffect,
 } from "react"
-import { useNavigate } from "react-router-dom"
+import { sendMonitor } from "src/api/clients/ApiHandler/routes/sendMonitor"
+import { sendForumRefresh } from "src/api/clients/forumHandler/routes/sendForumRefresh"
 import { ApiError } from "../../api/apiErrorHandler"
-import { LoggingPOSTResponse } from "../../components/Logger/types"
 // import { useNavigate } from 'react-router-dom';
-import { postForumRefresh } from "../App/api/forumApis"
-import { postMonitor } from "../App/api/loggerApi"
-import { ForumRouteType } from "../App/routeTypes"
-import {
-  ForumLoginPOSTPayload,
-  ForumLoginPOSTResponse,
-} from "../forumLoginPage/types"
 
 type AccessTokenContext = [
   string | null,
@@ -24,7 +16,7 @@ type AccessTokenContext = [
 
 export function monitor() {
   const currentPage = localStorage.getItem("currentPage")
-  postMonitor({
+  sendMonitor({
     uuid: localStorage.getItem("uuid") ?? "",
     session_id: sessionStorage.getItem("session_id") ?? "",
     page: encodeURIComponent(window.location.pathname),
@@ -56,9 +48,9 @@ export function AccessTokenProvider({ children }: any) {
       (accessToken && !accessToken.length)
     )
       return
-    postForumRefresh({ session_id: sessionStorage.getItem("session_id") ?? "" })
+    sendForumRefresh({ session_id: sessionStorage.getItem("session_id") ?? "" })
       .then(resp => {
-        if (resp.success && resp.data?.accessToken && resp.data.expires) {
+        if (resp.success && resp.accessToken && resp.expires) {
           // setPOSTState({
           //   details: resp,
           //   error: false,
@@ -66,8 +58,8 @@ export function AccessTokenProvider({ children }: any) {
           //   loading: false
           // });
           // navigate(`/${forumPath}/post`)
-          setAccessToken(resp.data.accessToken)
-          setAccessTokenExpires(new Date(resp.data.expires))
+          setAccessToken(resp.accessToken)
+          setAccessTokenExpires(new Date(resp.expires))
         } else {
           // RIP genuinely invalid
           // throw new Error(resp.error);

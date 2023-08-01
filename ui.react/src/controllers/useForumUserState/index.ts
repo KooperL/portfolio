@@ -18,7 +18,7 @@ export const useForumUserState = () => {
   const { state, pull: post } = useFetch<ForumUserRequestPayload, ForumUserResponsePayload>()
   useEffect(() => {
     post({
-      endpoint: fetchForumUser,
+      ApiImpl: fetchForumUser,
       auth: `Bearer ${token ?? ""}`,
       varRoute: user,
       payload: {

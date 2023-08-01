@@ -6,12 +6,8 @@ import ButtonRedir from "../ButtonRedir"
 import Hamburger from "../Hamburger"
 import { useLocation } from "react-router-dom"
 import { useAccessToken } from "../../containers/authContext/context"
-import { forumPath } from "../../containers/App/api/types"
-import { ForumRouteType } from "../../containers/App/routeTypes"
-import { postForumLogout } from "../../containers/App/api/forumApis"
-import { ForumRegisterPOSTResponse } from "../../containers/forumLoginPage/types"
-
-// style="width: 100000px; transform: translateX(-3561px); animation: 12.9416s linear 0s infinite normal none running marqueeAnimation-77345020;"
+import { sendForumLogout } from "src/api/clients/forumHandler/routes/sendForumLogout"
+import { forumPath, routes } from "src/containers/App/types"
 
 function getPath() {
   return window.location.pathname.split("/").filter(item => item)
@@ -78,66 +74,30 @@ function Navbar(props: { isVertical: boolean }) {
         // Signed in
 
         const username = JSON.parse(atob(token.split(".")[1]))["username"]
-        // const forum_create = (
-        //   <ButtonRedir
-        //     destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumPostCreate}`}
-        //     label="create"
-        //     local={true}
-        //   />
-        // )
-        // const forum_profile = (
-        //   <ButtonRedir
-        //     destination={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumUser}/${username}`}
-        //     label="My posts"
-        //     local={true}
-        //   />
-        // )
-        // const forum_sign_out = (
-        //   <ButtonRedir
-        //     destination={`/${ForumRouteType.ForumHome}`}
-        //     label="Log out"
-        //     local={true}
-        //     onClickCallback={() => {
-        //       postForumLogout(
-        //         { session_id: sessionStorage.getItem("session_id") ?? "" },
-        //         token,
-        //       ).then(resp => {
-        //         resp = resp as ForumRegisterPOSTResponse
-        //         if (resp.success) {
-        //           setToken(null)
-        //         }
-        //       })
-        //     }}
-        //   />
-        // )
-        // const items = [forum_create, forum_profile, forum_sign_out]
-
-        // Search field?
-        // setSpecialButtons(items)
 
         const HamburgerData = (
           <Hamburger
             data={[
               {
-                destination: `/${ForumRouteType.ForumHome}/${ForumRouteType.ForumPostCreate}`,
+                destination: `/${forumPath}/${routes.forumPostCreate}`,
                 label: "create",
               },
               {
-                destination: `/${ForumRouteType.ForumHome}/${ForumRouteType.ForumUser}/${username}`,
+                destination: `/${forumPath}/${routes.forumUserView}/${username}`,
                 label: "my posts",
               },
               {
-                destination: `/${ForumRouteType.ForumHome}`,
+                destination: `/${forumPath}`,
                 label: "logout",
                 callback: () => {
-                  postForumLogout(
+                  sendForumLogout(
                     { session_id: sessionStorage.getItem("session_id") ?? "" },
                     token,
                   ).then(resp => {
                     if (resp.success) {
                       setToken(null)
                       navigate(
-                        `/${ForumRouteType.ForumHome}/${ForumRouteType.ForumLogin}`,
+                        `/${forumPath}/${routes.forumLogin}`,
                       )
                     }
                   })

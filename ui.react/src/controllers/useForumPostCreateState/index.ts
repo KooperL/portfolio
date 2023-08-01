@@ -1,3 +1,4 @@
+import { forumPath, routes } from "src/containers/App/types"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { sendForumPostCreate } from "src/api/clients/forumHandler/routes/sendPostCreate"
@@ -43,7 +44,7 @@ export const useForumPostCreateState = () => {
 
   useEffect(() => {
     if (hasPosted) {
-      navigate(`/${forumPath}/post/${state?.details?.forumPostId ?? 1}`)
+      navigate(`/${forumPath}/${routes.forumPostView}/${state?.details?.forumPostId ?? 1}`)
     }
   }, [hasPosted])
 

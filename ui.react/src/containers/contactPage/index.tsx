@@ -1,38 +1,26 @@
-import React, {
-  HtmlHTMLAttributes,
-  useContext,
-  useEffect,
-  useState,
-} from "react"
-import Spinner from "../../components/Spinner"
-import { ContactRequestPayload } from "./types"
-import Navbar from "../../components/Navbar"
-import { PageInformation, SchemeContext } from "../context/colourScheme"
+import { ContactRequestPayload, ContactResponsePayload } from "./types"
 import "./style.css"
 
-import { ReactP5Wrapper } from "react-p5-wrapper"
-import sketchWrapper from "../../components/p5/box"
 import { Button } from "../../components/Button"
-import ButtonRedir from "../../components/ButtonRedir"
 import { IslandCenter } from "../../templates/IslandCenter"
 import TypeLookup from "../../components/TypeLookup"
 import { Input } from "../../components/Input"
-import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
 import { useContactState } from "../../controllers/useContactState"
-import { ApiError } from "src/api/apiErrorHandler"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
+import { PageInformation } from "src/containers/context/colourScheme"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 interface Props {
   scheme: PageInformation
-  handleSubmit: (
+  onSubmit: (
     event: React.FormEvent<HTMLFormElement>,
     payload: ContactRequestPayload,
   ) => void
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
   stateCMS: State<CMSPageResponse>
-  POSTstate: State<null>
+  POSTstate: State<genericApiDataResponse<ContactResponsePayload>>
 }
 
 function ContactPage(props: Props): JSX.Element {
@@ -42,7 +30,7 @@ function ContactPage(props: Props): JSX.Element {
         <div className="form">
           <form
             onSubmit={e =>
-              props.handleSubmit(e, {
+              props.onSubmit(e, {
                 session_id: sessionStorage.getItem("session_id") ?? "error",
                 message: props.value,
               })

@@ -1,10 +1,7 @@
 const routes = {
   contact: 'contact',
-  monitor: 'monitor',
-  capture: 'capture',
-  track: 'track',
-  logsInsert: 'logs/insert',
-  logsPull: 'logs/pull',
+  about: 'about',
+  home: 'home',
 
   mrna: 'mrna',
   seqalign: 'seqalign',
@@ -13,15 +10,23 @@ const routes = {
   secondary: 'secondary',
   fuelprices: 'fuelprices',
   tictactoe: 'tictactoe',
+  jssim: 'jssim',
+  minesweeper: 'minesweeper',
   randombio: 'randombio',
   property: 'property',
   propertySearch: 'property/search',
+
+  forumRegister: 'login',
+  forumLogin: 'login',
+  forumPostCreate: '',
+  forumPostView: 'post',
+  forumUserView: 'user',
 } as const
 
 export const projectsPath = "projects"
+export const forumPath = "forum"
 export const indexPath = ""
 
 export {
   routes
 }
-
