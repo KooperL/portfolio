@@ -2,9 +2,6 @@ import { useContext, useEffect, useState } from "react"
 import "./style.css"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { Props } from "./types"
-import { Link } from "react-router-dom"
-import { postMonitor } from "../../containers/App/api/loggerApi"
-import { LoggingPOSTResponse } from "../Logger/types"
 import ButtonRedir from "../ButtonRedir"
 
 function Hamburger(props: Props) {

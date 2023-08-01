@@ -11,7 +11,7 @@ interface MonitorRequestPayload {
   newVisit?: string
 }
 
-export const sendCapture = (data: MonitorRequestPayload): Promise<genericApiDataResponse<null>> => {
+export const sendMonitor = (data: MonitorRequestPayload): Promise<genericApiDataResponse<null>> => {
   const path = `${routes.monitor}`
   const config = {
     url: path,

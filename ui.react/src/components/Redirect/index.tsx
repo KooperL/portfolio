@@ -1,6 +1,6 @@
+import { LoggingResponsePayload } from "src/components/Logger/types"
 import { Navigate, useNavigate } from "react-router-dom"
-import { postMonitor } from "../../containers/App/api/loggerApi"
-import { LoggingPOSTResponse } from "../Logger/types"
+import { sendMonitor } from "src/api/clients/ApiHandler/routes/sendMonitor"
 import { FuncProps, Props } from "./types"
 
 function Redirect(props: FuncProps) {
@@ -13,7 +13,7 @@ function Redirect(props: FuncProps) {
         prevPage: localStorage.getItem("currentPage"),
       }),
     })
-    .then((resp: LoggingPOSTResponse) => {
+    .then((resp: LoggingResponsePayload) => {
       if (resp.success) {
         localStorage.setItem("currentPage", window.location.pathname)
       } else {
@@ -39,7 +39,7 @@ const enhance = (props: Props): JSX.Element => {
   return (
     <Redirect
       data={props}
-      monitorPost={postMonitor}
+      monitorPost={sendMonitor}
     />
   )
 }

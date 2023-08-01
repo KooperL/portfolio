@@ -15,7 +15,7 @@ export const sendSecondary = (data: SecondaryRequest): Promise<genericApiDataRes
     CacheMode: CacheMode.NetworkFirst,
     CacheKey: path
   }
-  return fetchCMS.request(
+  return ApiConsumer.request(
     config,
     cacheKey,
   )

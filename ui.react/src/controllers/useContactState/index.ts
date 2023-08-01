@@ -36,7 +36,7 @@ export const useContactState = () => {
 
   return {
     scheme,
-    handleSubmit,
+    onSubmit,
     value,
     setValue,
     stateCMS,

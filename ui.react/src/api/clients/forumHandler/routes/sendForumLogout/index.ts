@@ -2,8 +2,9 @@ import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { fetchForum } from "../../instance";
 import { forumPath, routes } from "../../types";
 import { AxiosRequestConfig } from "axios";
+import { genericApiDataResponse } from "src/api/shared/types";
 
-function sendForumLogout(data: {}, creds: string): Promise<null> {
+function sendForumLogout(data: {}, creds: string): Promise<genericApiDataResponse<null>> {
   const path = `${forumPath}/${routes.forumLogout}`
   const config: AxiosRequestConfig = {
     url: path,

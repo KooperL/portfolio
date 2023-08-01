@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react"
-import { postCapture, postMonitor } from "../../containers/App/api/loggerApi"
-import { LoggingPOSTResponse } from "./types"
+import { sendCapture } from "src/api/clients/ApiHandler/routes/sendCapture"
+import { LoggingResponsePayload } from "./types"
+
+// TODO make it use the api handler
 
 interface Props {
   capturePost: Function
@@ -111,7 +113,7 @@ function Logger(props: Props) {
         browser: browserVar ?? "null",
         version: versionVar ?? "null",
       })
-      .then((resp: LoggingPOSTResponse) => {
+      .then((resp: LoggingResponsePayload) => {
         if (resp.success) {
         } else {
           throw new Error(resp.error)
@@ -141,7 +143,7 @@ function Logger(props: Props) {
 }
 
 const enhance = (): JSX.Element => {
-  return <Logger capturePost={postCapture} />
+  return <Logger capturePost={sendCapture} />
 }
 
 export default enhance

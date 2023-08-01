@@ -1,18 +1,18 @@
+import { forumPath, routes } from "@containers/App/types"
 import { useContext } from "react"
 import { Link } from "react-router-dom"
-import { ForumRouteType } from "../../containers/App/routeTypes"
+import { ForumItem } from "src/api/clients/forumHandler/types"
 import { monitor } from "../../containers/authContext/context"
-import { forumItem } from "../../containers/common/types"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import daysAgo from "../../utils/daysAgo"
 import "./style.css"
 
-function ForumItem(props: { data: forumItem }) {
+export default function ForumItem(props: { data: ForumItem }) {
   const [scheme, setScheme] = useContext(SchemeContext)
 
   return (
     <Link
-      to={`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumPost}/${props.data["id"]}`}
+      to={`/${forumPath}/${routes.forumPostView}/${props.data["id"]}`}
       onClick={monitor}
     >
       <div
@@ -43,4 +43,3 @@ function ForumItem(props: { data: forumItem }) {
   )
 }
 
-export default ForumItem

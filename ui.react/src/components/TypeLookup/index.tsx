@@ -1,11 +1,11 @@
 import ButtonRedir from "../ButtonRedir"
 import "./style.css"
-import { CMSPage } from "./types"
+import { CMSPageResponse } from "./types"
 import { State } from "../../types/State"
 import ErrorPage from "../../containers/ErrorPage"
 import Spinner from "../../components/Spinner"
 
-function TypeLookup(props: State<CMSPage>): JSX.Element {
+function TypeLookup(props: State<CMSPageResponse>): JSX.Element {
   if (props.loading) return <Spinner />
   if (props.error && props.errorMessage)
     return <ErrorPage error={props.errorMessage} />
