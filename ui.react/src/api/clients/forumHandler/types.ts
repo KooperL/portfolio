@@ -18,7 +18,7 @@ interface SessionId {
   session_id: string
 }
 
-interface ForumItem {
+interface ForumItemType {
   id: number
   date: string
   author: string
@@ -31,5 +31,5 @@ interface ForumItem {
 
 export type {
   SessionId,
-  ForumItem
+  ForumItemType
 }

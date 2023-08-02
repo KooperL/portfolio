@@ -5,7 +5,7 @@ import { forumPath, routes } from "../../types";
 import { fetchForum } from "../../instance";
 import { genericApiDataResponse } from "src/api/shared/types";
 
-function fetchForumUser(data: ForumUserRequestPayload, creds?: string, username?: string): Promise<genericApiDataResponse<ForumUserResponsePayload>> {
+function fetchForumUser(data: ForumUserRequestPayload, creds?: string, username?: string): Promise<genericApiDataResponse<ForumUserResponsePayload[]>> {
   const path = `${forumPath}/${routes.forumUser}/${username}`
   const config: AxiosRequestConfig = {
     url: path,

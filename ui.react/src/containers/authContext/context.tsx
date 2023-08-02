@@ -6,7 +6,6 @@ import React, {
 } from "react"
 import { sendMonitor } from "src/api/clients/ApiHandler/routes/sendMonitor"
 import { sendForumRefresh } from "src/api/clients/forumHandler/routes/sendForumRefresh"
-import { ApiError } from "../../api/apiErrorHandler"
 // import { useNavigate } from 'react-router-dom';
 
 type AccessTokenContext = [

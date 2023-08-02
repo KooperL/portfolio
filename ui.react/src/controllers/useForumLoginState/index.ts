@@ -80,7 +80,7 @@ export const useForumLoginState = () => {
     }
   }
 
-  const loginCallback = (e) => {
+  const loginCallback = (e: any) => {
     setToken(e?.accessToken ?? "")
     if (window.hasOwnProperty("PasswordCrediential")) {
       let c = new PasswordCredential({
@@ -113,9 +113,7 @@ export const useForumLoginState = () => {
 
   useEffect(() => {
     if (POSTState.details && POSTState.details.success) {
-      console.log("nav about to be called")
       navigate(`/${forumPath}`)
-      console.log("called")
     }
   }, [POSTState])
 

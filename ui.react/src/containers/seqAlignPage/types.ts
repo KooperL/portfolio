@@ -1,5 +1,3 @@
-import { ApiError } from "../../api/apiErrorHandler"
-
 export interface SeqAlignResponse {
   results: {
     end: number

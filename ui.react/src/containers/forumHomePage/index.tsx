@@ -1,9 +1,3 @@
-import React, {
-  HtmlHTMLAttributes,
-  useContext,
-  useEffect,
-  useState,
-} from "react"
 import Spinner from "../../components/Spinner"
 import Navbar from "../../components/Navbar"
 import { PageInformation, SchemeContext } from "../context/colourScheme"
@@ -12,12 +6,8 @@ import "./style.css"
 import { ReactP5Wrapper } from "react-p5-wrapper"
 import sketchWrapper from "../../components/p5/box"
 import { Button } from "../../components/Button"
-import ForumItem from "../../components/ForumItem"
-import ButtonRedir from "../../components/ButtonRedir"
-import { monitor, useAccessToken } from "../authContext/context"
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom"
+import ForumItem, * as forumItem from "../../components/ForumItem"
 import Redirect from "../../components/Redirect"
-import { IslandCenter } from "../../templates/IslandCenter"
 import { IslandLeft } from "../../templates/IslandLeft"
 import { Input } from "../../components/Input"
 import ErrorPage from "../ErrorPage"
@@ -25,7 +15,10 @@ import { State } from "../../types/State"
 import { useForumHomeState } from "../../controllers/useForumHomeState"
 import { ForumHomeResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumHome/types"
 import { forumPath } from "src/api/shared/types"
-import { routes } from "src/api/clients/forumHandler/types"
+import { ForumItemType, routes } from "src/api/clients/forumHandler/types"
+import { sendMonitor } from "src/api/clients/ApiHandler/routes/sendMonitor"
+import { Link } from "react-router-dom"
+import { monitor } from "src/containers/authContext/context"
 
 interface Props {
   scheme: PageInformation
@@ -98,7 +91,7 @@ function ForumHomePage(props: Props): JSX.Element {
                       </Link>
                       <div className="posts">
                         {data[segment].map(
-                          (catPost: forumItem, catPostIndex: number) => (
+                          (catPost: ForumItemType, catPostIndex: number) => (
                             <ForumItem
                               key={`${indexSegment}-${catPostIndex}`}
                               data={catPost}

@@ -1,13 +1,13 @@
-import { forumPath, routes } from "@containers/App/types"
+import { forumPath, routes } from "src/containers/App/types"
 import { useContext } from "react"
 import { Link } from "react-router-dom"
-import { ForumItem } from "src/api/clients/forumHandler/types"
+import { ForumItemType } from "src/api/clients/forumHandler/types"
 import { monitor } from "../../containers/authContext/context"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import daysAgo from "../../utils/daysAgo"
 import "./style.css"
 
-export default function ForumItem(props: { data: ForumItem }) {
+export default function ForumItem(props: { data: ForumItemType }) {
   const [scheme, setScheme] = useContext(SchemeContext)
 
   return (
