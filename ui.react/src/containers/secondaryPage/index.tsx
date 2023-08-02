@@ -34,8 +34,9 @@ interface Props {
 }
 
 function SecondaryPage(props: Props): JSX.Element {
-  // const { state, handleSubmit } = useSecondaryState(props.dataCall)
-
+  if (props.stateCMS.error && props.stateCMS.errorMessage) {
+    return <ErrorPage error={props.stateCMS.errorMessage} />
+  }
   function SearchBar(showingDesc: Boolean) {
     return (
       <div className="search-container">

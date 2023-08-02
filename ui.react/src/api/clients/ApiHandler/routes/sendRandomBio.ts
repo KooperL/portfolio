@@ -3,9 +3,10 @@ import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { ApiConsumer } from "../instance";
 import { routes } from "../types";
 import { genericApiDataResponse } from "src/api/shared/types";
+import { AxiosResponse } from "axios";
 
 
-export const sendRandomBio = (data: RandombioRequest): Promise<genericApiDataResponse<string>> => {
+export const sendRandomBio = (data: RandombioRequest): Promise<AxiosResponse<genericApiDataResponse<string>>> => {
   const path = `${routes.randombio}`
   const config = {
     url: path,

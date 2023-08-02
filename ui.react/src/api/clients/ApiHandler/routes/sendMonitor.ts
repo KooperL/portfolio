@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { genericApiDataResponse } from "src/api/shared/types";
 import { ApiConsumer } from "../instance";
@@ -11,7 +12,7 @@ interface MonitorRequestPayload {
   newVisit?: string
 }
 
-export const sendMonitor = (data: MonitorRequestPayload): Promise<genericApiDataResponse<null>> => {
+export const sendMonitor = (data: MonitorRequestPayload): Promise<AxiosResponse<genericApiDataResponse<null>>> => {
   const path = `${routes.monitor}`
   const config = {
     url: path,

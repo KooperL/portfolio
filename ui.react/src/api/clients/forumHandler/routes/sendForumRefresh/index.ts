@@ -1,11 +1,11 @@
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { fetchForum } from "../../instance";
 import { forumPath, routes } from "../../types";
-import { AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { ForumRefreshRequestPayload, ForumRefreshResponsePayload } from "./types";
 import { genericApiTokenResponse } from "src/api/shared/types";
 
-function sendForumRefresh(data: ForumRefreshRequestPayload): Promise<ForumRefreshResponsePayload> {
+function sendForumRefresh(data: ForumRefreshRequestPayload): Promise<AxiosResponse<ForumRefreshResponsePayload>> {
   const path = `${forumPath}/${routes.forumRefresh}`
   const config: AxiosRequestConfig = {
     url: path,

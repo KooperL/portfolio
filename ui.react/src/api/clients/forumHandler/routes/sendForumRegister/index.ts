@@ -3,8 +3,9 @@ import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { fetchForum } from "../../instance";
 import { forumPath, routes } from "../../types";
 import { genericApiDataResponse } from "src/api/shared/types";
+import { AxiosResponse } from "axios";
 
-function sendForumRegister(data: ForumRegisterRequstPayload, creds?: string): Promise<genericApiDataResponse<ForumRegisterResponsepayload>> {
+function sendForumRegister(data: ForumRegisterRequstPayload, creds?: string): Promise<AxiosResponse<genericApiDataResponse<ForumRegisterResponsepayload>>> {
   const path = `${forumPath}/${routes.forumRegister}`
   const config = {
     url: path,

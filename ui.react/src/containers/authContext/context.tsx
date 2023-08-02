@@ -22,7 +22,7 @@ export function monitor() {
     prevPage: encodeURIComponent(currentPage ?? "NULL"),
   })
     .then(resp => {
-      if (resp.success) {
+      if (resp.data.success) {
         localStorage.setItem("currentPage", window.location.pathname)
         // } else {
         //   throw new Error((resp as ApiError))
@@ -49,7 +49,7 @@ export function AccessTokenProvider({ children }: any) {
       return
     sendForumRefresh({ session_id: sessionStorage.getItem("session_id") ?? "" })
       .then(resp => {
-        if (resp.success && resp.accessToken && resp.expires) {
+        if (resp.data.success && resp.data.accessToken && resp.data.expires) {
           // setPOSTState({
           //   details: resp,
           //   error: false,
@@ -57,8 +57,8 @@ export function AccessTokenProvider({ children }: any) {
           //   loading: false
           // });
           // navigate(`/${forumPath}/post`)
-          setAccessToken(resp.accessToken)
-          setAccessTokenExpires(new Date(resp.expires))
+          setAccessToken(resp.data.accessToken)
+          setAccessTokenExpires(new Date(resp.data.expires))
         } else {
           // RIP genuinely invalid
           // throw new Error(resp.error);

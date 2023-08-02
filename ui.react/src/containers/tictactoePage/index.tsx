@@ -17,6 +17,7 @@ import { o, useTictactoeState, x } from "../../controllers/useTictactoeState"
 import { State } from "../../types/State"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
+import ErrorPage from "src/containers/ErrorPage"
 
 interface Props {
   gameInProgress: boolean
@@ -37,6 +38,9 @@ interface Props {
 }
 
 function Tictactoe(props: Props) {
+  if (props.stateCMS.error && props.stateCMS.errorMessage) {
+    return <ErrorPage error={props.stateCMS.errorMessage} />
+  }
   return (
     <IslandCenter>
       <div className="tictactoePage">

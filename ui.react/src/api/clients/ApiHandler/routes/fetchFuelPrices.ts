@@ -3,9 +3,10 @@ import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { ApiConsumer } from "../instance";
 import { routes } from "../types";
 import { genericApiDataResponse } from "src/api/shared/types";
+import { AxiosResponse } from "axios";
 
 
-export const fetchFuelPrices = (data: FuelPricesRequestPayload): Promise<genericApiDataResponse<FuelPricesResponsePayload>> => {
+export const fetchFuelPrices = (data: FuelPricesRequestPayload): Promise<AxiosResponse<genericApiDataResponse<FuelPricesResponsePayload>>> => {
   const path = `${routes.fuelprices}`
   const config = {
     url: path,

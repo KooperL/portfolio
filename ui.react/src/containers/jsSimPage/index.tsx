@@ -11,6 +11,7 @@ import { useJssimState } from "../../controllers/useJssimState"
 import { State } from "../../types/State"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
+import ErrorPage from "src/containers/ErrorPage"
 
 interface Props {
   timer: number
@@ -29,6 +30,10 @@ interface Props {
 }
 
 function JsSim(props: Props) {
+  if (props.stateCMS.error && props.stateCMS.errorMessage) {
+    return <ErrorPage error={props.stateCMS.errorMessage} />
+  }
+
   return (
     <IslandCenter>
       <div className="jsSimPage">

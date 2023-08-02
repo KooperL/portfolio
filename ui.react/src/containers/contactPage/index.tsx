@@ -10,6 +10,7 @@ import { useContactState } from "../../controllers/useContactState"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import { PageInformation } from "src/containers/context/colourScheme"
 import { genericApiDataResponse } from "src/api/shared/types"
+import ErrorPage from "src/containers/ErrorPage"
 
 interface Props {
   scheme: PageInformation
@@ -63,6 +64,10 @@ function ContactPage(props: Props): JSX.Element {
         </div>
       </div>
     )
+  }
+
+  if (props.stateCMS.error && props.stateCMS.errorMessage) {
+    return <ErrorPage error={props.stateCMS.errorMessage} />
   }
 
   return (

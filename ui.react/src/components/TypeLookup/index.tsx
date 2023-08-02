@@ -6,6 +6,7 @@ import ErrorPage from "../../containers/ErrorPage"
 import Spinner from "../../components/Spinner"
 
 function TypeLookup(props: State<CMSPageResponse>): JSX.Element {
+  console.log(props)
   if (props.loading) return <Spinner />
   if (props.error && props.errorMessage)
     return <ErrorPage error={props.errorMessage} />
@@ -56,15 +57,15 @@ function TypeLookup(props: State<CMSPageResponse>): JSX.Element {
                     return (
                       <>
                         {component.content?.title && (
-                          <h1 key={`${sectionIndex}-${componentIndex}`}>{component.content.title}</h1>
+                          <h1 key={`${sectionIndex}-${componentIndex}-1`}>{component.content.title}</h1>
                         )}
                         {component.content?.subtitle && (
-                          <h3 key={`${sectionIndex}-${componentIndex}`}>{component.content.subtitle}</h3>
+                          <h3 key={`${sectionIndex}-${componentIndex}-2`}>{component.content.subtitle}</h3>
                         )}
                         {component.content?.body &&
                           component.content.body.map(
                             (bodyText, bodyTextIndex) => (
-                              <p key={`${sectionIndex}-${componentIndex}-${bodyTextIndex}`}>
+                              <p key={`${sectionIndex}-${componentIndex}-${bodyTextIndex + 2}`}>
                                 {bodyText}
                               </p>
                             ),

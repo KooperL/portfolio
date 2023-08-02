@@ -50,6 +50,7 @@ function ForumLoginPage(props: Props): JSX.Element {
     return <Redirect destination={`/${forumPath}`} />
   }
 
+  
   const tnc = termsAndConditions()
   return (
     <IslandCenter>

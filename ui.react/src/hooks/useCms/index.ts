@@ -1,5 +1,5 @@
 import { CMSPageResponse } from "src/components/TypeLookup/types"
-import { AxiosRequestConfig } from "axios"
+import { AxiosError, AxiosRequestConfig } from "axios"
 import { useCallback, useEffect, useState } from "react"
 import { genericApiDataResponse } from "src/api/shared/types"
 import { State } from "../../types/State"
@@ -18,10 +18,10 @@ export const useCms = (
   const pull = useCallback(
     (route: keyof typeof routes) => {
       fetchCmsGeneric(route)
-        .then((resp) => {
-          if (resp.data.hasOwnProperty("id")) {
+        .then(resp => {
+          if (resp.data?.success) {
             setState({
-              details: resp?.data || null,
+              details: resp?.data.data || null,
               error: false,
               errorMessage: null,
               loading: false,
@@ -35,11 +35,11 @@ export const useCms = (
             })
           }
         })
-        .catch((err: any) => {
+        .catch((err: AxiosError) => {
           setState({
             details: null,
             error: true,
-            errorMessage: err,
+            errorMessage: err.message,
             loading: false,
           })
         })

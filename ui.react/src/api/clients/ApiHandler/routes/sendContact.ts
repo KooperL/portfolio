@@ -4,9 +4,10 @@ import { ApiConsumer } from "../instance";
 import { routes } from "../types";
 import { genericApiDataResponse } from "src/api/shared/types";
 import { MrnaResponse } from "src/containers/mrnaPage/types";
+import { AxiosResponse } from "axios";
 
 
-export const sendContact = (data: ContactRequestPayload): Promise<genericApiDataResponse<ContactResponsePayload>> => {
+export const sendContact = (data: ContactRequestPayload): Promise<AxiosResponse<genericApiDataResponse<ContactResponsePayload>>> => {
   const path = `${routes.contact}`
   const config = {
     url: path,
