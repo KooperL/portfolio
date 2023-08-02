@@ -50,6 +50,7 @@ function MrnaPage(props: Props): JSX.Element {
     )
   }
   if (props.statePOST.loading) return <Spinner />
+  if (props.stateCMS.loading) return <Spinner />
   if (props.statePOST.error && props.statePOST.errorMessage)
     return <ErrorPage error={props.statePOST.errorMessage} />
   if (props.stateCMS.error && props.stateCMS.errorMessage) {
@@ -57,6 +58,7 @@ function MrnaPage(props: Props): JSX.Element {
   }
   if (props.statePOST.details && props.statePOST.details) {
     const data = props.statePOST.details
+    console.log(data)
     return (
       <div className="mrnaPage">
         <IslandCenter>
@@ -143,10 +145,9 @@ function MrnaPage(props: Props): JSX.Element {
                       readOnly={true}
                     />
                     <p>Base frequency:</p>
-                    {Object.keys(data.simplecount).map((link, indexLink) => (
-                      <p key={indexLink}>
-                        {/* @ts-ignore, dumbest fucking error, come on ts */}
-                        {link}: {data.simplecount[link]}
+                    {Object.keys(data.simplecount).map((countCatKey, countCatIndex) => (
+                      <p key={countCatIndex}>
+                        {countCatKey}: {data.simplecount[countCatKey as keyof typeof data.simplecount]}
                       </p>
                     ))}
                   </div>

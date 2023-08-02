@@ -17,13 +17,19 @@ interface useFetchOptions<T, U> {
 export const useFetch = <T, U>(
 ) => {
   const [state, setState] = useState<State<U>>({
-    loading: true,
+    loading: false,
     details: null,
     errorMessage: null,
     error: false,
   })
   const pull = useCallback(
     (props: useFetchOptions<T, U>) => {
+      setState({
+        loading: true,
+        details: null,
+        errorMessage: null,
+        error: false,
+      })
       props.ApiImpl(
         props.payload,
         props?.auth,
@@ -32,8 +38,7 @@ export const useFetch = <T, U>(
         .then((resp) => {
           if (resp.data.hasOwnProperty("success") && resp.data.success) {
             setState({
-              // @ts-ignore, come back to this, should satisfy U
-              details: resp?.data || null,
+              details: resp.data?.data || null,
               error: false,
               errorMessage: null,
               loading: false,

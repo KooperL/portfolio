@@ -6,7 +6,7 @@ import { cmsPath, routes } from "../types";
 import { genericApiDataResponse } from "src/api/shared/types";
 
 function fetchCmsGeneric(route: keyof typeof routes): Promise<AxiosResponse<genericApiDataResponse<CMSPageResponse>>> {
-  const path = `${cmsPath}/${routes[route]}`
+  const path = `${routes[route]}`
   const config = {
     url: path 
   }
