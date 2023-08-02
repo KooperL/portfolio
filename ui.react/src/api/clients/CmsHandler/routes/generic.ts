@@ -3,9 +3,10 @@ import { AxiosResponse } from "axios";
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { fetchCMS } from "../instance";
 import { cmsPath, routes } from "../types";
+import { genericApiDataResponse } from "src/api/shared/types";
 
-function fetchCmsGeneric(route: keyof typeof routes): Promise<AxiosResponse<CMSPageResponse>> {
-  const path = `${cmsPath}/${route}`
+function fetchCmsGeneric(route: keyof typeof routes): Promise<AxiosResponse<genericApiDataResponse<CMSPageResponse>>> {
+  const path = `${cmsPath}/${routes[route]}`
   const config = {
     url: path 
   }

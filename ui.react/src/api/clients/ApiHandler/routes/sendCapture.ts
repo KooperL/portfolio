@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { genericApiDataResponse } from "src/api/shared/types";
 import { ApiConsumer } from "../instance";
@@ -17,7 +18,7 @@ interface CaptureRequestPayload {
   cookieEnabled: boolean
   darkMode: boolean
 }
-export const sendCapture = (data: CaptureRequestPayload): Promise<genericApiDataResponse<null>> => {
+export const sendCapture = (data: CaptureRequestPayload): Promise<AxiosResponse<genericApiDataResponse<null>>> => {
   const path = `${routes.capture}`
   const config = {
     url: path,

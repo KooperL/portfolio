@@ -22,6 +22,9 @@ function FuelPricesPage(props: Props): JSX.Element {
   if (props.state.error && props.state.errorMessage)
     return <ErrorPage error={props.state.errorMessage} />
 
+  if (props.stateCMS.error && props.stateCMS.errorMessage)
+    return <ErrorPage error={props.stateCMS.errorMessage} />
+  
   if (props.state.details && props.state.details) {
     const data = props.state.details
     const width = Math.max(window.outerWidth, 1500)

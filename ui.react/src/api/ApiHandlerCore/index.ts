@@ -16,7 +16,7 @@ class ApiHandlerCore {
     this.retryTimeSeconds = retryTimeSeconds
     this.defaultCacheMode = defaultCacheMode
 
-    this.instance.interceptors.response.use((response) => {}, (error) => {
+    this.instance.interceptors.response.use((response) => response, (error) => {
       if (error.config && error.response && error.response.status !== 429) {
           return axios.request(error.config);
       }
@@ -30,14 +30,16 @@ class ApiHandlerCore {
   ) {
     switch (cacheKey.CacheMode) {
       case CacheMode.CacheFirst:
-        const cachedData = this.store.get(cacheKey.CacheKey)
-        this.instance.request(config).then(resp => {
-          this.store.set(cacheKey.CacheKey, resp)
-        })
-        return cachedData
+        // const cachedData = this.store.get(cacheKey.CacheKey)
+        // this.instance.request(config).then(resp => {
+        //   this.store.set(cacheKey.CacheKey, resp)
+        // })
+        // return cachedData
+        const resp1 = this.instance.request(config)
+        return resp1
 
       case CacheMode.NetworkFirst:
-        const resp = await this.instance.request(config)
+        const resp = this.instance.request(config)
         this.store.set(cacheKey.CacheKey, resp)
         return resp
     }

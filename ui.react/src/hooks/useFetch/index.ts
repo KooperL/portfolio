@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from "axios"
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios"
 import { useCallback, useEffect, useState } from "react"
 import { genericApiDataResponse } from "src/api/shared/types"
 import { State } from "../../types/State"
@@ -8,7 +8,7 @@ interface useFetchOptions<T, U> {
     config: T,
     auth?: string | undefined,
     varRoute?: string
-  ) => Promise<genericApiDataResponse<U>> 
+  ) => Promise<AxiosResponse<genericApiDataResponse<U>>> 
   payload: T
   auth?: string
   varRoute?: string
@@ -30,8 +30,9 @@ export const useFetch = <T, U>(
         props?.varRoute
       )
         .then((resp) => {
-          if (resp.hasOwnProperty("success") && resp.success) {
+          if (resp.data.hasOwnProperty("success") && resp.data.success) {
             setState({
+              // @ts-ignore, come back to this, should satisfy U
               details: resp?.data || null,
               error: false,
               errorMessage: null,
@@ -41,16 +42,16 @@ export const useFetch = <T, U>(
             setState({
               details: null,
               error: true,
-              errorMessage: resp?.errorMessage ?? null,
+              errorMessage: resp?.data?.errorMessage ?? null,
               loading: false,
             })
           }
         })
-        .catch((err: any) => {
+        .catch((err: AxiosError) => {
           setState({
             details: null,
             error: true,
-            errorMessage: err,
+            errorMessage: err.message,
             loading: false,
           })
         })

@@ -3,9 +3,10 @@ import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { routes } from "../types";
 import { ApiConsumer } from "../instance";
 import { genericApiDataResponse } from "src/api/shared/types";
+import { AxiosResponse } from "axios";
 
 
-export const fetchPropertyIndex = (data: PropertyIndexRequest): Promise<genericApiDataResponse<PropertyIndexResponse>> => {
+export const fetchPropertyIndex = (data: PropertyIndexRequest): Promise<AxiosResponse<genericApiDataResponse<PropertyIndexResponse>>> => {
   const path = `${routes.property}`
   const config = {
     url: path,

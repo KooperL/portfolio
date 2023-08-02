@@ -28,6 +28,9 @@ interface Props {
 function AboutPage(props: Props): JSX.Element {
   const validCharsBinary = ["1", "0"]
   const validCharsNucleotides = ["A", "T", "G", "C"]
+  if (props.stateCMS.error && props.stateCMS.errorMessage) {
+    return <ErrorPage error={props.stateCMS.errorMessage} />
+  }
   return (
     <IslandCenter>
       <div className="aboutPage">

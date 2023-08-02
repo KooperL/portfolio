@@ -18,6 +18,7 @@ import {
 import { State } from "../../types/State"
 import TypeLookup from "../../components/TypeLookup"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
+import ErrorPage from "src/containers/ErrorPage"
 
 interface Props {
   gridSize: number
@@ -40,6 +41,9 @@ interface Props {
 }
 
 function Minesweeper(props: Props) {
+  if (props.stateCMS.error && props.stateCMS.errorMessage) {
+    return <ErrorPage error={props.stateCMS.errorMessage} />
+  }
   return (
     <IslandCenter>
       <div className="minesweeperPage">

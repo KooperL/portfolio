@@ -3,9 +3,10 @@ import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { ApiConsumer } from "../instance";
 import { routes } from "../types";
 import { genericApiDataResponse } from "src/api/shared/types";
+import { AxiosResponse } from "axios";
 
 
-export const sendSeqAlign = (data: SeqAlignRequest): Promise<genericApiDataResponse<SeqAlignResponse>> => {
+export const sendSeqAlign = (data: SeqAlignRequest): Promise<AxiosResponse<genericApiDataResponse<SeqAlignResponse>>> => {
   const path = `${routes.seqalign}`
   const config = {
     url: path,
