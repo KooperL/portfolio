@@ -1,4 +1,4 @@
-import { ForumItem } from "../../types";
+import { ForumItemType } from "../../types"
 
 export interface ForumHomeRequestPayload {
   session_id: string
@@ -7,5 +7,5 @@ export interface ForumHomeRequestPayload {
 }
 
 export interface ForumHomeResponsePayload {
-  [key: string]: ForumItem[]
+  [key: string]: ForumItemType[]
 }

@@ -1,3 +1,5 @@
+// Not to be confused with the backend api set. This defines the routing for the frontend pages
+
 const routes = {
   contact: 'contact',
   about: 'about',

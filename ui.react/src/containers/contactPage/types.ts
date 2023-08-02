@@ -1,11 +1,10 @@
-import { genericApiResponse } from "src/api/clients/ApiHandler/types"
-import { ApiError } from "../../api/apiErrorHandler"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 export interface ContactRequestPayload {
   session_id: string
   message: string
 }
 
-export interface ContactResponsePayload extends genericApiResponse<null>{
+export interface ContactResponsePayload extends genericApiDataResponse<null>{
   
 }

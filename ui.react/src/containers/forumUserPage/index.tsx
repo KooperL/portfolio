@@ -27,7 +27,7 @@ import { routes } from "src/api/clients/forumHandler/types"
 interface Props {
   scheme: PageInformation
   token: string | null
-  state: State<ForumUserResponsePayload>
+  state: State<ForumUserResponsePayload[]>
   user: string
 }
 

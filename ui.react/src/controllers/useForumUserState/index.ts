@@ -15,7 +15,7 @@ export const useForumUserState = () => {
     .toString()
     .slice(window.location.href.lastIndexOf("/") + 1)
 
-  const { state, pull: post } = useFetch<ForumUserRequestPayload, ForumUserResponsePayload>()
+  const { state, pull: post } = useFetch<ForumUserRequestPayload, ForumUserResponsePayload[]>()
   useEffect(() => {
     post({
       ApiImpl: fetchForumUser,

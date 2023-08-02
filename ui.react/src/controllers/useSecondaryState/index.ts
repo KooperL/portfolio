@@ -1,6 +1,5 @@
 import { useState, useCallback, useContext, useEffect } from "react"
 import { SchemeContext } from "../../containers/context/colourScheme"
-import { ApiError } from "../../api/apiErrorHandler"
 import {
   SecondaryRequest,
   SecondaryResponse,

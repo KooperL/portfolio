@@ -1,9 +1,9 @@
-import { ForumItem } from "../../types";
+import { ForumItemType } from "../../types";
 
 export interface ForumUserRequestPayload {
   session_id: string
 }
 
-export interface ForumUserResponsePayload extends ForumItem {
-}[]
+export interface ForumUserResponsePayload extends ForumItemType {
+}
 

@@ -1,5 +1,3 @@
-import { ApiError } from "../apiErrorHandler"
-
 export const forumPath = "forum"
 export const projectPath = "projects"
 

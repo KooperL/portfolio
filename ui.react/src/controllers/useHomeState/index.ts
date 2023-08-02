@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react"
-import { ApiError } from "src/api/apiErrorHandler"
 import { useCms } from "src/hooks/useCms"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useFetch } from "../../hooks/useFetch"

@@ -3,11 +3,11 @@ import { State } from "src/types/State"
 import { SchemeContext } from "../context/colourScheme"
 import "./style.css"
 
-interface Props <T> {
-  error: State<T>
+interface Props {
+  error: string
 }
 
-function ErrorPage<T>(props: Props<T>): JSX.Element {
+function ErrorPage(props: Props): JSX.Element {
   const [scheme, setScheme] = useContext(SchemeContext)
 
   return (
@@ -17,10 +17,10 @@ function ErrorPage<T>(props: Props<T>): JSX.Element {
           className="code"
           style={{ color: scheme.body.h1 }}
         >
-          123 TODO HI KOOPER
+          20x
         </div>
         <div className="details">
-          <div className="message">{props.error.errorMessage}</div>
+          <div className="message">{props.error}</div>
         </div>
       </div>
     </div>
