@@ -18,5 +18,3 @@ export const useHomeState = () => {
   }
 }
 
-
-//2 errors, api error not handled correctly and cms routes shouldn't include cms
