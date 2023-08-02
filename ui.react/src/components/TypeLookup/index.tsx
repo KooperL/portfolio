@@ -6,7 +6,6 @@ import ErrorPage from "../../containers/ErrorPage"
 import Spinner from "../../components/Spinner"
 
 function TypeLookup(props: State<CMSPageResponse>): JSX.Element {
-  console.log(props)
   if (props.loading) return <Spinner />
   if (props.error && props.errorMessage)
     return <ErrorPage error={props.errorMessage} />
