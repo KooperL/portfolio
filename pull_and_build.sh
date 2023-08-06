@@ -2,6 +2,7 @@
 
 current_dir="$(pwd)"
 ui_dir="$current_dir/ui.react"
+# Don't need to build python app
 go_dir="$current_dir/server/v2.golang"
 
 cd "$current_dir"
@@ -15,12 +16,12 @@ if [ "$(git rev-parse HEAD)" != "$(git rev-parse @{u})" ]; then
     npm run-script build
   fi
 
+  # Change back to the original working directory
+  cd "$current_dir"
+  
   if [ -d "$go_dir" ]; then
     cd "$go_dir"
-
     go build -o bin/app
   fi
 fi
 
-# Change back to the original working directory
-cd "$current_dir"

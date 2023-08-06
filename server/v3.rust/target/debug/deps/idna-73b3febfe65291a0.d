@@ -1,0 +1,10 @@
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/idna-73b3febfe65291a0.rmeta: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/punycode.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/uts46.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/uts46_mapping_table.rs
+
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/libidna-73b3febfe65291a0.rlib: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/punycode.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/uts46.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/uts46_mapping_table.rs
+
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/idna-73b3febfe65291a0.d: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/punycode.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/uts46.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/uts46_mapping_table.rs
+
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/lib.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/punycode.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/uts46.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/idna-0.1.5/src/uts46_mapping_table.rs:

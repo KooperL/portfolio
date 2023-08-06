@@ -8,11 +8,11 @@ go_command="bash $current_dir/v2.golang/bin/app"
 if pgrep -x "python3" > /dev/null; then
   pkill -f "$flask_command"
   $flask_command &
+fi
 
-elif pgrep -x "go" > /dev/null; then
+if pgrep -x "go" > /dev/null; then
   pkill -f "$go_command"
   $go_command &
-
-else
-  $flask_command &
 fi
+
+# Rust server will go here

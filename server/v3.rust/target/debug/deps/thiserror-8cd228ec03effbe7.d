@@ -1,0 +1,10 @@
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/thiserror-8cd228ec03effbe7.rmeta: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/aserror.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/display.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/provide.rs
+
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/libthiserror-8cd228ec03effbe7.rlib: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/aserror.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/display.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/provide.rs
+
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/thiserror-8cd228ec03effbe7.d: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/aserror.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/display.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/provide.rs
+
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/lib.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/aserror.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/display.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/thiserror-1.0.40/src/provide.rs:
