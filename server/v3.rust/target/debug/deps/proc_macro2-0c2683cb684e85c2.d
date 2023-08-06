@@ -1,0 +1,10 @@
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/proc_macro2-0c2683cb684e85c2.rmeta: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/strnom.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/fallback.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/wrapper.rs
+
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/libproc_macro2-0c2683cb684e85c2.rlib: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/strnom.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/fallback.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/wrapper.rs
+
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/proc_macro2-0c2683cb684e85c2.d: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/strnom.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/fallback.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/wrapper.rs
+
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/lib.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/strnom.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/fallback.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/proc-macro2-0.4.30/src/wrapper.rs:

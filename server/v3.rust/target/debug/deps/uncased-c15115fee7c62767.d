@@ -1,0 +1,10 @@
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/uncased-c15115fee7c62767.rmeta: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/owned.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/borrowed.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/as_uncased.rs
+
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/libuncased-c15115fee7c62767.rlib: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/owned.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/borrowed.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/as_uncased.rs
+
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/uncased-c15115fee7c62767.d: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/owned.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/borrowed.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/as_uncased.rs
+
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/lib.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/owned.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/borrowed.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/as_uncased.rs:

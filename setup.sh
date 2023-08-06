@@ -8,16 +8,16 @@ backendport="5000"
 # Run this file as a super user
 # This will not handle database creation
 
-crons="#0 16 * * * /usr/bin/python3 $current_dir/server/v1.flask/scripts/fuelscrape/fuelscrape.py
+crons="#0 16 * * * !/usr/bin/python3 $current_dir/server/v1.flask/scripts/fuelscrape/fuelscrape.py
 
-#0 9 * * * /usr/bin/python3 $current_dir/server/v1.flask/scripts/fuelscrape/fuelscrape.py
+#0 9 * * * !/usr/bin/python3 $current_dir/server/v1.flask/scripts/fuelscrape/fuelscrape.py
 
-#0 1 * * 2 /usr/bin/python3 $current_dir/server/v1.flask/scripts/property/scrape.py
+#0 1 * * 2 !/usr/bin/python3 $current_dir/server/v1.flask/scripts/property/scrape.py
 
-# 0 * * * * /bin/bash $current_dir/pull_and_build.sh
-# 5 * * * * /bin/bash $current_dir/server/kill_and_exec.sh
+# 0 * * * * !/bin/bash $current_dir/pull_and_build.sh
+# 5 * * * * !/bin/bash $current_dir/server/kill_and_exec.sh
 
-#@reboot cd $current_dir/server/v1.flask/ && /usr/bin/python3 $current_dir/server/v1.flask/app.py
+@reboot !cd $current_dir/server/v1.flask/ && /usr/bin/python3 $current_dir/server/v1.flask/app.py
 
 @reboot /bin/bash $current_dir/kill_and_exec.sh"
 

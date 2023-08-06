@@ -5,7 +5,7 @@ Find the website here: [kooperlingohr.com](https://kooperlingohr.com)
 
 
 ## Structure 
-The backend server is a build with Python and Flask. Find it at `server/` and find documentation there.
+The backend server was build with Python and Flask, but has since been rewritten in Go and Rust. Find them at `server/` with documentation.
 The front end of the website is made with React and Typescript. Navigate to `ui.react/` for more information.
 
 

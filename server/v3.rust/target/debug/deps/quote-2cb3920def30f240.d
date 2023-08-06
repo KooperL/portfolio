@@ -1,0 +1,10 @@
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/quote-2cb3920def30f240.rmeta: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/ext.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/to_tokens.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/runtime.rs
+
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/libquote-2cb3920def30f240.rlib: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/ext.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/to_tokens.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/runtime.rs
+
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/quote-2cb3920def30f240.d: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/ext.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/to_tokens.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/runtime.rs
+
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/lib.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/ext.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/to_tokens.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/quote-0.6.13/src/runtime.rs:

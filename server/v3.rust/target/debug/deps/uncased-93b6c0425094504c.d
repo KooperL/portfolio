@@ -1,0 +1,9 @@
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/uncased-93b6c0425094504c.rmeta: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/serde.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/owned.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/borrowed.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/as_uncased.rs
+
+/Users/kooperlingohr/Documents/Documents - Kooper’s MacBook Air/portfolio/server/v3.rust/target/debug/deps/uncased-93b6c0425094504c.d: /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/lib.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/serde.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/owned.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/borrowed.rs /Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/as_uncased.rs
+
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/lib.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/serde.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/owned.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/borrowed.rs:
+/Users/kooperlingohr/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uncased-0.9.7/src/as_uncased.rs:
