@@ -5,6 +5,6 @@ __pycache__
 logs/
 database.db
 bin/*
-target/*
+target/
 .DS_Store
 **/__pycache__/
