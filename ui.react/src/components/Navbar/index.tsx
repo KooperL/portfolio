@@ -90,10 +90,10 @@ function Navbar(props: { isVertical: boolean }) {
                 destination: `/${forumPath}`,
                 label: "logout",
                 callback: () => {
-                  sendForumLogout(
-                    { session_id: sessionStorage.getItem("session_id") ?? "" },
-                    token,
-                  ).then(resp => {
+                  sendForumLogout({
+                    payload: { session_id: sessionStorage.getItem("session_id") ?? "" },
+                    auth: `Bearer ${token}`,
+                  }).then(resp => {
                     if (resp?.data?.success) {
                       setToken(null)
                       navigate(

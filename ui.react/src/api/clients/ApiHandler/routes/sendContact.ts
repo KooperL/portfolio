@@ -2,12 +2,13 @@ import { ContactRequestPayload, ContactResponsePayload } from "./../../../../con
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { ApiConsumer } from "../instance";
 import { routes } from "../types";
-import { genericApiDataResponse } from "src/api/shared/types";
+import { genericApiDataResponse, genericApiRequestArgs } from "src/api/shared/types";
 import { MrnaResponse } from "src/containers/mrnaPage/types";
 import { AxiosResponse } from "axios";
 
 
-export const sendContact = (data: ContactRequestPayload): Promise<AxiosResponse<genericApiDataResponse<ContactResponsePayload>>> => {
+export const sendContact = (props: genericApiRequestArgs<ContactRequestPayload>): Promise<AxiosResponse<genericApiDataResponse<ContactResponsePayload>>> => {
+  const {payload: data} = props
   const path = `${routes.contact}`
   const config = {
     url: path,

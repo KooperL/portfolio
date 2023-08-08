@@ -2,11 +2,16 @@ import { PropertyIndexResponse } from "./../../../../containers/propertyPage/typ
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { routes } from "../types";
 import { ApiConsumer } from "../instance";
-import { genericApiDataResponse } from "src/api/shared/types";
+import { genericApiDataResponse, genericApiRequestArgs } from "src/api/shared/types";
 import { AxiosResponse } from "axios";
 
 
-export const fetchPropertySearch = (body: {}, suburb: string): Promise<AxiosResponse<genericApiDataResponse<PropertyIndexResponse>>> => {
+export const fetchPropertySearch = (props: genericApiRequestArgs<any>): Promise<AxiosResponse<genericApiDataResponse<PropertyIndexResponse>>> => {
+  const {
+    varRoute: suburb,
+    payload: body
+  } = props
+
   const path = `${routes.property}/${suburb}`
   const config = {
     url: path,

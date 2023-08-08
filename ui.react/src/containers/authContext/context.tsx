@@ -16,10 +16,12 @@ type AccessTokenContext = [
 export function monitor() {
   const currentPage = localStorage.getItem("currentPage")
   sendMonitor({
-    uuid: localStorage.getItem("uuid") ?? "",
-    session_id: sessionStorage.getItem("session_id") ?? "",
-    page: encodeURIComponent(window.location.pathname),
-    prevPage: encodeURIComponent(currentPage ?? "NULL"),
+    payload: {
+      uuid: localStorage.getItem("uuid") ?? "",
+      session_id: sessionStorage.getItem("session_id") ?? "",
+      page: encodeURIComponent(window.location.pathname),
+      prevPage: encodeURIComponent(currentPage ?? "NULL"),
+    }
   })
     .then(resp => {
       if (resp.data.success) {
@@ -47,7 +49,7 @@ export function AccessTokenProvider({ children }: any) {
       (accessToken && !accessToken.length)
     )
       return
-    sendForumRefresh({ session_id: sessionStorage.getItem("session_id") ?? "" })
+    sendForumRefresh({payload: {session_id: sessionStorage.getItem("session_id") ?? "" }})
       .then(resp => {
         if (resp.data.success && resp.data.accessToken && resp.data.expires) {
           // setPOSTState({

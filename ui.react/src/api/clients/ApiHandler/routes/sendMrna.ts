@@ -2,15 +2,16 @@ import { MrnaRequest, MrnaResponse } from "./../../../../containers/mrnaPage/typ
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { ApiConsumer } from "../instance";
 import { routes } from "../types";
-import { genericApiDataResponse } from "src/api/shared/types";
+import { genericApiDataResponse, genericApiRequestArgs } from "src/api/shared/types";
 import { AxiosResponse } from "axios";
 
 
-export const sendMrna = (data: MrnaRequest): Promise<AxiosResponse<genericApiDataResponse<MrnaResponse>>> => {
+export const sendMrna = (props: genericApiRequestArgs<MrnaRequest>): Promise<AxiosResponse<genericApiDataResponse<MrnaResponse>>> => {
+  const {payload: params} = props
   const path = `${routes.mrna}`
   const config = {
     url: path,
-    params: data,
+    params,
   }
   const cacheKey: CacheKey = {
     CacheMode: CacheMode.NetworkFirst,

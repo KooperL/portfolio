@@ -3,9 +3,10 @@ import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { ForumPostViewRequestPayload, ForumPostViewResponsePayload } from "./types";
 import { forumPath, routes } from "../../types";
 import { fetchForum } from "../../instance";
-import { genericApiDataResponse, genericApiTokenResponse } from "src/api/shared/types";
+import { genericApiDataResponse, genericApiRequestArgs, genericApiTokenResponse } from "src/api/shared/types";
 
-function fetchForumPostView(data: ForumPostViewRequestPayload, creds?: string, id?: string): Promise<AxiosResponse<genericApiDataResponse<ForumPostViewResponsePayload>>> {
+function fetchForumPostView(props: genericApiRequestArgs<ForumPostViewRequestPayload>): Promise<AxiosResponse<genericApiDataResponse<ForumPostViewResponsePayload>>> {
+  const {payload: data, auth: creds, varRoute: id} = props
   const path = `${forumPath}/${routes.forumPost}/${id}`
   const config: AxiosRequestConfig = {
     url: path,
