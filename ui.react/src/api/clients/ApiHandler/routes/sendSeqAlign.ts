@@ -2,15 +2,16 @@ import { SeqAlignRequest, SeqAlignResponse } from "./../../../../containers/seqA
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { ApiConsumer } from "../instance";
 import { routes } from "../types";
-import { genericApiDataResponse } from "src/api/shared/types";
+import { genericApiDataResponse, genericApiRequestArgs } from "src/api/shared/types";
 import { AxiosResponse } from "axios";
 
 
-export const sendSeqAlign = (data: SeqAlignRequest): Promise<AxiosResponse<genericApiDataResponse<SeqAlignResponse>>> => {
+export const sendSeqAlign = (props: genericApiRequestArgs<SeqAlignRequest>): Promise<AxiosResponse<genericApiDataResponse<SeqAlignResponse>>> => {
+  const {payload: params} = props
   const path = `${routes.seqalign}`
   const config = {
     url: path,
-    params: data,
+    params,
   }
   const cacheKey: CacheKey = {
     CacheMode: CacheMode.NetworkFirst,

@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
-import { genericApiDataResponse } from "src/api/shared/types";
+import { genericApiDataResponse, genericApiRequestArgs } from "src/api/shared/types";
 import { ApiConsumer } from "../instance";
 import { routes } from "../types";
 
@@ -18,11 +18,12 @@ interface CaptureRequestPayload {
   cookieEnabled: boolean
   darkMode: boolean
 }
-export const sendCapture = (data: CaptureRequestPayload): Promise<AxiosResponse<genericApiDataResponse<null>>> => {
+export const sendCapture = (props: genericApiRequestArgs<CaptureRequestPayload>): Promise<AxiosResponse<genericApiDataResponse<null>>> => {
+  const {payload: params} = props
   const path = `${routes.capture}`
   const config = {
     url: path,
-    params: data,
+    params,
   }
   const cacheKey: CacheKey = {
     CacheMode: CacheMode.NetworkFirst,

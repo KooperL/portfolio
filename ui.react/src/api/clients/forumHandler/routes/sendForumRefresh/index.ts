@@ -3,9 +3,10 @@ import { fetchForum } from "../../instance";
 import { forumPath, routes } from "../../types";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { ForumRefreshRequestPayload, ForumRefreshResponsePayload } from "./types";
-import { genericApiTokenResponse } from "src/api/shared/types";
+import { genericApiRequestArgs, genericApiTokenResponse } from "src/api/shared/types";
 
-function sendForumRefresh(data: ForumRefreshRequestPayload): Promise<AxiosResponse<ForumRefreshResponsePayload>> {
+function sendForumRefresh(props: genericApiRequestArgs<ForumRefreshRequestPayload>): Promise<AxiosResponse<ForumRefreshResponsePayload>> {
+  const {payload: data} = props
   const path = `${forumPath}/${routes.forumRefresh}`
   const config: AxiosRequestConfig = {
     url: path,

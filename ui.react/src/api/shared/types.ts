@@ -41,6 +41,12 @@ interface genericApiDataResponse<T> {
   errorMessage: string | null,
 }
 
+interface genericApiRequestArgs<T> {
+  payload: T
+  auth?: string
+  varRoute?: string 
+  callback?: () => void
+}
 interface genericApiTokenResponse {
   success: boolean
   type?: string
@@ -50,6 +56,7 @@ interface genericApiTokenResponse {
 }
 
 export type {
+  genericApiRequestArgs,
   genericApiTokenResponse,
   genericApiDataResponse
 }
