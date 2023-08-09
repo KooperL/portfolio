@@ -2,13 +2,13 @@ import { siteAnalysisResponse } from "./../../../../containers/siteAnalysisPage/
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { ApiConsumer } from "../instance";
 import { routes } from "../types";
-import { genericApiDataResponse, genericApiRequestArgs } from "src/api/shared/types";
+import { genericApiDataResponse, genericApiRequestArgs, projectPath } from "src/api/shared/types";
 import { AxiosResponse } from "axios";
 
 
 export const fetchSiteAnalysis = (props: genericApiRequestArgs<any>): Promise<AxiosResponse<genericApiDataResponse<siteAnalysisResponse>>> => {
   const {payload: body} = props
-  const path = `${routes.logsPull}`
+  const path = `${projectPath}/${routes.logsPull}`
   const config = {
     url: path,
   }

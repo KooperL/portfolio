@@ -13,7 +13,7 @@ interface useFetchOptions<T, U> {
 
 export const useFetch = <T, U>(
 ) => {
-  const [state, setState] = useState<State<U>>({
+  const [state, setState] = useState<State<genericApiDataResponse<U>>>({
     loading: false,
     details: null,
     errorMessage: null,
@@ -35,7 +35,7 @@ export const useFetch = <T, U>(
         .then((resp) => {
           if (resp.data.hasOwnProperty("success") && resp.data.success) {
             setState({
-              details: resp.data?.data || null,
+              details: resp.data || null,
               error: false,
               errorMessage: null,
               loading: false,

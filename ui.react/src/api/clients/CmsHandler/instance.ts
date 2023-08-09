@@ -1,4 +1,3 @@
-import path from "path";
 import { ApiHandlerCore } from "src/api/ApiHandlerCore";
 import { CacheMode } from "src/api/ApiHandlerCore/types";
 import { environmentConfig } from "src/api/environmentMappings";

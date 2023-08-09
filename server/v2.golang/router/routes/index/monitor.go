@@ -26,7 +26,7 @@ func Monitor(w http.ResponseWriter, r *http.Request) {
 			database.Insert(insertStatement, data)
 		}
 		responses.BuildPlainSuccess(w, 200)
-
+    return
 	} else {
 		// 405
 	}

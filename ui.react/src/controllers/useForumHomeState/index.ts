@@ -28,7 +28,7 @@ export const useForumHomeState = () => {
     }
     post({
       ApiImpl: fetchForumHome,
-      auth: `Bearer ${token ?? ""}`,
+      auth: token ?? "",
       payload: {
         session_id: sessionStorage.getItem("session_id") ?? "",
         category: queryString.get("category") ?? "",

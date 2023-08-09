@@ -8,7 +8,7 @@ const apiHost = environmentConfig()
 
 const ApiConsumer = new ApiHandlerCore(
   {
-    baseURL: `${apiHost.apiHost.toString()}/${projectPath}`,
+    baseURL: `${apiHost.apiHost.toString()}/`,
   },
   2,
   CacheMode.NetworkFirst,

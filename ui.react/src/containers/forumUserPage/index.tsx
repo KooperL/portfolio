@@ -21,13 +21,13 @@ import { State } from "../../types/State"
 import { useForumUserState } from "../../controllers/useForumUserState"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { ForumUserResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumUser/types"
-import { forumPath } from "src/api/shared/types"
+import { forumPath, genericApiDataResponse } from "src/api/shared/types"
 import { routes } from "src/api/clients/forumHandler/types"
 
 interface Props {
   scheme: PageInformation
   token: string | null
-  state: State<ForumUserResponsePayload[]>
+  state: State<genericApiDataResponse<ForumUserResponsePayload[]>>
   user: string
 }
 
@@ -40,10 +40,10 @@ function ForumHomePage(props: Props): JSX.Element {
       />
     )
   }
-  if (props.state.error && props.state.errorMessage)
+  if (props.state.error && props.state.errorMessage && !props.state.details?.data)
     return <ErrorPage error={props.state.errorMessage} />
   if (props.state.details) {
-    const data = props.state.details
+    const data = props.state.details.data as ForumUserResponsePayload[]
     return (
       <IslandCenter>
         <div className="forumUserPage">

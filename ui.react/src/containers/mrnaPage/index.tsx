@@ -11,13 +11,14 @@ import { State } from "../../types/State"
 import { MrnaRequest, MrnaResponse } from "./types"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 interface Props {
   scheme: PageInformation
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  statePOST: State<MrnaResponse>
+  statePOST: State<genericApiDataResponse<MrnaResponse>>
   stateCMS: State<CMSPageResponse>
 }
 
@@ -56,8 +57,8 @@ function MrnaPage(props: Props): JSX.Element {
   if (props.stateCMS.error && props.stateCMS.errorMessage) {
     return <ErrorPage error={props.stateCMS.errorMessage} />
   }
-  if (props.statePOST.details && props.statePOST.details) {
-    const data = props.statePOST.details
+  if (props.statePOST.details && props.statePOST.details?.data) {
+    const data = props.statePOST.details.data
     console.log(data)
     return (
       <div className="mrnaPage">

@@ -13,6 +13,7 @@ import GenerateHeatmap from "../../controllers/utils/heatmap"
 import "./style.css"
 import TypeLookup from "../../components/TypeLookup"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 function generateData(count: number, yrange: { max: number; min: number }) {
   var i = 0
@@ -32,7 +33,7 @@ function generateData(count: number, yrange: { max: number; min: number }) {
 }
 
 interface Props {
-  state: State<siteAnalysisResponse>
+  state: State<genericApiDataResponse<siteAnalysisResponse>>
   scheme: PageInformation
   setLoaded: React.Dispatch<React.SetStateAction<boolean>>
   stateCMS: State<CMSPageResponse>
@@ -46,8 +47,8 @@ function SiteAnalysisPage(props: Props): JSX.Element {
   if (props.stateCMS.error && props.stateCMS.errorMessage) {
     return <ErrorPage error={props.stateCMS.errorMessage} />
   }
-  if (props.state.details && props.state.details) {
-    const data = props.state.details
+  if (props.state.details && props.state.details?.data) {
+    const data = props.state.details.data
     props.setLoaded(true)
     return (
       <IslandCenter>

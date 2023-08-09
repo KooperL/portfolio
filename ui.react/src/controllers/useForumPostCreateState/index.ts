@@ -33,7 +33,7 @@ export const useForumPostCreateState = () => {
     e.preventDefault()
     post({
       ApiImpl: sendForumPostCreate,
-      auth: `Bearer ${token ?? ""}`,
+      auth: token ?? "",
       payload: data,
     })
   }
@@ -44,7 +44,7 @@ export const useForumPostCreateState = () => {
 
   useEffect(() => {
     if (hasPosted) {
-      navigate(`/${forumPath}/${routes.forumPostView}/${state?.details?.forumPostId ?? 1}`)
+      navigate(`/${forumPath}/${routes.forumPostView}/${state?.details?.data?.forumPostId ?? 1}`)
     }
   }, [hasPosted])
 

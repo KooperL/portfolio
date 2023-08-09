@@ -10,9 +10,10 @@ import useFuelPricesState from "../../controllers/useFuelPricesState"
 import { FuelPricesResponsePayload } from "./types"
 import TypeLookup from "../../components/TypeLookup"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 interface Props {
-  state: State<FuelPricesResponsePayload>
+  state: State<genericApiDataResponse<FuelPricesResponsePayload>>
   stateCMS: State<CMSPageResponse>
   scheme: PageInformation
 }
@@ -25,8 +26,8 @@ function FuelPricesPage(props: Props): JSX.Element {
   if (props.stateCMS.error && props.stateCMS.errorMessage)
     return <ErrorPage error={props.stateCMS.errorMessage} />
   
-  if (props.state.details && props.state.details) {
-    const data = props.state.details
+  if (props.state.details && props.state?.details.data) {
+    const data = props.state.details.data
     const width = Math.max(window.outerWidth, 1500)
 
     return (

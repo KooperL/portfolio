@@ -29,7 +29,7 @@ export const useForumPostViewState = () => {
     }
     post({
       ApiImpl: fetchForumPostView,
-      auth: `Bearer ${token ?? ""}`,
+      auth: token ?? "",
       varRoute,
       payload: {
         session_id: sessionStorage.getItem("session_id") ?? "error",
@@ -39,7 +39,7 @@ export const useForumPostViewState = () => {
 
   useEffect(() => {
     document.title = `${
-      GETstate.details ? GETstate.details?.title : "Loading"
+      GETstate.details ? GETstate.details?.data?.title : "Loading"
     } | ${scheme.title}`
     // window.location.href.substring(window.location.href.lastIndexOf('/') + 1)
   }, [GETstate])

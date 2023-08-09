@@ -13,6 +13,7 @@ import { State } from "../../types/State"
 import { RandombioRequest } from "./types"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 interface Props {
   scheme: PageInformation
@@ -23,7 +24,7 @@ interface Props {
   single: boolean
   setSingle: React.Dispatch<React.SetStateAction<boolean>>
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  statePOST: State<string>
+  statePOST: State<genericApiDataResponse<string>>
   stateCMS: State<CMSPageResponse>
 }
 
@@ -108,8 +109,8 @@ function RandomBioPage(props: Props): JSX.Element {
   if (props.stateCMS.error && props.stateCMS.errorMessage) {
     return <ErrorPage error={props.stateCMS.errorMessage} />
   }
-  if (props.statePOST.details && props.statePOST.details) {
-    const data = props.statePOST.details
+  if (props.statePOST.details && props.statePOST.details?.data) {
+    const data = props.statePOST.details.data
     return (
       <IslandCenter>
         <div className="randomBioPage">

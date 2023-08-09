@@ -14,7 +14,7 @@ import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
 import { useForumHomeState } from "../../controllers/useForumHomeState"
 import { ForumHomeResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumHome/types"
-import { forumPath } from "src/api/shared/types"
+import { forumPath, genericApiDataResponse } from "src/api/shared/types"
 import { ForumItemType, routes } from "src/api/clients/forumHandler/types"
 import { sendMonitor } from "src/api/clients/ApiHandler/routes/sendMonitor"
 import { Link } from "react-router-dom"
@@ -24,7 +24,7 @@ interface Props {
   scheme: PageInformation
   token: string | null
   handleSubmit: () => void
-  state: State<ForumHomeResponsePayload>
+  state: State<genericApiDataResponse<ForumHomeResponsePayload>>
   searchState: string
   setSearchState: React.Dispatch<React.SetStateAction<string>>
 }
@@ -41,7 +41,7 @@ function ForumHomePage(props: Props): JSX.Element {
   if (props.state.error && props.state.errorMessage)
     return <ErrorPage error={props.state.errorMessage} />
   if (props.state.details && props.state.details.data) {
-    const data = props.state.details
+    const data = props.state.details.data
     return (
       <IslandLeft>
         <div className="forumHomePage">

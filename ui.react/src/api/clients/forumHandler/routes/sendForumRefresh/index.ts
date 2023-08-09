@@ -7,7 +7,7 @@ import { genericApiRequestArgs, genericApiTokenResponse } from "src/api/shared/t
 
 function sendForumRefresh(props: genericApiRequestArgs<ForumRefreshRequestPayload>): Promise<AxiosResponse<ForumRefreshResponsePayload>> {
   const {payload: data} = props
-  const path = `${forumPath}/${routes.forumRefresh}`
+  const path = `${routes.forumRefresh}`
   const config: AxiosRequestConfig = {
     url: path,
     data: data,

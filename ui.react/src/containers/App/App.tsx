@@ -35,8 +35,8 @@ import { projectPath } from "src/api/shared/types"
 function App() {
   return (
     <SchemeSettings>
-      <AccessTokenProvider>
-        <Router>
+      <Router>
+        <AccessTokenProvider>
           <Navbar isVertical={false} />
           <Logger />
           <Routes>
@@ -135,8 +135,8 @@ function App() {
               />
             </Route>
           </Routes>
-        </Router>
-      </AccessTokenProvider>
+        </AccessTokenProvider>
+      </Router>
     </SchemeSettings>
   )
 }

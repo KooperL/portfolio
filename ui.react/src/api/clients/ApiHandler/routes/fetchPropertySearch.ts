@@ -2,7 +2,7 @@ import { PropertyIndexResponse } from "./../../../../containers/propertyPage/typ
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
 import { routes } from "../types";
 import { ApiConsumer } from "../instance";
-import { genericApiDataResponse, genericApiRequestArgs } from "src/api/shared/types";
+import { genericApiDataResponse, genericApiRequestArgs, projectPath } from "src/api/shared/types";
 import { AxiosResponse } from "axios";
 
 
@@ -12,7 +12,7 @@ export const fetchPropertySearch = (props: genericApiRequestArgs<any>): Promise<
     payload: body
   } = props
 
-  const path = `${routes.property}/${suburb}`
+  const path = `${projectPath}/${routes.property}/${suburb}`
   const config = {
     url: path,
   }
