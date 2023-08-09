@@ -19,7 +19,7 @@ export const useForumUserState = () => {
   useEffect(() => {
     post({
       ApiImpl: fetchForumUser,
-      auth: `Bearer ${token ?? ""}`,
+      auth: token ?? "",
       varRoute: user,
       payload: {
         session_id: sessionStorage.getItem("session_id") ?? "error",

@@ -19,13 +19,13 @@ import { IslandCenter } from "../../templates/IslandCenter"
 import { State } from "../../types/State"
 import { useForumPostViewState } from "../../controllers/useForumPostViewState"
 import { ForumPostViewResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumPostView/types"
-import { forumPath } from "src/api/shared/types"
+import { forumPath, genericApiDataResponse } from "src/api/shared/types"
 import { routes } from "src/api/clients/forumHandler/types"
 
 interface Props {
   scheme: PageInformation
   token: string | null
-  GETstate: State<ForumPostViewResponsePayload>
+  GETstate: State<genericApiDataResponse<ForumPostViewResponsePayload>>
 }
 
 function ForumPostViewPage(props: Props): JSX.Element {
@@ -42,7 +42,7 @@ function ForumPostViewPage(props: Props): JSX.Element {
   if (props.GETstate.error) {
     return <div>{JSON.stringify(props.GETstate.errorMessage)}</div>
   }
-  const data = props.GETstate.details
+  const data = props.GETstate.details!.data
   return (
     <IslandCenter>
       <div className="forumPostViewPage">

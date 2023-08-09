@@ -7,7 +7,7 @@ import { AxiosResponse } from "axios";
 
 function sendForumRegister(props: genericApiRequestArgs<ForumRegisterRequstPayload>): Promise<AxiosResponse<genericApiDataResponse<ForumRegisterResponsepayload>>> {
   const {payload: data, auth: creds} = props
-  const path = `${forumPath}/${routes.forumRegister}`
+  const path = `${routes.forumRegister}`
   const config = {
     url: path,
     data: data,

@@ -20,13 +20,13 @@ import { Textarea } from "../../components/Textarea"
 import { State } from "../../types/State"
 import { useForumPostCreateState } from "../../controllers/useForumPostCreateState"
 import { ForumPostCreateRequestPayload, ForumPostCreateResponsePayload } from "src/api/clients/forumHandler/routes/sendPostCreate/types"
-import { forumPath } from "src/api/shared/types"
+import { forumPath, genericApiDataResponse } from "src/api/shared/types"
 import { routes } from "src/api/clients/forumHandler/types"
 
 interface Props {
   scheme: PageInformation
   token: string | null
-  state: State<ForumPostCreateResponsePayload>
+  state: State<genericApiDataResponse<ForumPostCreateResponsePayload>>
   body: string
   setBody: React.Dispatch<React.SetStateAction<string>>
   title: string

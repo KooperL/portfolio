@@ -1,9 +1,11 @@
+import { forumPath, routes } from "src/containers/App/types"
 import React, {
   useContext,
   createContext,
   useState,
   useEffect,
 } from "react"
+import { useNavigate } from "react-router-dom"
 import { sendMonitor } from "src/api/clients/ApiHandler/routes/sendMonitor"
 import { sendForumRefresh } from "src/api/clients/forumHandler/routes/sendForumRefresh"
 // import { useNavigate } from 'react-router-dom';
@@ -41,7 +43,7 @@ export function AccessTokenProvider({ children }: any) {
   const [accessTokenExpires, setAccessTokenExpires] = useState<Date | null>(
     null,
   )
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   function refresh() {
     if (
@@ -58,9 +60,9 @@ export function AccessTokenProvider({ children }: any) {
           //   errorMessage: null,
           //   loading: false
           // });
-          // navigate(`/${forumPath}/post`)
           setAccessToken(resp.data.accessToken)
           setAccessTokenExpires(new Date(resp.data.expires))
+          navigate(`/${forumPath}/post`)
         } else {
           // RIP genuinely invalid
           // throw new Error(resp.error);
@@ -68,14 +70,14 @@ export function AccessTokenProvider({ children }: any) {
       })
       .catch((err: any) => {
         setAccessToken("")
-        console.log(err)
+        console.log('error caught: ', err)
         // window.location.href = (`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumRegister}`)
-        // navigate(`/${ForumRouteType.ForumHome}/${ForumRouteType.ForumRegister}`)
         // setPOSTState({
         //   error: true,
         //   errorMessage: err,
         //   loading: false
         // });
+        navigate(`/${forumPath}/${routes.forumRegister}`)
       })
   }
 

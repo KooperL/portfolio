@@ -18,6 +18,7 @@ export const sendMonitor = (props: genericApiRequestArgs<MonitorRequestPayload>)
   const config = {
     url: path,
     params,
+    method: 'POST',
   }
   const cacheKey: CacheKey = {
     CacheMode: CacheMode.NetworkFirst,

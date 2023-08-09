@@ -16,6 +16,7 @@ import { State } from "../../types/State"
 import { SeqAlignResponse } from "./types"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 interface Props {
   sampletxt: string
@@ -32,7 +33,7 @@ interface Props {
   setExtgaps: React.Dispatch<React.SetStateAction<number>>
   scheme: PageInformation
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  stateSubmit: State<SeqAlignResponse>
+  stateSubmit: State<genericApiDataResponse<SeqAlignResponse>>
   stateCMS: State<CMSPageResponse>
 }
 
@@ -128,8 +129,8 @@ function SeqAlignPage(props: Props): JSX.Element {
   if (props.stateCMS.error && props.stateCMS.errorMessage) {
     return <ErrorPage error={props.stateCMS.errorMessage} />
   }
-  if (props.stateSubmit.details && props.stateSubmit.details) {
-    const data = props.stateSubmit.details
+  if (props.stateSubmit.details && props.stateSubmit.details?.data) {
+    const data = props.stateSubmit.details.data
     const splitDrawArray = data.draw_res.map(elem => elem.split("\n"))
 
     return (

@@ -7,7 +7,7 @@ import { ForumHomeRequestPayload, ForumHomeResponsePayload } from "./types";
 
 export function fetchForumHome(props: genericApiRequestArgs<ForumHomeRequestPayload>): Promise<AxiosResponse<genericApiDataResponse<ForumHomeResponsePayload>>> {
   const {payload: body} = props
-  const path = `${forumPath}`
+  const path = ``
   const config = {
     url: path 
   }

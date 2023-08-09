@@ -6,5 +6,6 @@ logs/
 database.db
 bin/*
 target/
+build/
 .DS_Store
 **/__pycache__/

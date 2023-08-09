@@ -8,7 +8,7 @@ import { genericApiDataResponse, genericApiRequestArgs } from "src/api/shared/ty
 
 function sendForumPostCreate(props: genericApiRequestArgs<ForumPostCreateRequestPayload>): Promise<AxiosResponse<genericApiDataResponse<ForumPostCreateResponsePayload>>> {
   const {payload: data, auth: creds} = props
-  const path = `${forumPath}/${routes.forumPostCreate}`
+  const path = `${routes.forumPostCreate}`
   const config: AxiosRequestConfig = {
     url: path,
     data: data,

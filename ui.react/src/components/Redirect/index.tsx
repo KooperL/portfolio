@@ -2,6 +2,7 @@ import { LoggingResponsePayload } from "src/components/Logger/types"
 import { Navigate, useNavigate } from "react-router-dom"
 import { sendMonitor } from "src/api/clients/ApiHandler/routes/sendMonitor"
 import { FuncProps, Props } from "./types"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 function Redirect(props: FuncProps) {
   props
@@ -13,11 +14,11 @@ function Redirect(props: FuncProps) {
         prevPage: localStorage.getItem("currentPage"),
       }),
     })
-    .then((resp: LoggingResponsePayload) => {
-      if (resp.success) {
+    .then((resp: genericApiDataResponse<LoggingResponsePayload>) => {
+      if (resp.data?.success) {
         localStorage.setItem("currentPage", window.location.pathname)
       } else {
-        throw new Error(resp.error)
+        throw new Error(resp.data?.error)
       }
     })
     .catch((err: any) => {

@@ -11,10 +11,11 @@ import { Button } from "../../components/Button"
 import { PropertyIndexResponse } from "./types"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 interface Props {
   scheme: PageInformation
-  state: State<PropertyIndexResponse>
+  state: State<genericApiDataResponse<PropertyIndexResponse>>
   stateCMS: State<CMSPageResponse>
   ref: any
   handleSubmit: () => void
@@ -27,8 +28,8 @@ function PropertyPage(props: Props): JSX.Element {
   if (props.stateCMS.error && props.stateCMS.errorMessage) {
     return <ErrorPage error={props.stateCMS.errorMessage} />
   }
-  if (props.state.details && props.state.details) {
-    const data = props.state.details
+  if (props.state.details && props.state.details?.data) {
+    const data = props.state.details.data
     return (
       <div className="propertypage">
         <IslandCenter>

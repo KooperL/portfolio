@@ -21,7 +21,7 @@ interface Props {
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
   stateCMS: State<CMSPageResponse>
-  POSTstate: State<ContactResponsePayload>
+  POSTstate: State<genericApiDataResponse<ContactResponsePayload>>
 }
 
 function ContactPage(props: Props): JSX.Element {

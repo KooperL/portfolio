@@ -17,6 +17,7 @@ import { State } from "../../types/State"
 import { SecondaryResponse } from "./types"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 interface Props {
   aa_field_id: string
@@ -28,7 +29,7 @@ interface Props {
   leniency: number
   setLeniency: React.Dispatch<React.SetStateAction<number>>
   scheme: PageInformation
-  statePOST: State<SecondaryResponse>
+  statePOST: State<genericApiDataResponse<SecondaryResponse>>
   stateCMS: State<CMSPageResponse>
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
@@ -80,8 +81,8 @@ function SecondaryPage(props: Props): JSX.Element {
   if (props.statePOST.loading) return <Spinner />
   if (props.statePOST.error && props.statePOST.errorMessage)
     return <ErrorPage error={props.statePOST.errorMessage} />
-  if (props.statePOST.details && props.statePOST.details) {
-    const data = props.statePOST.details
+  if (props.statePOST.details && props.statePOST.details?.data) {
+    const data = props.statePOST.details.data
     return (
       <IslandCenter>
         <div className="secondaryPage">

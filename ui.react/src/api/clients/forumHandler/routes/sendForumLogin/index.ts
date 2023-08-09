@@ -7,7 +7,7 @@ import { genericApiDataResponse, genericApiRequestArgs } from "src/api/shared/ty
 
 function sendForumLogin(props: genericApiRequestArgs<ForumLoginRequestPayload>): Promise<AxiosResponse<genericApiDataResponse<ForumLoginResponsePayload>>> {
   const {payload: data, auth: creds} = props
-  const path = `${forumPath}/${routes.forumLogin}`
+  const path = `${routes.forumLogin}`
   const config: AxiosRequestConfig = {
     url: path,
     data: data,

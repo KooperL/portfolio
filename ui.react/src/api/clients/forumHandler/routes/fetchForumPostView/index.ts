@@ -7,7 +7,7 @@ import { genericApiDataResponse, genericApiRequestArgs, genericApiTokenResponse 
 
 function fetchForumPostView(props: genericApiRequestArgs<ForumPostViewRequestPayload>): Promise<AxiosResponse<genericApiDataResponse<ForumPostViewResponsePayload>>> {
   const {payload: data, auth: creds, varRoute: id} = props
-  const path = `${forumPath}/${routes.forumPost}/${id}`
+  const path = `${routes.forumPost}/${id}`
   const config: AxiosRequestConfig = {
     url: path,
     data: data,

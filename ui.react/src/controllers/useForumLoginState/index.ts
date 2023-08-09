@@ -65,31 +65,8 @@ export const useForumLoginState = () => {
 
   const { state, pull: postRegister } = useFetch<
     ForumRegisterRequstPayload,
-  ForumRegisterResponsepayload
+    ForumRegisterResponsepayload
   >()
-
-  const registerCallback = () => {
-    setHasRegistered(true)
-
-    if (window.hasOwnProperty("PasswordCrediential")) {
-      let c = new PasswordCredential({
-        id: usernameRegister,
-        password: passwordRegister,
-      })
-      navigator.credentials.create(c as any)
-    }
-  }
-
-  const loginCallback = (e: any) => {
-    setToken(e?.accessToken ?? "")
-    if (window.hasOwnProperty("PasswordCrediential")) {
-      let c = new PasswordCredential({
-        id: usernameLogin,
-        password: passwordLogin,
-      })
-      navigator.credentials.create(c as any)
-    }
-  }
 
   const { state: POSTState, pull: postLogin } = useFetch<
     ForumLoginRequestPayload,
@@ -104,15 +81,31 @@ export const useForumLoginState = () => {
   }, [])
 
   useEffect(() => {
-    if (hasRegistered) {
+    if (state.details && state.details?.success) {
+      setHasRegistered(true)
       setUsernameLogin(usernameRegister)
       setPasswordLogin(passwordRegister)
-      setHasRegistered(hasRegistered)
+
+      if (window.hasOwnProperty("PasswordCrediential")) {
+        let c = new PasswordCredential({
+          id: usernameRegister,
+          password: passwordRegister,
+        })
+        navigator.credentials.create(c as any)
+      }
     }
-  }, [hasRegistered])
+  }, [state])
 
   useEffect(() => {
-    if (POSTState.details && POSTState.details.success) {
+    if (POSTState.details && POSTState.details?.success) {
+    setToken(POSTState.details.data?.accessToken ?? "")
+    if (window.hasOwnProperty("PasswordCrediential")) {
+      let c = new PasswordCredential({
+        id: usernameLogin,
+        password: passwordLogin,
+      })
+      navigator.credentials.create(c as any)
+    }
       navigate(`/${forumPath}`)
     }
   }, [POSTState])
@@ -125,7 +118,7 @@ export const useForumLoginState = () => {
     if (hasRegistered) return
     postRegister({
       ApiImpl: sendForumRegister,
-      auth: !encodedRegister ? undefined : `Basic ${encodedRegister}`,
+      auth: !encodedRegister ? undefined : encodedRegister,
       payload: data,
     })
   }
@@ -138,7 +131,7 @@ export const useForumLoginState = () => {
     // if (hasRegistered) return
     postLogin({
       ApiImpl: sendForumLogin,
-      auth: !encodedRegister ? undefined : `Basic ${encodedLogin}`,
+      auth: !encodedRegister ? undefined : encodedLogin,
       payload: data,
     })
   }

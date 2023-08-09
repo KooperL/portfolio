@@ -6,7 +6,7 @@ import { genericApiDataResponse, genericApiRequestArgs } from "src/api/shared/ty
 
 function sendForumLogout(props: genericApiRequestArgs<any>): Promise<AxiosResponse<genericApiDataResponse<null>>> {
   const {payload: data, auth: creds} = props
-  const path = `${forumPath}/${routes.forumLogout}`
+  const path = `${routes.forumLogout}`
   const config: AxiosRequestConfig = {
     url: path,
     data: data,

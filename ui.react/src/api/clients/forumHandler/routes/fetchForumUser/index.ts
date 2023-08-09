@@ -7,7 +7,7 @@ import { genericApiDataResponse, genericApiRequestArgs } from "src/api/shared/ty
 
 function fetchForumUser(props: genericApiRequestArgs<ForumUserRequestPayload>): Promise<AxiosResponse<genericApiDataResponse<ForumUserResponsePayload[]>>> {
   const {payload: data, auth: creds, varRoute: username} = props
-  const path = `${forumPath}/${routes.forumUser}/${username}`
+  const path = `${routes.forumUser}/${username}`
   const config: AxiosRequestConfig = {
     url: path,
     data: data,
