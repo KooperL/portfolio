@@ -13,6 +13,7 @@ function Hamburger(props: Props) {
   const burgerButton = (
     <>
       <button
+        style={{ backgroundColor: scheme.button.bgSolid }}
         onClick={() => {
           setOpen(!open)
         }}

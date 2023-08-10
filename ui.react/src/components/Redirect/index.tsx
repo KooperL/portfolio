@@ -7,12 +7,14 @@ import { genericApiDataResponse } from "src/api/shared/types"
 function Redirect(props: FuncProps) {
   props
     .monitorPost({
-      uuid: localStorage.getItem("uuid"),
-      session_id: sessionStorage.getItem("session_id"),
-      page: window.location.pathname,
-      ...(localStorage.getItem("currentPage") && {
-        prevPage: localStorage.getItem("currentPage"),
-      }),
+      payload: {
+        uuid: localStorage.getItem("uuid"),
+        session_id: sessionStorage.getItem("session_id"),
+        page: window.location.pathname,
+        ...(localStorage.getItem("currentPage") && {
+          prevPage: localStorage.getItem("currentPage"),
+        }),
+      }
     })
     .then((resp: genericApiDataResponse<LoggingResponsePayload>) => {
       if (resp.data?.success) {
