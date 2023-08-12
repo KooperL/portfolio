@@ -54,7 +54,6 @@ function MrnaPage(props: Props): JSX.Element {
   if (props.stateCMS.loading) return <Spinner />
   if (props.statePOST.details && props.statePOST.details?.data) {
     const data = props.statePOST.details.data
-    console.log(data)
     return (
       <div className="mrnaPage">
         <IslandCenter>

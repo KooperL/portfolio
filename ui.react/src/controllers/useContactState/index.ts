@@ -37,13 +37,12 @@ export const useContactState = () => {
     e: React.FormEvent<HTMLFormElement>,
     payload: ContactRequestPayload
   ) => {
+    e.preventDefault()
     handleSubmit({
       ApiImpl: sendContact,
       payload
     })
   }
-
-  // ^^^ what???
 
   return {
     scheme,

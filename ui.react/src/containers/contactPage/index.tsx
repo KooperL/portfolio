@@ -33,7 +33,7 @@ function ContactPage(props: Props): JSX.Element {
             onSubmit={e =>
               props.onSubmit(e, {
                 session_id: sessionStorage.getItem("session_id") ?? "error",
-                message: props.value,
+                message: props.value ?? "",
               })
             }
           >
