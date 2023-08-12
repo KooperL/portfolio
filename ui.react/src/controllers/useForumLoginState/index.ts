@@ -7,8 +7,8 @@ import { ForumLoginRequestPayload, ForumLoginResponsePayload } from "src/api/cli
 import { ForumRegisterRequstPayload, ForumRegisterResponsepayload } from "src/api/clients/forumHandler/routes/sendForumRegister/types"
 import { forumPath } from "src/api/shared/types"
 import { useFetch } from "src/hooks/useFetch"
-import { useAccessToken } from "../../containers/authContext/context"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { useAccessToken } from "../../state/authContext/context"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { sendForumRegister } from "src/api/clients/forumHandler/routes/sendForumRegister"
 import { sendForumLogin } from "src/api/clients/forumHandler/routes/sendForumLogin"
 

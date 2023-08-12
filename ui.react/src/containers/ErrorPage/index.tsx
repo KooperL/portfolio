@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { State } from "src/types/State"
-import { SchemeContext } from "../context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import "./style.css"
 import { ErrorPageProps } from "./types"
 

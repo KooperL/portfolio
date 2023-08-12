@@ -1,4 +1,4 @@
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import React, { useContext, useState } from "react"
 import "./style.css"
 

@@ -1,6 +1,6 @@
 import { ContactRequestPayload, ContactResponsePayload } from "../../containers/contactPage/types"
 import { useContext, useEffect, useState } from "react"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { useFetch } from "../../hooks/useFetch"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import { useCms } from "src/hooks/useCms"

@@ -1,7 +1,7 @@
 import { Button } from "../Button"
 import React from "react"
 import renderer from "react-test-renderer"
-import dark from "../../containers/context/dark.json"
+import dark from "../../state/colorScheme/dark.json"
 import Hamburger from "../Hamburger"
 
 describe("Hamburger component", () => {

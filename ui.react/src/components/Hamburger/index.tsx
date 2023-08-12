@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import "./style.css"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { Props } from "./types"
 import ButtonRedir from "../ButtonRedir"
 

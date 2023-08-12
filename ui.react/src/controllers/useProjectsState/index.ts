@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react"
 import { useCms } from "src/hooks/useCms"
 import { useError } from "src/hooks/useError"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { useFetch } from "../../hooks/useFetch"
 
 export const useProjectsState = () => {

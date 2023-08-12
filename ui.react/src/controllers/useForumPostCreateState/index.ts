@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom"
 import { sendForumPostCreate } from "src/api/clients/forumHandler/routes/sendPostCreate"
 import { ForumPostCreateRequestPayload, ForumPostCreateResponsePayload } from "src/api/clients/forumHandler/routes/sendPostCreate/types"
 import { useFetch } from "src/hooks/useFetch"
-import { useAccessToken } from "../../containers/authContext/context"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { useAccessToken } from "../../state/authContext/context"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 
 
 export const useForumPostCreateState = () => {

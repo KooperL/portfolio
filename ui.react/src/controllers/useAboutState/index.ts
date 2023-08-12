@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { useFetch } from "../../hooks/useFetch"
 import { State } from "../../types/State"
 // @ts-ignore

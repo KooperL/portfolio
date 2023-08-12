@@ -1,4 +1,4 @@
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { useContext } from "react"
 // @ts-ignore
 import globe from "../../assets/globe.svg"

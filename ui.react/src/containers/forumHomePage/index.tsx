@@ -1,6 +1,6 @@
 import Spinner from "../../components/Spinner"
 import Navbar from "../../components/Navbar"
-import { PageInformation, SchemeContext } from "../context/colourScheme"
+import { PageInformation, SchemeContext } from "../../state/colorScheme/colourScheme"
 import "./style.css"
 
 import { ReactP5Wrapper } from "react-p5-wrapper"
@@ -18,7 +18,7 @@ import { forumPath, genericApiDataResponse } from "src/api/shared/types"
 import { ForumItemType, routes } from "src/api/clients/forumHandler/types"
 import { sendMonitor } from "src/api/clients/ApiHandler/routes/sendMonitor"
 import { Link } from "react-router-dom"
-import { monitor } from "src/containers/authContext/context"
+import { monitor } from "src/state/authContext/context"
 
 interface Props {
   scheme: PageInformation

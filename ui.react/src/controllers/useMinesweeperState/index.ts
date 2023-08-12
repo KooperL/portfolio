@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { useCms } from "src/hooks/useCms"
 import { useError } from "src/hooks/useError"
 import { useFetch } from "src/hooks/useFetch"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 
 interface DensityMap {
   [key: string]: number
