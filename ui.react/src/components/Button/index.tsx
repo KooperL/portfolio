@@ -1,4 +1,4 @@
-import { Scheme } from "../../containers/context/type"
+import { Scheme } from "../../state/colorScheme/type"
 
 export function Button(props: {
   colours: Scheme

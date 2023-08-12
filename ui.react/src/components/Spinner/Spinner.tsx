@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import React, { useContext } from "react"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import "./Spinner.css"
 
 function Spinner() {

@@ -3,7 +3,7 @@ import Spinner from "../../components/Spinner"
 import Modal from "../../components/Modal"
 // @ts-ignore
 import gear from "../../assets/gear.svg"
-import { PageInformation, SchemeContext } from "../context/colourScheme"
+import { PageInformation, SchemeContext } from "../../state/colorScheme/colourScheme"
 import { Button } from "../../components/Button"
 import "./style.css"
 import { IslandCenter } from "../../templates/IslandCenter"

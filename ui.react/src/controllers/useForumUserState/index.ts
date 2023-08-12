@@ -3,8 +3,8 @@ import { useLocation } from "react-router-dom"
 import { fetchForumUser } from "src/api/clients/forumHandler/routes/fetchForumUser"
 import { ForumUserRequestPayload, ForumUserResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumUser/types"
 import { useFetch } from "src/hooks/useFetch"
-import { useAccessToken } from "../../containers/authContext/context"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { useAccessToken } from "../../state/authContext/context"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 
 export const useForumUserState = () => {
   // const [POSTstate, setPOSTState] = useState({...ContactPOSTInitialState});

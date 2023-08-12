@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
 import Vchart from "../../components/Vchart"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { useFetch } from "src/hooks/useFetch"
 import { FuelPricesRequestPayload, FuelPricesResponsePayload } from "@containers/fuelPricesPage/types"
 import { fetchFuelPrices } from "src/api/clients/ApiHandler/routes/fetchFuelPrices"

@@ -8,7 +8,7 @@ import { Input } from "../../components/Input"
 import { State } from "../../types/State"
 import { useContactState } from "../../controllers/useContactState"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
-import { PageInformation } from "src/containers/context/colourScheme"
+import { PageInformation } from "src/state/colorScheme/colourScheme"
 import { genericApiDataResponse } from "src/api/shared/types"
 import ErrorPage from "src/containers/ErrorPage"
 

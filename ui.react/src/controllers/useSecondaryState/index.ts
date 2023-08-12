@@ -1,5 +1,5 @@
 import { useState, useCallback, useContext, useEffect } from "react"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import {
   SecondaryRequest,
   SecondaryResponse,

@@ -1,11 +1,11 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import "./style.css"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { FuncProps, Props } from "./types"
 import { Link } from "react-router-dom"
 import { LoggingResponsePayload } from "../Logger/types"
 import { Globe } from "../Globe"
-import { monitor } from "../../containers/authContext/context"
+import { monitor } from "../../state/authContext/context"
 
 const letters = "abcdefghijklmnopqrstuvwxyz"
 

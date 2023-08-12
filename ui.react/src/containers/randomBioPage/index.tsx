@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
-import { PageInformation, SchemeContext } from "../context/colourScheme"
+import { PageInformation, SchemeContext } from "../../state/colorScheme/colourScheme"
 import "./style.css"
 import { Button } from "../../components/Button"
 import { IslandCenter } from "../../templates/IslandCenter"

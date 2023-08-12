@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import "./style.css"
 
 export function IslandCenter({ children }: { children: React.ReactNode }) {

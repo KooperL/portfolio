@@ -1,4 +1,4 @@
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { useContext, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { useFetch } from "src/hooks/useFetch"

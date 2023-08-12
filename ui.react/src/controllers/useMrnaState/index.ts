@@ -1,5 +1,5 @@
 import { useState, useCallback, useContext, useEffect } from "react"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { useFetch } from "src/hooks/useFetch"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import { sendMrna } from "src/api/clients/ApiHandler/routes/sendMrna"

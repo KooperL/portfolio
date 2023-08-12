@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import "./style.css"
 import { Link, useNavigate } from "react-router-dom"
 import ButtonRedir from "../ButtonRedir"
 import Hamburger from "../Hamburger"
 import { useLocation } from "react-router-dom"
-import { useAccessToken } from "../../containers/authContext/context"
+import { useAccessToken } from "../../state/authContext/context"
 import { sendForumLogout } from "src/api/clients/forumHandler/routes/sendForumLogout"
 import { forumPath, routes } from "src/containers/App/types"
 

@@ -1,7 +1,7 @@
 import { RandombioRequest } from "../../containers/randomBioPage/types"
 import { useState, useCallback, useEffect, useContext } from "react"
 import { useFetch } from "src/hooks/useFetch"
-import { SchemeContext } from "../../containers/context/colourScheme"
+import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { useCms } from "src/hooks/useCms"
 import { sendRandomBio } from "src/api/clients/ApiHandler/routes/sendRandomBio"
 import { useError } from "src/hooks/useError"

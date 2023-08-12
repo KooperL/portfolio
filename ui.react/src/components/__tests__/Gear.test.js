@@ -1,6 +1,6 @@
 import React from "react"
 import renderer from "react-test-renderer"
-import dark from "../../containers/context/dark.json"
+import dark from "../../state/colorScheme/dark.json"
 import { Gear } from "../Gear"
 
 describe("Gear component", () => {
