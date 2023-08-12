@@ -19,7 +19,6 @@ func Monitor(w http.ResponseWriter, r *http.Request) {
     
 		insertStatement := "INSERT INTO monitor VALUES (?, ?, ?, ?, ?);"
 		data := append(headerColumns, body.Uuid, body.SessionID, body.Page)
-    fmt.Println("{}", data)
 		database.Insert(insertStatement, data)
 
 		if body.PrevPage != "NULL" {
