@@ -52,11 +52,6 @@ function MrnaPage(props: Props): JSX.Element {
   }
   if (props.statePOST.loading) return <Spinner />
   if (props.stateCMS.loading) return <Spinner />
-  if (props.statePOST.error && props.statePOST.errorMessage)
-    return <ErrorPage error={props.statePOST.errorMessage} />
-  if (props.stateCMS.error && props.stateCMS.errorMessage) {
-    return <ErrorPage error={props.stateCMS.errorMessage} />
-  }
   if (props.statePOST.details && props.statePOST.details?.data) {
     const data = props.statePOST.details.data
     console.log(data)

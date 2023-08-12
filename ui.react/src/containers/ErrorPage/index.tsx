@@ -2,12 +2,9 @@ import { useContext } from "react"
 import { State } from "src/types/State"
 import { SchemeContext } from "../context/colourScheme"
 import "./style.css"
+import { ErrorPageProps } from "./types"
 
-interface Props {
-  error: string
-}
-
-function ErrorPage(props: Props): JSX.Element {
+function ErrorPage(props: ErrorPageProps): JSX.Element {
   const [scheme, setScheme] = useContext(SchemeContext)
 
   return (
@@ -17,10 +14,10 @@ function ErrorPage(props: Props): JSX.Element {
           className="code"
           style={{ color: scheme.body.h1 }}
         >
-          20x
+          {props.decorator ?? ':('}
         </div>
         <div className="details">
-          <div className="message">{props.error}</div>
+          <div className="message">{props.errorMessage}</div>
         </div>
       </div>
     </div>

@@ -24,10 +24,7 @@ interface Props {
 function PropertyPage(props: Props): JSX.Element {
   if (props.state.loading) return <Spinner />
   if (props.state.error && props.state.errorMessage)
-    return <ErrorPage error={props.state.errorMessage} />
-  if (props.stateCMS.error && props.stateCMS.errorMessage) {
-    return <ErrorPage error={props.stateCMS.errorMessage} />
-  }
+    return <ErrorPage errorMessage={props.state.errorMessage} errorType='NETWORK' />
   if (props.state.details && props.state.details?.data) {
     const data = props.state.details.data
     return (

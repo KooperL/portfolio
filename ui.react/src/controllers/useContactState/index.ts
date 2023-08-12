@@ -5,12 +5,23 @@ import { useFetch } from "../../hooks/useFetch"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import { useCms } from "src/hooks/useCms"
 import { sendContact } from "src/api/clients/ApiHandler/routes/sendContact"
+import { useError } from "src/hooks/useError"
 
 export const useContactState = () => {
   // const [state, setState] = useState({ ...ContactInitialState })
   const [value, setValue] = useState("")
   const [scheme, setScheme] = useContext(SchemeContext)
   const { state: stateCMS, pull } = useCms()
+  const { raiseError } = useError();
+  
+  useEffect(() => {
+    if (stateCMS.error) {
+      raiseError({
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data'
+      })
+    }
+  }, [stateCMS])
 
   const { state: POSTstate, pull: handleSubmit } = useFetch<
     ContactRequestPayload,

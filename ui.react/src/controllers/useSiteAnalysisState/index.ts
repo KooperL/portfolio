@@ -6,6 +6,7 @@ import React from "react"
 import { siteAnalysisRequest, siteAnalysisResponse } from "../../containers/siteAnalysisPage/types"
 import { useCms } from "src/hooks/useCms"
 import { fetchSiteAnalysis } from "src/api/clients/ApiHandler/routes/fetchSiteAnalysis"
+import { useError } from "src/hooks/useError"
 
 declare module "react" {
   interface SVGElement extends React.ReactElement<SVGElement> {}
@@ -23,6 +24,16 @@ export const useSiteAnalysisState = () => {
   const { state: stateCMS, pull: pullCMS } = useCms()
   const [loaded, setLoaded] = useState(false)
   const ref = useRef<any>(null)
+  const { raiseError } = useError();
+  
+  useEffect(() => {
+    if (stateCMS.error) {
+      raiseError({
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data'
+      })
+    }
+  }, [stateCMS])
 
   useEffect(() => {
     document.title = `Site analysis | ${scheme.title}`

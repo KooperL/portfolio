@@ -7,6 +7,7 @@ import dna from "./dna.txt"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import { fetchCmsGeneric } from "src/api/clients/CmsHandler/routes/generic"
 import { useCms } from "src/hooks/useCms"
+import { useError } from "src/hooks/useError"
 
 function newSeed(arrs: number, length: number, width: number) {
   let arr = new Array(arrs)
@@ -21,7 +22,6 @@ function newSeed(arrs: number, length: number, width: number) {
       }
     }
   }
-  // arr = arr.map((subArr) => subArr.map(() => Math.ceil(Math.random()*10)))
   return arr
 }
 
@@ -29,9 +29,17 @@ export const useAboutState = () => {
   // const [seed, setSeed] = useState<Array<Array<Array<number>>>>([]);
   // const [text, setText] = useState<Array<Array<number>>>([[]]);
   const [scheme, setScheme] = useContext(SchemeContext)
-  // let state: State<AboutPayload>;
-
   const { state: stateCMS, pull } = useCms()
+  const { raiseError } = useError();
+  
+  useEffect(() => {
+    if (stateCMS.error) {
+      raiseError({
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data'
+      })
+    }
+  }, [stateCMS])
 
   useEffect(() => {
     document.title = `About | ${scheme.title}`
@@ -43,6 +51,7 @@ export const useAboutState = () => {
         // setText(textRaw.split('\n').map(item => item.split('').map(item => +item)));
       })
   }, [])
+
 
   // useEffect(() => {
   //   setSeed(newSeed(3, text.length, text[0].length))

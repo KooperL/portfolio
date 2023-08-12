@@ -8,7 +8,7 @@ import Spinner from "../../components/Spinner"
 function TypeLookup(props: State<CMSPageResponse>): JSX.Element {
   if (props.loading) return <Spinner />
   if (props.error && props.errorMessage)
-    return <ErrorPage error={props.errorMessage} />
+    return <ErrorPage errorMessage={props.errorMessage} errorType='NETWORK' />
   if (props.details) {
     return (
       <div className="type-lookup">

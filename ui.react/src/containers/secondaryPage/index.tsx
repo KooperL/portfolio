@@ -35,9 +35,6 @@ interface Props {
 }
 
 function SecondaryPage(props: Props): JSX.Element {
-  if (props.stateCMS.error && props.stateCMS.errorMessage) {
-    return <ErrorPage error={props.stateCMS.errorMessage} />
-  }
   function SearchBar(showingDesc: Boolean) {
     return (
       <div className="search-container">
@@ -80,7 +77,7 @@ function SecondaryPage(props: Props): JSX.Element {
 
   if (props.statePOST.loading) return <Spinner />
   if (props.statePOST.error && props.statePOST.errorMessage)
-    return <ErrorPage error={props.statePOST.errorMessage} />
+    return <ErrorPage errorMessage={props.statePOST.errorMessage} errorType='NETWORK' />
   if (props.statePOST.details && props.statePOST.details?.data) {
     const data = props.statePOST.details.data
     return (

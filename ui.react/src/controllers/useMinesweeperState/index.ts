@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { useCms } from "src/hooks/useCms"
+import { useError } from "src/hooks/useError"
 import { useFetch } from "src/hooks/useFetch"
 import { SchemeContext } from "../../containers/context/colourScheme"
 
@@ -177,6 +178,16 @@ export const useMinesweeperState = () => {
   const [gameState, setGameState] = useState(0)
   const [scheme, setScheme] = useContext(SchemeContext)
   const { state: stateCMS, pull } = useCms()
+  const { raiseError } = useError();
+  
+  useEffect(() => {
+    if (stateCMS.error) {
+      raiseError({
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data'
+      })
+    }
+  }, [stateCMS])
 
   useEffect(() => {
     document.title = `Minesweeper | ${scheme.title}`

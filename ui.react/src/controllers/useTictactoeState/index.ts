@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { useCms } from "src/hooks/useCms"
+import { useError } from "src/hooks/useError"
 import { useFetch } from "src/hooks/useFetch"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useEventListener } from "../../hooks/useEventListener"
@@ -156,6 +157,16 @@ export const useTictactoeState = () => {
   const { state: stateCMS, pull } = useCms()
   const p1 = pPlayerFirst ? x : o
   const p2 = pPlayerFirst ? o : x
+  const { raiseError } = useError();
+  
+  useEffect(() => {
+    if (stateCMS.error) {
+      raiseError({
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data'
+      })
+    }
+  }, [stateCMS])
 
   const newGame = () => {
     let board = new Array(9).fill(undefined)

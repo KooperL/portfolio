@@ -25,9 +25,6 @@ interface Props {
 }
 
 function HomePage(props: Props): JSX.Element {
-  if (props.stateCMS.error && props.stateCMS.errorMessage)
-    return <ErrorPage error={props.stateCMS.errorMessage} />
-  
   return (
     <IslandLeft>
       <div className="homePage">

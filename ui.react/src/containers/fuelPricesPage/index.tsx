@@ -21,11 +21,8 @@ interface Props {
 function FuelPricesPage(props: Props): JSX.Element {
   if (props.state.loading) return <Spinner />
   if (props.state.error && props.state.errorMessage)
-    return <ErrorPage error={props.state.errorMessage} />
+    return <ErrorPage errorMessage={props.state.errorMessage} errorType="NETWORK" />
 
-  if (props.stateCMS.error && props.stateCMS.errorMessage)
-    return <ErrorPage error={props.stateCMS.errorMessage} />
-  
   if (props.state.details && props.state?.details.data) {
     const data = props.state.details.data
     const width = Math.max(window.outerWidth, 1500)

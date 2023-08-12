@@ -26,15 +26,17 @@ import Redirect from "../../components/Redirect"
 import * as baseHandler from "src/api/clients/ApiHandler/types"
 import { forumPath, routes } from "./types"
 import { projectPath } from "src/api/shared/types"
+import { ErrorProvider } from "src/state/errorHandler/context"
+import ErrorPage from "src/containers/ErrorPage"
+import WithErrorHandling from "src/controllers/withErrorHandling"
 // import { Render } from '../renderer/renderer v3/cube/Render';
 // import { Render } from '../renderer/grid/Render';
 
 // TODO Helmet
 // TODO Feature toggling
 
-function App() {
-  return (
-    <SchemeSettings>
+function BaseLayout() {
+  return ( 
       <Router>
         <AccessTokenProvider>
           <Navbar isVertical={false} />
@@ -134,10 +136,21 @@ function App() {
                 element={<ForumUserPage />}
               />
             </Route>
+            <Route path="*" element={<ErrorPage errorMessage="Page not found" errorType="CLIENT" decorator="404"/>} />
           </Routes>
         </AccessTokenProvider>
-      </Router>
-    </SchemeSettings>
+      </Router>)
+}
+
+function App() {
+  return (
+    <ErrorProvider>
+      <SchemeSettings>
+        <WithErrorHandling>
+          <BaseLayout />
+        </WithErrorHandling>
+      </SchemeSettings>
+    </ErrorProvider>
   )
 }
 export default App
