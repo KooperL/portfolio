@@ -41,9 +41,6 @@ interface Props {
 }
 
 function Minesweeper(props: Props) {
-  if (props.stateCMS.error && props.stateCMS.errorMessage) {
-    return <ErrorPage error={props.stateCMS.errorMessage} />
-  }
   return (
     <IslandCenter>
       <div className="minesweeperPage">

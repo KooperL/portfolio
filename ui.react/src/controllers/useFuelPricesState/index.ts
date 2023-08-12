@@ -6,11 +6,22 @@ import { useFetch } from "src/hooks/useFetch"
 import { FuelPricesRequestPayload, FuelPricesResponsePayload } from "@containers/fuelPricesPage/types"
 import { fetchFuelPrices } from "src/api/clients/ApiHandler/routes/fetchFuelPrices"
 import { useCms } from "src/hooks/useCms"
+import { useError } from "src/hooks/useError"
 
 function useFuelPricesState() {
   const [scheme, setScheme] = useContext(SchemeContext)
   const { state, pull } = useFetch<FuelPricesRequestPayload, FuelPricesResponsePayload>()
   const { state: stateCMS, pull: pullCMS } = useCms()
+  const { raiseError } = useError();
+  
+  useEffect(() => {
+    if (stateCMS.error) {
+      raiseError({
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data'
+      })
+    }
+  }, [stateCMS])
 
   useEffect(() => {
     pull({

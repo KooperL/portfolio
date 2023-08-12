@@ -30,10 +30,6 @@ interface Props {
 }
 
 function JsSim(props: Props) {
-  if (props.stateCMS.error && props.stateCMS.errorMessage) {
-    return <ErrorPage error={props.stateCMS.errorMessage} />
-  }
-
   return (
     <IslandCenter>
       <div className="jsSimPage">

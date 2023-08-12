@@ -4,6 +4,7 @@ import { useFetch } from "src/hooks/useFetch"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useCms } from "src/hooks/useCms"
 import { sendRandomBio } from "src/api/clients/ApiHandler/routes/sendRandomBio"
+import { useError } from "src/hooks/useError"
 
 export const useRandomBioState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
@@ -12,6 +13,17 @@ export const useRandomBioState = () => {
   const [single, setSingle] = useState(true)
   const { state: stateCMS, pull } = useCms()
   const { state: statePOST, pull: handleSubmit } = useFetch<RandombioRequest, string>()
+  const { raiseError } = useError();
+  
+  useEffect(() => {
+    if (stateCMS.error) {
+      raiseError({
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data'
+      })
+    }
+  }, [stateCMS])
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     handleSubmit({
       ApiImpl: sendRandomBio,

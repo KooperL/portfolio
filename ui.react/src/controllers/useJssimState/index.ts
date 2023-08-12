@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { useCms } from "src/hooks/useCms"
+import { useError } from "src/hooks/useError"
 import { useFetch } from "src/hooks/useFetch"
 import { SchemeContext } from "../../containers/context/colourScheme"
 import { useEventListener } from "../../hooks/useEventListener"
@@ -39,6 +40,16 @@ export const useJssimState = () => {
   const [timerIsActive, setTimerIsActive] = useState(false)
   const [timerIsPaused, setTimerIsPaused] = useState(true)
   const { state: stateCMS, pull } = useCms()
+  const { raiseError } = useError();
+  
+  useEffect(() => {
+    if (stateCMS.error) {
+      raiseError({
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data'
+      })
+    }
+  }, [stateCMS])
 
   const scoreColourLookup: { [key: string]: string } = {
     "0": scheme.body.text, // Unpicked

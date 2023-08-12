@@ -5,12 +5,23 @@ import { CMSPageResponse } from "../../components/TypeLookup/types"
 import { sendMrna } from "src/api/clients/ApiHandler/routes/sendMrna"
 import { MrnaRequest, MrnaResponse } from "src/containers/mrnaPage/types"
 import { useCms } from "src/hooks/useCms"
+import { useError } from "src/hooks/useError"
 
 export const useMrnaState = () => {
   const [value, setValue] = useState("")
   const [scheme, setScheme] = useContext(SchemeContext)
   const { state: statePOST, pull: handleSubmit } = useFetch<MrnaRequest, MrnaResponse>()
   const { state: stateCMS, pull } = useCms()
+  const { raiseError } = useError();
+  
+  useEffect(() => {
+    if (stateCMS.error) {
+      raiseError({
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data'
+      })
+    }
+  }, [stateCMS])
 
   useEffect(() => {
     document.title = `DNA decoder | ${scheme.title}`

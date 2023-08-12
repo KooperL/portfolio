@@ -39,7 +39,7 @@ function ForumHomePage(props: Props): JSX.Element {
     )
   }
   if (props.state.error && props.state.errorMessage)
-    return <ErrorPage error={props.state.errorMessage} />
+    return <ErrorPage errorMessage={props.state.errorMessage} errorType='NETWORK' />
   if (props.state.details && props.state.details.data) {
     const data = props.state.details.data
     return (
