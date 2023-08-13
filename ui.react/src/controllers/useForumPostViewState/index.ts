@@ -1,41 +1,44 @@
 import { useContext, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import { useAccessToken } from "../../state/authContext/context"
 import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import Redirect from "../../components/Redirect"
 import { useFetch } from "src/hooks/useFetch"
 import { ForumPostViewRequestPayload, ForumPostViewResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumPostView/types"
 import { fetchForumPostView } from "src/api/clients/forumHandler/routes/fetchForumPostView"
+import { useAuth } from "src/hooks/useAuth"
+import { forumPath, routes } from "src/containers/App/types"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 
 export const useForumPostViewState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
-  // const [token, setToken] = useContext(AccessToken);
-  const [token, setToken] = useAccessToken()
   const navigate = useNavigate()
   const { state: GETstate, pull: post } = useFetch<
     ForumPostViewRequestPayload,
-    ForumPostViewResponsePayload
+    genericApiDataResponse<ForumPostViewResponsePayload>
   >()
+  const { authentication } = useAuth() 
+
+  useEffect(() => {
+    if (!authentication.accessToken) {
+      // HandleUnauthenticated()
+      navigate(`/${forumPath}/${routes.forumRegister}`)
+    }
+    post({
+      ApiImpl: fetchForumPostView,
+      auth: authentication.accessToken as string,
+      varRoute,
+      payload: {
+        session_id: sessionStorage.getItem("session_id") ?? "error",
+      },
+    })
+  }, [authentication])
 
   const varRoute = window.location.href
     .split("/")
     .slice(-1)[0]
     .replace(/[^0-9]/g, "")
 
-  useEffect(() => {
-    if (!token) {
-      return
-    }
-    post({
-      ApiImpl: fetchForumPostView,
-      auth: token ?? "",
-      varRoute,
-      payload: {
-        session_id: sessionStorage.getItem("session_id") ?? "error",
-      },
-    })
-  }, [token])
 
   useEffect(() => {
     document.title = `${
@@ -46,7 +49,7 @@ export const useForumPostViewState = () => {
 
   return {
     scheme,
-    token,
+    authentication,
     GETstate,
   }
 }

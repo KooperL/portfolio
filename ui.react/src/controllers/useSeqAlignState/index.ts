@@ -8,6 +8,7 @@ import { useFetch } from "src/hooks/useFetch"
 import { useCms } from "src/hooks/useCms"
 import { sendSeqAlign } from "src/api/clients/ApiHandler/routes/sendSeqAlign"
 import { useError } from "src/hooks/useError"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 export const useSeqAlignState = () => {
   const [sampletxt, setSampletxt] = useState("")
@@ -18,7 +19,7 @@ export const useSeqAlignState = () => {
   const [extgaps, setExtgaps] = useState(-0.1)
   const [scheme, setScheme] = useContext(SchemeContext)
   const { state: stateCMS, pull } = useCms()
-  const { state: stateSubmit, pull: handleSubmit } = useFetch<SeqAlignRequest, SeqAlignResponse>()
+  const { state: stateSubmit, pull: handleSubmit } = useFetch<SeqAlignRequest, genericApiDataResponse<SeqAlignResponse>>()
   const { raiseError } = useError();
   
   useEffect(() => {

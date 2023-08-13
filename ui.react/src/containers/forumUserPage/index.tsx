@@ -12,7 +12,6 @@ import "./style.css"
 import { ReactP5Wrapper } from "react-p5-wrapper"
 import sketchWrapper from "../../components/p5/box"
 import { Button } from "../../components/Button"
-import { useAccessToken } from "../../state/authContext/context"
 import { Link, Navigate, useLocation } from "react-router-dom"
 import Redirect from "../../components/Redirect"
 import ForumItem from "../../components/ForumItem"
@@ -23,23 +22,17 @@ import { IslandCenter } from "../../templates/IslandCenter"
 import { ForumUserResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumUser/types"
 import { forumPath, genericApiDataResponse } from "src/api/shared/types"
 import { routes } from "src/api/clients/forumHandler/types"
+import { AuthContextType } from "src/state/authContext/types"
 
 interface Props {
   scheme: PageInformation
-  token: string | null
+  authentication: AuthContextType['authentication']
   state: State<genericApiDataResponse<ForumUserResponsePayload[]>>
   user: string
 }
 
 function ForumHomePage(props: Props): JSX.Element {
   if (props.state.loading) return <Spinner />
-  if (props.token === "") {
-    return (
-      <Redirect
-        destination={`/${forumPath}/${routes.forumRegister}`}
-      />
-    )
-  }
   if (props.state.error && props.state.errorMessage && !props.state.details?.data)
     return <ErrorPage errorMessage={props.state.errorMessage} errorType='NETWORK' />
   if (props.state.details) {

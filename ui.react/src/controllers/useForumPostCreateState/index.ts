@@ -4,27 +4,29 @@ import { useNavigate } from "react-router-dom"
 import { sendForumPostCreate } from "src/api/clients/forumHandler/routes/sendPostCreate"
 import { ForumPostCreateRequestPayload, ForumPostCreateResponsePayload } from "src/api/clients/forumHandler/routes/sendPostCreate/types"
 import { useFetch } from "src/hooks/useFetch"
-import { useAccessToken } from "../../state/authContext/context"
 import { SchemeContext } from "../../state/colorScheme/colourScheme"
+import { useAuth } from "src/hooks/useAuth"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 
 export const useForumPostCreateState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
-  // const [token, setToken] = useContext(AccessToken);
-  const [token, setToken] = useAccessToken()
   const navigate = useNavigate()
   const [body, setBody] = useState("")
   const [title, setTitle] = useState("")
   const [hasPosted, setHasPosted] = useState(false)
-
   const { state, pull: post } = useFetch<
     ForumPostCreateRequestPayload,
-    ForumPostCreateResponsePayload 
-  >(
-  //  () => {
-  //  setHasPosted(true)
-  //}
-  )
+    genericApiDataResponse<ForumPostCreateResponsePayload> 
+  >()
+  const { authentication } = useAuth() 
+
+  useEffect(() => {
+    if (!authentication.accessToken) {
+      // HandleUnauthenticated()
+      navigate(`/${forumPath}/${routes.forumRegister}`)
+    }
+  }, [authentication])
 
   const handleSubmit = (
     e: React.FormEvent<HTMLFormElement>,
@@ -33,8 +35,9 @@ export const useForumPostCreateState = () => {
     e.preventDefault()
     post({
       ApiImpl: sendForumPostCreate,
-      auth: token ?? "",
+      auth: authentication.accessToken as string,
       payload: data,
+      callback: () => setHasPosted(true)
     })
   }
 
@@ -50,7 +53,7 @@ export const useForumPostCreateState = () => {
 
   return {
     scheme,
-    token,
+    authentication,
     state,
     body,
     setBody,

@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom"
 import { ReactP5Wrapper } from "react-p5-wrapper"
 import sketchWrapper from "../../components/p5/box"
 import { Button } from "../../components/Button"
-import { useAccessToken } from "../../state/authContext/context"
 import Redirect from "../../components/Redirect"
 import daysAgo from "../../utils/daysAgo"
 import { IslandCenter } from "../../templates/IslandCenter"
@@ -21,23 +20,17 @@ import { useForumPostViewState } from "../../controllers/useForumPostViewState"
 import { ForumPostViewResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumPostView/types"
 import { forumPath, genericApiDataResponse } from "src/api/shared/types"
 import { routes } from "src/api/clients/forumHandler/types"
+import { AuthContextType } from "src/state/authContext/types"
 
 interface Props {
   scheme: PageInformation
-  token: string | null
+  authentication: AuthContextType['authentication']
   GETstate: State<genericApiDataResponse<ForumPostViewResponsePayload>>
 }
 
 function ForumPostViewPage(props: Props): JSX.Element {
   if (props.GETstate.loading) {
     return <Spinner />
-  }
-  if (!props.token?.length) {
-    return (
-      <Redirect
-        destination={`/${forumPath}/${routes.forumRegister}`}
-      />
-    )
   }
   if (props.GETstate.error) {
     return <div>{JSON.stringify(props.GETstate.errorMessage)}</div>

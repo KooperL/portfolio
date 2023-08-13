@@ -1,12 +1,7 @@
 import { ErrorPageProps } from '@containers/ErrorPage/types';
 import React, { createContext, useContext, useState } from 'react';
-import { Props } from './types'
+import { ErrorContextType, Props } from './types'
 
-interface ErrorContextType {
-  hasError: boolean;
-  error: null | ErrorPageProps;
-  raiseError: (err: ErrorPageProps) => void;
-}
 
 const ErrorContext = createContext<ErrorContextType | undefined>(undefined);
 

@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom"
 import { ReactP5Wrapper } from "react-p5-wrapper"
 import sketchWrapper from "../../components/p5/box"
 import { Button } from "../../components/Button"
-import { useAccessToken } from "../../state/authContext/context"
 import Redirect from "../../components/Redirect"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Input } from "../../components/Input"
@@ -22,10 +21,11 @@ import { useForumPostCreateState } from "../../controllers/useForumPostCreateSta
 import { ForumPostCreateRequestPayload, ForumPostCreateResponsePayload } from "src/api/clients/forumHandler/routes/sendPostCreate/types"
 import { forumPath, genericApiDataResponse } from "src/api/shared/types"
 import { routes } from "src/api/clients/forumHandler/types"
+import { AuthContextType } from "src/state/authContext/types"
 
 interface Props {
   scheme: PageInformation
-  token: string | null
+  authentication: AuthContextType['authentication']
   state: State<genericApiDataResponse<ForumPostCreateResponsePayload>>
   body: string
   setBody: React.Dispatch<React.SetStateAction<string>>
@@ -38,13 +38,6 @@ interface Props {
 }
 
 function ForumPostCreatePage(props: Props): JSX.Element {
-  if (props.token === "") {
-    return (
-      <Redirect
-        destination={`/${forumPath}/${routes.forumRegister}`}
-      />
-    )
-  }
   return (
     <IslandCenter>
       <div className="forumCreatePage">
