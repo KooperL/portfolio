@@ -1,36 +1,20 @@
 import Spinner from "../../components/Spinner"
 import Navbar from "../../components/Navbar"
-import { PageInformation, SchemeContext } from "../../state/colorScheme/colourScheme"
 import "./style.css"
-
-import { ReactP5Wrapper } from "react-p5-wrapper"
-import sketchWrapper from "../../components/p5/box"
 import { Button } from "../../components/Button"
-import ForumItem, * as forumItem from "../../components/ForumItem"
-import Redirect from "../../components/Redirect"
 import { IslandLeft } from "../../templates/IslandLeft"
 import { Input } from "../../components/Input"
 import ErrorPage from "../ErrorPage"
-import { State } from "../../types/State"
 import { useForumHomeState } from "../../controllers/useForumHomeState"
-import { ForumHomeResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumHome/types"
-import { forumPath, genericApiDataResponse } from "src/api/shared/types"
-import { ForumItemType, routes } from "src/api/clients/forumHandler/types"
-import { sendMonitor } from "src/api/clients/ApiHandler/routes/sendMonitor"
+import { forumPath } from "src/api/shared/types"
+import { ForumItemType } from "src/api/clients/forumHandler/types"
 import { Link } from "react-router-dom"
 import { useMonitor } from "src/hooks/useMonitor"
-import { AuthContextType } from "src/state/authContext/types"
+import ForumItem from "src/components/ForumItem"
 
-interface Props {
-  scheme: PageInformation
-  authentication: AuthContextType['authentication']
-  handleSubmit: () => void
-  state: State<genericApiDataResponse<ForumHomeResponsePayload>>
-  searchState: string
-  setSearchState: React.Dispatch<React.SetStateAction<string>>
-}
+type t = ReturnType<typeof useForumHomeState>
 
-function ForumHomePage(props: Props): JSX.Element {
+function ForumHomePage(props: t): JSX.Element {
   if (props.state.loading) return <Spinner />
   if (props.state.error && props.state.errorMessage)
     return <ErrorPage errorMessage={props.state.errorMessage} errorType='NETWORK' />

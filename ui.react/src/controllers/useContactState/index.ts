@@ -7,6 +7,7 @@ import { useCms } from "src/hooks/useCms"
 import { sendContact } from "src/api/clients/ApiHandler/routes/sendContact"
 import { useError } from "src/hooks/useError"
 import { genericApiDataResponse } from "src/api/shared/types"
+import { useAuth } from "src/hooks/useAuth"
 
 export const useContactState = () => {
   // const [state, setState] = useState({ ...ContactInitialState })
@@ -14,6 +15,7 @@ export const useContactState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
   const { state: stateCMS, pull } = useCms()
   const { raiseError } = useError();
+  const { trackingInformation } = useAuth()
   
   useEffect(() => {
     if (stateCMS.error) {
@@ -47,6 +49,7 @@ export const useContactState = () => {
 
   return {
     scheme,
+    trackingInformation,
     onSubmit,
     value,
     setValue,

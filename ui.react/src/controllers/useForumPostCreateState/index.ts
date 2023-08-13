@@ -19,7 +19,7 @@ export const useForumPostCreateState = () => {
     ForumPostCreateRequestPayload,
     genericApiDataResponse<ForumPostCreateResponsePayload> 
   >()
-  const { authentication } = useAuth() 
+  const { authentication, trackingInformation } = useAuth() 
 
   useEffect(() => {
     if (!authentication.accessToken) {
@@ -54,6 +54,7 @@ export const useForumPostCreateState = () => {
   return {
     scheme,
     authentication,
+    trackingInformation,
     state,
     body,
     setBody,

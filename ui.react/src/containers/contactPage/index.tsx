@@ -1,30 +1,13 @@
-import { ContactRequestPayload, ContactResponsePayload } from "./types"
 import "./style.css"
-
 import { Button } from "../../components/Button"
 import { IslandCenter } from "../../templates/IslandCenter"
 import TypeLookup from "../../components/TypeLookup"
 import { Input } from "../../components/Input"
-import { State } from "../../types/State"
 import { useContactState } from "../../controllers/useContactState"
-import { CMSPageResponse } from "../../components/TypeLookup/types"
-import { PageInformation } from "src/state/colorScheme/colourScheme"
-import { genericApiDataResponse } from "src/api/shared/types"
-import ErrorPage from "src/containers/ErrorPage"
 
-interface Props {
-  scheme: PageInformation
-  onSubmit: (
-    event: React.FormEvent<HTMLFormElement>,
-    payload: ContactRequestPayload,
-  ) => void
-  value: string
-  setValue: React.Dispatch<React.SetStateAction<string>>
-  stateCMS: State<CMSPageResponse>
-  POSTstate: State<genericApiDataResponse<ContactResponsePayload>>
-}
+type t = ReturnType<typeof useContactState>
 
-function ContactPage(props: Props): JSX.Element {
+function ContactPage(props: t): JSX.Element {
   function SearchBar() {
     return (
       <div className="search-container">
@@ -32,7 +15,7 @@ function ContactPage(props: Props): JSX.Element {
           <form
             onSubmit={e =>
               props.onSubmit(e, {
-                session_id: sessionStorage.getItem("session_id") ?? "error",
+                session_id: props.trackingInformation.getSessionKey(),
                 message: props.value ?? "",
               })
             }

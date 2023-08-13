@@ -26,8 +26,8 @@ export function AuthProvider({ children }: any) {
       setAccessToken
     },
     trackingInformation: {
-      sessionKey: getSessionKey(),
-      persistentKey: getPersistentKey()
+      getSessionKey,
+      getPersistentKey
     }
   }
 

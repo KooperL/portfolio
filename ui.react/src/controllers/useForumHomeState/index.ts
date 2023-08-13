@@ -8,7 +8,6 @@ import { routes } from "src/api/clients/forumHandler/types"
 import { forumPath, genericApiDataResponse } from "src/api/shared/types"
 import { ForumHomeRequestPayload, ForumHomeResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumHome/types"
 import { useAuth } from "src/hooks/useAuth"
-import { getSessionKey } from "src/state/authContext/helper"
 
 export const useForumHomeState = () => {
   const [searchState, setSearchState] = useState("")
@@ -32,7 +31,7 @@ export const useForumHomeState = () => {
       ApiImpl: fetchForumHome,
       auth: authentication.accessToken as string,
       payload: {
-        session_id: trackingInformation.sessionKey,
+        session_id: trackingInformation.getSessionKey(),
         category: queryString.get("category") ?? "",
         search: queryString.get("search") ?? "",
       },
@@ -50,6 +49,7 @@ export const useForumHomeState = () => {
   return {
     scheme,
     authentication,
+    trackingInformation,
     handleSubmit,
     state,
     searchState,

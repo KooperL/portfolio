@@ -140,6 +140,7 @@ export const useForumLoginState = () => {
 
   return {
     authentication,
+    trackingInformation,
     scheme,
     handleSubmitRegister,
     handleSubmitLogin,

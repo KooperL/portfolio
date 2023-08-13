@@ -1,50 +1,14 @@
-import React, {
-  HtmlHTMLAttributes,
-  useContext,
-  useEffect,
-  useState,
-} from "react"
-import Spinner from "../../components/Spinner"
-import Navbar from "../../components/Navbar"
-import { PageInformation, SchemeContext } from "../../state/colorScheme/colourScheme"
 import "./style.css"
-import { useNavigate } from "react-router-dom"
-import { ReactP5Wrapper } from "react-p5-wrapper"
-import sketchWrapper from "../../components/p5/box"
 import { Button } from "../../components/Button"
-import Redirect from "../../components/Redirect"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Input } from "../../components/Input"
 import Modal from "../../components/Modal"
 import { termsAndConditions } from "../../assets/TermsAndConditions"
 import { useForumLoginState } from "../../controllers/useForumLoginState"
-import { ForumRegisterRequstPayload } from "src/api/clients/forumHandler/routes/sendForumRegister/types"
-import { ForumLoginRequestPayload } from "src/api/clients/forumHandler/routes/sendForumLogin/types"
-import { forumPath } from "src/api/shared/types"
-import { AuthContextType } from "src/state/authContext/types"
 
-interface Props {
-  authentication: AuthContextType['authentication']
-  scheme: PageInformation
-  handleSubmitRegister: (
-    e: React.FormEvent<HTMLFormElement>,
-    data: ForumRegisterRequstPayload,
-  ) => void
-  handleSubmitLogin: (
-    e: React.FormEvent<HTMLFormElement>,
-    data: ForumLoginRequestPayload,
-  ) => void
-  usernameRegister: string
-  setUsernameRegister: React.Dispatch<React.SetStateAction<string>>
-  passwordRegister: string
-  setPasswordRegister: React.Dispatch<React.SetStateAction<string>>
-  usernameLogin: string
-  setUsernameLogin: React.Dispatch<React.SetStateAction<string>>
-  passwordLogin: string
-  setPasswordLogin: React.Dispatch<React.SetStateAction<string>>
-}
+type t = ReturnType<typeof useForumLoginState>
 
-function ForumLoginPage(props: Props): JSX.Element {
+function ForumLoginPage(props: t): JSX.Element {
   const tnc = termsAndConditions()
   return (
     <IslandCenter>
@@ -60,7 +24,7 @@ function ForumLoginPage(props: Props): JSX.Element {
             <form
               onSubmit={e =>
                 props.handleSubmitRegister(e, {
-                  session_id: sessionStorage.getItem("session_id") ?? "error",
+                  session_id: props.trackingInformation.getSessionKey(),
                 })
               }
             >
@@ -126,7 +90,7 @@ function ForumLoginPage(props: Props): JSX.Element {
             <form
               onSubmit={e =>
                 props.handleSubmitLogin(e, {
-                  session_id: sessionStorage.getItem("session_id") ?? "error",
+                  session_id: props.trackingInformation.getSessionKey(),
                 })
               }
             >

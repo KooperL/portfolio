@@ -1,43 +1,13 @@
-import React, {
-  HtmlHTMLAttributes,
-  useContext,
-  useEffect,
-  useState,
-} from "react"
-import Spinner from "../../components/Spinner"
-import Navbar from "../../components/Navbar"
-import { PageInformation, SchemeContext } from "../../state/colorScheme/colourScheme"
 import "./style.css"
-import { useNavigate } from "react-router-dom"
-import { ReactP5Wrapper } from "react-p5-wrapper"
-import sketchWrapper from "../../components/p5/box"
 import { Button } from "../../components/Button"
-import Redirect from "../../components/Redirect"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Input } from "../../components/Input"
 import { Textarea } from "../../components/Textarea"
-import { State } from "../../types/State"
 import { useForumPostCreateState } from "../../controllers/useForumPostCreateState"
-import { ForumPostCreateRequestPayload, ForumPostCreateResponsePayload } from "src/api/clients/forumHandler/routes/sendPostCreate/types"
-import { forumPath, genericApiDataResponse } from "src/api/shared/types"
-import { routes } from "src/api/clients/forumHandler/types"
-import { AuthContextType } from "src/state/authContext/types"
 
-interface Props {
-  scheme: PageInformation
-  authentication: AuthContextType['authentication']
-  state: State<genericApiDataResponse<ForumPostCreateResponsePayload>>
-  body: string
-  setBody: React.Dispatch<React.SetStateAction<string>>
-  title: string
-  setTitle: React.Dispatch<React.SetStateAction<string>>
-  handleSubmit: (
-    e: React.FormEvent<HTMLFormElement>,
-    data: ForumPostCreateRequestPayload,
-  ) => void
-}
+type t = ReturnType<typeof useForumPostCreateState>
 
-function ForumPostCreatePage(props: Props): JSX.Element {
+function ForumPostCreatePage(props: t): JSX.Element {
   return (
     <IslandCenter>
       <div className="forumCreatePage">
@@ -52,7 +22,7 @@ function ForumPostCreatePage(props: Props): JSX.Element {
             <form
               onSubmit={e =>
                 props.handleSubmit(e, {
-                  session_id: sessionStorage.getItem("session_id") ?? "error",
+                  session_id: props.trackingInformation.getSessionKey(),
                   data: {
                     forum_title: props.title,
                     forum_body: props.body,

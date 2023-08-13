@@ -1,37 +1,15 @@
-import React, {
-  HtmlHTMLAttributes,
-  useContext,
-  useEffect,
-  useState,
-} from "react"
 import Spinner from "../../components/Spinner"
 import Navbar from "../../components/Navbar"
-import { PageInformation, SchemeContext } from "../../state/colorScheme/colourScheme"
 import "./style.css"
-
-import { ReactP5Wrapper } from "react-p5-wrapper"
-import sketchWrapper from "../../components/p5/box"
-import { Button } from "../../components/Button"
-import { Link, Navigate, useLocation } from "react-router-dom"
-import Redirect from "../../components/Redirect"
 import ForumItem from "../../components/ForumItem"
 import ErrorPage from "../ErrorPage"
-import { State } from "../../types/State"
 import { useForumUserState } from "../../controllers/useForumUserState"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { ForumUserResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumUser/types"
-import { forumPath, genericApiDataResponse } from "src/api/shared/types"
-import { routes } from "src/api/clients/forumHandler/types"
-import { AuthContextType } from "src/state/authContext/types"
 
-interface Props {
-  scheme: PageInformation
-  authentication: AuthContextType['authentication']
-  state: State<genericApiDataResponse<ForumUserResponsePayload[]>>
-  user: string
-}
+type t = ReturnType<typeof useForumUserState>
 
-function ForumHomePage(props: Props): JSX.Element {
+function ForumHomePage(props: t): JSX.Element {
   if (props.state.loading) return <Spinner />
   if (props.state.error && props.state.errorMessage && !props.state.details?.data)
     return <ErrorPage errorMessage={props.state.errorMessage} errorType='NETWORK' />
