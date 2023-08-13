@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom"
 import { ReactP5Wrapper } from "react-p5-wrapper"
 import sketchWrapper from "../../components/p5/box"
 import { Button } from "../../components/Button"
-import { useAccessToken } from "../../state/authContext/context"
 import Redirect from "../../components/Redirect"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Input } from "../../components/Input"
@@ -22,9 +21,10 @@ import { useForumLoginState } from "../../controllers/useForumLoginState"
 import { ForumRegisterRequstPayload } from "src/api/clients/forumHandler/routes/sendForumRegister/types"
 import { ForumLoginRequestPayload } from "src/api/clients/forumHandler/routes/sendForumLogin/types"
 import { forumPath } from "src/api/shared/types"
+import { AuthContextType } from "src/state/authContext/types"
 
 interface Props {
-  token: string | null
+  authentication: AuthContextType['authentication']
   scheme: PageInformation
   handleSubmitRegister: (
     e: React.FormEvent<HTMLFormElement>,
@@ -45,12 +45,6 @@ interface Props {
 }
 
 function ForumLoginPage(props: Props): JSX.Element {
-
-  if (props.token !== "" && props.token !== null) {
-    return <Redirect destination={`/${forumPath}`} />
-  }
-
-  
   const tnc = termsAndConditions()
   return (
     <IslandCenter>

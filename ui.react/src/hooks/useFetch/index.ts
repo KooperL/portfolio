@@ -1,19 +1,19 @@
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios"
 import { useCallback, useEffect, useState } from "react"
-import { genericApiDataResponse, genericApiRequestArgs } from "src/api/shared/types"
+import { genericApiDataResponse, genericApiRequestArgs, genericTemplate } from "src/api/shared/types"
 import { State } from "../../types/State"
 
 interface useFetchOptions<T, U> {
-  ApiImpl: (props: genericApiRequestArgs<T>) => Promise<AxiosResponse<genericApiDataResponse<U>>> 
+  ApiImpl: (props: genericApiRequestArgs<T>) => Promise<AxiosResponse<U>> 
   payload: T
   auth?: string
   varRoute?: string
     callback?: () => void
 }
 
-export const useFetch = <T, U>(
+export const useFetch = <T, U extends genericTemplate>(
 ) => {
-  const [state, setState] = useState<State<genericApiDataResponse<U>>>({
+  const [state, setState] = useState<State<U>>({
     loading: false,
     details: null,
     errorMessage: null,

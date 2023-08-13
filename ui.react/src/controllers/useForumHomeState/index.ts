@@ -1,49 +1,46 @@
 import { useContext, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import { useAccessToken } from "../../state/authContext/context"
 import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import Redirect from "../../components/Redirect"
 import { useFetch } from "src/hooks/useFetch"
 import { fetchForumHome } from "src/api/clients/forumHandler/routes/fetchForumHome"
 import { routes } from "src/api/clients/forumHandler/types"
-import { forumPath } from "src/api/shared/types"
+import { forumPath, genericApiDataResponse } from "src/api/shared/types"
 import { ForumHomeRequestPayload, ForumHomeResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumHome/types"
+import { useAuth } from "src/hooks/useAuth"
+import { getSessionKey } from "src/state/authContext/helper"
 
 export const useForumHomeState = () => {
   const [searchState, setSearchState] = useState("")
   // const [POSTstate, setPOSTState] = useState({...ContactPOSTInitialState});
   const [scheme, setScheme] = useContext(SchemeContext)
-  const [token, setToken] = useAccessToken()
+  const { authentication, trackingInformation } = useAuth()
   const location = useLocation()
   const navigate = useNavigate()
 
   let paramString = window.location.href.split("?")[1]
   let queryString = new URLSearchParams(paramString)
 
-  const { state, pull: post } = useFetch<ForumHomeRequestPayload, ForumHomeResponsePayload>()
+  const { state, pull: post } = useFetch<ForumHomeRequestPayload, genericApiDataResponse<ForumHomeResponsePayload>>()
 
   useEffect(() => {
-    if (!token) {
-      return
+    if (!authentication.accessToken) {
+      // HandleUnauthenticated() 
+      navigate(`/${forumPath}/${routes.forumRegister}`)
     }
     post({
       ApiImpl: fetchForumHome,
-      auth: token ?? "",
+      auth: authentication.accessToken as string,
       payload: {
-        session_id: sessionStorage.getItem("session_id") ?? "",
+        session_id: trackingInformation.sessionKey,
         category: queryString.get("category") ?? "",
         search: queryString.get("search") ?? "",
       },
     })
-  }, [token, location])
+  }, [authentication, location])
 
   const handleSubmit = () => {
     navigate(`${forumPath}?search=${searchState}`)
-    // return (
-    //   <Redirect
-    //     destination={`/${ForumRouteType.ForumHome}?search=${searchState}`}
-    //   />
-    // )
   }
 
   useEffect(() => {
@@ -52,7 +49,7 @@ export const useForumHomeState = () => {
 
   return {
     scheme,
-    token,
+    authentication,
     handleSubmit,
     state,
     searchState,

@@ -6,7 +6,7 @@ import { PropertyIndexRequest, PropertyIndexResponse } from "../../containers/pr
 import { useCms } from "src/hooks/useCms"
 import { fetchFuelPrices } from "src/api/clients/ApiHandler/routes/fetchFuelPrices"
 import { fetchPropertyIndex } from "src/api/clients/ApiHandler/routes/fetchPropertyIndex"
-import { projectPath } from "src/api/shared/types"
+import { genericApiDataResponse, projectPath } from "src/api/shared/types"
 import { useError } from "src/hooks/useError"
 
 function usePropertyState() {
@@ -14,7 +14,7 @@ function usePropertyState() {
   const [scheme, setScheme] = useContext(SchemeContext)
   const navigate = useNavigate()
   const { state: stateCMS, pull: pullCMS } = useCms()
-  const { state, pull } = useFetch<PropertyIndexRequest, PropertyIndexResponse>()
+  const { state, pull } = useFetch<PropertyIndexRequest, genericApiDataResponse<PropertyIndexResponse>>()
   const { raiseError } = useError();
   
   useEffect(() => {

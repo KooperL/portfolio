@@ -8,6 +8,7 @@ import { useFetch } from "src/hooks/useFetch"
 import { useCms } from "src/hooks/useCms"
 import { sendSecondary } from "src/api/clients/ApiHandler/routes/sendSecondary"
 import { useError } from "src/hooks/useError"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 
 export const useSecondaryState = () => {
@@ -18,7 +19,7 @@ export const useSecondaryState = () => {
   const [leniency, setLeniency] = useState(3)
   const [scheme, setScheme] = useContext(SchemeContext)
   const { state: stateCMS, pull } = useCms()
-  const { state: statePOST, pull: handleSubmit } = useFetch<SecondaryRequest, SecondaryResponse>()
+  const { state: statePOST, pull: handleSubmit } = useFetch<SecondaryRequest, genericApiDataResponse<SecondaryResponse>>()
   const { raiseError } = useError();
   
   useEffect(() => {

@@ -1,31 +1,38 @@
+import { forumPath, routes } from "src/containers/App/types"
 import { useContext, useEffect } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { fetchForumUser } from "src/api/clients/forumHandler/routes/fetchForumUser"
 import { ForumUserRequestPayload, ForumUserResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumUser/types"
+import { useAuth } from "src/hooks/useAuth"
 import { useFetch } from "src/hooks/useFetch"
-import { useAccessToken } from "../../state/authContext/context"
 import { SchemeContext } from "../../state/colorScheme/colourScheme"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 export const useForumUserState = () => {
-  // const [POSTstate, setPOSTState] = useState({...ContactPOSTInitialState});
+  const navigate = useNavigate()
   const [scheme, setScheme] = useContext(SchemeContext)
-  const [token, setToken] = useAccessToken()
   const location = useLocation()
   const user = window.location.href
     .toString()
     .slice(window.location.href.lastIndexOf("/") + 1)
+  const { authentication } = useAuth() 
 
-  const { state, pull: post } = useFetch<ForumUserRequestPayload, ForumUserResponsePayload[]>()
+  const { state, pull: post } = useFetch<ForumUserRequestPayload, genericApiDataResponse<ForumUserResponsePayload[]>>()
+  
   useEffect(() => {
+    if (!authentication.accessToken) {
+      // HandleUnauthenticated()
+      navigate(`/${forumPath}/${routes.forumRegister}`)
+    }
     post({
       ApiImpl: fetchForumUser,
-      auth: token ?? "",
+      auth: authentication.accessToken as string,
       varRoute: user,
       payload: {
         session_id: sessionStorage.getItem("session_id") ?? "error",
       },
     })
-  }, [token])
+  }, [authentication])
 
   useEffect(() => {
     document.title = `Forum Home | ${scheme.title}`
@@ -33,7 +40,7 @@ export const useForumUserState = () => {
 
   return {
     scheme,
-    token,
+    authentication,
     state,
     user,
   }

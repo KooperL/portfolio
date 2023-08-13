@@ -7,10 +7,11 @@ import { FuelPricesRequestPayload, FuelPricesResponsePayload } from "@containers
 import { fetchFuelPrices } from "src/api/clients/ApiHandler/routes/fetchFuelPrices"
 import { useCms } from "src/hooks/useCms"
 import { useError } from "src/hooks/useError"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 function useFuelPricesState() {
   const [scheme, setScheme] = useContext(SchemeContext)
-  const { state, pull } = useFetch<FuelPricesRequestPayload, FuelPricesResponsePayload>()
+  const { state, pull } = useFetch<FuelPricesRequestPayload, genericApiDataResponse<FuelPricesResponsePayload>>()
   const { state: stateCMS, pull: pullCMS } = useCms()
   const { raiseError } = useError();
   

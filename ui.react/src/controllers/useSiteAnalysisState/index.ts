@@ -7,6 +7,7 @@ import { siteAnalysisRequest, siteAnalysisResponse } from "../../containers/site
 import { useCms } from "src/hooks/useCms"
 import { fetchSiteAnalysis } from "src/api/clients/ApiHandler/routes/fetchSiteAnalysis"
 import { useError } from "src/hooks/useError"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 declare module "react" {
   interface SVGElement extends React.ReactElement<SVGElement> {}
@@ -19,7 +20,7 @@ declare module "react" {
 
 export const useSiteAnalysisState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
-  const { state, pull } = useFetch<siteAnalysisRequest, siteAnalysisResponse>()
+  const { state, pull } = useFetch<siteAnalysisRequest, genericApiDataResponse<siteAnalysisResponse>>()
 
   const { state: stateCMS, pull: pullCMS } = useCms()
   const [loaded, setLoaded] = useState(false)

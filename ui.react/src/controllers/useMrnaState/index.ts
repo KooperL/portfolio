@@ -6,11 +6,12 @@ import { sendMrna } from "src/api/clients/ApiHandler/routes/sendMrna"
 import { MrnaRequest, MrnaResponse } from "src/containers/mrnaPage/types"
 import { useCms } from "src/hooks/useCms"
 import { useError } from "src/hooks/useError"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 export const useMrnaState = () => {
   const [value, setValue] = useState("")
   const [scheme, setScheme] = useContext(SchemeContext)
-  const { state: statePOST, pull: handleSubmit } = useFetch<MrnaRequest, MrnaResponse>()
+  const { state: statePOST, pull: handleSubmit } = useFetch<MrnaRequest, genericApiDataResponse<MrnaResponse>>()
   const { state: stateCMS, pull } = useCms()
   const { raiseError } = useError();
   

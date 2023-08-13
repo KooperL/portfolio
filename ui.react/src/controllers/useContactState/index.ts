@@ -6,6 +6,7 @@ import { CMSPageResponse } from "../../components/TypeLookup/types"
 import { useCms } from "src/hooks/useCms"
 import { sendContact } from "src/api/clients/ApiHandler/routes/sendContact"
 import { useError } from "src/hooks/useError"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 export const useContactState = () => {
   // const [state, setState] = useState({ ...ContactInitialState })
@@ -25,7 +26,7 @@ export const useContactState = () => {
 
   const { state: POSTstate, pull: handleSubmit } = useFetch<
     ContactRequestPayload,
-    ContactResponsePayload 
+    genericApiDataResponse<ContactResponsePayload> 
   >()
 
   useEffect(() => {

@@ -15,7 +15,7 @@ import { JsSimPage } from "../jsSimPage/loadable"
 import { ContactPage } from "../contactPage/loadable"
 import { AboutPage } from "../aboutPage/loadable"
 import { Logger } from "../../components/Logger/loadable"
-import { AccessTokenProvider } from "../../state/authContext/context"
+import { AuthProvider } from "../../state/authContext/context"
 import { ForumHomePage } from "../forumHomePage/loadable"
 import { ForumUserPage } from "../forumUserPage/loadable"
 import { ForumLoginPage } from "../forumLoginPage/loadable"
@@ -38,7 +38,7 @@ import WithErrorHandling from "src/controllers/withErrorHandling"
 function BaseLayout() {
   return ( 
       <Router>
-        <AccessTokenProvider>
+        <AuthProvider>
           <Navbar isVertical={false} />
           <Logger />
           <Routes>
@@ -138,7 +138,7 @@ function BaseLayout() {
             </Route>
             <Route path="*" element={<ErrorPage errorMessage="Page not found" errorType="CLIENT" decorator="404"/>} />
           </Routes>
-        </AccessTokenProvider>
+        </AuthProvider>
       </Router>)
 }
 

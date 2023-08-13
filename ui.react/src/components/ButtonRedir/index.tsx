@@ -5,7 +5,7 @@ import { FuncProps, Props } from "./types"
 import { Link } from "react-router-dom"
 import { LoggingResponsePayload } from "../Logger/types"
 import { Globe } from "../Globe"
-import { monitor } from "../../state/authContext/context"
+import { useMonitor } from "src/hooks/useMonitor"
 
 const letters = "abcdefghijklmnopqrstuvwxyz"
 
@@ -63,7 +63,7 @@ function ButtonRedir(props: FuncProps) {
             onMouseEnter={() => isMouseOver(true)}
             onMouseLeave={() => isMouseOver(false)}
             onClick={async e => {
-              monitor()
+              props.monitorPost()
               if (props.data.onClickCallback) {
                 props.data.onClickCallback()
               }
@@ -90,11 +90,10 @@ function ButtonRedir(props: FuncProps) {
         style={{ backgroundColor: scheme.button.bgSolid }}
         className="buttonRedir"
         onClick={async e => {
-          monitor()
+          props.monitorPost()
           if (props.data.onClickCallback) {
             props.data.onClickCallback()
           }
-          // window.location = (window.location.host + props.data.destination)
         }}
       >
         <div className="data">{props.data.label}</div>
@@ -108,7 +107,7 @@ const enhance = (props: Props): JSX.Element => {
   return (
     <ButtonRedir
       data={props}
-      monitorPost={monitor}
+      monitorPost={useMonitor}
     />
   )
 }

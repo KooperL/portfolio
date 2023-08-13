@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom"
 import { routes } from "src/api/clients/forumHandler/types"
 import { ForumLoginRequestPayload, ForumLoginResponsePayload } from "src/api/clients/forumHandler/routes/sendForumLogin/types"
 import { ForumRegisterRequstPayload, ForumRegisterResponsepayload } from "src/api/clients/forumHandler/routes/sendForumRegister/types"
-import { forumPath } from "src/api/shared/types"
+import { forumPath, genericApiDataResponse } from "src/api/shared/types"
 import { useFetch } from "src/hooks/useFetch"
-import { useAccessToken } from "../../state/authContext/context"
 import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { sendForumRegister } from "src/api/clients/forumHandler/routes/sendForumRegister"
 import { sendForumLogin } from "src/api/clients/forumHandler/routes/sendForumLogin"
+import { useAuth } from "src/hooks/useAuth"
 
 declare global {
   interface PasswordCredentialConstructor extends PasswordCredential {
@@ -55,17 +55,15 @@ export const useForumLoginState = () => {
   const [hasRegistered, setHasRegistered] = useState(false)
 
   const [scheme, setScheme] = useContext(SchemeContext)
-  // const [token, setToken] = useContext(AccessToken);
-  const [token, setToken] = useAccessToken()
+  const { authentication, trackingInformation } = useAuth()
   const navigate = useNavigate()
-  // useAccessToken()
 
   const encodedLogin = btoa(`${usernameLogin}:${passwordLogin}`)
   const encodedRegister = btoa(`${usernameRegister}:${passwordRegister}`)
 
   const { state, pull: postRegister } = useFetch<
     ForumRegisterRequstPayload,
-    ForumRegisterResponsepayload
+    genericApiDataResponse<ForumRegisterResponsepayload>
   >()
 
   const { state: POSTState, pull: postLogin } = useFetch<
@@ -97,15 +95,15 @@ export const useForumLoginState = () => {
   }, [state])
 
   useEffect(() => {
-    if (POSTState.details && POSTState.details?.success) {
-    setToken(POSTState.details.data?.accessToken ?? "")
-    if (window.hasOwnProperty("PasswordCrediential")) {
-      let c = new PasswordCredential({
-        id: usernameLogin,
-        password: passwordLogin,
-      })
-      navigator.credentials.create(c as any)
-    }
+    if (POSTState.details && POSTState.details?.success && POSTState.details?.accessToken) {
+      authentication.setAccessToken(POSTState.details.accessToken)
+      if (window.hasOwnProperty("PasswordCrediential")) {
+        let c = new PasswordCredential({
+          id: usernameLogin,
+          password: passwordLogin,
+        })
+        navigator.credentials.create(c as any)
+      }
       navigate(`/${forumPath}`)
     }
   }, [POSTState])
@@ -141,7 +139,7 @@ export const useForumLoginState = () => {
   }, [])
 
   return {
-    token,
+    authentication,
     scheme,
     handleSubmitRegister,
     handleSubmitLogin,

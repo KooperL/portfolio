@@ -3,9 +3,9 @@ import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { ForumLoginRequestPayload, ForumLoginResponsePayload } from "./types";
 import { forumPath, routes } from "../../types";
 import { fetchForum } from "../../instance";
-import { genericApiDataResponse, genericApiRequestArgs } from "src/api/shared/types";
+import { genericApiRequestArgs, genericApiTokenResponse } from "src/api/shared/types";
 
-function sendForumLogin(props: genericApiRequestArgs<ForumLoginRequestPayload>): Promise<AxiosResponse<genericApiDataResponse<ForumLoginResponsePayload>>> {
+function sendForumLogin(props: genericApiRequestArgs<ForumLoginRequestPayload>): Promise<AxiosResponse<ForumLoginResponsePayload>> {
   const {payload: data, auth: creds} = props
   const path = `${routes.forumLogin}`
   const config: AxiosRequestConfig = {

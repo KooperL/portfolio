@@ -5,9 +5,9 @@ import { Link, useNavigate } from "react-router-dom"
 import ButtonRedir from "../ButtonRedir"
 import Hamburger from "../Hamburger"
 import { useLocation } from "react-router-dom"
-import { useAccessToken } from "../../state/authContext/context"
 import { sendForumLogout } from "src/api/clients/forumHandler/routes/sendForumLogout"
 import { forumPath, routes } from "src/containers/App/types"
+import { useAuth } from "src/hooks/useAuth"
 
 function getPath() {
   return window.location.pathname.split("/").filter(item => item)
@@ -27,7 +27,7 @@ const site = () => {
 function Navbar(props: { isVertical: boolean }) {
   const [scheme, setScheme] = useContext(SchemeContext)
   // const [path, setPath] = useState([''])
-  const [token, setToken] = useAccessToken()
+  const { authentication } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -66,14 +66,13 @@ function Navbar(props: { isVertical: boolean }) {
 
   function buttonController(path: string[]) {
     if (path[0] && path[0].toLowerCase() === "forum") {
-      if (token === "") {
-      } else if (token === null) {
+      if (!authentication.accessToken) {
         // No user
-        // Should already be redirected to login/register page
+        // Should have already been redirected to login/register page
       } else {
         // Signed in
 
-        const username = JSON.parse(atob(token.split(".")[1]))["username"]
+        const username = JSON.parse(atob(authentication.accessToken.split(".")[1]))["username"]
 
         const HamburgerData = (
           <Hamburger
@@ -92,10 +91,10 @@ function Navbar(props: { isVertical: boolean }) {
                 callback: () => {
                   sendForumLogout({
                     payload: { session_id: sessionStorage.getItem("session_id") ?? "" },
-                    auth: `Bearer ${token}`,
+                    auth: `Bearer ${authentication.accessToken}`,
                   }).then(resp => {
                     if (resp?.data?.success) {
-                      setToken(null)
+                      authentication.setAccessToken(null)
                       navigate(
                         `/${forumPath}/${routes.forumLogin}`,
                       )
@@ -113,18 +112,6 @@ function Navbar(props: { isVertical: boolean }) {
     }
     return []
   }
-
-  // useEffect(() => {
-  //   const pathTemp = getPath()
-  //   setPath(pathTemp)
-  //   setSpecialButtons(buttonController(pathTemp))
-  // }, [location])
-
-  // useEffect(() => {
-  //   const pathTemp = getPath()
-  //   setPath(pathTemp)
-  //   setSpecialButtons(buttonController(pathTemp))
-  // }, [])
 
   const path = getPath()
   const aaa = buttonController(path)

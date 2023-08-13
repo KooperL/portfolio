@@ -2,10 +2,10 @@ import { forumPath, routes } from "src/containers/App/types"
 import { useContext } from "react"
 import { Link } from "react-router-dom"
 import { ForumItemType } from "src/api/clients/forumHandler/types"
-import { monitor } from "../../state/authContext/context"
 import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import daysAgo from "../../utils/daysAgo"
 import "./style.css"
+import { useMonitor } from "src/hooks/useMonitor"
 
 export default function ForumItem(props: { data: ForumItemType }) {
   const [scheme, setScheme] = useContext(SchemeContext)
@@ -13,7 +13,7 @@ export default function ForumItem(props: { data: ForumItemType }) {
   return (
     <Link
       to={`/${forumPath}/${routes.forumPostView}/${props.data["id"]}`}
-      onClick={monitor}
+      onClick={useMonitor}
     >
       <div
         className="post-details"

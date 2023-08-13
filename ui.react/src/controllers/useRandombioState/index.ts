@@ -5,6 +5,7 @@ import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { useCms } from "src/hooks/useCms"
 import { sendRandomBio } from "src/api/clients/ApiHandler/routes/sendRandomBio"
 import { useError } from "src/hooks/useError"
+import { genericApiDataResponse } from "src/api/shared/types"
 
 export const useRandomBioState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
@@ -12,7 +13,7 @@ export const useRandomBioState = () => {
   const [type, setType] = useState(1)
   const [single, setSingle] = useState(true)
   const { state: stateCMS, pull } = useCms()
-  const { state: statePOST, pull: handleSubmit } = useFetch<RandombioRequest, string>()
+  const { state: statePOST, pull: handleSubmit } = useFetch<RandombioRequest, genericApiDataResponse<string>>()
   const { raiseError } = useError();
   
   useEffect(() => {

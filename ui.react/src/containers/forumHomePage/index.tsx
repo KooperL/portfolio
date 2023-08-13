@@ -18,11 +18,12 @@ import { forumPath, genericApiDataResponse } from "src/api/shared/types"
 import { ForumItemType, routes } from "src/api/clients/forumHandler/types"
 import { sendMonitor } from "src/api/clients/ApiHandler/routes/sendMonitor"
 import { Link } from "react-router-dom"
-import { monitor } from "src/state/authContext/context"
+import { useMonitor } from "src/hooks/useMonitor"
+import { AuthContextType } from "src/state/authContext/types"
 
 interface Props {
   scheme: PageInformation
-  token: string | null
+  authentication: AuthContextType['authentication']
   handleSubmit: () => void
   state: State<genericApiDataResponse<ForumHomeResponsePayload>>
   searchState: string
@@ -31,13 +32,6 @@ interface Props {
 
 function ForumHomePage(props: Props): JSX.Element {
   if (props.state.loading) return <Spinner />
-  if (props.token === "" || props.token === null) {
-    return (
-      <Redirect
-        destination={`/${forumPath}/${routes.forumRegister}`}
-      />
-    )
-  }
   if (props.state.error && props.state.errorMessage)
     return <ErrorPage errorMessage={props.state.errorMessage} errorType='NETWORK' />
   if (props.state.details && props.state.details.data) {
@@ -85,7 +79,7 @@ function ForumHomePage(props: Props): JSX.Element {
                       <Link
                         key={`${indexSegment}-1`}
                         to={`/${forumPath}?category=${segment}`}
-                        onClick={monitor}
+                        onClick={useMonitor}
                       >
                         <p>{`Topic - ${segment}`}</p>
                       </Link>
