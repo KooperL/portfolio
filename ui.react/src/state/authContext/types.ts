@@ -4,7 +4,7 @@ export interface AuthContextType {
     setAccessToken: React.Dispatch<React.SetStateAction<string | null>>,
   }
   trackingInformation: {
-    sessionKey: string,
-    persistentKey: string,
+    getSessionKey: () => string,
+    getPersistentKey: () => string,
   }
 }

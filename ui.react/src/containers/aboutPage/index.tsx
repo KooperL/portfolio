@@ -1,12 +1,6 @@
-import React, {
-  HtmlHTMLAttributes,
-  useContext,
-  useEffect,
-  useState,
-} from "react"
 import Spinner from "../../components/Spinner"
 import Navbar from "../../components/Navbar"
-import { PageInformation, SchemeContext } from "../../state/colorScheme/colourScheme"
+import { PageInformation } from "../../state/colorScheme/colourScheme"
 import "./style.css"
 import sketchWrapper from "../../components/p5/dnaAscii"
 import { ReactP5Wrapper } from "react-p5-wrapper"

@@ -1,34 +1,12 @@
-import React, {
-  HtmlHTMLAttributes,
-  useContext,
-  useEffect,
-  useState,
-} from "react"
 import Spinner from "../../components/Spinner"
-import Navbar from "../../components/Navbar"
-import { PageInformation, SchemeContext } from "../../state/colorScheme/colourScheme"
 import "./style.css"
-import { useNavigate } from "react-router-dom"
-import { ReactP5Wrapper } from "react-p5-wrapper"
-import sketchWrapper from "../../components/p5/box"
-import { Button } from "../../components/Button"
-import Redirect from "../../components/Redirect"
 import daysAgo from "../../utils/daysAgo"
 import { IslandCenter } from "../../templates/IslandCenter"
-import { State } from "../../types/State"
 import { useForumPostViewState } from "../../controllers/useForumPostViewState"
-import { ForumPostViewResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumPostView/types"
-import { forumPath, genericApiDataResponse } from "src/api/shared/types"
-import { routes } from "src/api/clients/forumHandler/types"
-import { AuthContextType } from "src/state/authContext/types"
 
-interface Props {
-  scheme: PageInformation
-  authentication: AuthContextType['authentication']
-  GETstate: State<genericApiDataResponse<ForumPostViewResponsePayload>>
-}
+type t = ReturnType<typeof useForumPostViewState>
 
-function ForumPostViewPage(props: Props): JSX.Element {
+function ForumPostViewPage(props: t): JSX.Element {
   if (props.GETstate.loading) {
     return <Spinner />
   }
@@ -71,7 +49,7 @@ function ForumPostViewPage(props: Props): JSX.Element {
                 <Button colours={scheme} />
               </div> */}
               {/* <form onSubmit={((e) => handleSubmit(e, {
-                session_id: sessionStorage.getItem('session_id') ?? 'error',
+                session_id: props.trackingInformation.getSessionKey(),
                 data: {
                   forum_title: title,
                   forum_body: body

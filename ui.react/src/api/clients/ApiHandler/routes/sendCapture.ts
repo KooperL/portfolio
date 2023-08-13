@@ -24,6 +24,7 @@ export const sendCapture = (props: genericApiRequestArgs<CaptureRequestPayload>)
   const config = {
     url: path,
     params,
+    method: 'POST'
   }
   const cacheKey: CacheKey = {
     CacheMode: CacheMode.NetworkFirst,
