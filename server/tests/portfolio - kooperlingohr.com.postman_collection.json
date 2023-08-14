@@ -1,56 +1,21 @@
 {
 	"info": {
-		"_postman_id": "01483051-0057-43e8-8e8d-ac634c1f877c",
+		"_postman_id": "4d260db0-2aea-4686-a450-e70832b4329b",
 		"name": "portfolio - kooperlingohr.com",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "17975111"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "/",
 			"item": [
 				{
-					"name": "home",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/home",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"home"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "contact - GET",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/contact",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"contact"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "contact - POST",
+					"name": "/contact",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"session_id\": \"{{test_session_id}}\",\n    \"message\": \"Test success!\"\n}",
+							"raw": "{\n    \"session_id\": {{test_session_id}},\n    \"message\": \"Test success!\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -70,44 +35,300 @@
 					"response": []
 				},
 				{
-					"name": "about",
+					"name": "/monitor",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/about",
+							"raw": "{{host}}/monitor?uuid={{test_uuid}}&session_id={{test_session_id}}&page=testOld&prevPage=testNew",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"about"
+								"monitor"
+							],
+							"query": [
+								{
+									"key": "uuid",
+									"value": "{{test_uuid}}"
+								},
+								{
+									"key": "session_id",
+									"value": "{{test_session_id}}"
+								},
+								{
+									"key": "page",
+									"value": "testOld"
+								},
+								{
+									"key": "prevPage",
+									"value": "testNew"
+								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/monitor?uuid={{test_uuid}}&session_id={{test_session_id}}&page=testOld&prevPage=testNew",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"monitor"
+									],
+									"query": [
+										{
+											"key": "uuid",
+											"value": "{{test_uuid}}"
+										},
+										{
+											"key": "session_id",
+											"value": "{{test_session_id}}"
+										},
+										{
+											"key": "page",
+											"value": "testOld"
+										},
+										{
+											"key": "prevPage",
+											"value": "testNew"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.2 Python/3.9.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 14 Aug 2023 22:18:02 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "22"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:3000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "/capture",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/capture?uuid={{test_uuid}}&canvas_hash=-1&version=1&platform=postman_test_platform&browser=postman_test_browser&User-Agent=postman_test_useragent&darkMode=2&cookieEnabled=2&actualHeight=10&actualWidth=19&pixelDepth=1&innerHeight=9&outerHeight=11&innerWidth=18&outerWidth=20",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"capture"
+							],
+							"query": [
+								{
+									"key": "uuid",
+									"value": "{{test_uuid}}"
+								},
+								{
+									"key": "canvas_hash",
+									"value": "-1"
+								},
+								{
+									"key": "version",
+									"value": "1"
+								},
+								{
+									"key": "platform",
+									"value": "postman_test_platform"
+								},
+								{
+									"key": "browser",
+									"value": "postman_test_browser"
+								},
+								{
+									"key": "User-Agent",
+									"value": "postman_test_useragent"
+								},
+								{
+									"key": "darkMode",
+									"value": "2"
+								},
+								{
+									"key": "cookieEnabled",
+									"value": "2"
+								},
+								{
+									"key": "actualHeight",
+									"value": "10"
+								},
+								{
+									"key": "actualWidth",
+									"value": "19"
+								},
+								{
+									"key": "pixelDepth",
+									"value": "1"
+								},
+								{
+									"key": "innerHeight",
+									"value": "9"
+								},
+								{
+									"key": "outerHeight",
+									"value": "11"
+								},
+								{
+									"key": "innerWidth",
+									"value": "18"
+								},
+								{
+									"key": "outerWidth",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/capture?uuid={{test_uuid}}&canvas_hash=-1&version=1&platform=postman_test_platform&browser=postman_test_browser&User-Agent=postman_test_useragent&darkMode=2&cookieEnabled=2&actualHeight=10&actualWidth=19&pixelDepth=1&innerHeight=9&outerHeight=11&innerWidth=18&outerWidth=20",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"capture"
+									],
+									"query": [
+										{
+											"key": "uuid",
+											"value": "{{test_uuid}}"
+										},
+										{
+											"key": "canvas_hash",
+											"value": "-1"
+										},
+										{
+											"key": "version",
+											"value": "1"
+										},
+										{
+											"key": "platform",
+											"value": "postman_test_platform"
+										},
+										{
+											"key": "browser",
+											"value": "postman_test_browser"
+										},
+										{
+											"key": "User-Agent",
+											"value": "postman_test_useragent"
+										},
+										{
+											"key": "darkMode",
+											"value": "2"
+										},
+										{
+											"key": "cookieEnabled",
+											"value": "2"
+										},
+										{
+											"key": "actualHeight",
+											"value": "10"
+										},
+										{
+											"key": "actualWidth",
+											"value": "19"
+										},
+										{
+											"key": "pixelDepth",
+											"value": "1"
+										},
+										{
+											"key": "innerHeight",
+											"value": "9"
+										},
+										{
+											"key": "outerHeight",
+											"value": "11"
+										},
+										{
+											"key": "innerWidth",
+											"value": "18"
+										},
+										{
+											"key": "outerWidth",
+											"value": "20"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.2 Python/3.9.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 14 Aug 2023 22:18:24 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "22"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:3000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true\n}"
+						}
+					]
 				}
 			]
 		},
 		{
 			"name": "/projects",
 			"item": [
-				{
-					"name": "/",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/{{projectsPath}}",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"{{projectsPath}}"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "/fuelprices",
 					"request": {
@@ -213,7 +434,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/{{projectsPath}}/secondary?aa_field_id=vkklfhwlekhmrttalynsynamrscqnimrayrkhhiqvgeathakyksdpnfgmarasqcykgeytmwpwvdrhmpehakwrtqvknilyashpywr",
+							"raw": "{{host}}/{{projectsPath}}/secondary?aas=KVENGKTDLY",
 							"host": [
 								"{{host}}"
 							],
@@ -223,24 +444,24 @@
 							],
 							"query": [
 								{
-									"key": "aa_field_id",
-									"value": "vkklfhwlekhmrttalynsynamrscqnimrayrkhhiqvgeathakyksdpnfgmarasqcykgeytmwpwvdrhmpehakwrtqvknilyashpywr",
+									"key": "aas",
+									"value": "KVENGKTDLY",
 									"description": "Amino acid (AA) sequence"
 								},
 								{
-									"key": "aaf_field_id",
+									"key": "aaformat",
 									"value": "s",
 									"description": "single letters to represent AA's",
 									"disabled": true
 								},
 								{
-									"key": "detectthreshold",
+									"key": "threshold",
 									"value": "4",
 									"description": "Sensitivity to assigning structure",
 									"disabled": true
 								},
 								{
-									"key": "leniency",
+									"key": "avg",
 									"value": "3",
 									"description": "Scope of calculation",
 									"disabled": true
@@ -256,7 +477,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/{{projectsPath}}/seqalign?sampletxt=aaaa&referencetxt=aatg&identical=1&mismatch=0&gaps=-0.5&extgaps=-0.1",
+							"raw": "{{host}}/{{projectsPath}}/seqalign?sampletxt=aaaacgttg&referencetxt=aatgccttc&identical=1&mismatch=0&gaps=-0.5&extgaps=-0.1",
 							"host": [
 								"{{host}}"
 							],
@@ -267,11 +488,11 @@
 							"query": [
 								{
 									"key": "sampletxt",
-									"value": "aaaa"
+									"value": "aaaacgttg"
 								},
 								{
 									"key": "referencetxt",
-									"value": "aatg"
+									"value": "aatgccttc"
 								},
 								{
 									"key": "identical",
@@ -296,7 +517,86 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/{{projectsPath}}/seqalign?sampletxt=aaaacgttg&referencetxt=aatgccttc&identical=1&mismatch=0&gaps=-0.5&extgaps=-0.1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"{{projectsPath}}",
+										"seqalign"
+									],
+									"query": [
+										{
+											"key": "sampletxt",
+											"value": "aaaacgttg"
+										},
+										{
+											"key": "referencetxt",
+											"value": "aatgccttc"
+										},
+										{
+											"key": "identical",
+											"value": "1",
+											"description": "Identical match score"
+										},
+										{
+											"key": "mismatch",
+											"value": "0",
+											"description": "Mismatch score"
+										},
+										{
+											"key": "gaps",
+											"value": "-0.5",
+											"description": "Penalty for beginning of gap "
+										},
+										{
+											"key": "extgaps",
+											"value": "-0.1",
+											"description": "Penalty for extending gap"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.2 Python/3.9.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 14 Aug 2023 22:34:22 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "238"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:3000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"draw_res\": [\n            \"aaaacgttg\\n||..|.||.\\naatgccttc\\n  Score=5\\n\"\n        ],\n        \"results\": {\n            \"s1\": [\n                \"aaaacgttg\",\n                \"aatgccttc\",\n                5,\n                0,\n                9\n            ]\n        }\n    },\n    \"success\": true\n}"
+						}
+					]
 				},
 				{
 					"name": "/randombio",
@@ -331,7 +631,138 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success (DNA)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/{{projectsPath}}/randombio?type=1&length=100&single=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"{{projectsPath}}",
+										"randombio"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "1",
+											"description": "1 = DNA\n2 = RNA\n3 = AA's"
+										},
+										{
+											"key": "length",
+											"value": "100",
+											"description": "Length of sequence"
+										},
+										{
+											"key": "single",
+											"value": "1",
+											"description": "Whether or not to use single letters to represent AA's"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.2 Python/3.9.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 14 Aug 2023 22:19:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "136"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:3000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": \"AAGACCAAGGCTGGAAGTATGACGATCTAACATGCGGTCTAATACGGGAGTCGCAAGCCCTGATCATTGGTTAGTACAGACGCAAAGGTACGGGGACATT\",\n    \"success\": true\n}"
+						},
+						{
+							"name": "success (RNA)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/{{projectsPath}}/randombio?type=2&length=100&single=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"{{projectsPath}}",
+										"randombio"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "2",
+											"description": "1 = DNA\n2 = RNA\n3 = AA's"
+										},
+										{
+											"key": "length",
+											"value": "100",
+											"description": "Length of sequence"
+										},
+										{
+											"key": "single",
+											"value": "1",
+											"description": "Whether or not to use single letters to represent AA's"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.2 Python/3.9.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 14 Aug 2023 22:20:14 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "136"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:3000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": \"UUUAAUUAACUGCUGAUGCGGGGGUUCGGAAGCUAGUAGAUAGACGUUCUCCCCGACCCUGAGUAAUUCACACAUAGAGGGGUCGGGCGAGAUAUGCGUC\",\n    \"success\": true\n}"
+						}
+					]
 				},
 				{
 					"name": "/property",
@@ -350,154 +781,11 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "/siteanalysis",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/{{projectsPath}}/siteanalysis?uuid=jtvYO9ltn9",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"{{projectsPath}}",
-								"siteanalysis"
-							],
-							"query": [
-								{
-									"key": "uuid",
-									"value": "jtvYO9ltn9"
-								}
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
 		{
-			"name": "utils",
-			"item": [
-				{
-					"name": "/capture",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/capture?uuid={{test_uuid}}&canvas_hash=-1&version=1&platform=postman_test_platform&browser=postman_test_browser&User-Agent=postman_test_useragent&darkMode=2&cookieEnabled=2&actualHeight=10&actualWidth=19&pixelDepth=1&innerHeight=9&outerHeight=11&innerWidth=18&outerWidth=20",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"capture"
-							],
-							"query": [
-								{
-									"key": "uuid",
-									"value": "{{test_uuid}}"
-								},
-								{
-									"key": "canvas_hash",
-									"value": "-1"
-								},
-								{
-									"key": "version",
-									"value": "1"
-								},
-								{
-									"key": "platform",
-									"value": "postman_test_platform"
-								},
-								{
-									"key": "browser",
-									"value": "postman_test_browser"
-								},
-								{
-									"key": "User-Agent",
-									"value": "postman_test_useragent"
-								},
-								{
-									"key": "darkMode",
-									"value": "2"
-								},
-								{
-									"key": "cookieEnabled",
-									"value": "2"
-								},
-								{
-									"key": "actualHeight",
-									"value": "10"
-								},
-								{
-									"key": "actualWidth",
-									"value": "19"
-								},
-								{
-									"key": "pixelDepth",
-									"value": "1"
-								},
-								{
-									"key": "innerHeight",
-									"value": "9"
-								},
-								{
-									"key": "outerHeight",
-									"value": "11"
-								},
-								{
-									"key": "innerWidth",
-									"value": "18"
-								},
-								{
-									"key": "outerWidth",
-									"value": "20"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "monitor",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/monitor?uuid={{test_uuid}}&session_id={{test_session_id}}&page=testOld&prevPage=testNew",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"monitor"
-							],
-							"query": [
-								{
-									"key": "uuid",
-									"value": "{{test_uuid}}"
-								},
-								{
-									"key": "session_id",
-									"value": "{{test_session_id}}"
-								},
-								{
-									"key": "page",
-									"value": "testOld"
-								},
-								{
-									"key": "prevPage",
-									"value": "testNew"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "/blog",
+			"name": "/forum",
 			"item": [
 				{
 					"name": "/register",
@@ -506,7 +794,8 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									""
+									"pm.collectionVariables.set('forum_test_username', `test_${sharedFunctins.generateRandom(10)}`)",
+									"pm.collectionVariables.set('forum_test_password', `test_${sharedFunctins.generateRandom(20)}`)"
 								],
 								"type": "text/javascript"
 							}
@@ -518,12 +807,12 @@
 							"basic": [
 								{
 									"key": "password",
-									"value": "{{blog_test_password}}",
+									"value": "{{forum_test_password}}",
 									"type": "string"
 								},
 								{
 									"key": "username",
-									"value": "{{blog_test_username}}",
+									"value": "{{forum_test_username}}",
 									"type": "string"
 								}
 							]
@@ -540,17 +829,79 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/{{blogPath}}/register",
+							"raw": "{{host}}/{{forumPath}}/register",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{blogPath}}",
+								"{{forumPath}}",
 								"register"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"session_id\": \"{{test_session_id}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/{{forumPath}}/register",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"{{forumPath}}",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.2 Python/3.9.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 14 Aug 2023 22:28:46 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "22"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:3000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true\n}"
+						}
+					]
 				},
 				{
 					"name": "/login",
@@ -560,7 +911,10 @@
 							"script": {
 								"exec": [
 									"const jsonResp = JSON.parse(responseBody)",
-									"pm.collectionVariables.set('blog_login_token', jsonResp['accessToken'])"
+									"if (jsonResp?.accessToken) {",
+									"    pm.collectionVariables.set('forum_login_token', jsonResp['accessToken'])",
+									"}",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -572,12 +926,12 @@
 							"basic": [
 								{
 									"key": "password",
-									"value": "{{blog_test_password}}",
+									"value": "{{forum_test_password}}",
 									"type": "string"
 								},
 								{
 									"key": "username",
-									"value": "{{blog_test_username}}",
+									"value": "{{forum_test_username}}",
 									"type": "string"
 								}
 							]
@@ -586,7 +940,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"session_id\":\"{{test_session_id}}\"\n    }",
+							"raw": "{\n    \"session_id\":\"{{test_session_id}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -594,17 +948,83 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/{{blogPath}}/login",
+							"raw": "{{host}}/{{forumPath}}/login",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{blogPath}}",
+								"{{forumPath}}",
 								"login"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"session_id\":\"{{test_session_id}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/{{forumPath}}/login",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"{{forumPath}}",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.2 Python/3.9.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 14 Aug 2023 22:29:14 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "383"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refresh_token=eyJoZWFkZXIiOiB7ImFsZyI6ICJTSEEyNTYiLCAidHlwIjogIkpXVCJ9fQ==.eyJ1c2VySWQiOiAyOSwgImlhdCI6ICIxNjkyMDUyMTU0NzY3In0=.Yzc1NTRiOGIzYTUwOWI4NzhiNmI3ZDMwOGQ5ZGM5NDAzZDNlNjdhODJjN2ZmNWE4ZjMzNmNmZTllMzllMmEwMg==; Expires=Sun, 10 May 2026 08:29:14 GMT; HttpOnly; Path=/"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "http://localhost:3000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"accessToken\": \"eyJoZWFkZXIiOiB7ImFsZyI6ICJTSEEyNTYiLCAidHlwIjogIkpXVCJ9fQ==.eyJ1c2VySWQiOiAyOSwgImlhdCI6ICIxNjkyMDUyMTU0NzY3IiwgInJvbGUiOiAxLCAidXNlcm5hbWUiOiAidGVzdF9ieTNpaDY2aTR1IiwgImV4cCI6ICIxNjkyMTEyMDk0NzY3In0=.NGU2ZmMxMzM3YjM3NGQyYjRhYjEwM2QwZjdlZDcwMGNiYjM2MzYxODM1YTRiMGQxYTdmNDUzNzMxZjhkYzM5ZA==\",\n    \"expires\": \"1692112094767\",\n    \"success\": true,\n    \"type\": \"Bearer\"\n}"
+						}
+					]
 				},
 				{
 					"name": "/post",
@@ -614,7 +1034,9 @@
 							"script": {
 								"exec": [
 									"const jsonResp = JSON.parse(responseBody)",
-									"pm.collectionVariables.set('blog_test_post_id', jsonResp['data']['blogPostId'])"
+									"if (jsonResp?.data?.forumPostId) {",
+									"    pm.collectionVariables.set('forum_test_post_id', jsonResp['data']['forumPostId'])",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -626,7 +1048,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{blog_login_token}}",
+									"value": "{{forum_login_token}}",
 									"type": "string"
 								}
 							]
@@ -643,12 +1065,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/{{blogPath}}/post",
+							"raw": "{{host}}/{{forumPath}}/post",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{blogPath}}",
+								"{{forumPath}}",
 								"post"
 							]
 						}
@@ -663,7 +1085,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{blog_login_token}}",
+									"value": "{{forum_login_token}}",
 									"type": "string"
 								}
 							]
@@ -671,13 +1093,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/{{apiVersion}}/{{blogPath}}?session_id={{test_session_id}}",
+							"raw": "{{host}}/{{forumPath}}?session_id={{test_session_id}}",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{apiVersion}}",
-								"{{blogPath}}"
+								"{{forumPath}}"
 							],
 							"query": [
 								{
@@ -707,7 +1128,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{blog_login_token}}",
+									"value": "{{forum_login_token}}",
 									"type": "string"
 								}
 							]
@@ -724,14 +1145,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/{{blogPath}}/post/{{blog_test_post_id}}",
+							"raw": "{{host}}/{{forumPath}}/post/{{forum_test_post_id}}",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{blogPath}}",
+								"{{forumPath}}",
 								"post",
-								"{{blog_test_post_id}}"
+								"{{forum_test_post_id}}"
 							]
 						}
 					},
@@ -745,7 +1166,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{blog_login_token}}",
+									"value": "{{forum_login_token}}",
 									"type": "string"
 								}
 							]
@@ -753,14 +1174,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/{{blogPath}}/user/{{blog_test_username}}?session_id={{test_session_id}}",
+							"raw": "{{host}}/{{forumPath}}/user/{{forum_test_username}}?session_id={{test_session_id}}",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{blogPath}}",
+								"{{forumPath}}",
 								"user",
-								"{{blog_test_username}}"
+								"{{forum_test_username}}"
 							],
 							"query": [
 								{
@@ -773,14 +1194,17 @@
 					"response": []
 				},
 				{
-					"name": "/refresh",
+					"name": "/refresh TODO",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
 									"const jsonResp = JSON.parse(responseBody)",
-									"pm.collectionVariables.set('blog_login_token', jsonResp['accessToken'])"
+									"if (jsonResp?.accessToken) {",
+									"    pm.collectionVariables.set('forum_login_token', jsonResp['accessToken'])",
+									"}",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -792,29 +1216,20 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJoZWFkZXIiOiB7ImFsZyI6ICJTSEEyNTYiLCAidHlwIjogIkpXVCJ9fQ==.eyJ1c2VySWQiOiA0LCAiaWF0IjogIjE2Njg3MzQxNDkxMTgiLCAicm9sZSI6IDEsICJ1c2VybmFtZSI6ICJ0ZXN0QWNjdCIsICJleHAiOiAiMTY2ODc5NDA4OTExOCJ9.NTcxYWNhODVhOTdjM2I3MDY5MTViZDc3MTE1ZDI4NGQ1YzU0MzdjNWFhZjYxOGFmZTE0MWZiOTgyNWY1YmZjNQ",
+									"value": "{{forum_login_token}}",
 									"type": "string"
 								}
 							]
 						},
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"session_id\": \"{{test_session_id}}\"}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{host}}/{{blogPath}}/refresh",
+							"raw": "{{host}}/{{forumPath}}/refresh",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{blogPath}}",
+								"{{forumPath}}",
 								"refresh"
 							]
 						}
@@ -822,14 +1237,28 @@
 					"response": []
 				},
 				{
-					"name": "/logout",
+					"name": "/logout TODO",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('forum_test_username', '')",
+									"pm.collectionVariables.set('forum_test_password', '')",
+									"pm.collectionVariables.set('forum_login_token', '')",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{blog_login_token}}",
+									"value": "{{forum_login_token}}",
 									"type": "string"
 								}
 							]
@@ -837,13 +1266,234 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/{{blogPath}}/logout",
+							"raw": "{{host}}/{{forumPath}}/logout",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"{{blogPath}}",
+								"{{forumPath}}",
 								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/cms",
+			"item": [
+				{
+					"name": "/home",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{cmsRoute}}/home",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{cmsRoute}}",
+								"home"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/contact",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{cmsRoute}}/contact",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{cmsRoute}}",
+								"contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/jssimulator",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{cmsRoute}}/jssimulator",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{cmsRoute}}",
+								"jssimulator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/minesweeper",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{cmsRoute}}/minesweeper",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{cmsRoute}}",
+								"minesweeper"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/mrna",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{cmsRoute}}/mrna",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{cmsRoute}}",
+								"mrna"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/fuelprices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{cmsRoute}}/fuelprices",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{cmsRoute}}",
+								"fuelprices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/about",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{cmsRoute}}/about",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{cmsRoute}}",
+								"about"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/property",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{cmsRoute}}/property",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{cmsRoute}}",
+								"property"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/randombio",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{cmsRoute}}/randombio",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{cmsRoute}}",
+								"randombio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/secondary",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{cmsRoute}}/secondary",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{cmsRoute}}",
+								"secondary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/seqalign",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{cmsRoute}}/seqalign",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{cmsRoute}}",
+								"seqalign"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tictactoe",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{cmsRoute}}/tictactoe",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{cmsRoute}}",
+								"tictactoe"
 							]
 						}
 					},
@@ -858,7 +1508,17 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					""
+					"sharedFunctions = {",
+					"    generateRandon: function(num) {",
+					"        let outString = ''",
+					"        // Is this insecure? Yeah, yea...",
+					"        let inOptions = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'",
+					"        for (let i = 0; i < num; i++) {",
+					"        outString += inOptions.charAt(Math.floor(Math.random() * inOptions.length))",
+					"        }",
+					"        return outString",
+					"    }",
+					"}"
 				]
 			}
 		},
@@ -874,8 +1534,13 @@
 	],
 	"variable": [
 		{
-			"key": "blogPath",
-			"value": "blog",
+			"key": "host",
+			"value": "https://kooperlingohr.com/api/",
+			"type": "string"
+		},
+		{
+			"key": "forumPath",
+			"value": "forum",
 			"type": "string"
 		},
 		{
@@ -884,15 +1549,20 @@
 			"type": "string"
 		},
 		{
-			"key": "blog_test_username",
-			"value": "testAcct"
+			"key": "cmsRoute",
+			"value": "cms",
+			"type": "default"
 		},
 		{
-			"key": "blog_test_password",
-			"value": "aaaa"
+			"key": "forum_test_username",
+			"value": ""
 		},
 		{
-			"key": "blog_login_token",
+			"key": "forum_test_password",
+			"value": ""
+		},
+		{
+			"key": "forum_login_token",
 			"value": ""
 		},
 		{
@@ -904,15 +1574,6 @@
 			"key": "test_uuid",
 			"value": "321test",
 			"type": "string"
-		},
-		{
-			"key": "apiVersion",
-			"value": "v1",
-			"type": "string"
-		},
-		{
-			"key": "blog_test_post_id",
-			"value": ""
 		}
 	]
 }
