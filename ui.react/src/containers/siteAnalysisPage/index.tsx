@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
-import { siteAnalysisResponse } from "./types"
 import Chart from "react-apexcharts"
 import ErrorPage from "../ErrorPage"
 import { useSiteAnalysisState } from "../../controllers/useSiteAnalysisState"
-import { State } from "../../types/State"
-import { PageInformation } from "../../state/colorScheme/colourScheme"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { BoxSvg } from "../../controllers/utils/SVGBox"
 import ReactApexChart from "react-apexcharts"
 import GenerateHeatmap from "../../controllers/utils/heatmap"
 import "./style.css"
 import TypeLookup from "../../components/TypeLookup"
-import { CMSPageResponse } from "../../components/TypeLookup/types"
-import { genericApiDataResponse } from "src/api/shared/types"
 
 function generateData(count: number, yrange: { max: number; min: number }) {
   var i = 0
@@ -32,15 +27,9 @@ function generateData(count: number, yrange: { max: number; min: number }) {
   return series
 }
 
-interface Props {
-  state: State<genericApiDataResponse<siteAnalysisResponse>>
-  scheme: PageInformation
-  setLoaded: React.Dispatch<React.SetStateAction<boolean>>
-  stateCMS: State<CMSPageResponse>
-  // ref: any
-}
+type t = ReturnType<typeof useSiteAnalysisState>
 
-function SiteAnalysisPage(props: Props): JSX.Element {
+function SiteAnalysisPage(props: t): JSX.Element {
   if (props.state.loading) return <Spinner />
   if (props.state.error && props.state.errorMessage)
     return <ErrorPage errorMessage={props.state.errorMessage} errorType='NETWORK' />

@@ -3,11 +3,11 @@ import { useContext, useEffect, useRef, useState } from "react"
 import { useFetch } from "src/hooks/useFetch"
 
 import React from "react"
-import { siteAnalysisRequest, siteAnalysisResponse } from "../../containers/siteAnalysisPage/types"
 import { useCms } from "src/hooks/useCms"
 import { fetchSiteAnalysis } from "src/api/clients/ApiHandler/routes/fetchSiteAnalysis"
 import { useError } from "src/hooks/useError"
 import { genericApiDataResponse } from "src/api/shared/types"
+import { siteAnalysisRequest, siteAnalysisResponse } from "src/api/clients/ApiHandler/routes/fetchSiteAnalysis/types"
 
 declare module "react" {
   interface SVGElement extends React.ReactElement<SVGElement> {}

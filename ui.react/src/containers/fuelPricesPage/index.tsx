@@ -7,18 +7,11 @@ import { IslandCenter } from "../../templates/IslandCenter"
 import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
 import useFuelPricesState from "../../controllers/useFuelPricesState"
-import { FuelPricesResponsePayload } from "./types"
 import TypeLookup from "../../components/TypeLookup"
-import { CMSPageResponse } from "../../components/TypeLookup/types"
-import { genericApiDataResponse } from "src/api/shared/types"
 
-interface Props {
-  state: State<genericApiDataResponse<FuelPricesResponsePayload>>
-  stateCMS: State<CMSPageResponse>
-  scheme: PageInformation
-}
+type t = ReturnType<typeof useFuelPricesState>
 
-function FuelPricesPage(props: Props): JSX.Element {
+function FuelPricesPage(props: t): JSX.Element {
   if (props.state.loading) return <Spinner />
   if (props.state.error && props.state.errorMessage)
     return <ErrorPage errorMessage={props.state.errorMessage} errorType="NETWORK" />

@@ -1,14 +1,11 @@
 import { useState, useCallback, useContext, useEffect } from "react"
 import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import {
-  SeqAlignRequest,
-  SeqAlignResponse,
-} from "../../containers/seqAlignPage/types"
 import { useFetch } from "src/hooks/useFetch"
 import { useCms } from "src/hooks/useCms"
 import { sendSeqAlign } from "src/api/clients/ApiHandler/routes/sendSeqAlign"
 import { useError } from "src/hooks/useError"
 import { genericApiDataResponse } from "src/api/shared/types"
+import { SeqAlignRequest, SeqAlignResponse } from "src/api/clients/ApiHandler/routes/sendSeqAlign/types"
 
 export const useSeqAlignState = () => {
   const [sampletxt, setSampletxt] = useState("")

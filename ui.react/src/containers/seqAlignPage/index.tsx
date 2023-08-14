@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
 import Modal from "../../components/Modal"
 // @ts-ignore
 import gear from "../../assets/gear.svg"
-import { PageInformation, SchemeContext } from "../../state/colorScheme/colourScheme"
 import { Button } from "../../components/Button"
 import "./style.css"
 import { IslandCenter } from "../../templates/IslandCenter"
@@ -12,32 +10,11 @@ import { Gear } from "../../components/Gear"
 import { Radio } from "../../components/Radio"
 import ErrorPage from "../ErrorPage"
 import { useSeqAlignState } from "../../controllers/useSeqAlignState"
-import { State } from "../../types/State"
-import { SeqAlignResponse } from "./types"
-import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
-import { genericApiDataResponse } from "src/api/shared/types"
 
-interface Props {
-  sampletxt: string
-  setSampletxt: React.Dispatch<React.SetStateAction<string>>
-  referencetxt: string
-  setReferencetxt: React.Dispatch<React.SetStateAction<string>>
-  identical: number
-  setIdentical: React.Dispatch<React.SetStateAction<number>>
-  mismatch: number
-  setMismatch: React.Dispatch<React.SetStateAction<number>>
-  gaps: number
-  setGaps: React.Dispatch<React.SetStateAction<number>>
-  extgaps: number
-  setExtgaps: React.Dispatch<React.SetStateAction<number>>
-  scheme: PageInformation
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  stateSubmit: State<genericApiDataResponse<SeqAlignResponse>>
-  stateCMS: State<CMSPageResponse>
-}
+type t = ReturnType<typeof useSeqAlignState>
 
-function SeqAlignPage(props: Props): JSX.Element {
+function SeqAlignPage(props: t): JSX.Element {
   function SearchBar(showingDesc: Boolean) {
     return (
       <div className="search-container">
@@ -128,7 +105,7 @@ function SeqAlignPage(props: Props): JSX.Element {
     return <ErrorPage errorMessage={props.stateSubmit.errorMessage} errorType='NETWORK' />
   if (props.stateSubmit.details && props.stateSubmit.details?.data) {
     const data = props.stateSubmit.details.data
-    const splitDrawArray = data.draw_res.map(elem => elem.split("\n"))
+    const splitDrawArray = data.draw_res.map((elem: string) => elem.split("\n"))
 
     return (
       <IslandCenter>
@@ -141,7 +118,8 @@ function SeqAlignPage(props: Props): JSX.Element {
             <div className="resultTitle">Results:</div>
             <div className="resultsContainer">
               <div className="results">
-                {splitDrawArray.map((res, ind) => (
+                {/** TODO */}
+                {splitDrawArray.map((res: string[], ind: number) => (
                   <div
                     key={ind}
                     className="result"

@@ -1,7 +1,7 @@
-import { ContactRequestPayload, ContactResponsePayload } from "./../../../../containers/contactPage/types";
+import { ContactRequestPayload, ContactResponsePayload } from "./types";
 import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types";
-import { ApiConsumer } from "../instance";
-import { routes } from "../types";
+import { ApiConsumer } from "../../instance";
+import { routes } from "../../types";
 import { genericApiDataResponse, genericApiRequestArgs } from "src/api/shared/types";
 import { AxiosResponse } from "axios";
 

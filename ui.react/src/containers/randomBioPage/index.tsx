@@ -10,25 +10,13 @@ import { Radio } from "../../components/Radio"
 import ErrorPage from "../ErrorPage"
 import { useRandomBioState } from "../../controllers/useRandombioState"
 import { State } from "../../types/State"
-import { RandombioRequest } from "./types"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
 import { genericApiDataResponse } from "src/api/shared/types"
 
-interface Props {
-  scheme: PageInformation
-  length: number
-  setLength: React.Dispatch<React.SetStateAction<number>>
-  type: number
-  setType: React.Dispatch<React.SetStateAction<number>>
-  single: boolean
-  setSingle: React.Dispatch<React.SetStateAction<boolean>>
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  statePOST: State<genericApiDataResponse<string>>
-  stateCMS: State<CMSPageResponse>
-}
+type t = ReturnType<typeof useRandomBioState>
 
-function RandomBioPage(props: Props): JSX.Element {
+function RandomBioPage(props: t): JSX.Element {
   function SearchBar(showingDesc: Boolean) {
     return (
       <div className="search-container">

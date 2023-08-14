@@ -14,27 +14,13 @@ import { Textarea } from "../../components/Textarea"
 import ErrorPage from "../ErrorPage"
 import { useSecondaryState } from "../../controllers/useSecondaryState"
 import { State } from "../../types/State"
-import { SecondaryResponse } from "./types"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
 import { genericApiDataResponse } from "src/api/shared/types"
 
-interface Props {
-  aa_field_id: string
-  setAa_field_id: React.Dispatch<React.SetStateAction<string>>
-  aaf_field_id: string
-  setAaf_field_id: React.Dispatch<React.SetStateAction<string>>
-  detectthreshold: number
-  setDetectthreshold: React.Dispatch<React.SetStateAction<number>>
-  leniency: number
-  setLeniency: React.Dispatch<React.SetStateAction<number>>
-  scheme: PageInformation
-  statePOST: State<genericApiDataResponse<SecondaryResponse>>
-  stateCMS: State<CMSPageResponse>
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-}
+type t = ReturnType<typeof useSecondaryState>
 
-function SecondaryPage(props: Props): JSX.Element {
+function SecondaryPage(props: t): JSX.Element {
   function SearchBar(showingDesc: Boolean) {
     return (
       <div className="search-container">
