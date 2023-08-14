@@ -73,7 +73,9 @@ def forumHome(authPayload):
         })
       kwargs = {
         'success': True,
-        'data': OrganisedPosts
+        'data': {
+            category: OrganisedPosts
+        }
       }
       res = jsonify(kwargs)
       res.headers.add('Access-Control-Allow-Credentials', 'true') 

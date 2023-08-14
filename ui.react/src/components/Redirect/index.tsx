@@ -3,13 +3,15 @@ import { Navigate, useNavigate } from "react-router-dom"
 import { sendMonitor } from "src/api/clients/ApiHandler/routes/sendMonitor"
 import { FuncProps, Props } from "./types"
 import { genericApiDataResponse } from "src/api/shared/types"
+import { useAuth } from "src/hooks/useAuth"
 
 function Redirect(props: FuncProps) {
+  const { trackingInformation } = useAuth()
   props
     .monitorPost({
       payload: {
-        uuid: localStorage.getItem("uuid"),
-        session_id: sessionStorage.getItem("session_id"),
+        uuid: trackingInformation.getPersistentKey(),
+        session_id: trackingInformation.getSessionKey(),
         page: window.location.pathname,
         ...(localStorage.getItem("currentPage") && {
           prevPage: localStorage.getItem("currentPage"),

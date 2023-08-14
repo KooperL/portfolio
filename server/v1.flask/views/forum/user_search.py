@@ -48,9 +48,8 @@ def forumUserViewHome(authPayload, *args, **kwargs):
         lower(forum_users.forum_username) = ? and
         (forum_posts.visible = 1 or forum_posts.forum_user_id = ? or ? = "True");'''
     postRaw = controllers.database.conn.fetch(pullForumQuery, (username.lower(), user_id, (role==999)))
-    print(postRaw, username, user_id)
-    if len(postRaw) <= 0:
-      return scripts.utils.responses.build_not_found()
+    # if len(postRaw) <= 0:
+    #   return scripts.utils.responses.build_not_found()
 
     posts = []
     for i in postRaw:
@@ -73,6 +72,7 @@ def forumUserViewHome(authPayload, *args, **kwargs):
       'data': posts,
     }
     res = jsonify(kwargs)
+    res.headers.add('Access-Control-Allow-Credentials', 'true') 
     return scripts.utils.responses.build_actual_response(res)
   elif request.method == 'OPTIONS': 
     return scripts.utils.responses.build_preflight_response()

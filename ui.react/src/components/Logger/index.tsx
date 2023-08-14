@@ -1,29 +1,12 @@
 import { useContext, useEffect, useState } from "react"
 import { sendCapture } from "src/api/clients/ApiHandler/routes/sendCapture"
+import { getPersistentKey, getSessionKey } from "src/state/authContext/helper"
 import { LoggingResponsePayload } from "./types"
 
 // TODO make it use the api handler
 
 interface Props {
   capturePost: Function
-}
-
-function generateUniqueToken(length: number) {
-  let token = ""
-  let validChars = "abcdefghijklmnopqrstuvwxyz"
-  for (let i = 0; i < length; i++) {
-    let random = Math.random()
-    if (random > 0.8) {
-      token = token.concat(parseInt((random * 10).toString()).toString())
-    } else {
-      const index = Math.floor(Math.random() * validChars.length)
-      let alpha = validChars[index]
-      token = token.concat(
-        index % 2 ? alpha.toLowerCase() : alpha.toUpperCase(),
-      )
-    }
-  }
-  return token
 }
 
 const MatchUserAgent = () => {
@@ -58,12 +41,6 @@ const MatchUserAgent = () => {
 }
 
 function Logger(props: Props) {
-  // useEffect(() => {
-  // TODO hash all three items
-  if (!localStorage.getItem("uuid")) {
-    localStorage.setItem("uuid", generateUniqueToken(10))
-  }
-
   const canvasHash = document.getElementById("canvas-hash")?.innerText ?? ""
   if (
     !localStorage.getItem("canvas-hash") ||
@@ -73,7 +50,7 @@ function Logger(props: Props) {
   }
 
   if (!sessionStorage.getItem("session_id")) {
-    sessionStorage.setItem("session_id", generateUniqueToken(20))
+    getSessionKey()
     // TODO
     // @ts-ignore
     const [browserVar, versionVar] = MatchUserAgent()
@@ -81,7 +58,7 @@ function Logger(props: Props) {
     props
       .capturePost({
         canvas_hash: document.getElementById("canvas-hash")?.innerText,
-        uuid: localStorage.getItem("uuid"),
+        uuid: getPersistentKey(),
         // windowInfo: {
         // plugins: JSON.stringify([].slice.call(navigator.plugins).map((item: any) => {
         //   return {
@@ -123,22 +100,6 @@ function Logger(props: Props) {
         console.log(err) //TODO
       })
   }
-  // props.monitorPost({
-  //   uuid: localStorage.getItem('uuid'),
-  //   session_id: sessionStorage.getItem('session_id'),
-  //   page: window.location.pathname,
-  //   ...(localStorage.getItem('currentPage') && {prevPage: localStorage.getItem('currentPage')})
-  // }).then((resp: LoggingPOSTResponse) => {
-  //   if(resp.success) {
-  //     localStorage.setItem('currentPage', window.location.pathname)
-  //   } else {
-  //     throw new Error(resp.error);
-  //   }
-  // }).catch((err: any) => {
-  //   console.log(err)
-  // })
-  // }, [window.location.href])
-
   return <></>
 }
 

@@ -10,10 +10,11 @@ function fetchForumUser(props: genericApiRequestArgs<ForumUserRequestPayload>): 
   const path = `${routes.forumUser}/${username}`
   const config: AxiosRequestConfig = {
     url: path,
-    data: data,
-    headers: { Authorization: `Bearer ${creds}` },
+    params: data,
+    headers: {
+      Authorization: `Bearer ${creds}`
+    },
     withCredentials: true,
-    method: 'POST'
   }
   const cacheKey: CacheKey = {
     CacheMode: CacheMode.NetworkFirst,

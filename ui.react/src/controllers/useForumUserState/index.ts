@@ -15,21 +15,21 @@ export const useForumUserState = () => {
   const user = window.location.href
     .toString()
     .slice(window.location.href.lastIndexOf("/") + 1)
-  const { authentication } = useAuth() 
+  const { authentication, trackingInformation } = useAuth() 
 
   const { state, pull: post } = useFetch<ForumUserRequestPayload, genericApiDataResponse<ForumUserResponsePayload[]>>()
   
   useEffect(() => {
     if (!authentication.accessToken) {
       // HandleUnauthenticated()
-      navigate(`/${forumPath}/${routes.forumRegister}`)
+      navigate(`/${forumPath}/${routes.forumLogin}`)
     }
     post({
       ApiImpl: fetchForumUser,
       auth: authentication.accessToken as string,
       varRoute: user,
       payload: {
-        session_id: sessionStorage.getItem("session_id") ?? "error",
+        session_id: trackingInformation.getSessionKey(),
       },
     })
   }, [authentication])

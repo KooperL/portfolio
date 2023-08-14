@@ -20,7 +20,7 @@ const routes = {
 
   forumRegister: 'login',
   forumLogin: 'login',
-  forumPostCreate: '',
+  forumPostCreate: 'create',
   forumPostView: 'post',
   forumUserView: 'user',
 } as const

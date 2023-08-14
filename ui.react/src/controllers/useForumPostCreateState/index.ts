@@ -24,7 +24,7 @@ export const useForumPostCreateState = () => {
   useEffect(() => {
     if (!authentication.accessToken) {
       // HandleUnauthenticated()
-      navigate(`/${forumPath}/${routes.forumRegister}`)
+      navigate(`/${forumPath}/${routes.forumLogin}`)
     }
   }, [authentication])
 
