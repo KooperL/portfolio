@@ -8,20 +8,13 @@ import usePropertyState from "../../controllers/usePropertyState"
 import "./style.css"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Button } from "../../components/Button"
-import { PropertyIndexResponse } from "./types"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
 import { genericApiDataResponse } from "src/api/shared/types"
 
-interface Props {
-  scheme: PageInformation
-  state: State<genericApiDataResponse<PropertyIndexResponse>>
-  stateCMS: State<CMSPageResponse>
-  ref: any
-  handleSubmit: () => void
-}
+type t = ReturnType<typeof usePropertyState>
 
-function PropertyPage(props: Props): JSX.Element {
+function PropertyPage(props: t): JSX.Element {
   if (props.state.loading) return <Spinner />
   if (props.state.error && props.state.errorMessage)
     return <ErrorPage errorMessage={props.state.errorMessage} errorType='NETWORK' />
@@ -47,7 +40,7 @@ function PropertyPage(props: Props): JSX.Element {
                   type="text"
                   name="prop_suburb"
                   id="prop_suburb"
-                  ref={React.forwardRef(props.ref)}
+                  ref={props.ref}
                 />
                 <Button colours={props.scheme} />
               </form>

@@ -8,21 +8,13 @@ import { Input } from "../../components/Input"
 import ErrorPage from "../ErrorPage"
 import { useMrnaState } from "../../controllers/useMrnaState"
 import { State } from "../../types/State"
-import { MrnaRequest, MrnaResponse } from "./types"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import TypeLookup from "../../components/TypeLookup"
 import { genericApiDataResponse } from "src/api/shared/types"
 
-interface Props {
-  scheme: PageInformation
-  value: string
-  setValue: React.Dispatch<React.SetStateAction<string>>
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  statePOST: State<genericApiDataResponse<MrnaResponse>>
-  stateCMS: State<CMSPageResponse>
-}
+type t = ReturnType<typeof useMrnaState>
 
-function MrnaPage(props: Props): JSX.Element {
+function MrnaPage(props: t): JSX.Element {
   function SearchBar(showingDesc: Boolean) {
     return (
       <div className="search-container">

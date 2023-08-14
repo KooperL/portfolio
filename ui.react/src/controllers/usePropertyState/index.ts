@@ -2,15 +2,15 @@ import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { useContext, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { useFetch } from "src/hooks/useFetch"
-import { PropertyIndexRequest, PropertyIndexResponse } from "../../containers/propertyPage/types"
 import { useCms } from "src/hooks/useCms"
 import { fetchFuelPrices } from "src/api/clients/ApiHandler/routes/fetchFuelPrices"
 import { fetchPropertyIndex } from "src/api/clients/ApiHandler/routes/fetchPropertyIndex"
 import { genericApiDataResponse, projectPath } from "src/api/shared/types"
 import { useError } from "src/hooks/useError"
+import { PropertyIndexRequest, PropertyIndexResponse } from "src/api/clients/ApiHandler/routes/fetchPropertyIndex/types"
 
 function usePropertyState() {
-  const ref = useRef()
+  const ref = useRef<any>()
   const [scheme, setScheme] = useContext(SchemeContext)
   const navigate = useNavigate()
   const { state: stateCMS, pull: pullCMS } = useCms()

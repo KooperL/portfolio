@@ -1,4 +1,3 @@
-import { ContactRequestPayload, ContactResponsePayload } from "../../containers/contactPage/types"
 import { useContext, useEffect, useState } from "react"
 import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { useFetch } from "../../hooks/useFetch"
@@ -8,6 +7,7 @@ import { sendContact } from "src/api/clients/ApiHandler/routes/sendContact"
 import { useError } from "src/hooks/useError"
 import { genericApiDataResponse } from "src/api/shared/types"
 import { useAuth } from "src/hooks/useAuth"
+import { ContactRequestPayload, ContactResponsePayload } from "src/api/clients/ApiHandler/routes/sendContact/types"
 
 export const useContactState = () => {
   // const [state, setState] = useState({ ...ContactInitialState })

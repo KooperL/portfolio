@@ -3,10 +3,10 @@ import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { useFetch } from "src/hooks/useFetch"
 import { CMSPageResponse } from "../../components/TypeLookup/types"
 import { sendMrna } from "src/api/clients/ApiHandler/routes/sendMrna"
-import { MrnaRequest, MrnaResponse } from "src/containers/mrnaPage/types"
 import { useCms } from "src/hooks/useCms"
 import { useError } from "src/hooks/useError"
 import { genericApiDataResponse } from "src/api/shared/types"
+import { MrnaRequest, MrnaResponse } from "src/api/clients/ApiHandler/routes/sendMrna/types"
 
 export const useMrnaState = () => {
   const [value, setValue] = useState("")

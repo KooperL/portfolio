@@ -1,14 +1,11 @@
 import { useState, useCallback, useContext, useEffect } from "react"
 import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import {
-  SecondaryRequest,
-  SecondaryResponse,
-} from "../../containers/secondaryPage/types"
 import { useFetch } from "src/hooks/useFetch"
 import { useCms } from "src/hooks/useCms"
-import { sendSecondary } from "src/api/clients/ApiHandler/routes/sendSecondary"
 import { useError } from "src/hooks/useError"
 import { genericApiDataResponse } from "src/api/shared/types"
+import { SecondaryRequest, SecondaryResponse } from "src/api/clients/ApiHandler/routes/sendSecondary/types"
+import { sendSecondary } from "src/api/clients/ApiHandler/routes/sendSecondary"
 
 
 export const useSecondaryState = () => {
