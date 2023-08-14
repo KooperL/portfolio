@@ -1,7 +1,6 @@
 package index
 
 import (
-	"fmt"
 	types "kooperlingohr/portfolio/Types"
 	"kooperlingohr/portfolio/controllers/database"
 	"kooperlingohr/portfolio/router/middleware/responses"

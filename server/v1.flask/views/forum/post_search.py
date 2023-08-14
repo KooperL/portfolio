@@ -16,8 +16,8 @@ post_search = Blueprint('post_search', __name__)
 
 @post_search.route(f'/{scripts.utils.structs.forumPath}/post/<int:id>', methods=['POST', 'OPTIONS'])   # DEL, GET was,'t working because axios wouldn't set content length
 @scripts.utils.decorators.errorHandle
-@scripts.utils.decorators.token_required
 @scripts.utils.decorators.rateLimit
+@scripts.utils.decorators.token_required
 def forumPostViewHome(authPayload, *args, **kwargs):
   if request.method == 'POST':
     id = int(kwargs.get('id'))
@@ -83,6 +83,7 @@ def forumPostViewHome(authPayload, *args, **kwargs):
       'data': post,
     }
     res = jsonify(kwargs)
+    res.headers.add('Access-Control-Allow-Credentials', 'true') 
     return scripts.utils.responses.build_actual_response(res)
   elif request.method == 'OPTIONS': 
     return scripts.utils.responses.build_preflight_response()

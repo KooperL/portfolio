@@ -56,6 +56,7 @@ def forumPostCreateHome(authPayload):
       }
     }
     res = jsonify(kwargs)
+    res.headers.add('Access-Control-Allow-Credentials', 'true') 
     return scripts.utils.responses.build_actual_response(res)
   elif request.method == 'OPTIONS': 
     return scripts.utils.responses.build_preflight_response()

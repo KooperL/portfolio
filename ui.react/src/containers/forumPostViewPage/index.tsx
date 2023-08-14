@@ -7,13 +7,13 @@ import { useForumPostViewState } from "../../controllers/useForumPostViewState"
 type t = ReturnType<typeof useForumPostViewState>
 
 function ForumPostViewPage(props: t): JSX.Element {
-  if (props.GETstate.loading) {
+  if (props.GETstate.loading || !props.GETstate.details) {
     return <Spinner />
   }
   if (props.GETstate.error) {
     return <div>{JSON.stringify(props.GETstate.errorMessage)}</div>
   }
-  const data = props.GETstate.details!.data
+  const data = props.GETstate.details.data
   return (
     <IslandCenter>
       <div className="forumPostViewPage">

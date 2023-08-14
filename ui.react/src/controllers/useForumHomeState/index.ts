@@ -25,21 +25,21 @@ export const useForumHomeState = () => {
   useEffect(() => {
     if (!authentication.accessToken) {
       // HandleUnauthenticated() 
-      navigate(`/${forumPath}/${routes.forumRegister}`)
+      navigate(`/${forumPath}/${routes.forumLogin}`)
     }
     post({
       ApiImpl: fetchForumHome,
       auth: authentication.accessToken as string,
       payload: {
         session_id: trackingInformation.getSessionKey(),
-        category: queryString.get("category") ?? "",
-        search: queryString.get("search") ?? "",
+        ...(queryString && {category: queryString.get("category")}),
+        ...(queryString && {search: queryString.get("search")}),
       },
     })
   }, [authentication, location])
 
   const handleSubmit = () => {
-    navigate(`${forumPath}?search=${searchState}`)
+    navigate(`/${forumPath}?search=${searchState}`)
   }
 
   useEffect(() => {

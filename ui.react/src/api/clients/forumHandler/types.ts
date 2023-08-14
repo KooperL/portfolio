@@ -1,9 +1,9 @@
 const routes = {
   forumRegister: 'register',
+  forumLogin: 'login',
   forumPostCreate: 'post',
   forumPost: 'post',
   forumUser: 'user',
-  forumLogin: 'login',
   forumRefresh: 'refresh',
   forumLogout: 'logout',
 } as const

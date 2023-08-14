@@ -2,8 +2,8 @@ import { ForumItemType } from "../../types"
 
 export interface ForumHomeRequestPayload {
   session_id: string
-  category?: string
-  search?: string
+  category: string | null
+  search?: string | null
 }
 
 export interface ForumHomeResponsePayload {

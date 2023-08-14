@@ -17,22 +17,23 @@ export const useForumPostViewState = () => {
     ForumPostViewRequestPayload,
     genericApiDataResponse<ForumPostViewResponsePayload>
   >()
-  const { authentication } = useAuth() 
+  const { authentication, trackingInformation } = useAuth() 
 
   useEffect(() => {
     if (!authentication.accessToken) {
       // HandleUnauthenticated()
-      navigate(`/${forumPath}/${routes.forumRegister}`)
+      navigate(`/${forumPath}/${routes.forumLogin}`)
+      return
     }
     post({
       ApiImpl: fetchForumPostView,
-      auth: authentication.accessToken as string,
+      auth: authentication.accessToken,
       varRoute,
       payload: {
-        session_id: sessionStorage.getItem("session_id") ?? "error",
+        session_id: trackingInformation.getSessionKey(),
       },
     })
-  }, [authentication])
+  }, [])
 
   const varRoute = window.location.href
     .split("/")

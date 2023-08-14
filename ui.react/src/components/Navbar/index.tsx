@@ -27,7 +27,7 @@ const site = () => {
 function Navbar(props: { isVertical: boolean }) {
   const [scheme, setScheme] = useContext(SchemeContext)
   // const [path, setPath] = useState([''])
-  const { authentication } = useAuth()
+  const { authentication, trackingInformation } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -90,7 +90,7 @@ function Navbar(props: { isVertical: boolean }) {
                 label: "logout",
                 callback: () => {
                   sendForumLogout({
-                    payload: { session_id: sessionStorage.getItem("session_id") ?? "" },
+                    payload: { session_id: trackingInformation.getSessionKey() },
                     auth: `Bearer ${authentication.accessToken}`,
                   }).then(resp => {
                     if (resp?.data?.success) {
