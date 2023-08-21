@@ -1,27 +1,27 @@
-package projects
+package ProjectsRandombioRoute
 
 import (
-	types "kooperlingohr/portfolio/Types"
+	"fmt"
 	"kooperlingohr/portfolio/router/middleware/responses"
+	ProjectsRoute "kooperlingohr/portfolio/router/routes/projects"
 	"kooperlingohr/portfolio/utils"
 	"math/rand"
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
 )
 
-func RandomBio(w http.ResponseWriter, r *http.Request) {
+func Route(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		params := r.URL.Query()
 		randomType := utils.HandleErrorDeconstruct(strconv.ParseInt(params.Get("type"), 10, 16))
 		randomLength := utils.HandleErrorDeconstruct(strconv.ParseInt(params.Get("length"), 10, 16))
 
-    dataDir := "../data"
+		dataDir := "../data"
 		switch randomType {
 		case (1):
-			var data []types.Dna
+			var data []ProjectsRoute.Dna
 			utils.OpenAndParseJSONFile(fmt.Sprintf("%s/dna.json", dataDir), &data)
 
 			rand.Seed(time.Now().Unix())
@@ -35,7 +35,7 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 			responses.BuildSuccessResponse(w, strings.Join(arr, ""))
 			return
 		case (2):
-			var data []types.Rna
+			var data []ProjectsRoute.Rna
 			utils.OpenAndParseJSONFile(fmt.Sprintf("%s/rna.json", dataDir), &data)
 
 			rand.Seed(time.Now().Unix())
@@ -51,7 +51,7 @@ func RandomBio(w http.ResponseWriter, r *http.Request) {
 		case (3):
 			aaFormat := utils.HandleErrorDeconstruct(strconv.ParseInt(params.Get("single"), 10, 16))
 
-			var data []types.AminoAcids
+			var data []ProjectsRoute.AminoAcids
 			utils.OpenAndParseJSONFile(fmt.Sprintf("%s/aminoAcids.json", dataDir), &data)
 
 			rand.Seed(time.Now().Unix())

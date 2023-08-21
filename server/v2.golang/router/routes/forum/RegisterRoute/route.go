@@ -1,4 +1,4 @@
-package forum
+package ForumRegisterRoute
 
 import (
 	types "kooperlingohr/portfolio/Types"
@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-func Register(w http.ResponseWriter, r *http.Request) {
+func Route(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		now := time.Now()
 		dt := now.Format(utils.GetTimeFormat())

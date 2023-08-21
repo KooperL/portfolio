@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	types "kooperlingohr/portfolio/Types"
+	ProjectsRoute "kooperlingohr/portfolio/router/routes/projects"
 	"kooperlingohr/portfolio/utils"
 )
 
@@ -42,7 +42,7 @@ func FindNucleationRegion(arr []float64, threshold float64, sliding_window int, 
 	return nucleationRegions
 }
 
-func PopulatePropensitiesFromSymbol(symbol string, memo *types.AaMemo, key string, dict []types.AminoAcids) float64 {
+func PopulatePropensitiesFromSymbol(symbol string, memo *ProjectsRoute.AaMemo, key string, dict []ProjectsRoute.AminoAcids) float64 {
 	var m map[string]float64
 	if key == "alpha_helix" {
 		m = memo.AlphaHelix

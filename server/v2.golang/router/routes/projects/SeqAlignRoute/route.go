@@ -1,4 +1,4 @@
-package projects
+package ProjectsSeqalignRoute
 
 import (
 	"fmt"
@@ -11,8 +11,8 @@ import (
 )
 
 type SeqAlignRes struct {
-  DrawRes []string `json:"draw_res"`
-  Results  []SeqAlignScore `json:"results"`
+	DrawRes []string        `json:"draw_res"`
+	Results []SeqAlignScore `json:"results"`
 }
 
 type SeqAlignScore struct {
@@ -23,7 +23,7 @@ type SeqAlignScore struct {
 	LastMatchIndex  int64  `json:"end"`
 }
 
-func SeqAlign(w http.ResponseWriter, r *http.Request) {
+func Route(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		params := r.URL.Query()
 		s1 := params.Get("sampletxt")
@@ -35,9 +35,9 @@ func SeqAlign(w http.ResponseWriter, r *http.Request) {
 		extendingGap, _ := strconv.ParseInt(params.Get("extgaps"), 10, 8)
 		beginningGap, _ := strconv.ParseInt(params.Get("gaps"), 10, 8)
 
-		results := SeqAlignRes {
+		results := SeqAlignRes{
 			DrawRes: []string{},
-			Results:  []SeqAlignScore{},
+			Results: []SeqAlignScore{},
 		}
 
 		if len(s1) == len(s2) {

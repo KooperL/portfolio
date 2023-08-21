@@ -1,18 +1,18 @@
-package projects
+package ProjectsSecondaryRoute
 
 import (
-	types "kooperlingohr/portfolio/Types"
-	"kooperlingohr/portfolio/controllers"
+	controllers "kooperlingohr/portfolio/controllers"
 	"kooperlingohr/portfolio/router/middleware/responses"
+	ProjectsRoute "kooperlingohr/portfolio/router/routes/projects"
 	"kooperlingohr/portfolio/utils"
 	"math"
 	"net/http"
 	"strings"
 )
 
-func Secondary(w http.ResponseWriter, r *http.Request) {
+func Route(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		var data []types.AminoAcids
+		var data []ProjectsRoute.AminoAcids
 		utils.OpenAndParseJSONFile("../data/aminoAcids.json", &data)
 
 		aa_list := strings.Split(r.URL.Query().Get("aa_field_id"), "")
@@ -22,7 +22,7 @@ func Secondary(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		var memo types.AaMemo
+		var memo ProjectsRoute.AaMemo
 		memo.AlphaHelix = map[string]float64{}
 		memo.BetaStrand = map[string]float64{}
 

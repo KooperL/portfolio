@@ -1,4 +1,4 @@
-package index
+package ContactRoute
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-func Contact(w http.ResponseWriter, r *http.Request) {
+func Route(w http.ResponseWriter, r *http.Request) {
  if r.Method == http.MethodPost {
 		var body types.ContactPayload
 		utils.ParseReqBody(r, &body)

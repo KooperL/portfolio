@@ -1,17 +1,17 @@
-package forum
+package ForumRoute
 
 import (
 	"fmt"
-	types "kooperlingohr/portfolio/Types"
 	"kooperlingohr/portfolio/controllers/database"
 	"kooperlingohr/portfolio/lib"
 	"kooperlingohr/portfolio/router/middleware/responses"
+	ForumRoute "kooperlingohr/portfolio/router/routes/forum"
 	"kooperlingohr/portfolio/utils"
 	"net/http"
 )
 
-func Index(w http.ResponseWriter, r *http.Request) {
-	decodedToken := r.Context().Value("decodedToken").(types.JWTbody)
+func Route(w http.ResponseWriter, r *http.Request) {
+	decodedToken := r.Context().Value("decodedToken").(ForumRoute.JWTbody)
 	// var jwtDecoded types.JWTbody
 
 	// reader := strings.NewReader(decodedToken)
@@ -46,7 +46,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 				forum_posts.parent_forum_user_id = 0 and
 				forum_posts.category_id = ?
 		`
-		posts := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumPostDB](categoryPostsQuery, []interface{}{categoryId}))
+		posts := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[ForumRoute.ForumPostDB](categoryPostsQuery, []interface{}{categoryId}))
 		fmt.Println(posts)
 		// organisedPosts := make([]types.ForumPostResponse, len(posts))
 		// for _, v := range posts {
@@ -88,7 +88,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 				forum_posts.title like ? or 
 				forum_posts.body like ? 
 		`
-		generalResults := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumPostDB](generalQuery, []interface{}{params.Get("search"), params.Get("search"), params.Get("search"), params.Get("search")}))
+		generalResults := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[ForumRoute.ForumPostDB](generalQuery, []interface{}{params.Get("search"), params.Get("search"), params.Get("search"), params.Get("search")}))
 		fmt.Println(generalResults)
 		// organisedPosts := make([]types.ForumPostResponse, len(generalResults))
 		// organisedPosts := map[string][]types.ForumPostResponse{}
@@ -136,15 +136,15 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		forum_posts.category_id = ?
 	limit 5;
 	`
-	posts := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumPostDB](categoryPostsQuery, []interface{}{categoryId}))
+	posts := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[ForumRoute.ForumPostDB](categoryPostsQuery, []interface{}{categoryId}))
 
-	organisedPosts := map[string][]types.ForumPostResponse{}
+	organisedPosts := map[string][]ForumRoute.ForumPostResponse{}
 	for _, v := range posts {
 
 		pullForumViewsQuery := "SELECT count(*) from forum_post_views where forum_post_id = ?;"
 		pullForumViews := database.SimpleQuery[int64](pullForumViewsQuery, []interface{}{v.ID})
 
-		post := types.ForumPostResponse{
+		post := ForumRoute.ForumPostResponse{
 			ID:     v.ID,
 			Date:   v.Date,
 			Author: v.ForumUsername,
@@ -155,7 +155,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		if val, ok := organisedPosts[v.Category]; ok {
 			organisedPosts[v.Category] = append(val, post)
 		} else {
-			organisedPosts[v.Category] = []types.ForumPostResponse{post}
+			organisedPosts[v.Category] = []ForumRoute.ForumPostResponse{post}
 		}
 	}
 	responses.BuildSuccessResponse(w, organisedPosts)

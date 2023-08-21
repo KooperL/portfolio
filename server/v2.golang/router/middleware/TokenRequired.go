@@ -3,10 +3,9 @@ package middleware
 import (
 	"context"
 	"fmt"
-	types "kooperlingohr/portfolio/Types"
 	"kooperlingohr/portfolio/router/middleware/responses"
+	ForumRoute "kooperlingohr/portfolio/router/routes/forum"
 	"kooperlingohr/portfolio/utils"
-
 	"net/http"
 	"os"
 	"strings"
@@ -21,7 +20,7 @@ func TokenRequired(h http.HandlerFunc) http.HandlerFunc {
 		// var jwt types.JWT
 		// utils.HandleErrorVar(json.Unmarshal([]byte(token[1]), &jwt))
 
-		tokenDecoded, err := utils.DecodeJWT[types.JWTbody](token[1], os.Getenv("forum-jwt-auth-token"))
+		tokenDecoded, err := utils.DecodeJWT[ForumRoute.JWTbody](token[1], os.Getenv("forum-jwt-auth-token"))
 		fmt.Println(tokenDecoded, err)
 		if err == nil {
 			ctx := context.WithValue(r.Context(), "decodedToken", tokenDecoded)

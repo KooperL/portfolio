@@ -1,4 +1,5 @@
-package types
+
+package cms 
 
 type CMSPage struct {
 	ID       string      `json:"id"`

@@ -1,18 +1,18 @@
-package forum
+package ForumUserRoute
 
 import (
 	"fmt"
-	types "kooperlingohr/portfolio/Types"
 	"kooperlingohr/portfolio/controllers/database"
 	"kooperlingohr/portfolio/lib"
 	"kooperlingohr/portfolio/router/middleware/responses"
+	ForumRoute "kooperlingohr/portfolio/router/routes/forum"
 	"kooperlingohr/portfolio/utils"
 	"net/http"
 	"regexp"
 	"strings"
 )
 
-func User(w http.ResponseWriter, r *http.Request) {
+func Route(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		// Rest of this is done, thing is called with {{forumPath}}/user/{{forum_test_username}}?session_id={{test_session_id}}
 		// Need a way to parse the username from the url or otherwise refactor TS code to send as payload
@@ -29,7 +29,7 @@ func User(w http.ResponseWriter, r *http.Request) {
 
 		userSearched := matches[1]
 
-		decodedToken := r.Context().Value("decodedToken").(types.JWTbody)
+		decodedToken := r.Context().Value("decodedToken").(ForumRoute.JWTbody)
 		params := r.URL.Query()
 		if params.Get("session_id") == "" {
 			responses.BuildUnauthorised(w)
@@ -55,8 +55,8 @@ func User(w http.ResponseWriter, r *http.Request) {
 		where
 		lower(forum_users.forum_username) = ? and
 		(forum_posts.visible = 1 or forum_posts.forum_user_id = ? or ? = true);`
-		postRaw := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumPostVerbose](pullForumQuery, []interface{}{strings.ToLower(userSearched), decodedToken.UserID, (decodedToken.Role == 999)}))
-		var posts []types.ForumPostResponseVerbose
+		postRaw := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[ForumRoute.ForumPostVerbose](pullForumQuery, []interface{}{strings.ToLower(userSearched), decodedToken.UserID, (decodedToken.Role == 999)}))
+		var posts []ForumRoute.ForumPostResponseVerbose
 
 		if len(postRaw) < 1 {
 			responses.BuildPlainSuccess(w, 204)
@@ -67,9 +67,9 @@ func User(w http.ResponseWriter, r *http.Request) {
 			pullForumViewsQuery := "SELECT count(*) from forum_post_views where forum_post_id = ?;"
 			pullForumViews := database.SimpleQuery[int64](pullForumViewsQuery, []interface{}{v.ID})
 
-			resp := types.ForumPostResponseVerbose{
+			resp := ForumRoute.ForumPostResponseVerbose{
 				Views: pullForumViews + 1,
-				ForumPostVerbose: types.ForumPostVerbose{
+				ForumPostVerbose: ForumRoute.ForumPostVerbose{
 					ID:       v.ID,
 					Date:     v.Date,
 					Author:   v.Author,

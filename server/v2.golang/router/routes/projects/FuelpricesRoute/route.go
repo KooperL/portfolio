@@ -1,4 +1,4 @@
-package projects
+package ProjectsFuelpricesRoute
 
 import (
 	types "kooperlingohr/portfolio/Types"
@@ -8,9 +8,18 @@ import (
 	"net/http"
 )
 
-func Fuelprices(w http.ResponseWriter, r *http.Request) {
+type FuelpricesDB struct {
+	ID             int64   `json:"id"`
+	Date           any     `json:"date"`
+	Minprice       float64 `json:"minprice"`
+	Maxprice       float64 `json:"maxprice"`
+	Averageprice   float64 `json:"averageprice"`
+	Wholesaleprice float64 `json:"wholesaleprice"`
+}
+
+func Route(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		res := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.Fuelprices]("SELECT * FROM fuelprices ORDER BY id DESC LIMIT ?", []any{200}))
+		res := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[FuelpricesDB]("SELECT * FROM fuelprices ORDER BY id DESC LIMIT ?", []any{200}))
     if len(res) < 200 {
       responses.BuildBadResponse(w, "Resources not found", 500)
       return
