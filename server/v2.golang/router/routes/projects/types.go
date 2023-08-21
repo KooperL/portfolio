@@ -1,4 +1,4 @@
-package types
+package ProjectsRoute
 
 type Base struct {
 	Name                    string `json:"name"`

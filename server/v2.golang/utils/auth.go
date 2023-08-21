@@ -8,7 +8,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	types "kooperlingohr/portfolio/Types"
+	ForumRoute "kooperlingohr/portfolio/router/routes/forum"
 	"net"
 	"net/http"
 	"strconv"
@@ -74,16 +74,16 @@ func GenerateSalt(x int64) string {
 }
 
 type test interface {
-	types.JWTbody | types.RefreshToken
+	ForumRoute.JWTbody | ForumRoute.RefreshToken
 }
 
-func DecodeJWT[T test](jwt, secret string) (types.JWTbody, error) {
+func DecodeJWT[T test](jwt, secret string) (ForumRoute.JWTbody, error) {
 	jwtSlice := strings.Split(jwt, ".")
 	header := jwtSlice[0]
 	body := jwtSlice[1]
 	externalSignature := jwtSlice[2]
 
-	var jwtDecoded types.JWTbody
+	var jwtDecoded ForumRoute.JWTbody
 	reader := strings.NewReader(DecodeBase64Raw(body))
 	HandleErrorVar(json.NewDecoder(reader).Decode(&jwtDecoded))
 
@@ -109,13 +109,13 @@ func DecodeJWT[T test](jwt, secret string) (types.JWTbody, error) {
 }
 
 // Fuck this shitty language
-func DecodeJWTRefresh[T test](jwt, secret string) (types.RefreshToken, error) {
+func DecodeJWTRefresh[T test](jwt, secret string) (ForumRoute.RefreshToken, error) {
 	jwtSlice := strings.Split(jwt, ".")
 	header := jwtSlice[0]
 	body := jwtSlice[1]
 	externalSignature := jwtSlice[2]
 
-	var jwtDecoded types.RefreshToken
+	var jwtDecoded ForumRoute.RefreshToken
 	reader := strings.NewReader(DecodeBase64Raw(body))
 	HandleErrorVar(json.NewDecoder(reader).Decode(&jwtDecoded))
 
@@ -140,9 +140,9 @@ func DecodeJWTRefresh[T test](jwt, secret string) (types.RefreshToken, error) {
 	return jwtDecoded, nil
 }
 
-func generateJWTHeader() types.JWTheader {
+func generateJWTHeader() ForumRoute.JWTheader {
 	jsonStr := `{"alg":"HS256","typ":"JWT"}`
-	var header types.JWTheader
+	var header ForumRoute.JWTheader
 	HandleErrorVar(json.Unmarshal([]byte(jsonStr), &header))
 
 	return header
@@ -153,7 +153,7 @@ func generateJWTSignature(preSig string, secret string) string {
 	return signature
 }
 
-func generateJWTPreSig[T types.JWTbody | types.RefreshToken](header types.JWTheader, payload T) string {
+func generateJWTPreSig[T ForumRoute.JWTbody | ForumRoute.RefreshToken](header ForumRoute.JWTheader, payload T) string {
 	headerStr := string(HandleErrorDeconstruct(json.Marshal(generateJWTHeader())))
 	bodyStr := string(HandleErrorDeconstruct(json.Marshal(payload)))
 	bundle := fmt.Sprintf(
@@ -164,7 +164,7 @@ func generateJWTPreSig[T types.JWTbody | types.RefreshToken](header types.JWThea
 	return bundle
 }
 
-func GenerateJWT[T types.JWTbody | types.RefreshToken](payload T, secret string) string {
+func GenerateJWT[T ForumRoute.JWTbody | ForumRoute.RefreshToken](payload T, secret string) string {
 	bundle := generateJWTPreSig(generateJWTHeader(), payload)
 	signature := generateJWTSignature(bundle, secret)
 	return fmt.Sprintf("%s.%s", bundle, signature)

@@ -1,4 +1,4 @@
-package projects
+package ProjectsPropertyRoute
 
 import (
 	"kooperlingohr/portfolio/router/middleware/responses"
@@ -28,7 +28,7 @@ type PropertyRes struct {
 	Stats StatsMap `json:"stats"`
 }
 
-func Property(w http.ResponseWriter, r *http.Request) {
+func Route(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
     data := PropertyRes{
       Highest: []HighestMap{

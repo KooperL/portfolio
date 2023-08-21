@@ -1,8 +1,9 @@
-package forum
+package ForumPostRoute
 
 import (
 	"fmt"
 	types "kooperlingohr/portfolio/Types"
+  ForumRoute "kooperlingohr/portfolio/router/routes/forum"
 	"kooperlingohr/portfolio/controllers/database"
 	"kooperlingohr/portfolio/controllers/discord"
 	"kooperlingohr/portfolio/lib"
@@ -13,9 +14,9 @@ import (
 	"time"
 )
 
-func Post(w http.ResponseWriter, r *http.Request) {
+func Route(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
-		decodedToken := r.Context().Value("decodedToken").(types.JWTbody)
+		decodedToken := r.Context().Value("decodedToken").(ForumRoute.JWTbody)
 		var body types.PostForum
 		utils.ParseReqBody(r, &body)
 

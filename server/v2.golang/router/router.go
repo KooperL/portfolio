@@ -5,20 +5,35 @@ import (
 	"kooperlingohr/portfolio/router/middleware"
 	"kooperlingohr/portfolio/router/middleware/responses"
 	"kooperlingohr/portfolio/router/routes/cms"
-	"kooperlingohr/portfolio/router/routes/forum"
-	index "kooperlingohr/portfolio/router/routes/index"
-	projects "kooperlingohr/portfolio/router/routes/projects"
+	ForumRoute "kooperlingohr/portfolio/router/routes/forum/IndexRoute"
+	ForumLoginRoute "kooperlingohr/portfolio/router/routes/forum/LoginRoute"
+	ForumLogoutRoute "kooperlingohr/portfolio/router/routes/forum/LogoutRoute"
+	ForumPostRoute "kooperlingohr/portfolio/router/routes/forum/PostRoute"
+	ForumPostSearchRoute "kooperlingohr/portfolio/router/routes/forum/PostSearchRoute"
+	ForumRefreshRoute "kooperlingohr/portfolio/router/routes/forum/RefreshRoute"
+	ForumRegisterRoute "kooperlingohr/portfolio/router/routes/forum/RegisterRoute"
+	ForumUserRoute "kooperlingohr/portfolio/router/routes/forum/UserRoute"
+	"kooperlingohr/portfolio/router/routes/index/CaptureRoute"
+	"kooperlingohr/portfolio/router/routes/index/ContactRoute"
+	"kooperlingohr/portfolio/router/routes/index/MonitorRoute"
+	ProjectsFuelpricesRoute "kooperlingohr/portfolio/router/routes/projects/FuelpricesRoute"
+	ProjectsMrnaRoute "kooperlingohr/portfolio/router/routes/projects/MrnaRoute"
+	ProjectsPropertyRoute "kooperlingohr/portfolio/router/routes/projects/PropertyRoute"
+	ProjectsRandombioRoute "kooperlingohr/portfolio/router/routes/projects/RandomBioRoute"
+	ProjectsSecondaryRoute "kooperlingohr/portfolio/router/routes/projects/SecondaryRoute"
+	ProjectsSeqalignRoute "kooperlingohr/portfolio/router/routes/projects/SeqAlignRoute"
+	ProjectsSiteanalysisRoute "kooperlingohr/portfolio/router/routes/projects/SiteAnalysisRoute"
 	"net/http"
 )
 
 func SetupRouter() *http.ServeMux {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/contact", middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(index.Contact))))
-	mux.HandleFunc("/capture", middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(index.Capture))))
-	mux.HandleFunc("/monitor", middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(index.Monitor))))
+	mux.HandleFunc("/contact", middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(ContactRoute.Route))))
+	mux.HandleFunc("/capture", middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(CaptureRoute.Route))))
+	mux.HandleFunc("/monitor", middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(MonitorRoute.Route))))
 
-  cmsRoute := "cms"
+	cmsRoute := "cms"
 	mux.HandleFunc(fmt.Sprintf("/%s/about", cmsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(cms.AboutPage))))
 	mux.HandleFunc(fmt.Sprintf("/%s/contact", cmsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(cms.ContactPage))))
 	mux.HandleFunc(fmt.Sprintf("/%s/fuelprices", cmsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(cms.FuelpricesPage))))
@@ -33,24 +48,24 @@ func SetupRouter() *http.ServeMux {
 	mux.HandleFunc(fmt.Sprintf("/%s/seqalign", cmsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(cms.SeqalignPage))))
 	mux.HandleFunc(fmt.Sprintf("/%s/tictactoe", cmsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(cms.TictactoePage))))
 
-	projectsRoute := "projects"
-	mux.HandleFunc(fmt.Sprintf("/%s/property", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.Property))))
-	mux.HandleFunc(fmt.Sprintf("/%s/fuelprices", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.Fuelprices))))
-	mux.HandleFunc(fmt.Sprintf("/%s/seqalign", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.SeqAlign))))
-	mux.HandleFunc(fmt.Sprintf("/%s/randombio", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.RandomBio))))
-	mux.HandleFunc(fmt.Sprintf("/%s/secondary", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.Secondary))))
-	mux.HandleFunc(fmt.Sprintf("/%s/mrna", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.Mrna))))
-	mux.HandleFunc(fmt.Sprintf("/%s/siteanalysis", projectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(projects.SiteAnalysis))))
+	ProjectsRoute := "projects"
+	mux.HandleFunc(fmt.Sprintf("/%s/property", ProjectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(ProjectsPropertyRoute.Route))))
+	mux.HandleFunc(fmt.Sprintf("/%s/fuelprices", ProjectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(ProjectsFuelpricesRoute.Route))))
+	mux.HandleFunc(fmt.Sprintf("/%s/seqalign", ProjectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(ProjectsSeqalignRoute.Route))))
+	mux.HandleFunc(fmt.Sprintf("/%s/randombio", ProjectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(ProjectsRandombioRoute.Route))))
+	mux.HandleFunc(fmt.Sprintf("/%s/secondary", ProjectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(ProjectsSecondaryRoute.Route))))
+	mux.HandleFunc(fmt.Sprintf("/%s/mrna", ProjectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(ProjectsMrnaRoute.Route))))
+	mux.HandleFunc(fmt.Sprintf("/%s/siteanalysis", ProjectsRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(ProjectsSiteanalysisRoute.Route))))
 
 	forumRoute := "forum"
-	mux.HandleFunc(fmt.Sprintf("/%s", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(forum.Index)))))
-	mux.HandleFunc(fmt.Sprintf("/%s/login", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(forum.Login))))
-	mux.HandleFunc(fmt.Sprintf("/%s/register", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(forum.Register))))
-	mux.HandleFunc(fmt.Sprintf("/%s/refresh", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(forum.Refresh))))
-	mux.HandleFunc(fmt.Sprintf("/%s/post", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(forum.Post)))))
-	mux.HandleFunc(fmt.Sprintf("/%s/post/", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(forum.PostSearch)))))
-	mux.HandleFunc(fmt.Sprintf("/%s/user/", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(forum.User)))))
-	mux.HandleFunc(fmt.Sprintf("/%s/logout", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(forum.Logout)))))
+	mux.HandleFunc(fmt.Sprintf("/%s", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(ForumRoute.Route)))))
+	mux.HandleFunc(fmt.Sprintf("/%s/login", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(ForumLoginRoute.Route))))
+	mux.HandleFunc(fmt.Sprintf("/%s/register", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(ForumRegisterRoute.Route))))
+	mux.HandleFunc(fmt.Sprintf("/%s/refresh", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(ForumRefreshRoute.Route))))
+	mux.HandleFunc(fmt.Sprintf("/%s/post", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(ForumPostRoute.Route)))))
+	mux.HandleFunc(fmt.Sprintf("/%s/post/", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(ForumPostSearchRoute.Route)))))
+	mux.HandleFunc(fmt.Sprintf("/%s/user/", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(ForumUserRoute.Route)))))
+	mux.HandleFunc(fmt.Sprintf("/%s/logout", forumRoute), middleware.CatchErrors(responses.BuildPreflight(middleware.RateLimit(middleware.TokenRequired(ForumLogoutRoute.Route)))))
 
 	return mux
 }

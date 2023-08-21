@@ -1,9 +1,10 @@
-package forum
+package ForumLoginRoute
 
 import (
 	"bytes"
 	"fmt"
 	types "kooperlingohr/portfolio/Types"
+  ForumRoute "kooperlingohr/portfolio/router/routes/forum"
 	"kooperlingohr/portfolio/controllers/database"
 	"kooperlingohr/portfolio/lib"
 	"kooperlingohr/portfolio/router/middleware/responses"
@@ -14,7 +15,7 @@ import (
 	"time"
 )
 
-func Login(w http.ResponseWriter, r *http.Request) {
+func Route(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		var accessTokenLife, refreshTokenLife int
 		fmt.Sscan(os.Getenv("forum-access-token-life"), &accessTokenLife)
@@ -32,7 +33,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		lib.TrackForumFunctionsCalled(creds[0], body.SessionID, "login")
 
 		userSearchQuery := "SELECT id, forum_password_hash, forum_password_salt, role_id FROM forum_users where forum_username = ?"
-		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumUsersDB](userSearchQuery, []any{strings.ToLower(creds[0])}))
+		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[ForumRoute.ForumUsersDB](userSearchQuery, []any{strings.ToLower(creds[0])}))
 
 		if len(userSearchTraffic) != 1 {
 			responses.BuildUnauthorised(w)
@@ -51,7 +52,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		now := time.Now()
 		dt := now.Format(utils.GetTimeFormat())
 
-		jwtAccessPayload := types.JWTbody{
+		jwtAccessPayload := ForumRoute.JWTbody{
 			UserID:   userSearchTraffic[0].ID,
 			Iat:      now.Unix(),
 			Role:     userSearchTraffic[0].RoleID,
@@ -60,7 +61,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		}
 		jwtAccess := utils.GenerateJWT(jwtAccessPayload, os.Getenv("forum-jwt-auth-token"))
 
-		jwtRefreshPayload := types.RefreshToken{
+		jwtRefreshPayload := ForumRoute.RefreshToken{
 			UserID: userSearchTraffic[0].ID,
 			Exp:    fmt.Sprintf("%d", utils.TimeOffset(now, refreshTokenLife)),
 		}

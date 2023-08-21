@@ -1,28 +1,29 @@
-package projects
+package ProjectsMrnaRoute
 
 import (
 	"bytes"
 	"fmt"
 	types "kooperlingohr/portfolio/Types"
 	"kooperlingohr/portfolio/router/middleware/responses"
+	"kooperlingohr/portfolio/router/routes/projects"
 	"kooperlingohr/portfolio/utils"
 	"net/http"
 	"strings"
 )
 
-func Mrna(w http.ResponseWriter, r *http.Request) {
+func Route(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		dnaSourceRaw := r.URL.Query().Get("dna_field_id")
 		dnaSource := strings.Split(dnaSourceRaw, "")
 		sourceSize := len(dnaSource)
 
-		var dnaDict []types.Dna
+		var dnaDict []ProjectsRoute.Dna
 		utils.OpenAndParseJSONFile("../data/dna.json", &dnaDict)
 
-		var rnaDict []types.Rna
+		var rnaDict []ProjectsRoute.Rna
 		utils.OpenAndParseJSONFile("../data/rna.json", &rnaDict)
 
-		var aaDict []types.AminoAcids
+		var aaDict []ProjectsRoute.AminoAcids
 		utils.OpenAndParseJSONFile("../data/aminoAcids.json", &aaDict)
 
 		sourceAsBytes := []byte(strings.Join(dnaSource, ""))

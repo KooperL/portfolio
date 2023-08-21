@@ -1,4 +1,4 @@
-package index
+package MonitorRoute
 
 import (
 	types "kooperlingohr/portfolio/Types"
@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func Monitor(w http.ResponseWriter, r *http.Request) {
+func Route(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		var body types.MonitorPayload
 		datetime := time.Now().Format("2006-01-02 15:04:05.000000")

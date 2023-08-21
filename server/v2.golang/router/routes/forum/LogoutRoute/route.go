@@ -1,23 +1,23 @@
-package forum
+package ForumLogoutRoute
 
 import (
 	"fmt"
-	types "kooperlingohr/portfolio/Types"
 	"kooperlingohr/portfolio/controllers/database"
 	"kooperlingohr/portfolio/router/middleware/responses"
+	ForumRoute "kooperlingohr/portfolio/router/routes/forum"
 	"kooperlingohr/portfolio/utils"
 	"net/http"
 	"os"
 )
 
-func Logout(w http.ResponseWriter, r *http.Request) {
+func Route(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 
 		var accessTokenLife int
 		fmt.Sscan(os.Getenv("forum-access-token-life"), &accessTokenLife)
 
 		refresh_token := utils.HandleErrorDeconstruct(r.Cookie("refresh_token"))
-		refresh_token_decoded, err := utils.DecodeJWTRefresh[types.RefreshToken](refresh_token.Value, os.Getenv("forum-jwt-refresh-token"))
+		refresh_token_decoded, err := utils.DecodeJWTRefresh[ForumRoute.RefreshToken](refresh_token.Value, os.Getenv("forum-jwt-refresh-token"))
 
 		fmt.Println(refresh_token.Value, refresh_token_decoded, err)
 
@@ -37,7 +37,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		}
 
 		userSearchQuery := "DELETE from forum_refresh_tokens where forum_user_id = ?;"
-		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[types.ForumUsersSimpleDB](userSearchQuery, []any{refresh_token_decoded.UserID}))
+		userSearchTraffic := utils.HandleErrorDeconstruct(database.ExecuteSQLiteQuery[ForumRoute.ForumUsersSimpleDB](userSearchQuery, []any{refresh_token_decoded.UserID}))
 
 		if len(userSearchTraffic) != 1 {
 			responses.BuildUnauthorised(w)

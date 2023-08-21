@@ -1,7 +1,6 @@
-package cms 
+package cms
 
 import (
-	types "kooperlingohr/portfolio/Types"
 	"kooperlingohr/portfolio/router/middleware/responses"
 	"kooperlingohr/portfolio/utils"
 	"net/http"
@@ -9,7 +8,7 @@ import (
 
 func MinesweeperPage(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		var res types.CMSPage
+		var res CMSPage
 		utils.OpenAndParseJSONFile("../data/responses/minesweeperPage.json", &res)
 		responses.BuildSuccessResponse(w, res)
 	}

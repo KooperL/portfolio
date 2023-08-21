@@ -1,4 +1,4 @@
-package projects
+package ProjectsSiteanalysisRoute
 
 import (
 	types "kooperlingohr/portfolio/Types"
@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func SiteAnalysis(w http.ResponseWriter, r *http.Request) {
+func Route(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		params := r.URL.Query()
 		if params.Get("uuid") == "" {
