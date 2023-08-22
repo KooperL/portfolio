@@ -16,8 +16,8 @@ function fetchForumPostView(props: genericApiRequestArgs<ForumPostViewRequestPay
     method: 'POST'
   }
   const cacheKey: CacheKey = {
-    CacheMode: CacheMode.NetworkFirst,
-    CacheKey: routes.forumPost
+    CacheMode: fetchForum.defaultCacheMode,
+    CacheKey: null
   }
   return fetchForum.request(
     config,

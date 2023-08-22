@@ -17,8 +17,8 @@ function sendForumPostCreate(props: genericApiRequestArgs<ForumPostCreateRequest
     method: 'POST'
   }
   const cacheKey: CacheKey = {
-    CacheMode: CacheMode.NetworkFirst,
-    CacheKey: routes.forumPostCreate
+    CacheMode: fetchForum.defaultCacheMode,
+    CacheKey: null
   }
   return fetchForum.request(
     config,

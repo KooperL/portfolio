@@ -1,11 +1,12 @@
 enum CacheMode {
   CacheFirst,
   NetworkFirst,
+  NetworkOnly,
 }
 
 interface CacheKey {
   CacheMode: CacheMode,
-  CacheKey: String
+  CacheKey: String | null
 }
 
 export {

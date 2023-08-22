@@ -16,8 +16,8 @@ function sendForumLogin(props: genericApiRequestArgs<ForumLoginRequestPayload>):
     method: 'POST'
   }
   const cacheKey: CacheKey = {
-    CacheMode: CacheMode.NetworkFirst,
-    CacheKey: routes.forumLogin
+    CacheMode: fetchForum.defaultCacheMode,
+    CacheKey: null
   }
   return fetchForum.request(
     config,

@@ -1,4 +1,4 @@
-import axios, { Axios, AxiosRequestConfig } from "axios";
+import axios, { Axios, AxiosRequestConfig, AxiosResponse } from "axios";
 import { CacheKey, CacheMode } from "./types";
 
 class ApiHandlerCore {
@@ -15,14 +15,11 @@ class ApiHandlerCore {
     this.instance = axios.create(config)
     this.retryTimeSeconds = retryTimeSeconds
     this.defaultCacheMode = defaultCacheMode
-
-    this.instance.interceptors.response.use((response) => response, (error) => {
-      if (error.config && error.response && error.response.status !== 429) {
-          return axios.request(error.config);
-      }
-      return Promise.reject(error);
-    })
   };
+
+  addResponseInterceptor(onFulfilled: (resp: AxiosResponse) => any, onError: any) {
+    return this.instance.interceptors.response.use(onFulfilled, onError)
+  }
 
   async request<T>(
     config: AxiosRequestConfig<T>,
@@ -30,18 +27,20 @@ class ApiHandlerCore {
   ) {
     switch (cacheKey.CacheMode) {
       case CacheMode.CacheFirst:
-        // const cachedData = this.store.get(cacheKey.CacheKey)
-        // this.instance.request(config).then(resp => {
-        //   this.store.set(cacheKey.CacheKey, resp)
-        // })
-        // return cachedData
-        const resp1 = this.instance.request(config)
-        return resp1
+        const cachedData = this.store.get(cacheKey.CacheKey)
+        this.instance.request(config).then(resp => {
+          this.store.set(cacheKey.CacheKey, resp)
+          // what if onothing in cache
+        })
+        return cachedData
+        // TODO: correct way to do this
 
       case CacheMode.NetworkFirst:
         const resp = this.instance.request(config)
         this.store.set(cacheKey.CacheKey, resp)
         return resp
+      case CacheMode.NetworkOnly:
+        return this.instance.request(config)
     }
   }
 }
