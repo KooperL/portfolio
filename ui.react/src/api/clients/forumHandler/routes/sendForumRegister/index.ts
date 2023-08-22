@@ -16,8 +16,8 @@ function sendForumRegister(props: genericApiRequestArgs<ForumRegisterRequstPaylo
     method: 'POST'
   }
   const cacheKey: CacheKey = {
-    CacheMode: CacheMode.NetworkFirst,
-    CacheKey: routes.forumRegister
+    CacheMode: fetchForum.defaultCacheMode,
+    CacheKey: null
   }
   return fetchForum.request(
     config,

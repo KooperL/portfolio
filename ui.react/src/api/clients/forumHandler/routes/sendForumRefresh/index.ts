@@ -15,8 +15,8 @@ function sendForumRefresh(props: genericApiRequestArgs<ForumRefreshRequestPayloa
     method: 'POST'
   }
   const cacheKey: CacheKey = {
-    CacheMode: CacheMode.NetworkFirst,
-    CacheKey: routes.forumRefresh
+    CacheMode: fetchForum.defaultCacheMode,
+    CacheKey: null
   }
   return fetchForum.request(
     config,

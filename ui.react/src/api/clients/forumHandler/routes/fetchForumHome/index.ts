@@ -17,8 +17,8 @@ export function fetchForumHome(props: genericApiRequestArgs<ForumHomeRequestPayl
     withCredentials: true
   }
   const cacheKey: CacheKey = {
-    CacheMode: CacheMode.NetworkFirst,
-    CacheKey: forumPath
+    CacheMode: fetchForum.defaultCacheMode,
+    CacheKey: null 
   }
   return fetchForum.request(
     config,

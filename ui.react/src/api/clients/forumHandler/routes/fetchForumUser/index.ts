@@ -17,8 +17,8 @@ function fetchForumUser(props: genericApiRequestArgs<ForumUserRequestPayload>): 
     withCredentials: true,
   }
   const cacheKey: CacheKey = {
-    CacheMode: CacheMode.NetworkFirst,
-    CacheKey: routes.forumUser
+    CacheMode: fetchForum.defaultCacheMode,
+    CacheKey: null
   }
   return fetchForum.request(
     config,

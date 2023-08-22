@@ -10,7 +10,7 @@ const fetchForum = new ApiHandlerCore(
     baseURL: `${apiHost.apiHost.toString()}/${forumPath}`,
   },
   2,
-  CacheMode.NetworkFirst,
+  CacheMode.NetworkOnly,
 )
 
 export {
