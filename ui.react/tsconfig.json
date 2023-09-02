@@ -16,16 +16,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "paths": {
-      "@components/*": ["src/components/*"],
-      "@utils/*": ["src/utils/*"],
-      "@controllers/*": ["src/controllers/*"],
-      "@assets/*": ["src/assets/*"],
-      "@containers/*": ["src/containers/*"],
-      "@templates/*": ["src/templates/*"],
-      "@types/*": ["src/types/*"]
-    }
-  },
   "include": ["src"],
   "exclude": ["node_modules"]
 }
