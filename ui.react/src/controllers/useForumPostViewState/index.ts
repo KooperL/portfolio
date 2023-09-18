@@ -3,12 +3,14 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import Redirect from "../../components/Redirect"
 import { useFetch } from "src/hooks/useFetch"
-import { ForumPostViewRequestPayload, ForumPostViewResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumPostView/types"
+import {
+  ForumPostViewRequestPayload,
+  ForumPostViewResponsePayload,
+} from "src/api/clients/forumHandler/routes/fetchForumPostView/types"
 import { fetchForumPostView } from "src/api/clients/forumHandler/routes/fetchForumPostView"
 import { useAuth } from "src/hooks/useAuth"
 import { forumPath, routes } from "src/containers/App/types"
 import { genericApiDataResponse } from "src/api/shared/types"
-
 
 export const useForumPostViewState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
@@ -17,7 +19,7 @@ export const useForumPostViewState = () => {
     ForumPostViewRequestPayload,
     genericApiDataResponse<ForumPostViewResponsePayload>
   >()
-  const { authentication, trackingInformation } = useAuth() 
+  const { authentication, trackingInformation } = useAuth()
 
   useEffect(() => {
     if (!authentication.accessToken) {
@@ -39,7 +41,6 @@ export const useForumPostViewState = () => {
     .split("/")
     .slice(-1)[0]
     .replace(/[^0-9]/g, "")
-
 
   useEffect(() => {
     document.title = `${

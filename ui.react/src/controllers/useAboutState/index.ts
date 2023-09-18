@@ -30,13 +30,13 @@ export const useAboutState = () => {
   // const [text, setText] = useState<Array<Array<number>>>([[]]);
   const [scheme, setScheme] = useContext(SchemeContext)
   const { state: stateCMS, pull } = useCms()
-  const { raiseError } = useError();
-  
+  const { raiseError } = useError()
+
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: 'NETWORK',
-        errorMessage: 'Error fetching data'
+        errorType: "NETWORK",
+        errorMessage: "Error fetching data",
       })
     }
   }, [stateCMS])
@@ -51,7 +51,6 @@ export const useAboutState = () => {
         // setText(textRaw.split('\n').map(item => item.split('').map(item => +item)));
       })
   }, [])
-
 
   // useEffect(() => {
   //   setSeed(newSeed(3, text.length, text[0].length))

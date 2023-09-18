@@ -42,4 +42,3 @@ export default function ForumItem(props: { data: ForumItemType }) {
     </Link>
   )
 }
-

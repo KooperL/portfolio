@@ -11,8 +11,17 @@ type t = ReturnType<typeof useForumUserState>
 
 function ForumHomePage(props: t): JSX.Element {
   if (props.state.loading) return <Spinner />
-  if (props.state.error && props.state.errorMessage && !props.state.details?.data)
-    return <ErrorPage errorMessage={props.state.errorMessage} errorType='NETWORK' />
+  if (
+    props.state.error &&
+    props.state.errorMessage &&
+    !props.state.details?.data
+  )
+    return (
+      <ErrorPage
+        errorMessage={props.state.errorMessage}
+        errorType="NETWORK"
+      />
+    )
   if (props.state.details) {
     const data = props.state.details.data as ForumUserResponsePayload[]
     return (

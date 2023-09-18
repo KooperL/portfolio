@@ -11,7 +11,7 @@ export function useMonitor() {
       session_id: getSessionKey(),
       page: encodeURIComponent(window.location.pathname),
       prevPage: encodeURIComponent(currentPage ?? "NULL"),
-    }
+    },
   })
     .then(resp => {
       if (resp.data.success) {

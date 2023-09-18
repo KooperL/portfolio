@@ -12,4 +12,3 @@ export interface ForumPostViewResponsePayload {
   category: string
   views: number
 }
-

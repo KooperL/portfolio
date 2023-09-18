@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
-import { PageInformation, SchemeContext } from "../../state/colorScheme/colourScheme"
+import {
+  PageInformation,
+  SchemeContext,
+} from "../../state/colorScheme/colourScheme"
 import "./style.css"
 import { Button } from "../../components/Button"
 import { IslandCenter } from "../../templates/IslandCenter"
@@ -132,11 +135,18 @@ function MrnaPage(props: t): JSX.Element {
                       readOnly={true}
                     />
                     <p>Base frequency:</p>
-                    {Object.keys(data.simplecount).map((countCatKey, countCatIndex) => (
-                      <p key={countCatIndex}>
-                        {countCatKey}: {data.simplecount[countCatKey as keyof typeof data.simplecount]}
-                      </p>
-                    ))}
+                    {Object.keys(data.simplecount).map(
+                      (countCatKey, countCatIndex) => (
+                        <p key={countCatIndex}>
+                          {countCatKey}:{" "}
+                          {
+                            data.simplecount[
+                              countCatKey as keyof typeof data.simplecount
+                            ]
+                          }
+                        </p>
+                      ),
+                    )}
                   </div>
                 </div>
               </div>

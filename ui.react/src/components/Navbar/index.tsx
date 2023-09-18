@@ -72,7 +72,9 @@ function Navbar(props: { isVertical: boolean }) {
       } else {
         // Signed in
 
-        const username = JSON.parse(atob(authentication.accessToken.split(".")[1]))["username"]
+        const username = JSON.parse(
+          atob(authentication.accessToken.split(".")[1]),
+        )["username"]
 
         const HamburgerData = (
           <Hamburger
@@ -90,14 +92,14 @@ function Navbar(props: { isVertical: boolean }) {
                 label: "logout",
                 callback: () => {
                   sendForumLogout({
-                    payload: { session_id: trackingInformation.getSessionKey() },
+                    payload: {
+                      session_id: trackingInformation.getSessionKey(),
+                    },
                     auth: `Bearer ${authentication.accessToken}`,
                   }).then(resp => {
                     if (resp?.data?.success) {
                       authentication.setAccessToken(null)
-                      navigate(
-                        `/${forumPath}/${routes.forumLogin}`,
-                      )
+                      navigate(`/${forumPath}/${routes.forumLogin}`)
                     }
                   })
                 },

@@ -4,7 +4,10 @@ import Modal from "../../components/Modal"
 // @ts-ignore
 import gear from "../../assets/gear.svg"
 import "./style.css"
-import { PageInformation, SchemeContext } from "../../state/colorScheme/colourScheme"
+import {
+  PageInformation,
+  SchemeContext,
+} from "../../state/colorScheme/colourScheme"
 import { Button } from "../../components/Button"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Input } from "../../components/Input"
@@ -63,7 +66,12 @@ function SecondaryPage(props: t): JSX.Element {
 
   if (props.statePOST.loading) return <Spinner />
   if (props.statePOST.error && props.statePOST.errorMessage)
-    return <ErrorPage errorMessage={props.statePOST.errorMessage} errorType='NETWORK' />
+    return (
+      <ErrorPage
+        errorMessage={props.statePOST.errorMessage}
+        errorType="NETWORK"
+      />
+    )
   if (props.statePOST.details && props.statePOST.details?.data) {
     const data = props.statePOST.details.data
     return (

@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
-import { PageInformation, SchemeContext } from "../../state/colorScheme/colourScheme"
+import {
+  PageInformation,
+  SchemeContext,
+} from "../../state/colorScheme/colourScheme"
 import "./style.css"
 import { Button } from "../../components/Button"
 import { IslandCenter } from "../../templates/IslandCenter"
@@ -93,7 +96,12 @@ function RandomBioPage(props: t): JSX.Element {
   }
   if (props.statePOST.loading) return <Spinner />
   if (props.statePOST.error && props.statePOST.errorMessage)
-    return <ErrorPage errorMessage={props.statePOST.errorMessage} errorType='NETWORK'/>
+    return (
+      <ErrorPage
+        errorMessage={props.statePOST.errorMessage}
+        errorType="NETWORK"
+      />
+    )
   if (props.statePOST.details && props.statePOST.details?.data) {
     const data = props.statePOST.details.data
     return (

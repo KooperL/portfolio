@@ -5,6 +5,4 @@ export interface ContactRequestPayload {
   message: string
 }
 
-export interface ContactResponsePayload extends genericApiDataResponse<null>{
-  
-}
+export interface ContactResponsePayload extends genericApiDataResponse<null> {}

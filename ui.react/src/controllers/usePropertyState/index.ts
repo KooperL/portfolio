@@ -7,21 +7,27 @@ import { fetchFuelPrices } from "src/api/clients/ApiHandler/routes/fetchFuelPric
 import { fetchPropertyIndex } from "src/api/clients/ApiHandler/routes/fetchPropertyIndex"
 import { genericApiDataResponse, projectPath } from "src/api/shared/types"
 import { useError } from "src/hooks/useError"
-import { PropertyIndexRequest, PropertyIndexResponse } from "src/api/clients/ApiHandler/routes/fetchPropertyIndex/types"
+import {
+  PropertyIndexRequest,
+  PropertyIndexResponse,
+} from "src/api/clients/ApiHandler/routes/fetchPropertyIndex/types"
 
 function usePropertyState() {
   const ref = useRef<any>()
   const [scheme, setScheme] = useContext(SchemeContext)
   const navigate = useNavigate()
   const { state: stateCMS, pull: pullCMS } = useCms()
-  const { state, pull } = useFetch<PropertyIndexRequest, genericApiDataResponse<PropertyIndexResponse>>()
-  const { raiseError } = useError();
-  
+  const { state, pull } = useFetch<
+    PropertyIndexRequest,
+    genericApiDataResponse<PropertyIndexResponse>
+  >()
+  const { raiseError } = useError()
+
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: 'NETWORK',
-        errorMessage: 'Error fetching data'
+        errorType: "NETWORK",
+        errorMessage: "Error fetching data",
       })
     }
   }, [stateCMS])
@@ -30,7 +36,7 @@ function usePropertyState() {
     pullCMS("propertyCms")
     pull({
       ApiImpl: fetchPropertyIndex,
-      payload: {}
+      payload: {},
     })
     document.title = `Property | ${scheme.title}`
   }, [])

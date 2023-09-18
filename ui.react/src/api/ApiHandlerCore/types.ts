@@ -5,14 +5,10 @@ enum CacheMode {
 }
 
 interface CacheKey {
-  CacheMode: CacheMode,
+  CacheMode: CacheMode
   CacheKey: String | null
 }
 
-export {
-  CacheMode,
-}
+export { CacheMode }
 
-export type {
-  CacheKey,
-}
+export type { CacheKey }

@@ -7,27 +7,30 @@ import { sendContact } from "src/api/clients/ApiHandler/routes/sendContact"
 import { useError } from "src/hooks/useError"
 import { genericApiDataResponse } from "src/api/shared/types"
 import { useAuth } from "src/hooks/useAuth"
-import { ContactRequestPayload, ContactResponsePayload } from "src/api/clients/ApiHandler/routes/sendContact/types"
+import {
+  ContactRequestPayload,
+  ContactResponsePayload,
+} from "src/api/clients/ApiHandler/routes/sendContact/types"
 
 export const useContactState = () => {
   const [value, setValue] = useState("")
   const [scheme, setScheme] = useContext(SchemeContext)
   const { state: stateCMS, pull } = useCms()
-  const { raiseError } = useError();
+  const { raiseError } = useError()
   const { trackingInformation } = useAuth()
-  
+
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: 'NETWORK',
-        errorMessage: 'Error fetching data'
+        errorType: "NETWORK",
+        errorMessage: "Error fetching data",
       })
     }
   }, [stateCMS])
 
   const { state: POSTstate, pull: handleSubmit } = useFetch<
     ContactRequestPayload,
-    genericApiDataResponse<ContactResponsePayload> 
+    genericApiDataResponse<ContactResponsePayload>
   >()
 
   useEffect(() => {
@@ -37,12 +40,12 @@ export const useContactState = () => {
 
   const onSubmit = (
     e: React.FormEvent<HTMLFormElement>,
-    payload: ContactRequestPayload
+    payload: ContactRequestPayload,
   ) => {
     e.preventDefault()
     handleSubmit({
       ApiImpl: sendContact,
-      payload
+      payload,
     })
   }
 

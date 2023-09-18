@@ -102,7 +102,12 @@ function SeqAlignPage(props: t): JSX.Element {
 
   if (props.stateSubmit.loading) return <Spinner />
   if (props.stateSubmit.error && props.stateSubmit.errorMessage)
-    return <ErrorPage errorMessage={props.stateSubmit.errorMessage} errorType='NETWORK' />
+    return (
+      <ErrorPage
+        errorMessage={props.stateSubmit.errorMessage}
+        errorType="NETWORK"
+      />
+    )
   if (props.stateSubmit.details && props.stateSubmit.details?.data) {
     const data = props.stateSubmit.details.data
     const splitDrawArray = data.draw_res.map((elem: string) => elem.split("\n"))

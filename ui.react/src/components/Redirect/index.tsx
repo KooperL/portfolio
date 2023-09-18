@@ -16,7 +16,7 @@ function Redirect(props: FuncProps) {
         ...(localStorage.getItem("currentPage") && {
           prevPage: localStorage.getItem("currentPage"),
         }),
-      }
+      },
     })
     .then((resp: genericApiDataResponse<LoggingResponsePayload>) => {
       if (resp.data?.success) {

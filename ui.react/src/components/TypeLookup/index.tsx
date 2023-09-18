@@ -8,7 +8,12 @@ import Spinner from "../../components/Spinner"
 function TypeLookup(props: State<CMSPageResponse>): JSX.Element {
   if (props.loading) return <Spinner />
   if (props.error && props.errorMessage)
-    return <ErrorPage errorMessage={props.errorMessage} errorType='NETWORK' />
+    return (
+      <ErrorPage
+        errorMessage={props.errorMessage}
+        errorType="NETWORK"
+      />
+    )
   if (props.details) {
     return (
       <div className="type-lookup">
@@ -31,7 +36,10 @@ function TypeLookup(props: State<CMSPageResponse>): JSX.Element {
                     )
                   case "button-list":
                     return (
-                      <div className="button-list" key={`${sectionIndex}-${componentIndex}`}>
+                      <div
+                        className="button-list"
+                        key={`${sectionIndex}-${componentIndex}`}
+                      >
                         {component.content.buttons.map((segment, ind) => (
                           <ButtonRedir
                             destination={segment.url}
@@ -44,10 +52,17 @@ function TypeLookup(props: State<CMSPageResponse>): JSX.Element {
                     )
                   case "unordered-list":
                     return (
-                      <ul className="unordered-list" key={`${sectionIndex}-${componentIndex}`}>
+                      <ul
+                        className="unordered-list"
+                        key={`${sectionIndex}-${componentIndex}`}
+                      >
                         {component.content.items.map(
                           (item: string, index: number) => (
-                            <li key={`${sectionIndex}-${componentIndex}-${index}`}>{item}</li>
+                            <li
+                              key={`${sectionIndex}-${componentIndex}-${index}`}
+                            >
+                              {item}
+                            </li>
                           ),
                         )}
                       </ul>
@@ -56,15 +71,23 @@ function TypeLookup(props: State<CMSPageResponse>): JSX.Element {
                     return (
                       <>
                         {component.content?.title && (
-                          <h1 key={`${sectionIndex}-${componentIndex}-1`}>{component.content.title}</h1>
+                          <h1 key={`${sectionIndex}-${componentIndex}-1`}>
+                            {component.content.title}
+                          </h1>
                         )}
                         {component.content?.subtitle && (
-                          <h3 key={`${sectionIndex}-${componentIndex}-2`}>{component.content.subtitle}</h3>
+                          <h3 key={`${sectionIndex}-${componentIndex}-2`}>
+                            {component.content.subtitle}
+                          </h3>
                         )}
                         {component.content?.body &&
                           component.content.body.map(
                             (bodyText, bodyTextIndex) => (
-                              <p key={`${sectionIndex}-${componentIndex}-${bodyTextIndex + 2}`}>
+                              <p
+                                key={`${sectionIndex}-${componentIndex}-${
+                                  bodyTextIndex + 2
+                                }`}
+                              >
                                 {bodyText}
                               </p>
                             ),
@@ -73,7 +96,10 @@ function TypeLookup(props: State<CMSPageResponse>): JSX.Element {
                     )
                   case "emoji":
                     return (
-                      <p className={`type-lookup text ${component.type}`} key={`${sectionIndex}-${componentIndex}`}>
+                      <p
+                        className={`type-lookup text ${component.type}`}
+                        key={`${sectionIndex}-${componentIndex}`}
+                      >
                         {component.content.emoji}
                       </p>
                     )

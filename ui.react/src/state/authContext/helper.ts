@@ -3,24 +3,24 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { sendForumRefresh } from "src/api/clients/forumHandler/routes/sendForumRefresh"
 import { useAuth } from "src/hooks/useAuth"
 // @ts-ignore
-import { v4 } from 'uuid'
+import { v4 } from "uuid"
 
 function getSessionKey() {
-  let itemInStorage = sessionStorage.getItem('session_id')
+  let itemInStorage = sessionStorage.getItem("session_id")
   if (!itemInStorage) {
     let uniqueStr = v4() ?? "Error"
-    itemInStorage = uniqueStr 
-    sessionStorage.setItem('session_id', uniqueStr)
+    itemInStorage = uniqueStr
+    sessionStorage.setItem("session_id", uniqueStr)
   }
   return itemInStorage as string
 }
 
 function getPersistentKey() {
-  let itemInStorage = localStorage.getItem('uuid')
+  let itemInStorage = localStorage.getItem("uuid")
   if (!itemInStorage) {
     let uniqueStr = v4() ?? "Error"
     itemInStorage = uniqueStr
-    localStorage.setItem('uuid', uniqueStr)
+    localStorage.setItem("uuid", uniqueStr)
   }
   return itemInStorage as string
 }
@@ -40,26 +40,21 @@ function HandleUnauthenticated() {
 
 function Refresh() {
   const { authentication, trackingInformation } = useAuth()
-  
+
   sendForumRefresh({
-    payload:
-      {session_id: trackingInformation.getSessionKey()
-      }
-    }).then(resp => {
+    payload: { session_id: trackingInformation.getSessionKey() },
+  })
+    .then(resp => {
       if (resp.data.success && resp.data.accessToken && resp.data.expires) {
         authentication.setAccessToken(resp.data.accessToken)
       } else {
         // RIP genuinely invalid
       }
-    }).catch((err: any) => {
+    })
+    .catch((err: any) => {
       authentication.setAccessToken(null)
       HandleUnauthenticated()
     })
 }
 
-
-export {
-  getSessionKey,
-  getPersistentKey,
-  Refresh
-}
+export { getSessionKey, getPersistentKey, Refresh }

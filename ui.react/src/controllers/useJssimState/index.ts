@@ -40,13 +40,13 @@ export const useJssimState = () => {
   const [timerIsActive, setTimerIsActive] = useState(false)
   const [timerIsPaused, setTimerIsPaused] = useState(true)
   const { state: stateCMS, pull } = useCms()
-  const { raiseError } = useError();
-  
+  const { raiseError } = useError()
+
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: 'NETWORK',
-        errorMessage: 'Error fetching data'
+        errorType: "NETWORK",
+        errorMessage: "Error fetching data",
       })
     }
   }, [stateCMS])

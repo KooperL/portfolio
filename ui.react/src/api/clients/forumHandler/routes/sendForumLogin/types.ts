@@ -5,4 +5,3 @@ export interface ForumLoginRequestPayload {
 }
 
 export interface ForumLoginResponsePayload extends genericApiTokenResponse {}
-

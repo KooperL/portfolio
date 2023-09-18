@@ -2,12 +2,14 @@ import { forumPath, routes } from "src/containers/App/types"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { sendForumPostCreate } from "src/api/clients/forumHandler/routes/sendPostCreate"
-import { ForumPostCreateRequestPayload, ForumPostCreateResponsePayload } from "src/api/clients/forumHandler/routes/sendPostCreate/types"
+import {
+  ForumPostCreateRequestPayload,
+  ForumPostCreateResponsePayload,
+} from "src/api/clients/forumHandler/routes/sendPostCreate/types"
 import { useFetch } from "src/hooks/useFetch"
 import { SchemeContext } from "../../state/colorScheme/colourScheme"
 import { useAuth } from "src/hooks/useAuth"
 import { genericApiDataResponse } from "src/api/shared/types"
-
 
 export const useForumPostCreateState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
@@ -17,9 +19,9 @@ export const useForumPostCreateState = () => {
   const [hasPosted, setHasPosted] = useState(false)
   const { state, pull: post } = useFetch<
     ForumPostCreateRequestPayload,
-    genericApiDataResponse<ForumPostCreateResponsePayload> 
+    genericApiDataResponse<ForumPostCreateResponsePayload>
   >()
-  const { authentication, trackingInformation } = useAuth() 
+  const { authentication, trackingInformation } = useAuth()
 
   useEffect(() => {
     if (!authentication.accessToken) {
@@ -37,7 +39,7 @@ export const useForumPostCreateState = () => {
       ApiImpl: sendForumPostCreate,
       auth: authentication.accessToken as string,
       payload: data,
-      callback: () => setHasPosted(true)
+      callback: () => setHasPosted(true),
     })
   }
 
@@ -47,7 +49,11 @@ export const useForumPostCreateState = () => {
 
   useEffect(() => {
     if (hasPosted) {
-      navigate(`/${forumPath}/${routes.forumPostView}/${state?.details?.data?.forumPostId ?? 1}`)
+      navigate(
+        `/${forumPath}/${routes.forumPostView}/${
+          state?.details?.data?.forumPostId ?? 1
+        }`,
+      )
     }
   }, [hasPosted])
 

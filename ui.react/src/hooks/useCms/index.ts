@@ -6,9 +6,7 @@ import { State } from "../../types/State"
 import { fetchCmsGeneric } from "src/api/clients/CmsHandler/routes/generic"
 import { routes } from "src/api/clients/CmsHandler/types"
 
-
-export const useCms = (
-) => {
+export const useCms = () => {
   const [state, setState] = useState<State<CMSPageResponse>>({
     loading: true,
     details: null,
