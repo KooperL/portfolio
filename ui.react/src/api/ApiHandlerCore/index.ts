@@ -1,11 +1,11 @@
-import axios, { Axios, AxiosRequestConfig, AxiosResponse } from "axios";
-import { CacheKey, CacheMode } from "./types";
+import axios, { Axios, AxiosRequestConfig, AxiosResponse } from "axios"
+import { CacheKey, CacheMode } from "./types"
 
 class ApiHandlerCore {
   instance: Axios
   retryTimeSeconds: number
   defaultCacheMode: CacheMode
-  store = new Map() 
+  store = new Map()
 
   constructor(
     config: AxiosRequestConfig,
@@ -15,16 +15,16 @@ class ApiHandlerCore {
     this.instance = axios.create(config)
     this.retryTimeSeconds = retryTimeSeconds
     this.defaultCacheMode = defaultCacheMode
-  };
+  }
 
-  addResponseInterceptor(onFulfilled: (resp: AxiosResponse) => any, onError: any) {
+  addResponseInterceptor(
+    onFulfilled: (resp: AxiosResponse) => any,
+    onError: any,
+  ) {
     return this.instance.interceptors.response.use(onFulfilled, onError)
   }
 
-  async request<T>(
-    config: AxiosRequestConfig<T>,
-    cacheKey: CacheKey 
-  ) {
+  async request<T>(config: AxiosRequestConfig<T>, cacheKey: CacheKey) {
     switch (cacheKey.CacheMode) {
       case CacheMode.CacheFirst:
         const cachedData = this.store.get(cacheKey.CacheKey)
@@ -33,7 +33,7 @@ class ApiHandlerCore {
           // what if onothing in cache
         })
         return cachedData
-        // TODO: correct way to do this
+      // TODO: correct way to do this
 
       case CacheMode.NetworkFirst:
         const resp = this.instance.request(config)
@@ -45,4 +45,4 @@ class ApiHandlerCore {
   }
 }
 
-export { ApiHandlerCore };
+export { ApiHandlerCore }

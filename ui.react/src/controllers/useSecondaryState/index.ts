@@ -4,9 +4,11 @@ import { useFetch } from "src/hooks/useFetch"
 import { useCms } from "src/hooks/useCms"
 import { useError } from "src/hooks/useError"
 import { genericApiDataResponse } from "src/api/shared/types"
-import { SecondaryRequest, SecondaryResponse } from "src/api/clients/ApiHandler/routes/sendSecondary/types"
+import {
+  SecondaryRequest,
+  SecondaryResponse,
+} from "src/api/clients/ApiHandler/routes/sendSecondary/types"
 import { sendSecondary } from "src/api/clients/ApiHandler/routes/sendSecondary"
-
 
 export const useSecondaryState = () => {
   // dataCall: (body: SecondaryPOST) => Promise<ApiError | SecondaryPayload>
@@ -16,27 +18,30 @@ export const useSecondaryState = () => {
   const [leniency, setLeniency] = useState(3)
   const [scheme, setScheme] = useContext(SchemeContext)
   const { state: stateCMS, pull } = useCms()
-  const { state: statePOST, pull: handleSubmit } = useFetch<SecondaryRequest, genericApiDataResponse<SecondaryResponse>>()
-  const { raiseError } = useError();
-  
+  const { state: statePOST, pull: handleSubmit } = useFetch<
+    SecondaryRequest,
+    genericApiDataResponse<SecondaryResponse>
+  >()
+  const { raiseError } = useError()
+
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: 'NETWORK',
-        errorMessage: 'Error fetching data'
+        errorType: "NETWORK",
+        errorMessage: "Error fetching data",
       })
     }
   }, [stateCMS])
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     handleSubmit({
-    ApiImpl: sendSecondary,
-    payload: {
+      ApiImpl: sendSecondary,
+      payload: {
         aa_field_id: aa_field_id,
         aaf_field_id: aaf_field_id,
         detectthreshold: detectthreshold,
         leniency: leniency,
-      }
+      },
     })
   }
 

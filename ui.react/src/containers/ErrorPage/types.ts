@@ -1,9 +1,7 @@
 interface ErrorPageProps {
   errorMessage: string
-  errorType: 'NETWORK' | 'CLIENT'
+  errorType: "NETWORK" | "CLIENT"
   decorator?: string
 }
 
-export type {
-  ErrorPageProps
-}
+export type { ErrorPageProps }

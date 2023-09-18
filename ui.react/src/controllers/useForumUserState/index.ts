@@ -2,7 +2,10 @@ import { forumPath, routes } from "src/containers/App/types"
 import { useContext, useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { fetchForumUser } from "src/api/clients/forumHandler/routes/fetchForumUser"
-import { ForumUserRequestPayload, ForumUserResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumUser/types"
+import {
+  ForumUserRequestPayload,
+  ForumUserResponsePayload,
+} from "src/api/clients/forumHandler/routes/fetchForumUser/types"
 import { useAuth } from "src/hooks/useAuth"
 import { useFetch } from "src/hooks/useFetch"
 import { SchemeContext } from "../../state/colorScheme/colourScheme"
@@ -15,10 +18,13 @@ export const useForumUserState = () => {
   const user = window.location.href
     .toString()
     .slice(window.location.href.lastIndexOf("/") + 1)
-  const { authentication, trackingInformation } = useAuth() 
+  const { authentication, trackingInformation } = useAuth()
 
-  const { state, pull: post } = useFetch<ForumUserRequestPayload, genericApiDataResponse<ForumUserResponsePayload[]>>()
-  
+  const { state, pull: post } = useFetch<
+    ForumUserRequestPayload,
+    genericApiDataResponse<ForumUserResponsePayload[]>
+  >()
+
   useEffect(() => {
     if (!authentication.accessToken) {
       // HandleUnauthenticated()

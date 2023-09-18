@@ -1,22 +1,20 @@
 const routes = {
-  aboutCms: 'about',
-  contactCms: 'contact',
-  fuelpricesCms: 'fuelprices',
-  homeCms: 'home',
-  jssimulatorCms: 'jssimulator',
-  minesweeperCms: 'minesweeper',
-  mrnaCms: 'mrna',
-  propertyCms: 'property',
-  projectsCms: 'projects',
-  randombioCms: 'randombio',
-  secondaryCms: 'secondary',
-  seqalignCms: 'seqalign',
-  siteanalysisCms: 'siteanalysis',
-  tictactoeCms: 'tictactoe',
+  aboutCms: "about",
+  contactCms: "contact",
+  fuelpricesCms: "fuelprices",
+  homeCms: "home",
+  jssimulatorCms: "jssimulator",
+  minesweeperCms: "minesweeper",
+  mrnaCms: "mrna",
+  propertyCms: "property",
+  projectsCms: "projects",
+  randombioCms: "randombio",
+  secondaryCms: "secondary",
+  seqalignCms: "seqalign",
+  siteanalysisCms: "siteanalysis",
+  tictactoeCms: "tictactoe",
 } as const
 
 export const cmsPath = "cms"
 
-export {
-  routes
-}
+export { routes }

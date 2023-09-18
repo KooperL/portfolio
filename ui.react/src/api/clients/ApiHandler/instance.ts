@@ -1,8 +1,8 @@
-import path from "path";
-import { ApiHandlerCore } from "src/api/ApiHandlerCore";
-import { CacheMode } from "src/api/ApiHandlerCore/types";
-import { environmentConfig } from "src/api/environmentMappings";
-import { projectPath } from "src/api/shared/types";
+import path from "path"
+import { ApiHandlerCore } from "src/api/ApiHandlerCore"
+import { CacheMode } from "src/api/ApiHandlerCore/types"
+import { environmentConfig } from "src/api/environmentMappings"
+import { projectPath } from "src/api/shared/types"
 
 const apiHost = environmentConfig()
 
@@ -14,6 +14,4 @@ const ApiConsumer = new ApiHandlerCore(
   CacheMode.NetworkFirst,
 )
 
-export {
-  ApiConsumer 
-}
+export { ApiConsumer }

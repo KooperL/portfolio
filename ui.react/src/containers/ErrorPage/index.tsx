@@ -14,7 +14,7 @@ function ErrorPage(props: ErrorPageProps): JSX.Element {
           className="code"
           style={{ color: scheme.body.h1 }}
         >
-          {props.decorator ?? ':('}
+          {props.decorator ?? ":("}
         </div>
         <div className="details">
           <div className="message">{props.errorMessage}</div>

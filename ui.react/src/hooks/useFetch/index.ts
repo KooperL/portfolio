@@ -1,18 +1,21 @@
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios"
 import { useCallback, useEffect, useState } from "react"
-import { genericApiDataResponse, genericApiRequestArgs, genericTemplate } from "src/api/shared/types"
+import {
+  genericApiDataResponse,
+  genericApiRequestArgs,
+  genericTemplate,
+} from "src/api/shared/types"
 import { State } from "../../types/State"
 
 interface useFetchOptions<T, U> {
-  ApiImpl: (props: genericApiRequestArgs<T>) => Promise<AxiosResponse<U>> 
+  ApiImpl: (props: genericApiRequestArgs<T>) => Promise<AxiosResponse<U>>
   payload: T
   auth?: string
   varRoute?: string
-    callback?: () => void
+  callback?: () => void
 }
 
-export const useFetch = <T, U extends genericTemplate>(
-) => {
+export const useFetch = <T, U extends genericTemplate>() => {
   const [state, setState] = useState<State<U>>({
     loading: false,
     details: null,
@@ -27,12 +30,13 @@ export const useFetch = <T, U extends genericTemplate>(
         errorMessage: null,
         error: false,
       })
-      props.ApiImpl({
-        payload: props.payload,
-        auth: props?.auth,
-        varRoute: props?.varRoute
+      props
+        .ApiImpl({
+          payload: props.payload,
+          auth: props?.auth,
+          varRoute: props?.varRoute,
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.hasOwnProperty("success") && resp.data.success) {
             setState({
               details: resp.data || null,

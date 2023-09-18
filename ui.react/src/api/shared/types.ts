@@ -36,12 +36,12 @@ export interface ApiEndpoints {
 // }
 
 interface genericTemplate {
-  errorMessage: string | null,
-  success: boolean,
+  errorMessage: string | null
+  success: boolean
 }
 
 interface genericApiDataResponse<T> extends genericTemplate {
-  data: T | null,
+  data: T | null
 }
 
 interface genericApiTokenResponse extends genericTemplate {
@@ -53,7 +53,7 @@ interface genericApiTokenResponse extends genericTemplate {
 interface genericApiRequestArgs<T> {
   payload: T
   auth?: string
-  varRoute?: string 
+  varRoute?: string
   callback?: () => void
 }
 
@@ -61,5 +61,5 @@ export type {
   genericTemplate,
   genericApiRequestArgs,
   genericApiTokenResponse,
-  genericApiDataResponse
+  genericApiDataResponse,
 }

@@ -178,13 +178,13 @@ export const useMinesweeperState = () => {
   const [gameState, setGameState] = useState(0)
   const [scheme, setScheme] = useContext(SchemeContext)
   const { state: stateCMS, pull } = useCms()
-  const { raiseError } = useError();
-  
+  const { raiseError } = useError()
+
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: 'NETWORK',
-        errorMessage: 'Error fetching data'
+        errorType: "NETWORK",
+        errorMessage: "Error fetching data",
       })
     }
   }, [stateCMS])

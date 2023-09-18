@@ -3,8 +3,14 @@
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { routes } from "src/api/clients/forumHandler/types"
-import { ForumLoginRequestPayload, ForumLoginResponsePayload } from "src/api/clients/forumHandler/routes/sendForumLogin/types"
-import { ForumRegisterRequstPayload, ForumRegisterResponsepayload } from "src/api/clients/forumHandler/routes/sendForumRegister/types"
+import {
+  ForumLoginRequestPayload,
+  ForumLoginResponsePayload,
+} from "src/api/clients/forumHandler/routes/sendForumLogin/types"
+import {
+  ForumRegisterRequstPayload,
+  ForumRegisterResponsepayload,
+} from "src/api/clients/forumHandler/routes/sendForumRegister/types"
 import { forumPath, genericApiDataResponse } from "src/api/shared/types"
 import { useFetch } from "src/hooks/useFetch"
 import { SchemeContext } from "../../state/colorScheme/colourScheme"
@@ -68,7 +74,7 @@ export const useForumLoginState = () => {
 
   const { state: POSTState, pull: postLogin } = useFetch<
     ForumLoginRequestPayload,
-    ForumLoginResponsePayload 
+    ForumLoginResponsePayload
   >()
 
   useEffect(() => {
@@ -95,7 +101,11 @@ export const useForumLoginState = () => {
   }, [state])
 
   useEffect(() => {
-    if (POSTState.details && POSTState.details?.success && POSTState.details?.accessToken) {
+    if (
+      POSTState.details &&
+      POSTState.details?.success &&
+      POSTState.details?.accessToken
+    ) {
       authentication.setAccessToken(POSTState.details.accessToken)
       if (window.hasOwnProperty("PasswordCrediential")) {
         let c = new PasswordCredential({

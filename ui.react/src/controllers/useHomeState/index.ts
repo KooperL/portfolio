@@ -7,13 +7,13 @@ import { useFetch } from "../../hooks/useFetch"
 export const useHomeState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
   const { state: stateCMS, pull } = useCms()
-  const { raiseError } = useError();
-  
+  const { raiseError } = useError()
+
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: 'NETWORK',
-        errorMessage: 'Error fetching data'
+        errorType: "NETWORK",
+        errorMessage: "Error fetching data",
       })
     }
   }, [stateCMS])
@@ -28,4 +28,3 @@ export const useHomeState = () => {
     scheme,
   }
 }
-

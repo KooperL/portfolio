@@ -1,7 +1,7 @@
 export interface RandombioRequestPayload {
   type: number
   length: number
-  single?: number 
+  single?: number
 }
 
 export type RandomBioResponsePayload = string

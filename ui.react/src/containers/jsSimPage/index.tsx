@@ -3,7 +3,10 @@ import React, { useContext, useEffect, useRef, useState } from "react"
 import Modal from "../../components/Modal"
 // @ts-ignore
 import gear from "../../assets/gear.svg"
-import { PageInformation, SchemeContext } from "../../state/colorScheme/colourScheme"
+import {
+  PageInformation,
+  SchemeContext,
+} from "../../state/colorScheme/colourScheme"
 import "./style.css"
 import { IslandCenter } from "../../templates/IslandCenter"
 import { Button } from "../../components/Button"

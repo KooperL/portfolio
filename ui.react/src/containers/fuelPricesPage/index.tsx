@@ -2,7 +2,10 @@ import { useContext, useEffect, useState } from "react"
 import Spinner from "../../components/Spinner"
 import Vchart from "../../components/Vchart"
 import "./style.css"
-import { PageInformation, SchemeContext } from "../../state/colorScheme/colourScheme"
+import {
+  PageInformation,
+  SchemeContext,
+} from "../../state/colorScheme/colourScheme"
 import { IslandCenter } from "../../templates/IslandCenter"
 import ErrorPage from "../ErrorPage"
 import { State } from "../../types/State"
@@ -14,7 +17,12 @@ type t = ReturnType<typeof useFuelPricesState>
 function FuelPricesPage(props: t): JSX.Element {
   if (props.state.loading) return <Spinner />
   if (props.state.error && props.state.errorMessage)
-    return <ErrorPage errorMessage={props.state.errorMessage} errorType="NETWORK" />
+    return (
+      <ErrorPage
+        errorMessage={props.state.errorMessage}
+        errorType="NETWORK"
+      />
+    )
 
   if (props.state.details && props.state?.details.data) {
     const data = props.state.details.data

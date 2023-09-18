@@ -17,7 +17,12 @@ type t = ReturnType<typeof usePropertyState>
 function PropertyPage(props: t): JSX.Element {
   if (props.state.loading) return <Spinner />
   if (props.state.error && props.state.errorMessage)
-    return <ErrorPage errorMessage={props.state.errorMessage} errorType='NETWORK' />
+    return (
+      <ErrorPage
+        errorMessage={props.state.errorMessage}
+        errorType="NETWORK"
+      />
+    )
   if (props.state.details && props.state.details?.data) {
     const data = props.state.details.data
     return (

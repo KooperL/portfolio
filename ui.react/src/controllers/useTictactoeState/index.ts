@@ -157,13 +157,13 @@ export const useTictactoeState = () => {
   const { state: stateCMS, pull } = useCms()
   const p1 = pPlayerFirst ? x : o
   const p2 = pPlayerFirst ? o : x
-  const { raiseError } = useError();
-  
+  const { raiseError } = useError()
+
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: 'NETWORK',
-        errorMessage: 'Error fetching data'
+        errorType: "NETWORK",
+        errorMessage: "Error fetching data",
       })
     }
   }, [stateCMS])
@@ -201,7 +201,7 @@ export const useTictactoeState = () => {
       }
     }
   }, [ticker])
-  
+
   useEffect(() => {
     document.title = `Ttictactoe | ${scheme.title}`
     pull("tictactoeCms")

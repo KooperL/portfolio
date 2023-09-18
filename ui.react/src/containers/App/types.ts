@@ -1,34 +1,32 @@
 // Not to be confused with the backend api set. This defines the routing for the frontend pages
 
 const routes = {
-  contact: 'contact',
-  about: 'about',
-  home: 'home',
+  contact: "contact",
+  about: "about",
+  home: "home",
 
-  mrna: 'mrna',
-  seqalign: 'seqalign',
-  siteanalysis: 'siteanalysis',
-  render: 'render',
-  secondary: 'secondary',
-  fuelprices: 'fuelprices',
-  tictactoe: 'tictactoe',
-  jssim: 'jssim',
-  minesweeper: 'minesweeper',
-  randombio: 'randombio',
-  property: 'property',
-  propertySearch: 'property/search',
+  mrna: "mrna",
+  seqalign: "seqalign",
+  siteanalysis: "siteanalysis",
+  render: "render",
+  secondary: "secondary",
+  fuelprices: "fuelprices",
+  tictactoe: "tictactoe",
+  jssim: "jssim",
+  minesweeper: "minesweeper",
+  randombio: "randombio",
+  property: "property",
+  propertySearch: "property/search",
 
-  forumRegister: 'login',
-  forumLogin: 'login',
-  forumPostCreate: 'create',
-  forumPostView: 'post',
-  forumUserView: 'user',
+  forumRegister: "login",
+  forumLogin: "login",
+  forumPostCreate: "create",
+  forumPostView: "post",
+  forumUserView: "user",
 } as const
 
 export const projectsPath = "projects"
 export const forumPath = "forum"
 export const indexPath = ""
 
-export {
-  routes
-}
+export { routes }
