@@ -17,19 +17,29 @@
             <stringProp name="Argument.value">https://kooperlingohr.com</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="contentType" elementType="Argument">
-            <stringProp name="Argument.name">contentType</stringProp>
-            <stringProp name="Argument.value">application/json</stringProp>
+          <elementProp name="APIPath" elementType="Argument">
+            <stringProp name="Argument.name">APIPath</stringProp>
+            <stringProp name="Argument.value">api</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="method" elementType="Argument">
-            <stringProp name="Argument.name">method</stringProp>
-            <stringProp name="Argument.value">POST</stringProp>
+          <elementProp name="APIVersion" elementType="Argument">
+            <stringProp name="Argument.name">APIVersion</stringProp>
+            <stringProp name="Argument.value">v1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="body" elementType="Argument">
-            <stringProp name="Argument.name">body</stringProp>
-            <stringProp name="Argument.value"></stringProp>
+          <elementProp name="CMSRoute" elementType="Argument">
+            <stringProp name="Argument.name">CMSRoute</stringProp>
+            <stringProp name="Argument.value">cms</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ProjectsRoute" elementType="Argument">
+            <stringProp name="Argument.name">ProjectsRoute</stringProp>
+            <stringProp name="Argument.value">projects</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ForumRoute" elementType="Argument">
+            <stringProp name="Argument.name">ForumRoute</stringProp>
+            <stringProp name="Argument.value">forum</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -72,7 +82,7 @@
         <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="CMS" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <stringProp name="LoopController.loops">1</stringProp>
@@ -87,12 +97,12 @@
         <boolProp name="ThreadGroup.delayedStart">false</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="homePage" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.path">${url}/api/v1/cms/mrna</stringProp>
+          <stringProp name="HTTPSampler.path">${url}/${APIPath}/${APIVersion}/${CMSRoute}/home</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -106,19 +116,94 @@
           <intProp name="HTTPSampler.ipSourceType">0</intProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion" enabled="true">
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="string match" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">// https://stackoverflow.com/questions/53190831/how-to-assert-to-json-objects-in-jmeter
-// https://stackoverflow.com/questions/27504508/java-lang-noclassdeffounderror-org-json-jsonobject#27506960
+            <stringProp name="script">import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 
-String actual = &quot;{id:&quot;123&quot;, name:\&quot;John\&quot;}&quot;;
-org.skyscreamer.jsonassert.JSONAssert.assertEquals(
-  &quot;{id:123, name:\&quot;John\&quot;}&quot;, actual, org.skyscreamer.jsonassert.JSONCompareMode.LENIENT);</stringProp>
+String actual = prev.getResponseDataAsString();
+String expected = &quot;{\&quot;data\&quot;:{\&quot;id\&quot;:\&quot;__unused__\&quot;,\&quot;sections\&quot;:[{\&quot;components\&quot;:[{\&quot;content\&quot;:{\&quot;subtitle\&quot;:\&quot;Hi \\ud83d\\udc4b I\&apos;m Kooper, welcome to my website.\&quot;,\&quot;title\&quot;:\&quot;Home\&quot;},\&quot;type\&quot;:\&quot;text\&quot;},{\&quot;content\&quot;:{\&quot;local\&quot;:true,\&quot;text\&quot;:\&quot;/projects\&quot;,\&quot;url\&quot;:\&quot;/projects\&quot;},\&quot;type\&quot;:\&quot;button\&quot;},{\&quot;content\&quot;:{\&quot;local\&quot;:true,\&quot;text\&quot;:\&quot;/contact\&quot;,\&quot;url\&quot;:\&quot;/contact\&quot;},\&quot;type\&quot;:\&quot;button\&quot;},{\&quot;content\&quot;:{\&quot;local\&quot;:true,\&quot;text\&quot;:\&quot;/about\&quot;,\&quot;url\&quot;:\&quot;/about\&quot;},\&quot;type\&quot;:\&quot;button\&quot;},{\&quot;content\&quot;:{\&quot;local\&quot;:true,\&quot;text\&quot;:\&quot;/forum\&quot;,\&quot;url\&quot;:\&quot;/forum\&quot;},\&quot;type\&quot;:\&quot;button\&quot;}],\&quot;id\&quot;:\&quot;__unused__\&quot;,\&quot;title\&quot;:\&quot;__unused__\&quot;}],\&quot;slug\&quot;:\&quot;__unused__\&quot;,\&quot;title\&quot;:\&quot;__unused__\&quot;},\&quot;success\&quot;:true}&quot;
+
+JSONAssert.assertEquals(
+  expected,
+  actual,
+  JSONCompareMode.LENIENT
+);</stringProp>
           </JSR223Assertion>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="response code success" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
+            <stringProp name="JSON_PATH">success</stringProp>
+            <stringProp name="EXPECTED_VALUE">true|false</stringProp>
+            <boolProp name="JSONVALIDATION">true</boolProp>
+            <boolProp name="EXPECT_NULL">false</boolProp>
+            <boolProp name="INVERT">false</boolProp>
+            <boolProp name="ISREGEX">true</boolProp>
+            <stringProp name="TestPlan.comments">success flag</stringProp>
+          </JSONPathAssertion>
+          <hashTree/>
+          <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
+            <stringProp name="JSON_PATH">data.id</stringProp>
+            <stringProp name="EXPECTED_VALUE">.+</stringProp>
+            <boolProp name="JSONVALIDATION">true</boolProp>
+            <boolProp name="EXPECT_NULL">false</boolProp>
+            <boolProp name="INVERT">false</boolProp>
+            <boolProp name="ISREGEX">true</boolProp>
+            <stringProp name="TestPlan.comments">data.id</stringProp>
+          </JSONPathAssertion>
+          <hashTree/>
+          <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
+            <stringProp name="JSON_PATH">data.sections[*].id</stringProp>
+            <stringProp name="EXPECTED_VALUE">.+</stringProp>
+            <boolProp name="JSONVALIDATION">true</boolProp>
+            <boolProp name="EXPECT_NULL">false</boolProp>
+            <boolProp name="INVERT">false</boolProp>
+            <boolProp name="ISREGEX">true</boolProp>
+            <stringProp name="TestPlan.comments">data2.id</stringProp>
+          </JSONPathAssertion>
+          <hashTree/>
+          <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
+            <stringProp name="JSON_PATH">data.sections[*].title</stringProp>
+            <stringProp name="EXPECTED_VALUE">.+</stringProp>
+            <boolProp name="JSONVALIDATION">true</boolProp>
+            <boolProp name="EXPECT_NULL">false</boolProp>
+            <boolProp name="INVERT">false</boolProp>
+            <boolProp name="ISREGEX">true</boolProp>
+            <stringProp name="TestPlan.comments">data2.id</stringProp>
+          </JSONPathAssertion>
+          <hashTree/>
+          <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
+            <stringProp name="JSON_PATH">data.sections[*].components[*].type</stringProp>
+            <stringProp name="EXPECTED_VALUE">text|button</stringProp>
+            <boolProp name="JSONVALIDATION">true</boolProp>
+            <boolProp name="EXPECT_NULL">false</boolProp>
+            <boolProp name="INVERT">false</boolProp>
+            <boolProp name="ISREGEX">true</boolProp>
+            <stringProp name="TestPlan.comments">data2.id</stringProp>
+          </JSONPathAssertion>
+          <hashTree/>
+          <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
+            <stringProp name="JSON_PATH">data.sections[*].components[*].content</stringProp>
+            <stringProp name="EXPECTED_VALUE">^(\{&quot;subtitle&quot;:&quot;[^&quot;]+&quot;,&quot;title&quot;:&quot;[^&quot;]+&quot;\}|{&quot;local&quot;:(true|false),&quot;text&quot;:&quot;[^&quot;]+&quot;,&quot;url&quot;:&quot;[^&quot;]+&quot;})$</stringProp>
+            <boolProp name="JSONVALIDATION">true</boolProp>
+            <boolProp name="EXPECT_NULL">false</boolProp>
+            <boolProp name="INVERT">false</boolProp>
+            <boolProp name="ISREGEX">true</boolProp>
+            <stringProp name="TestPlan.comments">data2.id</stringProp>
+          </JSONPathAssertion>
           <hashTree/>
         </hashTree>
       </hashTree>
