@@ -9,6 +9,7 @@ import hmac
 import controllers.database
 from dotenv import dotenv_values
 config =  dotenv_values('../.env')
+from controllers.logger import logger, getRequestContext
 
 # https://stackoverflow.com/questions/16022624/examples-of-http-api-rate-limiting-http-response-headers
 def rateLimit(func):
@@ -134,5 +135,12 @@ def handlePreflight(f):
   def decorated(*args, **kwargs):
     if request.method == 'OPTIONS':
       return scripts.utils.responses.build_preflight_response()
+    return f(*args, **kwargs)
+  return decorated
+
+def WrapWithLogs(f):
+  @wraps(f)
+  def decorated(*args, **kwargs):
+    logger.info(msg=f"({getRequestContext()}) Request received")
     return f(*args, **kwargs)
   return decorated

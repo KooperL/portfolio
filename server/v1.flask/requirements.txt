@@ -13,3 +13,4 @@ scipy
 Werkzeug==2.2.2
 urllib3==1.26.12
 SQLAlchemy==1.4.40
+psutil=5.9.5

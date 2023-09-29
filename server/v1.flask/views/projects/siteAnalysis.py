@@ -3,15 +3,18 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
 import controllers.database
+from controllers.logger import logger, getRequestContext
 
 
 siteAnalysis = Blueprint('siteAnalysis', __name__)
 
 @siteAnalysis.route(f'/{scripts.utils.structs.projectsPath}/siteanalysis', methods=['GET', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
 def siteAnalysisHome():
   if request.method == 'GET':
+    logger.info(msg=f"({getRequestContext()}) Processing request GET/")
     pull = [
       request.args.get('uuid'),
     ]

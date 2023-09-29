@@ -8,6 +8,7 @@ import datetime
 import inspect
 import scripts.utils.forumFuncs
 import controllers.database
+from controllers.logger import logger, getRequestContext
 from dotenv import dotenv_values
 config =  dotenv_values('../.env')
 
@@ -15,11 +16,13 @@ config =  dotenv_values('../.env')
 forumIndex = Blueprint('forumIndex', __name__)
 
 @forumIndex.route(f'/{scripts.utils.structs.forumPath}', methods=['GET', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
 @scripts.utils.decorators.token_required
 def forumHome(authPayload):
   if request.method == 'GET':
+    logger.info(msg=f"({getRequestContext()}) Processing request GET/")
     session_id = request.args.get('session_id')
     category = request.args.get('category')
     search = request.args.get('search')

@@ -3,14 +3,17 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import datetime
 import controllers.database
+from controllers.logger import logger, getRequestContext
 
 
 capture = Blueprint('capture', __name__)
 
 @capture.route('/capture', methods=['POST', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 def captureHome():
   if request.method == 'POST':
+    logger.info(msg=f"({getRequestContext()}) Processing request POST/")
     # kwargs = {
     #   'request': {
     #     'remote_addr': request.remote_addr,

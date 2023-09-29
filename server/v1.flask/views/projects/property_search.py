@@ -2,15 +2,17 @@ from flask import Blueprint, render_template, jsonify, request
 import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
-
+from controllers.logger import logger, getRequestContext
 
 property_search = Blueprint('property_search', __name__)
 
 @property_search.route(f'/{scripts.utils.structs.projectsPath}/property/search', methods=['GET', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
 def propertySearchHome():
   if request.method == 'GET':
+    logger.info(msg=f"({getRequestContext()}) Processing request GET/")
     if not request.args.get('prop_suburb'):
       raise RuntimeError('Mandatory value not provided')
     suburb = request.args.get('prop_suburb').lower().replace('%20','_')

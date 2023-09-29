@@ -3,14 +3,17 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
 import scripts.mrna_files.decode
+from controllers.logger import logger, getRequestContext
 
 mrna = Blueprint('mrna', __name__)
 
 @mrna.route(f'/{scripts.utils.structs.projectsPath}/mrna', methods=['GET', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
 def mrnaHome():
   if request.method == 'GET':
+    logger.info(msg=f"({getRequestContext()}) Processing request GET/")
     dna_field = request.args.get('dna_field_id')
     if not dna_field:
       raise RuntimeError('Mandatory value not provided')

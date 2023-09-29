@@ -9,16 +9,19 @@ import inspect
 import scripts.utils.forumFuncs
 import controllers.database
 from dotenv import dotenv_values
+from controllers.logger import logger, getRequestContext
 config =  dotenv_values('../.env')
 
 
 register = Blueprint('register', __name__)
 
 @register.route(f'/{scripts.utils.structs.forumPath}/register', methods=['POST', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
 def forumRegisterHome():
   if request.method == 'POST':
+    logger.info(msg=f"({getRequestContext()}) Processing request POST/")
     data = request.get_json()
     if 'data' not in data and not 'session_id' in data:
       return scripts.utils.responses.build_bad_req()

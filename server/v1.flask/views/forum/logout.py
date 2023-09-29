@@ -9,17 +9,20 @@ import inspect
 import scripts.utils.forumFuncs
 import controllers.database
 from dotenv import dotenv_values
+from controllers.logger import logger, getRequestContext
 config =  dotenv_values('../.env')
 
 
 logout = Blueprint('logout', __name__)
 
 @logout.route(f'/{scripts.utils.structs.forumPath}/logout', methods=['POST', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.token_required
 @scripts.utils.decorators.rateLimit
 def forumLogoutHome(authPayload):
   if request.method == 'POST':
+    logger.info(msg=f"({getRequestContext()}) Processing request POST/")
     refresh_token = request.cookies.get('refresh_token')
     if not refresh_token:
       return scripts.utils.responses.build_unauthenticated()
