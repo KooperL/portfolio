@@ -1,6 +1,7 @@
 from flask import make_response, jsonify
 from dotenv import dotenv_values
 config =  dotenv_values('../.env')
+from controllers.logger import logger, getRequestContext
 
 
 def build_preflight_response():
@@ -16,6 +17,7 @@ def build_preflight_response():
     'Origin',
     'Accept',
     'X-Requested-With',
+    'X-Request-ID',
     'Content-Type',
     'Access-Control-Request-Method',
     'Access-Control-Request-Headers',
@@ -23,10 +25,12 @@ def build_preflight_response():
     'cachecontrol'
   ]]))
   response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')  
+  logger.debug(msg=f"({getRequestContext()}) Closing request")
   return response
 
 def build_actual_response(response):
   response.headers.add('Access-Control-Allow-Origin', config['ORIGIN'])
+  logger.info(msg=f"({getRequestContext()}) Closing request")
   return response
 
 def build_unauthorized():
@@ -60,6 +64,7 @@ def buildBearerResp(jwt, expires=None):
     'accessToken': jwt,
     'expires': expires
   }
+  logger.info(msg=f"({getRequestContext()}) Closing request")
   return kwargs
 
 def buildSuccessResp(data):

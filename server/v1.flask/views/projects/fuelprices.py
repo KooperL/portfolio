@@ -4,15 +4,18 @@ import scripts.utils.responses
 import datetime
 import scripts.utils.structs
 import controllers.database
+from controllers.logger import logger, getRequestContext
 
 
 fuelprices = Blueprint('fuelprices', __name__)
 
 @fuelprices.route(f'/{scripts.utils.structs.projectsPath}/fuelprices', methods=['GET', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
 def fuelpricesHome():
   if request.method == 'GET':
+    logger.info(msg=f"({getRequestContext()}) Processing request GET/")
     rows = list(controllers.database.conn.fetch('SELECT * FROM fuelprices where ? = "None" ORDER BY id DESC LIMIT ?', ('None', 200)))[::-1]
 
     dic = {'wholesale': [], 'min': [], 'max': [], 'average': [], }

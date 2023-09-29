@@ -4,6 +4,7 @@ import scripts.utils.responses
 import datetime
 import controllers.database
 import controllers.discordLogger
+from controllers.logger import logger, getRequestContext
 from dotenv import dotenv_values
 
 config = dotenv_values('../.env')
@@ -11,10 +12,12 @@ config = dotenv_values('../.env')
 contact = Blueprint('contact', __name__)
 
 @contact.route('/contact', methods=['GET', 'POST', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
 def contactHome():
   if request.method == 'POST':
+    logger.info(msg=f"({getRequestContext()}) Processing request POST/")
     data = request.get_json()
     # session_id = request.args.get('session_id')
     # message = request.args.get('message')

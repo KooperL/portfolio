@@ -2,15 +2,18 @@ from flask import Blueprint, render_template, jsonify, request
 import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
+from controllers.logger import logger, getRequestContext
 
 
 seqAlign = Blueprint('seqAlign', __name__)
 
 @seqAlign.route(f'/{scripts.utils.structs.projectsPath}/seqalign', methods=['GET', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
 def seqalignHome():
   if request.method == 'GET':
+    logger.info(msg=f"({getRequestContext()}) Processing request GET/")
     pull = [
       request.args.get('sampletxt'),
       request.args.get('referencetxt'),

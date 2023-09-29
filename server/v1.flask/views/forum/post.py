@@ -9,6 +9,7 @@ import inspect
 import scripts.utils.forumFuncs
 import controllers.database
 import controllers.discordLogger
+from controllers.logger import logger, getRequestContext
 from dotenv import dotenv_values
 
 config = dotenv_values('../.env')
@@ -16,11 +17,13 @@ config = dotenv_values('../.env')
 post = Blueprint('post', __name__)
 
 @post.route(f'/{scripts.utils.structs.forumPath}/post', methods=['POST', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.token_required
 @scripts.utils.decorators.rateLimit
 def forumPostCreateHome(authPayload):
   if request.method == 'POST':
+    logger.info(msg=f"({getRequestContext()}) Processing request POST/")
     data = request.get_json()
     if 'data' not in data and 'session_id' not in data:
       return scripts.utils.responses.build_bad_req()

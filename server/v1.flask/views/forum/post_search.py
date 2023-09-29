@@ -9,17 +9,20 @@ import inspect
 import scripts.utils.forumFuncs
 import controllers.database
 from dotenv import dotenv_values
+from controllers.logger import logger, getRequestContext
 config =  dotenv_values('../.env')
 
 
 post_search = Blueprint('post_search', __name__)
 
 @post_search.route(f'/{scripts.utils.structs.forumPath}/post/<int:id>', methods=['POST', 'OPTIONS'])   # DEL, GET was,'t working because axios wouldn't set content length
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
 @scripts.utils.decorators.token_required
 def forumPostViewHome(authPayload, *args, **kwargs):
   if request.method == 'POST':
+    logger.info(msg=f"({getRequestContext()}) Processing request POST/")
     id = int(kwargs.get('id'))
     data = request.get_json()
     user_id = authPayload.get('payload').get('userId')

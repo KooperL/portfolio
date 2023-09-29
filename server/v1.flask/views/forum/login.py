@@ -9,15 +9,18 @@ import inspect
 import scripts.utils.forumFuncs
 import controllers.database
 from dotenv import dotenv_values
+from controllers.logger import logger, getRequestContext
 config =  dotenv_values('../.env')
 
 login = Blueprint('login', __name__)
 
 @login.route(f'/{scripts.utils.structs.forumPath}/login', methods=['POST', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
 def forumLoginHome():
   if request.method == 'POST':
+    logger.info(msg=f"({getRequestContext()}) Processing request POST/")
     accessTokenLife = int(config['forum-access-token-life']) # Minutes
     refreshTokenLife = int(config['forum-refresh-token-life']) # Days
 

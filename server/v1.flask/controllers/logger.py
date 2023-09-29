@@ -1,15 +1,43 @@
-import logging
-from logging.handlers import RotatingFileHandler
+from werkzeug.local import LocalProxy
+from flask import current_app
+from logging.config import dictConfig
+from psutil import cpu_percent, virtual_memory
+import flask
+from flask import request
+from datetime import datetime
+import threading
 
-from dotenv import dotenv_values
-config = dotenv_values('../.env')
+def getRequestContext():
+    if flask.has_request_context():
+        newStr = f"{request.remote_addr} {request.headers.get('X-Request-ID')}"
+        return newStr
+    return 
 
-logger = logging.getLogger(__name__)
-file_handler = RotatingFileHandler('../../logs/api.log', maxBytes=1024 * 1024 * 100, backupCount=20)
-file_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] v1.flask (%(pathname)s:%(lineno)d) -  %(message)s ', datefmt='%Y-%m-%d %H:%M:%S'))
-if config['ENV'] == 'development':
-  file_handler.setLevel(logging.DEBUG)
-else:
-  file_handler.setLevel(logging.WARNING)
+logging_schema = {
+  "version": 1,
+  "formatters": {
+    "default": {
+      "format": f"[%(asctime)s] [%(levelname)s | %(module)s] [{threading.current_thread().ident}] [c{cpu_percent():02.0f}m{virtual_memory().percent:02.0f}] %(message)s",
+      "datefmt": "%B %d, %Y %H:%M:%S",
+    },
+  },
+  "handlers": {
+    "console": {
+      "class": "logging.StreamHandler",
+      "formatter": "default",
+    },
+    "file": {
+      "class": "logging.FileHandler",
+      "filename": f"logs/{datetime.now():%Y-%m-%d}-out.log",
+      "formatter": "default",
+    },
+  },
+  "root": {
+  "level": "INFO",
+     "handlers": ["console", "file"]
+  },
+}
 
-logger.addHandler(file_handler)
+dictConfig(logging_schema)
+
+logger = LocalProxy(lambda: current_app.logger)

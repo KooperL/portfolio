@@ -9,17 +9,20 @@ import inspect
 import scripts.utils.forumFuncs
 import controllers.database
 from dotenv import dotenv_values
+from controllers.logger import logger, getRequestContext
 config =  dotenv_values('../.env')
 
 
 user_search = Blueprint('user_search', __name__)
 
 @user_search.route(f'/{scripts.utils.structs.forumPath}/user/<string:username>', methods=['GET', 'OPTIONS'])   # DEL, GET was,'t working because axios wouldn't set content length
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.token_required
 @scripts.utils.decorators.rateLimit
 def forumUserViewHome(authPayload, *args, **kwargs):
   if request.method == 'GET':
+    logger.info(msg=f"({getRequestContext()}) Processing request GET/")
     username = kwargs.get('username')
 
     session_id = request.args.get('session_id')

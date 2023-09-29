@@ -3,14 +3,17 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import datetime
 import controllers.database
+from controllers.logger import logger, getRequestContext
 
 
 monitor = Blueprint('monitor', __name__)
 
 @monitor.route('/monitor', methods=['POST', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 def monitorHome():
   if request.method == 'POST':
+    logger.info(msg=f"({getRequestContext()}) Processing request POST/")
 
     uuid = request.args.get('uuid')
     session_id = request.args.get('session_id')

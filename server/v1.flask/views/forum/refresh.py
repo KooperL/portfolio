@@ -9,15 +9,18 @@ import inspect
 import scripts.utils.forumFuncs
 import controllers.database
 from dotenv import dotenv_values
+from controllers.logger import logger, getRequestContext
 config =  dotenv_values('../.env')
 
 
 refresh = Blueprint('refresh', __name__)
 
 @refresh.route(f'/{scripts.utils.structs.forumPath}/refresh', methods=['POST', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 def forumRefreshHome():
   if request.method == 'POST':
+    logger.info(msg=f"({getRequestContext()}) Processing request POST/")
     refresh_token = request.cookies.get('refresh_token')
     accessTokenLife = int(config['forum-access-token-life']) # Days
     if not refresh_token:

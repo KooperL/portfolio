@@ -2,15 +2,18 @@ from flask import Blueprint, render_template, jsonify, request
 import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
+from controllers.logger import logger, getRequestContext
 
 
 randomBio = Blueprint('randomBio', __name__)
 
 @randomBio.route(f'/{scripts.utils.structs.projectsPath}/randombio', methods=['GET', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
 def randomBioHome():
   if request.method == 'GET':
+    logger.info(msg=f"({getRequestContext()}) Processing request GET/")
     pull = [
       int(request.args.get('type')),
       int(request.args.get('length'))

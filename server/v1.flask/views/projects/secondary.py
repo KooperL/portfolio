@@ -3,15 +3,18 @@ import scripts.utils.decorators
 import scripts.utils.responses
 import scripts.utils.structs
 import scripts.mrna_files.secondary
+from controllers.logger import logger, getRequestContext
 
 secondary = Blueprint('secondary', __name__)
 
 @secondary.route(f'/{scripts.utils.structs.projectsPath}/secondary', methods=['GET', 'OPTIONS'])
+@scripts.utils.decorators.WrapWithLogs
 @scripts.utils.decorators.errorHandle
 @scripts.utils.decorators.rateLimit
 def secondaryHome():
   # log(request.remote_addr, inspect.stack()[0][3]).
   if request.method == 'GET':
+    logger.info(msg=f"({getRequestContext()}) Processing request GET/")
     aas = request.args.get('aa_field_id')
     # aaformat = request.args.get('aaf_field_id')
     # #threshold = request.form['detectthreshold']

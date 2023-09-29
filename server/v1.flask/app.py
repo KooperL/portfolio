@@ -75,7 +75,6 @@ app.wsgi_app = ProxyFix(
   app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
 )
 
-
 username = urllib.parse.quote_plus(config['MONGO_USERNAME'])
 password = urllib.parse.quote_plus(config['MONGO_PASSWORD'])
 client = MongoClient('mongodb://%s:%s@localhost:%s/' % (username, password, config['MONGO_PORT']))
