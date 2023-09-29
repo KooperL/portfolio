@@ -57,43 +57,45 @@ function Logger(props: Props) {
 
     props
       .capturePost({
-        canvas_hash: document.getElementById("canvas-hash")?.innerText,
-        uuid: getPersistentKey(),
-        // windowInfo: {
-        // plugins: JSON.stringify([].slice.call(navigator.plugins).map((item: any) => {
-        //   return {
-        //     name: item.name,
-        //     filename: item.filename,
-        //     description: item.description,
-        //   }
-        // })) ?? null,
-        // window: {
-        innerHeight: +window.innerHeight ?? 123,
-        outerHeight: +window.outerHeight ?? 123,
-        innerWidth: +window.innerWidth ?? 123,
-        outerWidth: +window.outerWidth ?? 123,
-        // },
-        // screen: {
-        actualHeight: +window.screen.height ?? 123, // window.screen might not be valid in safari
-        actualWidth: +window.screen.width ?? 123,
-        pixelDepth: +window.screen.pixelDepth ?? 123,
-        // },
-        // navigator: {
-        platform: navigator.platform ?? "null",
-        cookieEnabled: +navigator.cookieEnabled ?? 2,
-        // 'java': navigator.javaEnabled ?? null,
-        // 'online': navigator.onLine ?? null,
-        // },
-        // }
-        darkMode:
-          +window.matchMedia("(prefers-color-scheme: dark)").matches ?? 2,
-        browser: browserVar ?? "null",
-        version: versionVar ?? "null",
+        payload: {
+          canvas_hash: document.getElementById("canvas-hash")?.innerText,
+          uuid: getPersistentKey(),
+          // windowInfo: {
+          // plugins: JSON.stringify([].slice.call(navigator.plugins).map((item: any) => {
+          //   return {
+          //     name: item.name,
+          //     filename: item.filename,
+          //     description: item.description,
+          //   }
+          // })) ?? null,
+          // window: {
+          innerHeight: +window.innerHeight ?? 123,
+          outerHeight: +window.outerHeight ?? 123,
+          innerWidth: +window.innerWidth ?? 123,
+          outerWidth: +window.outerWidth ?? 123,
+          // },
+          // screen: {
+          actualHeight: +window.screen.height ?? 123, // window.screen might not be valid in safari
+          actualWidth: +window.screen.width ?? 123,
+          pixelDepth: +window.screen.pixelDepth ?? 123,
+          // },
+          // navigator: {
+          platform: navigator.platform ?? "null",
+          cookieEnabled: +navigator.cookieEnabled ?? 2,
+          // 'java': navigator.javaEnabled ?? null,
+          // 'online': navigator.onLine ?? null,
+          // },
+          // }
+          darkMode:
+            +window.matchMedia("(prefers-color-scheme: dark)").matches ?? 2,
+          browser: browserVar ?? "null",
+          version: versionVar ?? "null",
+        }
       })
       .then((resp: LoggingResponsePayload) => {
         if (resp.success) {
         } else {
-          throw new Error(resp.error)
+          // throw new Error(resp.error)
         }
       })
       .catch((err: any) => {
