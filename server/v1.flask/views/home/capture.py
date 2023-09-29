@@ -32,8 +32,8 @@ def captureHome():
       request.args.get('browser'),
       request.args.get('version'),
       request.headers.get('User-Agent'),
-      int(request.args.get('darkMode')),
-      int(request.args.get('cookieEnabled')),
+      request.args.get('darkMode'),
+      request.args.get('cookieEnabled'),
       # request.args.get('java'),
       # request.args.get('online'),
       int(request.args.get('actualHeight')),
@@ -47,7 +47,6 @@ def captureHome():
     ]
 
     if not all(args[1:]):
-      print(args[1:])
       raise RuntimeError('Mandatory value(s) not provided')
 
     insertFingerprintQuery = """INSERT INTO fingerprint VALUES (
