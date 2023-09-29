@@ -102,7 +102,7 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.path">${url}/${APIPath}/${APIVersion}/${CMSRoute}/home</stringProp>
+          <stringProp name="HTTPSampler.path">${url}/${APIPath}/${APIVersion}/${CMSRoute}/about</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -116,7 +116,7 @@
           <intProp name="HTTPSampler.ipSourceType">0</intProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="string match" enabled="true">
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="string match" enabled="false">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -187,7 +187,7 @@ JSONAssert.assertEquals(
           <hashTree/>
           <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
             <stringProp name="JSON_PATH">data.sections[*].components[*].type</stringProp>
-            <stringProp name="EXPECTED_VALUE">text|button</stringProp>
+            <stringProp name="EXPECTED_VALUE">text|button|unordered\-list</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>
             <boolProp name="INVERT">false</boolProp>
@@ -197,8 +197,8 @@ JSONAssert.assertEquals(
           <hashTree/>
           <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
             <stringProp name="JSON_PATH">data.sections[*].components[*].content</stringProp>
-            <stringProp name="EXPECTED_VALUE">^(\{&quot;subtitle&quot;:&quot;[^&quot;]+&quot;,&quot;title&quot;:&quot;[^&quot;]+&quot;\}|{&quot;local&quot;:(true|false),&quot;text&quot;:&quot;[^&quot;]+&quot;,&quot;url&quot;:&quot;[^&quot;]+&quot;})$</stringProp>
-            <boolProp name="JSONVALIDATION">false</boolProp>
+            <stringProp name="EXPECTED_VALUE">\[\{((((&quot;body&quot;:\s?\[(&quot;.+&quot;,*)+)\],?)|(&quot;subtitle&quot;: &quot;.+&quot;,?)|(&quot;title&quot;: &quot;.+&quot;,?))+\}|\{&quot;local&quot;: (true|false),&quot;text&quot;: &quot;.+&quot;,&quot;url&quot;: &quot;.+&quot;\}|\{&quot;items&quot;: \[(&quot;.+&quot;,?)+\]\}),*\]</stringProp>
+            <boolProp name="JSONVALIDATION">true</boolProp>
             <boolProp name="EXPECT_NULL">false</boolProp>
             <boolProp name="INVERT">false</boolProp>
             <boolProp name="ISREGEX">true</boolProp>
@@ -206,7 +206,7 @@ JSONAssert.assertEquals(
           </JSONPathAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST /contact" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST /contact" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">

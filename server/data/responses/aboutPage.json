@@ -11,9 +11,9 @@
           "type": "text",
           "content": {
             "title": "About", 
-            "subtitle": "Hi 👋 I'm kooper, welcome to my website.",
+            "subtitle": "Hi 👋 I'm Kooper, welcome to my website.",
             "body": [
-              "If you're just here for a quick visit, you might be more interested in browsing some of my favourite projects."
+              "If you're just here for a quick visit, you might be more interested in browsing some of my weekend projects."
             ]
           }
         },
@@ -30,7 +30,6 @@
           "content": {
             "body": [
               "Initially created in July 2020 during my honours year, this site started from scratch as a hobby, secondary only to my studies. As I learned more, it ate more of my free time and continued to evolve. ",
-              "It is designed with functionality and design over speed and SEO. This was a deliberate trade off to demonstrate experience with many technologies. ",
               "Here's some information on what is being used to serve this website to you: "
             ]
           }
@@ -39,10 +38,10 @@
           "type": "unordered-list",
           "content": {
             "items": [
-              "Domain registration and namespace mapping through godaddy 📝",
-              "Servers are deployed and hosted on a VPS 🖥️",
-              "Version control managed with git/github 📆",
-              "SSL certification and security through Cloudflare 🕵️",
+              "Domain registration and namespace mapping through GoDaddy 📝",
+              "Servers are deployed and self-hosted on a VPS 🖥️",
+              "Version control managed with git/Github 📆",
+              "SSL certification and monitoring via Cloudflare 🕵️",
               "SQLite (SQL) and MongoDB (NoSQL) as backends 💽",
               "Flask, Golang and Rust as a middleware API servers 🤖",
               "Frontend is written with React in Typescript 💄",

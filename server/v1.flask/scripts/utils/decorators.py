@@ -71,11 +71,15 @@ def errorHandle(func):
     try:
       return func(*args, **kwargs)
     except Exception as e:
+      errorVal = ''
+      if config['ENV'] != 'production':
+        errorVal = f': {e}'
       kwargs = {
         'success': False,
-        'error': f'Deliberate error: {e}'
+        'error': f'Deliberate error: {errorVal}'
       }
       res = jsonify(kwargs)
+      logger.error(msg=f"({getRequestContext()}) Uncaught error found: {e}")
       return scripts.utils.responses.build_actual_response(res), 500
     except:
       kwargs = {
