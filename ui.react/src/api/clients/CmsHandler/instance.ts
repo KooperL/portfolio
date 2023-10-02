@@ -18,22 +18,23 @@ const fetchCMS = new ApiHandlerCore(
   CacheMode.NetworkFirst,
 )
 
-fetchCMS.addResponseInterceptor(
-  response => response,
-  async (error) => {
-    if (error.config && error.response && error.response.status !== 429) {
-
-      await new Promise(resolve => setTimeout(resolve, fetchCMS.retryTimeSeconds/1000));
-
-      return fetchCMS.request(error.config, {
-        CacheMode: CacheMode.NetworkFirst,
-        CacheKey: null,
-      });
-    }
-    return Promise.reject(error);
-  },
-);
-
+{/** 
+  fetchCMS.addResponseInterceptor(
+    response => response,
+    async (error) => {
+      if (error.config && error.response && error.response.status !== 429) {
+  
+        // await new Promise(resolve => setTimeout(resolve, fetchCMS.retryTimeSeconds/1000));
+  
+        // return fetchCMS.request(error.config, {
+        //   CacheMode: CacheMode.NetworkFirst,
+        //   CacheKey: null,
+        // });
+      }
+      return Promise.reject(error);
+    },
+  );
+*/}
 
 
 export { fetchCMS }
