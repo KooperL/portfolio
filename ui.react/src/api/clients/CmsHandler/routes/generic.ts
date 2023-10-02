@@ -16,7 +16,8 @@ function fetchCmsGeneric(
     CacheMode: CacheMode.CacheFirst,
     CacheKey: route.toString(),
   }
-  return fetchCMS.request(config, cacheKey)
+  const req = fetchCMS.request(config, cacheKey)
+  return req
 }
 
 export { fetchCmsGeneric }

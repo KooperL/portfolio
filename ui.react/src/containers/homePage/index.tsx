@@ -28,6 +28,7 @@ interface Props {
 }
 
 function HomePage(props: Props): JSX.Element {
+  console.log(props)
   return (
     <IslandLeft>
       <div className="homePage">

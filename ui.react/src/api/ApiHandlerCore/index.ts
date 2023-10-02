@@ -25,19 +25,20 @@ class ApiHandlerCore {
   }
 
   async request<T>(config: AxiosRequestConfig<T>, cacheKey: CacheKey) {
+    return this.instance.request(config)
     switch (cacheKey.CacheMode) {
       case CacheMode.CacheFirst:
-        const cachedData = this.store.get(cacheKey.CacheKey)
         this.instance.request(config).then(resp => {
           this.store.set(cacheKey.CacheKey, resp)
-          // what if onothing in cache
+          // what if nothing in cache
         })
+        const cachedData = this.store.get(cacheKey.CacheKey)
         return cachedData
       // TODO: correct way to do this
 
       case CacheMode.NetworkFirst:
         const resp = this.instance.request(config)
-        this.store.set(cacheKey.CacheKey, resp)
+        // this.store.set(cacheKey.CacheKey, resp)
         return resp
       case CacheMode.NetworkOnly:
         return this.instance.request(config)
