@@ -15,7 +15,8 @@ export const useCms = () => {
   })
   const pull = useCallback(
     (route: keyof typeof routes) => {
-      fetchCmsGeneric(route).then(resp => {
+      fetchCmsGeneric(route)
+        .then(resp => {
           console.log(resp)
           if (resp.data?.success) {
             setState({

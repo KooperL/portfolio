@@ -6,6 +6,11 @@ exports[`Hamburger component it matches the snapshot 1`] = `
 >
   <button
     onClick={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#205375",
+      }
+    }
   >
     <div
       className="icon"

@@ -90,7 +90,7 @@ function Logger(props: Props) {
             +window.matchMedia("(prefers-color-scheme: dark)").matches ?? 2,
           browser: browserVar ?? "null",
           version: versionVar ?? "null",
-        }
+        },
       })
       .then((resp: LoggingResponsePayload) => {
         if (resp.success) {
