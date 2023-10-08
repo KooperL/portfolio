@@ -8,17 +8,8 @@ backendport="5000"
 # Run this file as a super user
 # This will not handle database creation
 
-crons="#0 16 * * * !/usr/bin/python3 $current_dir/server/v1.flask/scripts/fuelscrape/fuelscrape.py
-
-#0 9 * * * !/usr/bin/python3 $current_dir/server/v1.flask/scripts/fuelscrape/fuelscrape.py
-
-#0 1 * * 2 !/usr/bin/python3 $current_dir/server/v1.flask/scripts/property/scrape.py
-
-# 0 * * * * !/bin/bash $current_dir/pull_and_build.sh
-# 5 * * * * !/bin/bash $current_dir/server/kill_and_exec.sh
-
+crons="
 @reboot !cd $current_dir/server/v1.flask/ && /usr/bin/python3 $current_dir/server/v1.flask/app.py
-
 @reboot /bin/bash $current_dir/kill_and_exec.sh"
 
 crontab -l >> tempfile
@@ -27,7 +18,7 @@ crontab tempfile
 rm tempfile
 
 
-nxinx1="server {
+nginx1="server {
   listen       80;
   server_name  $(domain);
   location /api/v1 {
@@ -49,7 +40,7 @@ nxinx1="server {
   }
 }"
 
-nxinx2="server {
+nginx2="server {
     listen 80;
     server_name www.$(domain);
     return 301 $scheme://$(domain)$request_uri;
@@ -60,16 +51,26 @@ echo $nginx1 > /etc/nginx/conf.d/site1.conf
 echo $nginx2 > /etc/nginx/conf.d/site2.conf
 
 
-mkdir $current_dir/server/data
-
 serverdotenv="MONGO_USERNAME=
 MONGO_PASSWORD=
 MONGO_PORT=
 GOOGLE_MAPS_API_KEY=
 ORIGIN=
-ENV=$environment
-PROD_PORT=$backendport
+ENV=
+DEV_PORT=
+PROD_PORT=
+forum-register-hash-key=
+forum-register-salt-length=
+forum-jwt-auth-token=
+forum-jwt-refresh-token=
+forum-access-token-life=
+forum-refresh-token-life=
+
+DISCORD_BOT_TOKEN=
+DISCORD_SERVER_ID=
+
 DISCORD_WEBHOOK_URL=
+
 RATE_LIMIT_WINDOW=
 RATE_LIMIT_REQUESTS_LIMITED=
 RATE_LIMIT_REQUESTS_GENERAL="
