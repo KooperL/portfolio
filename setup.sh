@@ -17,6 +17,28 @@ echo crons >> tempfile
 crontab tempfile
 rm tempfile
 
+conf="user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
+
+events {
+        worker_connections 768;
+}
+
+http {
+        sendfile on;
+        tcp_nopush on;
+        types_hash_max_size 2048;
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE
+        ssl_prefer_server_ciphers on;
+        access_log /var/log/nginx/access.log;
+        error_log /var/log/nginx/error.log;
+        gzip on;
+        include /etc/nginx/conf.d/*.conf;
+}"
 
 nginx1="server {
   listen       80;
@@ -46,8 +68,8 @@ nginx2="server {
     return 301 $scheme://$(domain)$request_uri;
 }"
 
+echo $conf > /etc/nginx/nginx.conf
 echo $nginx1 > /etc/nginx/conf.d/site1.conf
-
 echo $nginx2 > /etc/nginx/conf.d/site2.conf
 
 
@@ -74,9 +96,9 @@ DISCORD_WEBHOOK_URL=
 RATE_LIMIT_WINDOW=
 RATE_LIMIT_REQUESTS_LIMITED=
 RATE_LIMIT_REQUESTS_GENERAL="
-echo $serverdotenv > $current_dir/server/.env
 
 reactdotenv="REACT_APP_DEV_FLASK_API_PORT=$backendport
 REACT_APP_NODE_ENV=$environment"
 
+echo $serverdotenv > $current_dir/server/.env
 echo $reactdotenv > $current_dir/ui.react/.env
