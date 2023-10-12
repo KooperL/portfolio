@@ -3,7 +3,7 @@ Flask-Cors==3.0.10
 Flask-SQLAlchemy==2.5.1
 biopython==1.79
 matplotlib==3.5.3
-numpy==1.22.4
+numpy==1.26.0
 pandas==1.4.3
 pymongo==4.2.0
 python-dotenv==0.20.0
@@ -13,4 +13,4 @@ scipy
 Werkzeug==2.2.2
 urllib3==1.26.12
 SQLAlchemy==1.4.40
-psutil=5.9.5
+psutil==5.9.5
