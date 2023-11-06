@@ -1,11 +1,11 @@
-import Spinner from "../../components/Spinner"
-import Navbar from "../../components/Navbar"
-import "./style.css"
-import ForumItem from "../../components/ForumItem"
-import ErrorPage from "../ErrorPage"
-import { useForumUserState } from "../../controllers/useForumUserState"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { ForumUserResponsePayload } from "src/api/clients/forumHandler/routes/fetchForumUser/types"
+import Spinner from '../../components/Spinner'
+import Navbar from '../../components/Navbar'
+import './style.css'
+import ForumItem from '../../components/ForumItem'
+import ErrorPage from '../ErrorPage'
+import { useForumUserState } from '../../controllers/useForumUserState'
+import { IslandCenter } from '../../templates/IslandCenter'
+import { ForumUserResponsePayload } from 'src/api/clients/forumHandler/routes/fetchForumUser/types'
 
 type t = ReturnType<typeof useForumUserState>
 

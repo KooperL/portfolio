@@ -1,27 +1,27 @@
-import { useContext, useEffect, useState } from "react"
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import "./style.css"
-import { Link, useNavigate } from "react-router-dom"
-import ButtonRedir from "../ButtonRedir"
-import Hamburger from "../Hamburger"
-import { useLocation } from "react-router-dom"
-import { sendForumLogout } from "src/api/clients/forumHandler/routes/sendForumLogout"
-import { forumPath, routes } from "src/containers/App/types"
-import { useAuth } from "src/hooks/useAuth"
+import { useContext, useEffect, useState } from 'react'
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import './style.css'
+import { Link, useNavigate } from 'react-router-dom'
+import ButtonRedir from '../ButtonRedir'
+import Hamburger from '../Hamburger'
+import { useLocation } from 'react-router-dom'
+import { sendForumLogout } from 'src/api/clients/forumHandler/routes/sendForumLogout'
+import { forumPath, routes } from 'src/containers/App/types'
+import { useAuth } from 'src/hooks/useAuth'
 
 function getPath() {
-  return window.location.pathname.split("/").filter(item => item)
+  return window.location.pathname.split('/').filter(item => item)
 }
 
 const site = () => {
-  let name = "kooperlingohr.com/".split("")
+  let name = 'kooperlingohr.com/'.split('')
   for (let i = 0; i < name.length; i++) {
     const rand = Math.random()
     if ((rand * 100) % 10 > 8) {
       name[i] = name[Math.floor(rand * name.length)]
     }
   }
-  return name.join("")
+  return name.join('')
 }
 
 function Navbar(props: { isVertical: boolean }) {
@@ -65,7 +65,7 @@ function Navbar(props: { isVertical: boolean }) {
   }
 
   function buttonController(path: string[]) {
-    if (path[0] && path[0].toLowerCase() === "forum") {
+    if (path[0] && path[0].toLowerCase() === 'forum') {
       if (!authentication.accessToken) {
         // No user
         // Should have already been redirected to login/register page
@@ -73,23 +73,23 @@ function Navbar(props: { isVertical: boolean }) {
         // Signed in
 
         const username = JSON.parse(
-          atob(authentication.accessToken.split(".")[1]),
-        )["username"]
+          atob(authentication.accessToken.split('.')[1]),
+        )['username']
 
         const HamburgerData = (
           <Hamburger
             data={[
               {
                 destination: `/${forumPath}/${routes.forumPostCreate}`,
-                label: "create",
+                label: 'create',
               },
               {
                 destination: `/${forumPath}/${routes.forumUserView}/${username}`,
-                label: "my posts",
+                label: 'my posts',
               },
               {
                 destination: `/${forumPath}`,
-                label: "logout",
+                label: 'logout',
                 callback: () => {
                   sendForumLogout({
                     payload: {
@@ -107,7 +107,7 @@ function Navbar(props: { isVertical: boolean }) {
             ]}
           />
         )
-        return [HamburgerData, "items"]
+        return [HamburgerData, 'items']
       }
     } else {
       return []
@@ -128,7 +128,7 @@ function Navbar(props: { isVertical: boolean }) {
   const back = (
     <ButtonRedir
       destination={path[0]}
-      label={`${path[0] ?? "/"} ⬅️` ?? ""}
+      label={`${path[0] ?? '/'} ⬅️` ?? ''}
       local={true}
     />
   )
@@ -136,7 +136,7 @@ function Navbar(props: { isVertical: boolean }) {
   return (
     <div className="navbar">
       <nav
-        className={`nav-container ${props.isVertical ? "vertical" : ""}`}
+        className={`nav-container ${props.isVertical ? 'vertical' : ''}`}
         style={{
           backgroundColor: scheme.header.background,
           zIndex: props.isVertical ? 1 : 11,
@@ -149,13 +149,13 @@ function Navbar(props: { isVertical: boolean }) {
           </div>
           {/* {props.isVertical ? '' : specialButtons} */}
           <div className="buttons-container">
-            {!!path.length ? (!props.isVertical ? home : "") : ""}
-            {path.length >= 2 ? (!props.isVertical ? back : "") : ""}
+            {!!path.length ? (!props.isVertical ? home : '') : ''}
+            {path.length >= 2 ? (!props.isVertical ? back : '') : ''}
           </div>
           <div className="tech-slideshow">
             <div
               className="mover-1 text"
-              style={{ height: "100%" }}
+              style={{ height: '100%' }}
             >
               {bannerText.map(jsx => jsx)}
             </div>

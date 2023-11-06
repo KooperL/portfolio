@@ -1,4 +1,4 @@
-import { ForumItemType } from "../../types"
+import { ForumItemType } from '../../types'
 
 export interface ForumHomeRequestPayload {
   session_id: string

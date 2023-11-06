@@ -1,5 +1,5 @@
-import React from "react"
-import "./style.css"
+import React from 'react'
+import './style.css'
 
 export function Radio(props: {
   onClick?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void

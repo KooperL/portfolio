@@ -1,4 +1,4 @@
-import "./style.css"
+import './style.css'
 
 export function RadioButton(props: {
   name: string

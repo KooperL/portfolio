@@ -1,5 +1,5 @@
-import { useError } from "src/hooks/useError"
-import ErrorPage from "../../containers/ErrorPage"
+import { useError } from 'src/hooks/useError'
+import ErrorPage from '../../containers/ErrorPage'
 
 interface WithErrorHandlingProps {
   children: React.ReactNode

@@ -1,4 +1,4 @@
-import { ErrorPageProps } from "src/containers/ErrorPage/types"
+import { ErrorPageProps } from 'src/containers/ErrorPage/types'
 
 export interface Props {
   children: React.ReactNode

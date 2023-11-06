@@ -1,12 +1,12 @@
-import { ContactRequestPayload, ContactResponsePayload } from "./types"
-import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types"
-import { ApiConsumer } from "../../instance"
-import { routes } from "../../types"
+import { ContactRequestPayload, ContactResponsePayload } from './types'
+import { CacheKey, CacheMode } from 'src/api/ApiHandlerCore/types'
+import { ApiConsumer } from '../../instance'
+import { routes } from '../../types'
 import {
   genericApiDataResponse,
   genericApiRequestArgs,
-} from "src/api/shared/types"
-import { AxiosResponse } from "axios"
+} from 'src/api/shared/types'
+import { AxiosResponse } from 'axios'
 
 export const sendContact = (
   props: genericApiRequestArgs<ContactRequestPayload>,
@@ -15,7 +15,7 @@ export const sendContact = (
   const path = `${routes.contact}`
   const config = {
     url: path,
-    method: "POST",
+    method: 'POST',
     data,
   }
   const cacheKey: CacheKey = {

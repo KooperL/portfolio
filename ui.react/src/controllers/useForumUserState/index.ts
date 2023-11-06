@@ -1,15 +1,15 @@
-import { forumPath, routes } from "src/containers/App/types"
-import { useContext, useEffect } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
-import { fetchForumUser } from "src/api/clients/forumHandler/routes/fetchForumUser"
+import { forumPath, routes } from 'src/containers/App/types'
+import { useContext, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { fetchForumUser } from 'src/api/clients/forumHandler/routes/fetchForumUser'
 import {
   ForumUserRequestPayload,
   ForumUserResponsePayload,
-} from "src/api/clients/forumHandler/routes/fetchForumUser/types"
-import { useAuth } from "src/hooks/useAuth"
-import { useFetch } from "src/hooks/useFetch"
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import { genericApiDataResponse } from "src/api/shared/types"
+} from 'src/api/clients/forumHandler/routes/fetchForumUser/types'
+import { useAuth } from 'src/hooks/useAuth'
+import { useFetch } from 'src/hooks/useFetch'
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import { genericApiDataResponse } from 'src/api/shared/types'
 
 export const useForumUserState = () => {
   const navigate = useNavigate()
@@ -17,7 +17,7 @@ export const useForumUserState = () => {
   const location = useLocation()
   const user = window.location.href
     .toString()
-    .slice(window.location.href.lastIndexOf("/") + 1)
+    .slice(window.location.href.lastIndexOf('/') + 1)
   const { authentication, trackingInformation } = useAuth()
 
   const { state, pull: post } = useFetch<

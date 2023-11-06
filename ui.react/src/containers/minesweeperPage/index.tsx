@@ -1,27 +1,27 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from 'react'
 // import { useLocation } from "react-router-dom";
-import Modal from "../../components/Modal"
+import Modal from '../../components/Modal'
 // @ts-ignore
-import gear from "../../assets/gear.svg"
+import gear from '../../assets/gear.svg'
 import {
   PageInformation,
   SchemeContext,
-} from "../../state/colorScheme/colourScheme"
-import "./style.css"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { Gear } from "../../components/Gear"
-import { Input } from "../../components/Input"
-import { Button } from "../../components/Button"
+} from '../../state/colorScheme/colourScheme'
+import './style.css'
+import { IslandCenter } from '../../templates/IslandCenter'
+import { Gear } from '../../components/Gear'
+import { Input } from '../../components/Input'
+import { Button } from '../../components/Button'
 import {
   Cell,
   gameStateLookup,
   makeupLookup,
   useMinesweeperState,
-} from "../../controllers/useMinesweeperState"
-import { State } from "../../types/State"
-import TypeLookup from "../../components/TypeLookup"
-import { CMSPageResponse } from "../../components/TypeLookup/types"
-import ErrorPage from "src/containers/ErrorPage"
+} from '../../controllers/useMinesweeperState'
+import { State } from '../../types/State'
+import TypeLookup from '../../components/TypeLookup'
+import { CMSPageResponse } from '../../components/TypeLookup/types'
+import ErrorPage from 'src/containers/ErrorPage'
 
 interface Props {
   gridSize: number
@@ -76,20 +76,20 @@ function Minesweeper(props: Props) {
           </div>
           <div className="game-control">
             <span className="digits">
-              {("0" + Math.floor((props.timer / 60000) % 60)).slice(-2)}:
+              {('0' + Math.floor((props.timer / 60000) % 60)).slice(-2)}:
             </span>
             <span className="digits">
-              {("0" + Math.floor((props.timer / 1000) % 60)).slice(-2)}.
+              {('0' + Math.floor((props.timer / 1000) % 60)).slice(-2)}.
             </span>
             <span className="digits mili-sec">
-              {("0" + ((props.timer / 10) % 100)).slice(-2)}
+              {('0' + ((props.timer / 10) % 100)).slice(-2)}
             </span>
           </div>
         </div>
         <div
           className="game"
           style={{
-            display: "grid",
+            display: 'grid',
             gridTemplateColumns: `repeat(${props.grid.length}, 1fr)`,
           }}
         >
@@ -126,12 +126,12 @@ function Minesweeper(props: Props) {
                       backgroundColor: props.scheme.body.foreground,
                     }}
                   >
-                    {cell.makeup === ""
+                    {cell.makeup === ''
                       ? cell.revealed
                         ? cell.neighbours > 0
                           ? cell.neighbours
                           : (makeupLookup as any)[cell.type.toString()]
-                        : ""
+                        : ''
                       : cell.makeup}
                   </button>
                 </div>

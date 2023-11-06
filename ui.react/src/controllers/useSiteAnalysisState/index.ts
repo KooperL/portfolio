@@ -1,18 +1,18 @@
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import { useContext, useEffect, useRef, useState } from "react"
-import { useFetch } from "src/hooks/useFetch"
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { useFetch } from 'src/hooks/useFetch'
 
-import React from "react"
-import { useCms } from "src/hooks/useCms"
-import { fetchSiteAnalysis } from "src/api/clients/ApiHandler/routes/fetchSiteAnalysis"
-import { useError } from "src/hooks/useError"
-import { genericApiDataResponse } from "src/api/shared/types"
+import React from 'react'
+import { useCms } from 'src/hooks/useCms'
+import { fetchSiteAnalysis } from 'src/api/clients/ApiHandler/routes/fetchSiteAnalysis'
+import { useError } from 'src/hooks/useError'
+import { genericApiDataResponse } from 'src/api/shared/types'
 import {
   siteAnalysisRequest,
   siteAnalysisResponse,
-} from "src/api/clients/ApiHandler/routes/fetchSiteAnalysis/types"
+} from 'src/api/clients/ApiHandler/routes/fetchSiteAnalysis/types'
 
-declare module "react" {
+declare module 'react' {
   interface SVGElement extends React.ReactElement<SVGElement> {}
   interface LineElement extends React.ReactElement<LineElement> {}
   interface TextElement extends React.ReactElement<TextElement> {}
@@ -36,8 +36,8 @@ export const useSiteAnalysisState = () => {
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: "NETWORK",
-        errorMessage: "Error fetching data",
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data',
       })
     }
   }, [stateCMS])
@@ -48,12 +48,12 @@ export const useSiteAnalysisState = () => {
       ApiImpl: fetchSiteAnalysis,
       payload: {},
     })
-    pullCMS("siteanalysisCms")
+    pullCMS('siteanalysisCms')
     // ref.current && ref.current.getContext('2d').drawImage(document.getElementById("myCanvas"), 0, 0);
   }, [])
 
   useEffect(() => {
-    const canvas = document.getElementById("myCanvas2")
+    const canvas = document.getElementById('myCanvas2')
     // @ts-ignore
     canvas && generateCanvas(canvas)
   }, [loaded])

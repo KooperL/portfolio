@@ -1,18 +1,18 @@
-import { useState, useCallback, useContext, useEffect } from "react"
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import { useFetch } from "src/hooks/useFetch"
-import { useCms } from "src/hooks/useCms"
-import { sendSeqAlign } from "src/api/clients/ApiHandler/routes/sendSeqAlign"
-import { useError } from "src/hooks/useError"
-import { genericApiDataResponse } from "src/api/shared/types"
+import { useState, useCallback, useContext, useEffect } from 'react'
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import { useFetch } from 'src/hooks/useFetch'
+import { useCms } from 'src/hooks/useCms'
+import { sendSeqAlign } from 'src/api/clients/ApiHandler/routes/sendSeqAlign'
+import { useError } from 'src/hooks/useError'
+import { genericApiDataResponse } from 'src/api/shared/types'
 import {
   SeqAlignRequest,
   SeqAlignResponse,
-} from "src/api/clients/ApiHandler/routes/sendSeqAlign/types"
+} from 'src/api/clients/ApiHandler/routes/sendSeqAlign/types'
 
 export const useSeqAlignState = () => {
-  const [sampletxt, setSampletxt] = useState("")
-  const [referencetxt, setReferencetxt] = useState("")
+  const [sampletxt, setSampletxt] = useState('')
+  const [referencetxt, setReferencetxt] = useState('')
   const [identical, setIdentical] = useState(1.0)
   const [mismatch, setMismatch] = useState(0.0)
   const [gaps, setGaps] = useState(-0.5)
@@ -28,8 +28,8 @@ export const useSeqAlignState = () => {
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: "NETWORK",
-        errorMessage: "Error fetching data",
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data',
       })
     }
   }, [stateCMS])
@@ -50,7 +50,7 @@ export const useSeqAlignState = () => {
 
   useEffect(() => {
     document.title = `Protein Secondary Structure | ${scheme.title}`
-    pull("seqalignCms")
+    pull('seqalignCms')
   }, [])
 
   return {

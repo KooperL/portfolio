@@ -1,9 +1,9 @@
 // @ts-nocheck
 
-import React from "react"
-import Popup from "reactjs-popup"
-import { Link } from "react-router-dom"
-import "./style.css"
+import React from 'react'
+import Popup from 'reactjs-popup'
+import { Link } from 'react-router-dom'
+import './style.css'
 
 const Modal = props => (
   <Popup

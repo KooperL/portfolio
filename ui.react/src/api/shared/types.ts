@@ -1,5 +1,5 @@
-export const forumPath = "forum"
-export const projectPath = "projects"
+export const forumPath = 'forum'
+export const projectPath = 'projects'
 
 export interface ApiEndpoints {
   contact: string

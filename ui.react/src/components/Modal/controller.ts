@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from 'react'
 
 export const ModalController = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -8,7 +8,7 @@ export const ModalController = () => {
 
   const handleClick = (event: React.MouseEvent) => {
     const overlay = event.currentTarget as HTMLDivElement
-    const wrapper = overlay.querySelector(".modal-wrapper") as HTMLDivElement
+    const wrapper = overlay.querySelector('.modal-wrapper') as HTMLDivElement
     if (event.target === overlay && event.target !== wrapper) {
       closeModal()
     }

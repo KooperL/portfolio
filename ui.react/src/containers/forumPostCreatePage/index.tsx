@@ -1,9 +1,9 @@
-import "./style.css"
-import { Button } from "../../components/Button"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { Input } from "../../components/Input"
-import { Textarea } from "../../components/Textarea"
-import { useForumPostCreateState } from "../../controllers/useForumPostCreateState"
+import './style.css'
+import { Button } from '../../components/Button'
+import { IslandCenter } from '../../templates/IslandCenter'
+import { Input } from '../../components/Input'
+import { Textarea } from '../../components/Textarea'
+import { useForumPostCreateState } from '../../controllers/useForumPostCreateState'
 
 type t = ReturnType<typeof useForumPostCreateState>
 

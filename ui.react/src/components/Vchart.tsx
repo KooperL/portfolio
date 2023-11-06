@@ -7,8 +7,8 @@ import {
   VictoryLegend,
   VictoryVoronoiContainer,
   VictoryTooltip,
-} from "victory"
-import React from "react"
+} from 'victory'
+import React from 'react'
 
 interface Props {
   data: any
@@ -36,19 +36,19 @@ export default function Vchart(props) {
         title="Legend"
         centerTitle
         gutter={30}
-        style={{ border: { stroke: "black" }, title: { fill: "white" } }}
+        style={{ border: { stroke: 'black' }, title: { fill: 'white' } }}
         data={[
-          { name: "Max", symbol: { fill: "red" }, labels: { fill: "white" } },
+          { name: 'Max', symbol: { fill: 'red' }, labels: { fill: 'white' } },
           {
-            name: "Average",
-            symbol: { fill: "blue" },
-            labels: { fill: "white" },
+            name: 'Average',
+            symbol: { fill: 'blue' },
+            labels: { fill: 'white' },
           },
-          { name: "Min", symbol: { fill: "black" }, labels: { fill: "white" } },
+          { name: 'Min', symbol: { fill: 'black' }, labels: { fill: 'white' } },
           {
-            name: "Wholesale",
-            symbol: { fill: "green" },
-            labels: { fill: "white" },
+            name: 'Wholesale',
+            symbol: { fill: 'green' },
+            labels: { fill: 'white' },
           },
         ]}
       />
@@ -56,11 +56,11 @@ export default function Vchart(props) {
       <VictoryAxis
         label="Days"
         style={{
-          axis: { stroke: "#756f6a" },
-          axisLabel: { padding: 50, fill: "white" },
-          grid: { stroke: ({ tick }) => (tick > 0.5 ? "grey" : "grey") },
-          ticks: { stroke: "grey", size: 6 },
-          tickLabels: { padding: 0, fill: "white" },
+          axis: { stroke: '#756f6a' },
+          axisLabel: { padding: 50, fill: 'white' },
+          grid: { stroke: ({ tick }) => (tick > 0.5 ? 'grey' : 'grey') },
+          ticks: { stroke: 'grey', size: 6 },
+          tickLabels: { padding: 0, fill: 'white' },
         }}
         // tickFormat={(t) => t}
         tickFormat={t => `${t.slice(6, 12)}`}
@@ -72,10 +72,10 @@ export default function Vchart(props) {
           key={ind}
           style={{
             data: {
-              stroke: props.cols[ind] || "black",
+              stroke: props.cols[ind] || 'black',
               strokeWidth: ({ active }) => (active ? 0.5 : 1.0),
             },
-            labels: { fill: props.cols[ind] || "black" },
+            labels: { fill: props.cols[ind] || 'black' },
           }}
         />
       ))}
@@ -83,10 +83,10 @@ export default function Vchart(props) {
         dependentAxis
         label="Price, c"
         style={{
-          axis: { stroke: "#756f6a" },
-          axisLabel: { padding: 50, fill: "white" },
-          ticks: { stroke: "grey", size: 6 },
-          tickLabels: { padding: 0, fill: "white" },
+          axis: { stroke: '#756f6a' },
+          axisLabel: { padding: 50, fill: 'white' },
+          ticks: { stroke: 'grey', size: 6 },
+          tickLabels: { padding: 0, fill: 'white' },
         }}
         tickCount={5}
       />

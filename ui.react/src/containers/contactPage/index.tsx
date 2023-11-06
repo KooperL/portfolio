@@ -1,9 +1,9 @@
-import "./style.css"
-import { Button } from "../../components/Button"
-import { IslandCenter } from "../../templates/IslandCenter"
-import TypeLookup from "../../components/TypeLookup"
-import { Input } from "../../components/Input"
-import { useContactState } from "../../controllers/useContactState"
+import './style.css'
+import { Button } from '../../components/Button'
+import { IslandCenter } from '../../templates/IslandCenter'
+import TypeLookup from '../../components/TypeLookup'
+import { Input } from '../../components/Input'
+import { useContactState } from '../../controllers/useContactState'
 
 type t = ReturnType<typeof useContactState>
 
@@ -16,7 +16,7 @@ function ContactPage(props: t): JSX.Element {
             onSubmit={e =>
               props.onSubmit(e, {
                 session_id: props.trackingInformation.getSessionKey(),
-                message: props.value ?? "",
+                message: props.value ?? '',
               })
             }
           >
@@ -33,13 +33,13 @@ function ContactPage(props: t): JSX.Element {
                 <div className="status">
                   {props.value.length
                     ? props.POSTstate.loading
-                      ? "🛫"
+                      ? '🛫'
                       : props.POSTstate.details
                       ? !props.POSTstate.error
-                        ? "✅"
-                        : "❌"
-                      : "✏️"
-                    : "🗒️"}
+                        ? '✅'
+                        : '❌'
+                      : '✏️'
+                    : '🗒️'}
                 </div>
               </div>
             </div>

@@ -1,26 +1,26 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from 'react'
 // import { useLocation } from "react-router-dom";
-import Modal from "../../components/Modal"
+import Modal from '../../components/Modal'
 // @ts-ignore
-import gear from "../../assets/gear.svg"
+import gear from '../../assets/gear.svg'
 import {
   PageInformation,
   SchemeContext,
-} from "../../state/colorScheme/colourScheme"
-import "./style.css"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { Gear } from "../../components/Gear"
-import { Radio } from "../../components/Radio"
-import { Button } from "../../components/Button"
+} from '../../state/colorScheme/colourScheme'
+import './style.css'
+import { IslandCenter } from '../../templates/IslandCenter'
+import { Gear } from '../../components/Gear'
+import { Radio } from '../../components/Radio'
+import { Button } from '../../components/Button'
 import {
   Board,
   CalculateWinner,
-} from "../../controllers/useTictactoeState/types"
-import { o, useTictactoeState, x } from "../../controllers/useTictactoeState"
-import { State } from "../../types/State"
-import { CMSPageResponse } from "../../components/TypeLookup/types"
-import TypeLookup from "../../components/TypeLookup"
-import ErrorPage from "src/containers/ErrorPage"
+} from '../../controllers/useTictactoeState/types'
+import { o, useTictactoeState, x } from '../../controllers/useTictactoeState'
+import { State } from '../../types/State'
+import { CMSPageResponse } from '../../components/TypeLookup/types'
+import TypeLookup from '../../components/TypeLookup'
+import ErrorPage from 'src/containers/ErrorPage'
 
 interface Props {
   gameInProgress: boolean
@@ -57,7 +57,7 @@ function Tictactoe(props: Props) {
               style={{
                 backgroundColor:
                   props.winner && props.winner[1].includes(i)
-                    ? "#BBF7D0"
+                    ? '#BBF7D0'
                     : props.scheme.body.foreground,
                 borderColor: props.scheme.body.foreground,
               }}
@@ -67,7 +67,7 @@ function Tictactoe(props: Props) {
                 style={{}}
                 onClick={() => props.handleClick(i)}
               >
-                {square ? square : "(empty)"}
+                {square ? square : '(empty)'}
               </button>
             </div>
           ))}

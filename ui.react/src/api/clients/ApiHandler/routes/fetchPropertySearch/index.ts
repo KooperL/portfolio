@@ -1,13 +1,13 @@
-import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types"
-import { routes } from "../../types"
-import { ApiConsumer } from "../../instance"
+import { CacheKey, CacheMode } from 'src/api/ApiHandlerCore/types'
+import { routes } from '../../types'
+import { ApiConsumer } from '../../instance'
 import {
   genericApiDataResponse,
   genericApiRequestArgs,
   projectPath,
-} from "src/api/shared/types"
-import { AxiosResponse } from "axios"
-import { PropertyIndexResponse } from "../fetchPropertyIndex/types"
+} from 'src/api/shared/types'
+import { AxiosResponse } from 'axios'
+import { PropertyIndexResponse } from '../fetchPropertyIndex/types'
 
 export const fetchPropertySearch = (
   props: genericApiRequestArgs<any>,

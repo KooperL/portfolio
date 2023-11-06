@@ -1,18 +1,18 @@
-import { useState, useCallback, useContext, useEffect } from "react"
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import { useFetch } from "src/hooks/useFetch"
-import { CMSPageResponse } from "../../components/TypeLookup/types"
-import { sendMrna } from "src/api/clients/ApiHandler/routes/sendMrna"
-import { useCms } from "src/hooks/useCms"
-import { useError } from "src/hooks/useError"
-import { genericApiDataResponse } from "src/api/shared/types"
+import { useState, useCallback, useContext, useEffect } from 'react'
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import { useFetch } from 'src/hooks/useFetch'
+import { CMSPageResponse } from '../../components/TypeLookup/types'
+import { sendMrna } from 'src/api/clients/ApiHandler/routes/sendMrna'
+import { useCms } from 'src/hooks/useCms'
+import { useError } from 'src/hooks/useError'
+import { genericApiDataResponse } from 'src/api/shared/types'
 import {
   MrnaRequest,
   MrnaResponse,
-} from "src/api/clients/ApiHandler/routes/sendMrna/types"
+} from 'src/api/clients/ApiHandler/routes/sendMrna/types'
 
 export const useMrnaState = () => {
-  const [value, setValue] = useState("")
+  const [value, setValue] = useState('')
   const [scheme, setScheme] = useContext(SchemeContext)
   const { state: statePOST, pull: handleSubmit } = useFetch<
     MrnaRequest,
@@ -24,15 +24,15 @@ export const useMrnaState = () => {
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: "NETWORK",
-        errorMessage: "Error fetching data",
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data',
       })
     }
   }, [stateCMS])
 
   useEffect(() => {
     document.title = `DNA decoder | ${scheme.title}`
-    pull("mrnaCms")
+    pull('mrnaCms')
   }, [])
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {

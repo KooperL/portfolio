@@ -1,13 +1,13 @@
-import { useContext, useEffect, useRef, useState } from "react"
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import { useFetch } from "../../hooks/useFetch"
-import { State } from "../../types/State"
+import { useContext, useEffect, useRef, useState } from 'react'
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import { useFetch } from '../../hooks/useFetch'
+import { State } from '../../types/State'
 // @ts-ignore
-import dna from "./dna.txt"
-import { CMSPageResponse } from "../../components/TypeLookup/types"
-import { fetchCmsGeneric } from "src/api/clients/CmsHandler/routes/generic"
-import { useCms } from "src/hooks/useCms"
-import { useError } from "src/hooks/useError"
+import dna from './dna.txt'
+import { CMSPageResponse } from '../../components/TypeLookup/types'
+import { fetchCmsGeneric } from 'src/api/clients/CmsHandler/routes/generic'
+import { useCms } from 'src/hooks/useCms'
+import { useError } from 'src/hooks/useError'
 
 function newSeed(arrs: number, length: number, width: number) {
   let arr = new Array(arrs)
@@ -35,15 +35,15 @@ export const useAboutState = () => {
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: "NETWORK",
-        errorMessage: "Error fetching data",
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data',
       })
     }
   }, [stateCMS])
 
   useEffect(() => {
     document.title = `About | ${scheme.title}`
-    pull("aboutCms")
+    pull('aboutCms')
 
     fetch(dna)
       .then(r => r.text())

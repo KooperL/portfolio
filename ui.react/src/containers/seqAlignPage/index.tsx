@@ -1,16 +1,16 @@
-import Spinner from "../../components/Spinner"
-import Modal from "../../components/Modal"
+import Spinner from '../../components/Spinner'
+import Modal from '../../components/Modal'
 // @ts-ignore
-import gear from "../../assets/gear.svg"
-import { Button } from "../../components/Button"
-import "./style.css"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { Input } from "../../components/Input"
-import { Gear } from "../../components/Gear"
-import { Radio } from "../../components/Radio"
-import ErrorPage from "../ErrorPage"
-import { useSeqAlignState } from "../../controllers/useSeqAlignState"
-import TypeLookup from "../../components/TypeLookup"
+import gear from '../../assets/gear.svg'
+import { Button } from '../../components/Button'
+import './style.css'
+import { IslandCenter } from '../../templates/IslandCenter'
+import { Input } from '../../components/Input'
+import { Gear } from '../../components/Gear'
+import { Radio } from '../../components/Radio'
+import ErrorPage from '../ErrorPage'
+import { useSeqAlignState } from '../../controllers/useSeqAlignState'
+import TypeLookup from '../../components/TypeLookup'
 
 type t = ReturnType<typeof useSeqAlignState>
 
@@ -110,7 +110,7 @@ function SeqAlignPage(props: t): JSX.Element {
     )
   if (props.stateSubmit.details && props.stateSubmit.details?.data) {
     const data = props.stateSubmit.details.data
-    const splitDrawArray = data.draw_res.map((elem: string) => elem.split("\n"))
+    const splitDrawArray = data.draw_res.map((elem: string) => elem.split('\n'))
 
     return (
       <IslandCenter>
@@ -134,7 +134,7 @@ function SeqAlignPage(props: t): JSX.Element {
                         key={ind}
                         className="resultTitle"
                       >
-                        Possible result:{" "}
+                        Possible result:{' '}
                       </p>
                       {/** @ts-ignore */}
                       {/* {state.details.draw_res[ind].split('\n').map((line, lineInd) => ( */}

@@ -1,13 +1,13 @@
-import { useContext, useEffect, useRef, useState } from "react"
-import "./style.css"
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import { FuncProps, Props } from "./types"
-import { Link } from "react-router-dom"
-import { LoggingResponsePayload } from "../Logger/types"
-import { Globe } from "../Globe"
-import { useMonitor } from "src/hooks/useMonitor"
+import { useContext, useEffect, useRef, useState } from 'react'
+import './style.css'
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import { FuncProps, Props } from './types'
+import { Link } from 'react-router-dom'
+import { LoggingResponsePayload } from '../Logger/types'
+import { Globe } from '../Globe'
+import { useMonitor } from 'src/hooks/useMonitor'
 
-const letters = "abcdefghijklmnopqrstuvwxyz"
+const letters = 'abcdefghijklmnopqrstuvwxyz'
 
 // const glitchText = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 const glitchText = (e: HTMLDivElement) => {
@@ -18,7 +18,7 @@ const glitchText = (e: HTMLDivElement) => {
 
   // const dataVal = e.target.dataset.value
   // @ts-ignore
-  const dataVal = e.attributes["data-value"].nodeValue
+  const dataVal = e.attributes['data-value'].nodeValue
 
   const interval = setInterval(() => {
     // @ts-ignore
@@ -26,13 +26,13 @@ const glitchText = (e: HTMLDivElement) => {
     // @ts-ignore
     // e.target.innerText = ogText
     e.innerText = ogText
-      .split("")
+      .split('')
       .map((letter, index) => {
         // @ts-ignore
         if (index < iterations) return dataVal[index]
         return letters[Math.floor(Math.random() * letters.length)]
       })
-      .join("")
+      .join('')
     iterations += 3
   }, 60)
 

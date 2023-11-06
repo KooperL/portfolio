@@ -1,14 +1,14 @@
 const routes = {
-  forumRegister: "register",
-  forumLogin: "login",
-  forumPostCreate: "post",
-  forumPost: "post",
-  forumUser: "user",
-  forumRefresh: "refresh",
-  forumLogout: "logout",
+  forumRegister: 'register',
+  forumLogin: 'login',
+  forumPostCreate: 'post',
+  forumPost: 'post',
+  forumUser: 'user',
+  forumRefresh: 'refresh',
+  forumLogout: 'logout',
 } as const
 
-export const forumPath = "forum"
+export const forumPath = 'forum'
 
 export { routes }
 

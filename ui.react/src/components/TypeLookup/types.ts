@@ -20,14 +20,14 @@ interface CMSSection {
 }
 
 interface ImageComponent {
-  type: "image"
+  type: 'image'
   content: {
     src: string
     alt: string
   }
 }
 interface TextComponent {
-  type: "text"
+  type: 'text'
   content: {
     title?: string
     subtitle?: string
@@ -35,31 +35,31 @@ interface TextComponent {
   }
 }
 interface ButtonListComponent {
-  type: "button-list"
+  type: 'button-list'
   content: {
     buttons: ButtonActual[]
   }
 }
 interface UnorderedListComponent {
-  type: "unordered-list"
+  type: 'unordered-list'
   content: {
     items: string[]
   }
 }
 interface OrderedListComponent {
-  type: "ordered-list"
+  type: 'ordered-list'
   content: {
     items: string[]
   }
 }
 interface EmojiComponent {
-  type: "emoji"
+  type: 'emoji'
   content: {
     emoji: string
   }
 }
 interface ButtonComponent {
-  type: "button"
+  type: 'button'
   content: ButtonActual
 }
 

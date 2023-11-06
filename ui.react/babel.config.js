@@ -4,17 +4,17 @@ module.exports = function (api) {
   return {
     presets: [
       [
-        "@babel/preset-env",
+        '@babel/preset-env',
         {
           targets: {
-            node: "current",
+            node: 'current',
           },
-          useBuiltIns: "entry",
+          useBuiltIns: 'entry',
         },
       ],
-      "@babel/preset-typescript",
-      "@babel/preset-react",
+      '@babel/preset-typescript',
+      '@babel/preset-react',
     ],
-    extends: "./tsconfig.json",
+    extends: './tsconfig.json',
   }
 }

@@ -1,9 +1,9 @@
-import { Input } from "../Input"
-import React from "react"
-import renderer from "react-test-renderer"
+import { Input } from '../Input'
+import React from 'react'
+import renderer from 'react-test-renderer'
 
-describe("Input component", () => {
-  test("it matches the snapshot", () => {
+describe('Input component', () => {
+  test('it matches the snapshot', () => {
     const tree = renderer
       .create(
         <Input

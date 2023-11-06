@@ -1,19 +1,19 @@
-import { useState, useCallback, useContext, useEffect } from "react"
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import { useFetch } from "src/hooks/useFetch"
-import { useCms } from "src/hooks/useCms"
-import { useError } from "src/hooks/useError"
-import { genericApiDataResponse } from "src/api/shared/types"
+import { useState, useCallback, useContext, useEffect } from 'react'
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import { useFetch } from 'src/hooks/useFetch'
+import { useCms } from 'src/hooks/useCms'
+import { useError } from 'src/hooks/useError'
+import { genericApiDataResponse } from 'src/api/shared/types'
 import {
   SecondaryRequest,
   SecondaryResponse,
-} from "src/api/clients/ApiHandler/routes/sendSecondary/types"
-import { sendSecondary } from "src/api/clients/ApiHandler/routes/sendSecondary"
+} from 'src/api/clients/ApiHandler/routes/sendSecondary/types'
+import { sendSecondary } from 'src/api/clients/ApiHandler/routes/sendSecondary'
 
 export const useSecondaryState = () => {
   // dataCall: (body: SecondaryPOST) => Promise<ApiError | SecondaryPayload>
-  const [aa_field_id, setAa_field_id] = useState("")
-  const [aaf_field_id, setAaf_field_id] = useState("s")
+  const [aa_field_id, setAa_field_id] = useState('')
+  const [aaf_field_id, setAaf_field_id] = useState('s')
   const [detectthreshold, setDetectthreshold] = useState(4)
   const [leniency, setLeniency] = useState(3)
   const [scheme, setScheme] = useContext(SchemeContext)
@@ -27,8 +27,8 @@ export const useSecondaryState = () => {
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: "NETWORK",
-        errorMessage: "Error fetching data",
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data',
       })
     }
   }, [stateCMS])
@@ -47,7 +47,7 @@ export const useSecondaryState = () => {
 
   useEffect(() => {
     document.title = `Protein Secondary Structure | ${scheme.title}`
-    pull("secondaryCms")
+    pull('secondaryCms')
   }, [])
 
   return {

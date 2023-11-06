@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react"
-import { useCms } from "src/hooks/useCms"
-import { useError } from "src/hooks/useError"
-import { useFetch } from "src/hooks/useFetch"
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
+import { useContext, useEffect, useState } from 'react'
+import { useCms } from 'src/hooks/useCms'
+import { useError } from 'src/hooks/useError'
+import { useFetch } from 'src/hooks/useFetch'
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
 
 interface DensityMap {
   [key: string]: number
@@ -17,11 +17,11 @@ const typeLookup = {
 }
 
 export const makeupLookup = {
-  0: "",
-  1: "💣",
-  2: "💥",
-  3: "🚩",
-  4: "❓",
+  0: '',
+  1: '💣',
+  2: '💥',
+  3: '🚩',
+  4: '❓',
 }
 
 export class Cell {
@@ -75,7 +75,7 @@ export class Cell {
   identity() {
     switch (this.type) {
       case 0:
-        return this.neighbours > 0 ? this.neighbours.toString() : "2"
+        return this.neighbours > 0 ? this.neighbours.toString() : '2'
       case 1:
         return makeupLookup[this.type]
       case 2:
@@ -160,10 +160,10 @@ function randomPopulate(grid: Cell[][], densityMap: DensityMap) {
 }
 
 export const gameStateLookup = {
-  0: "⏳", // Loading
-  1: "🙂", // In progress
-  2: "😵", // Lost
-  3: "😄", // Won
+  0: '⏳', // Loading
+  1: '🙂', // In progress
+  2: '😵', // Lost
+  3: '😄', // Won
 }
 
 export const useMinesweeperState = () => {
@@ -183,15 +183,15 @@ export const useMinesweeperState = () => {
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: "NETWORK",
-        errorMessage: "Error fetching data",
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data',
       })
     }
   }, [stateCMS])
 
   useEffect(() => {
     document.title = `Minesweeper | ${scheme.title}`
-    pull("minesweeperCms")
+    pull('minesweeperCms')
   }, [])
 
   function genFreshBoard() {

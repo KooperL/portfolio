@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from "react"
-import Spinner from "../../components/Spinner"
+import React, { useContext, useEffect, useState } from 'react'
+import Spinner from '../../components/Spinner'
 import {
   PageInformation,
   SchemeContext,
-} from "../../state/colorScheme/colourScheme"
-import "./style.css"
-import { Button } from "../../components/Button"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { Input } from "../../components/Input"
-import ErrorPage from "../ErrorPage"
-import { useMrnaState } from "../../controllers/useMrnaState"
-import { State } from "../../types/State"
-import { CMSPageResponse } from "../../components/TypeLookup/types"
-import TypeLookup from "../../components/TypeLookup"
-import { genericApiDataResponse } from "src/api/shared/types"
+} from '../../state/colorScheme/colourScheme'
+import './style.css'
+import { Button } from '../../components/Button'
+import { IslandCenter } from '../../templates/IslandCenter'
+import { Input } from '../../components/Input'
+import ErrorPage from '../ErrorPage'
+import { useMrnaState } from '../../controllers/useMrnaState'
+import { State } from '../../types/State'
+import { CMSPageResponse } from '../../components/TypeLookup/types'
+import TypeLookup from '../../components/TypeLookup'
+import { genericApiDataResponse } from 'src/api/shared/types'
 
 type t = ReturnType<typeof useMrnaState>
 
@@ -138,7 +138,7 @@ function MrnaPage(props: t): JSX.Element {
                     {Object.keys(data.simplecount).map(
                       (countCatKey, countCatIndex) => (
                         <p key={countCatIndex}>
-                          {countCatKey}:{" "}
+                          {countCatKey}:{' '}
                           {
                             data.simplecount[
                               countCatKey as keyof typeof data.simplecount

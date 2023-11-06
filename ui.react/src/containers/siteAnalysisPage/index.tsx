@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react"
-import Spinner from "../../components/Spinner"
-import Chart from "react-apexcharts"
-import ErrorPage from "../ErrorPage"
-import { useSiteAnalysisState } from "../../controllers/useSiteAnalysisState"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { BoxSvg } from "../../controllers/utils/SVGBox"
-import ReactApexChart from "react-apexcharts"
-import GenerateHeatmap from "../../controllers/utils/heatmap"
-import "./style.css"
-import TypeLookup from "../../components/TypeLookup"
+import React, { useEffect, useState } from 'react'
+import Spinner from '../../components/Spinner'
+import Chart from 'react-apexcharts'
+import ErrorPage from '../ErrorPage'
+import { useSiteAnalysisState } from '../../controllers/useSiteAnalysisState'
+import { IslandCenter } from '../../templates/IslandCenter'
+import { BoxSvg } from '../../controllers/utils/SVGBox'
+import ReactApexChart from 'react-apexcharts'
+import GenerateHeatmap from '../../controllers/utils/heatmap'
+import './style.css'
+import TypeLookup from '../../components/TypeLookup'
 
 function generateData(count: number, yrange: { max: number; min: number }) {
   var i = 0
@@ -51,7 +51,7 @@ function SiteAnalysisPage(props: t): JSX.Element {
               id="myCanvas2"
               width="200"
               height="40"
-              style={{ border: "1px solid #000000" }}
+              style={{ border: '1px solid #000000' }}
             ></canvas>
             {/* <script defer></script> */}
             <p>Canvas hash: {data?.fingerprint.CanvasHash}</p>
@@ -91,7 +91,7 @@ function SiteAnalysisPage(props: t): JSX.Element {
             <p className="h2">All page redirects</p>
             <GenerateHeatmap
               // @ts-ignore typescript demonstrating it has the mental capacity of a carboard box
-              data={(data as siteAnalysisResp["data"]).siteTraffic.map(
+              data={(data as siteAnalysisResp['data']).siteTraffic.map(
                 (item: any) => ({
                   x: item.source,
                   y: item.destination,

@@ -1,11 +1,11 @@
-import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types"
-import { fetchForum } from "../../instance"
-import { forumPath, routes } from "../../types"
-import { AxiosRequestConfig, AxiosResponse } from "axios"
+import { CacheKey, CacheMode } from 'src/api/ApiHandlerCore/types'
+import { fetchForum } from '../../instance'
+import { forumPath, routes } from '../../types'
+import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import {
   genericApiDataResponse,
   genericApiRequestArgs,
-} from "src/api/shared/types"
+} from 'src/api/shared/types'
 
 function sendForumLogout(
   props: genericApiRequestArgs<any>,
@@ -17,7 +17,7 @@ function sendForumLogout(
     data: data,
     headers: { Authorization: `Bearer ${creds}` },
     withCredentials: true,
-    method: "POST",
+    method: 'POST',
   }
   const cacheKey: CacheKey = {
     CacheMode: CacheMode.NetworkFirst,

@@ -1,7 +1,7 @@
-import React, { useState } from "react"
-import { EnhanceProps, ModalProps } from "./types"
-import "./style.css"
-import { ModalController } from "./controller"
+import React, { useState } from 'react'
+import { EnhanceProps, ModalProps } from './types'
+import './style.css'
+import { ModalController } from './controller'
 
 const Modal: React.FC<ModalProps> = (props: ModalProps) => {
   if (!props.isModalOpen) {

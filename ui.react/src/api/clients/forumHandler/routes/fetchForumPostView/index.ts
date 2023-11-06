@@ -1,16 +1,16 @@
-import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types"
-import { AxiosRequestConfig, AxiosResponse } from "axios"
+import { CacheKey, CacheMode } from 'src/api/ApiHandlerCore/types'
+import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import {
   ForumPostViewRequestPayload,
   ForumPostViewResponsePayload,
-} from "./types"
-import { forumPath, routes } from "../../types"
-import { fetchForum } from "../../instance"
+} from './types'
+import { forumPath, routes } from '../../types'
+import { fetchForum } from '../../instance'
 import {
   genericApiDataResponse,
   genericApiRequestArgs,
   genericApiTokenResponse,
-} from "src/api/shared/types"
+} from 'src/api/shared/types'
 
 function fetchForumPostView(
   props: genericApiRequestArgs<ForumPostViewRequestPayload>,
@@ -24,7 +24,7 @@ function fetchForumPostView(
     data: data,
     headers: { Authorization: `Bearer ${creds}` },
     withCredentials: true,
-    method: "POST",
+    method: 'POST',
   }
   const cacheKey: CacheKey = {
     CacheMode: fetchForum.defaultCacheMode,

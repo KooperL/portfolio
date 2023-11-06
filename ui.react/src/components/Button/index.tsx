@@ -1,17 +1,17 @@
-import { Scheme } from "../../state/colorScheme/type"
+import { Scheme } from '../../state/colorScheme/type'
 
 export function Button(props: {
   colours: Scheme
   disabled?: Boolean
   callBack?: () => void
   label?: string
-  action?: "button" | "submit" | "reset" | undefined
+  action?: 'button' | 'submit' | 'reset' | undefined
 }) {
   const style = {
     backgroundColor: props.colours.button.bgSolid,
     color: props.colours.button.text,
-    borderRadius: "10px",
-    padding: "0.2rem 2rem",
+    borderRadius: '10px',
+    padding: '0.2rem 2rem',
     // margin: '10px'
   } as const
   if (props.callBack) {
@@ -20,13 +20,13 @@ export function Button(props: {
         {/* @ts-ignore - Sooo bad.... cmon ts, it exists!!!!  */}
         <button
           className="submit-button"
-          value={props.label ?? "submit"}
+          value={props.label ?? 'submit'}
           style={style}
           onClick={() => {
             props.callBack && props.callBack()
           }}
         >
-          {props.label ?? "Submit"}
+          {props.label ?? 'Submit'}
         </button>
       </div>
     )
@@ -34,12 +34,12 @@ export function Button(props: {
   return (
     <button
       className="submit-button"
-      type={props.action ?? "submit"}
+      type={props.action ?? 'submit'}
       name="submit"
-      value={props.label ?? "Submit"}
+      value={props.label ?? 'Submit'}
       style={style}
     >
-      {props.label ?? "Submit"}
+      {props.label ?? 'Submit'}
     </button>
   )
 }

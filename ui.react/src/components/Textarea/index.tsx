@@ -1,5 +1,5 @@
-import React from "react"
-import "./style.css"
+import React from 'react'
+import './style.css'
 
 export function Textarea(props: {
   value: string
@@ -22,10 +22,10 @@ export function Textarea(props: {
         name={props.name}
         id={props.id}
         style={{
-          ...((props.hasOwnProperty("resize") && { resize: props.resize }) as {
+          ...((props.hasOwnProperty('resize') && { resize: props.resize }) as {
             [key: string]: string
           }),
-          ...((props.hasOwnProperty("height") && { height: props.height }) as {
+          ...((props.hasOwnProperty('height') && { height: props.height }) as {
             [key: string]: string
           }),
         }}

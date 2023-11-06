@@ -1,9 +1,9 @@
-import { LoggingResponsePayload } from "src/components/Logger/types"
-import { Navigate, useNavigate } from "react-router-dom"
-import { sendMonitor } from "src/api/clients/ApiHandler/routes/sendMonitor"
-import { FuncProps, Props } from "./types"
-import { genericApiDataResponse } from "src/api/shared/types"
-import { useAuth } from "src/hooks/useAuth"
+import { LoggingResponsePayload } from 'src/components/Logger/types'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { sendMonitor } from 'src/api/clients/ApiHandler/routes/sendMonitor'
+import { FuncProps, Props } from './types'
+import { genericApiDataResponse } from 'src/api/shared/types'
+import { useAuth } from 'src/hooks/useAuth'
 
 function Redirect(props: FuncProps) {
   const { trackingInformation } = useAuth()
@@ -13,14 +13,14 @@ function Redirect(props: FuncProps) {
         uuid: trackingInformation.getPersistentKey(),
         session_id: trackingInformation.getSessionKey(),
         page: window.location.pathname,
-        ...(localStorage.getItem("currentPage") && {
-          prevPage: localStorage.getItem("currentPage"),
+        ...(localStorage.getItem('currentPage') && {
+          prevPage: localStorage.getItem('currentPage'),
         }),
       },
     })
     .then((resp: genericApiDataResponse<LoggingResponsePayload>) => {
       if (resp.data?.success) {
-        localStorage.setItem("currentPage", window.location.pathname)
+        localStorage.setItem('currentPage', window.location.pathname)
       } else {
         throw new Error(resp.data?.error)
       }

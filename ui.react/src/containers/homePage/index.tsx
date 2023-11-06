@@ -3,24 +3,24 @@ import React, {
   useContext,
   useEffect,
   useState,
-} from "react"
-import Spinner from "../../components/Spinner"
-import Navbar from "../../components/Navbar"
+} from 'react'
+import Spinner from '../../components/Spinner'
+import Navbar from '../../components/Navbar'
 import {
   PageInformation,
   SchemeContext,
-} from "../../state/colorScheme/colourScheme"
-import "./style.css"
+} from '../../state/colorScheme/colourScheme'
+import './style.css'
 
-import { ReactP5Wrapper } from "react-p5-wrapper"
-import sketchWrapper from "../../components/p5/box"
-import ButtonRedir from "../../components/ButtonRedir"
-import { IslandLeft } from "../../templates/IslandLeft"
-import TypeLookup from "../../components/TypeLookup"
-import ErrorPage from "../ErrorPage"
-import { useHomeState } from "../../controllers/useHomeState"
-import { State } from "../../types/State"
-import { CMSPageResponse } from "../../components/TypeLookup/types"
+import { ReactP5Wrapper } from 'react-p5-wrapper'
+import sketchWrapper from '../../components/p5/box'
+import ButtonRedir from '../../components/ButtonRedir'
+import { IslandLeft } from '../../templates/IslandLeft'
+import TypeLookup from '../../components/TypeLookup'
+import ErrorPage from '../ErrorPage'
+import { useHomeState } from '../../controllers/useHomeState'
+import { State } from '../../types/State'
+import { CMSPageResponse } from '../../components/TypeLookup/types'
 
 interface Props {
   stateCMS: State<CMSPageResponse>

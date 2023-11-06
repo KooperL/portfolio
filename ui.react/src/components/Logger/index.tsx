@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from "react"
-import { sendCapture } from "src/api/clients/ApiHandler/routes/sendCapture"
-import { getPersistentKey, getSessionKey } from "src/state/authContext/helper"
-import { LoggingResponsePayload } from "./types"
+import { useContext, useEffect, useState } from 'react'
+import { sendCapture } from 'src/api/clients/ApiHandler/routes/sendCapture'
+import { getPersistentKey, getSessionKey } from 'src/state/authContext/helper'
+import { LoggingResponsePayload } from './types'
 
 // TODO make it use the api handler
 
@@ -18,21 +18,21 @@ const MatchUserAgent = () => {
   let temp
   if (/trident/i.test(match[1])) {
     temp = /\brv[ :]+(\d+)/g.exec(userAgent) || []
-    return `IE ${temp[1] || ""}`
+    return `IE ${temp[1] || ''}`
   }
-  if (match[1] === "Chrome") {
+  if (match[1] === 'Chrome') {
     temp = userAgent.match(/\b(OPR|Edge)\/(\d+)/)
     if (temp !== null) {
-      return temp.slice(1).join(" ").replace("OPR", "Opera")
+      return temp.slice(1).join(' ').replace('OPR', 'Opera')
     }
     temp = userAgent.match(/\b(Edg)\/(\d+)/)
     if (temp !== null) {
-      return temp.slice(1).join(" ").replace("Edg", "Edge (Chromium)")
+      return temp.slice(1).join(' ').replace('Edg', 'Edge (Chromium)')
     }
   }
   match = match[2]
     ? [match[1], match[2]]
-    : [navigator.appName, navigator.appVersion, "-?"]
+    : [navigator.appName, navigator.appVersion, '-?']
   temp = userAgent.match(/version\/(\d+)/i)
   if (temp !== null) {
     match.splice(1, 1, temp[1])
@@ -41,15 +41,15 @@ const MatchUserAgent = () => {
 }
 
 function Logger(props: Props) {
-  const canvasHash = document.getElementById("canvas-hash")?.innerText ?? ""
+  const canvasHash = document.getElementById('canvas-hash')?.innerText ?? ''
   if (
-    !localStorage.getItem("canvas-hash") ||
-    localStorage.getItem("canvas-hash") !== canvasHash
+    !localStorage.getItem('canvas-hash') ||
+    localStorage.getItem('canvas-hash') !== canvasHash
   ) {
-    localStorage.setItem("canvas-hash", canvasHash?.toString())
+    localStorage.setItem('canvas-hash', canvasHash?.toString())
   }
 
-  if (!sessionStorage.getItem("session_id")) {
+  if (!sessionStorage.getItem('session_id')) {
     getSessionKey()
     // TODO
     // @ts-ignore
@@ -58,7 +58,7 @@ function Logger(props: Props) {
     props
       .capturePost({
         payload: {
-          canvas_hash: document.getElementById("canvas-hash")?.innerText,
+          canvas_hash: document.getElementById('canvas-hash')?.innerText,
           uuid: getPersistentKey(),
           // windowInfo: {
           // plugins: JSON.stringify([].slice.call(navigator.plugins).map((item: any) => {
@@ -80,16 +80,16 @@ function Logger(props: Props) {
           pixelDepth: +window.screen.pixelDepth ?? 123,
           // },
           // navigator: {
-          platform: navigator.platform ?? "null",
+          platform: navigator.platform ?? 'null',
           cookieEnabled: +navigator.cookieEnabled ?? 2,
           // 'java': navigator.javaEnabled ?? null,
           // 'online': navigator.onLine ?? null,
           // },
           // }
           darkMode:
-            +window.matchMedia("(prefers-color-scheme: dark)").matches ?? 2,
-          browser: browserVar ?? "null",
-          version: versionVar ?? "null",
+            +window.matchMedia('(prefers-color-scheme: dark)').matches ?? 2,
+          browser: browserVar ?? 'null',
+          version: versionVar ?? 'null',
         },
       })
       .then((resp: LoggingResponsePayload) => {

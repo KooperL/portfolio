@@ -1,9 +1,9 @@
-import ButtonRedir from "../ButtonRedir"
-import "./style.css"
-import { CMSPageResponse } from "./types"
-import { State } from "../../types/State"
-import ErrorPage from "../../containers/ErrorPage"
-import Spinner from "../../components/Spinner"
+import ButtonRedir from '../ButtonRedir'
+import './style.css'
+import { CMSPageResponse } from './types'
+import { State } from '../../types/State'
+import ErrorPage from '../../containers/ErrorPage'
+import Spinner from '../../components/Spinner'
 
 function TypeLookup(props: State<CMSPageResponse>): JSX.Element {
   if (props.loading) return <Spinner />
@@ -25,16 +25,16 @@ function TypeLookup(props: State<CMSPageResponse>): JSX.Element {
             >
               {section.components.map((component, componentIndex) => {
                 switch (component.type) {
-                  case "button":
+                  case 'button':
                     return (
                       <ButtonRedir
                         destination={component.content.url}
-                        label={component.content.text ?? ""}
+                        label={component.content.text ?? ''}
                         local={component.content.local}
                         key={`${sectionIndex}-${componentIndex}`}
                       />
                     )
-                  case "button-list":
+                  case 'button-list':
                     return (
                       <div
                         className="button-list"
@@ -43,14 +43,14 @@ function TypeLookup(props: State<CMSPageResponse>): JSX.Element {
                         {component.content.buttons.map((segment, ind) => (
                           <ButtonRedir
                             destination={segment.url}
-                            label={segment.text ?? ""}
+                            label={segment.text ?? ''}
                             local={segment.local}
                             key={`${sectionIndex}-${componentIndex}-${ind}`}
                           />
                         ))}
                       </div>
                     )
-                  case "unordered-list":
+                  case 'unordered-list':
                     return (
                       <ul
                         className="unordered-list"
@@ -67,7 +67,7 @@ function TypeLookup(props: State<CMSPageResponse>): JSX.Element {
                         )}
                       </ul>
                     )
-                  case "text":
+                  case 'text':
                     return (
                       <>
                         {component.content?.title && (
@@ -94,7 +94,7 @@ function TypeLookup(props: State<CMSPageResponse>): JSX.Element {
                           )}
                       </>
                     )
-                  case "emoji":
+                  case 'emoji':
                     return (
                       <p
                         className={`type-lookup text ${component.type}`}

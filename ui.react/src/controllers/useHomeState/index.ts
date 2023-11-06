@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react"
-import { useCms } from "src/hooks/useCms"
-import { useError } from "src/hooks/useError"
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import { useFetch } from "../../hooks/useFetch"
+import { useContext, useEffect, useState } from 'react'
+import { useCms } from 'src/hooks/useCms'
+import { useError } from 'src/hooks/useError'
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import { useFetch } from '../../hooks/useFetch'
 
 export const useHomeState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
@@ -12,15 +12,15 @@ export const useHomeState = () => {
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: "NETWORK",
-        errorMessage: "Error fetching data",
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data',
       })
     }
   }, [stateCMS])
 
   useEffect(() => {
     document.title = `Home | ${scheme.title}`
-    pull("homeCms")
+    pull('homeCms')
   }, [])
 
   return {
