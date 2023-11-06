@@ -1,16 +1,16 @@
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import { useContext, useEffect, useRef } from "react"
-import { useNavigate } from "react-router-dom"
-import { useFetch } from "src/hooks/useFetch"
-import { useCms } from "src/hooks/useCms"
-import { fetchFuelPrices } from "src/api/clients/ApiHandler/routes/fetchFuelPrices"
-import { fetchPropertyIndex } from "src/api/clients/ApiHandler/routes/fetchPropertyIndex"
-import { genericApiDataResponse, projectPath } from "src/api/shared/types"
-import { useError } from "src/hooks/useError"
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import { useContext, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useFetch } from 'src/hooks/useFetch'
+import { useCms } from 'src/hooks/useCms'
+import { fetchFuelPrices } from 'src/api/clients/ApiHandler/routes/fetchFuelPrices'
+import { fetchPropertyIndex } from 'src/api/clients/ApiHandler/routes/fetchPropertyIndex'
+import { genericApiDataResponse, projectPath } from 'src/api/shared/types'
+import { useError } from 'src/hooks/useError'
 import {
   PropertyIndexRequest,
   PropertyIndexResponse,
-} from "src/api/clients/ApiHandler/routes/fetchPropertyIndex/types"
+} from 'src/api/clients/ApiHandler/routes/fetchPropertyIndex/types'
 
 function usePropertyState() {
   const ref = useRef<any>()
@@ -26,14 +26,14 @@ function usePropertyState() {
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: "NETWORK",
-        errorMessage: "Error fetching data",
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data',
       })
     }
   }, [stateCMS])
 
   useEffect(() => {
-    pullCMS("propertyCms")
+    pullCMS('propertyCms')
     pull({
       ApiImpl: fetchPropertyIndex,
       payload: {},

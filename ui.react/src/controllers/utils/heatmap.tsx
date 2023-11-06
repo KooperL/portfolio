@@ -1,6 +1,6 @@
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import React, { useContext, useState } from "react"
-import "./style.css"
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import React, { useContext, useState } from 'react'
+import './style.css'
 
 interface HeatmapData {
   x: number
@@ -30,8 +30,8 @@ const GenerateHeatmap = (props: { data: HeatmapData[] }) => {
     ),
   )
   const style = {
-    "--table-heading": `${max * 8}px`,
-    "--cell-dims": `${max - 2}px`,
+    '--table-heading': `${max * 8}px`,
+    '--cell-dims': `${max - 2}px`,
   } as React.CSSProperties
 
   let arr: number[][] = new Array(xAxisArr.length)

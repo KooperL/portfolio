@@ -1,8 +1,8 @@
-import Spinner from "../../components/Spinner"
-import "./style.css"
-import daysAgo from "../../utils/daysAgo"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { useForumPostViewState } from "../../controllers/useForumPostViewState"
+import Spinner from '../../components/Spinner'
+import './style.css'
+import daysAgo from '../../utils/daysAgo'
+import { IslandCenter } from '../../templates/IslandCenter'
+import { useForumPostViewState } from '../../controllers/useForumPostViewState'
 
 type t = ReturnType<typeof useForumPostViewState>
 
@@ -24,7 +24,7 @@ function ForumPostViewPage(props: t): JSX.Element {
                 <p>Posted to:&nbsp;</p>
                 <p>{data?.category}</p>
                 <p>,&nbsp;</p>
-                <p>{daysAgo(data?.date ?? "0")}</p>
+                <p>{daysAgo(data?.date ?? '0')}</p>
               </div>
               <div className="title">
                 <p className="field">{data?.title}</p>

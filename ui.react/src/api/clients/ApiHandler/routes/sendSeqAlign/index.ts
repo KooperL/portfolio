@@ -1,13 +1,13 @@
-import { SeqAlignRequest, SeqAlignResponse } from "./types"
-import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types"
-import { ApiConsumer } from "../../instance"
-import { routes } from "../../types"
+import { SeqAlignRequest, SeqAlignResponse } from './types'
+import { CacheKey, CacheMode } from 'src/api/ApiHandlerCore/types'
+import { ApiConsumer } from '../../instance'
+import { routes } from '../../types'
 import {
   genericApiDataResponse,
   genericApiRequestArgs,
   projectPath,
-} from "src/api/shared/types"
-import { AxiosResponse } from "axios"
+} from 'src/api/shared/types'
+import { AxiosResponse } from 'axios'
 
 export const sendSeqAlign = (
   props: genericApiRequestArgs<SeqAlignRequest>,

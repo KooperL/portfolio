@@ -1,4 +1,4 @@
-import { genericApiDataResponse } from "src/api/shared/types"
+import { genericApiDataResponse } from 'src/api/shared/types'
 
 export interface ContactRequestPayload {
   session_id: string

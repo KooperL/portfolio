@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react"
-import Spinner from "../../components/Spinner"
-import Chart from "react-apexcharts"
-import ErrorPage from "../ErrorPage"
-import { PageInformation } from "../../state/colorScheme/colourScheme"
-import { State } from "../../types/State"
-import usePropertyState from "../../controllers/usePropertyState"
-import "./style.css"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { Button } from "../../components/Button"
-import { CMSPageResponse } from "../../components/TypeLookup/types"
-import TypeLookup from "../../components/TypeLookup"
-import { genericApiDataResponse } from "src/api/shared/types"
+import React, { useEffect, useState } from 'react'
+import Spinner from '../../components/Spinner'
+import Chart from 'react-apexcharts'
+import ErrorPage from '../ErrorPage'
+import { PageInformation } from '../../state/colorScheme/colourScheme'
+import { State } from '../../types/State'
+import usePropertyState from '../../controllers/usePropertyState'
+import './style.css'
+import { IslandCenter } from '../../templates/IslandCenter'
+import { Button } from '../../components/Button'
+import { CMSPageResponse } from '../../components/TypeLookup/types'
+import TypeLookup from '../../components/TypeLookup'
+import { genericApiDataResponse } from 'src/api/shared/types'
 
 type t = ReturnType<typeof usePropertyState>
 

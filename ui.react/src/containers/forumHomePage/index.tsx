@@ -1,16 +1,16 @@
-import Spinner from "../../components/Spinner"
-import Navbar from "../../components/Navbar"
-import "./style.css"
-import { Button } from "../../components/Button"
-import { IslandLeft } from "../../templates/IslandLeft"
-import { Input } from "../../components/Input"
-import ErrorPage from "../ErrorPage"
-import { useForumHomeState } from "../../controllers/useForumHomeState"
-import { forumPath } from "src/api/shared/types"
-import { ForumItemType } from "src/api/clients/forumHandler/types"
-import { Link } from "react-router-dom"
-import { useMonitor } from "src/hooks/useMonitor"
-import ForumItem from "src/components/ForumItem"
+import Spinner from '../../components/Spinner'
+import Navbar from '../../components/Navbar'
+import './style.css'
+import { Button } from '../../components/Button'
+import { IslandLeft } from '../../templates/IslandLeft'
+import { Input } from '../../components/Input'
+import ErrorPage from '../ErrorPage'
+import { useForumHomeState } from '../../controllers/useForumHomeState'
+import { forumPath } from 'src/api/shared/types'
+import { ForumItemType } from 'src/api/clients/forumHandler/types'
+import { Link } from 'react-router-dom'
+import { useMonitor } from 'src/hooks/useMonitor'
+import ForumItem from 'src/components/ForumItem'
 
 type t = ReturnType<typeof useForumHomeState>
 

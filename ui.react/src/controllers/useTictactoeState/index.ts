@@ -1,13 +1,13 @@
-import { useContext, useEffect, useState } from "react"
-import { useCms } from "src/hooks/useCms"
-import { useError } from "src/hooks/useError"
-import { useFetch } from "src/hooks/useFetch"
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import { useEventListener } from "../../hooks/useEventListener"
-import { Board, CalculateWinner } from "./types"
+import { useContext, useEffect, useState } from 'react'
+import { useCms } from 'src/hooks/useCms'
+import { useError } from 'src/hooks/useError'
+import { useFetch } from 'src/hooks/useFetch'
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import { useEventListener } from '../../hooks/useEventListener'
+import { Board, CalculateWinner } from './types'
 
-export const x = "❌"
-export const o = "🟢"
+export const x = '❌'
+export const o = '🟢'
 
 const inverse = new Map([
   [x, o],
@@ -28,13 +28,13 @@ function miniMax(
   }
 
   let result = calculateWinner(board)
-  if (result[0] !== "") {
-    if (result[0] === "draw") {
-      return scores["draw"]
+  if (result[0] !== '') {
+    if (result[0] === 'draw') {
+      return scores['draw']
     } else if (result[0] === o) {
-      return scores["A"]
+      return scores['A']
     } else if (result[0] === x) {
-      return scores["B"]
+      return scores['B']
     }
   }
   if (isMaximising) {
@@ -51,7 +51,7 @@ function miniMax(
           potentialBoard,
           depth + 1,
           false,
-          inverse.get(symbol) ?? "",
+          inverse.get(symbol) ?? '',
         )
         bestScore = Math.max(score, bestScore)
       }
@@ -72,7 +72,7 @@ function miniMax(
           potentialBoard,
           depth + 1,
           true,
-          inverse.get(symbol) ?? "",
+          inverse.get(symbol) ?? '',
         )
         bestScore = Math.min(score, bestScore)
       }
@@ -130,10 +130,10 @@ function calculateWinner(board: Board): CalculateWinner {
       return [board[a], lines[i]]
     }
     if (!board.some(elem => elem == undefined)) {
-      return ["draw", [NaN, NaN, NaN]]
+      return ['draw', [NaN, NaN, NaN]]
     }
   }
-  return ["", [NaN, NaN, NaN]]
+  return ['', [NaN, NaN, NaN]]
 }
 
 export const useTictactoeState = () => {
@@ -162,8 +162,8 @@ export const useTictactoeState = () => {
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: "NETWORK",
-        errorMessage: "Error fetching data",
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data',
       })
     }
   }, [stateCMS])
@@ -204,7 +204,7 @@ export const useTictactoeState = () => {
 
   useEffect(() => {
     document.title = `Ttictactoe | ${scheme.title}`
-    pull("tictactoeCms")
+    pull('tictactoeCms')
   }, [])
 
   const handleClick = (BoardIndex: number) => {

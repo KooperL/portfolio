@@ -1,22 +1,22 @@
 // https://github.com/Nooruddin-code/english-words-Json/blob/master/words_dictionary.json
 
-import { useContext, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { routes } from "src/api/clients/forumHandler/types"
+import { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { routes } from 'src/api/clients/forumHandler/types'
 import {
   ForumLoginRequestPayload,
   ForumLoginResponsePayload,
-} from "src/api/clients/forumHandler/routes/sendForumLogin/types"
+} from 'src/api/clients/forumHandler/routes/sendForumLogin/types'
 import {
   ForumRegisterRequstPayload,
   ForumRegisterResponsepayload,
-} from "src/api/clients/forumHandler/routes/sendForumRegister/types"
-import { forumPath, genericApiDataResponse } from "src/api/shared/types"
-import { useFetch } from "src/hooks/useFetch"
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import { sendForumRegister } from "src/api/clients/forumHandler/routes/sendForumRegister"
-import { sendForumLogin } from "src/api/clients/forumHandler/routes/sendForumLogin"
-import { useAuth } from "src/hooks/useAuth"
+} from 'src/api/clients/forumHandler/routes/sendForumRegister/types'
+import { forumPath, genericApiDataResponse } from 'src/api/shared/types'
+import { useFetch } from 'src/hooks/useFetch'
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import { sendForumRegister } from 'src/api/clients/forumHandler/routes/sendForumRegister'
+import { sendForumLogin } from 'src/api/clients/forumHandler/routes/sendForumLogin'
+import { useAuth } from 'src/hooks/useAuth'
 
 declare global {
   interface PasswordCredentialConstructor extends PasswordCredential {
@@ -30,15 +30,15 @@ declare global {
 }
 
 function generateUsername() {
-  const adjectives = ["happy", "exciting", "adorable", "clever", "elegant"]
+  const adjectives = ['happy', 'exciting', 'adorable', 'clever', 'elegant']
   const nouns = [
-    "otter",
-    "penguin",
-    "unicorn",
-    "rainbow",
-    "puppy",
-    "student",
-    "youtuber",
+    'otter',
+    'penguin',
+    'unicorn',
+    'rainbow',
+    'puppy',
+    'student',
+    'youtuber',
   ]
   const randomAdjective =
     adjectives[Math.floor(Math.random() * adjectives.length)]
@@ -46,7 +46,7 @@ function generateUsername() {
   return `${randomAdjective}_${randomNoun}${new Array(2)
     .fill(0)
     .map(_ => Math.floor(Math.random() * 10))
-    .join("")}`
+    .join('')}`
 }
 
 function generatePassword(length: number) {
@@ -54,10 +54,10 @@ function generatePassword(length: number) {
 }
 
 export const useForumLoginState = () => {
-  const [usernameLogin, setUsernameLogin] = useState("")
-  const [passwordLogin, setPasswordLogin] = useState("")
-  const [usernameRegister, setUsernameRegister] = useState("")
-  const [passwordRegister, setPasswordRegister] = useState("")
+  const [usernameLogin, setUsernameLogin] = useState('')
+  const [passwordLogin, setPasswordLogin] = useState('')
+  const [usernameRegister, setUsernameRegister] = useState('')
+  const [passwordRegister, setPasswordRegister] = useState('')
   const [hasRegistered, setHasRegistered] = useState(false)
 
   const [scheme, setScheme] = useContext(SchemeContext)
@@ -90,7 +90,7 @@ export const useForumLoginState = () => {
       setUsernameLogin(usernameRegister)
       setPasswordLogin(passwordRegister)
 
-      if (window.hasOwnProperty("PasswordCrediential")) {
+      if (window.hasOwnProperty('PasswordCrediential')) {
         let c = new PasswordCredential({
           id: usernameRegister,
           password: passwordRegister,
@@ -107,7 +107,7 @@ export const useForumLoginState = () => {
       POSTState.details?.accessToken
     ) {
       authentication.setAccessToken(POSTState.details.accessToken)
-      if (window.hasOwnProperty("PasswordCrediential")) {
+      if (window.hasOwnProperty('PasswordCrediential')) {
         let c = new PasswordCredential({
           id: usernameLogin,
           password: passwordLogin,

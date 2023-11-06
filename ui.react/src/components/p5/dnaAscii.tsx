@@ -1,18 +1,18 @@
-import { P5Instance } from "react-p5-wrapper"
-import { makeNoise3D } from "open-simplex-noise"
-import { Noise3D } from "open-simplex-noise/lib/3d"
-import { Image } from "p5"
+import { P5Instance } from 'react-p5-wrapper'
+import { makeNoise3D } from 'open-simplex-noise'
+import { Noise3D } from 'open-simplex-noise/lib/3d'
+import { Image } from 'p5'
 // import dna from '../../assets/dna.png';
 
 function sketchWrapper(foreground: string) {
   function sketch(p5: P5Instance) {
     // const validChars = ['A','T','G','C']
-    const validCharsBinary = ["1", "0"]
-    const validCharsNucleotides = ["A", "T", "G", "C"]
+    const validCharsBinary = ['1', '0']
+    const validCharsNucleotides = ['A', 'T', 'G', 'C']
     let img: Image
 
     p5.setup = () => {
-      img = p5.loadImage("./images/dna-64.jpg")
+      img = p5.loadImage('./images/dna-64.jpg')
       p5.noCanvas()
       p5.frameRate(5)
     }
@@ -55,11 +55,11 @@ function sketchWrapper(foreground: string) {
             // row.push('00')
           }
         }
-        parent.push(`<div>${row.join("")}</div>`)
+        parent.push(`<div>${row.join('')}</div>`)
       }
       // console.log(parent)
       //@ts-ignore
-      document.getElementById("test").innerHTML = parent.join("")
+      document.getElementById('test').innerHTML = parent.join('')
     }
   }
   return sketch

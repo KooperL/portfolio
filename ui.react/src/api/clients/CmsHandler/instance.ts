@@ -1,9 +1,9 @@
-import { AxiosError } from "axios"
-import { ApiHandlerCore } from "src/api/ApiHandlerCore"
-import { CacheMode } from "src/api/ApiHandlerCore/types"
-import { environmentConfig } from "src/api/environmentMappings"
-import { cmsPath } from "./types"
-import { v4 } from "uuid"
+import { AxiosError } from 'axios'
+import { ApiHandlerCore } from 'src/api/ApiHandlerCore'
+import { CacheMode } from 'src/api/ApiHandlerCore/types'
+import { environmentConfig } from 'src/api/environmentMappings'
+import { cmsPath } from './types'
+import { v4 } from 'uuid'
 
 const apiHost = environmentConfig()
 
@@ -11,7 +11,7 @@ const fetchCMS = new ApiHandlerCore(
   {
     baseURL: `${apiHost.apiHost.toString()}/${cmsPath}`,
     headers: {
-      "X-Request-ID": v4(),
+      'X-Request-ID': v4(),
     },
   },
   2,

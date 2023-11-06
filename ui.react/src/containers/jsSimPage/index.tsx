@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useRef, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from 'react'
 // import { useLocation } from "react-router-dom";
-import Modal from "../../components/Modal"
+import Modal from '../../components/Modal'
 // @ts-ignore
-import gear from "../../assets/gear.svg"
+import gear from '../../assets/gear.svg'
 import {
   PageInformation,
   SchemeContext,
-} from "../../state/colorScheme/colourScheme"
-import "./style.css"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { Button } from "../../components/Button"
-import { useJssimState } from "../../controllers/useJssimState"
-import { State } from "../../types/State"
-import { CMSPageResponse } from "../../components/TypeLookup/types"
-import TypeLookup from "../../components/TypeLookup"
-import ErrorPage from "src/containers/ErrorPage"
+} from '../../state/colorScheme/colourScheme'
+import './style.css'
+import { IslandCenter } from '../../templates/IslandCenter'
+import { Button } from '../../components/Button'
+import { useJssimState } from '../../controllers/useJssimState'
+import { State } from '../../types/State'
+import { CMSPageResponse } from '../../components/TypeLookup/types'
+import TypeLookup from '../../components/TypeLookup'
+import ErrorPage from 'src/containers/ErrorPage'
 
 interface Props {
   timer: number
@@ -43,13 +43,13 @@ function JsSim(props: Props) {
         <div className="info">
           <div className="timer">
             <span className="digits">
-              {("0" + Math.floor((props.timer / 60000) % 60)).slice(-2)}:
+              {('0' + Math.floor((props.timer / 60000) % 60)).slice(-2)}:
             </span>
             <span className="digits">
-              {("0" + Math.floor((props.timer / 1000) % 60)).slice(-2)}.
+              {('0' + Math.floor((props.timer / 1000) % 60)).slice(-2)}.
             </span>
             <span className="digits mili-sec">
-              {("0" + ((props.timer / 10) % 100)).slice(-2)} ⏱️
+              {('0' + ((props.timer / 10) % 100)).slice(-2)} ⏱️
             </span>
           </div>
           <div>{props.score}% 🎯</div>

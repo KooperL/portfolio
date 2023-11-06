@@ -1,14 +1,14 @@
-import { useState, useCallback, useEffect, useContext } from "react"
-import { useFetch } from "src/hooks/useFetch"
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import { useCms } from "src/hooks/useCms"
-import { sendRandomBio } from "src/api/clients/ApiHandler/routes/sendRandomBio"
-import { useError } from "src/hooks/useError"
-import { genericApiDataResponse } from "src/api/shared/types"
+import { useState, useCallback, useEffect, useContext } from 'react'
+import { useFetch } from 'src/hooks/useFetch'
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import { useCms } from 'src/hooks/useCms'
+import { sendRandomBio } from 'src/api/clients/ApiHandler/routes/sendRandomBio'
+import { useError } from 'src/hooks/useError'
+import { genericApiDataResponse } from 'src/api/shared/types'
 import {
   RandombioRequestPayload,
   RandomBioResponsePayload,
-} from "src/api/clients/ApiHandler/routes/sendRandomBio/types"
+} from 'src/api/clients/ApiHandler/routes/sendRandomBio/types'
 
 export const useRandomBioState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
@@ -25,8 +25,8 @@ export const useRandomBioState = () => {
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: "NETWORK",
-        errorMessage: "Error fetching data",
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data',
       })
     }
   }, [stateCMS])
@@ -42,7 +42,7 @@ export const useRandomBioState = () => {
     })
   }
   useEffect(() => {
-    pull("randombioCms")
+    pull('randombioCms')
     document.title = `Random generator | ${scheme.title}`
   }, [])
 

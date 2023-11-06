@@ -1,15 +1,15 @@
-import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types"
-import { AxiosRequestConfig, AxiosResponse } from "axios"
-import { forumPath, routes } from "../../types"
-import { fetchForum } from "../../instance"
+import { CacheKey, CacheMode } from 'src/api/ApiHandlerCore/types'
+import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { forumPath, routes } from '../../types'
+import { fetchForum } from '../../instance'
 import {
   ForumPostCreateRequestPayload,
   ForumPostCreateResponsePayload,
-} from "./types"
+} from './types'
 import {
   genericApiDataResponse,
   genericApiRequestArgs,
-} from "src/api/shared/types"
+} from 'src/api/shared/types'
 // TODO rename
 
 function sendForumPostCreate(
@@ -24,7 +24,7 @@ function sendForumPostCreate(
     data: data,
     headers: { Authorization: `Bearer ${creds}` },
     withCredentials: true,
-    method: "POST",
+    method: 'POST',
   }
   const cacheKey: CacheKey = {
     CacheMode: fetchForum.defaultCacheMode,

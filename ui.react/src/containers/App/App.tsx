@@ -1,34 +1,34 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import Navbar from "../../components/Navbar"
-import { HomePage } from "../homePage/loadable"
-import { ProjectsPage } from "../projectsPage/loadable"
-import { MrnaPage } from "../mrnaPage/loadable"
-import { PropertyPage } from "../propertyPage/loadable"
-import { FuelPricesPage } from "../fuelPricesPage/loadable"
-import { SecondaryPage } from "../secondaryPage/loadable"
-import { SeqAlignPage } from "../seqAlignPage/loadable"
-import { TictactoePage } from "../tictactoePage/loadable"
-import { RandomBioPage } from "../randomBioPage/loadable"
-import { SchemeSettings } from "../../state/colorScheme/colourScheme"
-import { MinesweeperPage } from "../minesweeperPage/loadable"
-import { JsSimPage } from "../jsSimPage/loadable"
-import { ContactPage } from "../contactPage/loadable"
-import { AboutPage } from "../aboutPage/loadable"
-import { Logger } from "../../components/Logger/loadable"
-import { AuthProvider } from "../../state/authContext/context"
-import { ForumHomePage } from "../forumHomePage/loadable"
-import { ForumUserPage } from "../forumUserPage/loadable"
-import { ForumLoginPage } from "../forumLoginPage/loadable"
-import { ForumPostCreatePage } from "../forumPostCreatePage/loadable"
-import { ForumPostViewPage } from "../forumPostViewPage/loadable"
-import { SiteAnalysisPage } from "../siteAnalysisPage/loadable"
-import Redirect from "../../components/Redirect"
-import * as baseHandler from "src/api/clients/ApiHandler/types"
-import { forumPath, routes } from "./types"
-import { projectPath } from "src/api/shared/types"
-import { ErrorProvider } from "src/state/errorHandler/context"
-import ErrorPage from "src/containers/ErrorPage"
-import WithErrorHandling from "src/controllers/withErrorHandling"
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Navbar from '../../components/Navbar'
+import { HomePage } from '../homePage/loadable'
+import { ProjectsPage } from '../projectsPage/loadable'
+import { MrnaPage } from '../mrnaPage/loadable'
+import { PropertyPage } from '../propertyPage/loadable'
+import { FuelPricesPage } from '../fuelPricesPage/loadable'
+import { SecondaryPage } from '../secondaryPage/loadable'
+import { SeqAlignPage } from '../seqAlignPage/loadable'
+import { TictactoePage } from '../tictactoePage/loadable'
+import { RandomBioPage } from '../randomBioPage/loadable'
+import { SchemeSettings } from '../../state/colorScheme/colourScheme'
+import { MinesweeperPage } from '../minesweeperPage/loadable'
+import { JsSimPage } from '../jsSimPage/loadable'
+import { ContactPage } from '../contactPage/loadable'
+import { AboutPage } from '../aboutPage/loadable'
+import { Logger } from '../../components/Logger/loadable'
+import { AuthProvider } from '../../state/authContext/context'
+import { ForumHomePage } from '../forumHomePage/loadable'
+import { ForumUserPage } from '../forumUserPage/loadable'
+import { ForumLoginPage } from '../forumLoginPage/loadable'
+import { ForumPostCreatePage } from '../forumPostCreatePage/loadable'
+import { ForumPostViewPage } from '../forumPostViewPage/loadable'
+import { SiteAnalysisPage } from '../siteAnalysisPage/loadable'
+import Redirect from '../../components/Redirect'
+import * as baseHandler from 'src/api/clients/ApiHandler/types'
+import { forumPath, routes } from './types'
+import { projectPath } from 'src/api/shared/types'
+import { ErrorProvider } from 'src/state/errorHandler/context'
+import ErrorPage from 'src/containers/ErrorPage'
+import WithErrorHandling from 'src/controllers/withErrorHandling'
 // import { Render } from '../renderer/renderer v3/cube/Render';
 // import { Render } from '../renderer/grid/Render';
 
@@ -49,7 +49,7 @@ function BaseLayout() {
               element={<HomePage />}
             />
             <Route
-              path={"home"}
+              path={'home'}
               element={<Redirect destination={baseHandler.indexPath} />}
             />
             <Route

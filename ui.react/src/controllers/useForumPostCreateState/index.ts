@@ -1,21 +1,21 @@
-import { forumPath, routes } from "src/containers/App/types"
-import { useContext, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { sendForumPostCreate } from "src/api/clients/forumHandler/routes/sendPostCreate"
+import { forumPath, routes } from 'src/containers/App/types'
+import { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { sendForumPostCreate } from 'src/api/clients/forumHandler/routes/sendPostCreate'
 import {
   ForumPostCreateRequestPayload,
   ForumPostCreateResponsePayload,
-} from "src/api/clients/forumHandler/routes/sendPostCreate/types"
-import { useFetch } from "src/hooks/useFetch"
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import { useAuth } from "src/hooks/useAuth"
-import { genericApiDataResponse } from "src/api/shared/types"
+} from 'src/api/clients/forumHandler/routes/sendPostCreate/types'
+import { useFetch } from 'src/hooks/useFetch'
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import { useAuth } from 'src/hooks/useAuth'
+import { genericApiDataResponse } from 'src/api/shared/types'
 
 export const useForumPostCreateState = () => {
   const [scheme, setScheme] = useContext(SchemeContext)
   const navigate = useNavigate()
-  const [body, setBody] = useState("")
-  const [title, setTitle] = useState("")
+  const [body, setBody] = useState('')
+  const [title, setTitle] = useState('')
   const [hasPosted, setHasPosted] = useState(false)
   const { state, pull: post } = useFetch<
     ForumPostCreateRequestPayload,

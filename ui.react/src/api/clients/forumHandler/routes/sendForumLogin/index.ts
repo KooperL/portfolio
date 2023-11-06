@@ -1,12 +1,12 @@
-import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types"
-import { AxiosRequestConfig, AxiosResponse } from "axios"
-import { ForumLoginRequestPayload, ForumLoginResponsePayload } from "./types"
-import { forumPath, routes } from "../../types"
-import { fetchForum } from "../../instance"
+import { CacheKey, CacheMode } from 'src/api/ApiHandlerCore/types'
+import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { ForumLoginRequestPayload, ForumLoginResponsePayload } from './types'
+import { forumPath, routes } from '../../types'
+import { fetchForum } from '../../instance'
 import {
   genericApiRequestArgs,
   genericApiTokenResponse,
-} from "src/api/shared/types"
+} from 'src/api/shared/types'
 
 function sendForumLogin(
   props: genericApiRequestArgs<ForumLoginRequestPayload>,
@@ -18,7 +18,7 @@ function sendForumLogin(
     data: data,
     headers: { Authorization: `Basic ${creds}` },
     withCredentials: true,
-    method: "POST",
+    method: 'POST',
   }
   const cacheKey: CacheKey = {
     CacheMode: fetchForum.defaultCacheMode,

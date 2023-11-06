@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from "react"
-import { useCms } from "src/hooks/useCms"
-import { useError } from "src/hooks/useError"
-import { useFetch } from "src/hooks/useFetch"
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import { useEventListener } from "../../hooks/useEventListener"
+import { useContext, useEffect, useState } from 'react'
+import { useCms } from 'src/hooks/useCms'
+import { useError } from 'src/hooks/useError'
+import { useFetch } from 'src/hooks/useFetch'
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import { useEventListener } from '../../hooks/useEventListener'
 
 function calcScore(arr: number[]): number {
   let score = 0
@@ -45,30 +45,30 @@ export const useJssimState = () => {
   useEffect(() => {
     if (stateCMS.error) {
       raiseError({
-        errorType: "NETWORK",
-        errorMessage: "Error fetching data",
+        errorType: 'NETWORK',
+        errorMessage: 'Error fetching data',
       })
     }
   }, [stateCMS])
 
   const scoreColourLookup: { [key: string]: string } = {
-    "0": scheme.body.text, // Unpicked
-    "1": "#347543", // Correct
-    "2": "#963033", // Incorrect
-    "3": "#967F30", // Corrected **
+    '0': scheme.body.text, // Unpicked
+    '1': '#347543', // Correct
+    '2': '#963033', // Incorrect
+    '3': '#967F30', // Corrected **
   }
   const sentences = [
-    "for (let i = 0; i < arr.length; i++) {};",
+    'for (let i = 0; i < arr.length; i++) {};',
     "console.log('test');",
-    "function setup() {return 0}",
-    ".container {display: flex; align-items: center; justify-content: center;}",
-    "git add . && git commit && git push",
+    'function setup() {return 0}',
+    '.container {display: flex; align-items: center; justify-content: center;}',
+    'git add . && git commit && git push',
     '<div className="container"></div>',
   ]
 
   useEffect(() => {
     document.title = `Typing challenge | ${scheme.title}`
-    pull("jssimulatorCms")
+    pull('jssimulatorCms')
   }, [])
 
   function selectString(index?: number) {
@@ -90,7 +90,7 @@ export const useJssimState = () => {
         }
       }
     }
-    const sentence = sentences[newReferenceIndex].split("")
+    const sentence = sentences[newReferenceIndex].split('')
     setReferenceIndex(newReferenceIndex)
     setReferenceString(sentence)
     setScoreTally(new Array(sentence.length).fill(0))
@@ -132,7 +132,7 @@ export const useJssimState = () => {
     setTimer(0)
   }
 
-  useEventListener("keydown", (e: KeyboardEvent) => {
+  useEventListener('keydown', (e: KeyboardEvent) => {
     e.preventDefault()
     if (typedString.length < referenceString.length) {
       handleStart()
@@ -145,7 +145,7 @@ export const useJssimState = () => {
       if (keyType && keyType.length === 1) {
         // console.log(keyType, e.key)
         cursorClone += 1
-        typedStringClone.push(e.key.toString() !== " " ? e.key : "·")
+        typedStringClone.push(e.key.toString() !== ' ' ? e.key : '·')
         if (scoreTallyClone[cursorClone] === 0) {
           if (e.key === referenceString[cursorClone]) {
             scoreTallyClone[cursorClone] = 1
@@ -160,7 +160,7 @@ export const useJssimState = () => {
           }
         }
       } else {
-        if (e.key === "Backspace") {
+        if (e.key === 'Backspace') {
           scoreTallyClone[cursorClone] = 3
           typedStringClone.pop()
           if (cursorClone > -1) {

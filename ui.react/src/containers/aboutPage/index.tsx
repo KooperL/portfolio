@@ -1,18 +1,18 @@
-import Spinner from "../../components/Spinner"
-import Navbar from "../../components/Navbar"
-import { PageInformation } from "../../state/colorScheme/colourScheme"
-import "./style.css"
-import sketchWrapper from "../../components/p5/dnaAscii"
-import { ReactP5Wrapper } from "react-p5-wrapper"
+import Spinner from '../../components/Spinner'
+import Navbar from '../../components/Navbar'
+import { PageInformation } from '../../state/colorScheme/colourScheme'
+import './style.css'
+import sketchWrapper from '../../components/p5/dnaAscii'
+import { ReactP5Wrapper } from 'react-p5-wrapper'
 // @ts-ignore
-import ButtonRedir from "../../components/ButtonRedir"
-import TypeLookup from "../../components/TypeLookup"
-import { IslandLeft } from "../../templates/IslandLeft"
-import { IslandCenter } from "../../templates/IslandCenter"
-import ErrorPage from "../ErrorPage"
-import { State } from "../../types/State"
-import { useAboutState } from "../../controllers/useAboutState"
-import { CMSPageResponse } from "src/components/TypeLookup/types"
+import ButtonRedir from '../../components/ButtonRedir'
+import TypeLookup from '../../components/TypeLookup'
+import { IslandLeft } from '../../templates/IslandLeft'
+import { IslandCenter } from '../../templates/IslandCenter'
+import ErrorPage from '../ErrorPage'
+import { State } from '../../types/State'
+import { useAboutState } from '../../controllers/useAboutState'
+import { CMSPageResponse } from 'src/components/TypeLookup/types'
 
 interface Props {
   stateCMS: State<CMSPageResponse>
@@ -20,8 +20,8 @@ interface Props {
 }
 
 function AboutPage(props: Props): JSX.Element {
-  const validCharsBinary = ["1", "0"]
-  const validCharsNucleotides = ["A", "T", "G", "C"]
+  const validCharsBinary = ['1', '0']
+  const validCharsNucleotides = ['A', 'T', 'G', 'C']
   return (
     <IslandCenter>
       <div className="aboutPage">

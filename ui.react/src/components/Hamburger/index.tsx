@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react"
-import "./style.css"
-import { SchemeContext } from "../../state/colorScheme/colourScheme"
-import { Props } from "./types"
-import ButtonRedir from "../ButtonRedir"
+import { useContext, useEffect, useState } from 'react'
+import './style.css'
+import { SchemeContext } from '../../state/colorScheme/colourScheme'
+import { Props } from './types'
+import ButtonRedir from '../ButtonRedir'
 
 function Hamburger(props: Props) {
   const [scheme, setScheme] = useContext(SchemeContext)
@@ -22,7 +22,7 @@ function Hamburger(props: Props) {
           className="icon"
           style={{ backgroundColor: scheme.body.h1 }}
         >
-          <p className="hamburger-icon">{open ? "×" : "≡"}</p>
+          <p className="hamburger-icon">{open ? '×' : '≡'}</p>
           <div className="hover-effect"></div>
         </div>
       </button>
@@ -42,7 +42,7 @@ function Hamburger(props: Props) {
     <div className="hamburger">
       {burgerButton}
       <div
-        className={`links ${open ? "open" : ""}`}
+        className={`links ${open ? 'open' : ''}`}
         style={{ backgroundColor: scheme.body.background }}
       >
         {/* <div className="links" style={{display: open ? 'fixed' : 'none'}}> */}

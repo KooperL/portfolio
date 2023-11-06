@@ -1,6 +1,6 @@
-import { P5Instance } from "react-p5-wrapper"
-import { makeNoise3D } from "open-simplex-noise"
-import { Noise3D } from "open-simplex-noise/lib/3d"
+import { P5Instance } from 'react-p5-wrapper'
+import { makeNoise3D } from 'open-simplex-noise'
+import { Noise3D } from 'open-simplex-noise/lib/3d'
 
 function sketchWrapper(
   width: number,

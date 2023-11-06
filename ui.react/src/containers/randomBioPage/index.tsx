@@ -1,21 +1,21 @@
-import React, { useContext, useEffect, useState } from "react"
-import Spinner from "../../components/Spinner"
+import React, { useContext, useEffect, useState } from 'react'
+import Spinner from '../../components/Spinner'
 import {
   PageInformation,
   SchemeContext,
-} from "../../state/colorScheme/colourScheme"
-import "./style.css"
-import { Button } from "../../components/Button"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { Input } from "../../components/Input"
-import { Textarea } from "../../components/Textarea"
-import { Radio } from "../../components/Radio"
-import ErrorPage from "../ErrorPage"
-import { useRandomBioState } from "../../controllers/useRandombioState"
-import { State } from "../../types/State"
-import { CMSPageResponse } from "../../components/TypeLookup/types"
-import TypeLookup from "../../components/TypeLookup"
-import { genericApiDataResponse } from "src/api/shared/types"
+} from '../../state/colorScheme/colourScheme'
+import './style.css'
+import { Button } from '../../components/Button'
+import { IslandCenter } from '../../templates/IslandCenter'
+import { Input } from '../../components/Input'
+import { Textarea } from '../../components/Textarea'
+import { Radio } from '../../components/Radio'
+import ErrorPage from '../ErrorPage'
+import { useRandomBioState } from '../../controllers/useRandombioState'
+import { State } from '../../types/State'
+import { CMSPageResponse } from '../../components/TypeLookup/types'
+import TypeLookup from '../../components/TypeLookup'
+import { genericApiDataResponse } from 'src/api/shared/types'
 
 type t = ReturnType<typeof useRandomBioState>
 

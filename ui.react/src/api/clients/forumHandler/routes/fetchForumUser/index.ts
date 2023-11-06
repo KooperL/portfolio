@@ -1,12 +1,12 @@
-import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types"
-import { AxiosRequestConfig, AxiosResponse } from "axios"
-import { ForumUserRequestPayload, ForumUserResponsePayload } from "./types"
-import { forumPath, routes } from "../../types"
-import { fetchForum } from "../../instance"
+import { CacheKey, CacheMode } from 'src/api/ApiHandlerCore/types'
+import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { ForumUserRequestPayload, ForumUserResponsePayload } from './types'
+import { forumPath, routes } from '../../types'
+import { fetchForum } from '../../instance'
 import {
   genericApiDataResponse,
   genericApiRequestArgs,
-} from "src/api/shared/types"
+} from 'src/api/shared/types'
 
 function fetchForumUser(
   props: genericApiRequestArgs<ForumUserRequestPayload>,

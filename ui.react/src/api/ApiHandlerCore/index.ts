@@ -1,5 +1,5 @@
-import axios, { Axios, AxiosRequestConfig, AxiosResponse } from "axios"
-import { CacheKey, CacheMode } from "./types"
+import axios, { Axios, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { CacheKey, CacheMode } from './types'
 
 class ApiHandlerCore {
   instance: Axios

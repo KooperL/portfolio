@@ -1,10 +1,10 @@
-import "./style.css"
-import { Button } from "../../components/Button"
-import { IslandCenter } from "../../templates/IslandCenter"
-import { Input } from "../../components/Input"
-import Modal from "../../components/Modal"
-import { termsAndConditions } from "../../assets/TermsAndConditions"
-import { useForumLoginState } from "../../controllers/useForumLoginState"
+import './style.css'
+import { Button } from '../../components/Button'
+import { IslandCenter } from '../../templates/IslandCenter'
+import { Input } from '../../components/Input'
+import Modal from '../../components/Modal'
+import { termsAndConditions } from '../../assets/TermsAndConditions'
+import { useForumLoginState } from '../../controllers/useForumLoginState'
 
 type t = ReturnType<typeof useForumLoginState>
 

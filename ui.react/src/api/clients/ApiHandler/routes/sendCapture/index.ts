@@ -1,12 +1,12 @@
-import { AxiosResponse } from "axios"
-import { CacheKey, CacheMode } from "src/api/ApiHandlerCore/types"
+import { AxiosResponse } from 'axios'
+import { CacheKey, CacheMode } from 'src/api/ApiHandlerCore/types'
 import {
   genericApiDataResponse,
   genericApiRequestArgs,
-} from "src/api/shared/types"
-import { ApiConsumer } from "../../instance"
-import { routes } from "../../types"
-import { CaptureRequestPayload } from "./types"
+} from 'src/api/shared/types'
+import { ApiConsumer } from '../../instance'
+import { routes } from '../../types'
+import { CaptureRequestPayload } from './types'
 
 const sendCapture = (
   props: genericApiRequestArgs<CaptureRequestPayload>,
@@ -16,7 +16,7 @@ const sendCapture = (
   const config = {
     url: path,
     params,
-    method: "POST",
+    method: 'POST',
   }
   const cacheKey: CacheKey = {
     CacheMode: CacheMode.NetworkFirst,

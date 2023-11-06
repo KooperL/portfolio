@@ -1,16 +1,16 @@
-import { useContext, useEffect, useState } from "react"
-import Spinner from "../../components/Spinner"
-import Vchart from "../../components/Vchart"
-import "./style.css"
+import { useContext, useEffect, useState } from 'react'
+import Spinner from '../../components/Spinner'
+import Vchart from '../../components/Vchart'
+import './style.css'
 import {
   PageInformation,
   SchemeContext,
-} from "../../state/colorScheme/colourScheme"
-import { IslandCenter } from "../../templates/IslandCenter"
-import ErrorPage from "../ErrorPage"
-import { State } from "../../types/State"
-import useFuelPricesState from "../../controllers/useFuelPricesState"
-import TypeLookup from "../../components/TypeLookup"
+} from '../../state/colorScheme/colourScheme'
+import { IslandCenter } from '../../templates/IslandCenter'
+import ErrorPage from '../ErrorPage'
+import { State } from '../../types/State'
+import useFuelPricesState from '../../controllers/useFuelPricesState'
+import TypeLookup from '../../components/TypeLookup'
 
 type t = ReturnType<typeof useFuelPricesState>
 
@@ -41,7 +41,7 @@ function FuelPricesPage(props: t): JSX.Element {
                   data.fuelprices.average,
                   data.fuelprices.wholesale,
                 ]}
-                cols={["green", "red", "blue", "black"]}
+                cols={['green', 'red', 'blue', 'black']}
                 width={width / 2}
                 height={width / 4}
               />
@@ -75,7 +75,7 @@ function FuelPricesPage(props: t): JSX.Element {
               "Today's price": data.stats.average.toFixed(2),
               Skew: data.stats.relativePrice.toFixed(2),
               Trend: data.stats.gradient.toFixed(2),
-              "Should buy?": data.stats.decision.toString(),
+              'Should buy?': data.stats.decision.toString(),
             }).map((item, itemInd) => (
               <div
                 className="column"
