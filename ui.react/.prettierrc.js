@@ -9,5 +9,5 @@ module.exports = {
   useTabs: false,
   endOfLine: 'auto',
   semi: false,
-  singleAttributePerLine: true,
+  singleAttributePerLine: true
 }

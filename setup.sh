@@ -3,7 +3,7 @@
 current_dir="$(pwd)"
 domain="kooperlingohr.com"
 environment="development"
-backendport="5000"
+flask_port="5000"
 
 # Run this file as a super user
 # This will not handle database creation
@@ -17,7 +17,7 @@ echo crons >> tempfile
 crontab tempfile
 rm tempfile
 
-conf="user www-data;
+nginx_conf="user www-data;
 worker_processes auto;
 pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
@@ -40,9 +40,16 @@ http {
         include /etc/nginx/conf.d/*.conf;
 }"
 
-nginx1="server {
+nginx_backend_frontend="server {
   listen       80;
-  server_name  $(domain);
+  server_name test.com;
+  return 301 \$sheme://www.github.com/KooperL;
+}
+
+server {
+  listen       80;
+  server_name  experimental.$(domain);
+
   location /api/v1 {
     proxy_set_header X-Real-IP \$remote_addr;
     proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
@@ -50,30 +57,37 @@ nginx1="server {
     proxy_set_header X-Forwarded-Host \$host;
     proxy_set_header X-Forwarded-Prefix \$uri;
     proxy_set_header X-NginX-Proxy true;
-    proxy_pass http://127.0.0.1:$backendport/;
+    proxy_pass http://127.0.0.1:$flask_port/;
     proxy_ssl_session_reuse off;
     proxy_set_header Host \$http_host;
     proxy_redirect off;
   }
+
   location / {
     root   $current_dir/ui.react/build;
     index  index.html;
     try_files \$uri /index.html;
+    error_page 404 500 502 503 504 = @fallback;
   }
+
+  location @fallback {
+    proxy_pass \$sheme://www.github.com/KooperL;
+  }
+
 }"
 
-nginx2="server {
+nginx_www_redirect="server {
     listen 80;
     server_name www.$(domain);
     return 301 $scheme://$(domain)$request_uri;
 }"
 
-echo $conf > /etc/nginx/nginx.conf
-echo $nginx1 > /etc/nginx/conf.d/site1.conf
-echo $nginx2 > /etc/nginx/conf.d/site2.conf
+echo $nginx_conf > /etc/nginx/nginx.conf
+echo $nginx_backend_frontend > /etc/nginx/conf.d/site1.conf
+echo $nginx_www_redirect > /etc/nginx/conf.d/site2.conf
 
 
-serverdotenv="MONGO_USERNAME=
+server_env_vars="MONGO_USERNAME=
 MONGO_PASSWORD=
 MONGO_PORT=
 GOOGLE_MAPS_API_KEY=
@@ -97,8 +111,8 @@ RATE_LIMIT_WINDOW=
 RATE_LIMIT_REQUESTS_LIMITED=
 RATE_LIMIT_REQUESTS_GENERAL="
 
-reactdotenv="REACT_APP_DEV_FLASK_API_PORT=$backendport
+react_env_vars="REACT_APP_DEV_FLASK_API_PORT=$flask_port
 REACT_APP_NODE_ENV=$environment"
 
-echo $serverdotenv > $current_dir/server/.env
-echo $reactdotenv > $current_dir/ui.react/.env
+echo $server_env_vars > $current_dir/server/.env
+echo $react_env_vars > $current_dir/ui.react/.env
