@@ -1,7 +1,0 @@
-.radio-button-container {
-  display: flex;
-  flex-direction: row;
-  height: fit-content;
-  justify-content: space-between;
-  padding: 3px;
-}
