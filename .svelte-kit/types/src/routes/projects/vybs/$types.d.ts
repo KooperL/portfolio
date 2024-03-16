@@ -8,7 +8,7 @@ type MatcherParam<M> = M extends (param: string) => param is infer U
     : string
   : string
 type RouteParams = {}
-type RouteId = "/about"
+type RouteId = "/projects/vybs"
 type MaybeWithVoid<T> = {} extends T ? T | void : T
 export type RequiredKeys<T> = {
   [K in keyof T]-?: {} extends { [P in K]: T[K] } ? never : K
@@ -24,7 +24,7 @@ type OptionalUnion<
   A extends keyof U = U extends U ? keyof U : never,
 > = U extends unknown ? { [P in Exclude<A, keyof U>]?: never } & U : never
 export type Snapshot<T = any> = Kit.Snapshot<T>
-type PageParentData = EnsureDefined<import("../$types.js").LayoutData>
+type PageParentData = EnsureDefined<import("../../$types.js").LayoutData>
 
 export type PageServerData = null
 export type PageData = Expand<PageParentData>
