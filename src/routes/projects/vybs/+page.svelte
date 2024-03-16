@@ -15,17 +15,16 @@
 <div class="box-border p-8 w-full h-full">
 <Card class="w-full max-w-full h-full bg-white/50">
 	<div class="flex flex-col space-y-4">
-		<span class="text-4xl font-bold">dropzones.io</span>
+		<span class="text-4xl font-bold">pento.io</span>
         <div>
-			<span class=" font-bold">Straight up bingo.</span>
-            <div class="h-128 border-solid border-3 bg-primary-600 rounded box-border p-1 m-4 flex justify-center items-center">
-				<iframe src="https://dropzones.io/sheet/3fv45nzt3gko5us" class="w-full h-full" />
+			<span class=" font-bold">Online note archive.</span>
+            <div class="aspect-square border-solid border-3 bg-primary-600 rounded box-border p-1 m-4 flex justify-center items-center">
+				<iframe src="https://vybs.tv" class="w-full h-full" />
 			</div>
 			</div>
 			<div class="flex space-x-4">
 				<Button href="/projects" class="w-48" variant="primary">back</Button>
 				<Button href="https://pento.page/" class="w-48" variant="primary"><ArrowRightToBracketOutline class="w-5 h-5 pr-2"  />visit</Button>
-				</div>
-	</div>
+				</div>	</div>
 </Card>
 </div>

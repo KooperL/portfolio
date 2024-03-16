@@ -63,9 +63,7 @@
 		<div class="hidden md:block flex h-full flex-col items-center justify-center aspect-square max-w-1/2" style="max-width: 50%;">
 			<Canvas bind:this={renderer} id="canvas">
 				<World>
-
-
-			<TestScene renderer={renderer}/>
+					<TestScene renderer={renderer}/>
 				</World>
 		</Canvas>
 </div>
@@ -79,9 +77,9 @@
 			ulClass="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
 		>
 			<FooterLink href="/">Home</FooterLink>
-			<FooterLink href="/">Projects</FooterLink>
-			<FooterLink href="/">About</FooterLink>
-			<FooterLink href="/">Contact</FooterLink>
+			<FooterLink href="/projects">Projects</FooterLink>
+			<FooterLink href="/about">About</FooterLink>
+			<FooterLink href="/contact">Contact</FooterLink>
 		</FooterLinkGroup>
 	</Footer>
 </div>
