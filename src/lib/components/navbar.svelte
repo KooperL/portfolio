@@ -28,7 +28,7 @@
 <Navbar class="flex flex-row">
 	<NavBrand href="/" class="w-20">
 		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-			<HomeSolid class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 w-10 h-10" fill="primary-600" />
+			<HomeSolid class="text-primary-500 dark:text-primary-400 hover:bg-primary-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 w-10 h-10" fill="primary-600" />
 		</span>
 	</NavBrand>
 	<Marquee class="w-0 grow">

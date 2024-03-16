@@ -1,9 +1,0 @@
-{
-  "/": ["src/routes/+page.server.js"],
-  "/about": [],
-  "/contact": [],
-  "/projects": [],
-  "/projects/bingoApp": [],
-  "/projects/pento": [],
-  "/projects/vybs": []
-}

@@ -4,9 +4,8 @@ import { env } from "$env/dynamic/public"
 
 const HOST = env.PUBLIC_POCKETBASE_URL
 export const pocketbaseCustomEndpoints = {
-  noteRating: HOST + "/api/custom/notes/:noteId/ratings",
-  submitNoteRating: HOST + "/api/custom/notes/:noteId/rating",
-  noteShare: HOST + "/api/custom/notes/:noteId/share",
+  noteRating: HOST + "/api/custom/notes/example",
+
 } as const
 
 interface ApiData {
