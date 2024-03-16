@@ -13,9 +13,12 @@
   import { tweened } from 'svelte/motion'
   import { DEG2RAD } from 'three/src/math/MathUtils.js'
   import colors from 'tailwindcss/colors'
-  
+
   export let renderer
   let camera
+  let cameraPositionX = tweened(-110, {duration: 2000})
+  let cameraPositionY = tweened(90, {duration: 2000})
+  let cameraPositionZ = tweened(20, {duration: 2000})
   let resizeCanvasToDisplaySize = () => {
   const canvas = renderer
 
@@ -57,7 +60,9 @@
 
     onMount(() => {
   
-
+      // setTimeout(() => {
+      //   $cameraPositionX = 0
+      // }, 2000)
 
     })
 
@@ -70,22 +75,16 @@
     })
 
     interactivity()
-    const pulsePosition = new Vector3()
-    const pulseTimer = tweened(0, {
+  const pulsePosition = new Vector3()
+  const pulseTimer = tweened(0, {
     easing: quadOut
   })
-
-  // <T.MeshStandardMaterial
-  //   wireframe={true}
-  //   color={colors.red[600]}
-  //   material="transparent"
-  // />
   </script>
   
   <T.PerspectiveCamera
   bind:this={camera}
   makeDefault
-  position={[-110, 90, 20]}
+  position={[$cameraPositionX, $cameraPositionY, $cameraPositionZ]}
   fov={15}
 >
   <OrbitControls
@@ -109,9 +108,11 @@
     })
   }}
 >
-
-
-  <T.ShaderMaterial
+  <T.LineBasicMaterial
+    color={colors.indigo[600]}
+    wireframe
+  />
+  <!-- <T.ShaderMaterial
     {fragmentShader}
     {vertexShader}
     uniforms={{
@@ -123,7 +124,7 @@
       }
     }}
     uniforms.pulseTimer.value={$pulseTimer}
-  />
+  /> -->
 </T.Mesh>
 
 <style>
