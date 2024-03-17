@@ -41,7 +41,7 @@
 		<Navbar />
 	</header>
 	<main class="flex grow max-h-full w-full bg-dotted-spacing-6 bg-dotted-primary-700 bg-dotted-radius-0.1">
-		<div class="w-full md:w-1/2">
+		<div class="w-full md:min-w-96 md:w-2/3 lg:w-1/2" style="max-height: 100%">
 			<slot />
 			{#if $toast?.text}
 				<Toast class="absolute bottom-2.5 left-1/2 mb-4 -translate-x-1/2">
@@ -60,7 +60,7 @@
 				</Toast>
 			{/if}
 		</div>
-		<div class="hidden md:block flex h-full flex-col items-center justify-center aspect-square max-w-1/2" style="max-width: 50%;">
+		<div class="hidden md:block flex h-full flex-col items-center justify-center lg:aspect-square" style="max-width: 50%;">
 			<Canvas bind:this={renderer} id="canvas">
 				<World>
 					<TestScene renderer={renderer}/>
@@ -68,13 +68,10 @@
 		</Canvas>
 </div>
 
-		
-
-		
 	</main>
 	<Footer class="flex justify-center">
 		<FooterLinkGroup
-			ulClass="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
+			ulClass="flex flex-wrap items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
 		>
 			<FooterLink href="/">Home</FooterLink>
 			<FooterLink href="/projects">Projects</FooterLink>
