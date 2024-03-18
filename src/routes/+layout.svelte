@@ -1,7 +1,6 @@
 <script lang="ts">
 	import '../app.pcss';
 	import { beforeNavigate } from '$app/navigation';
-	import { base } from '$app/paths';
 	import { Flex, Box } from '@threlte/flex'
 	import {
 		Button,
@@ -22,6 +21,8 @@
 	import TestScene from '$lib/components/scenes/grid/grid.svelte'
   import { Canvas } from '@threlte/core'
   import { World } from '@threlte/rapier'
+  import { base } from '$app/paths';
+
 
 	let formModal = false;
 	$: title = ($metadata.title ? $metadata.title + ' | ' : '') + site.name;
@@ -73,7 +74,7 @@
 		<FooterLinkGroup
 			ulClass="flex flex-wrap items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
 		>
-			<FooterLink href="/">Home</FooterLink>
+			<FooterLink href={`${base}/projects`}>Home</FooterLink>
 			<FooterLink href="/projects">Projects</FooterLink>
 			<FooterLink href="/about">About</FooterLink>
 			<FooterLink href="/contact">Contact</FooterLink>
