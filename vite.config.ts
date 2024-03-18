@@ -3,6 +3,9 @@ import { defineConfig } from "vite"
 
 export default defineConfig({
   plugins: [sveltekit()],
+  build: {
+    outDir: "docs",
+  },
   ssr: {
     noExternal: ["three"],
   },

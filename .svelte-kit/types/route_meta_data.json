@@ -1,11 +1,25 @@
 {
 	"/": [
-		"src/routes/+page.server.js"
+		"src/routes/+page.server.js",
+		"src/routes/+layout.js",
+		"src/routes/+layout.js"
 	],
-	"/about": [],
-	"/contact": [],
-	"/projects": [],
-	"/projects/bingoApp": [],
-	"/projects/pento": [],
-	"/projects/vybs": []
+	"/about": [
+		"src/routes/+layout.js"
+	],
+	"/contact": [
+		"src/routes/+layout.js"
+	],
+	"/projects": [
+		"src/routes/+layout.js"
+	],
+	"/projects/bingoApp": [
+		"src/routes/+layout.js"
+	],
+	"/projects/pento": [
+		"src/routes/+layout.js"
+	],
+	"/projects/vybs": [
+		"src/routes/+layout.js"
+	]
 }

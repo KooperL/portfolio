@@ -1,9 +1,9 @@
-import { env } from "$env/dynamic/public"
+import { PUBLIC_POCKETBASE_URL } from "$env/static/public"
 import type { Handle } from "@sveltejs/kit"
 import PocketBase from "pocketbase"
 
 export const handle: Handle = async ({ event, resolve }) => {
-  event.locals.pb = new PocketBase(env.PUBLIC_POCKETBASE_URL)
+  event.locals.pb = new PocketBase(PUBLIC_POCKETBASE_URL)
 
   // Grab the cookie from request headers
   const cookie = event.request.headers.get("cookie")
