@@ -74,10 +74,10 @@
 		<FooterLinkGroup
 			ulClass="flex flex-wrap items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
 		>
-			<FooterLink href={`${base}/projects`}>Home</FooterLink>
-			<FooterLink href="/projects">Projects</FooterLink>
-			<FooterLink href="/about">About</FooterLink>
-			<FooterLink href="/contact">Contact</FooterLink>
+			<FooterLink href={`${base}`}>Home</FooterLink>
+			<FooterLink href={`${base}/projects}`}>Projects</FooterLink>
+			<FooterLink href={`${base}/about}`}>About</FooterLink>
+			<FooterLink href={`${base}/contact}`}>Contact</FooterLink>
 		</FooterLinkGroup>
 	</Footer>
 </div>
