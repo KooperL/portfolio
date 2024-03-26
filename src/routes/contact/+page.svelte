@@ -35,7 +35,7 @@
                     </div>
                     <div>
                         <Label for="message">Message</Label>
-                        <Textarea bind:value={message} id="message" name="message" class="bg-gray-50" required></Textarea>
+                        <Textarea bind:value={message} id="message" name="message" class="bg-gray-50 dark:bg-gray-600" required></Textarea>
                     </div>
                     <div>
                         <Button type="submit"class="w-48">Send</Button>

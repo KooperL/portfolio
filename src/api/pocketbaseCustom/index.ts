@@ -5,7 +5,6 @@ import { PUBLIC_POCKETBASE_URL } from "$env/static/public"
 const HOST = PUBLIC_POCKETBASE_URL
 export const pocketbaseCustomEndpoints = {
   noteRating: HOST + "/api/custom/notes/example",
-
 } as const
 
 interface ApiData {
