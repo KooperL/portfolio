@@ -1,3 +1,5 @@
-# Svelte-pocketbase-quickstart
+# Introduction
 
-Use this quickstart to skip all the boilerplate and begin building your project ASAP!
+Welcome to the guts of my portfolio, have a poke around the source code and check it out live!
+
+Find the website here: [kooperlingohr.com](https://kooperlingohr.com)
