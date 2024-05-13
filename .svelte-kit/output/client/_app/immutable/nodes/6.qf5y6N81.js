@@ -2,15 +2,15 @@ import {
   s as T,
   e as d,
   c as h,
-  a as V,
-  d as m,
-  b as g,
+  a as j,
+  d as p,
+  b as _,
   i as y,
   o as H,
-  f as I,
+  f as S,
   g as A,
-  h as S,
-  j as p,
+  h as V,
+  j as m,
   t as E,
   k as M,
   n as L,
@@ -42,7 +42,7 @@ function R(l) {
       y(s, t, r)
     },
     d(s) {
-      s && m(t)
+      s && p(t)
     },
   }
 }
@@ -68,7 +68,7 @@ function F(l) {
         C(t.$$.fragment, e), (r = !1)
       },
       d(e) {
-        e && m(s), k(t, e)
+        e && p(s), k(t, e)
       },
     }
   )
@@ -81,12 +81,12 @@ function G(l) {
     a,
     $ =
       '<span class="font-bold">Straight up bingo.</span> <div class="h-96 2xl:h-192 md:h-128 border-solid border-3 bg-primary-600 rounded box-border p-1 m-4 flex justify-center items-center" style="max-height: 50vh"><iframe src="https://dropzones.io/sheet/3fv45nzt3gko5us" class="w-full h-full"></iframe></div>',
-    z,
+    D,
     i,
     c,
-    D,
+    I,
     f,
-    _
+    g
   return (
     (c = new B({
       props: {
@@ -99,7 +99,7 @@ function G(l) {
     })),
     (f = new B({
       props: {
-        href: "https://dropzones.io/",
+        href: "https://pento.page/",
         class: "w-48",
         variant: "primary",
         $$slots: { default: [F] },
@@ -111,65 +111,65 @@ function G(l) {
         ;(t = d("div")),
           (s = d("span")),
           (s.textContent = r),
-          (e = I()),
+          (e = S()),
           (a = d("div")),
           (a.innerHTML = $),
-          (z = I()),
+          (D = S()),
           (i = d("div")),
           v(c.$$.fragment),
-          (D = I()),
+          (I = S()),
           v(f.$$.fragment),
           this.h()
       },
       l(n) {
         t = h(n, "DIV", { class: !0 })
-        var o = V(t)
+        var o = j(t)
         ;(s = h(o, "SPAN", { class: !0, "data-svelte-h": !0 })),
           A(s) !== "svelte-1crtp5g" && (s.textContent = r),
-          (e = S(o)),
+          (e = V(o)),
           (a = h(o, "DIV", { "data-svelte-h": !0 })),
           A(a) !== "svelte-17w46of" && (a.innerHTML = $),
-          (z = S(o)),
+          (D = V(o)),
           (i = h(o, "DIV", { class: !0 }))
-        var u = V(i)
+        var u = j(i)
         b(c.$$.fragment, u),
-          (D = S(u)),
+          (I = V(u)),
           b(f.$$.fragment, u),
-          u.forEach(m),
-          o.forEach(m),
+          u.forEach(p),
+          o.forEach(p),
           this.h()
       },
       h() {
-        g(s, "class", "text-4xl font-bold"),
-          g(i, "class", "flex space-x-4"),
-          g(t, "class", "flex flex-col space-y-4")
+        _(s, "class", "text-4xl font-bold"),
+          _(i, "class", "flex space-x-4"),
+          _(t, "class", "flex flex-col space-y-4")
       },
       m(n, o) {
         y(n, t, o),
-          p(t, s),
-          p(t, e),
-          p(t, a),
-          p(t, z),
-          p(t, i),
+          m(t, s),
+          m(t, e),
+          m(t, a),
+          m(t, D),
+          m(t, i),
           x(c, i, null),
-          p(i, D),
+          m(i, I),
           x(f, i, null),
-          (_ = !0)
+          (g = !0)
       },
       p(n, o) {
         const u = {}
         o & 1 && (u.$$scope = { dirty: o, ctx: n }), c.$set(u)
-        const j = {}
-        o & 1 && (j.$$scope = { dirty: o, ctx: n }), f.$set(j)
+        const z = {}
+        o & 1 && (z.$$scope = { dirty: o, ctx: n }), f.$set(z)
       },
       i(n) {
-        _ || (w(c.$$.fragment, n), w(f.$$.fragment, n), (_ = !0))
+        g || (w(c.$$.fragment, n), w(f.$$.fragment, n), (g = !0))
       },
       o(n) {
-        C(c.$$.fragment, n), C(f.$$.fragment, n), (_ = !1)
+        C(c.$$.fragment, n), C(f.$$.fragment, n), (g = !1)
       },
       d(n) {
-        n && m(t), k(c), k(f)
+        n && p(t), k(c), k(f)
       },
     }
   )
@@ -190,11 +190,11 @@ function J(l) {
       },
       l(e) {
         t = h(e, "DIV", { class: !0 })
-        var a = V(t)
-        b(s.$$.fragment, a), a.forEach(m), this.h()
+        var a = j(t)
+        b(s.$$.fragment, a), a.forEach(p), this.h()
       },
       h() {
-        g(t, "class", "box-border p-8 w-full h-full")
+        _(t, "class", "box-border p-8 w-full h-full")
       },
       m(e, a) {
         y(e, t, a), x(s, t, null), (r = !0)
@@ -210,7 +210,7 @@ function J(l) {
         C(s.$$.fragment, e), (r = !1)
       },
       d(e) {
-        e && m(t), k(s)
+        e && p(t), k(s)
       },
     }
   )

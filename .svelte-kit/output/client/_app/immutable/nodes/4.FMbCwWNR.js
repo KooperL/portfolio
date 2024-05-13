@@ -1334,12 +1334,7 @@ function Dt(t) {
   function Ie(m) {
     t[6](m)
   }
-  let ve = {
-    id: "message",
-    name: "message",
-    class: "bg-gray-50 dark:bg-gray-600",
-    required: !0,
-  }
+  let ve = { id: "message", name: "message", class: "bg-gray-50", required: !0 }
   return (
     t[2] !== void 0 && (ve.value = t[2]),
     (P = new vt({ props: ve })),

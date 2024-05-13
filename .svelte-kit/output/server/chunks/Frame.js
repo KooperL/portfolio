@@ -1,23 +1,41 @@
-import { c as create_ssr_component, h as compute_rest_props, s as setContext, k as spread, l as escape_attribute_value, p as escape_object, e as add_attribute } from "./ssr.js";
-import { twMerge } from "tailwind-merge";
-const void_element_names = /^(?:area|base|br|col|command|embed|hr|img|input|keygen|link|meta|param|source|track|wbr)$/;
+import {
+  c as create_ssr_component,
+  h as compute_rest_props,
+  s as setContext,
+  k as spread,
+  l as escape_attribute_value,
+  p as escape_object,
+  e as add_attribute,
+} from "./ssr.js"
+import { twMerge } from "tailwind-merge"
+const void_element_names =
+  /^(?:area|base|br|col|command|embed|hr|img|input|keygen|link|meta|param|source|track|wbr)$/
 function is_void(name) {
-  return void_element_names.test(name) || name.toLowerCase() === "!doctype";
+  return void_element_names.test(name) || name.toLowerCase() === "!doctype"
 }
 const Frame = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $$restProps = compute_rest_props($$props, ["tag", "color", "rounded", "border", "shadow", "node", "use", "options", "role"]);
-  const noop = () => {
-  };
-  setContext("background", true);
-  let { tag = $$restProps.href ? "a" : "div" } = $$props;
-  let { color = "default" } = $$props;
-  let { rounded = false } = $$props;
-  let { border = false } = $$props;
-  let { shadow = false } = $$props;
-  let { node = void 0 } = $$props;
-  let { use = noop } = $$props;
-  let { options = {} } = $$props;
-  let { role = void 0 } = $$props;
+  let $$restProps = compute_rest_props($$props, [
+    "tag",
+    "color",
+    "rounded",
+    "border",
+    "shadow",
+    "node",
+    "use",
+    "options",
+    "role",
+  ])
+  const noop = () => {}
+  setContext("background", true)
+  let { tag = $$restProps.href ? "a" : "div" } = $$props
+  let { color = "default" } = $$props
+  let { rounded = false } = $$props
+  let { border = false } = $$props
+  let { shadow = false } = $$props
+  let { node = void 0 } = $$props
+  let { use = noop } = $$props
+  let { options = {} } = $$props
+  let { role = void 0 } = $$props
   const bgColors = {
     gray: "bg-gray-50 dark:bg-gray-800",
     red: "bg-red-50 dark:bg-gray-800",
@@ -36,8 +54,8 @@ const Frame = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     form: "bg-gray-50 dark:bg-gray-700",
     primary: "bg-primary-50 dark:bg-gray-800 ",
     orange: "bg-orange-50 dark:bg-orange-800",
-    none: ""
-  };
+    none: "",
+  }
   const textColors = {
     gray: "text-gray-800 dark:text-gray-300",
     red: "text-red-800 dark:text-red-400",
@@ -56,64 +74,81 @@ const Frame = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     form: "text-gray-900 dark:text-white",
     primary: "text-primary-800 dark:text-primary-400",
     orange: "text-orange-800 dark:text-orange-400",
-    none: ""
-  };
+    none: "",
+  }
   const borderColors = {
     gray: "border-gray-300 dark:border-gray-800 divide-gray-300 dark:divide-gray-800",
     red: "border-red-300 dark:border-red-800 divide-red-300 dark:divide-red-800",
-    yellow: "border-yellow-300 dark:border-yellow-800 divide-yellow-300 dark:divide-yellow-800",
-    green: "border-green-300 dark:border-green-800 divide-green-300 dark:divide-green-800",
-    indigo: "border-indigo-300 dark:border-indigo-800 divide-indigo-300 dark:divide-indigo-800",
-    purple: "border-purple-300 dark:border-purple-800 divide-purple-300 dark:divide-purple-800",
+    yellow:
+      "border-yellow-300 dark:border-yellow-800 divide-yellow-300 dark:divide-yellow-800",
+    green:
+      "border-green-300 dark:border-green-800 divide-green-300 dark:divide-green-800",
+    indigo:
+      "border-indigo-300 dark:border-indigo-800 divide-indigo-300 dark:divide-indigo-800",
+    purple:
+      "border-purple-300 dark:border-purple-800 divide-purple-300 dark:divide-purple-800",
     pink: "border-pink-300 dark:border-pink-800 divide-pink-300 dark:divide-pink-800",
     blue: "border-blue-300 dark:border-blue-800 divide-blue-300 dark:divide-blue-800",
     light: "border-gray-500 divide-gray-500",
     dark: "border-gray-500 divide-gray-500",
-    default: "border-gray-200 dark:border-gray-700 divide-gray-200 dark:divide-gray-700",
-    dropdown: "border-gray-100 dark:border-gray-600 divide-gray-100 dark:divide-gray-600",
-    navbar: "border-gray-100 dark:border-gray-700 divide-gray-100 dark:divide-gray-700",
-    navbarUl: "border-gray-100 dark:border-gray-700 divide-gray-100 dark:divide-gray-700",
+    default:
+      "border-gray-200 dark:border-gray-700 divide-gray-200 dark:divide-gray-700",
+    dropdown:
+      "border-gray-100 dark:border-gray-600 divide-gray-100 dark:divide-gray-600",
+    navbar:
+      "border-gray-100 dark:border-gray-700 divide-gray-100 dark:divide-gray-700",
+    navbarUl:
+      "border-gray-100 dark:border-gray-700 divide-gray-100 dark:divide-gray-700",
     form: "border-gray-300 dark:border-gray-700 divide-gray-300 dark:divide-gray-700",
-    primary: "border-primary-500 dark:border-primary-200  divide-primary-500 dark:divide-primary-200 ",
-    orange: "border-orange-300 dark:border-orange-800 divide-orange-300 dark:divide-orange-800",
-    none: ""
-  };
-  let divClass;
-  if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
-    $$bindings.tag(tag);
-  if ($$props.color === void 0 && $$bindings.color && color !== void 0)
-    $$bindings.color(color);
-  if ($$props.rounded === void 0 && $$bindings.rounded && rounded !== void 0)
-    $$bindings.rounded(rounded);
-  if ($$props.border === void 0 && $$bindings.border && border !== void 0)
-    $$bindings.border(border);
-  if ($$props.shadow === void 0 && $$bindings.shadow && shadow !== void 0)
-    $$bindings.shadow(shadow);
-  if ($$props.node === void 0 && $$bindings.node && node !== void 0)
-    $$bindings.node(node);
-  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-    $$bindings.use(use);
-  if ($$props.options === void 0 && $$bindings.options && options !== void 0)
-    $$bindings.options(options);
-  if ($$props.role === void 0 && $$bindings.role && role !== void 0)
-    $$bindings.role(role);
-  color = color ?? "default";
-  {
-    setContext("color", color);
+    primary:
+      "border-primary-500 dark:border-primary-200  divide-primary-500 dark:divide-primary-200 ",
+    orange:
+      "border-orange-300 dark:border-orange-800 divide-orange-300 dark:divide-orange-800",
+    none: "",
   }
-  divClass = twMerge(bgColors[color], textColors[color], rounded && "rounded-lg", border && "border", borderColors[color], shadow && "shadow-md", $$props.class);
-  return `${((tag$1) => {
-    return tag$1 ? `<${tag}${spread(
-      [
-        { role: escape_attribute_value(role) },
-        escape_object($$restProps),
-        { class: escape_attribute_value(divClass) }
-      ],
-      {}
-    )}${add_attribute("this", node, 0)}>${is_void(tag$1) ? "" : `${slots.default ? slots.default({}) : ``}`}${is_void(tag$1) ? "" : `</${tag$1}>`}` : "";
-  })(tag)} `;
-});
-export {
-  Frame as F,
-  is_void as i
-};
+  let divClass
+  if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
+    $$bindings.tag(tag)
+  if ($$props.color === void 0 && $$bindings.color && color !== void 0)
+    $$bindings.color(color)
+  if ($$props.rounded === void 0 && $$bindings.rounded && rounded !== void 0)
+    $$bindings.rounded(rounded)
+  if ($$props.border === void 0 && $$bindings.border && border !== void 0)
+    $$bindings.border(border)
+  if ($$props.shadow === void 0 && $$bindings.shadow && shadow !== void 0)
+    $$bindings.shadow(shadow)
+  if ($$props.node === void 0 && $$bindings.node && node !== void 0)
+    $$bindings.node(node)
+  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+    $$bindings.use(use)
+  if ($$props.options === void 0 && $$bindings.options && options !== void 0)
+    $$bindings.options(options)
+  if ($$props.role === void 0 && $$bindings.role && role !== void 0)
+    $$bindings.role(role)
+  color = color ?? "default"
+  {
+    setContext("color", color)
+  }
+  divClass = twMerge(
+    bgColors[color],
+    textColors[color],
+    rounded && "rounded-lg",
+    border && "border",
+    borderColors[color],
+    shadow && "shadow-md",
+    $$props.class,
+  )
+  return `${(tag$1 => {
+    return tag$1
+      ? `<${tag}${spread(
+          [
+            { role: escape_attribute_value(role) },
+            escape_object($$restProps),
+            { class: escape_attribute_value(divClass) },
+          ],
+          {},
+        )}${add_attribute("this", node, 0)}>${is_void(tag$1) ? "" : `${slots.default ? slots.default({}) : ``}`}${is_void(tag$1) ? "" : `</${tag$1}>`}`
+      : ""
+  })(tag)} `
+})
+export { Frame as F, is_void as i }

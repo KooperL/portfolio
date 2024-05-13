@@ -15,7 +15,7 @@ import {
   L as k,
 } from "../chunks/scheduler.gY_bz6RS.js"
 import { S as q, i as y } from "../chunks/index.1Dz5KRer.js"
-import { s as C } from "../chunks/entry.6kHzac2I.js"
+import { s as C } from "../chunks/entry.Bz0ScapB.js"
 const H = () => {
     const s = C
     return {

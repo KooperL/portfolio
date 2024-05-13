@@ -1,6 +1,3 @@
-const ssr = false;
-const prerender = true;
-export {
-  prerender,
-  ssr
-};
+const ssr = false
+const prerender = true
+export { prerender, ssr }

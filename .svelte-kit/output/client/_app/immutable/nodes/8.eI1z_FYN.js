@@ -1,45 +1,45 @@
 import {
-  s as T,
+  s as S,
   e as d,
   c as h,
-  a as V,
+  a as q,
   d as m,
-  b as g,
-  i as y,
-  o as H,
-  f as I,
-  g as A,
-  h as S,
-  j as p,
-  t as E,
-  k as M,
-  n as L,
+  b as v,
+  i as k,
+  o as T,
+  f as V,
+  g as B,
+  h as j,
+  j as $,
+  t as M,
+  k as P,
+  n as H,
 } from "../chunks/scheduler.gY_bz6RS.js"
 import {
-  S as P,
-  i as q,
-  c as v,
+  S as L,
+  i as z,
+  c as g,
   a as b,
   m as x,
   t as w,
-  b as C,
-  d as k,
+  b as y,
+  d as C,
 } from "../chunks/index.1Dz5KRer.js"
 import "../chunks/pocketbase.eYyW_pXf.js"
-import { B } from "../chunks/Button.ZyweCTx2.js"
+import { B as E } from "../chunks/Button.ZyweCTx2.js"
 import { C as N } from "../chunks/Card.vyHOi96P.js"
 import { A as O } from "../chunks/ArrowRightToBracketOutline.6j5_Ggcq.js"
 function R(l) {
   let t
   return {
     c() {
-      t = E("back")
+      t = M("back")
     },
     l(s) {
-      t = M(s, "back")
+      t = P(s, "back")
     },
     m(s, r) {
-      y(s, t, r)
+      k(s, t, r)
     },
     d(s) {
       s && m(t)
@@ -52,23 +52,23 @@ function F(l) {
     (t = new O({ props: { class: "w-5 h-5 pr-2" } })),
     {
       c() {
-        v(t.$$.fragment), (s = E("visit"))
+        g(t.$$.fragment), (s = M("visit"))
       },
       l(e) {
-        b(t.$$.fragment, e), (s = M(e, "visit"))
+        b(t.$$.fragment, e), (s = P(e, "visit"))
       },
       m(e, a) {
-        x(t, e, a), y(e, s, a), (r = !0)
+        x(t, e, a), k(e, s, a), (r = !0)
       },
-      p: L,
+      p: H,
       i(e) {
         r || (w(t.$$.fragment, e), (r = !0))
       },
       o(e) {
-        C(t.$$.fragment, e), (r = !1)
+        y(t.$$.fragment, e), (r = !1)
       },
       d(e) {
-        e && m(s), k(t, e)
+        e && m(s), C(t, e)
       },
     }
   )
@@ -76,19 +76,19 @@ function F(l) {
 function G(l) {
   let t,
     s,
-    r = "dropzones.io",
+    r = "vybs.tv",
     e,
     a,
-    $ =
-      '<span class="font-bold">Straight up bingo.</span> <div class="h-96 2xl:h-192 md:h-128 border-solid border-3 bg-primary-600 rounded box-border p-1 m-4 flex justify-center items-center" style="max-height: 50vh"><iframe src="https://dropzones.io/sheet/3fv45nzt3gko5us" class="w-full h-full"></iframe></div>',
-    z,
+    p =
+      '<span class="font-bold">Pretty web animations.</span> <div class="h-96 aspect-square border-solid border-3 bg-primary-600 rounded box-border p-1 m-4 flex justify-center items-center"><iframe src="https://vybs.tv" class="w-full h-full"></iframe></div>',
+    D,
     i,
     c,
-    D,
+    I,
     f,
     _
   return (
-    (c = new B({
+    (c = new E({
       props: {
         href: "/projects",
         class: "w-48",
@@ -97,9 +97,9 @@ function G(l) {
         $$scope: { ctx: l },
       },
     })),
-    (f = new B({
+    (f = new E({
       props: {
-        href: "https://dropzones.io/",
+        href: "https://pento.page/",
         class: "w-48",
         variant: "primary",
         $$slots: { default: [F] },
@@ -111,65 +111,65 @@ function G(l) {
         ;(t = d("div")),
           (s = d("span")),
           (s.textContent = r),
-          (e = I()),
+          (e = V()),
           (a = d("div")),
-          (a.innerHTML = $),
-          (z = I()),
+          (a.innerHTML = p),
+          (D = V()),
           (i = d("div")),
-          v(c.$$.fragment),
-          (D = I()),
-          v(f.$$.fragment),
+          g(c.$$.fragment),
+          (I = V()),
+          g(f.$$.fragment),
           this.h()
       },
       l(n) {
         t = h(n, "DIV", { class: !0 })
-        var o = V(t)
+        var o = q(t)
         ;(s = h(o, "SPAN", { class: !0, "data-svelte-h": !0 })),
-          A(s) !== "svelte-1crtp5g" && (s.textContent = r),
-          (e = S(o)),
+          B(s) !== "svelte-q5r68g" && (s.textContent = r),
+          (e = j(o)),
           (a = h(o, "DIV", { "data-svelte-h": !0 })),
-          A(a) !== "svelte-17w46of" && (a.innerHTML = $),
-          (z = S(o)),
+          B(a) !== "svelte-1ua2gzd" && (a.innerHTML = p),
+          (D = j(o)),
           (i = h(o, "DIV", { class: !0 }))
-        var u = V(i)
+        var u = q(i)
         b(c.$$.fragment, u),
-          (D = S(u)),
+          (I = j(u)),
           b(f.$$.fragment, u),
           u.forEach(m),
           o.forEach(m),
           this.h()
       },
       h() {
-        g(s, "class", "text-4xl font-bold"),
-          g(i, "class", "flex space-x-4"),
-          g(t, "class", "flex flex-col space-y-4")
+        v(s, "class", "text-4xl font-bold"),
+          v(i, "class", "flex space-x-4"),
+          v(t, "class", "flex flex-col space-y-4")
       },
       m(n, o) {
-        y(n, t, o),
-          p(t, s),
-          p(t, e),
-          p(t, a),
-          p(t, z),
-          p(t, i),
+        k(n, t, o),
+          $(t, s),
+          $(t, e),
+          $(t, a),
+          $(t, D),
+          $(t, i),
           x(c, i, null),
-          p(i, D),
+          $(i, I),
           x(f, i, null),
           (_ = !0)
       },
       p(n, o) {
         const u = {}
         o & 1 && (u.$$scope = { dirty: o, ctx: n }), c.$set(u)
-        const j = {}
-        o & 1 && (j.$$scope = { dirty: o, ctx: n }), f.$set(j)
+        const A = {}
+        o & 1 && (A.$$scope = { dirty: o, ctx: n }), f.$set(A)
       },
       i(n) {
         _ || (w(c.$$.fragment, n), w(f.$$.fragment, n), (_ = !0))
       },
       o(n) {
-        C(c.$$.fragment, n), C(f.$$.fragment, n), (_ = !1)
+        y(c.$$.fragment, n), y(f.$$.fragment, n), (_ = !1)
       },
       d(n) {
-        n && m(t), k(c), k(f)
+        n && m(t), C(c), C(f)
       },
     }
   )
@@ -186,41 +186,41 @@ function J(l) {
     })),
     {
       c() {
-        ;(t = d("div")), v(s.$$.fragment), this.h()
+        ;(t = d("div")), g(s.$$.fragment), this.h()
       },
       l(e) {
         t = h(e, "DIV", { class: !0 })
-        var a = V(t)
+        var a = q(t)
         b(s.$$.fragment, a), a.forEach(m), this.h()
       },
       h() {
-        g(t, "class", "box-border p-8 w-full h-full")
+        v(t, "class", "box-border p-8 w-full h-full")
       },
       m(e, a) {
-        y(e, t, a), x(s, t, null), (r = !0)
+        k(e, t, a), x(s, t, null), (r = !0)
       },
       p(e, [a]) {
-        const $ = {}
-        a & 1 && ($.$$scope = { dirty: a, ctx: e }), s.$set($)
+        const p = {}
+        a & 1 && (p.$$scope = { dirty: a, ctx: e }), s.$set(p)
       },
       i(e) {
         r || (w(s.$$.fragment, e), (r = !0))
       },
       o(e) {
-        C(s.$$.fragment, e), (r = !1)
+        y(s.$$.fragment, e), (r = !1)
       },
       d(e) {
-        e && m(t), k(s)
+        e && m(t), C(s)
       },
     }
   )
 }
 function K(l) {
-  return H(async () => {}), []
+  return T(async () => {}), []
 }
-class tt extends P {
+class tt extends L {
   constructor(t) {
-    super(), q(this, t, K, J, T, {})
+    super(), z(this, t, K, J, S, {})
   }
 }
 export { tt as component }

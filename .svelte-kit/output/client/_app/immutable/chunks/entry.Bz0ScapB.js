@@ -297,12 +297,12 @@ function Rt(t, e, n = JSON.stringify) {
 }
 var Nt
 const I =
-  ((Nt = globalThis.__sveltekit_jkstuc) == null ? void 0 : Nt.base) ??
+  ((Nt = globalThis.__sveltekit_158h2nm) == null ? void 0 : Nt.base) ??
   "/sveltekit-github-pages"
 var Ot
 const Se =
-    ((Ot = globalThis.__sveltekit_jkstuc) == null ? void 0 : Ot.assets) ?? I,
-  Ae = "1711482568893",
+    ((Ot = globalThis.__sveltekit_158h2nm) == null ? void 0 : Ot.assets) ?? I,
+  Ae = "1710761851518",
   $t = "sveltekit:snapshot",
   Ct = "sveltekit:scroll",
   Vt = "sveltekit:states",
