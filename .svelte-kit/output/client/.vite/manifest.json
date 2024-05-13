@@ -12,17 +12,12 @@
       ".svelte-kit/generated/client-optimized/nodes/8.js"
     ],
     "file": "_app/immutable/entry/app.A-vR_ZK-.js",
-    "imports": [
-      "_scheduler.gY_bz6RS.js",
-      "_index.1Dz5KRer.js"
-    ],
+    "imports": ["_scheduler.gY_bz6RS.js", "_index.1Dz5KRer.js"],
     "isEntry": true,
     "src": ".svelte-kit/generated/client-optimized/app.js"
   },
   ".svelte-kit/generated/client-optimized/nodes/0.js": {
-    "css": [
-      "_app/immutable/assets/0.41mCIbvY.css"
-    ],
+    "css": ["_app/immutable/assets/0.41mCIbvY.css"],
     "file": "_app/immutable/nodes/0._bhLl1wR.js",
     "imports": [
       "_scheduler.gY_bz6RS.js",
@@ -168,44 +163,30 @@
   },
   "_Frame.osOJd-OA.js": {
     "file": "_app/immutable/chunks/Frame.osOJd-OA.js",
-    "imports": [
-      "_scheduler.gY_bz6RS.js",
-      "_index.1Dz5KRer.js"
-    ]
+    "imports": ["_scheduler.gY_bz6RS.js", "_index.1Dz5KRer.js"]
   },
   "_entry.6kHzac2I.js": {
     "file": "_app/immutable/chunks/entry.6kHzac2I.js",
-    "imports": [
-      "_scheduler.gY_bz6RS.js",
-      "_index.f12sfW-N.js"
-    ]
+    "imports": ["_scheduler.gY_bz6RS.js", "_index.f12sfW-N.js"]
   },
   "_index.1Dz5KRer.js": {
     "file": "_app/immutable/chunks/index.1Dz5KRer.js",
-    "imports": [
-      "_scheduler.gY_bz6RS.js"
-    ]
+    "imports": ["_scheduler.gY_bz6RS.js"]
   },
   "_index.f12sfW-N.js": {
     "file": "_app/immutable/chunks/index.f12sfW-N.js",
-    "imports": [
-      "_scheduler.gY_bz6RS.js"
-    ]
+    "imports": ["_scheduler.gY_bz6RS.js"]
   },
   "_pocketbase.eYyW_pXf.js": {
     "file": "_app/immutable/chunks/pocketbase.eYyW_pXf.js",
-    "imports": [
-      "_index.f12sfW-N.js"
-    ]
+    "imports": ["_index.f12sfW-N.js"]
   },
   "_scheduler.gY_bz6RS.js": {
     "file": "_app/immutable/chunks/scheduler.gY_bz6RS.js"
   },
   "node_modules/@sveltejs/kit/src/runtime/client/entry.js": {
     "file": "_app/immutable/entry/start.HeHXXYvA.js",
-    "imports": [
-      "_entry.6kHzac2I.js"
-    ],
+    "imports": ["_entry.6kHzac2I.js"],
     "isEntry": true,
     "src": "node_modules/@sveltejs/kit/src/runtime/client/entry.js"
   }
