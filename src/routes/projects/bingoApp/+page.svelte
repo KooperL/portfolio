@@ -24,7 +24,7 @@
 			</div>
 			<div class="flex space-x-4">
 				<Button href="/projects" class="w-48" variant="primary">back</Button>
-				<Button href="https://pento.page/" class="w-48" variant="primary"><ArrowRightToBracketOutline class="w-5 h-5 pr-2"  />visit</Button>
+				<Button href="https://dropzones.io/" class="w-48" variant="primary"><ArrowRightToBracketOutline class="w-5 h-5 pr-2"  />visit</Button>
 				</div>
 	</div>
 </Card>

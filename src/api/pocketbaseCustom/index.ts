@@ -1,11 +1,10 @@
 import axios from "axios"
 import { currentUser } from "$lib/pocketbase"
-import { env } from "$env/dynamic/public"
+import { PUBLIC_POCKETBASE_URL } from "$env/static/public"
 
-const HOST = env.PUBLIC_POCKETBASE_URL
+const HOST = PUBLIC_POCKETBASE_URL
 export const pocketbaseCustomEndpoints = {
   noteRating: HOST + "/api/custom/notes/example",
-
 } as const
 
 interface ApiData {
