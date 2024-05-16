@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="icon"
+      href="./favicon.ico"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <link
+      rel="modulepreload"
+      href="./_app/immutable/entry/start.HeHXXYvA.js"
+    />
+    <link
+      rel="modulepreload"
+      href="./_app/immutable/chunks/entry.6kHzac2I.js"
+    />
+    <link
+      rel="modulepreload"
+      href="./_app/immutable/chunks/scheduler.gY_bz6RS.js"
+    />
+    <link
+      rel="modulepreload"
+      href="./_app/immutable/chunks/index.f12sfW-N.js"
+    />
+    <link
+      rel="modulepreload"
+      href="./_app/immutable/entry/app.A-vR_ZK-.js"
+    />
+    <link
+      rel="modulepreload"
+      href="./_app/immutable/chunks/index.1Dz5KRer.js"
+    />
+    <link
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  </head>
+  <body
+    data-sveltekit-preload-data="hover"
+    class="bg-white dark:bg-gray-800"
+  >
+    <div
+      style="display: contents; height: 100%"
+      id="svelte"
+    >
+      <script>
+        {
+          __sveltekit_jkstuc = {
+            base: new URL(".", location).pathname.slice(0, -1),
+            assets: "/sveltekit-github-pages",
+          }
+
+          const element = document.currentScript.parentElement
+
+          Promise.all([
+            import("./_app/immutable/entry/start.HeHXXYvA.js"),
+            import("./_app/immutable/entry/app.A-vR_ZK-.js"),
+          ]).then(([kit, app]) => {
+            kit.start(app, element)
+          })
+        }
+      </script>
+    </div>
+  </body>
+</html>

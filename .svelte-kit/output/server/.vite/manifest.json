@@ -1,0 +1,173 @@
+{
+  ".svelte-kit/generated/server/internal.js": {
+    "file": "internal.js",
+    "imports": ["_internal.js", "_paths.js"],
+    "isEntry": true,
+    "src": ".svelte-kit/generated/server/internal.js"
+  },
+  "_ArrowRightToBracketOutline.js": {
+    "file": "chunks/ArrowRightToBracketOutline.js",
+    "imports": ["_ssr.js"]
+  },
+  "_Button.js": {
+    "file": "chunks/Button.js",
+    "imports": ["_ssr.js", "_Frame.js"]
+  },
+  "_Card.js": {
+    "file": "chunks/Card.js",
+    "imports": ["_ssr.js", "_Frame.js"]
+  },
+  "_Frame.js": {
+    "file": "chunks/Frame.js",
+    "imports": ["_ssr.js"]
+  },
+  "_client.js": {
+    "file": "chunks/client.js",
+    "imports": ["_exports.js"]
+  },
+  "_exports.js": {
+    "file": "chunks/exports.js"
+  },
+  "_index.js": {
+    "file": "chunks/index.js",
+    "imports": ["_ssr.js"]
+  },
+  "_internal.js": {
+    "dynamicImports": ["src/hooks.server.ts"],
+    "file": "chunks/internal.js",
+    "imports": ["_ssr.js", "_paths.js"]
+  },
+  "_paths.js": {
+    "file": "chunks/paths.js"
+  },
+  "_pocketbase.js": {
+    "file": "chunks/pocketbase.js",
+    "imports": ["_public.js", "_index.js"]
+  },
+  "_public.js": {
+    "file": "chunks/public.js"
+  },
+  "_ssr.js": {
+    "file": "chunks/ssr.js"
+  },
+  "node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
+    "file": "entries/fallbacks/error.svelte.js",
+    "imports": ["_ssr.js", "_client.js"],
+    "isEntry": true,
+    "src": "node_modules/@sveltejs/kit/src/runtime/components/error.svelte"
+  },
+  "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
+    "file": "index.js",
+    "imports": ["_paths.js", "_exports.js", "_index.js", "_internal.js"],
+    "isEntry": true,
+    "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js"
+  },
+  "src/hooks.server.ts": {
+    "file": "chunks/hooks.server.js",
+    "imports": ["_public.js"],
+    "isDynamicEntry": true,
+    "src": "src/hooks.server.ts"
+  },
+  "src/routes/+layout.js": {
+    "file": "entries/pages/_layout.js",
+    "isEntry": true,
+    "src": "src/routes/+layout.js"
+  },
+  "src/routes/+layout.svelte": {
+    "css": ["_app/immutable/assets/_layout.vz8IjfpW.css"],
+    "file": "entries/pages/_layout.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_client.js",
+      "_index.js",
+      "_Frame.js",
+      "_pocketbase.js",
+      "_paths.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/+layout.svelte"
+  },
+  "src/routes/+page.server.js": {
+    "file": "entries/pages/_page.server.js",
+    "isEntry": true,
+    "src": "src/routes/+page.server.js"
+  },
+  "src/routes/+page.svelte": {
+    "file": "entries/pages/_page.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_pocketbase.js",
+      "_Button.js",
+      "_Card.js",
+      "_ArrowRightToBracketOutline.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/+page.svelte"
+  },
+  "src/routes/about/+page.svelte": {
+    "file": "entries/pages/about/_page.svelte.js",
+    "imports": ["_ssr.js", "_Card.js"],
+    "isEntry": true,
+    "src": "src/routes/about/+page.svelte"
+  },
+  "src/routes/contact/+page.svelte": {
+    "file": "entries/pages/contact/_page.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_pocketbase.js",
+      "_Button.js",
+      "_Card.js",
+      "_Frame.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/contact/+page.svelte"
+  },
+  "src/routes/projects/+page.svelte": {
+    "file": "entries/pages/projects/_page.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_pocketbase.js",
+      "_Button.js",
+      "_Card.js",
+      "_ArrowRightToBracketOutline.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/projects/+page.svelte"
+  },
+  "src/routes/projects/bingoApp/+page.svelte": {
+    "file": "entries/pages/projects/bingoApp/_page.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_pocketbase.js",
+      "_Button.js",
+      "_Card.js",
+      "_ArrowRightToBracketOutline.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/projects/bingoApp/+page.svelte"
+  },
+  "src/routes/projects/pento/+page.svelte": {
+    "file": "entries/pages/projects/pento/_page.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_pocketbase.js",
+      "_Button.js",
+      "_Card.js",
+      "_ArrowRightToBracketOutline.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/projects/pento/+page.svelte"
+  },
+  "src/routes/projects/vybs/+page.svelte": {
+    "file": "entries/pages/projects/vybs/_page.svelte.js",
+    "imports": [
+      "_ssr.js",
+      "_pocketbase.js",
+      "_Button.js",
+      "_Card.js",
+      "_ArrowRightToBracketOutline.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/projects/vybs/+page.svelte"
+  }
+}
