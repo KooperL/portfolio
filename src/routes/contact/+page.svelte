@@ -4,9 +4,11 @@
     let name = ''
     let email = ''
     let message = ''
+    let submitted = false
+    let submittedSuccessfully = false
 
     async function handleSubmit(event) {
-        console.log('submit')   
+      try {
         event.preventDefault()
         if (!name.length) {
             return
@@ -15,7 +17,14 @@
             return
         }
         const payload = { name, email, message }
+        submitted = true
+        submittedSuccessfully = false 
         pb.collection('messages').create(payload)
+        submittedSuccessfully = true
+        submitted = false
+      } catch (e) {
+        console.error(e)
+      }
     }
 </script>
 
@@ -37,8 +46,11 @@
                         <Label for="message">Message</Label>
                         <Textarea bind:value={message} id="message" name="message" class="bg-gray-50 dark:bg-gray-600" required></Textarea>
                     </div>
-                    <div>
-                        <Button type="submit"class="w-48">Send</Button>
+                    <div class="flex">
+                        <Button disabled={submitted} type="submit"class="w-48">Send</Button>
+                        {#if submittedSuccessfully}
+                            <div class="flex items-center justify-center w-12">✅</div>
+                        {/if}
                     </div>
                 </div>
             </form>
