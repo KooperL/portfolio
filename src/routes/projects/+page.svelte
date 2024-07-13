@@ -18,11 +18,11 @@
 		<span class="text-4xl font-bold">Published sites</span>
 			<Button href="/projects/bingoApp" class="w-48" variant="primary">dropzones</Button>
 			<Button href="/projects/pento" class="w-48" variant="primary">pento</Button>
-			<Button href="/projects/vybs" class="w-48" variant="primary">vybs</Button>
+			{#if false}<Button href="/projects/vybs" class="w-48" variant="primary">vybs</Button>{/if}
 
 		<span class="text-4xl font-bold">My projects</span>
 
-			<Button href="https://github.com/KooperL/svelte-pocketbase-quickstart" class="w-48" variant="primary"><ArrowRightToBracketOutline class="w-5 pr-2 h-5" /><span class="text-xxs">svelte-pocketbase-quickstart</span></Button>
+			<Button href="https://github.com/KooperL/svelte-pocketbase-quickstart" class="w-48" variant="primary"><ArrowRightToBracketOutline class="w-5 pr-2 h-5" /><marquee class="text-xxs text-nowrap-fff">svelte-pocketbase-quickstart</marquee></Button>
 			<Button href="https://github.com/KooperL/mdApp" class="w-48" variant="primary"><ArrowRightToBracketOutline class="w-5 h-5 pr-2"  />mdApp</Button>
 	</div>
 </Card>
