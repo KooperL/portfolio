@@ -11,8 +11,8 @@
 			<span class="md:block  font-bold">I'm a software developer and I like to make things. I wear the hat of web developer most often but I've also dabbled in other areas of software development.</span>
 			</div>
 				<div>
-				<span class="md:block  font-bold">Continuous growth is important to me and I'm always looking for new things to learn. From new frameworks and different programming languages, to biology and physiology.</span>
-			<span class="md:block  font-bold">There's a reason why I'm a fan of the web. I get inspired by other websites who try to be different and love that anyone can contribute their ideas to the internet via weird websites, awesome toolkits/libraries and open source.</span>
+				<span class="md:block font-bold">Continuous growth is important to me and I'm always looking for new things to learn. From new frameworks and different programming languages, to biology and physiology.</span>
+			<span class="md:block font-bold">There's a reason why I'm a fan of the web. I get inspired by other websites who try to be different and love that anyone can contribute their ideas to the internet via weird websites, awesome toolkits/libraries and open source.</span>
 			</div>
 	</Card>
 	</div>
