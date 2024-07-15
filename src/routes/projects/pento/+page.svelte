@@ -15,7 +15,7 @@
 <div class="box-border p-8 w-full h-full">
 	<Card class="w-full max-w-full h-full bg-white/50">
 	<div class="flex flex-col space-y-4">
-		<span class="text-4xl font-bold">pento.io</span>
+		<span class="text-4xl font-bold" data-test="title">pento.page</span>
         <div>
 			<span class=" font-bold">Online note archive.</span>
             <div class="h-128 border-solid border-3 bg-primary-600 rounded box-border p-1 m-4 flex justify-center items-center" style="max-height: 50vh">

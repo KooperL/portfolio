@@ -15,7 +15,7 @@
 <div class="box-border p-8 w-full h-full">
 	<Card class="w-full max-w-full h-full bg-white/50">
 	<div class="flex flex-col space-y-4">
-		<span class="text-4xl font-bold">vybs.tv</span>
+		<span class="text-4xl font-bold" data-test="title">vybs.tv</span>
         <div>
 			<span class=" font-bold">Pretty web animations.</span>
             <div class="h-96 aspect-square border-solid border-3 bg-primary-600 rounded box-border p-1 m-4 flex justify-center items-center">
