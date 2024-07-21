@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.pcss';
 	import { beforeNavigate } from '$app/navigation';
-	import { Flex, Box } from '@threlte/flex'
+	// import TestScene from '$lib/components/scenes/grid/component.svelte'
 	import {
 		Button,
 		Modal,
@@ -18,18 +18,19 @@
 	import Navbar from '$lib/components/navbar.svelte';
 	import { site } from '$lib/config';
 	import { metadata, toast } from '$lib/app/stores';
-	import TestScene from '$lib/components/scenes/grid/grid.svelte'
-  import { Canvas } from '@threlte/core'
-  import { World } from '@threlte/rapier'
   import { base } from '$app/paths';
+  import { onMount } from 'svelte'
 
-
+  let GridComponent
 	let formModal = false;
 	$: title = ($metadata.title ? $metadata.title + ' | ' : '') + site.name;
 	$: description = site.description;
 	$: headline = $metadata.title;
-	let renderer
 	beforeNavigate(() => {});
+
+  onMount(async () => {
+    GridComponent = (await import('$lib/components/scenes/grid/component.svelte')).default
+    })
 </script>
 
 <svelte:head>
@@ -62,11 +63,9 @@
 			{/if}
 		</div>
 		<div class="hidden md:block flex h-full flex-col items-center justify-center lg:aspect-square" style="max-width: 50%;">
-			<Canvas bind:this={renderer} id="canvas">
-				<World>
-					<TestScene renderer={renderer}/>
-				</World>
-		</Canvas>
+    {#if GridComponent}
+      <svelte:component this={GridComponent} />
+      {/if}
 </div>
 
 	</main>
