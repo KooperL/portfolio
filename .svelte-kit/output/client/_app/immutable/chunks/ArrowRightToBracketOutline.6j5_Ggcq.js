@@ -16,9 +16,9 @@ import {
   x as F,
   y as A,
   z as n,
-} from "./scheduler.gY_bz6RS.js"
-import { t as B, g as G } from "./Frame.osOJd-OA.js"
-import { S as I, i as J } from "./index.1Dz5KRer.js"
+} from "./scheduler.gY_bz6RS.js";
+import { t as B, g as G } from "./Frame.osOJd-OA.js";
+import { S as I, i as J } from "./index.1Dz5KRer.js";
 function K(s) {
   let e,
     a,
@@ -34,11 +34,11 @@ function K(s) {
       { "aria-label": s[5] },
       { viewBox: "0 0 16 16" },
     ],
-    c = {}
-  for (let i = 0; i < m.length; i += 1) c = f(c, m[i])
+    c = {};
+  for (let i = 0; i < m.length; i += 1) c = f(c, m[i]);
   return {
     c() {
-      ;(e = L("svg")), (a = L("path")), this.h()
+      (e = L("svg")), (a = L("path")), this.h();
     },
     l(i) {
       e = b(i, "svg", {
@@ -48,9 +48,9 @@ function K(s) {
         role: !0,
         "aria-label": !0,
         viewBox: !0,
-      })
-      var o = w(e)
-      ;(a = b(o, "path", {
+      });
+      var o = w(e);
+      (a = b(o, "path", {
         stroke: !0,
         "stroke-linecap": !0,
         "stroke-linejoin": !0,
@@ -59,7 +59,7 @@ function K(s) {
       })),
         w(a).forEach(d),
         o.forEach(d),
-        this.h()
+        this.h();
     },
     h() {
       u(a, "stroke", "currentColor"),
@@ -71,7 +71,7 @@ function K(s) {
           "d",
           "M4 7.64h11m0 0-4-3.79m4 3.79-4 3.791m-5 2.844H3c-.53 0-1.04-.2-1.414-.556A1.846 1.846 0 0 1 1 12.38V2.902c0-.503.21-.985.586-1.34A2.057 2.057 0 0 1 3 1.007h3",
         ),
-        j(e, c)
+        j(e, c);
     },
     m(i, o) {
       T(i, e, o),
@@ -88,7 +88,7 @@ function K(s) {
             l(e, "mouseover", s[16]),
             l(e, "mouseout", s[17]),
           ]),
-          (k = !0))
+          (k = !0));
     },
     p(i, [o]) {
       o & 4 && u(a, "stroke-linecap", i[2]),
@@ -106,14 +106,14 @@ function K(s) {
             o & 32 && { "aria-label": i[5] },
             { viewBox: "0 0 16 16" },
           ])),
-        )
+        );
     },
     i: z,
     o: z,
     d(i) {
-      i && d(e), (k = !1), D(r)
+      i && d(e), (k = !1), D(r);
     },
-  }
+  };
 }
 function N(s, e, a) {
   const h = [
@@ -123,8 +123,8 @@ function N(s, e, a) {
     "strokeLinejoin",
     "strokeWidth",
     "ariaLabel",
-  ]
-  let k = W(e, h)
+  ];
+  let k = W(e, h);
   const r = F("iconCtx") ?? {},
     m = {
       xs: "w-3 h-3",
@@ -132,42 +132,42 @@ function N(s, e, a) {
       md: "w-5 h-5",
       lg: "w-6 h-6",
       xl: "w-8 h-8",
-    }
+    };
   let { size: c = r.size || "md" } = e,
     { role: i = r.role || "img" } = e,
     { strokeLinecap: o = r.strokeLinecap || "round" } = e,
     { strokeLinejoin: g = r.strokeLinejoin || "round" } = e,
     { strokeWidth: _ = r.strokeWidth || "2" } = e,
-    { ariaLabel: v = "arrow right to bracket outline" } = e
+    { ariaLabel: v = "arrow right to bracket outline" } = e;
   function C(t) {
-    n.call(this, s, t)
+    n.call(this, s, t);
   }
   function q(t) {
-    n.call(this, s, t)
+    n.call(this, s, t);
   }
   function E(t) {
-    n.call(this, s, t)
+    n.call(this, s, t);
   }
   function M(t) {
-    n.call(this, s, t)
+    n.call(this, s, t);
   }
   function S(t) {
-    n.call(this, s, t)
+    n.call(this, s, t);
   }
   function y(t) {
-    n.call(this, s, t)
+    n.call(this, s, t);
   }
   function H(t) {
-    n.call(this, s, t)
+    n.call(this, s, t);
   }
   function O(t) {
-    n.call(this, s, t)
+    n.call(this, s, t);
   }
   function P(t) {
-    n.call(this, s, t)
+    n.call(this, s, t);
   }
   return (
-    (s.$$set = t => {
+    (s.$$set = (t) => {
       a(8, (e = f(f({}, e), A(t)))),
         a(7, (k = W(e, h))),
         "size" in t && a(0, (c = t.size)),
@@ -175,11 +175,11 @@ function N(s, e, a) {
         "strokeLinecap" in t && a(2, (o = t.strokeLinecap)),
         "strokeLinejoin" in t && a(3, (g = t.strokeLinejoin)),
         "strokeWidth" in t && a(4, (_ = t.strokeWidth)),
-        "ariaLabel" in t && a(5, (v = t.ariaLabel))
+        "ariaLabel" in t && a(5, (v = t.ariaLabel));
     }),
     (e = A(e)),
     [c, i, o, g, _, v, m, k, e, C, q, E, M, S, y, H, O, P]
-  )
+  );
 }
 class Y extends I {
   constructor(e) {
@@ -191,7 +191,7 @@ class Y extends I {
         strokeLinejoin: 3,
         strokeWidth: 4,
         ariaLabel: 5,
-      })
+      });
   }
 }
-export { Y as A }
+export { Y as A };

@@ -3,10 +3,10 @@ import {
   c as create_ssr_component,
   d as subscribe,
   q as escape,
-} from "../../chunks/ssr.js"
-import "../../chunks/client.js"
+} from "../../chunks/ssr.js";
+import "../../chunks/client.js";
 const getStores = () => {
-  const stores = getContext("__svelte__")
+  const stores = getContext("__svelte__");
   return {
     /** @type {typeof page} */
     page: {
@@ -18,18 +18,18 @@ const getStores = () => {
     },
     /** @type {typeof updated} */
     updated: stores.updated,
-  }
-}
+  };
+};
 const page = {
   subscribe(fn) {
-    const store = getStores().page
-    return store.subscribe(fn)
+    const store = getStores().page;
+    return store.subscribe(fn);
   },
-}
+};
 const Error$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $page, $$unsubscribe_page
-  $$unsubscribe_page = subscribe(page, value => ($page = value))
-  $$unsubscribe_page()
-  return `<h1>${escape($page.status)}</h1> <p>${escape($page.error?.message)}</p>`
-})
-export { Error$1 as default }
+  let $page, $$unsubscribe_page;
+  $$unsubscribe_page = subscribe(page, (value) => ($page = value));
+  $$unsubscribe_page();
+  return `<h1>${escape($page.status)}</h1> <p>${escape($page.error?.message)}</p>`;
+});
+export { Error$1 as default };

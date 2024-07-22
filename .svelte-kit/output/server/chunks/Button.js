@@ -5,9 +5,9 @@ import {
   k as spread,
   l as escape_attribute_value,
   p as escape_object,
-} from "./ssr.js"
-import { i as is_void } from "./Frame.js"
-import { twMerge } from "tailwind-merge"
+} from "./ssr.js";
+import { i as is_void } from "./Frame.js";
+import { twMerge } from "tailwind-merge";
 const Button = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $$restProps = compute_rest_props($$props, [
     "pill",
@@ -19,18 +19,18 @@ const Button = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     "shadow",
     "tag",
     "checked",
-  ])
-  const group = getContext("group")
-  let { pill = false } = $$props
-  let { outline = false } = $$props
-  let { size = group ? "sm" : "md" } = $$props
-  let { href = void 0 } = $$props
-  let { type = "button" } = $$props
+  ]);
+  const group = getContext("group");
+  let { pill = false } = $$props;
+  let { outline = false } = $$props;
+  let { size = group ? "sm" : "md" } = $$props;
+  let { href = void 0 } = $$props;
+  let { type = "button" } = $$props;
   let { color = group ? (outline ? "dark" : "alternative") : "primary" } =
-    $$props
-  let { shadow = false } = $$props
-  let { tag = "button" } = $$props
-  let { checked = void 0 } = $$props
+    $$props;
+  let { shadow = false } = $$props;
+  let { tag = "button" } = $$props;
+  let { checked = void 0 } = $$props;
   const colorClasses = {
     alternative:
       "text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 hover:text-primary-700 focus-within:text-primary-700 dark:focus-within:text-white dark:hover:text-white",
@@ -47,7 +47,7 @@ const Button = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     red: "text-white bg-red-700 hover:bg-red-800 dark:bg-red-600 dark:hover:bg-red-700",
     yellow: "text-white bg-yellow-400 hover:bg-yellow-500 ",
     none: "",
-  }
+  };
   const colorCheckedClasses = {
     alternative:
       "text-primary-700 border dark:text-primary-500 bg-gray-100 dark:bg-gray-700 border-gray-300 shadow-gray-300 dark:shadow-gray-800 shadow-inner",
@@ -65,7 +65,7 @@ const Button = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     yellow:
       "text-yellow-900 bg-yellow-300 dark:bg-yellow-400 shadow-yellow-500 dark:shadow-yellow-700 shadow-inner",
     none: "",
-  }
+  };
   const coloredFocusClasses = {
     alternative: "focus-within:ring-gray-200 dark:focus-within:ring-gray-700",
     blue: "focus-within:ring-blue-300 dark:focus-within:ring-blue-800",
@@ -77,7 +77,7 @@ const Button = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     red: "focus-within:ring-red-300 dark:focus-within:ring-red-900",
     yellow: "focus-within:ring-yellow-300 dark:focus-within:ring-yellow-900",
     none: "",
-  }
+  };
   const coloredShadowClasses = {
     alternative: "shadow-gray-500/50 dark:shadow-gray-800/80",
     blue: "shadow-blue-500/50 dark:shadow-blue-800/80",
@@ -89,7 +89,7 @@ const Button = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     red: "shadow-red-500/50 dark:shadow-red-800/80 ",
     yellow: "shadow-yellow-500/50 dark:shadow-yellow-800/80 ",
     none: "",
-  }
+  };
   const outlineClasses = {
     alternative:
       "text-gray-900 dark:text-gray-400 hover:text-white border border-gray-800 hover:bg-gray-900 focus-within:bg-gray-900 focus-within:text-white focus-within:ring-gray-300 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-600 dark:focus-within:ring-gray-800",
@@ -107,35 +107,35 @@ const Button = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     yellow:
       "text-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400",
     none: "",
-  }
+  };
   const sizeClasses = {
     xs: "px-3 py-2 text-xs",
     sm: "px-4 py-2 text-sm",
     md: "px-5 py-2.5 text-sm",
     lg: "px-5 py-3 text-base",
     xl: "px-6 py-3.5 text-base",
-  }
+  };
   const hasBorder = () =>
-    outline || color === "alternative" || color === "light"
-  let buttonClass
+    outline || color === "alternative" || color === "light";
+  let buttonClass;
   if ($$props.pill === void 0 && $$bindings.pill && pill !== void 0)
-    $$bindings.pill(pill)
+    $$bindings.pill(pill);
   if ($$props.outline === void 0 && $$bindings.outline && outline !== void 0)
-    $$bindings.outline(outline)
+    $$bindings.outline(outline);
   if ($$props.size === void 0 && $$bindings.size && size !== void 0)
-    $$bindings.size(size)
+    $$bindings.size(size);
   if ($$props.href === void 0 && $$bindings.href && href !== void 0)
-    $$bindings.href(href)
+    $$bindings.href(href);
   if ($$props.type === void 0 && $$bindings.type && type !== void 0)
-    $$bindings.type(type)
+    $$bindings.type(type);
   if ($$props.color === void 0 && $$bindings.color && color !== void 0)
-    $$bindings.color(color)
+    $$bindings.color(color);
   if ($$props.shadow === void 0 && $$bindings.shadow && shadow !== void 0)
-    $$bindings.shadow(shadow)
+    $$bindings.shadow(shadow);
   if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
-    $$bindings.tag(tag)
+    $$bindings.tag(tag);
   if ($$props.checked === void 0 && $$bindings.checked && checked !== void 0)
-    $$bindings.checked(checked)
+    $$bindings.checked(checked);
   buttonClass = twMerge(
     "text-center font-medium",
     group ? "focus-within:ring-2" : "focus-within:ring-4",
@@ -168,7 +168,7 @@ const Button = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     shadow && coloredShadowClasses[color],
     $$props.disabled && "cursor-not-allowed opacity-50",
     $$props.class,
-  )
+  );
   return `${
     href
       ? `<a${spread(
@@ -194,7 +194,7 @@ const Button = create_ssr_component(($$result, $$props, $$bindings, slots) => {
                 ],
                 {},
               )}>${slots.default ? slots.default({}) : ``}</button>`
-            : `${(tag$1 => {
+            : `${((tag$1) => {
                 return tag$1
                   ? `<${tag}${spread(
                       [
@@ -205,9 +205,9 @@ const Button = create_ssr_component(($$result, $$props, $$bindings, slots) => {
                       ],
                       {},
                     )}>${is_void(tag$1) ? "" : `${slots.default ? slots.default({}) : ``}`}${is_void(tag$1) ? "" : `</${tag$1}>`}`
-                  : ""
+                  : "";
               })(tag)}`
         }`
-  } `
-})
-export { Button as B }
+  } `;
+});
+export { Button as B };

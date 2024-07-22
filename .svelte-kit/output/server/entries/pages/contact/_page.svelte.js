@@ -9,66 +9,66 @@ import {
   v as validate_component,
   q as escape,
   u as compute_slots,
-} from "../../../chunks/ssr.js"
-import "../../../chunks/pocketbase.js"
-import { B as Button } from "../../../chunks/Button.js"
-import { C as Card } from "../../../chunks/Card.js"
-import { twMerge } from "tailwind-merge"
-import { i as is_void } from "../../../chunks/Frame.js"
+} from "../../../chunks/ssr.js";
+import "../../../chunks/pocketbase.js";
+import { B as Button } from "../../../chunks/Button.js";
+import { C as Card } from "../../../chunks/Card.js";
+import { twMerge } from "tailwind-merge";
+import { i as is_void } from "../../../chunks/Frame.js";
 const Wrapper = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $$restProps = compute_rest_props($$props, ["tag", "show", "use"])
-  let { tag = "div" } = $$props
-  let { show } = $$props
-  let { use = () => {} } = $$props
+  let $$restProps = compute_rest_props($$props, ["tag", "show", "use"]);
+  let { tag = "div" } = $$props;
+  let { show } = $$props;
+  let { use = () => {} } = $$props;
   if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
-    $$bindings.tag(tag)
+    $$bindings.tag(tag);
   if ($$props.show === void 0 && $$bindings.show && show !== void 0)
-    $$bindings.show(show)
+    $$bindings.show(show);
   if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-    $$bindings.use(use)
+    $$bindings.use(use);
   return `${
     show
-      ? `${(tag$1 => {
+      ? `${((tag$1) => {
           return tag$1
             ? `<${tag}${spread([escape_object($$restProps)], {})}>${is_void(tag$1) ? "" : `${slots.default ? slots.default({}) : ``}`}${is_void(tag$1) ? "" : `</${tag$1}>`}`
-            : ""
+            : "";
         })(tag)}`
       : `${slots.default ? slots.default({}) : ``}`
-  } `
-})
+  } `;
+});
 const Label = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let labelClass
+  let labelClass;
   let $$restProps = compute_rest_props($$props, [
     "color",
     "defaultClass",
     "show",
-  ])
-  let { color = "gray" } = $$props
-  let { defaultClass = "text-sm rtl:text-right font-medium block" } = $$props
-  let { show = true } = $$props
-  let node
+  ]);
+  let { color = "gray" } = $$props;
+  let { defaultClass = "text-sm rtl:text-right font-medium block" } = $$props;
+  let { show = true } = $$props;
+  let node;
   const colorClasses = {
     gray: "text-gray-900 dark:text-gray-300",
     green: "text-green-700 dark:text-green-500",
     red: "text-red-700 dark:text-red-500",
     disabled: "text-gray-400 dark:text-gray-500",
-  }
+  };
   if ($$props.color === void 0 && $$bindings.color && color !== void 0)
-    $$bindings.color(color)
+    $$bindings.color(color);
   if (
     $$props.defaultClass === void 0 &&
     $$bindings.defaultClass &&
     defaultClass !== void 0
   )
-    $$bindings.defaultClass(defaultClass)
+    $$bindings.defaultClass(defaultClass);
   if ($$props.show === void 0 && $$bindings.show && show !== void 0)
-    $$bindings.show(show)
+    $$bindings.show(show);
   {
     {
-      color = color
+      color = color;
     }
   }
-  labelClass = twMerge(defaultClass, colorClasses[color], $$props.class)
+  labelClass = twMerge(defaultClass, colorClasses[color], $$props.class);
   return `${
     show
       ? ` <label${spread(
@@ -81,13 +81,13 @@ const Label = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           {},
         )}${add_attribute("this", node, 0)}>${slots.default ? slots.default({}) : ``}</label>`
       : `${slots.default ? slots.default({}) : ``}`
-  } `
-})
+  } `;
+});
 function clampSize(s) {
-  return s && s === "xs" ? "sm" : s === "xl" ? "lg" : s
+  return s && s === "xs" ? "sm" : s === "xl" ? "lg" : s;
 }
 const Input = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let _size
+  let _size;
   let $$restProps = compute_rest_props($$props, [
     "type",
     "value",
@@ -95,30 +95,30 @@ const Input = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     "defaultClass",
     "color",
     "floatClass",
-  ])
-  let $$slots = compute_slots(slots)
-  let { type = "text" } = $$props
-  let { value = void 0 } = $$props
-  let { size = void 0 } = $$props
+  ]);
+  let $$slots = compute_slots(slots);
+  let { type = "text" } = $$props;
+  let { value = void 0 } = $$props;
+  let { size = void 0 } = $$props;
   let {
     defaultClass = "block w-full disabled:cursor-not-allowed disabled:opacity-50 rtl:text-right",
-  } = $$props
-  let { color = "base" } = $$props
+  } = $$props;
+  let { color = "base" } = $$props;
   let {
     floatClass = "flex absolute inset-y-0 items-center text-gray-500 dark:text-gray-400",
-  } = $$props
+  } = $$props;
   const borderClasses = {
     base: "border-gray-300 dark:border-gray-600",
     tinted: "border-gray-300 dark:border-gray-500",
     green: "border-green-500 dark:border-green-400",
     red: "border-red-500 dark:border-red-400",
-  }
+  };
   const ringClasses = {
     base: "focus:border-primary-500 focus:ring-primary-500 dark:focus:border-primary-500 dark:focus:ring-primary-500",
     green:
       "focus:ring-green-500 focus:border-green-500 dark:focus:border-green-500 dark:focus:ring-green-500",
     red: "focus:ring-red-500 focus:border-red-500 dark:focus:ring-red-500 dark:focus:border-red-500",
-  }
+  };
   const colorClasses = {
     base: "bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400",
     tinted:
@@ -126,42 +126,42 @@ const Input = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     green:
       "bg-green-50 text-green-900 placeholder-green-700 dark:text-green-400 dark:placeholder-green-500 dark:bg-gray-700",
     red: "bg-red-50 text-red-900 placeholder-red-700 dark:text-red-500 dark:placeholder-red-500 dark:bg-gray-700",
-  }
-  let background = getContext("background")
-  let group = getContext("group")
+  };
+  let background = getContext("background");
+  let group = getContext("group");
   const textSizes = {
     sm: "sm:text-xs",
     md: "text-sm",
     lg: "sm:text-base",
-  }
-  const leftPadding = { sm: "ps-9", md: "ps-10", lg: "ps-11" }
-  const rightPadding = { sm: "pe-9", md: "pe-10", lg: "pe-11" }
-  const inputPadding = { sm: "p-2", md: "p-2.5", lg: "p-3" }
-  let inputClass
+  };
+  const leftPadding = { sm: "ps-9", md: "ps-10", lg: "ps-11" };
+  const rightPadding = { sm: "pe-9", md: "pe-10", lg: "pe-11" };
+  const inputPadding = { sm: "p-2", md: "p-2.5", lg: "p-3" };
+  let inputClass;
   if ($$props.type === void 0 && $$bindings.type && type !== void 0)
-    $$bindings.type(type)
+    $$bindings.type(type);
   if ($$props.value === void 0 && $$bindings.value && value !== void 0)
-    $$bindings.value(value)
+    $$bindings.value(value);
   if ($$props.size === void 0 && $$bindings.size && size !== void 0)
-    $$bindings.size(size)
+    $$bindings.size(size);
   if (
     $$props.defaultClass === void 0 &&
     $$bindings.defaultClass &&
     defaultClass !== void 0
   )
-    $$bindings.defaultClass(defaultClass)
+    $$bindings.defaultClass(defaultClass);
   if ($$props.color === void 0 && $$bindings.color && color !== void 0)
-    $$bindings.color(color)
+    $$bindings.color(color);
   if (
     $$props.floatClass === void 0 &&
     $$bindings.floatClass &&
     floatClass !== void 0
   )
-    $$bindings.floatClass(floatClass)
-  _size = size || clampSize(group?.size) || "md"
+    $$bindings.floatClass(floatClass);
+  _size = size || clampSize(group?.size) || "md";
   {
     {
-      const _color = color === "base" && background ? "tinted" : color
+      const _color = color === "base" && background ? "tinted" : color;
       inputClass = twMerge([
         defaultClass,
         inputPadding[_size],
@@ -175,7 +175,7 @@ const Input = create_ssr_component(($$result, $$props, $$bindings, slots) => {
         group && "first:rounded-s-lg last:rounded-e-lg",
         group && "border-s-0 first:border-s last:border-e",
         $$props.class,
-      ])
+      ]);
     }
   }
   return `${validate_component(Wrapper, "Wrapper").$$render(
@@ -202,11 +202,11 @@ const Input = create_ssr_component(($$result, $$props, $$bindings, slots) => {
                 ],
                 {},
               )}${add_attribute("value", value, 0)}> `
-        } ${$$slots.right ? `<div class="${escape(twMerge(floatClass, $$props.classRight), true) + " end-0 pe-2.5"}">${slots.right ? slots.right({}) : ``}</div>` : ``}`
+        } ${$$slots.right ? `<div class="${escape(twMerge(floatClass, $$props.classRight), true) + " end-0 pe-2.5"}">${slots.right ? slots.right({}) : ``}</div>` : ``}`;
       },
     },
-  )} `
-})
+  )} `;
+});
 const Textarea = create_ssr_component(
   ($$result, $$props, $$bindings, slots) => {
     let $$restProps = compute_rest_props($$props, [
@@ -214,62 +214,62 @@ const Textarea = create_ssr_component(
       "wrappedClass",
       "unWrappedClass",
       "innerWrappedClass",
-    ])
-    let $$slots = compute_slots(slots)
-    const background = getContext("background")
-    let { value = void 0 } = $$props
+    ]);
+    let $$slots = compute_slots(slots);
+    const background = getContext("background");
+    let { value = void 0 } = $$props;
     let {
       wrappedClass = "block w-full text-sm border-0 px-0 bg-inherit dark:bg-inherit focus:outline-none focus:ring-0",
-    } = $$props
+    } = $$props;
     let {
       unWrappedClass = "p-2.5 text-sm focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500",
-    } = $$props
-    let { innerWrappedClass = "py-2 px-4 bg-white dark:bg-gray-800" } = $$props
-    let wrapped
-    let wrapperClass
-    let textareaClass
-    const headerClass = header =>
+    } = $$props;
+    let { innerWrappedClass = "py-2 px-4 bg-white dark:bg-gray-800" } = $$props;
+    let wrapped;
+    let wrapperClass;
+    let textareaClass;
+    const headerClass = (header) =>
       twMerge(
         header ? "border-b" : "border-t",
         "py-2 px-3 border-gray-200 dark:border-gray-600",
-      )
-    let innerWrapperClass
+      );
+    let innerWrapperClass;
     if ($$props.value === void 0 && $$bindings.value && value !== void 0)
-      $$bindings.value(value)
+      $$bindings.value(value);
     if (
       $$props.wrappedClass === void 0 &&
       $$bindings.wrappedClass &&
       wrappedClass !== void 0
     )
-      $$bindings.wrappedClass(wrappedClass)
+      $$bindings.wrappedClass(wrappedClass);
     if (
       $$props.unWrappedClass === void 0 &&
       $$bindings.unWrappedClass &&
       unWrappedClass !== void 0
     )
-      $$bindings.unWrappedClass(unWrappedClass)
+      $$bindings.unWrappedClass(unWrappedClass);
     if (
       $$props.innerWrappedClass === void 0 &&
       $$bindings.innerWrappedClass &&
       innerWrappedClass !== void 0
     )
-      $$bindings.innerWrappedClass(innerWrappedClass)
-    wrapped = $$slots.header || $$slots.footer
+      $$bindings.innerWrappedClass(innerWrappedClass);
+    wrapped = $$slots.header || $$slots.footer;
     wrapperClass = twMerge(
       "w-full rounded-lg",
       background ? "bg-white dark:bg-gray-800" : "bg-gray-50 dark:bg-gray-700",
       "text-gray-900 dark:placeholder-gray-400 dark:text-white ",
       "border border-gray-200 dark:border-gray-600",
       $$props.class,
-    )
+    );
     textareaClass = wrapped
       ? wrappedClass
-      : twMerge(wrapperClass, unWrappedClass)
+      : twMerge(wrapperClass, unWrappedClass);
     innerWrapperClass = twMerge(
       innerWrappedClass,
       $$slots.footer ? "" : "rounded-b-lg",
       $$slots.header ? "" : "rounded-t-lg",
-    )
+    );
     return `${validate_component(Wrapper, "Wrapper").$$render(
       $$result,
       { show: wrapped, class: wrapperClass },
@@ -293,25 +293,25 @@ const Textarea = create_ssr_component(
                     },
                   ],
                   {},
-                )}>${escape(value || "")}</textarea>`
+                )}>${escape(value || "")}</textarea>`;
               },
             },
-          )} ${$$slots.footer ? `<div${add_attribute("class", headerClass(false), 0)}>${slots.footer ? slots.footer({}) : ``}</div>` : ``}`
+          )} ${$$slots.footer ? `<div${add_attribute("class", headerClass(false), 0)}>${slots.footer ? slots.footer({}) : ``}</div>` : ``}`;
         },
       },
-    )} `
+    )} `;
   },
-)
+);
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let name = ""
-  let email = ""
-  let message = ""
-  let $$settled
-  let $$rendered
-  let previous_head = $$result.head
+  let name = "";
+  let email = "";
+  let message = "";
+  let $$settled;
+  let $$rendered;
+  let previous_head = $$result.head;
   do {
-    $$settled = true
-    $$result.head = previous_head
+    $$settled = true;
+    $$result.head = previous_head;
     $$rendered = `<div class="box-border p-8 w-full h-full">${validate_component(
       Card,
       "Card",
@@ -332,7 +332,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
             {},
             {
               default: () => {
-                return `Name`
+                return `Name`;
               },
             },
           )} ${validate_component(Input, "Input").$$render(
@@ -345,9 +345,9 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
               value: name,
             },
             {
-              value: $$value => {
-                name = $$value
-                $$settled = false
+              value: ($$value) => {
+                name = $$value;
+                $$settled = false;
               },
             },
             {},
@@ -357,7 +357,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
             {},
             {
               default: () => {
-                return `Email (optional)`
+                return `Email (optional)`;
               },
             },
           )} ${validate_component(Input, "Input").$$render(
@@ -369,9 +369,9 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
               value: email,
             },
             {
-              value: $$value => {
-                email = $$value
-                $$settled = false
+              value: ($$value) => {
+                email = $$value;
+                $$settled = false;
               },
             },
             {},
@@ -381,7 +381,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
             {},
             {
               default: () => {
-                return `Message`
+                return `Message`;
               },
             },
           )} ${validate_component(Textarea, "Textarea").$$render(
@@ -394,9 +394,9 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
               value: message,
             },
             {
-              value: $$value => {
-                message = $$value
-                $$settled = false
+              value: ($$value) => {
+                message = $$value;
+                $$settled = false;
               },
             },
             {},
@@ -406,14 +406,14 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
             {},
             {
               default: () => {
-                return `Send`
+                return `Send`;
               },
             },
-          )}</div></div></form></div>`
+          )}</div></div></form></div>`;
         },
       },
-    )}</div>`
-  } while (!$$settled)
-  return $$rendered
-})
-export { Page as default }
+    )}</div>`;
+  } while (!$$settled);
+  return $$rendered;
+});
+export { Page as default };

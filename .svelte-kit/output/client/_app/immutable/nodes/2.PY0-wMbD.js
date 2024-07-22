@@ -14,7 +14,7 @@ import {
   t as L,
   k as H,
   n as F,
-} from "../chunks/scheduler.gY_bz6RS.js"
+} from "../chunks/scheduler.gY_bz6RS.js";
 import {
   S as X,
   i as Y,
@@ -24,115 +24,115 @@ import {
   t as _,
   b,
   d as v,
-} from "../chunks/index.1Dz5KRer.js"
-import "../chunks/pocketbase.eYyW_pXf.js"
-import { B as j } from "../chunks/Button.ZyweCTx2.js"
-import { C as Z } from "../chunks/Card.vyHOi96P.js"
-import { A as J } from "../chunks/ArrowRightToBracketOutline.6j5_Ggcq.js"
+} from "../chunks/index.1Dz5KRer.js";
+import "../chunks/pocketbase.eYyW_pXf.js";
+import { B as j } from "../chunks/Button.ZyweCTx2.js";
+import { C as Z } from "../chunks/Card.vyHOi96P.js";
+import { A as J } from "../chunks/ArrowRightToBracketOutline.6j5_Ggcq.js";
 function tt(l) {
-  let t
+  let t;
   return {
     c() {
-      t = L("Projects")
+      t = L("Projects");
     },
     l(e) {
-      t = H(e, "Projects")
+      t = H(e, "Projects");
     },
     m(e, s) {
-      C(e, t, s)
+      C(e, t, s);
     },
     d(e) {
-      e && f(t)
+      e && f(t);
     },
-  }
+  };
 }
 function et(l) {
-  let t
+  let t;
   return {
     c() {
-      t = L("About")
+      t = L("About");
     },
     l(e) {
-      t = H(e, "About")
+      t = H(e, "About");
     },
     m(e, s) {
-      C(e, t, s)
+      C(e, t, s);
     },
     d(e) {
-      e && f(t)
+      e && f(t);
     },
-  }
+  };
 }
 function nt(l) {
-  let t
+  let t;
   return {
     c() {
-      t = L("Contact")
+      t = L("Contact");
     },
     l(e) {
-      t = H(e, "Contact")
+      t = H(e, "Contact");
     },
     m(e, s) {
-      C(e, t, s)
+      C(e, t, s);
     },
     d(e) {
-      e && f(t)
+      e && f(t);
     },
-  }
+  };
 }
 function at(l) {
-  let t, e, s
+  let t, e, s;
   return (
     (t = new J({ props: { class: "w-5 pr-2 h-5" } })),
     {
       c() {
-        d(t.$$.fragment), (e = L("GitHub"))
+        d(t.$$.fragment), (e = L("GitHub"));
       },
       l(n) {
-        g(t.$$.fragment, n), (e = H(n, "GitHub"))
+        g(t.$$.fragment, n), (e = H(n, "GitHub"));
       },
       m(n, o) {
-        h(t, n, o), C(n, e, o), (s = !0)
+        h(t, n, o), C(n, e, o), (s = !0);
       },
       p: F,
       i(n) {
-        s || (_(t.$$.fragment, n), (s = !0))
+        s || (_(t.$$.fragment, n), (s = !0));
       },
       o(n) {
-        b(t.$$.fragment, n), (s = !1)
+        b(t.$$.fragment, n), (s = !1);
       },
       d(n) {
-        n && f(e), v(t, n)
+        n && f(e), v(t, n);
       },
     }
-  )
+  );
 }
 function st(l) {
-  let t, e, s
+  let t, e, s;
   return (
     (t = new J({ props: { class: "w-5 h-5 pr-2" } })),
     {
       c() {
-        d(t.$$.fragment), (e = L("LinkedIn"))
+        d(t.$$.fragment), (e = L("LinkedIn"));
       },
       l(n) {
-        g(t.$$.fragment, n), (e = H(n, "LinkedIn"))
+        g(t.$$.fragment, n), (e = H(n, "LinkedIn"));
       },
       m(n, o) {
-        h(t, n, o), C(n, e, o), (s = !0)
+        h(t, n, o), C(n, e, o), (s = !0);
       },
       p: F,
       i(n) {
-        s || (_(t.$$.fragment, n), (s = !0))
+        s || (_(t.$$.fragment, n), (s = !0));
       },
       o(n) {
-        b(t.$$.fragment, n), (s = !1)
+        b(t.$$.fragment, n), (s = !1);
       },
       d(n) {
-        n && f(e), v(t, n)
+        n && f(e), v(t, n);
       },
     }
-  )
+  );
 }
 function rt(l) {
   let t,
@@ -155,7 +155,7 @@ function rt(l) {
     p,
     V,
     m,
-    P
+    P;
   return (
     (i = new j({
       props: {
@@ -204,7 +204,7 @@ function rt(l) {
     })),
     {
       c() {
-        ;(t = A("div")),
+        (t = A("div")),
           (e = A("span")),
           (e.textContent = s),
           (n = x()),
@@ -223,12 +223,12 @@ function rt(l) {
           d(p.$$.fragment),
           (V = x()),
           d(m.$$.fragment),
-          this.h()
+          this.h();
       },
       l(r) {
-        t = I(r, "DIV", { class: !0 })
-        var a = z(t)
-        ;(e = I(a, "SPAN", { class: !0, "data-svelte-h": !0 })),
+        t = I(r, "DIV", { class: !0 });
+        var a = z(t);
+        (e = I(a, "SPAN", { class: !0, "data-svelte-h": !0 })),
           G(e) !== "svelte-4tyvej" && (e.textContent = s),
           (n = k(a)),
           (o = I(a, "DIV", { "data-svelte-h": !0 })),
@@ -247,12 +247,12 @@ function rt(l) {
           (V = k(a)),
           g(m.$$.fragment, a),
           a.forEach(f),
-          this.h()
+          this.h();
       },
       h() {
         S(e, "class", "text-4xl font-bold"),
           S(w, "class", "text-4xl font-bold"),
-          S(t, "class", "flex flex-col space-y-4")
+          S(t, "class", "flex flex-col space-y-4");
       },
       m(r, a) {
         C(r, t, a),
@@ -271,19 +271,19 @@ function rt(l) {
           h(p, t, null),
           $(t, V),
           h(m, t, null),
-          (P = !0)
+          (P = !0);
       },
       p(r, a) {
-        const N = {}
-        a & 1 && (N.$$scope = { dirty: a, ctx: r }), i.$set(N)
-        const q = {}
-        a & 1 && (q.$$scope = { dirty: a, ctx: r }), u.$set(q)
-        const O = {}
-        a & 1 && (O.$$scope = { dirty: a, ctx: r }), c.$set(O)
-        const R = {}
-        a & 1 && (R.$$scope = { dirty: a, ctx: r }), p.$set(R)
-        const W = {}
-        a & 1 && (W.$$scope = { dirty: a, ctx: r }), m.$set(W)
+        const N = {};
+        a & 1 && (N.$$scope = { dirty: a, ctx: r }), i.$set(N);
+        const q = {};
+        a & 1 && (q.$$scope = { dirty: a, ctx: r }), u.$set(q);
+        const O = {};
+        a & 1 && (O.$$scope = { dirty: a, ctx: r }), c.$set(O);
+        const R = {};
+        a & 1 && (R.$$scope = { dirty: a, ctx: r }), p.$set(R);
+        const W = {};
+        a & 1 && (W.$$scope = { dirty: a, ctx: r }), m.$set(W);
       },
       i(r) {
         P ||
@@ -292,7 +292,7 @@ function rt(l) {
           _(c.$$.fragment, r),
           _(p.$$.fragment, r),
           _(m.$$.fragment, r),
-          (P = !0))
+          (P = !0));
       },
       o(r) {
         b(i.$$.fragment, r),
@@ -300,16 +300,16 @@ function rt(l) {
           b(c.$$.fragment, r),
           b(p.$$.fragment, r),
           b(m.$$.fragment, r),
-          (P = !1)
+          (P = !1);
       },
       d(r) {
-        r && f(t), v(i), v(u), v(c), v(p), v(m)
+        r && f(t), v(i), v(u), v(c), v(p), v(m);
       },
     }
-  )
+  );
 }
 function ot(l) {
-  let t, e, s
+  let t, e, s;
   return (
     (e = new Z({
       props: {
@@ -320,41 +320,41 @@ function ot(l) {
     })),
     {
       c() {
-        ;(t = A("div")), d(e.$$.fragment), this.h()
+        (t = A("div")), d(e.$$.fragment), this.h();
       },
       l(n) {
-        t = I(n, "DIV", { class: !0 })
-        var o = z(t)
-        g(e.$$.fragment, o), o.forEach(f), this.h()
+        t = I(n, "DIV", { class: !0 });
+        var o = z(t);
+        g(e.$$.fragment, o), o.forEach(f), this.h();
       },
       h() {
-        S(t, "class", "box-border p-8 w-full h-full")
+        S(t, "class", "box-border p-8 w-full h-full");
       },
       m(n, o) {
-        C(n, t, o), h(e, t, null), (s = !0)
+        C(n, t, o), h(e, t, null), (s = !0);
       },
       p(n, [o]) {
-        const y = {}
-        o & 1 && (y.$$scope = { dirty: o, ctx: n }), e.$set(y)
+        const y = {};
+        o & 1 && (y.$$scope = { dirty: o, ctx: n }), e.$set(y);
       },
       i(n) {
-        s || (_(e.$$.fragment, n), (s = !0))
+        s || (_(e.$$.fragment, n), (s = !0));
       },
       o(n) {
-        b(e.$$.fragment, n), (s = !1)
+        b(e.$$.fragment, n), (s = !1);
       },
       d(n) {
-        n && f(t), v(e)
+        n && f(t), v(e);
       },
     }
-  )
+  );
 }
 function lt(l) {
-  return U(async () => {}), []
+  return U(async () => {}), [];
 }
 class mt extends X {
   constructor(t) {
-    super(), Y(this, t, lt, ot, Q, {})
+    super(), Y(this, t, lt, ot, Q, {});
   }
 }
-export { mt as component }
+export { mt as component };
