@@ -1,4 +1,4 @@
-export { matchers } from "./matchers.js"
+export { matchers } from "./matchers.js";
 
 export const nodes = [
   () => import("./nodes/0"),
@@ -10,9 +10,9 @@ export const nodes = [
   () => import("./nodes/6"),
   () => import("./nodes/7"),
   () => import("./nodes/8"),
-]
+];
 
-export const server_loads = []
+export const server_loads = [];
 
 export const dictionary = {
   "/": [2],
@@ -22,14 +22,14 @@ export const dictionary = {
   "/projects/bingoApp": [6],
   "/projects/pento": [7],
   "/projects/vybs": [8],
-}
+};
 
 export const hooks = {
   handleError: ({ error }) => {
-    console.error(error)
+    console.error(error);
   },
 
   reroute: () => {},
-}
+};
 
-export { default as root } from "../root.svelte"
+export { default as root } from "../root.svelte";
