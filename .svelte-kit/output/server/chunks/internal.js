@@ -3,65 +3,65 @@ import {
   s as setContext,
   v as validate_component,
   m as missing_component,
-} from "./ssr.js"
-import "./paths.js"
-let public_env = {}
-let safe_public_env = {}
+} from "./ssr.js";
+import "./paths.js";
+let public_env = {};
+let safe_public_env = {};
 function set_private_env(environment) {}
 function set_public_env(environment) {
-  public_env = environment
+  public_env = environment;
 }
 function set_safe_public_env(environment) {
-  safe_public_env = environment
+  safe_public_env = environment;
 }
 function afterUpdate() {}
-let prerendering = false
+let prerendering = false;
 function set_building() {}
 function set_prerendering() {
-  prerendering = true
+  prerendering = true;
 }
 const Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let { stores } = $$props
-  let { page } = $$props
-  let { constructors } = $$props
-  let { components = [] } = $$props
-  let { form } = $$props
-  let { data_0 = null } = $$props
-  let { data_1 = null } = $$props
+  let { stores } = $$props;
+  let { page } = $$props;
+  let { constructors } = $$props;
+  let { components = [] } = $$props;
+  let { form } = $$props;
+  let { data_0 = null } = $$props;
+  let { data_1 = null } = $$props;
   {
-    setContext("__svelte__", stores)
+    setContext("__svelte__", stores);
   }
-  afterUpdate(stores.page.notify)
+  afterUpdate(stores.page.notify);
   if ($$props.stores === void 0 && $$bindings.stores && stores !== void 0)
-    $$bindings.stores(stores)
+    $$bindings.stores(stores);
   if ($$props.page === void 0 && $$bindings.page && page !== void 0)
-    $$bindings.page(page)
+    $$bindings.page(page);
   if (
     $$props.constructors === void 0 &&
     $$bindings.constructors &&
     constructors !== void 0
   )
-    $$bindings.constructors(constructors)
+    $$bindings.constructors(constructors);
   if (
     $$props.components === void 0 &&
     $$bindings.components &&
     components !== void 0
   )
-    $$bindings.components(components)
+    $$bindings.components(components);
   if ($$props.form === void 0 && $$bindings.form && form !== void 0)
-    $$bindings.form(form)
+    $$bindings.form(form);
   if ($$props.data_0 === void 0 && $$bindings.data_0 && data_0 !== void 0)
-    $$bindings.data_0(data_0)
+    $$bindings.data_0(data_0);
   if ($$props.data_1 === void 0 && $$bindings.data_1 && data_1 !== void 0)
-    $$bindings.data_1(data_1)
-  let $$settled
-  let $$rendered
-  let previous_head = $$result.head
+    $$bindings.data_1(data_1);
+  let $$settled;
+  let $$rendered;
+  let previous_head = $$result.head;
   do {
-    $$settled = true
-    $$result.head = previous_head
+    $$settled = true;
+    $$result.head = previous_head;
     {
-      stores.page.set(page)
+      stores.page.set(page);
     }
     $$rendered = `  ${
       constructors[1]
@@ -72,9 +72,9 @@ const Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
             $$result,
             { data: data_0, this: components[0] },
             {
-              this: $$value => {
-                components[0] = $$value
-                $$settled = false
+              this: ($$value) => {
+                components[0] = $$value;
+                $$settled = false;
               },
             },
             {
@@ -86,13 +86,13 @@ const Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
                   $$result,
                   { data: data_1, form, this: components[1] },
                   {
-                    this: $$value => {
-                      components[1] = $$value
-                      $$settled = false
+                    this: ($$value) => {
+                      components[1] = $$value;
+                      $$settled = false;
                     },
                   },
                   {},
-                )}`
+                )}`;
               },
             },
           )}`
@@ -103,17 +103,17 @@ const Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
             $$result,
             { data: data_0, form, this: components[0] },
             {
-              this: $$value => {
-                components[0] = $$value
-                $$settled = false
+              this: ($$value) => {
+                components[0] = $$value;
+                $$settled = false;
               },
             },
             {},
           )}`
-    } ${``}`
-  } while (!$$settled)
-  return $$rendered
-})
+    } ${``}`;
+  } while (!$$settled);
+  return $$rendered;
+});
 function set_read_implementation(fn) {}
 function set_manifest(_) {}
 const options = {
@@ -227,11 +227,11 @@ const options = {
       "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n",
   },
   version_hash: "jkstuc",
-}
+};
 async function get_hooks() {
   return {
     ...(await import("./hooks.server.js")),
-  }
+  };
 }
 export {
   set_private_env as a,
@@ -246,4 +246,4 @@ export {
   options as o,
   public_env as p,
   safe_public_env as s,
-}
+};
