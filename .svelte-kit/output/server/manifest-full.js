@@ -1,7 +1,7 @@
 export const manifest = (() => {
   function __memo(fn) {
-    let value
-    return () => (value ??= value = fn())
+    let value;
+    return () => (value ??= value = fn());
   }
 
   return {
@@ -89,9 +89,9 @@ export const manifest = (() => {
         },
       ],
       matchers: async () => {
-        return {}
+        return {};
       },
       server_assets: {},
     },
-  }
-})()
+  };
+})();

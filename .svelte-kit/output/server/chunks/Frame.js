@@ -6,12 +6,12 @@ import {
   l as escape_attribute_value,
   p as escape_object,
   e as add_attribute,
-} from "./ssr.js"
-import { twMerge } from "tailwind-merge"
+} from "./ssr.js";
+import { twMerge } from "tailwind-merge";
 const void_element_names =
-  /^(?:area|base|br|col|command|embed|hr|img|input|keygen|link|meta|param|source|track|wbr)$/
+  /^(?:area|base|br|col|command|embed|hr|img|input|keygen|link|meta|param|source|track|wbr)$/;
 function is_void(name) {
-  return void_element_names.test(name) || name.toLowerCase() === "!doctype"
+  return void_element_names.test(name) || name.toLowerCase() === "!doctype";
 }
 const Frame = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $$restProps = compute_rest_props($$props, [
@@ -24,18 +24,18 @@ const Frame = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     "use",
     "options",
     "role",
-  ])
-  const noop = () => {}
-  setContext("background", true)
-  let { tag = $$restProps.href ? "a" : "div" } = $$props
-  let { color = "default" } = $$props
-  let { rounded = false } = $$props
-  let { border = false } = $$props
-  let { shadow = false } = $$props
-  let { node = void 0 } = $$props
-  let { use = noop } = $$props
-  let { options = {} } = $$props
-  let { role = void 0 } = $$props
+  ]);
+  const noop = () => {};
+  setContext("background", true);
+  let { tag = $$restProps.href ? "a" : "div" } = $$props;
+  let { color = "default" } = $$props;
+  let { rounded = false } = $$props;
+  let { border = false } = $$props;
+  let { shadow = false } = $$props;
+  let { node = void 0 } = $$props;
+  let { use = noop } = $$props;
+  let { options = {} } = $$props;
+  let { role = void 0 } = $$props;
   const bgColors = {
     gray: "bg-gray-50 dark:bg-gray-800",
     red: "bg-red-50 dark:bg-gray-800",
@@ -55,7 +55,7 @@ const Frame = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     primary: "bg-primary-50 dark:bg-gray-800 ",
     orange: "bg-orange-50 dark:bg-orange-800",
     none: "",
-  }
+  };
   const textColors = {
     gray: "text-gray-800 dark:text-gray-300",
     red: "text-red-800 dark:text-red-400",
@@ -75,7 +75,7 @@ const Frame = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     primary: "text-primary-800 dark:text-primary-400",
     orange: "text-orange-800 dark:text-orange-400",
     none: "",
-  }
+  };
   const borderColors = {
     gray: "border-gray-300 dark:border-gray-800 divide-gray-300 dark:divide-gray-800",
     red: "border-red-300 dark:border-red-800 divide-red-300 dark:divide-red-800",
@@ -105,29 +105,29 @@ const Frame = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     orange:
       "border-orange-300 dark:border-orange-800 divide-orange-300 dark:divide-orange-800",
     none: "",
-  }
-  let divClass
+  };
+  let divClass;
   if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
-    $$bindings.tag(tag)
+    $$bindings.tag(tag);
   if ($$props.color === void 0 && $$bindings.color && color !== void 0)
-    $$bindings.color(color)
+    $$bindings.color(color);
   if ($$props.rounded === void 0 && $$bindings.rounded && rounded !== void 0)
-    $$bindings.rounded(rounded)
+    $$bindings.rounded(rounded);
   if ($$props.border === void 0 && $$bindings.border && border !== void 0)
-    $$bindings.border(border)
+    $$bindings.border(border);
   if ($$props.shadow === void 0 && $$bindings.shadow && shadow !== void 0)
-    $$bindings.shadow(shadow)
+    $$bindings.shadow(shadow);
   if ($$props.node === void 0 && $$bindings.node && node !== void 0)
-    $$bindings.node(node)
+    $$bindings.node(node);
   if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-    $$bindings.use(use)
+    $$bindings.use(use);
   if ($$props.options === void 0 && $$bindings.options && options !== void 0)
-    $$bindings.options(options)
+    $$bindings.options(options);
   if ($$props.role === void 0 && $$bindings.role && role !== void 0)
-    $$bindings.role(role)
-  color = color ?? "default"
+    $$bindings.role(role);
+  color = color ?? "default";
   {
-    setContext("color", color)
+    setContext("color", color);
   }
   divClass = twMerge(
     bgColors[color],
@@ -137,8 +137,8 @@ const Frame = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     borderColors[color],
     shadow && "shadow-md",
     $$props.class,
-  )
-  return `${(tag$1 => {
+  );
+  return `${((tag$1) => {
     return tag$1
       ? `<${tag}${spread(
           [
@@ -148,7 +148,7 @@ const Frame = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           ],
           {},
         )}${add_attribute("this", node, 0)}>${is_void(tag$1) ? "" : `${slots.default ? slots.default({}) : ``}`}${is_void(tag$1) ? "" : `</${tag$1}>`}`
-      : ""
-  })(tag)} `
-})
-export { Frame as F, is_void as i }
+      : "";
+  })(tag)} `;
+});
+export { Frame as F, is_void as i };

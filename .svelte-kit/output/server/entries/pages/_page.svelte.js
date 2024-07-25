@@ -1,11 +1,11 @@
 import {
   c as create_ssr_component,
   v as validate_component,
-} from "../../chunks/ssr.js"
-import "../../chunks/pocketbase.js"
-import { B as Button } from "../../chunks/Button.js"
-import { C as Card } from "../../chunks/Card.js"
-import { A as ArrowRightToBracketOutline } from "../../chunks/ArrowRightToBracketOutline.js"
+} from "../../chunks/ssr.js";
+import "../../chunks/pocketbase.js";
+import { B as Button } from "../../chunks/Button.js";
+import { C as Card } from "../../chunks/Card.js";
+import { A as ArrowRightToBracketOutline } from "../../chunks/ArrowRightToBracketOutline.js";
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   return `<div class="box-border p-8 w-full h-full">${validate_component(
     Card,
@@ -31,7 +31,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           {},
           {
             default: () => {
-              return `Projects`
+              return `Projects`;
             },
           },
         )} ${validate_component(Button, "Button").$$render(
@@ -44,7 +44,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           {},
           {
             default: () => {
-              return `About`
+              return `About`;
             },
           },
         )} ${validate_component(Button, "Button").$$render(
@@ -57,7 +57,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           {},
           {
             default: () => {
-              return `Contact`
+              return `Contact`;
             },
           },
         )} <span class="text-4xl font-bold" data-svelte-h="svelte-1jt5udw">External links</span> ${validate_component(
@@ -73,7 +73,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           {},
           {
             default: () => {
-              return `${validate_component(ArrowRightToBracketOutline, "ArrowRightToBracketOutline").$$render($$result, { class: "w-5 pr-2 h-5" }, {}, {})}GitHub`
+              return `${validate_component(ArrowRightToBracketOutline, "ArrowRightToBracketOutline").$$render($$result, { class: "w-5 pr-2 h-5" }, {}, {})}GitHub`;
             },
           },
         )} ${validate_component(Button, "Button").$$render(
@@ -86,12 +86,12 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           {},
           {
             default: () => {
-              return `${validate_component(ArrowRightToBracketOutline, "ArrowRightToBracketOutline").$$render($$result, { class: "w-5 h-5 pr-2" }, {}, {})}LinkedIn`
+              return `${validate_component(ArrowRightToBracketOutline, "ArrowRightToBracketOutline").$$render($$result, { class: "w-5 h-5 pr-2" }, {}, {})}LinkedIn`;
             },
           },
-        )}</div>`
+        )}</div>`;
       },
     },
-  )}</div>`
-})
-export { Page as default }
+  )}</div>`;
+});
+export { Page as default };
