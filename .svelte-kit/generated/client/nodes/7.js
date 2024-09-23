@@ -1,1 +1,1 @@
-export { default as component } from "../../../../src/routes/projects/pento/+page.svelte";
+export { default as component } from "../../../../src/routes/projects/md-app/+page.svelte";

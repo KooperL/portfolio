@@ -24,12 +24,6 @@
 
       <div data-test="home-internal-link-container">
         <Button
-          data-test="home-link-to-projects"
-          href="/projects"
-          class="w-48 my-1"
-          variant="primary">Projects</Button
-        >
-        <Button
           data-test="home-link-to-about"
           href="/about"
           class="w-48 my-1"
@@ -47,37 +41,46 @@
     <div>
       <Button
         data-test="projects-link-to-bingo"
-        href="/projects/bingoApp"
-        class="w-48"
+        href="/projects/bingo-app"
+        class="w-48 my-1"
         variant="primary">dropzones</Button
       >
       <Button
         data-test="projects-link-to-pento"
         href="/projects/pento"
-        class="w-48"
+        class="w-48 my-1"
         variant="primary">pento</Button
       >
-      {#if false}<Button href="/projects/vybs" class="w-48" variant="primary"
-          >vybs</Button
-        >{/if}
 </div>
-      <span class="text-2xl font-bold" data-test="title">My projects</span>
+      <span class="text-2xl font-bold" data-test="title">Code projects</span>
 
 <div>
+  <Button
+  href="/projects/portfolio"
+  class="w-48 my-1"
+  variant="primary"
+  >portfolio</Button
+>
       <Button
-        href="https://github.com/KooperL/svelte-pocketbase-quickstart"
-        class="w-48"
+        href="/projects/svelte-pocketbase-quickstart"
+        class="w-48 my-1"
         variant="primary"
-        ><ArrowRightToBracketOutline class="w-5 pr-2 h-5" /><marquee
+        ><marquee
           class="text-xxs text-nowrap-fff">svelte-pocketbase-quickstart</marquee
         ></Button
       >
       <Button
-        href="https://github.com/KooperL/mdApp"
-        class="w-48"
+        href="/projects/md-app"
+        class="w-48 my-1"
         variant="primary"
-        ><ArrowRightToBracketOutline class="w-5 h-5 pr-2" />mdApp</Button
+        >text processor</Button
       >
+      <Button
+      href="/projects/pocketbase-logging"
+      class="w-48 my-1"
+      variant="primary"
+      >pocketbase-logging</Button
+    >
     </div>
       <!-- Temp added -->
       <span class="text-2xl font-bold">External links</span>
