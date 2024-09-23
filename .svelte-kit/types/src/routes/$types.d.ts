@@ -13,7 +13,7 @@ type OptionalUnion<U extends Record<string, any>, A extends keyof U = U extends 
 export type Snapshot<T = any> = Kit.Snapshot<T>;
 type PageServerParentData = EnsureDefined<LayoutServerData>;
 type PageParentData = EnsureDefined<LayoutData>;
-type LayoutRouteId = RouteId | "/" | "/about" | "/contact" | "/projects" | "/projects/bingoApp" | "/projects/pento" | "/projects/vybs" | null
+type LayoutRouteId = RouteId | "/" | "/about" | "/contact" | "/projects" | "/projects/bingo-app" | "/projects/md-app" | "/projects/pento" | "/projects/pocketbase-logging" | "/projects/portfolio" | "/projects/svelte-pocketbase-quickstart" | "/projects/vybs" | null
 type LayoutParams = RouteParams & {  }
 type LayoutParentData = EnsureDefined<{}>;
 

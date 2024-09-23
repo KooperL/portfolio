@@ -13,10 +13,22 @@
 	"/projects": [
 		"src/routes/+layout.js"
 	],
-	"/projects/bingoApp": [
+	"/projects/bingo-app": [
+		"src/routes/+layout.js"
+	],
+	"/projects/md-app": [
 		"src/routes/+layout.js"
 	],
 	"/projects/pento": [
+		"src/routes/+layout.js"
+	],
+	"/projects/pocketbase-logging": [
+		"src/routes/+layout.js"
+	],
+	"/projects/portfolio": [
+		"src/routes/+layout.js"
+	],
+	"/projects/svelte-pocketbase-quickstart": [
 		"src/routes/+layout.js"
 	],
 	"/projects/vybs": [

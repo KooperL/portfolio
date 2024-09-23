@@ -9,7 +9,11 @@ export const nodes = [
 	() => import('./nodes/5'),
 	() => import('./nodes/6'),
 	() => import('./nodes/7'),
-	() => import('./nodes/8')
+	() => import('./nodes/8'),
+	() => import('./nodes/9'),
+	() => import('./nodes/10'),
+	() => import('./nodes/11'),
+	() => import('./nodes/12')
 ];
 
 export const server_loads = [];
@@ -19,9 +23,13 @@ export const dictionary = {
 		"/about": [3],
 		"/contact": [4],
 		"/projects": [5],
-		"/projects/bingoApp": [6],
-		"/projects/pento": [7],
-		"/projects/vybs": [8]
+		"/projects/bingo-app": [6],
+		"/projects/md-app": [7],
+		"/projects/pento": [8],
+		"/projects/pocketbase-logging": [9],
+		"/projects/portfolio": [10],
+		"/projects/svelte-pocketbase-quickstart": [11],
+		"/projects/vybs": [12]
 	};
 
 export const hooks = {
