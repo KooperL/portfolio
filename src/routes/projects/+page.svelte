@@ -4,10 +4,9 @@
   import { Card, Button, Skeleton } from "flowbite-svelte";
   import { site } from "$lib/config";
   import { ArrowRightToBracketOutline } from "flowbite-svelte-icons";
-    import { goto } from "$app/navigation";
+  import { goto } from "$app/navigation";
 
   onMount(async () => {
     goto("/");
   });
 </script>
-
