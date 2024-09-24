@@ -38,50 +38,43 @@
       </div>
       <!-- Temp added -->
       <span class="text-2xl font-bold" data-test="title">Published sites</span>
-    <div>
-      <Button
-        data-test="projects-link-to-bingo"
-        href="/projects/bingo-app"
-        class="w-48 my-1"
-        variant="primary">dropzones</Button
-      >
-      <Button
-        data-test="projects-link-to-pento"
-        href="/projects/pento"
-        class="w-48 my-1"
-        variant="primary">pento</Button
-      >
-</div>
+      <div>
+        <Button
+          data-test="projects-link-to-bingo"
+          href="/projects/bingo-app"
+          class="w-48 my-1"
+          variant="primary">dropzones</Button
+        >
+        <Button
+          data-test="projects-link-to-pento"
+          href="/projects/pento"
+          class="w-48 my-1"
+          variant="primary">pento</Button
+        >
+      </div>
       <span class="text-2xl font-bold" data-test="title">Code projects</span>
 
-<div>
-  <Button
-  href="/projects/portfolio"
-  class="w-48 my-1"
-  variant="primary"
-  >portfolio</Button
->
-      <Button
-        href="/projects/svelte-pocketbase-quickstart"
-        class="w-48 my-1"
-        variant="primary"
-        ><marquee
-          class="text-xxs text-nowrap-fff">svelte-pocketbase-quickstart</marquee
-        ></Button
-      >
-      <Button
-        href="/projects/md-app"
-        class="w-48 my-1"
-        variant="primary"
-        >text processor</Button
-      >
-      <Button
-      href="/projects/pocketbase-logging"
-      class="w-48 my-1"
-      variant="primary"
-      >pocketbase-logging</Button
-    >
-    </div>
+      <div>
+        <Button href="/projects/portfolio" class="w-48 my-1" variant="primary"
+          >portfolio</Button
+        >
+        <Button
+          href="/projects/svelte-pocketbase-quickstart"
+          class="w-48 my-1"
+          variant="primary"
+          ><marquee class="text-xxs text-nowrap-fff"
+            >svelte-pocketbase-quickstart</marquee
+          ></Button
+        >
+        <Button href="/projects/md-app" class="w-48 my-1" variant="primary"
+          >text processor</Button
+        >
+        <Button
+          href="/projects/pocketbase-logging"
+          class="w-48 my-1"
+          variant="primary">pocketbase-logging</Button
+        >
+      </div>
       <!-- Temp added -->
       <span class="text-2xl font-bold">External links</span>
 
