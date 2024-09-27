@@ -4,7 +4,7 @@
   import { Card, Button, Skeleton } from "flowbite-svelte";
   import { site } from "$lib/config";
   import { ArrowRightToBracketOutline } from "flowbite-svelte-icons";
-    import { logger } from "$lib/logger";
+  import { logger } from "$lib/logger";
 
   onMount(async () => {});
 </script>
@@ -26,8 +26,21 @@
         </div>
       </div>
       <div class="flex space-x-4">
-        <Button on:click={(e) => {logger.debug('bingo-app','Press "back" button')}} href="/projects" class="w-48" variant="primary">back</Button>
-        <Button on:click={(e) => {logger.debug('bingo-app','Press "visit" button')}} href="https://dropzones.io/" class="w-48" variant="primary"
+        <Button
+          on:click={(e) => {
+            logger.debug("bingo-app-page", 'Press "back" button');
+          }}
+          href="/projects"
+          class="w-48"
+          variant="primary">back</Button
+        >
+        <Button
+          on:click={(e) => {
+            logger.debug("bingo-app-page", 'Press "visit" button');
+          }}
+          href="https://dropzones.io/"
+          class="w-48"
+          variant="primary"
           ><ArrowRightToBracketOutline class="w-5 h-5 pr-2" />visit</Button
         >
       </div>

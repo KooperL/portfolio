@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { logger } from "$lib/logger";
+  import { logger } from "$lib/logger";
   import { pb } from "$lib/pocketbase";
   import {
     AccordionItem,
@@ -34,7 +34,10 @@
       submitted = false;
       logger.trace("contact-page", "Contact form submitted successfully");
     } catch (e) {
-      logger.error("contact-page", "Failed to submit contact form: " + e.message);
+      logger.error(
+        "contact-page",
+        "Failed to submit contact form: " + e.message,
+      );
     }
   }
 </script>
