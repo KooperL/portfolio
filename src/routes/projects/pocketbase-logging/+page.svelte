@@ -4,7 +4,7 @@
   import { Card, Button, Skeleton } from "flowbite-svelte";
   import { site } from "$lib/config";
   import { ArrowRightToBracketOutline } from "flowbite-svelte-icons";
-    import { logger } from "$lib/logger";
+  import { logger } from "$lib/logger";
 
   onMount(async () => {});
 </script>
@@ -33,15 +33,28 @@
         </p>
       </div>
       <div class="flex space-x-4">
-        <Button on:click={(e) => {logger.debug('pocketbase-logging-page','Press "back" button')}} href="/" class="w-48" variant="primary">back</Button>
         <Button
-          on:click={(e) => {logger.debug('pocketbase-logging-page','Press "code" button')}} href="https://github.com/KooperL/pocketbase-logging"
+          on:click={(e) => {
+            logger.debug("pocketbase-logging-page", 'Press "back" button');
+          }}
+          href="/"
+          class="w-48"
+          variant="primary">back</Button
+        >
+        <Button
+          on:click={(e) => {
+            logger.debug("pocketbase-logging-page", 'Press "code" button');
+          }}
+          href="https://github.com/KooperL/pocketbase-logging"
           class="w-48"
           variant="primary"
           ><ArrowRightToBracketOutline class="w-5 h-5 pr-2" />view code</Button
         >
         <Button
-          on:click={(e) => {logger.debug('pocketbase-logging-page','Press "demo" button')}} href="https://logger.pockethost.io/realtime"
+          on:click={(e) => {
+            logger.debug("pocketbase-logging-page", 'Press "demo" button');
+          }}
+          href="https://logger.pockethost.io/realtime"
           class="w-48"
           variant="primary"
           ><ArrowRightToBracketOutline class="w-5 h-5 pr-2" />demo</Button

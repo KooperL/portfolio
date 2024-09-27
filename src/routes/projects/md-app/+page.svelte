@@ -4,7 +4,7 @@
   import { Card, Button, Skeleton } from "flowbite-svelte";
   import { site } from "$lib/config";
   import { ArrowRightToBracketOutline } from "flowbite-svelte-icons";
-    import { logger } from "$lib/logger";
+  import { logger } from "$lib/logger";
 
   onMount(async () => {});
 </script>
@@ -31,15 +31,28 @@
         </p>
       </div>
       <div class="flex space-x-4">
-        <Button on:click={(e) => {logger.debug('md-app-page','Press "back" button')}} href="/" class="w-48" variant="primary">back</Button>
         <Button
-          on:click={(e) => {logger.debug('md-app-page','Press "code" button')}} href="https://github.com/KooperL/mdApp"
+          on:click={(e) => {
+            logger.debug("md-app-page", 'Press "back" button');
+          }}
+          href="/"
+          class="w-48"
+          variant="primary">back</Button
+        >
+        <Button
+          on:click={(e) => {
+            logger.debug("md-app-page", 'Press "code" button');
+          }}
+          href="https://github.com/KooperL/mdApp"
           class="w-48"
           variant="primary"
           ><ArrowRightToBracketOutline class="w-5 h-5 pr-2" />view code</Button
         >
         <Button
-          on:click={(e) => {logger.debug('md-app-page','Press "demo" button')}} href="https://mdapp-site.pages.dev/"
+          on:click={(e) => {
+            logger.debug("md-app-page", 'Press "demo" button');
+          }}
+          href="https://mdapp-site.pages.dev/"
           class="w-48"
           variant="primary"
           ><ArrowRightToBracketOutline class="w-5 h-5 pr-2" />demo</Button

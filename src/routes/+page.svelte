@@ -4,7 +4,7 @@
   import { Card, Button, Skeleton } from "flowbite-svelte";
   import { site } from "$lib/config";
   import { ArrowRightToBracketOutline } from "flowbite-svelte-icons";
-    import { logger } from "$lib/logger";
+  import { logger } from "$lib/logger";
 
   onMount(async () => {});
 </script>
@@ -26,35 +26,46 @@
       <div data-test="home-internal-link-container">
         <Button
           data-test="home-link-to-about"
-          on:click={(e) => {logger.debug('home-page','Press "about" button')}} href="/about"
+          on:click={(e) => {
+            logger.debug("home-page", 'Press "about" button');
+          }}
+          href="/about"
           class="w-48 my-1"
           variant="primary">about</Button
         >
         <Button
           data-test="home-link-to-contact"
-          on:click={(e) => {logger.debug('home-page','Press "contact" button')}} href="/contact"
+          on:click={(e) => {
+            logger.debug("home-page", 'Press "contact" button');
+          }}
+          href="/contact"
           class="w-48 my-1"
           variant="primary">contact</Button
         >
       </div>
     </div>
-      <div id="sites-summary" class="flex flex-col">
-        <span class="text-2xl font-bold" data-test="title">Published sites</span
-        >
-        <span>Projects available right now, hosted on the public internet</span>
-      </div>
-      <Button
-        data-test="projects-link-to-bingo"
-        on:click={(e) => {logger.debug('home-page','Press "bingo-app" button')}} href="/projects/bingo-app"
-        class="w-48 my-1"
-        variant="primary">dropzones</Button
-      >
-      <Button
-        data-test="projects-link-to-pento"
-        on:click={(e) => {logger.debug('home-page','Press "pento" button')}} href="/projects/pento"
-        class="w-48 my-1"
-        variant="primary">pento</Button
-      >
+    <div id="sites-summary" class="flex flex-col">
+      <span class="text-2xl font-bold" data-test="title">Published sites</span>
+      <span>Projects available right now, hosted on the public internet</span>
+    </div>
+    <Button
+      data-test="projects-link-to-bingo"
+      on:click={(e) => {
+        logger.debug("home-page", 'Press "bingo-app" button');
+      }}
+      href="/projects/bingo-app"
+      class="w-48 my-1"
+      variant="primary">dropzones</Button
+    >
+    <Button
+      data-test="projects-link-to-pento"
+      on:click={(e) => {
+        logger.debug("home-page", 'Press "pento" button');
+      }}
+      href="/projects/pento"
+      class="w-48 my-1"
+      variant="primary">pento</Button
+    >
     <div id="projects-summary" class="flex flex-col mt-5">
       <span class="text-2xl font-bold" data-test="title">Code projects</span>
       <span
@@ -62,22 +73,41 @@
       >
     </div>
     <div>
-      <Button on:click={(e) => {logger.debug('home-page','Press "portfolio" button')}} href="/projects/portfolio" class="w-48 my-1" variant="primary"
-        >portfolio</Button
+      <Button
+        on:click={(e) => {
+          logger.debug("home-page", 'Press "portfolio" button');
+        }}
+        href="/projects/portfolio"
+        class="w-48 my-1"
+        variant="primary">portfolio</Button
       >
       <Button
-        on:click={(e) => {logger.debug('home-page','Press "svelte-pocketbase-quickstart" button')}} href="/projects/svelte-pocketbase-quickstart"
+        on:click={(e) => {
+          logger.debug(
+            "home-page",
+            'Press "svelte-pocketbase-quickstart" button',
+          );
+        }}
+        href="/projects/svelte-pocketbase-quickstart"
         class="w-48 my-1"
         variant="primary"
         ><marquee class="text-xxs text-nowrap-fff"
           >svelte-pocketbase-quickstart</marquee
         ></Button
       >
-      <Button on:click={(e) => {logger.debug('home-page','Press "md-app" button')}} href="/projects/md-app" class="w-48 my-1" variant="primary"
-        >text processor</Button
+      <Button
+        on:click={(e) => {
+          logger.debug("home-page", 'Press "md-app" button');
+        }}
+        href="/projects/md-app"
+        class="w-48 my-1"
+        variant="primary">text processor</Button
       >
       <Button
-        on:click={(e) => {logger.debug('home-page','Press "pocketbase-logging" button')}} href="/projects/pocketbase-logging"
+        on:click={(e) => {
+          logger.debug("home-page", 'Press "pocketbase-logging" button');
+        }}
+        href="/projects/pocketbase-logging"
         class="w-48 my-1"
         variant="primary">pocketbase-logging</Button
       >
@@ -89,14 +119,20 @@
     <div data-test="home-external-link-container">
       <Button
         data-test="home-link-to-github"
-        on:click={(e) => {logger.debug('__page__','Press "github" button')}} href="https://github.com/KooperL"
+        on:click={(e) => {
+          logger.debug("__page__", 'Press "github" button');
+        }}
+        href="https://github.com/KooperL"
         class="w-48 my-1"
         variant="primary"
         ><ArrowRightToBracketOutline class="w-5 pr-2 h-5" />GitHub</Button
       >
       <Button
         data-test="home-link-to-linkedin"
-        on:click={(e) => {logger.debug('__page__','Press "linkedIn" button')}} href="https://linkedin.com/in/kooper"
+        on:click={(e) => {
+          logger.debug("__page__", 'Press "linkedIn" button');
+        }}
+        href="https://linkedin.com/in/kooper"
         class="w-48 my-1"
         variant="primary"
         ><ArrowRightToBracketOutline class="w-5 h-5 pr-2" />LinkedIn</Button
