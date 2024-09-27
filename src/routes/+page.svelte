@@ -4,6 +4,7 @@
   import { Card, Button, Skeleton } from "flowbite-svelte";
   import { site } from "$lib/config";
   import { ArrowRightToBracketOutline } from "flowbite-svelte-icons";
+    import { logger } from "$lib/logger";
 
   onMount(async () => {});
 </script>
@@ -25,13 +26,13 @@
       <div data-test="home-internal-link-container">
         <Button
           data-test="home-link-to-about"
-          href="/about"
+          on:click={(e) => {logger.debug('home-page','Press "about" button')}} href="/about"
           class="w-48 my-1"
           variant="primary">about</Button
         >
         <Button
           data-test="home-link-to-contact"
-          href="/contact"
+          on:click={(e) => {logger.debug('home-page','Press "contact" button')}} href="/contact"
           class="w-48 my-1"
           variant="primary">contact</Button
         >
@@ -44,13 +45,13 @@
       </div>
       <Button
         data-test="projects-link-to-bingo"
-        href="/projects/bingo-app"
+        on:click={(e) => {logger.debug('home-page','Press "bingo-app" button')}} href="/projects/bingo-app"
         class="w-48 my-1"
         variant="primary">dropzones</Button
       >
       <Button
         data-test="projects-link-to-pento"
-        href="/projects/pento"
+        on:click={(e) => {logger.debug('home-page','Press "pento" button')}} href="/projects/pento"
         class="w-48 my-1"
         variant="primary">pento</Button
       >
@@ -61,22 +62,22 @@
       >
     </div>
     <div>
-      <Button href="/projects/portfolio" class="w-48 my-1" variant="primary"
+      <Button on:click={(e) => {logger.debug('home-page','Press "portfolio" button')}} href="/projects/portfolio" class="w-48 my-1" variant="primary"
         >portfolio</Button
       >
       <Button
-        href="/projects/svelte-pocketbase-quickstart"
+        on:click={(e) => {logger.debug('home-page','Press "svelte-pocketbase-quickstart" button')}} href="/projects/svelte-pocketbase-quickstart"
         class="w-48 my-1"
         variant="primary"
         ><marquee class="text-xxs text-nowrap-fff"
           >svelte-pocketbase-quickstart</marquee
         ></Button
       >
-      <Button href="/projects/md-app" class="w-48 my-1" variant="primary"
+      <Button on:click={(e) => {logger.debug('home-page','Press "md-app" button')}} href="/projects/md-app" class="w-48 my-1" variant="primary"
         >text processor</Button
       >
       <Button
-        href="/projects/pocketbase-logging"
+        on:click={(e) => {logger.debug('home-page','Press "pocketbase-logging" button')}} href="/projects/pocketbase-logging"
         class="w-48 my-1"
         variant="primary">pocketbase-logging</Button
       >
@@ -88,14 +89,14 @@
     <div data-test="home-external-link-container">
       <Button
         data-test="home-link-to-github"
-        href="https://github.com/KooperL"
+        on:click={(e) => {logger.debug('__page__','Press "github" button')}} href="https://github.com/KooperL"
         class="w-48 my-1"
         variant="primary"
         ><ArrowRightToBracketOutline class="w-5 pr-2 h-5" />GitHub</Button
       >
       <Button
         data-test="home-link-to-linkedin"
-        href="https://linkedin.com/in/kooper"
+        on:click={(e) => {logger.debug('__page__','Press "linkedIn" button')}} href="https://linkedin.com/in/kooper"
         class="w-48 my-1"
         variant="primary"
         ><ArrowRightToBracketOutline class="w-5 h-5 pr-2" />LinkedIn</Button

@@ -37,6 +37,7 @@
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { site } from "$lib/config";
+    import { logger } from "$lib/logger";
 
   let openLoginModalAttempted = false;
   let logoutModalAttempted = false;
@@ -44,7 +45,7 @@
 </script>
 
 <Navbar class="flex flex-row">
-  <NavBrand data-test="nav-home" href="/" class="w-20">
+  <NavBrand data-test="nav-home" on:click={(e) => {logger.debug('nav-bar','Press "home" button')}} href="/" class="w-20">
     <span
       class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
     >
