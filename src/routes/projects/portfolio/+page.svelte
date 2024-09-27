@@ -4,6 +4,7 @@
   import { Card, Button, Skeleton } from "flowbite-svelte";
   import { site } from "$lib/config";
   import { ArrowRightToBracketOutline } from "flowbite-svelte-icons";
+    import { logger } from "$lib/logger";
 
   onMount(async () => {});
 </script>
@@ -28,9 +29,9 @@
         </p>
       </div>
       <div class="flex space-x-4">
-        <Button href="/" class="w-48" variant="primary">back</Button>
+        <Button on:click={(e) => {logger.debug('portfolio-page','Press "back" button')}} href="/" class="w-48" variant="primary">back</Button>
         <Button
-          href="https://github.com/KooperL/portfolio"
+          on:click={(e) => {logger.debug('portfolio-page','Press "code" button')}} href="https://github.com/KooperL/portfolio"
           class="w-48"
           variant="primary"
           ><ArrowRightToBracketOutline class="w-5 h-5 pr-2" />view code</Button
@@ -38,7 +39,7 @@
         <Button
           class="w-48"
           variant="primary"
-          on:click={() => alert("Demo? Are you not entertained??")}>demo</Button
+          on:click={() => {logger.debug('portfolio-page','Press "demo" button');alert("Demo? Are you not entertained??")}}>demo</Button
         >
       </div>
     </div>

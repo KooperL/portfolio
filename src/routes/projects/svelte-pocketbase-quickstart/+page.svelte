@@ -4,6 +4,7 @@
   import { Card, Button, Skeleton } from "flowbite-svelte";
   import { site } from "$lib/config";
   import { ArrowRightToBracketOutline } from "flowbite-svelte-icons";
+    import { logger } from "$lib/logger";
 
   onMount(async () => {});
 </script>
@@ -25,15 +26,15 @@
         </p>
       </div>
       <div class="flex space-x-4">
-        <Button href="/" class="w-48" variant="primary">back</Button>
+        <Button on:click={(e) => {logger.debug('svelte-pocketbase-quickstart-page','Press "back" button')}} href="/" class="w-48" variant="primary">back</Button>
         <Button
-          href="https://github.com/KooperL/svelte-pocketbase-quickstart"
+          on:click={(e) => {logger.debug('svelte-pocketbase-quickstart-page','Press "code" button')}} href="https://github.com/KooperL/svelte-pocketbase-quickstart"
           class="w-48"
           variant="primary"
           ><ArrowRightToBracketOutline class="w-5 h-5 pr-2" />view code</Button
         >
         <Button
-          href="https://svelte-pocketbase-quickstart.pages.dev"
+          on:click={(e) => {logger.debug('svelte-pocketbase-quickstart-page','Press "demo" button')}} href="https://svelte-pocketbase-quickstart.pages.dev"
           class="w-48"
           variant="primary"
           ><ArrowRightToBracketOutline class="w-5 h-5 pr-2" />demo</Button
