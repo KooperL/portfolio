@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { logger } from "$lib/logger";
   import { pb } from "$lib/pocketbase";
   import {
     AccordionItem,
@@ -16,6 +17,7 @@
   let submittedSuccessfully = false;
 
   async function handleSubmit(event) {
+    logger.debug("contact-page", "Submit contact form");
     try {
       event.preventDefault();
       if (!name.length) {
@@ -30,8 +32,12 @@
       pb.collection("messages").create(payload, { autocancel: false });
       submittedSuccessfully = true;
       submitted = false;
+      logger.trace("contact-page", "Contact form submitted successfully");
     } catch (e) {
-      console.error(e);
+      logger.error(
+        "contact-page",
+        "Failed to submit contact form: " + e.message,
+      );
     }
   }
 </script>
