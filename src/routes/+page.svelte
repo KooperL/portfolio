@@ -44,35 +44,58 @@
         >
       </div>
     </div>
-    <div id="sites-summary" class="flex flex-col">
+    <div id="sites-summary" class="flex flex-col mt-5">
       <span class="text-2xl font-bold" data-test="title">Published sites</span>
       <span>Projects available right now, hosted on the public internet</span>
     </div>
-    <Button
-      data-test="projects-link-to-bingo"
-      on:click={(e) => {
-        logger.debug("home-page", 'Press "bingo-app" button');
-      }}
-      href="/projects/bingo-app"
-      class="w-48 my-1"
-      variant="primary">dropzones</Button
-    >
-    <Button
-      data-test="projects-link-to-pento"
-      on:click={(e) => {
-        logger.debug("home-page", 'Press "pento" button');
-      }}
-      href="/projects/pento"
-      class="w-48 my-1"
-      variant="primary">pento</Button
-    >
-    <div id="projects-summary" class="flex flex-col mt-5">
-      <span class="text-2xl font-bold" data-test="title">Code projects</span>
-      <span
-        >Other projects that don't necessarily need to be found on the web.</span
+    <div>
+      <Button
+        data-test="projects-link-to-logridge"
+        on:click={(e) => {
+          logger.debug("home-page", 'Press "logridge" button');
+        }}
+        href="/projects/logridge"
+        class="w-48 my-1"
+        variant="primary">logridge</Button
       >
+      <Button
+        data-test="projects-link-to-bingo"
+        on:click={(e) => {
+          logger.debug("home-page", 'Press "bingo-app" button');
+        }}
+        href="/projects/bingo-app"
+        class="w-48 my-1"
+        variant="primary">dropzones</Button
+      >
+      <Button
+        data-test="projects-link-to-pento"
+        on:click={(e) => {
+          logger.debug("home-page", 'Press "pento" button');
+        }}
+        href="/projects/pento"
+        class="w-48 my-1"
+        variant="primary">pento</Button
+      >
+      <div id="projects-summary" class="flex flex-col mt-5">
+        <span class="text-2xl font-bold" data-test="title">Code projects</span>
+        <span
+          >Other projects that don't necessarily need to be found on the web
+          (they have demos)</span
+        >
+      </div>
     </div>
     <div>
+      <Button
+        on:click={(e) => {
+          logger.debug("home-page", 'Press "tailwind-color-generator" button');
+        }}
+        href="/projects/tailwind-color-generator"
+        class="w-48 my-1"
+        variant="primary"
+        ><marquee class="text-xxs text-nowrap-fff">
+          tailwind-color-generator</marquee
+        ></Button
+      >
       <Button
         on:click={(e) => {
           logger.debug("home-page", 'Press "portfolio" button');
