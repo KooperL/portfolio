@@ -11,6 +11,7 @@ export interface Button {
   id: string;
   label: string;
   href: string;
+  disabled?: boolean;
   icon?: string;
   testId?: string;
   events?: ButtonEvent[];
@@ -19,6 +20,13 @@ export interface Button {
 export interface ButtonGroup extends OrderedContent {
   id: string;
   buttons: Button[];
+}
+
+export interface CardGroup extends OrderedContent {
+  id: string;
+  cards: Card[];
+  layout: "horizontal" | "grid";
+  columns?: 2 | 3 | 4; // For grid layout
 }
 
 export interface HeroText extends OrderedContent {
@@ -32,11 +40,16 @@ export interface TextBody extends OrderedContent {
   body: string[];
   buttons?: ButtonGroup;
   button?: Button;
+  cards?: CardGroup;
+  card?: Card;
 }
 
 export interface Image {
   url: string;
   alt: string;
+  width?: number;
+  height?: number;
+  lazy?: boolean;
 }
 
 export interface Card extends OrderedContent {
