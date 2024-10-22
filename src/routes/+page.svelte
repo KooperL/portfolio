@@ -57,7 +57,10 @@
           type: "textBody",
           content: {
             order: 1,
-            title: "test",
+            title: "Past work projects",
+            body: [
+              "Featured websites that I'm proud to have been involved with in the past!",
+            ],
             cards: {
               order: 1,
               id: "test-cards",
@@ -83,97 +86,24 @@
                   },
                 },
                 {
-                  title: "Logridge",
-                  body: "HTTP based log aggregator + stats.",
+                  title: "Pento",
+                  body: "Online note archive",
                   image: {
                     url: "https://placehold.co/600x400/EEE/31343C",
                     alt: "Screenshot of project",
                   },
                   buttonGroup: {
                     order: 1,
-                    id: "logridge-card-actions",
+                    id: "pento-card-actions",
                     buttons: [
                       {
-                        id: "logridge-view-project",
+                        id: "pento-view-project",
                         label: "Read more",
-                        href: "/projects/logridge",
-                        testId: "logridge-card-primary-action",
+                        href: "/projects/pento",
+                        testId: "pento-card-primary-action",
                       },
                     ],
                   },
-                },
-                {
-                  title: "Logridge",
-                  body: "HTTP based log aggregator + stats.",
-                  image: {
-                    url: "https://placehold.co/600x400/EEE/31343C",
-                    alt: "Screenshot of project",
-                  },
-                  buttonGroup: {
-                    order: 1,
-                    id: "logridge-card-actions",
-                    buttons: [
-                      {
-                        id: "logridge-view-project",
-                        label: "Read more",
-                        href: "/projects/logridge",
-                        testId: "logridge-card-primary-action",
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        },
-
-        {
-          type: "textBody",
-          content: {
-            order: 1,
-            title: "Published sites",
-            body: [
-              "Projects available right now, hosted on the public internet",
-            ],
-            buttons: {
-              order: 1,
-              id: "published-sites-buttons",
-              buttons: [
-                {
-                  id: "logridge",
-                  label: "logridge",
-                  href: "/projects/logridge",
-                  testId: "projects-link-to-logridge",
-                  events: [
-                    {
-                      name: "logInfo",
-                      payload: ["home", "Press on 'logridge' button"],
-                    },
-                  ],
-                },
-                {
-                  id: "dropzones",
-                  label: "dropzones",
-                  href: "/projects/bingo-app",
-                  testId: "projects-link-to-bingo",
-                  events: [
-                    {
-                      name: "logInfo",
-                      payload: ["home", "Press on 'dropzones' button"],
-                    },
-                  ],
-                },
-                {
-                  id: "pento",
-                  label: "pento",
-                  href: "/projects/pento",
-                  testId: "projects-link-to-pento",
-                  events: [
-                    {
-                      name: "logInfo",
-                      payload: ["home", "Press on 'pento' button"],
-                    },
-                  ],
                 },
               ],
             },
@@ -185,7 +115,7 @@
             order: 2,
             title: "Code projects",
             body: [
-              "Other projects that don't necessarily need to be found on the web (they have demos)",
+              "Fun projects that I spent a weekend or two on. These are low stakes guys that don't necessarily need to be found on the web.",
             ],
             buttons: {
               order: 1,
@@ -202,6 +132,18 @@
                         "home",
                         "Press on 'tailwind-color-generator' button",
                       ],
+                    },
+                  ],
+                },
+                {
+                  id: "dropzones",
+                  label: "dropzones",
+                  href: "/projects/bingo-app",
+                  testId: "projects-link-to-bingo",
+                  events: [
+                    {
+                      name: "logInfo",
+                      payload: ["home", "Press on 'dropzones' button"],
                     },
                   ],
                 },

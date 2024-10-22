@@ -1,15 +1,11 @@
 <script lang="ts">
   import type { EmbeddedFrame } from "$lib/utils/CMS/types";
 
-  export let frame: EmbeddedFrame;
-  export let className = "";
+  export let url = "";
+  // export let width = "100%";
+  // export let height = "500px";
+
+  export let className = "w-full h-128";
 </script>
 
-<iframe
-  src={frame.url}
-  class={className}
-  width={frame.width}
-  height={frame.height}
-  frameborder="0"
-  allowfullscreen="true"
-/>
+<iframe src={url} class={className} />

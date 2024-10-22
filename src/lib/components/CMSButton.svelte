@@ -21,7 +21,6 @@
   data-testid={button.testId}
   {...$$restProps}
   on:click={() => {
-    console.log("Button clicked", buttonActions, button);
     if (button.events) {
       button.events.forEach((event) => {
         if (buttonActions[event.name]) {

@@ -120,11 +120,11 @@
 
   <!-- Main Content -->
   {#each sortElements(parsedContent.pageContent.elements) as element}
-    <section class="mb-8">
+    <section class="mb-8 h-fit">
       {#if isTextBody(element)}
         <TextBodyComponent {...element.content} buttonActions={functions} />
       {:else if isForm(element)}
-        <FormComponent {...element.content} />
+        <FormComponent {...element.content} {functions} />
       {:else if isEmbeddedFrame(element)}
         <EmbeddedFrameComponent {...element.content} />
       {:else}

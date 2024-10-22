@@ -51,7 +51,7 @@
   <main
     class="flex grow w-full bg-dotted-spacing-6 bg-dotted-primary-700 bg-dotted-radius-0.1"
   >
-    <div class="2xl:min-w-96 2xl:w-2/3 2xl:w-1/2" style="height: 90vh;">
+    <div class="w-full 2xl:min-w-96 2xl:w-2/3 2xl:w-1/2" style="height: 90vh;">
       <slot />
       {#if $toast?.text}
         <Toast class="absolute bottom-2.5 left-1/2 mb-4 -translate-x-1/2">
