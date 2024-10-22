@@ -9,43 +9,30 @@
   export let endpoint: Form["endpoint"];
   export let successMessage: Form["successMessage"];
   export let errorMessage: Form["errorMessage"];
+  export let bindings = {};
+  export let functions = {};
 
-  let formData = {};
   let loading = false;
   let success = false;
   let error = "";
-
-  async function handleSubmit() {
-    if (!endpoint) return;
-
-    loading = true;
-    error = "";
-    success = false;
-
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) throw new Error("Submission failed");
-
-      success = true;
-      formData = {};
-    } catch (err) {
-      error = errorMessage || "An error occurred. Please try again.";
-    } finally {
-      loading = false;
-    }
-  }
 </script>
 
-<form on:submit|preventDefault={handleSubmit} class="max-w-2xl mx-auto p-4">
+<form
+  on:submit|preventDefault={() => {
+    if (submitButton.events) {
+      submitButton.events.forEach((event) => {
+        if (functions[event.name]) {
+          functions[event.name](...event.payload);
+        }
+      });
+    }
+  }}
+  class="max-w-2xl mx-auto p-4"
+>
   <h3 class="mb-4 text-2xl font-bold">{title}</h3>
 
   {#each fields as field}
-    <CmsFormField {field} bind:value={formData[field.id]} />
+    <CmsFormField {field} binding={bindings[field.id]} />
   {/each}
 
   {#if error}

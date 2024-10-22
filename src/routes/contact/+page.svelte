@@ -1,6 +1,7 @@
 <script lang="ts">
   import { logger } from "$lib/logger";
   import { pb } from "$lib/pocketbase";
+  import Parser from "$lib/utils/CMS/parser.svelte";
   import {
     AccordionItem,
     Accordion,
@@ -10,23 +11,35 @@
     Textarea,
     Button,
   } from "flowbite-svelte";
-  let name = "";
-  let email = "";
-  let message = "";
+
+  let bindings = {
+    "contact-form-name": { bind: "" },
+    "contact-form-email": { bind: "" },
+    "contact-form-message": { bind: "" },
+  };
+
   let submitted = false;
   let submittedSuccessfully = false;
 
-  async function handleSubmit(event) {
+  let buttonActions = {
+    logInfo: logger.info,
+    submit: handleSubmit,
+  };
+
+  async function handleSubmit(name, email, message) {
     logger.debug("contact-page", "Submit contact form");
     try {
-      event.preventDefault();
-      if (!name.length) {
+      if (!name.bind.length) {
         return;
       }
-      if (!message.length) {
+      if (!message.bind.length) {
         return;
       }
-      const payload = { name, email, message };
+      const payload = {
+        name: name.bind,
+        email: email.bind,
+        message: message.bind,
+      };
       submitted = true;
       submittedSuccessfully = false;
       pb.collection("messages").create(payload, { autocancel: false });
@@ -40,64 +53,71 @@
       );
     }
   }
+
+  const jsonContent = {
+    pageContent: {
+      order: 2,
+      elements: [
+        {
+          type: "textBody",
+          content: {
+            order: 1,
+            title: "Contact me",
+            body: [
+              "This form will automatically forward the message to me, if you're expecting a reply though, include an email!",
+            ],
+          },
+        },
+
+        {
+          type: "form",
+          content: {
+            order: 3,
+            id: "contact-form",
+            bindings: bindings,
+            fields: [
+              {
+                id: "contact-form-name",
+                label: "Name",
+                type: "text",
+                required: true,
+              },
+              {
+                id: "contact-form-email",
+                label: "Email",
+                type: "email",
+                required: false,
+              },
+              {
+                id: "contact-form-message",
+                label: "Message",
+                type: "textarea",
+                required: true,
+              },
+            ],
+            submitButton: {
+              label: "Send",
+              id: "contact-form-submit",
+              events: [
+                {
+                  name: "submit",
+                  payload: [
+                    bindings["contact-form-name"],
+                    bindings["contact-form-email"],
+                    bindings["contact-form-message"],
+                  ],
+                },
+              ],
+            },
+          },
+        },
+      ],
+    },
+  };
 </script>
 
 <div class="box-border p-8 w-full h-full">
-  <Card class="w-full max-w-full h-full bg-white/50">
-    <div class="flex flex-col space-y-4">
-      <span class="text-4xl font-bold" data-test="title">Contact me</span>
-      <form on:submit={handleSubmit}>
-        <div class="flex flex-col space-y-4">
-          <div>
-            <Label for="name">Name</Label>
-            <Input
-              bind:value={name}
-              type="text"
-              data-test="name-input"
-              id="name"
-              name="name"
-              required
-            />
-          </div>
-          <div>
-            <Label for="email">Email (optional)</Label>
-            <Input
-              bind:value={email}
-              type="text"
-              data-test="email-input"
-              id="email"
-              name="email"
-            />
-          </div>
-          <div>
-            <Label for="message">Message</Label>
-            <Textarea
-              bind:value={message}
-              id="message"
-              data-test="message-input"
-              name="message"
-              class="bg-gray-50 dark:bg-gray-600"
-              required
-            ></Textarea>
-          </div>
-          <div class="flex">
-            <Button
-              disabled={submitted}
-              data-test="submit-input"
-              type="submit"
-              class="w-48">Send</Button
-            >
-            {#if submittedSuccessfully}
-              <div
-                data-test="contact-submission-confirmation"
-                class="flex items-center justify-center w-12"
-              >
-                ✅
-              </div>
-            {/if}
-          </div>
-        </div>
-      </form>
-    </div></Card
-  >
+  <Card class="w-full max-w-full h-full max-h-full bg-white overflow-y-scroll">
+    <Parser content={jsonContent} functions={buttonActions} />
+  </Card>
 </div>

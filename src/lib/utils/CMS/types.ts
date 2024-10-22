@@ -71,12 +71,14 @@ export interface FormField {
   type: string;
   placeholder?: string;
   required: boolean;
+  binding: Record<'bind', string>;
 }
 
 export interface Form extends OrderedContent {
   id: string;
   title: string;
   fields: FormField[];
+  bindings: Record<string, Record<'bind', string>>;
   submitButton: Button;
 }
 
