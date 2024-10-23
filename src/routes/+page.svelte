@@ -5,6 +5,10 @@
   import { site } from "$lib/config";
   import { logger } from "$lib/logger";
   import Parser from "$lib/utils/CMS/parser.svelte";
+  import pentoScreenshot from "$lib/assets/pento-screenshot.png";
+  import logridgeScreenshot from "$lib/assets/logridge-screenshot.png";
+  import redirectedScreenshot from "$lib/assets/redirected-screenshot.png";
+
 
   onMount(async () => {});
 
@@ -69,7 +73,7 @@
                   title: "Logridge",
                   body: "HTTP based log aggregator + stats.",
                   image: {
-                    url: "https://placehold.co/600x400/EEE/31343C",
+                    url: logridgeScreenshot,
                     alt: "Screenshot of project",
                   },
                   buttonGroup: {
@@ -86,10 +90,30 @@
                   },
                 },
                 {
+                  title: "Redirected.dev",
+                  body: "Instant online tracking pixels + IP grabber",
+                  image: {
+                    url: redirectedScreenshot,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "redirected-card-actions",
+                    buttons: [
+                      {
+                        id: "redirected-view-project",
+                        label: "Read more",
+                        href: "/projects/redirected",
+                        testId: "redirected-card-primary-action",
+                      },
+                    ],
+                  },
+                },
+                {
                   title: "Pento",
                   body: "Online note archive",
                   image: {
-                    url: "https://placehold.co/600x400/EEE/31343C",
+                    url: pentoScreenshot,
                     alt: "Screenshot of project",
                   },
                   buttonGroup: {

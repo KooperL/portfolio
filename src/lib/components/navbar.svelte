@@ -42,13 +42,15 @@
   let openLoginModalAttempted = false;
   let logoutModalAttempted = false;
   let pendingUsernameChange = $currentUser?.model?.username;
+
+  logger.info("navbar", "Navbar loaded");
 </script>
 
 <Navbar class="flex flex-row">
   <NavBrand
     data-test="nav-home"
     on:click={(e) => {
-      logger.debug("nav-bar", 'Press "home" button');
+      logger.info("nav-bar", 'Press "home" button');
     }}
     href="/"
     class="w-20"

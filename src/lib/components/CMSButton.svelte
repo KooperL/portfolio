@@ -6,19 +6,18 @@
   export let button: typess.Button;
   export let buttonActions: Record<string, Function> = {};
 
-  // Map CMS button variants to Flowbite variants
-  const variantMap = {
-    primary: "blue",
-    secondary: "light",
-    ghost: "alternative",
-  };
 </script>
 
 <Button
+  class="custom-button rounded"
+  style="
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 66%, 78% 100%, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 66%, 78% 100%, 0 100%);
+  "
   href={button.href}
-  color={variantMap[button.variant || "primary"]}
   disabled={button.disabled}
   data-testid={button.testId}
+  variant={'primary'}
   {...$$restProps}
   on:click={() => {
     if (button.events) {
@@ -35,3 +34,7 @@
   {/if}
   {button.label}
 </Button>
+
+<style>
+
+</style>

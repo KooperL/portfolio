@@ -30,10 +30,10 @@
     logger.debug("contact-page", "Submit contact form");
     try {
       if (!name.bind.length) {
-        return;
+        throw new Error("Name is required");
       }
       if (!message.bind.length) {
-        return;
+        throw new Error("Message is required");
       }
       const payload = {
         name: name.bind,
@@ -68,7 +68,6 @@
             ],
           },
         },
-
         {
           type: "form",
           content: {
