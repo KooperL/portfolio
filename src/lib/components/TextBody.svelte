@@ -27,7 +27,7 @@
   {/if}
 
   {#if body}
-    <div class="space-y-4 text-gray-700">
+    <div class="space-y-4 text-gray-700 dark:text-gray-300">
       {#each body as paragraph}
         <p>{paragraph}</p>
       {/each}

@@ -15,7 +15,6 @@
   } from "$lib/utils/CMS/types";
   import EmbeddedFrameComponent from "$lib/components/EmbeddedFrame.svelte";
 
-  // Input can be either a JSON string or a parsed Content object
   export let content: string | Content;
   export let loading = false;
   export let functions: Record<string, Function> = {};
@@ -23,7 +22,6 @@
   let parsedContent: Content | null = null;
   let error: string | null = null;
 
-  // Content type guards
   const isTextBody = (
     element: ContentElement,
   ): element is { type: "textBody"; content: TextBody } =>
@@ -42,10 +40,8 @@
   ): element is { type: "embeddedFrame"; content: EmbeddedFrame } =>
     element.type === "embeddedFrame";
 
-  // Content validation
   function validateContent(content: Content): boolean {
     try {
-      // Basic structure validation
       if (
         !content.pageContent ||
         !Array.isArray(content.pageContent.elements)
@@ -53,7 +49,6 @@
         throw new Error("Invalid content structure");
       }
 
-      // Validate each element has required properties
       content.pageContent.elements.forEach((element) => {
         if (!element.type || !element.content) {
           throw new Error(
@@ -69,7 +64,6 @@
     }
   }
 
-  // Parse content if it's a string
   function parseContent() {
     try {
       if (typeof content === "string") {
@@ -87,13 +81,11 @@
     }
   }
 
-  // Watch for content changes
   $: if (content) {
     error = null;
     parseContent();
   }
 
-  // Sort elements by order
   function sortElements(elements: ContentElement[]): ContentElement[] {
     return [...elements].sort((a, b) => a.content.order - b.content.order);
   }
@@ -118,7 +110,6 @@
     </section>
   {/if}
 
-  <!-- Main Content -->
   {#each sortElements(parsedContent.pageContent.elements) as element}
     <section class="mb-8 h-fit">
       {#if isTextBody(element)}

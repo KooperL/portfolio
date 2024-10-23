@@ -76,13 +76,11 @@ export interface FormField {
 
 export interface Form extends OrderedContent {
   id: string;
-  title: string;
   fields: FormField[];
   bindings: Record<string, Record<'bind', string>>;
   submitButton: Button;
 }
 
-// Union type for all possible content types
 export type ContentElement =
   | { type: "textBody"; content: TextBody }
   | { type: "card"; content: Card }

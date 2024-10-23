@@ -1,155 +1,102 @@
 class Logger {
   session = "";
   session_inc = 0;
-
+  
   constructor() {
-    this.session =
-      Math.random().toString(36).substring(2, 15) +
-      Math.random().toString(36).substring(2, 15);
+    this.session = this.generateSession();
+  }
+
+  generateSession() {
+    return Math.random().toString(36).substring(2, 15) + 
+           Math.random().toString(36).substring(2, 15);
   }
 
   async getIdentifier() {
-    const id = await localStorage.getItem("identifier");
-    if (id) {
-      return id;
+    try {
+      const id = await localStorage.getItem("identifier");
+      return id || "no-identifier";
+    } catch (e) {
+      console.error("Error accessing localStorage:", e);
+      return "no-identifier";
     }
-    return "no-identifier";
   }
 
   async makeOpts(payload) {
-    const date = new Date();
     const identifier = await this.getIdentifier();
-
-    payload.submitted_on = date.toISOString().split("T")[0];
-    payload.source = `web-prod-1.0`;
-    payload.host = window.navigator.userAgent;
-    payload.identifier = identifier;
-    payload.session = this.session;
-    payload.session_inc = this.session_inc;
-    return payload;
+    return {
+      ...payload,
+      submitted_on: new Date().toISOString().split("T")[0],
+      source: "web-prod-1.0",
+      host: window.navigator.userAgent,
+      identifier,
+      session: this.session,
+      session_inc: this.session_inc
+    };
   }
 
   async fetch(loggerPayload) {
-    const url =
-      "https://logger-commercial.pockethost.io" +
-      "/api/log" +
-      "/b3z9x5nvey57oo5";
-
-    const res = await fetch(url, {
+    const url = "https://events.logridge.net/api/log/b3z9x5nvey57oo5";
+    const options = {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "X-Auth-Token": "8325ea35-191a-4d47-bd7b-150f151ecb27",
+        "X-Auth-Token": "8325ea35-191a-4d47-bd7b-150f151ecb27"
       },
-      body: JSON.stringify(loggerPayload),
-    });
-    return res;
+      body: JSON.stringify(loggerPayload)
+    };
+
+    try {
+      return await fetch(url, options);
+    } catch (e) {
+      console.error("Network error during logging:", e);
+      throw e;
+    }
   }
 
-  async error(title, body, telemetryEnabled = true) {
-    const loggerPayload = {
-      title: title,
-      detail: body,
-      channel: "fetch",
-      level: "error",
-    };
+  async log(level, title, body, telemetryEnabled = true) {
     try {
-      console.error(body);
+      // Call appropriate console method
+      const consoleMethod = level === 'trace' ? 'log' : level;
+      console[consoleMethod]?.(body);
 
       if (telemetryEnabled) {
-        await this.makeOpts(loggerPayload);
-        await this.fetch(loggerPayload);
-      }
+        const loggerPayload = {
+          title,
+          detail: body,
+          channel: "fetch",
+          level
+        };
 
+        const enrichedPayload = await this.makeOpts(loggerPayload);
+        await this.fetch(enrichedPayload);
+      }
+      
       this.session_inc++;
     } catch (e) {
       console.error("==============", e);
     }
+  }
+
+  // Public logging methods
+  async error(title, body, telemetryEnabled = true) {
+    return this.log('error', title, body, telemetryEnabled);
   }
 
   async warn(title, body, telemetryEnabled = true) {
-    const loggerPayload = {
-      title: title,
-      detail: body,
-      channel: "fetch",
-      level: "warn",
-    };
-    try {
-      console.warn(body);
-
-      if (telemetryEnabled) {
-        await this.makeOpts(loggerPayload);
-        await this.fetch(loggerPayload);
-      }
-
-      this.session_inc++;
-    } catch (e) {
-      console.error("==============", e);
-    }
+    return this.log('warn', title, body, telemetryEnabled);
   }
 
   async info(title, body, telemetryEnabled = true) {
-    const loggerPayload = {
-      title: title,
-      detail: body,
-      channel: "fetch",
-      level: "info",
-    };
-    try {
-      console.info(body);
-
-      if (telemetryEnabled) {
-        await this.makeOpts(loggerPayload);
-        await this.fetch(loggerPayload);
-      }
-
-      this.session_inc++;
-    } catch (e) {
-      console.error("==============", e);
-    }
+    return this.log('info', title, body, telemetryEnabled);
   }
 
   async debug(title, body, telemetryEnabled = true) {
-    const loggerPayload = {
-      title: title,
-      detail: body,
-      channel: "fetch",
-      level: "debug",
-    };
-    try {
-      console.debug(body);
-
-      if (telemetryEnabled) {
-        await this.makeOpts(loggerPayload);
-        await this.fetch(loggerPayload);
-      }
-
-      this.session_inc++;
-    } catch (e) {
-      console.error("==============", e);
-    }
+    return this.log('debug', title, body, telemetryEnabled);
   }
 
   async trace(title, body, telemetryEnabled = true) {
-    const loggerPayload = {
-      title: title,
-      detail: body,
-      channel: "fetch",
-      level: "trace",
-    };
-    try {
-      console.log(body);
-
-      if (telemetryEnabled) {
-        await this.makeOpts(loggerPayload);
-        await this.fetch(loggerPayload);
-      }
-
-      this.session_inc++;
-    } catch (e) {
-      console.error("==============", e);
-    }
+    return this.log('trace', title, body, telemetryEnabled);
   }
 }
 

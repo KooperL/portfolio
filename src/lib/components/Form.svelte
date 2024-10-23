@@ -3,7 +3,6 @@
   import CmsButton from "./CMSButton.svelte";
   import CmsFormField from "./CMSFormField.svelte";
 
-  export let title: string;
   export let fields: Form["fields"];
   export let submitButton: Form["submitButton"];
   export let endpoint: Form["endpoint"];
@@ -29,8 +28,6 @@
   }}
   class="max-w-2xl mx-auto p-4"
 >
-  <h3 class="mb-4 text-2xl font-bold">{title}</h3>
-
   {#each fields as field}
     <CmsFormField {field} binding={bindings[field.id]} />
   {/each}

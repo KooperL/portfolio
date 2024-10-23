@@ -18,7 +18,7 @@
 </script>
 
 <div
-  class="flex flex-wrap {alignmentClasses[buttonGroup.alignment || 'left']} 
+  class="flex flex-wrap gap-3 {alignmentClasses[buttonGroup.alignment || 'left']} 
               {layoutClasses[buttonGroup.layout || 'horizontal']}"
 >
   {#each buttonGroup.buttons as button}
