@@ -12,8 +12,8 @@
     logInfo: logger.info,
   };
 
-  const projectName = "redirected";
-  const projectDescription = ["Instant online tracking pixels + IP grabber"];
+  const projectName = "redirected.dev";
+  const projectDescription = ["Redirected is a powerful tracking pixel generator designed to help you capture and analyze traffic in real time. Create and organize tracking pixels into customizable groups for efficient management. With Redirected, you can easily view aggregated statistics to understand user behavior and optimize your marketing efforts. Simplify your data tracking process and make informed decisions with real-time insights at your fingertips."];
   const projectPathVar = "redirected";
   const websiteUrl = "https://redirected.dev/";
   const githubUrl = undefined;

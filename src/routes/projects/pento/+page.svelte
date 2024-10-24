@@ -13,8 +13,8 @@
   };
 
   const projectName = "pento.page";
-  const projectDescription = ["Online note archive."];
-  const projectPathVar = "md-app";
+  const projectDescription = ["Pento is a user-friendly platform for sharing and storing content, similar to Pastebin. It allows users to quickly dump text, code, or any other content without the need for account registration. Engage with the community by leaving comments and ratings on submissions, and track the popularity of your content through view counts. Pento also offers API and CLI access, making it easy to integrate with your applications and workflows. Share your ideas seamlessly with Pento!"];
+  const projectPathVar = "pento";
   const websiteUrl = "https://pento.page/";
   const githubUrl = undefined;
   const iframeUrl = "https://pento.page/";

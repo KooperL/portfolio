@@ -24,7 +24,7 @@
   } w-full max-w-full`}
 >
   {#if image}
-    <CmsImage {image} className="w-full rounded-t-lg" />
+    <CmsImage {image} className="rounded-t-lg overflow-hidden" style="width: 600px; height: 400px;" />
   {/if}
 
   {#if title}

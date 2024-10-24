@@ -4,6 +4,8 @@
   import CardGroup from "./CardGroup.svelte";
   import CmsButton from "./CMSButton.svelte";
   import CmsButtonGroup from "./CMSButtonGroup.svelte";
+    import CmsImage from "./CMSImage.svelte";
+    import ImageGroup from "./ImageGroup.svelte";
 
   export let title: TextBody["title"];
   export let body: TextBody["body"];
@@ -11,6 +13,7 @@
   export let buttons: TextBody["buttons"];
   export let card: TextBody["card"];
   export let cards: TextBody["cards"];
+  export let images: TextBody["images"];
   export let alignment: TextBody["alignment"] = "left";
   export let buttonActions: Record<string, Function> = {};
 
@@ -31,6 +34,12 @@
       {#each body as paragraph}
         <p>{paragraph}</p>
       {/each}
+    </div>
+  {/if}
+
+  {#if images}
+    <div class="mt-6">
+      <ImageGroup imageGroup={images} layout={"horizontal"} {buttonActions} />
     </div>
   {/if}
 
@@ -57,4 +66,8 @@
       <CardGroup cardGroup={cards} layout={"horizontal"} {buttonActions} />
     </div>
   {/if}
+
+
+
+
 </div>

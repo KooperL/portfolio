@@ -26,7 +26,14 @@ export interface CardGroup extends OrderedContent {
   id: string;
   cards: Card[];
   layout: "horizontal" | "grid";
-  columns?: 2 | 3 | 4; // For grid layout
+  columns?: 2 | 3 | 4;
+}
+
+export interface ImageGroup extends OrderedContent {
+  id: string;
+  images: Image[];
+  layout: "horizontal" | "grid";
+  columns?: 2 | 3 | 4;
 }
 
 export interface HeroText extends OrderedContent {
@@ -42,6 +49,7 @@ export interface TextBody extends OrderedContent {
   button?: Button;
   cards?: CardGroup;
   card?: Card;
+  images?: ImageGroup[];
 }
 
 export interface Image {

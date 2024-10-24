@@ -3,8 +3,8 @@
 
   export let image: Image;
   export let className = "";
-</script>
 
+</script>
 <img
   src={image.url}
   alt={image.alt}
