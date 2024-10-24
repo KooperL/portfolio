@@ -5,6 +5,7 @@
   import { site } from "$lib/config";
   import { logger } from "$lib/logger";
   import Parser from "$lib/utils/CMS/parser.svelte";
+  import pocketbaseLoggingScreenshot from "$lib/assets/pocketbase-logging-screenshot.png";
 
   onMount(async () => {});
 
@@ -39,8 +40,19 @@
           type: "textBody",
           content: {
             order: 3,
-            buttons: {
+            images: {
+              id: `${projectPathVar}-images`,
               order: 1,
+              images: [
+                {
+                  id: `${projectPathVar}-image-1`,
+                  url: pocketbaseLoggingScreenshot,
+                  alt: "Realtime logging",
+                },
+              ],
+            },
+            buttons: {
+              order: 2,
               id: `${projectPathVar}-action-buttons`,
               buttons: [
                 {

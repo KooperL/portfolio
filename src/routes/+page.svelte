@@ -8,7 +8,7 @@
   import pentoScreenshot from "$lib/assets/pento-screenshot.png";
   import logridgeScreenshot from "$lib/assets/logridge-screenshot.png";
   import redirectedScreenshot from "$lib/assets/redirected-screenshot.png";
-
+  import vitalityScreenshot3 from "$lib/assets/vitality-screenshot-3.jpeg";
 
   onMount(async () => {});
 
@@ -61,14 +61,34 @@
           type: "textBody",
           content: {
             order: 1,
-            title: "Past work projects",
+            title: "Featured projects",
             body: [
-              "Featured websites that I'm proud to have been involved with in the past!",
+              "Featured applications that I'm proud to have been involved with in the past!",
             ],
             cards: {
               order: 1,
               id: "test-cards",
               cards: [
+                {
+                  title: "Vitality",
+                  body: "Personalised health program",
+                  image: {
+                    url: vitalityScreenshot3,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "vitality-card-actions",
+                    buttons: [
+                      {
+                        id: "vitality-view-project",
+                        label: "Read more",
+                        href: "/projects/vitality",
+                        testId: "vitality-card-primary-action",
+                      },
+                    ],
+                  },
+                },
                 {
                   title: "Logridge",
                   body: "HTTP based log aggregator + stats.",
@@ -139,7 +159,7 @@
             order: 2,
             title: "Code projects",
             body: [
-              "Fun projects that I spent a weekend or two on. These are low stakes guys that don't necessarily need to be found on the web.",
+              "Fun projects that I spent a weekend or two on. These guys are low stakes and small scope hobby projects that don't necessarily need to be found on the web.",
             ],
             buttons: {
               order: 1,
