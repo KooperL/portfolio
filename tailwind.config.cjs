@@ -109,6 +109,9 @@ const config = {
         192: "48rem",
         256: "64rem",
       },
+      screens: {
+        "3xl": "1800px",
+      },
     },
   },
 };

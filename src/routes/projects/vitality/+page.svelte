@@ -5,6 +5,8 @@
   import { site } from "$lib/config";
   import { logger } from "$lib/logger";
   import Parser from "$lib/utils/CMS/parser.svelte";
+  import vitalityScreenshot2 from "$lib/assets/vitality-screenshot-1.jpeg";
+  import vitalityScreenshot1 from "$lib/assets/vitality-screenshot-2.jpeg";
 
   onMount(async () => {});
 
@@ -12,12 +14,13 @@
     logInfo: logger.info,
   };
 
-  const projectName = "logridge";
-  const projectDescription = ["Logridge is an efficient HTTP-based log aggregator designed for seamless log management. Instead of relying on bulky SDKs, applications can submit logs through a flexible API, simplifying integration. With Logridge, you can view statistics for all applications within designated tenants, allowing for organized log tracking. Applications can be grouped into tenants, and user access management features enable easy user invitations and collaboration. Streamline your logging process and enhance visibility with Logridge."];
-  const projectPathVar = "logridge";
-  const websiteUrl = "https://logridge.net/";
-  const githubUrl = undefined;
-  const iframeUrl = "https://logridge.net/";
+  const projectName = "Vitality";
+  const projectDescription = ["Vitality is a personalised, science backed health and wellbeing program that supports you in making healthier choices every day."
+  ];
+  const projectPathVar = "vitality";
+  const websiteUrl = "https://apps.apple.com/au/app/aia-vitality-australia/id1584775072";
+  const githubUrl = null
+  const iframeUrl = null
 
   const jsonContent = {
     pageContent: {
@@ -35,8 +38,22 @@
           type: "textBody",
           content: {
             order: 3,
-            buttons: {
+            images: {
+              id: `${projectPathVar}-images`,
               order: 1,
+              images: [
+                {
+                  id: `${projectPathVar}-image-1`,
+                  url: vitalityScreenshot1,
+                },
+                {
+                  id: `${projectPathVar}-image-2`,
+                  url: vitalityScreenshot2,
+                },
+              ],
+            },
+            buttons: {
+              order: 2,
               id: `${projectPathVar}-action-buttons`,
               buttons: [
                 {
@@ -110,3 +127,10 @@
     <Parser content={jsonContent} functions={buttonActions} />
   </Card>
 </div>
+
+<style>
+  img {
+    max-width: 200px;
+    height: auto;
+  }
+</style>
