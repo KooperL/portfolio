@@ -12,12 +12,12 @@
     logInfo: logger.info,
   };
 
-  const projectName = "logridge";
-  const projectDescription = ["Logridge is an efficient HTTP-based log aggregator designed for seamless log management. Instead of relying on bulky SDKs, applications can submit logs through a flexible API, simplifying integration. With Logridge, you can view statistics for all applications within designated tenants, allowing for organized log tracking. Applications can be grouped into tenants, and user access management features enable easy user invitations and collaboration. Streamline your logging process and enhance visibility with Logridge."];
-  const projectPathVar = "logridge";
-  const websiteUrl = "https://logridge.net/";
+  const projectName = "redirected.dev";
+  const projectDescription = ["Redirected is a powerful tracking pixel generator designed to help you capture and analyze traffic in real time. Create and organize tracking pixels into customizable groups for efficient management. With Redirected, you can easily view aggregated statistics to understand user behavior and optimize your marketing efforts. Simplify your data tracking process and make informed decisions with real-time insights at your fingertips."];
+  const projectPathVar = "redirected";
+  const websiteUrl = "https://redirected.dev/";
   const githubUrl = undefined;
-  const iframeUrl = "https://logridge.net/";
+  const iframeUrl = "https://redirected.dev/";
 
   const jsonContent = {
     pageContent: {
