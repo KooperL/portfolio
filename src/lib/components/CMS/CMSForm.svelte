@@ -5,11 +5,8 @@
 
   export let fields: Form["fields"];
   export let submitButton: Form["submitButton"];
-  export let endpoint: Form["endpoint"];
-  export let successMessage: Form["successMessage"];
-  export let errorMessage: Form["errorMessage"];
-  export let bindings = {};
-  export let functions = {};
+  export let bindings: Record<string, { bind: string }> = {};
+  export let functions: Record<string, Function> = {};
 
   let loading = false;
   let success = false;

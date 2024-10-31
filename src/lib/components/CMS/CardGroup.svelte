@@ -1,16 +1,14 @@
 <script lang="ts">
-    import type { ImageGroup } from "$lib/utils/CMS/types";
-  import Card from "./Card.svelte";
-    import CmsImage from "./CMSImage.svelte";
+  import Card from "./CMSCard.svelte";
 
-  export let imageGroup: ImageGroup;
+  export let cardGroup;
   export let layout;
   export let columns = 3;
-  export let buttonActions: Record<string, Function> = {};
+  export let functions: Record<string, Function> = {};
 
   const getLayoutClasses = () => {
     if (layout === "horizontal") {
-      return "w-full justify-around flex flex-wrap overflow-x-auto gap-4";
+      return "flex flex-wrap overflow-x-auto gap-4";
     }
 
     const columnClasses = {
@@ -24,12 +22,11 @@
 </script>
 
 <div class={getLayoutClasses()}>
-  {#each imageGroup.images as image}
+  {#each cardGroup.cards as card}
     <div
       class={`${layout === "horizontal" ? "flex-none" : ""} w-full md:w-[350px] 2xl:w-full 3xl:w-[350px]`}
     >
-    {@debug image}
-      <CmsImage {image} {buttonActions} />
+      <Card {...card} {functions} />
     </div>
   {/each}
 </div>

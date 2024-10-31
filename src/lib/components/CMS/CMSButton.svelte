@@ -1,11 +1,10 @@
 <script lang="ts">
   import { Button } from "flowbite-svelte";
   import * as typess from "$lib/utils/CMS/types";
-  import Icon from "./Icon.svelte";
+  import Icon from "./CMSIcon.svelte";
 
   export let button: typess.Button;
-  export let buttonActions: Record<string, Function> = {};
-
+  export let functions: Record<string, Function> = {};
 </script>
 
 <Button
@@ -17,13 +16,13 @@
   href={button.href}
   disabled={button.disabled}
   data-testid={button.testId}
-  variant={'primary'}
+  variant={"primary"}
   {...$$restProps}
   on:click={() => {
     if (button.events) {
       button.events.forEach((event) => {
-        if (buttonActions[event.name]) {
-          buttonActions[event.name](...event.payload);
+        if (functions[event.name]) {
+          functions[event.name](...event.payload);
         }
       });
     }
@@ -36,5 +35,4 @@
 </Button>
 
 <style>
-
 </style>

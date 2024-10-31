@@ -3,7 +3,7 @@
   import CMSButton from "./CMSButton.svelte";
 
   export let buttonGroup: ButtonGroup;
-  export let buttonActions: Record<string, Function> = {};
+  export let functions: Record<string, Function> = {};
 
   const alignmentClasses = {
     left: "justify-start",
@@ -18,10 +18,12 @@
 </script>
 
 <div
-  class="flex flex-wrap gap-3 {alignmentClasses[buttonGroup.alignment || 'left']} 
+  class="flex flex-wrap gap-3 {alignmentClasses[
+    buttonGroup.alignment || 'left'
+  ]} 
               {layoutClasses[buttonGroup.layout || 'horizontal']}"
 >
   {#each buttonGroup.buttons as button}
-    <CMSButton {button} {buttonActions} />
+    <CMSButton {button} {functions} />
   {/each}
 </div>

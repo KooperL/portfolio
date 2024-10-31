@@ -21,12 +21,12 @@
   let submitted = false;
   let submittedSuccessfully = false;
 
-  let buttonActions = {
+  let functions = {
     logInfo: logger.info,
     submit: handleSubmit,
   };
 
-  async function handleSubmit(name, email, message) {
+  async function handleSubmit(name: string, message: string, email?: string) {
     logger.debug("contact-page", "Submit contact form");
     try {
       if (!name.bind.length) {
@@ -39,6 +39,8 @@
         name: name.bind,
         email: email.bind,
         message: message.bind,
+        source: "portfolio",
+        type: "contact",
       };
       submitted = true;
       submittedSuccessfully = false;
@@ -73,7 +75,6 @@
           content: {
             order: 3,
             id: "contact-form",
-            bindings: bindings,
             fields: [
               {
                 id: "contact-form-name",
@@ -102,8 +103,8 @@
                   name: "submit",
                   payload: [
                     bindings["contact-form-name"],
-                    bindings["contact-form-email"],
                     bindings["contact-form-message"],
+                    bindings["contact-form-email"],
                   ],
                 },
               ],
@@ -117,6 +118,6 @@
 
 <div class="box-border p-8 w-full h-full">
   <Card class="w-full max-w-full h-full max-h-full bg-white overflow-y-scroll">
-    <Parser content={jsonContent} functions={buttonActions} />
+    <Parser content={jsonContent} {functions} {bindings} />
   </Card>
 </div>
