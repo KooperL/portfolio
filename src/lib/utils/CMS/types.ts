@@ -40,6 +40,9 @@ export interface HeroText extends OrderedContent {
   title: string;
   subtitle: string;
   buttons?: ButtonGroup;
+  backgroundImage?: string;
+  size?: "small" | "medium";
+  alignment?: "left" | "center";
 }
 
 export interface TextBody extends OrderedContent {
@@ -50,6 +53,7 @@ export interface TextBody extends OrderedContent {
   cards?: CardGroup;
   card?: Card;
   images?: ImageGroup[];
+  align?: "left" | "center" | "right";
 }
 
 export interface Image {
@@ -79,13 +83,13 @@ export interface FormField {
   type: string;
   placeholder?: string;
   required: boolean;
-  binding: Record<'bind', string>;
+  binding: Record<"bind", string>;
 }
 
 export interface Form extends OrderedContent {
   id: string;
   fields: FormField[];
-  bindings: Record<string, Record<'bind', string>>;
+  bindings: Record<string, Record<"bind", string>>;
   submitButton: Button;
 }
 
@@ -94,13 +98,13 @@ export type ContentElement =
   | { type: "card"; content: Card }
   | { type: "form"; content: Form }
   | { type: "embeddedFrame"; content: EmbeddedFrame }
-  | { type: "buttonGroup"; content: ButtonGroup };
+  | { type: "buttonGroup"; content: ButtonGroup }
+  | { type: "heroSection"; content: HeroText }
 
 export interface PageContent extends OrderedContent {
   elements: ContentElement[];
 }
 
 export interface Content {
-  heroText?: HeroText;
   pageContent: PageContent;
 }

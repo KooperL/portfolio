@@ -5,13 +5,13 @@
   import CmsButtonGroup from "./CMSButtonGroup.svelte";
   import type { Card as CardType } from "$lib/utils/CMS/types";
 
-  export let title: CardType["title"];
-  export let body: CardType["body"];
-  export let image: CardType["image"];
-  export let button: CardType["button"];
-  export let buttonGroup: CardType["buttonGroup"];
-  export let variant: CardType["variant"] = "default";
-  export let buttonActions: Record<string, Function> = {};
+  export let title: null | CardType["title"] = null;
+  export let body: null | CardType["body"] = null;
+  export let image: null | CardType["image"] = null;
+  export let button: null | CardType["button"] = null;
+  export let buttonGroup: null | CardType["buttonGroup"] = null;
+  export let variant: null | CardType["variant"] = "default";
+  export let functions: null | Record<string, Function> = {};
 </script>
 
 <Card
@@ -24,12 +24,15 @@
   } w-full max-w-full`}
 >
   {#if image}
-    <CmsImage {image} className="rounded-t-lg overflow-hidden" style="width: 600px; height: 400px;" />
+    <CmsImage
+      {image}
+      className="rounded-t-lg overflow-hidden"
+    />
   {/if}
 
   {#if title}
     <h5
-      class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+      class="mb-2 text-2xl font-bold tracking-tight text-gray-700 dark:text-white"
     >
       {title}
     </h5>
@@ -40,10 +43,10 @@
   </p>
 
   {#if button}
-    <CmsButton {button} {buttonActions} />
+    <CmsButton {button} {functions} />
   {/if}
 
   {#if buttonGroup}
-    <CmsButtonGroup {buttonGroup} {buttonActions} />
+    <CmsButtonGroup {buttonGroup} {functions} />
   {/if}
 </Card>

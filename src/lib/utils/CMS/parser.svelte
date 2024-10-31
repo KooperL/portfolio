@@ -1,10 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { Alert } from "flowbite-svelte";
-  import HeroSection from "$lib/components/HeroSection.svelte";
-  import TextBodyComponent from "$lib/components/TextBody.svelte";
-  import CardComponent from "$lib/components/Card.svelte";
-  import FormComponent from "$lib/components/Form.svelte";
+  import HeroSection from "$lib/components/CMS/CMSHeroSection.svelte";
+  import TextBodyComponent from "$lib/components/CMS/CMSTextBody.svelte";
+  import CardComponent from "$lib/components/CMS/CMSCard.svelte";
+  import FormComponent from "$lib/components/CMS/CMSForm.svelte";
   import type {
     Content,
     ContentElement,
@@ -13,11 +13,12 @@
     Form,
     EmbeddedFrame,
   } from "$lib/utils/CMS/types";
-  import EmbeddedFrameComponent from "$lib/components/EmbeddedFrame.svelte";
+  import EmbeddedFrameComponent from "$lib/components/CMS/CMSEmbeddedFrame.svelte";
 
   export let content: string | Content;
   export let loading = false;
   export let functions: Record<string, Function> = {};
+  export let bindings: Record<string, { bind: string }> = {};
 
   let parsedContent: Content | null = null;
   let error: string | null = null;
@@ -39,6 +40,12 @@
     element: ContentElement,
   ): element is { type: "embeddedFrame"; content: EmbeddedFrame } =>
     element.type === "embeddedFrame";
+
+    const isHeroSection = (
+    element: ContentElement,
+  ): element is { type: "heroSection"; content: HeroSection } =>
+    element.type === "heroSection";
+
 
   function validateContent(content: Content): boolean {
     try {
@@ -103,19 +110,14 @@
     {error}
   </Alert>
 {:else if parsedContent}
-  <!-- Hero Section -->
-  {#if parsedContent.heroText}
-    <section class="mb-8">
-      <HeroSection {...parsedContent.heroText} buttonActions={functions} />
-    </section>
-  {/if}
-
   {#each sortElements(parsedContent.pageContent.elements) as element}
     <section class="mb-8 h-fit">
-      {#if isTextBody(element)}
-        <TextBodyComponent {...element.content} buttonActions={functions} />
+      {#if isHeroSection(element)}
+        <HeroSection {...element.content} {functions} />
+      {:else if isTextBody(element)}
+        <TextBodyComponent {...element.content} {functions} />
       {:else if isForm(element)}
-        <FormComponent {...element.content} {functions} />
+        <FormComponent {...element.content} {functions} {bindings} />
       {:else if isEmbeddedFrame(element)}
         <EmbeddedFrameComponent {...element.content} />
       {:else}

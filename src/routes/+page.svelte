@@ -9,15 +9,26 @@
   import logridgeScreenshot from "$lib/assets/logridge-screenshot.png";
   import redirectedScreenshot from "$lib/assets/redirected-screenshot.png";
   import vitalityScreenshot3 from "$lib/assets/vitality-screenshot-3.jpeg";
+  import pocketbaseLoggingScreenshot from "$lib/assets/pocketbase-logging-screenshot-2.png";
+  import mdAppScreenshot from "$lib/assets/md-app-screenshot.png";
+  import bingoAppScreenshot from "$lib/assets/bingo-app-screenshot.png";
+  import tailwindColorGeneratorScreenshot from "$lib/assets/tailwind-color-generator-screenshot.png";
+  import sveltePocketbaseQuickstartScreenshot from "$lib/assets/svelte-pocketbase-quickstart-screenshot.png";
+  import portfolioScreenshot from "$lib/assets/portfolio-screenshot.png";
+// https://placehold.co/600x400/EEE/31343C
 
   onMount(async () => {});
 
-  let buttonActions = {
+  let functions = {
     logInfo: logger.info,
   };
 
   const jsonContent = {
-    heroText: {
+    pageContent: {
+      elements: [
+        {
+          type: "heroSection",
+          content: {
       order: 1,
       title: "Welcome to my portfolio",
       subtitle:
@@ -54,9 +65,7 @@
         ],
       },
     },
-    pageContent: {
-      order: 2,
-      elements: [
+        },
         {
           type: "textBody",
           content: {
@@ -156,89 +165,137 @@
         {
           type: "textBody",
           content: {
-            order: 2,
+            order: 1,
             title: "Code projects",
             body: [
               "Fun projects that I spent a weekend or two on. These guys are low stakes and small scope hobby projects that don't necessarily need to be found on the web.",
             ],
-            buttons: {
+            cards: {
               order: 1,
-              id: "code-projects-buttons",
-              buttons: [
+              id: "test-cards",
+              cards: [
                 {
-                  id: "tailwind-color-generator",
-                  label: "tailwind-color-generator",
-                  href: "/projects/tailwind-color-generator",
-                  events: [
-                    {
-                      name: "logInfo",
-                      payload: [
-                        "home",
-                        "Press on 'tailwind-color-generator' button",
-                      ],
-                    },
-                  ],
+                  title: "tailwind-color-generator",
+                  body: "Random color generator for the tailwindcss tool",
+                  image: {
+                    url: tailwindColorGeneratorScreenshot,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "tailwind-color-generator-card-actions",
+                    buttons: [
+                      {
+                        id: "tailwind-color-generator-view-project",
+                        label: "Read more",
+                        href: "/projects/tailwind-color-generator",
+                        testId: "tailwind-color-generator-card-primary-action",
+                      },
+                    ],
+                  },
                 },
                 {
-                  id: "dropzones",
-                  label: "dropzones",
-                  href: "/projects/bingo-app",
-                  testId: "projects-link-to-bingo",
-                  events: [
-                    {
-                      name: "logInfo",
-                      payload: ["home", "Press on 'dropzones' button"],
-                    },
-                  ],
+                  title: "dropzones",
+                  body: "Drag and drop bingo card generator",
+                  image: {
+                    url: bingoAppScreenshot,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "dropzones-card-actions",
+                    buttons: [
+                      {
+                        id: "dropzones-view-project",
+                        label: "Read more",
+                        href: "/projects/bingo_app",
+                        testId: "dropzones-card-primary-action",
+                      },
+                    ],
+                  },
                 },
                 {
-                  id: "portfolio",
-                  label: "portfolio",
-                  href: "/projects/portfolio",
-                  events: [
-                    {
-                      name: "logInfo",
-                      payload: ["home", "Press on 'portfolio' button"],
-                    },
-                  ],
+                  title: "portfolio",
+                  body: "Recursion joke here",
+                  image: {
+                    url: portfolioScreenshot,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "portfolio-card-actions",
+                    buttons: [
+                      {
+                        id: "portfolio-view-project",
+                        label: "Read more",
+                        href: "/projects/portfolio",
+                        testId: "portfolio-card-primary-action",
+                      },
+                    ],
+                  },
                 },
                 {
-                  id: "svelte-pocketbase-quickstart",
-                  label: "svelte-pocketbase-quickstart",
-                  href: "/projects/svelte-pocketbase-quickstart",
-                  events: [
-                    {
-                      name: "logInfo",
-                      payload: [
-                        "home",
-                        "Press on 'svelte-pocketbase-quickstart' button",
-                      ],
-                    },
-                  ],
+                  title: "svelte-pocketbase-quickstart",
+                  body: "Quickstart for svelte-pocketbase",
+                  image: {
+                    url: sveltePocketbaseQuickstartScreenshot,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "svelte-pocketbase-quickstart-card-actions",
+                    buttons: [
+                      {
+                        id: "svelte-pocketbase-quickstart-view-project",
+                        label: "Read more",
+                        href: "/projects/svelte_pocketbase_quickstart",
+                        testId: "svelte-pocketbase-quickstart-card-primary-action",
+                      },
+                    ],
+                  },
                 },
                 {
-                  id: "text-processor",
-                  label: "text processor",
-                  href: "/projects/md-app",
-                  events: [
-                    {
-                      name: "logInfo",
-                      payload: ["home", "Press on 'text-processor' button"],
-                    },
-                  ],
+                  title: "text-processor",
+                  body: "Markdown editor",
+                  image: {
+                    url: mdAppScreenshot,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "text-processor-card-actions",
+                    buttons: [
+                      {
+                        id: "text-processor-view-project",
+                        label: "Read more",
+                        href: "/projects/md_app",
+                        testId: "text-processor-card-primary-action",
+                      },
+                    ],
+                  },
                 },
                 {
-                  id: "pocketbase-logging",
-                  label: "pocketbase-logging",
-                  href: "/projects/pocketbase-logging",
-                  events: [
-                    {
-                      name: "logInfo",
-                      payload: ["home", "Press on 'pocketbase-logging' button"],
-                    },
-                  ],
+                  title: "pocketbase-logging",
+                  body: "Logging for pocketbase",
+                  image: {
+                    url: pocketbaseLoggingScreenshot,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "pocketbase-logging-card-actions",
+                    buttons: [
+                      {
+                        id: "pocketbase-logging-view-project",
+                        label: "Read more",
+                        href: "/projects/pocketbase_logging",
+                        testId: "pocketbase-logging-card-primary-action",
+                      },
+                    ],
+                  },
                 },
-              ],
+
+              ]
             },
           },
         },
@@ -289,6 +346,6 @@
 
 <div class="box-border p-8 w-full h-full">
   <Card class="w-full max-w-full h-full max-h-full bg-white overflow-y-scroll">
-    <Parser content={jsonContent} functions={buttonActions} />
+    <Parser content={jsonContent} {functions} />
   </Card>
 </div>

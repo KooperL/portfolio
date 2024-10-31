@@ -8,7 +8,7 @@
 
   onMount(async () => {});
 
-  let buttonActions = {
+  let functions = {
     logInfo: logger.info,
   };
   const jsonContent1 = {
@@ -46,7 +46,7 @@
             buttons: {
               order: 1,
               id: `about-action-buttons`,
-            buttons: [
+              buttons: [
                 {
                   id: `about-back-button`,
                   label: "Back",
@@ -55,12 +55,12 @@
                   events: [
                     {
                       name: "logInfo",
-                      payload: ['about', "Press on 'back' button"],
+                      payload: ["about", "Press on 'back' button"],
                     },
                   ],
                 },
               ],
-            }
+            },
           },
         },
       ],
@@ -70,12 +70,17 @@
 
 <div class="box-border p-8 w-full h-full">
   <Card class="w-full max-w-full h-full max-h-full bg-white overflow-y-scroll">
-    <Parser content={jsonContent1} functions={buttonActions} />
+    <Parser content={jsonContent1} {functions} />
     <div class="w-full flex justify-center">
-    <div class="github-card" data-github="kooperl" data-width="400" data-height="152" data-theme="default"></div>
-<script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+      <div
+        class="github-card"
+        data-github="kooperl"
+        data-width="400"
+        data-height="152"
+        data-theme="default"
+      ></div>
+      <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
     </div>
-<Parser content={jsonContent2} functions={buttonActions} />
-
+    <Parser content={jsonContent2} {functions} />
   </Card>
 </div>
