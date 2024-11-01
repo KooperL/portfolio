@@ -41,11 +41,10 @@
   ): element is { type: "embeddedFrame"; content: EmbeddedFrame } =>
     element.type === "embeddedFrame";
 
-    const isHeroSection = (
+  const isHeroSection = (
     element: ContentElement,
   ): element is { type: "heroSection"; content: HeroSection } =>
     element.type === "heroSection";
-
 
   function validateContent(content: Content): boolean {
     try {
