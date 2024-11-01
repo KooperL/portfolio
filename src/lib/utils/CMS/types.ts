@@ -99,7 +99,7 @@ export type ContentElement =
   | { type: "form"; content: Form }
   | { type: "embeddedFrame"; content: EmbeddedFrame }
   | { type: "buttonGroup"; content: ButtonGroup }
-  | { type: "heroSection"; content: HeroText }
+  | { type: "heroSection"; content: HeroText };
 
 export interface PageContent extends OrderedContent {
   elements: ContentElement[];

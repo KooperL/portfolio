@@ -8,7 +8,7 @@ export const projects = {
   pento: {
     projectName: "pento.page",
     projectDescription: [
-      "Pento is a user-friendly platform for sharing and storing content, similar to Pastebin. It allows users to quickly dump text, code, or any other content without the need for account registration. Engage with the community by leaving comments and ratings on submissions, and track the popularity of your content through view counts. Pento also offers API and CLI access, making it easy to integrate with your applications and workflows. Share your ideas seamlessly with Pento!",
+      "Pento is a user-friendly platform for sharing and storing text based content built with built from the ground up with privacy in mind. It allows users to quickly dump text, code, or any other content without the need for account registration and features the option to completely mask content by encrypting it. Engage with the community by leaving comments and ratings on submissions, and track the popularity of your content through view counts. Pento also offers API and CLI access, making it easy to integrate with your applications and workflows. Share your ideas seamlessly with Pento!",
     ],
     projectPathVar: "pento",
     websiteUrl: "https://pento.page/",
@@ -26,7 +26,7 @@ export const projects = {
   logridge: {
     projectName: "logridge",
     projectDescription: [
-      "Logridge is an efficient HTTP-based log aggregator designed for seamless log management. Instead of relying on bulky SDKs, applications can submit logs through a flexible API, simplifying integration. With Logridge, you can view statistics for all applications within designated tenants, allowing for organized log tracking. Applications can be grouped into tenants, and user access management features enable easy user invitations and collaboration. Streamline your logging process and enhance visibility with Logridge.",
+      "Logridge is an efficient HTTP-based log aggregator designed for seamless log storage and management. Instead of relying on bulky SDKs, applications can submit logs through a flexible API, simplifying integration. With Logridge, you can view statistics for all applications within designated tenants, allowing for organized log tracking. Applications can be grouped into tenants, and user access management features enable easy user invitations and collaboration. Streamline your logging process and enhance visibility with Logridge.",
     ],
     projectPathVar: "logridge",
     websiteUrl: "https://logridge.net/",
@@ -83,6 +83,8 @@ export const projects = {
     projectName: "Vitality",
     projectDescription: [
       "Vitality is a personalised, science backed health and wellbeing program that supports you in making healthier choices every day.",
+      "Using the principles of behavioural science, AIA Vitality incentivises you to take small steps towards improving your wellbeing and leading a healthier, longer, better life.",
+      "Vitality is available on the apple app store and google play store.",
     ],
     projectPathVar: "vitality",
     websiteUrl:
@@ -138,7 +140,7 @@ export const generateProjectContent = (
           content: {
             order: 1,
             title: projectName,
-            body: projectDescription,
+            body: [...projectDescription, 'Check it out below!'],
           },
         },
         {

@@ -12,41 +12,55 @@
   export let buttonGroup: null | CardType["buttonGroup"] = null;
   export let variant: null | CardType["variant"] = "default";
   export let functions: null | Record<string, Function> = {};
+  export let horizontal: boolean = false;
 </script>
 
 <Card
+  {horizontal}
   class={`${
     variant === "featured"
       ? "border-blue-500 shadow-lg"
       : variant === "minimal"
         ? "border-0 shadow-none"
         : ""
-  } w-full max-w-full`}
+  } w-full max-w-full ${horizontal ? "items-center justify-between" : ""}`}
 >
-  {#if image}
-    <CmsImage
-      {image}
-      className="rounded-t-lg overflow-hidden"
-    />
-  {/if}
+  <div
+    class={`${horizontal ? "w-full flex flex-row items-center justify-between" : ""}`}
+  >
+    {#if image}
+      <div class="h-full flex justify-center items-center ">
+        <CmsImage
+          {image}
+          className={`rounded-t-lg overflow-hidden ${horizontal ? "hidden sm:block max-w-36" : ""}`}
+        />
+      </div>
+    {/if}
+    <div
+    class={`${horizontal ? "w-full max-w-full flex flex-row items-center justify-between" : ""}`}
+  >
+    <div class="p-4 flex flex-col truncate">
+      {#if title}
+        <h5
+          class="mb-2 text-2xl font-bold tracking-tight text-gray-700 dark:text-white"
+        >
+          {title}
+        </h5>
+      {/if}
 
-  {#if title}
-    <h5
-      class="mb-2 text-2xl font-bold tracking-tight text-gray-700 dark:text-white"
-    >
-      {title}
-    </h5>
-  {/if}
+      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-wrap">
+        {body}
+      </p>
+    </div>
+  <div>
+    {#if button}
+      <CmsButton {button} {functions} />
+    {/if}
 
-  <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-    {body}
-  </p>
-
-  {#if button}
-    <CmsButton {button} {functions} />
-  {/if}
-
-  {#if buttonGroup}
-    <CmsButtonGroup {buttonGroup} {functions} />
-  {/if}
+    {#if buttonGroup}
+      <CmsButtonGroup {buttonGroup} {functions} />
+    {/if}
+  </div>
+</div>
+</div>
 </Card>

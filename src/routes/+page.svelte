@@ -15,7 +15,8 @@
   import tailwindColorGeneratorScreenshot from "$lib/assets/tailwind-color-generator-screenshot.png";
   import sveltePocketbaseQuickstartScreenshot from "$lib/assets/svelte-pocketbase-quickstart-screenshot.png";
   import portfolioScreenshot from "$lib/assets/portfolio-screenshot.png";
-// https://placehold.co/600x400/EEE/31343C
+    import { isMobile } from "$lib/utils/responsive";
+  // https://placehold.co/600x400/EEE/31343C
 
   onMount(async () => {});
 
@@ -29,42 +30,42 @@
         {
           type: "heroSection",
           content: {
-      order: 1,
-      title: "Welcome to my portfolio",
-      subtitle:
-        "I'm Kooper. Have a poke around and enjoy your visit. Let me know if you like what you see!",
+            order: 1,
+            title: "Welcome to my portfolio",
+            subtitle:
+              "I'm Kooper. Have a poke around and enjoy your visit. Let me know if you like what you see!",
 
-      buttons: {
-        order: 1,
-        id: "home-nav-buttons",
-        buttons: [
-          {
-            id: "about",
-            label: "about",
-            href: "/about",
-            testId: "home-link-to-about",
-            events: [
-              {
-                name: "logInfo",
-                payload: ["home", "Press on 'about' button"],
-              },
-            ],
+            buttons: {
+              order: 1,
+              id: "home-nav-buttons",
+              buttons: [
+                {
+                  id: "about",
+                  label: "about",
+                  href: "/about",
+                  testId: "home-link-to-about",
+                  events: [
+                    {
+                      name: "logInfo",
+                      payload: ["home", "Press on 'about' button"],
+                    },
+                  ],
+                },
+                {
+                  id: "contact",
+                  label: "contact",
+                  href: "/contact",
+                  testId: "home-link-to-contact",
+                  events: [
+                    {
+                      name: "logInfo",
+                      payload: ["home", "Press on 'contact' button"],
+                    },
+                  ],
+                },
+              ],
+            },
           },
-          {
-            id: "contact",
-            label: "contact",
-            href: "/contact",
-            testId: "home-link-to-contact",
-            events: [
-              {
-                name: "logInfo",
-                payload: ["home", "Press on 'contact' button"],
-              },
-            ],
-          },
-        ],
-      },
-    },
         },
         {
           type: "textBody",
@@ -72,15 +73,18 @@
             order: 1,
             title: "Featured projects",
             body: [
-              "Featured applications that I'm proud to have been involved with in the past!",
+              "Featured applications that I'm proud to have been involved with in the past! These applications are the result of hard work and aim to empower their users.",
             ],
             cards: {
               order: 1,
               id: "test-cards",
+              columns: 3,
+              horizontal: !isMobile(),
+
               cards: [
                 {
                   title: "Vitality",
-                  body: "Personalised health program",
+                  body: "Vitality is a personalised, science backed health and wellbeing program that supports you in making healthier choices every day.",
                   image: {
                     url: vitalityScreenshot3,
                     alt: "Screenshot of project",
@@ -100,7 +104,7 @@
                 },
                 {
                   title: "Logridge",
-                  body: "HTTP based log aggregator + stats.",
+                  body: "Logridge is an efficient HTTP-based log aggregator designed for seamless log storage and management.",
                   image: {
                     url: logridgeScreenshot,
                     alt: "Screenshot of project",
@@ -120,7 +124,7 @@
                 },
                 {
                   title: "Redirected.dev",
-                  body: "Instant online tracking pixels + IP grabber",
+                  body: "Redirected is a powerful tracking pixel generator designed to help you capture and analyze traffic in real time.",
                   image: {
                     url: redirectedScreenshot,
                     alt: "Screenshot of project",
@@ -140,7 +144,7 @@
                 },
                 {
                   title: "Pento",
-                  body: "Online note archive",
+                  body: "Pento is a user-friendly platform for sharing and storing text based content built with built from the ground up with privacy in mind.",
                   image: {
                     url: pentoScreenshot,
                     alt: "Screenshot of project",
@@ -173,6 +177,7 @@
             cards: {
               order: 1,
               id: "test-cards",
+              columns: 3,
               cards: [
                 {
                   title: "tailwind-color-generator",
@@ -249,7 +254,8 @@
                         id: "svelte-pocketbase-quickstart-view-project",
                         label: "Read more",
                         href: "/projects/svelte_pocketbase_quickstart",
-                        testId: "svelte-pocketbase-quickstart-card-primary-action",
+                        testId:
+                          "svelte-pocketbase-quickstart-card-primary-action",
                       },
                     ],
                   },
@@ -294,8 +300,7 @@
                     ],
                   },
                 },
-
-              ]
+              ],
             },
           },
         },
@@ -344,7 +349,7 @@
   };
 </script>
 
-<div class="box-border p-8 w-full h-full">
+<div class="box-border p-0 sm:p-8 w-full h-full">
   <Card class="w-full max-w-full h-full max-h-full bg-white overflow-y-scroll">
     <Parser content={jsonContent} {functions} />
   </Card>

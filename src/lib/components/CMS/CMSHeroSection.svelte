@@ -15,20 +15,20 @@
     : "";
 </script>
 
-<div class="relative bg-cover bg-center py-16 px-4" style={bgStyle}>
+<div class="relative bg-cover bg-center pt-8 pb-24 px-16 sm:py-16 sm:px-4" style={bgStyle}>
   <div class="background bottom bg-primary-700"></div>
   <div class="background top bg-gray-300"></div>
   <div
-    class={`relative z-3 max-w-screen-xl ${alignment === 'center' ? 'mx-auto text-center' : 'mx-4 text-left'}`}
+    class={`relative z-3 max-w-screen-xl ${alignment === "center" ? "mx-auto text-center" : "mx-4 text-left"}`}
     style="z-index:3;"
   >
     <h1
-      class={`font-extrabold tracking-tight text-gray-700 leading-none ${size === 'medium' ? 'text-4xl md:text-5xl lg:text-6xl' : 'text-2xl md:text-3xl lg:text-4xl'}`}
+      class={`font-extrabold tracking-tight text-gray-700 leading-none ${size === "medium" ? "text-4xl md:text-5xl lg:text-6xl" : "text-2xl md:text-3xl lg:text-4xl"}`}
     >
       {title}
     </h1>
     <p
-      class={`mb-8font-normal text-gray-700 ${size === 'medium' ? 'text-lg  lg:text-xl' : ''} ${alignment === 'center' ? 'sm:px-16 lg:px-48' : ''}`}
+      class={`mb-8 font-normal text-gray-700 ${size === "medium" ? "text-lg  lg:text-xl" : ""} ${alignment === "center" ? "sm:px-16 lg:px-48" : ""}`}
     >
       {subtitle}
     </p>

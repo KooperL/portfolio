@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { TextBody } from "$lib/utils/CMS/types";
   import Card from "./CMSCard.svelte";
-  import CardGroup from "./CardGroup.svelte";
+  import CardGroup from "./CMSCardGroup.svelte";
   import CmsButton from "./CMSButton.svelte";
   import CmsButtonGroup from "./CMSButtonGroup.svelte";
   import CmsImage from "./CMSImage.svelte";
@@ -27,7 +27,9 @@
 
 <div class="py-2 px-2 mx-auto max-w-screen-xl lg:px-12 {textAlign}">
   {#if title}
-    <h2 class="mb-4 text-3xl font-extrabold text-gray-700 dark:text-white">{title}</h2>
+    <h2 class="mb-4 text-3xl font-extrabold text-gray-700 dark:text-white">
+      {title}
+    </h2>
   {/if}
 
   {#if body}

@@ -8,7 +8,7 @@
 </script>
 
 <Button
-  class="custom-button rounded"
+  class="custom-button rounded text-nowrap"
   style="
   -webkit-clip-path: polygon(0 0, 100% 0, 100% 66%, 78% 100%, 0 100%);
   clip-path: polygon(0 0, 100% 0, 100% 66%, 78% 100%, 0 100%);
