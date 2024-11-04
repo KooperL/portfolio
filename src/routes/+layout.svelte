@@ -24,6 +24,7 @@
   import { metadata, toast } from "$lib/app/stores";
   import { base } from "$app/paths";
   import { onMount } from "svelte";
+  import { isMobile } from "$lib/utils/responsive";
 
   let GridComponent;
   let formModal = false;
@@ -33,6 +34,7 @@
   beforeNavigate(() => {});
 
   onMount(async () => {
+    if (isMobile()) return;
     GridComponent = (
       await import("$lib/components/scenes/grid/component.svelte")
     ).default;

@@ -14,6 +14,7 @@
     EmbeddedFrame,
   } from "$lib/utils/CMS/types";
   import EmbeddedFrameComponent from "$lib/components/CMS/CMSEmbeddedFrame.svelte";
+  import { metadata } from "$lib/app/stores";
 
   export let content: string | Content;
   export let loading = false;
@@ -80,6 +81,16 @@
 
       if (!validateContent(parsedContent)) {
         parsedContent = null;
+      }
+
+      if (parsedContent?.pageMetadata) {
+        const { title, description, headline } = parsedContent.pageMetadata;
+        metadata.update((m) => {
+          m.title = title;
+          m.description = description;
+          m.headline = headline;
+          return m;
+        });
       }
     } catch (err) {
       error = "Failed to parse content";

@@ -15,7 +15,7 @@
   import tailwindColorGeneratorScreenshot from "$lib/assets/tailwind-color-generator-screenshot.png";
   import sveltePocketbaseQuickstartScreenshot from "$lib/assets/svelte-pocketbase-quickstart-screenshot.png";
   import portfolioScreenshot from "$lib/assets/portfolio-screenshot.png";
-    import { isMobile } from "$lib/utils/responsive";
+  import { isMobile } from "$lib/utils/responsive";
   // https://placehold.co/600x400/EEE/31343C
 
   onMount(async () => {});
@@ -25,6 +25,13 @@
   };
 
   const jsonContent = {
+    pageMetadata: {
+      title: "",
+      headline:
+        "I'm Kooper. Have a poke around and enjoy your visit. Let me know if you like what you see!",
+      description:
+        "I'm Kooper. Have a poke around and enjoy your visit. Let me know if you like what you see!",
+    },
     pageContent: {
       elements: [
         {

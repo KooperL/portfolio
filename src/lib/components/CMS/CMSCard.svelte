@@ -29,7 +29,7 @@
     class={`${horizontal ? "w-full flex flex-row items-center justify-between" : ""}`}
   >
     {#if image}
-      <div class="h-full flex justify-center items-center ">
+      <div class="h-full flex justify-center items-center">
         <CmsImage
           {image}
           className={`rounded-t-lg overflow-hidden ${horizontal ? "hidden sm:block max-w-36" : ""}`}
@@ -37,30 +37,30 @@
       </div>
     {/if}
     <div
-    class={`${horizontal ? "w-full max-w-full flex flex-row items-center justify-between" : ""}`}
-  >
-    <div class="p-4 flex flex-col truncate">
-      {#if title}
-        <h5
-          class="mb-2 text-2xl font-bold tracking-tight text-gray-700 dark:text-white"
-        >
-          {title}
-        </h5>
-      {/if}
+      class={`${horizontal ? "w-full max-w-full flex flex-row items-center justify-between" : ""}`}
+    >
+      <div class="p-4 flex flex-col truncate">
+        {#if title}
+          <h5
+            class="mb-2 text-2xl font-bold tracking-tight text-gray-700 dark:text-white"
+          >
+            {title}
+          </h5>
+        {/if}
 
-      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-wrap">
-        {body}
-      </p>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-wrap">
+          {body}
+        </p>
+      </div>
+      <div>
+        {#if button}
+          <CmsButton {button} {functions} />
+        {/if}
+
+        {#if buttonGroup}
+          <CmsButtonGroup {buttonGroup} {functions} />
+        {/if}
+      </div>
     </div>
-  <div>
-    {#if button}
-      <CmsButton {button} {functions} />
-    {/if}
-
-    {#if buttonGroup}
-      <CmsButtonGroup {buttonGroup} {functions} />
-    {/if}
   </div>
-</div>
-</div>
 </Card>

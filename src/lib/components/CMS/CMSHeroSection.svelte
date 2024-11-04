@@ -15,7 +15,10 @@
     : "";
 </script>
 
-<div class="relative bg-cover bg-center pt-8 pb-24 px-16 sm:py-16 sm:px-4" style={bgStyle}>
+<div
+  class="relative bg-cover bg-center pt-8 pb-24 px-16 sm:py-16 sm:px-4"
+  style={bgStyle}
+>
   <div class="background bottom bg-primary-700"></div>
   <div class="background top bg-gray-300"></div>
   <div
