@@ -45,6 +45,12 @@ export interface HeroText extends OrderedContent {
   alignment?: "left" | "center";
 }
 
+export interface PageMetadata {
+  title: string;
+  description: string;
+  headline: string;
+}
+
 export interface TextBody extends OrderedContent {
   title?: string;
   body: string[];
@@ -106,5 +112,6 @@ export interface PageContent extends OrderedContent {
 }
 
 export interface Content {
+  pageMetadata: PageMetadata;
   pageContent: PageContent;
 }

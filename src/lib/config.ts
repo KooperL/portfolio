@@ -128,10 +128,16 @@ export const projects = {
 export const generateProjectContent = (
   projectPathVar: keyof typeof projects,
 ) => {
+  console.log(Object.keys(projects).join(","));
   const { projectDescription, projectName, websiteUrl, githubUrl, iframeUrl } =
     projects[projectPathVar];
 
   const jsonContent = {
+    pageMetadata: {
+      title: projectName,
+      description: projectDescription.join(" "),
+      headline: projectName,
+    },
     pageContent: {
       order: 2,
       elements: [
@@ -140,7 +146,7 @@ export const generateProjectContent = (
           content: {
             order: 1,
             title: projectName,
-            body: [...projectDescription, 'Check it out below!'],
+            body: [...projectDescription, "Check it out below!"],
           },
         },
         {
