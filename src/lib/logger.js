@@ -9,13 +9,7 @@ function generateSession() {
 }
 
 async function getIdentifier() {
-  try {
-    const id = await localStorage.getItem("identifier");
-    return id || "no-identifier";
-  } catch (e) {
-    console.error("Error accessing localStorage:", e);
-    return "no-identifier";
-  }
+  return null
 }
 
 async function makeOpts(payload) {
@@ -24,7 +18,7 @@ async function makeOpts(payload) {
     ...payload,
     submitted_on: new Date().toISOString().split("T")[0],
     source: "web-prod-1.0",
-    host: window.navigator.userAgent,
+    host: globalThis?.navigator && globalThis.navigator.userAgent,
     identifier,
     session: session,
     session_inc: session_inc,
