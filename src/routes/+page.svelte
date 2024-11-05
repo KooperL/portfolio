@@ -16,15 +16,23 @@
   import sveltePocketbaseQuickstartScreenshot from "$lib/assets/svelte-pocketbase-quickstart-screenshot.png";
   import portfolioScreenshot from "$lib/assets/portfolio-screenshot.png";
   import { isMobile } from "$lib/utils/responsive";
+    import { writable } from "svelte/store";
   // https://placehold.co/600x400/EEE/31343C
 
-  onMount(async () => {});
+  let shouldShowHorizontalCard = writable(true)
+
+  onMount(async () => {
+    if (isMobile()) {
+      shouldShowHorizontalCard.set(false)
+      console.log('mobile')
+    }
+  });
 
   let functions = {
     logInfo: logger.info,
   };
 
-  const jsonContent = {
+  $: jsonContent = {
     pageMetadata: {
       title: "",
       headline:
@@ -86,7 +94,7 @@
               order: 1,
               id: "test-cards",
               columns: 3,
-              horizontal: !isMobile(),
+              horizontal: $shouldShowHorizontalCard,
 
               cards: [
                 {
