@@ -38,6 +38,8 @@
   import { page } from "$app/stores";
   import { site } from "$lib/config";
   import { logger } from "$lib/logger";
+    import { base } from "$app/paths";
+
 
   let openLoginModalAttempted = false;
   let logoutModalAttempted = false;
@@ -52,7 +54,7 @@
     on:click={(e) => {
       logger.info("nav-bar", 'Press "home" button');
     }}
-    href="/"
+    href={base + '/'}
     class="w-20"
   >
     <span
