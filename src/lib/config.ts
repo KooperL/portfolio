@@ -128,7 +128,6 @@ export const projects = {
 export const generateProjectContent = (
   projectPathVar: keyof typeof projects,
 ) => {
-  console.log(Object.keys(projects).join(","));
   const { projectDescription, projectName, websiteUrl, githubUrl, iframeUrl } =
     projects[projectPathVar];
 

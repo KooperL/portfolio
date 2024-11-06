@@ -24,7 +24,6 @@
   onMount(async () => {
     if (isMobile()) {
       shouldShowHorizontalCard.set(false)
-      console.log('mobile')
     }
   });
 

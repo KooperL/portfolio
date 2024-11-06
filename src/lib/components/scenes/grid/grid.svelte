@@ -37,7 +37,6 @@
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      console.log("resize");
     }
   };
 
@@ -62,7 +61,6 @@
     }
     geometry.computeVertexNormals();
     geometry.attributes.position.needsUpdate = true;
-    // console.log(Object.keys(geometry))
     // geometry.computeFaceNormals()
   }
 
