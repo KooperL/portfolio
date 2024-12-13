@@ -10,6 +10,7 @@
   import redirectedScreenshot from "$lib/assets/redirected-screenshot.png";
   import vitalityScreenshot3 from "$lib/assets/vitality-screenshot-3.jpeg";
   import pocketbaseLoggingScreenshot from "$lib/assets/pocketbase-logging-screenshot-2.png";
+  import simpleSteganographyScreenshot from "$lib/assets/simple-steganography-screenshot.png";
   import mdAppScreenshot from "$lib/assets/md-app-screenshot.png";
   import bingoAppScreenshot from "$lib/assets/bingo-app-screenshot.png";
   import tailwindColorGeneratorScreenshot from "$lib/assets/tailwind-color-generator-screenshot.png";
@@ -207,7 +208,7 @@
                       {
                         id: "tailwind-color-generator-view-project",
                         label: "Read more",
-                        href: "/projects/tailwind-color-generator",
+                        href: "/projects/tailwind_color_generator",
                         testId: "tailwind-color-generator-card-primary-action",
                       },
                     ],
@@ -310,6 +311,26 @@
                         label: "Read more",
                         href: "/projects/pocketbase_logging",
                         testId: "pocketbase-logging-card-primary-action",
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "Steganographic encoder",
+                  body: "Secretly encode data into bodies of text",
+                  image: {
+                    url: simpleSteganographyScreenshot,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "simple-steganography-card-actions",
+                    buttons: [
+                      {
+                        id: "simple-steganography-view-project",
+                        label: "Read more",
+                        href: "/projects/simple_steganography",
+                        testId: "simple-steganography-card-primary-action",
                       },
                     ],
                   },
