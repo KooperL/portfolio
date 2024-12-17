@@ -110,10 +110,22 @@ export const projects = {
       "Tailwind is a framework that simultaneously fixes CSS as well as streamlining the process of standardising style formats.",
       " The colours generated here can be plugged straight into a tailwind configuration file to instantly use a beatiful colour palatte across a project using tailwind.",
     ],
-    projectPathVar: "tailwind-color-generator",
+    projectPathVar: "tailwind_color_generator",
     websiteUrl: "https://kooperl.github.io/tailwind-color-generator/",
     githubUrl: "https://github.com/KooperL/tailwind-color-generator",
     iframeUrl: "https://kooperl.github.io/tailwind-color-generator/",
+  },
+  simple_steganography: {
+    projectName: "Steganography encoder",
+    projectDescription: [
+      "Steganography is the practice of hiding information within another medium so that the existence of the hidden information is not obvious. When applied to text, it is often referred to as text steganography.",
+      "This project is a simple text steganography encoder that allows you to encode and decode secret messages within text.",
+      "The encoder works by using spaces (one space for 0, two spaces for 1) to encode the message. The decoder then reads the spaces to decode the message.",
+    ],
+    projectPathVar: "simple_steganography",
+    websiteUrl: "https://kooperl.github.io/simple-steganography/",
+    githubUrl: "https://github.com/KooperL/simple-steganography",
+    iframeUrl: "https://kooperl.github.io/simple-steganography/",
   },
   vybs: {
     projectName: "vybs.tv",
