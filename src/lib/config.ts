@@ -99,7 +99,7 @@ export const projects = {
       "Quickly get started with a Svelte project that uses Pocketbase as a backend service. This project is a great starting point for any Svelte project that needs a backend service.",
     ],
     projectPathVar: "svelte_pocketbase_quickstart",
-    websiteUrl: null && "/",
+    websiteUrl: "https://svelte-pocketbase-quickstart.pages.dev/",
     githubUrl: "https://github.com/KooperL/svelte-pocketbase-quickstart",
     iframeUrl: null && "/",
   },
