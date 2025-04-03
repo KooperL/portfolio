@@ -49,9 +49,10 @@
       submitted = false;
       logger.trace("contact-page", "Contact form submitted successfully");
     } catch (e) {
+      const error = "Failed to submit contact form";
       logger.error(
         "contact-page",
-        "Failed to submit contact form: " + e.message,
+        error + ": " + e.message,
       );
     }
   }
@@ -118,6 +119,11 @@
 
 <div class="box-border p-8 w-full h-full">
   <Card class="w-full max-w-full h-full max-h-full bg-white overflow-y-scroll">
+  <!-- TODO, mappings here -->
+  {#if submittedSuccessfully}
+    <p>Alright, this one's sitting with me now</p>
+  {:else}
     <Parser content={jsonContent} {functions} {bindings} />
+  {/if}
   </Card>
 </div>
