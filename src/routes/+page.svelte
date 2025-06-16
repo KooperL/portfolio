@@ -11,6 +11,8 @@
   import vitalityScreenshot3 from "$lib/assets/vitality-screenshot-3.jpeg";
   import pocketbaseLoggingScreenshot from "$lib/assets/pocketbase-logging-screenshot-2.png";
   import simpleSteganographyScreenshot from "$lib/assets/simple-steganography-screenshot.png";
+  import qrEncoderScreenshot from "$lib/assets/qr-encoder-screenshot.png";
+  
   import mdAppScreenshot from "$lib/assets/md-app-screenshot.png";
   import bingoAppScreenshot from "$lib/assets/bingo-app-screenshot.png";
   import tailwindColorGeneratorScreenshot from "$lib/assets/tailwind-color-generator-screenshot.png";
@@ -331,6 +333,26 @@
                         label: "Read more",
                         href: "/projects/simple_steganography",
                         testId: "simple-steganography-card-primary-action",
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "QR File Encoder",
+                  body: "Encode files into a series of QR codes",
+                  image: {
+                    url: qrEncoderScreenshot,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "qr-encoder-card-actions",
+                    buttons: [
+                      {
+                        id: "qr-encoder-view-project",
+                        label: "Read more",
+                        href: "/projects/qr_encoder",
+                        testId: "qr-encoder-card-primary-action",
                       },
                     ],
                   },
