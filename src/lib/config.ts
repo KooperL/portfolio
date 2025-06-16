@@ -127,6 +127,17 @@ export const projects = {
     githubUrl: "https://github.com/KooperL/simple-steganography",
     iframeUrl: "https://kooperl.github.io/simple-steganography/",
   },
+    qr_encoder: {
+    projectName: "QR File Encoder",
+    projectDescription: [
+      "Encode and decode files using QR code video streams — all in your browser.",
+      "Any file can be encoded into a sequence of QR codes and later reconstruct the original file by scanning the QR codes from the video",
+    ],
+    projectPathVar: "qr_encoder",
+    websiteUrl: "https://kooperl.github.io/qr-stream-generator/index.html",
+    githubUrl: "https://github.com/KooperL/qr-stream-generator",
+    iframeUrl: "https://kooperl.github.io/qr-stream-generator/index.html",
+  },
   vybs: {
     projectName: "vybs.tv",
     projectDescription: ["Pretty b-roll web animations."],
