@@ -216,7 +216,7 @@
                     ],
                   },
                 },
-                {
+                /**{
                   title: "dropzones",
                   body: "Drag and drop bingo card generator",
                   image: {
@@ -235,7 +235,7 @@
                       },
                     ],
                   },
-                },
+                },*/
                 {
                   title: "portfolio",
                   body: "Recursion joke here",
