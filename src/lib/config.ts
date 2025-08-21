@@ -33,6 +33,16 @@ export const projects = {
     githubUrl: undefined,
     iframeUrl: "https://logridge.net/",
   },
+  mail_catcher: {
+    projectName: "Mail catcher",
+    projectDescription: [
+      "This toy project was made to follow the footsteps over the famously difficult issue of rich text editing in browsers.",
+    ],
+    projectPathVar: "mail_catcher",
+    websiteUrl: "https://mail-catcher.net/",
+    githubUrl: "https://github.com/KooperL/mail-catcher",
+    iframeUrl: "https://mail-catcher.net/",
+  },
   md_app: {
     projectName: "text processor",
     projectDescription: [
@@ -40,7 +50,7 @@ export const projects = {
       "When it comes to having customised rich text (colour, bold, underline, headings) on websites, third-party text editors called WYSIWYG editors are used by the developers.",
       "This is because unlike modern web development, web browsers were initially built with no standardization, and different web browsers on different systems handle rich text editing different. Hence the introduction of specialised third-party editors",
     ],
-    projectPathVar: "md-app",
+    projectPathVar: "md_app",
     websiteUrl: "https://mdapp-site.pages.dev/",
     githubUrl: "https://github.com/KooperL/mdApp",
     iframeUrl: "https://mdapp-site.pages.dev/",
