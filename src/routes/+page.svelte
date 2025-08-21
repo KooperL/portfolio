@@ -12,7 +12,7 @@
   import pocketbaseLoggingScreenshot from "$lib/assets/pocketbase-logging-screenshot-2.png";
   import simpleSteganographyScreenshot from "$lib/assets/simple-steganography-screenshot.png";
   import qrEncoderScreenshot from "$lib/assets/qr-encoder-screenshot.png";
-  
+  import mailCatcherScreenshot from "$lib/assets/mailCatcher-app-screenshot.png"  
   import mdAppScreenshot from "$lib/assets/md-app-screenshot.png";
   import bingoAppScreenshot from "$lib/assets/bingo-app-screenshot.png";
   import tailwindColorGeneratorScreenshot from "$lib/assets/tailwind-color-generator-screenshot.png";
@@ -196,6 +196,26 @@
               id: "test-cards",
               columns: 3,
               cards: [
+                {
+                  title: "mail-catcher",
+                  body: "Catch all mail service with API support",
+                  image: {
+                    url: mailCatcherScreenshot,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "mail-catcher-card-actions",
+                    buttons: [
+                      {
+                        id: "mail-catcher-view-project",
+                        label: "Read more",
+                        href: "/projects/mail_catcher",
+                        testId: "mail-catcher-card-primary-action",
+                      },
+                    ],
+                  },
+                },
                 {
                   title: "tailwind-color-generator",
                   body: "Random color generator for the tailwindcss tool",
