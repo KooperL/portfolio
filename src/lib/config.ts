@@ -5,6 +5,16 @@ export const site = {
 };
 
 export const projects = {
+  gator_gang: {
+    projectName: "Gator gang",
+    projectDescription: [
+      "Gator gang adds a co-presence multiplayer mode to lil gator game (PC), allowing you to enjoy the game in a more social way. Each player retains their own progression, inventory, and story state. The goal is to enjoy the atmosphere together, explore side-by-side, and share moments.",
+    ],
+    projectPathVar: "gator_gang",
+    websiteUrl: undefined,
+    githubUrl: "https://github.com/KooperL/lil-gator-game-mp",
+    iframeUrl: undefined,
+  },
   pento: {
     projectName: "pento.page",
     projectDescription: [
