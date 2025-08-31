@@ -11,6 +11,7 @@
   import vitalityScreenshot3 from "$lib/assets/vitality-screenshot-3.jpeg";
   import pocketbaseLoggingScreenshot from "$lib/assets/pocketbase-logging-screenshot-2.png";
   import simpleSteganographyScreenshot from "$lib/assets/simple-steganography-screenshot.png";
+  import gatorGangScreenshot from "$lib/assets/gatorGang-screenshot.png";
   import qrEncoderScreenshot from "$lib/assets/qr-encoder-screenshot.png";
   import mailCatcherScreenshot from "$lib/assets/mailCatcher-app-screenshot.png"  
   import mdAppScreenshot from "$lib/assets/md-app-screenshot.png";
@@ -196,6 +197,26 @@
               id: "test-cards",
               columns: 3,
               cards: [
+                {
+                  title: "Gator gang",
+                  body: "Gator gang adds a co-presence multiplayer mode to lil gator game (PC), allowing you to enjoy the game in a more social way",
+                  image: {
+                    url: gatorGangScreenshot,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "gator-gang-card-actions",
+                    buttons: [
+                      {
+                        id: "gator-gang-view-project",
+                        label: "Read more",
+                        href: "/projects/gator_gang",
+                        testId: "gator-gang-card-primary-action",
+                      },
+                    ],
+                  },
+                },
                 {
                   title: "mail-catcher",
                   body: "Catch all mail service with API support",
