@@ -140,46 +140,6 @@
                     ],
                   },
                 },
-                {
-                  title: "Redirected.dev",
-                  body: "Redirected is a powerful tracking pixel generator designed to help you capture and analyze traffic in real time.",
-                  image: {
-                    url: redirectedScreenshot,
-                    alt: "Screenshot of project",
-                  },
-                  buttonGroup: {
-                    order: 1,
-                    id: "redirected-card-actions",
-                    buttons: [
-                      {
-                        id: "redirected-view-project",
-                        label: "Read more",
-                        href: "/projects/redirected",
-                        testId: "redirected-card-primary-action",
-                      },
-                    ],
-                  },
-                },
-                {
-                  title: "Pento",
-                  body: "Pento is a user-friendly platform for sharing and storing text based content built with built from the ground up with privacy in mind.",
-                  image: {
-                    url: pentoScreenshot,
-                    alt: "Screenshot of project",
-                  },
-                  buttonGroup: {
-                    order: 1,
-                    id: "pento-card-actions",
-                    buttons: [
-                      {
-                        id: "pento-view-project",
-                        label: "Read more",
-                        href: "/projects/pento",
-                        testId: "pento-card-primary-action",
-                      },
-                    ],
-                  },
-                },
               ],
             },
           },
@@ -190,7 +150,7 @@
             order: 1,
             title: "Code projects",
             body: [
-              "Fun projects that I spent a weekend or two on. These guys are low stakes and small scope hobby projects that don't necessarily need to be found on the web.",
+              "Fun projects that I spent a few weeks each on. These guys are low stakes and small scope hobby projects that were made for my own benefit more than anyone else's.",
             ],
             cards: {
               order: 1,
@@ -199,7 +159,7 @@
               cards: [
                 {
                   title: "Gator gang",
-                  body: "Gator gang adds a co-presence multiplayer mode to lil gator game (PC), allowing you to enjoy the game in a more social way",
+                  body: "Gator gang is a co-presence multiplayer mod for lil gator game, allowing players to enjoy the game in a more social way",
                   image: {
                     url: gatorGangScreenshot,
                     alt: "Screenshot of project",
@@ -219,7 +179,7 @@
                 },
                 {
                   title: "mail-catcher",
-                  body: "Catch all mail service with API support",
+                  body: "Catch-all + disposable email service with API support",
                   image: {
                     url: mailCatcherScreenshot,
                     alt: "Screenshot of project",
@@ -233,6 +193,46 @@
                         label: "Read more",
                         href: "/projects/mail_catcher",
                         testId: "mail-catcher-card-primary-action",
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "Redirected.dev",
+                  body: "Powerful and clean analytics tool designed to help track web page visits in real time.",
+                  image: {
+                    url: redirectedScreenshot,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "redirected-card-actions",
+                    buttons: [
+                      {
+                        id: "redirected-view-project",
+                        label: "Read more",
+                        href: "/projects/redirected",
+                        testId: "redirected-card-primary-action",
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "Pento",
+                  body: "Text storage and distribution platform built from the ground up with developers and scratch pads in mind.",
+                  image: {
+                    url: pentoScreenshot,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "pento-card-actions",
+                    buttons: [
+                      {
+                        id: "pento-view-project",
+                        label: "Read more",
+                        href: "/projects/pento",
+                        testId: "pento-card-primary-action",
                       },
                     ],
                   },
@@ -279,7 +279,7 @@
                 },*/
                 {
                   title: "portfolio",
-                  body: "Recursion joke here",
+                  body: "Recursion joke here, get it?",
                   image: {
                     url: portfolioScreenshot,
                     alt: "Screenshot of project",
@@ -299,7 +299,7 @@
                 },
                 {
                   title: "svelte-pocketbase-quickstart",
-                  body: "Quickstart for svelte-pocketbase",
+                  body: "Quickstart for svelte-pocketbase based projects to enhance my own DX",
                   image: {
                     url: sveltePocketbaseQuickstartScreenshot,
                     alt: "Screenshot of project",
@@ -320,7 +320,7 @@
                 },
                 {
                   title: "text-processor",
-                  body: "Markdown editor",
+                  body: "A XML based text formatting back end for input forms",
                   image: {
                     url: mdAppScreenshot,
                     alt: "Screenshot of project",
@@ -340,7 +340,7 @@
                 },
                 {
                   title: "pocketbase-logging",
-                  body: "Logging for pocketbase",
+                  body: "Log capturing from IoT and mobile environments and real time visibility",
                   image: {
                     url: pocketbaseLoggingScreenshot,
                     alt: "Screenshot of project",
@@ -360,7 +360,7 @@
                 },
                 {
                   title: "Steganographic encoder",
-                  body: "Secretly encode data into bodies of text",
+                  body: "Secretly encode data into bodies of text by hiding it in spaces (\" \")",
                   image: {
                     url: simpleSteganographyScreenshot,
                     alt: "Screenshot of project",
@@ -380,7 +380,7 @@
                 },
                 {
                   title: "QR File Encoder",
-                  body: "Encode files into a series of QR codes",
+                  body: "Visual data transmission by encoding files into a series of QR codes",
                   image: {
                     url: qrEncoderScreenshot,
                     alt: "Screenshot of project",

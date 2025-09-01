@@ -8,7 +8,10 @@ export const projects = {
   gator_gang: {
     projectName: "Gator gang",
     projectDescription: [
-      "Gator gang adds a co-presence multiplayer mode to lil gator game (PC), allowing you to enjoy the game in a more social way. Each player retains their own progression, inventory, and story state. The goal is to enjoy the atmosphere together, explore side-by-side, and share moments.",
+      "Gator gang is a co-presence multiplayer mod for lil gator game, allowing players to enjoy the game in a more social way. Each player retains their own progression, inventory, and story state. The goal is to enjoy the atmosphere together, explore side-by-side, and share moments.",
+      "It's composed of two projects, a local client (and their friends) must install a modified `.dll` file that was taken from a compiled Unity Engine project. That file is then decompiled into c# code, to which custom classes can be added before recompilation. The file then gets loaded like it normally would to result in a modded player experience. There's also a server component who must orchestrate the multiplayer environment and Go (golang) was chosen for this due to how performat it is compared to the complexity.",
+      "The client installs a modified `.dll` file which contains all the logic for ripping the local players stats from memory during runtime and sending it to the server. It's also reponsible for getting a list of that player data from the server and creating player clones from those stats.",
+      "The server organises that data from all of the clients and then broadcasts it out through a websockets connection. Games typically use custom serialisation over the UDP protocol and the reason for this became clear while load testing the server. The server receives a packet from each client on each of the clients frame updates (60 frames per second * 1 packet per frame * 5 clients = LOTS of data). The server also distributes player updates at 45 ticks per second. Given this, the combination of the overhead from websockets and JSON serialisation begs for a minimalist solution, ergo, the industry uses custom serialisation over UDP.",
     ],
     projectPathVar: "gator_gang",
     websiteUrl: undefined,
@@ -27,7 +30,7 @@ export const projects = {
   },
   bingo_app: {
     projectName: "dropzones",
-    projectDescription: ["Straight up bingo"],
+    projectDescription: ["Straight up bingo, with some multiplayer"],
     projectPathVar: "bingo_app",
     websiteUrl: "https://dropzones.io/",
     githubUrl: undefined,
@@ -46,7 +49,9 @@ export const projects = {
   mail_catcher: {
     projectName: "Mail catcher",
     projectDescription: [
-      "This toy project was made to follow the footsteps over the famously difficult issue of rich text editing in browsers.",
+      "This project provides a simple way to stand up a private disposable mail service, giving the owner access to ANY email address username they'd like.",
+      "With API support, it aims to solve the problem of testing automation script being blocked by one time password challenges in apps.",
+      "It can be stood up in a single command via docker-compose, as long as the host machine is not firewalled. It's also hosted and provides application access for free.",
     ],
     projectPathVar: "mail_catcher",
     websiteUrl: "https://mail-catcher.net/",
@@ -56,9 +61,10 @@ export const projects = {
   md_app: {
     projectName: "text processor",
     projectDescription: [
-      "This toy project was made to follow the footsteps over the famously difficult issue of rich text editing in browsers.",
-      "When it comes to having customised rich text (colour, bold, underline, headings) on websites, third-party text editors called WYSIWYG editors are used by the developers.",
-      "This is because unlike modern web development, web browsers were initially built with no standardization, and different web browsers on different systems handle rich text editing different. Hence the introduction of specialised third-party editors",
+      "This toy project was made to follow the footsteps over the famously difficult issue of rich text editing in browsers, which was interesting for me to learn. To explore this issue further, I wanted to create a backend for text processing that could be used in text rich environments.",
+      "When it comes to having customised rich text (colour, bold, underline, headings) on websites, third-party text editors called WYSIWYG editors are used by the developers. This is because, in vanilla environments, applying bold formatting (for example) to a selection of text is strangely challenging and non standard.",
+      "This is because unlike modern web development, web browsers were initially built with no standardization, and different web browsers on different systems handle rich text editing different. Hence the introduction of specialised third-party editors. This aims to be an environment agnostic backend which applies formatting using xml syntax.",
+      "Because this project was the backend for a text processor, it was plugged into a simple text processing application for the sake of demonstration."
     ],
     projectPathVar: "md_app",
     websiteUrl: "https://mdapp-site.pages.dev/",
@@ -80,7 +86,9 @@ export const projects = {
   redirected: {
     projectName: "redirected.dev",
     projectDescription: [
-      "Redirected is a powerful tracking pixel generator designed to help you capture and analyze traffic in real time. Create and organize tracking pixels into customizable groups for efficient management. With Redirected, you can easily view aggregated statistics to understand user behavior and optimize your marketing efforts. Simplify your data tracking process and make informed decisions with real-time insights at your fingertips.",
+      "Redirected is a tracking pixel generator designed to help capture and analyze web traffic in real time. Create and organize tracking pixels into customizable groups for efficient management. With Redirected, you can easily view aggregated statistics to understand user behavior and optimize your marketing efforts.",
+      "The internet has a flaw, whereby users who download an image from a server reveal too much information to the server they're communicating with. This issue can manifest when downloading assets such as images or fonts. When a user visits a website that uses a custom font from google, your web browser begins talking to google to download that font. Now, google knows you have landed on that page and can catalogue your page visit into their profiling database.",
+      "A tracking pixel is a 1 pixel x 1 pixel image that works the exact same way as the aforementioned font."
     ],
     projectPathVar: "redirected",
     websiteUrl: "https://redirected.dev/",
@@ -115,7 +123,7 @@ export const projects = {
   svelte_pocketbase_quickstart: {
     projectName: "svelte-pocketbase-quickstart",
     projectDescription: [
-      "Boilerplate, distilled into it's most generic form.",
+      "Pure boiler plate project that I clone and fork every time I wish to quickly begin a new project.",
       "Quickly get started with a Svelte project that uses Pocketbase as a backend service. This project is a great starting point for any Svelte project that needs a backend service.",
     ],
     projectPathVar: "svelte_pocketbase_quickstart",
