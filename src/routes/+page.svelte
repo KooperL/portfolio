@@ -12,9 +12,13 @@
   import pocketbaseLoggingScreenshot from "$lib/assets/pocketbase-logging-screenshot-2.png";
   import simpleSteganographyScreenshot from "$lib/assets/simple-steganography-screenshot.png";
   import gatorGangScreenshot from "$lib/assets/gatorGang-screenshot.png";
+  import perfGerberScreenshot from "$lib/assets/perf-gerber-screenshot-2.png";
+  import cloverPitThumbnail from "$lib/assets/clover-pit-jumpstart-thumbnail.png";
   import qrEncoderScreenshot from "$lib/assets/qr-encoder-screenshot.png";
+  import audioSnifferScreenshot from "$lib/assets/audio-sniffer-screenshot.png";
   import mailCatcherScreenshot from "$lib/assets/mailCatcher-app-screenshot.png"  
   import mdAppScreenshot from "$lib/assets/md-app-screenshot.png";
+  import radoGpsDemo from "$lib/assets/radogps-demo.gif";
   import bingoAppScreenshot from "$lib/assets/bingo-app-screenshot.png";
   import tailwindColorGeneratorScreenshot from "$lib/assets/tailwind-color-generator-screenshot.png";
   import sveltePocketbaseQuickstartScreenshot from "$lib/assets/svelte-pocketbase-quickstart-screenshot.png";
@@ -39,9 +43,9 @@
     pageMetadata: {
       title: "",
       headline:
-        "I'm Kooper. Have a poke around and enjoy your visit. Let me know if you like what you see!",
+        "I'm Kooper, I work professionally in front end app development. Have a poke around and enjoy your visit. Let me know if you like what you see!",
       description:
-        "I'm Kooper. Have a poke around and enjoy your visit. Let me know if you like what you see!",
+        "I'm Kooper, I work professionally in front end app development. Have a poke around and enjoy your visit. Let me know if you like what you see!",
     },
     pageContent: {
       elements: [
@@ -51,7 +55,7 @@
             order: 1,
             title: "Welcome to my portfolio",
             subtitle:
-              "I'm Kooper. Have a poke around and enjoy your visit. Let me know if you like what you see!",
+              "I'm Kooper, I work professionally in front end app development. Have a poke around and enjoy your visit. Let me know if you like what you see!",
 
             buttons: {
               order: 1,
@@ -158,8 +162,128 @@
               columns: 3,
               cards: [
                 {
+                  title: "perf-gerber",
+                  body: "Browser-based tool for designing perfboard-style PCBs quickly",
+                  image: {
+                    url: perfGerberScreenshot,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "perf-gerber-card-actions",
+                    buttons: [
+                      {
+                        id: "perf-gerber-view-project",
+                        label: "Read more",
+                        href: "/projects/perf_gerber",
+                        testId: "perf-gerber-card-primary-action",
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "esp32-person-counter",
+                  body: "Scans for nearby WiFi and Bluetooth Low Energy devices using an ESP32",
+                  image: {
+                    url: "https://raw.githubusercontent.com/KooperL/esp32-person-counter/refs/heads/main/demo.png",
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "esp32-person-counter-card-actions",
+                    buttons: [
+                      {
+                        id: "esp32-person-counter-view-project",
+                        label: "Read more",
+                        href: "/projects/esp32_person_counter",
+                        testId: "esp32-person-counter-card-primary-action",
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "geo-vic",
+                  body: "3D modeled and printed topographies/cityscapes in Victoria ",
+                  image: {
+                    url: "https://raw.githubusercontent.com/KooperL/geo-vic/main/images/bay.gif",
+                    alt: "GIF of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "geo-vic-card-actions",
+                    buttons: [
+                      {
+                        id: "geo-vic-view-project",
+                        label: "Read more",
+                        href: "/projects/geo_vic",
+                        testId: "geo-vic-card-primary-action",
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "prado-head-unit-plate",
+                  body: "A collection of modifications and accessories to my car's head unit.",
+                  image: {
+                    url: radoGpsDemo,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "prado-head-unit-plate-card-actions",
+                    buttons: [
+                      {
+                        id: "prado-head-unit-plate-view-project",
+                        label: "Read more",
+                        href: "/projects/prado_head_unit_plate",
+                        testId: "prado-head-unit-plate-card-primary-action",
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "audio-sniffer",
+                  body: "ESP32 that records audio and saves it as WAV files to an SD card",
+                  image: {
+                    url: audioSnifferScreenshot,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "audio-sniffer-card-actions",
+                    buttons: [
+                      {
+                        id: "audio-sniffer-view-project",
+                        label: "Read more",
+                        href: "/projects/audio_sniffer",
+                        testId: "audio-sniffer-card-primary-action",
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "clover-pit-jumpstart",
+                  body: "Provides a subtle early-game jumpstart to early game progression in CloverPit.",
+                  image: {
+                    url: cloverPitThumbnail,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "clover-pit-jumpstart-card-actions",
+                    buttons: [
+                      {
+                        id: "clover-pit-jumpstart-view-project",
+                        label: "Read more",
+                        href: "/projects/clover_pit_jumpstart",
+                        testId: "clover-pit-jumpstart-card-primary-action",
+                      },
+                    ],
+                  },
+                },
+                {
                   title: "Gator gang",
-                  body: "Gator gang is a co-presence multiplayer mod for lil gator game, allowing players to enjoy the game in a more social way",
+                  body: "A co-presence multiplayer mod for lil gator game, allowing players to enjoy the game in a more social way",
                   image: {
                     url: gatorGangScreenshot,
                     alt: "Screenshot of project",
@@ -297,7 +421,7 @@
                     ],
                   },
                 },
-                {
+                /**{
                   title: "svelte-pocketbase-quickstart",
                   body: "Quickstart for svelte-pocketbase based projects to enhance my own DX",
                   image: {
@@ -317,7 +441,7 @@
                       },
                     ],
                   },
-                },
+                },**/
                 {
                   title: "text-processor",
                   body: "A XML based text formatting back end for input forms",
@@ -338,7 +462,7 @@
                     ],
                   },
                 },
-                {
+                /**{
                   title: "pocketbase-logging",
                   body: "Log capturing from IoT and mobile environments and real time visibility",
                   image: {
@@ -357,7 +481,7 @@
                       },
                     ],
                   },
-                },
+                },**/
                 {
                   title: "Steganographic encoder",
                   body: "Secretly encode data into bodies of text by hiding it in spaces (\" \")",
@@ -435,6 +559,19 @@
                     {
                       name: "logInfo",
                       payload: ["home", "Press on 'linkedin' button"],
+                    },
+                  ],
+                },
+                {
+                  id: "roadmap",
+                  label: "Roadmap",
+                  href: "https://roadmap.kooperlingohr.com",
+                  testId: "home-link-to-roadmap",
+                  icon: "ArrowRightToBracketOutline",
+                  events: [
+                    {
+                      name: "logInfo",
+                      payload: ["home", "Press on 'roadmap' button"],
                     },
                   ],
                 },

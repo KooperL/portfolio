@@ -39,9 +39,10 @@
             order: 1,
             title: "",
             body: [
-              "I'm a software developer and I like to make things. I wear the hat of web developer most often but I've also dabbled in other areas of software development.",
-              "Continuous growth is important to me and I'm always looking for new things to learn. From new frameworks and different programming languages, to biology and physiology.",
-              "There's a reason why I'm a fan of the web. I get inspired by other websites who try to be different and love that anyone can contribute their ideas to the internet via weird websites, awesome toolkits/libraries and open source.",
+              "I'm a software developer who likes to make things. I most often wear the hat of a front-end web developer, but I've also dabbled in other areas of software development. I've played around with game modding, microcontrollers and hardware, 12 volt automotive modifications, local AI edge compute apps, and backend services that support front-end projects.",
+              "One of the most special aspects of software development is that so many of the tools we rely on are open source. I'm genuinely crushed that this isn't more widely appreciated. I have profound respect for industry heroes like Linus Torvalds and Ken Thompson, as well as the content creators who encourage newbies to enter the space.",
+              "There's a reason I'm a fan of the web. I get inspired by websites that try to be different, and I love that anyone can contribute ideas to the internet through weird websites, awesome toolkits and libraries, and open source projects.",
+              "Continuous growth is important to me, and I'm always looking for new things to learn—from new frameworks and programming languages to biology and physiology."
             ],
             buttons: {
               order: 1,
