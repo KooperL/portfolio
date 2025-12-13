@@ -162,7 +162,27 @@
               columns: 3,
               cards: [
                 {
-                  title: "perf-gerber",
+                  title: "Victorian POIs",
+                  body: "(Port Phillip Bay in the gif) 3D modeled and printed places of interest in Victoria ",
+                  image: {
+                    url: "https://raw.githubusercontent.com/KooperL/geo-vic/main/images/bay.gif",
+                    alt: "GIF of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "geo-vic-card-actions",
+                    buttons: [
+                      {
+                        id: "geo-vic-view-project",
+                        label: "Read more",
+                        href: "https://github.com/KooperL/geo-vic",
+                        testId: "geo-vic-card-primary-action",
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "Circuit board modeler",
                   body: "Browser-based tool for designing perfboard-style PCBs quickly",
                   image: {
                     url: perfGerberScreenshot,
@@ -182,7 +202,7 @@
                   },
                 },
                 {
-                  title: "esp32-person-counter",
+                  title: "person detector",
                   body: "Scans for nearby WiFi and Bluetooth Low Energy devices using an ESP32",
                   image: {
                     url: "https://raw.githubusercontent.com/KooperL/esp32-person-counter/refs/heads/main/demo.png",
@@ -195,55 +215,15 @@
                       {
                         id: "esp32-person-counter-view-project",
                         label: "Read more",
-                        href: "/projects/esp32_person_counter",
+                        href: "https://github.com/KooperL/esp32-person-counter",
                         testId: "esp32-person-counter-card-primary-action",
                       },
                     ],
                   },
                 },
                 {
-                  title: "geo-vic",
-                  body: "3D modeled and printed topographies/cityscapes in Victoria ",
-                  image: {
-                    url: "https://raw.githubusercontent.com/KooperL/geo-vic/main/images/bay.gif",
-                    alt: "GIF of project",
-                  },
-                  buttonGroup: {
-                    order: 1,
-                    id: "geo-vic-card-actions",
-                    buttons: [
-                      {
-                        id: "geo-vic-view-project",
-                        label: "Read more",
-                        href: "/projects/geo_vic",
-                        testId: "geo-vic-card-primary-action",
-                      },
-                    ],
-                  },
-                },
-                {
-                  title: "prado-head-unit-plate",
-                  body: "A collection of modifications and accessories to my car's head unit.",
-                  image: {
-                    url: radoGpsDemo,
-                    alt: "Screenshot of project",
-                  },
-                  buttonGroup: {
-                    order: 1,
-                    id: "prado-head-unit-plate-card-actions",
-                    buttons: [
-                      {
-                        id: "prado-head-unit-plate-view-project",
-                        label: "Read more",
-                        href: "/projects/prado_head_unit_plate",
-                        testId: "prado-head-unit-plate-card-primary-action",
-                      },
-                    ],
-                  },
-                },
-                {
-                  title: "audio-sniffer",
-                  body: "ESP32 that records audio and saves it as WAV files to an SD card",
+                  title: "Audio data logger",
+                  body: "ESP32 that constantly records audio and saves it as WAV files to an SD card",
                   image: {
                     url: audioSnifferScreenshot,
                     alt: "Screenshot of project",
@@ -255,15 +235,35 @@
                       {
                         id: "audio-sniffer-view-project",
                         label: "Read more",
-                        href: "/projects/audio_sniffer",
+                        href: "https://github.com/KooperL/audio-sniffer",
                         testId: "audio-sniffer-card-primary-action",
                       },
                     ],
                   },
                 },
                 {
-                  title: "clover-pit-jumpstart",
-                  body: "Provides a subtle early-game jumpstart to early game progression in CloverPit.",
+                  title: "Car mods",
+                  body: "A collection of modifications and accessories to my car",
+                  image: {
+                    url: radoGpsDemo,
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "prado-head-unit-plate-card-actions",
+                    buttons: [
+                      {
+                        id: "prado-head-unit-plate-view-project",
+                        label: "Read more",
+                        href: "https://github.com/KooperL/prado-head-unit-plate",
+                        testId: "prado-head-unit-plate-card-primary-action",
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "clover-pit jumpstart",
+                  body: "A mod for clover pit that provides a subtle early-game jumpstart to early game progression",
                   image: {
                     url: cloverPitThumbnail,
                     alt: "Screenshot of project",
@@ -275,34 +275,14 @@
                       {
                         id: "clover-pit-jumpstart-view-project",
                         label: "Read more",
-                        href: "/projects/clover_pit_jumpstart",
+                        href: "https://github.com/KooperL/clover-pit-jumpstart",
                         testId: "clover-pit-jumpstart-card-primary-action",
                       },
                     ],
                   },
                 },
                 {
-                  title: "Gator gang",
-                  body: "A co-presence multiplayer mod for lil gator game, allowing players to enjoy the game in a more social way",
-                  image: {
-                    url: gatorGangScreenshot,
-                    alt: "Screenshot of project",
-                  },
-                  buttonGroup: {
-                    order: 1,
-                    id: "gator-gang-card-actions",
-                    buttons: [
-                      {
-                        id: "gator-gang-view-project",
-                        label: "Read more",
-                        href: "/projects/gator_gang",
-                        testId: "gator-gang-card-primary-action",
-                      },
-                    ],
-                  },
-                },
-                {
-                  title: "mail-catcher",
+                  title: "mail-catcher (SaaS)",
                   body: "Catch-all + disposable email service with API support",
                   image: {
                     url: mailCatcherScreenshot,
@@ -322,8 +302,28 @@
                   },
                 },
                 {
-                  title: "Redirected.dev",
-                  body: "Powerful and clean analytics tool designed to help track web page visits in real time.",
+                  title: "Gator gang",
+                  body: "A co-presence multiplayer mod for lil gator game, adding multiplayer to a single player game",
+                  image: {
+                    url: "https://github.com/KooperL/lil-gator-game-mp/blob/Assets/animated1.gif?raw=true",
+                    alt: "Screenshot of project",
+                  },
+                  buttonGroup: {
+                    order: 1,
+                    id: "gator-gang-card-actions",
+                    buttons: [
+                      {
+                        id: "gator-gang-view-project",
+                        label: "Read more",
+                        href: "https://github.com/KooperL/lil-gator-game-mp",
+                        testId: "gator-gang-card-primary-action",
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "Redirected.dev (SaaS)",
+                  body: "Tracking pixel generator to count web page visits in real time.",
                   image: {
                     url: redirectedScreenshot,
                     alt: "Screenshot of project",
@@ -342,8 +342,8 @@
                   },
                 },
                 {
-                  title: "Pento",
-                  body: "Text storage and distribution platform built from the ground up with developers and scratch pads in mind.",
+                  title: "Pento (SaaS)",
+                  body: "Text storage and distribution (pastebin-like) platform built with user supplied encryption keys",
                   image: {
                     url: pentoScreenshot,
                     alt: "Screenshot of project",
@@ -401,7 +401,7 @@
                     ],
                   },
                 },*/
-                {
+                /**{
                   title: "portfolio",
                   body: "Recursion joke here, get it?",
                   image: {
@@ -420,7 +420,7 @@
                       },
                     ],
                   },
-                },
+                },**/
                 /**{
                   title: "svelte-pocketbase-quickstart",
                   body: "Quickstart for svelte-pocketbase based projects to enhance my own DX",
@@ -504,7 +504,7 @@
                 },
                 {
                   title: "QR File Encoder",
-                  body: "Visual data transmission by encoding files into a series of QR codes",
+                  body: "Tranfer files between devices by encoding it into a GIF of QR codes",
                   image: {
                     url: qrEncoderScreenshot,
                     alt: "Screenshot of project",

@@ -179,17 +179,16 @@ export const projects = {
     projectDescription: ["perf-gerber is a browser-based tool for designing perfboard-style PCBs quickly and exporting them as manufacturable Gerber files.",
       "It is intentionally simple, opinionated, and focused on a single job: turning a perfboard layout into real PCB files without needing a full EDA suite.",
       "Use perf-gerber when you want to:",
-
-      "Design custom perfboard / protoboard PCBs",
-      "Quickly lay out point-to-point style traces",
-      "Generate Gerber + drill files compatible with common PCB fabs",
-      "Prototype circuits that would normally be hand-wired on perfboard",
-      "Create single- or double-sided perfboard layouts with plated holes"
+      " - Design custom perfboard / protoboard PCBs",
+      " - Quickly lay out point-to-point style traces",
+      " - Generate Gerber + drill files compatible with common PCB fabs",
+      " - Prototype circuits that would normally be hand-wired on perfboard",
+      " - Create single- or double-sided perfboard layouts with plated holes"
     ],
     projectPathVar: "perf_gerber",
     websiteUrl: "https://kooperl.github.io/perf-gerber/index.html",
     githubUrl: "https://github.com/KooperL/perf-gerber",
-    iframeUrl: null,
+    iframeUrl: "https://kooperl.github.io/perf-gerber/index.html",
   },
     esp32_person_counter: {
     projectName: "esp32-person-counter",
@@ -241,7 +240,7 @@ export const projects = {
       "Provides a subtle early-game jumpstart to early game progression in CloverPit.",
       "The extra clover tickets and free restock smooth out the opening turns, letting players establish momentum faster without disrupting overall balance or progression."
     ],
-    projectPathVar: "vybs",
+    projectPathVar: "clover_pit_jumpstart",
     websiteUrl: "https://www.nexusmods.com/cloverpit/mods/47",
     githubUrl: "https://github.com/KooperL/clover-pit-jumpstart",
     iframeUrl: null,
