@@ -1,10 +1,10 @@
 import type { PageLoad } from "./$types";
 import { currentUser, pb } from "$lib/pocketbase";
-import { projects } from "$lib/config";
+import { projectContent } from "$lib/config";
 import { goto } from "$app/navigation";
 
 export const load = (async ({ params }) => {
-  if (!Object.keys(projects).includes(params["project_name"])) {
+  if (!Object.keys(projectContent).includes(params["project_name"])) {
     goto("/");
   }
   return {
