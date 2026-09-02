@@ -80,73 +80,73 @@
     "media": {
       "vitality-image": {
         "kind": "image",
-        "source": "bundled",
-        "ref": "vitalityScreenshot3"
+        "source": "url",
+        "ref": "https://github.com/KooperL/portfolio/blob/main/src/lib/assets/vitality-screenshot-3.jpeg?raw=true"
       },
       "logridge-image": {
         "kind": "image",
-        "source": "bundled",
-        "ref": "logridgeScreenshot"
+        "source": "url",
+        "ref": "https://github.com/KooperL/portfolio/blob/main/src/lib/assets/logridge-screenshot.png?raw=true"
       },
       "redirected-image": {
         "kind": "image",
-        "source": "bundled",
-        "ref": "redirectedScreenshot"
+        "source": "url",
+        "ref": "https://github.com/KooperL/portfolio/blob/main/src/lib/assets/redirected-screenshot.png?raw=true"
       },
       "stenography-image": {
         "kind": "image",
-        "source": "bundled",
-        "ref": "simpleSteganographyScreenshot"
+        "source": "url",
+        "ref": "https://github.com/KooperL/portfolio/blob/main/src/lib/assets/simple-steganography-screenshot.png?raw=true"
       },
       "perfgerber-image": {
         "kind": "image",
-        "source": "bundled",
-        "ref": "perfGerberScreenshot"
+        "source": "url",
+        "ref": "https://github.com/KooperL/portfolio/blob/main/src/lib/assets/perf-gerber-screenshot.png?raw=true"
       },
       "clovepitmod-image": {
         "kind": "image",
-        "source": "bundled",
-        "ref": "cloverPitThumbnail"
+        "source": "url",
+        "ref": "https://github.com/KooperL/portfolio/blob/main/src/lib/assets/clover-pit-jumpstart-thumbnail.png?raw=true"
       },
       "gatorgang-image": {
         "kind": "image",
-        "source": "bundled",
-        "ref": "gatorGangScreenshot"
+        "source": "url",
+        "ref": "https://github.com/KooperL/lil-gator-game-mp/blob/Assets/animated1.gif?raw=true"
       },
       "qrencoder-image": {
         "kind": "image",
-        "source": "bundled",
-        "ref": "qrEncoderScreenshot"
+        "source": "url",
+        "ref": "https://github.com/KooperL/portfolio/blob/main/src/lib/assets/qr-encoder-screenshot.png?raw=true"
       },
       "radogps-image": {
         "kind": "image",
-        "source": "bundled",
-        "ref": "radoGpsDemo"
+        "source": "url",
+        "ref": "https://github.com/KooperL/portfolio/blob/main/src/lib/assets/radogps-demo.gif?raw=true"
       },
       "audioSniffer-image": {
         "kind": "image",
-        "source": "bundled",
-        "ref": "audioSnifferScreenshot"
+        "source": "url",
+        "ref": "https://github.com/KooperL/portfolio/blob/main/src/lib/assets/audio-sniffer-screenshot.png?raw=true"
       },
       "mailcatcher-image": {
         "kind": "image",
-        "source": "bundled",
-        "ref": "mailCatcherScreenshot"
+        "source": "url",
+        "ref": "https://github.com/KooperL/portfolio/blob/main/src/lib/assets/mailCatcher-app-screenshot.png?raw=true"
       },
       "mdapp-image": {
         "kind": "image",
-        "source": "bundled",
-        "ref": "mdAppScreenshot"
+        "source": "url",
+        "ref": "https://github.com/KooperL/portfolio/blob/main/src/lib/assets/md-app-screenshot.png?raw=true"
       },
       "pento-image": {
         "kind": "image",
-        "source": "bundled",
-        "ref": "pentoScreenshot"
+        "source": "url",
+        "ref": "https://github.com/KooperL/portfolio/blob/main/src/lib/assets/pento-screenshot.png?raw=true"
       },
       "tailwind-image": {
         "kind": "image",
-        "source": "bundled",
-        "ref": "tailwindColorGeneratorScreenshot"
+        "source": "url",
+        "ref": "https://github.com/KooperL/portfolio/blob/main/src/lib/assets/tailwind-color-generator-screenshot.png?raw=true"
       },
       "geovic-image": {
         "kind": "image",
@@ -164,9 +164,7 @@
         "ref": "https://github.com/KooperL/lil-gator-game-mp/blob/Assets/animated1.gif?raw=true"
       }
     },
-    "styleClasses": {
-      "card.full-horizontal": "card.full-horizontal"
-    }
+    "styleClasses": {}
   },
   "root": [
     {
@@ -214,7 +212,8 @@
           "type": "container",
           "props": {
             "title": "@i18n:home-page.featured-projects-container.title",
-            "description": "@i18n:home-page.featured-projects-container.description"
+            "description": "@i18n:home-page.featured-projects-container.description",
+            "layout-style": "list"
           },
           "children": [
             {
@@ -222,6 +221,7 @@
               "type": "card",
               "styling": "@styling:card.full-horizontal",
               "props": {
+                "horizontal-layout": "true",
                 "title": "@i18n:home-page.featured-projects-container.vitality-card.title",
                 "description": "@i18n:home-page.featured-projects-container.vitality-card.description",
                 "image": "@media:vitality-image",
@@ -233,6 +233,7 @@
               "type": "card",
               "styling": "@styling:card.full-horizontal",
               "props": {
+                "horizontal-layout": "true",
                 "title": "@i18n:home-page.featured-projects-container.logridge-card.title",
                 "description": "@i18n:home-page.featured-projects-container.logridge-card.description",
                 "image": "@media:logridge-image",

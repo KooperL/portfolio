@@ -15,18 +15,20 @@
 </script>
 
 <Card class="w-full max-w-full" data-testid={testId}>
+  {#if image}
+    <div class="h-full flex justify-center items-center">
+      <CmsImage
+        image={{ url: image, alt: title }}
+        className="rounded-t-lg overflow-hidden"
+      />
+    </div>
+  {/if}
   <div class="flex flex-col">
-    {#if image}
-      <div class="h-full flex justify-center items-center">
-        <CmsImage
-          image={{ url: image, alt: title }}
-          className="rounded-t-lg overflow-hidden"
-        />
-      </div>
-    {/if}
     <div class="p-4 flex flex-col">
       {#if title}
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-700 dark:text-white">
+        <h5
+          class="mb-2 text-2xl font-bold tracking-tight text-gray-700 dark:text-white"
+        >
           {title}
         </h5>
       {/if}
