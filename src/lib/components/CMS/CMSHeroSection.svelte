@@ -1,53 +1,37 @@
 <script lang="ts">
-  import type { HeroText } from "$lib/utils/CMS/types";
-  import CmsButtonGroup from "./CMSButtonGroup.svelte";
+  import type { CMSNode, CMSEvent } from "$lib/utils/CMS/types";
 
-  export let title: null | string = null;
-  export let subtitle: null | string = null;
-  export let buttons: null | HeroText["buttons"] = null;
-  export let backgroundImage: null | HeroText["backgroundImage"] = null;
+  export let title: string = "";
+  export let subtitle: string = "";
+  export let backgroundImage: string = "";
+  export let testId: string = "";
+  export let events: CMSEvent[] = [];
   export let functions: Record<string, Function> = {};
-  export let size: "small" | "medium" = "medium";
-  export let alignment: "left" | "center" = "center";
+  export let children: CMSNode[] = [];
 
-  $: bgStyle = backgroundImage
-    ? `background-image: url(${backgroundImage.url})`
-    : "";
+  $: bgStyle = backgroundImage ? `background-image: url(${backgroundImage})` : "";
 </script>
 
 <div
   class="relative bg-cover bg-center pt-8 pb-24 px-16 sm:py-16 sm:px-4"
   style={bgStyle}
+  data-testid={testId}
 >
   <div class="background bottom bg-primary-700"></div>
   <div class="background top bg-gray-300"></div>
-  <div
-    class={`relative z-3 max-w-screen-xl ${alignment === "center" ? "mx-auto text-center" : "mx-4 text-left"}`}
-    style="z-index:3;"
-  >
-    <h1
-      class={`font-extrabold tracking-tight text-gray-700 leading-none ${size === "medium" ? "text-4xl md:text-5xl lg:text-6xl" : "text-2xl md:text-3xl lg:text-4xl"}`}
-    >
+  <div class="relative z-3 max-w-screen-xl mx-auto text-center" style="z-index:3;">
+    <h1 class="font-extrabold tracking-tight text-gray-700 leading-none text-4xl md:text-5xl lg:text-6xl">
       {title}
     </h1>
-    <p
-      class={`mb-8 font-normal text-gray-700 ${size === "medium" ? "text-lg  lg:text-xl" : ""} ${alignment === "center" ? "sm:px-16 lg:px-48" : ""}`}
-    >
+    <p class="mb-8 font-normal text-gray-700 text-lg lg:text-xl sm:px-16 lg:px-48">
       {subtitle}
     </p>
-    {#if buttons}
-      <CmsButtonGroup
-        buttonGroup={{ ...buttons, alignment: "center" }}
-        {functions}
-      />
-    {/if}
     <div class="my-16"></div>
   </div>
 </div>
 
 <style>
   .background {
-    /**top: 5rem;**/
     top: 0;
     left: 0;
     position: absolute;

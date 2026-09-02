@@ -9,7 +9,7 @@ function generateSession() {
 }
 
 async function getIdentifier() {
-  return null
+  return null;
 }
 
 async function makeOpts(payload) {

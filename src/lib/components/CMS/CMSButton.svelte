@@ -1,10 +1,16 @@
 <script lang="ts">
   import { Button } from "flowbite-svelte";
-  import * as typess from "$lib/utils/CMS/types";
   import Icon from "./CMSIcon.svelte";
-    import { base } from "$app/paths";
+  import { base } from "$app/paths";
+  import type { CMSEvent } from "$lib/utils/CMS/types";
 
-  export let button: typess.Button;
+  export let id: string = "";
+  export let label: string = "";
+  export let href: string = "";
+  export let testId: string = "";
+  export let icon: string = "";
+  export let disabled: boolean = false;
+  export let events: CMSEvent[] = [];
   export let functions: Record<string, Function> = {};
 </script>
 
@@ -14,26 +20,22 @@
   -webkit-clip-path: polygon(0 0, 100% 0, 100% 66%, 78% 100%, 0 100%);
   clip-path: polygon(0 0, 100% 0, 100% 66%, 78% 100%, 0 100%);
   "
-  href={button?.href ? button.href.startsWith('/') ? `${base}${button.href}` : button.href : null}
-  disabled={button.disabled}
-  data-testid={button.testId}
+  href={href ? (href.startsWith("/") ? `${base}${href}` : href) : undefined}
+  {disabled}
+  data-testid={testId}
   variant={"primary"}
   {...$$restProps}
   on:click={() => {
-    if (button.events) {
-      button.events.forEach((event) => {
-        if (functions[event.name]) {
-          functions[event.name](...event.payload);
-        }
-      });
-    }
+    events.forEach((event) => {
+      const funcName = event.name || event.action;
+      if (functions[funcName] && event.params) {
+        functions[funcName](event.params);
+      }
+    });
   }}
 >
-  {#if button.icon}
-    <Icon icon={button.icon} className="mr-2" />
+  {#if icon}
+    <Icon icon={icon} className="mr-2" />
   {/if}
-  {button.label}
+  {label}
 </Button>
-
-<style>
-</style>

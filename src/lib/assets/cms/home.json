@@ -1,0 +1,447 @@
+{
+  "_meta": {
+    "id": "home-page",
+    "author": "cms team",
+    "description": "Portfolio home page",
+    "revisions": {
+      "major": "2",
+      "minor": "0"
+    }
+  },
+  "_definitions": {
+    "tokens": {},
+    "i18n": {
+      "home-page.hero.title": "Welcome to my portfolio",
+      "home-page.hero.subtitle": "I'm Kooper, I work professionally in front end app development. Have a poke around and enjoy your visit. Let me know if you like what you see!",
+      "home-page.hero.hero-button-container.about-nav.text": "about",
+      "home-page.hero.hero-button-container.about-nav.url": "/about",
+      "home-page.hero.hero-button-container.contact-nav.text": "contact",
+      "home-page.hero.hero-button-container.contact-nav.url": "/contact",
+      "home-page.featured-projects-container.title": "Featured projects",
+      "home-page.featured-projects-container.description": "Featured applications that I'm proud to have been involved with in the past! These applications are the result of hard work and aim to empower their users.",
+      "home-page.featured-projects-container.vitality-card.title": "Vitality",
+      "home-page.featured-projects-container.vitality-card.description": "Vitality is a personalised, science backed health and wellbeing program that supports you in making healthier choices every day.",
+      "home-page.featured-projects-container.vitality-card.url": "/projects/vitality",
+      "home-page.featured-projects-container.logridge-card.title": "Logridge",
+      "home-page.featured-projects-container.logridge-card.description": "Logridge is an efficient HTTP-based log aggregator designed for seamless log storage and management.",
+      "home-page.featured-projects-container.logridge-card.url": "/projects/logridge",
+      "home-page.code-projects-container.title": "Code projects",
+      "home-page.code-projects-container.description": "Fun projects that I spent a few weeks each on. These guys are low stakes and small scope hobby projects that were made for my own benefit more than anyone else's.",
+      "home-page.code-projects-container.geo-vic-card.title": "Victorian POIs",
+      "home-page.code-projects-container.geo-vic-card.description": "(Port Phillip Bay in the gif) 3D modeled and printed places of interest in Victoria",
+      "home-page.code-projects-container.geo-vic-card.url": "https://github.com/KooperL/geo-vic",
+      "home-page.code-projects-container.perf-gerber-card.title": "Circuit board modeler",
+      "home-page.code-projects-container.perf-gerber-card.description": "Browser-based tool for designing perfboard-style PCBs quickly",
+      "home-page.code-projects-container.perf-gerber-card.url": "/projects/perf_gerber",
+      "home-page.code-projects-container.esp32-person-counter-card.title": "person detector",
+      "home-page.code-projects-container.esp32-person-counter-card.description": "Scans for nearby WiFi and Bluetooth Low Energy devices using an ESP32",
+      "home-page.code-projects-container.esp32-person-counter-card.url": "https://github.com/KooperL/esp32-person-counter",
+      "home-page.code-projects-container.audio-sniffer-card.title": "Audio data logger",
+      "home-page.code-projects-container.audio-sniffer-card.description": "ESP32 that constantly records audio and saves it as WAV files to an SD card",
+      "home-page.code-projects-container.audio-sniffer-card.url": "https://github.com/KooperL/audio-sniffer",
+      "home-page.code-projects-container.prado-head-unit-plate-card.title": "Car mods",
+      "home-page.code-projects-container.prado-head-unit-plate-card.description": "A collection of modifications and accessories to my car",
+      "home-page.code-projects-container.prado-head-unit-plate-card.url": "https://github.com/KooperL/prado-head-unit-plate",
+      "home-page.code-projects-container.clover-pit-jumpstart-card.title": "clover-pit jumpstart",
+      "home-page.code-projects-container.clover-pit-jumpstart-card.description": "A mod for clover pit that provides a subtle early-game jumpstart to early game progression",
+      "home-page.code-projects-container.clover-pit-jumpstart-card.url": "https://github.com/KooperL/clover-pit-jumpstart",
+      "home-page.code-projects-container.mail-catcher-card.title": "mail-catcher (SaaS)",
+      "home-page.code-projects-container.mail-catcher-card.description": "Catch-all + disposable email service with API support",
+      "home-page.code-projects-container.mail-catcher-card.url": "/projects/mail_catcher",
+      "home-page.code-projects-container.gator-gang-card.title": "Gator gang",
+      "home-page.code-projects-container.gator-gang-card.description": "A co-presence multiplayer mod for lil gator game, adding multiplayer to a single player game",
+      "home-page.code-projects-container.gator-gang-card.url": "https://github.com/KooperL/lil-gator-game-mp",
+      "home-page.code-projects-container.redirected-card.title": "Redirected.dev (SaaS)",
+      "home-page.code-projects-container.redirected-card.description": "Tracking pixel generator to count web page visits in real time.",
+      "home-page.code-projects-container.redirected-card.url": "/projects/redirected",
+      "home-page.code-projects-container.pento-card.title": "Pento (SaaS)",
+      "home-page.code-projects-container.pento-card.description": "Text storage and distribution (pastebin-like) platform built with user supplied encryption keys",
+      "home-page.code-projects-container.pento-card.url": "/projects/pento",
+      "home-page.code-projects-container.tailwind-color-generator-card.title": "tailwind-color-generator",
+      "home-page.code-projects-container.tailwind-color-generator-card.description": "Random color generator for the tailwindcss tool",
+      "home-page.code-projects-container.tailwind-color-generator-card.url": "/projects/tailwind_color_generator",
+      "home-page.code-projects-container.text-processor-card.title": "text-processor",
+      "home-page.code-projects-container.text-processor-card.description": "A XML based text formatting back end for input forms",
+      "home-page.code-projects-container.text-processor-card.url": "/projects/md_app",
+      "home-page.code-projects-container.simple-steganography-card.title": "Steganographic encoder",
+      "home-page.code-projects-container.simple-steganography-card.description": "Secretly encode data into bodies of text by hiding it in spaces (\" \")",
+      "home-page.code-projects-container.simple-steganography-card.url": "/projects/simple_steganography",
+      "home-page.code-projects-container.qr-encoder-card.title": "QR File Encoder",
+      "home-page.code-projects-container.qr-encoder-card.description": "Tranfer files between devices by encoding it into a GIF of QR codes",
+      "home-page.code-projects-container.qr-encoder-card.url": "/projects/qr_encoder",
+      "home-page.external-links-container.title": "External links",
+      "home-page.external-links-container.github-nav.text": "GitHub",
+      "home-page.external-links-container.github-nav.url": "https://github.com/KooperL",
+      "home-page.external-links-container.linkedin-nav.text": "LinkedIn",
+      "home-page.external-links-container.linkedin-nav.url": "https://linkedin.com/in/kooper",
+      "home-page.external-links-container.roadmap-nav.text": "Roadmap",
+      "home-page.external-links-container.roadmap-nav.url": "https://roadmap.kooperlingohr.com"
+    },
+    "media": {
+      "vitality-image": {
+        "kind": "image",
+        "source": "bundled",
+        "ref": "vitalityScreenshot3"
+      },
+      "logridge-image": {
+        "kind": "image",
+        "source": "bundled",
+        "ref": "logridgeScreenshot"
+      },
+      "redirected-image": {
+        "kind": "image",
+        "source": "bundled",
+        "ref": "redirectedScreenshot"
+      },
+      "stenography-image": {
+        "kind": "image",
+        "source": "bundled",
+        "ref": "simpleSteganographyScreenshot"
+      },
+      "perfgerber-image": {
+        "kind": "image",
+        "source": "bundled",
+        "ref": "perfGerberScreenshot"
+      },
+      "clovepitmod-image": {
+        "kind": "image",
+        "source": "bundled",
+        "ref": "cloverPitThumbnail"
+      },
+      "gatorgang-image": {
+        "kind": "image",
+        "source": "bundled",
+        "ref": "gatorGangScreenshot"
+      },
+      "qrencoder-image": {
+        "kind": "image",
+        "source": "bundled",
+        "ref": "qrEncoderScreenshot"
+      },
+      "radogps-image": {
+        "kind": "image",
+        "source": "bundled",
+        "ref": "radoGpsDemo"
+      },
+      "audioSniffer-image": {
+        "kind": "image",
+        "source": "bundled",
+        "ref": "audioSnifferScreenshot"
+      },
+      "mailcatcher-image": {
+        "kind": "image",
+        "source": "bundled",
+        "ref": "mailCatcherScreenshot"
+      },
+      "mdapp-image": {
+        "kind": "image",
+        "source": "bundled",
+        "ref": "mdAppScreenshot"
+      },
+      "pento-image": {
+        "kind": "image",
+        "source": "bundled",
+        "ref": "pentoScreenshot"
+      },
+      "tailwind-image": {
+        "kind": "image",
+        "source": "bundled",
+        "ref": "tailwindColorGeneratorScreenshot"
+      },
+      "geovic-image": {
+        "kind": "image",
+        "source": "url",
+        "ref": "https://raw.githubusercontent.com/KooperL/geo-vic/main/images/bay.gif"
+      },
+      "esp32-image": {
+        "kind": "image",
+        "source": "url",
+        "ref": "https://raw.githubusercontent.com/KooperL/esp32-person-counter/refs/heads/main/demo.png"
+      },
+      "gatorgang-gif-image": {
+        "kind": "image",
+        "source": "url",
+        "ref": "https://github.com/KooperL/lil-gator-game-mp/blob/Assets/animated1.gif?raw=true"
+      }
+    },
+    "styleClasses": {
+      "card.full-horizontal": "card.full-horizontal"
+    }
+  },
+  "root": [
+    {
+      "page": {
+        "slug": "home",
+        "id": "home-page",
+        "title": "Kooper's Portfolio",
+        "description": "I'm Kooper, I work professionally in front end app development. Have a poke around and enjoy your visit."
+      },
+      "children": [
+        {
+          "id": "hero",
+          "type": "hero",
+          "props": {
+            "title": "@i18n:home-page.hero.title",
+            "subtitle": "@i18n:home-page.hero.subtitle"
+          },
+          "children": [
+            {
+              "id": "hero-button-container",
+              "type": "buttonContainer",
+              "children": [
+                {
+                  "id": "about-nav",
+                  "type": "button",
+                  "props": {
+                    "text": "@i18n:home-page.hero.hero-button-container.about-nav.text",
+                    "url": "@i18n:home-page.hero.hero-button-container.about-nav.url"
+                  }
+                },
+                {
+                  "id": "contact-nav",
+                  "type": "button",
+                  "props": {
+                    "text": "@i18n:home-page.hero.hero-button-container.contact-nav.text",
+                    "url": "@i18n:home-page.hero.hero-button-container.contact-nav.url"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "featured-projects-container",
+          "type": "container",
+          "props": {
+            "title": "@i18n:home-page.featured-projects-container.title",
+            "description": "@i18n:home-page.featured-projects-container.description"
+          },
+          "children": [
+            {
+              "id": "vitality-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.featured-projects-container.vitality-card.title",
+                "description": "@i18n:home-page.featured-projects-container.vitality-card.description",
+                "image": "@media:vitality-image",
+                "url": "@i18n:home-page.featured-projects-container.vitality-card.url"
+              }
+            },
+            {
+              "id": "logridge-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.featured-projects-container.logridge-card.title",
+                "description": "@i18n:home-page.featured-projects-container.logridge-card.description",
+                "image": "@media:logridge-image",
+                "url": "@i18n:home-page.featured-projects-container.logridge-card.url"
+              }
+            }
+          ]
+        },
+        {
+          "id": "code-projects-container",
+          "type": "container",
+          "props": {
+            "title": "@i18n:home-page.code-projects-container.title",
+            "description": "@i18n:home-page.code-projects-container.description"
+          },
+          "children": [
+            {
+              "id": "geo-vic-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.code-projects-container.geo-vic-card.title",
+                "description": "@i18n:home-page.code-projects-container.geo-vic-card.description",
+                "image": "@media:geovic-image",
+                "url": "@i18n:home-page.code-projects-container.geo-vic-card.url"
+              }
+            },
+            {
+              "id": "perf-gerber-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.code-projects-container.perf-gerber-card.title",
+                "description": "@i18n:home-page.code-projects-container.perf-gerber-card.description",
+                "image": "@media:perfgerber-image",
+                "url": "@i18n:home-page.code-projects-container.perf-gerber-card.url"
+              }
+            },
+            {
+              "id": "esp32-person-counter-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.code-projects-container.esp32-person-counter-card.title",
+                "description": "@i18n:home-page.code-projects-container.esp32-person-counter-card.description",
+                "image": "@media:esp32-image",
+                "url": "@i18n:home-page.code-projects-container.esp32-person-counter-card.url"
+              }
+            },
+            {
+              "id": "audio-sniffer-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.code-projects-container.audio-sniffer-card.title",
+                "description": "@i18n:home-page.code-projects-container.audio-sniffer-card.description",
+                "image": "@media:audioSniffer-image",
+                "url": "@i18n:home-page.code-projects-container.audio-sniffer-card.url"
+              }
+            },
+            {
+              "id": "prado-head-unit-plate-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.code-projects-container.prado-head-unit-plate-card.title",
+                "description": "@i18n:home-page.code-projects-container.prado-head-unit-plate-card.description",
+                "image": "@media:radogps-image",
+                "url": "@i18n:home-page.code-projects-container.prado-head-unit-plate-card.url"
+              }
+            },
+            {
+              "id": "clover-pit-jumpstart-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.code-projects-container.clover-pit-jumpstart-card.title",
+                "description": "@i18n:home-page.code-projects-container.clover-pit-jumpstart-card.description",
+                "image": "@media:clovepitmod-image",
+                "url": "@i18n:home-page.code-projects-container.clover-pit-jumpstart-card.url"
+              }
+            },
+            {
+              "id": "mail-catcher-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.code-projects-container.mail-catcher-card.title",
+                "description": "@i18n:home-page.code-projects-container.mail-catcher-card.description",
+                "image": "@media:mailcatcher-image",
+                "url": "@i18n:home-page.code-projects-container.mail-catcher-card.url"
+              }
+            },
+            {
+              "id": "gator-gang-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.code-projects-container.gator-gang-card.title",
+                "description": "@i18n:home-page.code-projects-container.gator-gang-card.description",
+                "image": "@media:gatorgang-gif-image",
+                "url": "@i18n:home-page.code-projects-container.gator-gang-card.url"
+              }
+            },
+            {
+              "id": "redirected-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.code-projects-container.redirected-card.title",
+                "description": "@i18n:home-page.code-projects-container.redirected-card.description",
+                "image": "@media:redirected-image",
+                "url": "@i18n:home-page.code-projects-container.redirected-card.url"
+              }
+            },
+            {
+              "id": "pento-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.code-projects-container.pento-card.title",
+                "description": "@i18n:home-page.code-projects-container.pento-card.description",
+                "image": "@media:pento-image",
+                "url": "@i18n:home-page.code-projects-container.pento-card.url"
+              }
+            },
+            {
+              "id": "tailwind-color-generator-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.code-projects-container.tailwind-color-generator-card.title",
+                "description": "@i18n:home-page.code-projects-container.tailwind-color-generator-card.description",
+                "image": "@media:tailwind-image",
+                "url": "@i18n:home-page.code-projects-container.tailwind-color-generator-card.url"
+              }
+            },
+            {
+              "id": "text-processor-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.code-projects-container.text-processor-card.title",
+                "description": "@i18n:home-page.code-projects-container.text-processor-card.description",
+                "image": "@media:mdapp-image",
+                "url": "@i18n:home-page.code-projects-container.text-processor-card.url"
+              }
+            },
+            {
+              "id": "simple-steganography-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.code-projects-container.simple-steganography-card.title",
+                "description": "@i18n:home-page.code-projects-container.simple-steganography-card.description",
+                "image": "@media:stenography-image",
+                "url": "@i18n:home-page.code-projects-container.simple-steganography-card.url"
+              }
+            },
+            {
+              "id": "qr-encoder-card",
+              "type": "card",
+              "styling": "@styling:card.full-horizontal",
+              "props": {
+                "title": "@i18n:home-page.code-projects-container.qr-encoder-card.title",
+                "description": "@i18n:home-page.code-projects-container.qr-encoder-card.description",
+                "image": "@media:qrencoder-image",
+                "url": "@i18n:home-page.code-projects-container.qr-encoder-card.url"
+              }
+            }
+          ]
+        },
+        {
+          "id": "external-links-container",
+          "type": "container",
+          "props": {
+            "title": "@i18n:home-page.external-links-container.title"
+          },
+          "children": [
+            {
+              "id": "github-nav",
+              "type": "button",
+              "props": {
+                "text": "@i18n:home-page.external-links-container.github-nav.text",
+                "url": "@i18n:home-page.external-links-container.github-nav.url",
+                "icon": "ArrowRightToBracketOutline"
+              }
+            },
+            {
+              "id": "linkedin-nav",
+              "type": "button",
+              "props": {
+                "text": "@i18n:home-page.external-links-container.linkedin-nav.text",
+                "url": "@i18n:home-page.external-links-container.linkedin-nav.url",
+                "icon": "ArrowRightToBracketOutline"
+              }
+            },
+            {
+              "id": "roadmap-nav",
+              "type": "button",
+              "props": {
+                "text": "@i18n:home-page.external-links-container.roadmap-nav.text",
+                "url": "@i18n:home-page.external-links-container.roadmap-nav.url",
+                "icon": "ArrowRightToBracketOutline"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

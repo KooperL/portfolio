@@ -6,7 +6,7 @@
   import { logger } from "$lib/logger";
   import Parser from "$lib/utils/CMS/parser.svelte";
   import type { PageData } from "../$types";
-  import { projectContent } from "$lib/config"
+  import { projectContent } from "$lib/config";
   export let data: PageData;
 
   onMount(async () => {});
@@ -15,7 +15,8 @@
     logInfo: logger.info,
   };
 
-  const jsonContent = projectContent[data.project_name as keyof typeof projectContent];
+  const jsonContent =
+    projectContent[data.project_name as keyof typeof projectContent];
 </script>
 
 <div class="box-border p-8 w-full h-full">

@@ -1,0 +1,46 @@
+{
+  "_meta": {
+    "id": "",
+    "author": "",
+    "description": "",
+    "revisions": {
+      "major": "0",
+      "minor": "0"
+    }
+  },
+  "_definitions": {
+    "tokens": {},
+    "i18n": {
+      "about-page.about-title.value": "About me",
+      "about-page.about-content.value": "I'm Kooper. We might have met already but I can't remember - I didn't want to annoy you with cookies.\n\nI'm a software developer who likes to make things. I most often wear the hat of a front-end web developer, but I've also dabbled in other areas of software development. I've played around with game modding, microcontrollers and hardware, 12 volt automotive modifications, local AI edge compute apps, and backend services that support front-end projects.\n\nOne of the most special aspects of software development is that so many of the tools we rely on are open source. I'm genuinely crushed that this isn't more widely appreciated. I have profound respect for industry heroes like Linus Torvalds and Ken Thompson, as well as the content creators who encourage newbies to enter the space.\n\nThere's a reason I'm a fan of the web. I get inspired by websites that try to be different, and I love that anyone can contribute ideas to the internet through weird websites, awesome toolkits and libraries, and open source projects.\n\nContinuous growth is important to me, and I'm always looking for new things to learn—from new frameworks and programming languages to biology and physiology."
+    },
+    "media": {},
+    "styleClasses": {}
+  },
+  "root": [
+    {
+      "page": {
+        "slug": "",
+        "id": "about-page",
+        "title": "About",
+        "description": "About me"
+      },
+      "children": [
+        {
+          "id": "about-title",
+          "type": "title",
+          "props": {
+            "value": "@i18n:about-page.about-title.value"
+          }
+        },
+        {
+          "id": "about-content",
+          "type": "text",
+          "props": {
+            "value": "@i18n:about-page.about-content.value"
+          }
+        }
+      ]
+    }
+  ]
+}

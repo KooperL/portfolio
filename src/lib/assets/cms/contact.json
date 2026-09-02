@@ -1,0 +1,112 @@
+{
+  "_meta": {
+    "id": "",
+    "author": "",
+    "description": "",
+    "revisions": {
+      "major": "0",
+      "minor": "0"
+    }
+  },
+  "_definitions": {
+    "tokens": {},
+    "i18n": {
+      "about-page.about-title.value": "Contact me",
+      "about-page.about-content.value": "This form will automatically forward the message to me, if you're expecting a reply though, include an email!"
+    },
+    "media": {},
+    "styleClasses": {}
+  },
+  "root": [
+    {
+      "page": {
+        "slug": "",
+        "id": "contact-page",
+        "title": "Contact",
+        "description": "Contact me"
+      },
+      "children": [
+        {
+          "id": "contact-title",
+          "type": "title",
+          "props": {
+            "value": "@i18n:about-page.about-title.value"
+          }
+        },
+        {
+          "id": "contact-content",
+          "type": "text",
+          "props": {
+            "value": "@i18n:about-page.about-content.value"
+          }
+        },
+        {
+          "id": "contact-name-input",
+          "type": "input",
+          "props": {
+            "value": "{{contactNameInputValue}}"
+          },
+          "events": [
+            {
+              "type": "Function",
+              "name": "updateNameOnTextChange",
+              "params": {
+                "newValue": "{{event.value}}"
+              }
+            }
+          ]
+        },
+        {
+          "id": "contact-email-input",
+          "type": "input",
+          "props": {
+            "value": "{{contactEmailInputValue}}"
+          },
+          "events": [
+            {
+              "type": "Function",
+              "name": "updateEmailOnTextChange",
+              "params": {
+                "newValue": "{{event.value}}"
+              }
+            }
+          ]
+        },
+        {
+          "id": "contact-content-textarea",
+          "type": "textarea",
+          "props": {
+            "value": "{{contactContentTextareaValue}}"
+          },
+          "events": [
+            {
+              "type": "Function",
+              "name": "updateContentOnTextChange",
+              "params": {
+                "newValue": "{{event.value}}"
+              }
+            }
+          ]
+        },
+        {
+          "id": "contact-submit-button",
+          "type": "button",
+          "props": {
+            "value": "Submit"
+          },
+          "events": [
+            {
+              "type": "Function",
+              "name": "submitContactContent",
+              "params": {
+                "name": "{{name}}",
+                "email": "{{email}}",
+                "content": "{{content}}"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

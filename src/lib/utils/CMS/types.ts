@@ -1,3 +1,90 @@
+// New CMS schema types
+
+export interface Meta {
+  id: string;
+  author?: string;
+  description?: string;
+  revisions: { major: number; minor: number };
+}
+
+export interface MediaRef {
+  kind: "icon" | "image";
+  source: "bundled" | "remote";
+  ref: string;
+  resizeMode?: string;
+  fallback?: string;
+}
+
+export interface Definitions {
+  tokens: Record<string, string | number>;
+  i18n: Record<string, string>;
+  media: Record<string, MediaRef>;
+  styleClasses: Record<string, string>;
+}
+
+export interface RuntimeSchema {
+  description?: string;
+  shape: Record<string, string>;
+}
+
+export interface Styling {
+  styleClass?: string;
+  tokens?: Record<string, string | number>;
+}
+
+export interface CMSEvent {
+  type: string;
+  action: string;
+  name?: string;
+  params?: Record<string, unknown>;
+}
+
+export interface Gate {
+  allOf?: string[];
+  not?: string[];
+  eval?: string;
+}
+
+export interface TextValue {
+  value: string;
+  fallback?: string;
+}
+
+export interface Repeat {
+  dataSource: string;
+  itemKey: string;
+  template: CMSNode;
+}
+
+export interface CMSNode {
+  id: string;
+  type: string;
+  props?: Record<string, unknown>;
+  text?: TextValue;
+  field?: string;
+  styling?: Styling;
+  events?: CMSEvent[];
+  children?: CMSNode[];
+  repeat?: Repeat;
+  gate?: Gate;
+}
+
+export interface PageDef {
+  slug: string;
+  title: string;
+  description: string;
+}
+
+export interface CMSDocument {
+  _meta: Meta;
+  _definitions: Definitions;
+  _runtimeSchema?: RuntimeSchema;
+  layout: string;
+  page: PageDef;
+  children: CMSNode[];
+}
+
+// Legacy types for backward compatibility with existing CMS components
 export interface OrderedContent {
   order: number;
 }
@@ -20,6 +107,8 @@ export interface Button {
 export interface ButtonGroup extends OrderedContent {
   id: string;
   buttons: Button[];
+  layout?: "horizontal" | "vertical";
+  alignment?: "left" | "center" | "right";
 }
 
 export interface CardGroup extends OrderedContent {
@@ -27,6 +116,7 @@ export interface CardGroup extends OrderedContent {
   cards: Card[];
   layout: "horizontal" | "grid";
   columns?: 2 | 3 | 4;
+  horizontal?: boolean;
 }
 
 export interface ImageGroup extends OrderedContent {
@@ -68,6 +158,7 @@ export interface Image {
   width?: number;
   height?: number;
   lazy?: boolean;
+  caption?: string;
 }
 
 export interface Card extends OrderedContent {
@@ -76,6 +167,7 @@ export interface Card extends OrderedContent {
   image?: Image;
   button?: Button;
   buttonGroup?: ButtonGroup;
+  variant?: "default" | "featured" | "minimal";
 }
 
 export interface EmbeddedFrame extends OrderedContent {
@@ -89,29 +181,12 @@ export interface FormField {
   type: string;
   placeholder?: string;
   required: boolean;
-  binding: Record<"bind", string>;
+  binding?: Record<"bind", string>;
 }
 
 export interface Form extends OrderedContent {
   id: string;
   fields: FormField[];
-  bindings: Record<string, Record<"bind", string>>;
+  bindings?: Record<string, Record<"bind", string>>;
   submitButton: Button;
-}
-
-export type ContentElement =
-  | { type: "textBody"; content: TextBody }
-  | { type: "card"; content: Card }
-  | { type: "form"; content: Form }
-  | { type: "embeddedFrame"; content: EmbeddedFrame }
-  | { type: "buttonGroup"; content: ButtonGroup }
-  | { type: "heroSection"; content: HeroText };
-
-export interface PageContent extends OrderedContent {
-  elements: ContentElement[];
-}
-
-export interface Content {
-  pageMetadata: PageMetadata;
-  pageContent: PageContent;
 }

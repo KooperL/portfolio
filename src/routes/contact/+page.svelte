@@ -2,21 +2,8 @@
   import { logger } from "$lib/logger";
   import { pb } from "$lib/pocketbase";
   import Parser from "$lib/utils/CMS/parser.svelte";
-  import {
-    AccordionItem,
-    Accordion,
-    Card,
-    Label,
-    Input,
-    Textarea,
-    Button,
-  } from "flowbite-svelte";
-
-  let bindings = {
-    "contact-form-name": { bind: "" },
-    "contact-form-email": { bind: "" },
-    "contact-form-message": { bind: "" },
-  };
+  import { Card } from "flowbite-svelte";
+  import type { CMSDocument } from "$lib/utils/CMS/types";
 
   let submitted = false;
   let submittedSuccessfully = false;
@@ -26,104 +13,130 @@
     submit: handleSubmit,
   };
 
-  async function handleSubmit(name: string, message: string, email?: string) {
+  async function handleSubmit(params: any) {
     logger.debug("contact-page", "Submit contact form");
     try {
-      if (!name.bind.length) {
+      const { name, message, email } = params;
+      
+      if (!name || !name.length) {
         throw new Error("Name is required");
       }
-      if (!message.bind.length) {
+      if (!message || !message.length) {
         throw new Error("Message is required");
       }
+      
       const payload = {
-        name: name.bind,
-        email: email.bind,
-        message: message.bind,
+        name,
+        email: email || "",
+        message,
         source: "portfolio",
         type: "contact",
       };
+      
       submitted = true;
       submittedSuccessfully = false;
-      pb.collection("messages").create(payload, { autocancel: false });
+      
+      await pb.collection("messages").create(payload, { autocancel: false });
+      
       submittedSuccessfully = true;
       submitted = false;
       logger.trace("contact-page", "Contact form submitted successfully");
-    } catch (e) {
+    } catch (e: any) {
       const error = "Failed to submit contact form";
-      logger.error(
-        "contact-page",
-        error + ": " + e.message,
-      );
+      logger.error("contact-page", error + ": " + e.message);
     }
   }
 
-  const jsonContent = {
-    pageContent: {
-      order: 2,
-      elements: [
-        {
-          type: "textBody",
-          content: {
-            order: 1,
-            title: "Contact me",
-            body: [
-              "This form will automatically forward the message to me, if you're expecting a reply though, include an email!",
-            ],
+  const jsonContent: CMSDocument = {
+    _meta: {
+      id: "contact-page",
+      author: "cms team",
+      description: "Contact page with form",
+      revisions: { major: 2, minor: 0 },
+    },
+    _definitions: {
+      tokens: {},
+      i18n: {
+        "contact.title": "Contact me",
+        "contact.description":
+          "This form will automatically forward the message to me, if you're expecting a reply though, include an email!",
+        "contact.name.label": "Name",
+        "contact.email.label": "Email",
+        "contact.message.label": "Message",
+        "contact.submit": "Send",
+      },
+      media: {},
+      styleClasses: {},
+    },
+    layout: "page",
+    page: {
+      slug: "contact",
+      title: "Contact me",
+      description: "Get in touch with Kooper",
+    },
+    children: [
+      {
+        id: "contact-intro",
+        type: "container",
+        props: {
+          title: "@i18n:contact.title",
+          subtitle: "@i18n:contact.description",
+        },
+        children: [],
+      },
+      {
+        id: "contact-form",
+        type: "form",
+        props: {
+          fields: [
+            {
+              id: "contact-form-name",
+              label: "@i18n:contact.name.label",
+              type: "text",
+              required: true,
+            },
+            {
+              id: "contact-form-email",
+              label: "@i18n:contact.email.label",
+              type: "email",
+              required: false,
+            },
+            {
+              id: "contact-form-message",
+              label: "@i18n:contact.message.label",
+              type: "textarea",
+              required: true,
+            },
+          ],
+          submitButton: {
+            id: "contact-form-submit",
+            label: "@i18n:contact.submit",
           },
         },
-        {
-          type: "form",
-          content: {
-            order: 3,
-            id: "contact-form",
-            fields: [
-              {
-                id: "contact-form-name",
-                label: "Name",
-                type: "text",
-                required: true,
-              },
-              {
-                id: "contact-form-email",
-                label: "Email",
-                type: "email",
-                required: false,
-              },
-              {
-                id: "contact-form-message",
-                label: "Message",
-                type: "textarea",
-                required: true,
-              },
-            ],
-            submitButton: {
-              label: "Send",
-              id: "contact-form-submit",
-              events: [
-                {
-                  name: "submit",
-                  payload: [
-                    bindings["contact-form-name"],
-                    bindings["contact-form-message"],
-                    bindings["contact-form-email"],
-                  ],
-                },
-              ],
+        events: [
+          {
+            type: "onPress",
+            action: "function",
+            name: "submit",
+            params: {
+              name: "{{contact-form-name}}",
+              message: "{{contact-form-message}}",
+              email: "{{contact-form-email}}",
             },
           },
-        },
-      ],
-    },
+        ],
+        children: [],
+      },
+    ],
   };
 </script>
 
 <div class="box-border p-8 w-full h-full">
   <Card class="w-full max-w-full h-full max-h-full bg-white overflow-y-scroll">
-  <!-- TODO, mappings here -->
-  {#if submittedSuccessfully}
-    <p>Alright, this one's sitting with me now</p>
-  {:else}
-    <Parser content={jsonContent} {functions} {bindings} />
-  {/if}
+    {#if submittedSuccessfully}
+      <p>Alright, this one's sitting with me now</p>
+    {:else}
+      <Parser content={jsonContent} {functions} />
+    {/if}
   </Card>
 </div>
