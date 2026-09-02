@@ -1,4 +1,4 @@
-import type { CMSDocument } from "$lib/utils/CMS/types";
+import type { CmsDocumentObject, CmsNode, CmsEvent } from "$lib/utils/CMS";
 
 export const site = {
   name: "Kooper's portfolio",
@@ -6,7 +6,7 @@ export const site = {
     "My own corner of the internet to play around with tech that's too fun for a production environment",
 };
 
-// Helper to build a CMSDocument for a project page from compact data
+// Helper to build a CmsDocumentObject for a project page from compact data
 interface ProjectDef {
   title: string;
   description: string;
@@ -23,7 +23,7 @@ interface ProjectDef {
   embedUrl?: string;
 }
 
-function buildProjectDoc(key: string, def: ProjectDef): CMSDocument {
+function buildProjectDoc(key: string, def: ProjectDef): CmsDocumentObject {
   const i18n: Record<string, string> = {};
   i18n[`${key}.title`] = def.title;
   def.body.forEach((p, i) => {
@@ -33,10 +33,10 @@ function buildProjectDoc(key: string, def: ProjectDef): CMSDocument {
     i18n[`${key}.btn.${btn.id}`] = btn.label;
   });
 
-  const contentChildren: any[] = [];
+  const contentChildren: CmsNode[] = [];
 
   // Main content container
-  const container: any = {
+  const container: CmsNode = {
     id: `${key}-content`,
     type: "container",
     props: {
@@ -45,32 +45,31 @@ function buildProjectDoc(key: string, def: ProjectDef): CMSDocument {
   };
 
   if (def.body.length > 0) {
-    container.props.body = def.body.map((_, i) => `@i18n:${key}.body${i + 1}`);
+    container.props = container.props || {};
+    container.props.body = def.body.map((_, i) => `@i18n:${key}.body${i + 1}`).join("\n\n");
   }
 
   if (def.buttons.length > 0) {
-    container.children = def.buttons.map((btn) => ({
-      id: btn.id,
-      type: "button",
-      props: {
-        testID: btn.testId || `${btn.id}-testId`,
-        title: `@i18n:${key}.btn.${btn.id}`,
-        href: btn.href,
-        ...(btn.icon ? { icon: btn.icon } : {}),
-      },
-      events: [
-        {
-          type: "onPress",
-          action: "function",
-          name: "logInfo",
-          params: {
-            context: btn.logContext || key,
-            action:
-              btn.logAction || `Press on '${btn.label.toLowerCase()}' button`,
-          },
+    container.children = def.buttons.map((btn): CmsNode => {
+      const event: CmsEvent = {
+        type: "Function",
+        name: "logInfo",
+        params: {
+          context: btn.logContext || key,
+          action: btn.logAction || `Press on '${btn.label.toLowerCase()}' button`,
         },
-      ],
-    }));
+      };
+      return {
+        id: btn.id,
+        type: "button",
+        props: {
+          text: `@i18n:${key}.btn.${btn.id}`,
+          url: btn.href,
+          ...(btn.icon ? { icon: btn.icon } : {}),
+        },
+        events: [event],
+      };
+    });
   }
 
   contentChildren.push(container);
@@ -91,7 +90,7 @@ function buildProjectDoc(key: string, def: ProjectDef): CMSDocument {
       id: key,
       author: "cms team",
       description: `${def.title} project page`,
-      revisions: { major: 2, minor: 0 },
+      revisions: { major: "2", minor: "0" },
     },
     _definitions: {
       tokens: {},
@@ -99,17 +98,21 @@ function buildProjectDoc(key: string, def: ProjectDef): CMSDocument {
       media: {},
       styleClasses: {},
     },
-    layout: "page",
-    page: {
-      slug: key,
-      title: def.title,
-      description: def.description,
-    },
-    children: contentChildren,
+    root: [
+      {
+        page: {
+          slug: key,
+          id: key,
+          title: def.title,
+          description: def.description,
+        },
+        children: contentChildren,
+      },
+    ],
   };
 }
 
-export const projectContent: Record<string, CMSDocument> = {
+export const projectContent: Record<string, CmsDocumentObject> = {
   gator_gang: buildProjectDoc("gator_gang", {
     title: "Gator gang",
     description:

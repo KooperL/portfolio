@@ -1,368 +1,207 @@
 <script lang="ts">
-  import { Alert } from "flowbite-svelte";
-  import HeroSection from "$lib/components/CMS/CMSHeroSection.svelte";
-  import TextBodyComponent from "$lib/components/CMS/CMSTextBody.svelte";
-  import CardComponent from "$lib/components/CMS/CMSCard.svelte";
-  import FormComponent from "$lib/components/CMS/CMSForm.svelte";
-  import EmbeddedFrameComponent from "$lib/components/CMS/CMSEmbeddedFrame.svelte";
-  import ButtonComponent from "$lib/components/CMS/CMSButton.svelte";
-  import type { CMSDocument, CMSNode, Definitions } from "$lib/utils/CMS/types";
-  import { metadata } from "$lib/app/stores";
+  import type { CmsDocumentObject, CmsNode, CmsEvent } from "./cms";
+  import type { ResolvedNode } from "./parser";
+  import { resolveDocument } from "./parser";
+  import { dispatchEvents } from "./events";
+  import type { FunctionRegistry } from "./events";
+  import { Button, Card } from "flowbite-svelte";
+  import { base } from "$app/paths";
+  import CMSIcon from "$lib/components/CMS/CMSIcon.svelte";
 
-  export let content: string | CMSDocument;
-  export let loading = false;
-  export let functions: Record<string, Function> = {};
-  export let runtime: Record<string, unknown> = {};
+  // Top-level mode: pass a document
+  export let doc: CmsDocumentObject | null = null;
+  export let variables: Record<string, any> = {};
+  export let functions: FunctionRegistry = {};
 
-  let parsedContent: CMSDocument | null = null;
-  let error: string | null = null;
+  // Recursive node mode (used internally via <svelte:self>)
+  export let node: ResolvedNode | null = null;
 
-  function resolveRef(
-    value: unknown,
-    defs: Definitions,
-    ctx: Record<string, unknown>,
-  ): unknown {
-    if (typeof value !== "string") return value;
+  $: resolved = doc ? resolveDocument(doc, variables) : null;
 
-    if (value.startsWith("@i18n:")) {
-      return defs.i18n[value.slice(6)] ?? value;
-    }
-    if (value.startsWith("@token:")) {
-      return defs.tokens[value.slice(7)] ?? value;
-    }
-    if (value.startsWith("@media:")) {
-      return defs.media[value.slice(7)] ?? null;
-    }
-    if (value.startsWith("@class:")) {
-      return defs.styleClasses[value.slice(7)] ?? value;
-    }
-    if (value.startsWith("{{") && value.endsWith("}}")) {
-      const path = value.slice(2, -2);
-      let result: unknown = ctx;
-      for (const part of path.split(".")) {
-        if (
-          result &&
-          typeof result === "object" &&
-          part in (result as Record<string, unknown>)
-        ) {
-          result = (result as Record<string, unknown>)[part];
-        } else {
-          return value;
-        }
-      }
-      return result;
-    }
-    return value;
+  function handleEvents(events: CmsEvent[] | undefined, payload: Record<string, string> = {}) {
+    dispatchEvents(events, { event: payload }, functions);
   }
-
-  function resolveProps(
-    props: Record<string, unknown> | undefined,
-    defs: Definitions,
-    ctx: Record<string, unknown>,
-  ): Record<string, unknown> {
-    const out: Record<string, unknown> = {};
-    if (!props) return out;
-    for (const [k, v] of Object.entries(props)) {
-      out[k] = resolveRef(v, defs, ctx);
-    }
-    return out;
-  }
-
-  function resolveEvents(
-    events: CMSNode["events"],
-    defs: Definitions,
-    ctx: Record<string, unknown>,
-  ) {
-    if (!events || events.length === 0) return [];
-    return events.map((e) => {
-      const params: Record<string, unknown> = {};
-      if (e.params) {
-        for (const [k, v] of Object.entries(e.params)) {
-          params[k] = resolveRef(v, defs, ctx);
-        }
-      }
-      return {
-        ...e,
-        params,
-      };
-    });
-  }
-
-  function checkGate(
-    gate: CMSNode["gate"],
-    ctx: Record<string, unknown>,
-  ): boolean {
-    if (!gate) return true;
-    if (gate.allOf) {
-      for (const flag of gate.allOf) {
-        if (!ctx[flag]) return false;
-      }
-    }
-    if (gate.not) {
-      for (const flag of gate.not) {
-        if (ctx[flag]) return false;
-      }
-    }
-    return true;
-  }
-
-  function validateContent(doc: CMSDocument): boolean {
-    try {
-      if (!doc._meta || !doc._definitions || !doc.page) {
-        throw new Error("Invalid CMS document structure");
-      }
-      if (!Array.isArray(doc.children)) {
-        throw new Error("Invalid children array");
-      }
-      return true;
-    } catch (err: any) {
-      error = err.message;
-      return false;
-    }
-  }
-
-  function parseContent() {
-    try {
-      if (typeof content === "string") {
-        parsedContent = JSON.parse(content);
-      } else {
-        parsedContent = content;
-      }
-      if (!validateContent(parsedContent as CMSDocument)) {
-        parsedContent = null;
-      }
-      if (parsedContent?.page) {
-        const { title, description } = parsedContent.page;
-        metadata.update((m) => {
-          m.title = title;
-          m.description = description;
-          m.headline = title;
-          return m;
-        });
-      }
-    } catch (err) {
-      error = "Failed to parse content";
-      parsedContent = null;
-    }
-  }
-
-  $: if (content) {
-    error = null;
-    parseContent();
-  }
-
-  // Pre-resolve all nodes for rendering
-  interface ResolvedNode {
-    node: CMSNode;
-    props: Record<string, unknown>;
-    visible: boolean;
-    children?: ResolvedNode[];
-    repeatItems?: Array<{ item: unknown; props: Record<string, unknown>; events: any[] }>;
-    events: any[];
-  }
-
-  function resolveNodeTree(
-    nodes: CMSNode[],
-    defs: Definitions,
-    ctx: Record<string, unknown>,
-  ): ResolvedNode[] {
-    return nodes.map((n) => {
-      const resolved: ResolvedNode = {
-        node: n,
-        props: resolveProps(n.props, defs, ctx),
-        visible: checkGate(n.gate, ctx),
-        events: resolveEvents(n.events, defs, ctx),
-      };
-
-      if (n.children && n.children.length > 0) {
-        resolved.children = resolveNodeTree(n.children, defs, ctx);
-      }
-
-      if (n.repeat) {
-        const ds = resolveRef(n.repeat.dataSource, defs, ctx);
-        if (Array.isArray(ds)) {
-          resolved.repeatItems = ds.map((item) => ({
-            item,
-            props: resolveProps(n.repeat!.template.props, defs, {
-              ...ctx,
-              item,
-            }),
-            events: resolveEvents(n.repeat!.template.events, defs, {
-              ...ctx,
-              item,
-            }),
-          }));
-        }
-      }
-
-      return resolved;
-    });
-  }
-
-  // Helper functions to safely extract string values from props
-  function str(val: unknown, fallback: string = ""): string {
-    return typeof val === "string" ? val : fallback;
-  }
-
-  function strArr(val: unknown): string[] {
-    return Array.isArray(val) ? val.filter((v) => typeof v === "string") : [];
-  }
-
-  $: defs = parsedContent?._definitions;
-  $: resolvedChildren =
-    parsedContent && defs
-      ? resolveNodeTree(parsedContent.children, defs, runtime)
-      : [];
 </script>
 
-{#if loading}
-  <div class="flex justify-center items-center min-h-[200px]">
-    <div
-      class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"
-    ></div>
-  </div>
-{:else if error}
-  <Alert color="red" class="mb-4">
-    <span class="font-medium">Error:</span>
-    {error}
-  </Alert>
-{:else if parsedContent && defs}
-  {#each resolvedChildren as { node, props, visible, children, repeatItems, events }}
-    {#if visible}
-      <section class="mb-8 h-fit">
-        {#if node.type === "hero"}
-          <HeroSection
-            title={str(props.title)}
-            subtitle={str(props.subtitle)}
-            backgroundImage={str(props.backgroundImage)}
-            testId={str(props.testID)}
-            {events}
-            {functions}
-          />
-          {#if children}
-            <div class="mt-4 flex flex-wrap gap-2 justify-center">
-              {#each children as child}
-                {#if child.visible && child.node.type === "button"}
-                  <ButtonComponent
-                    id={child.node.id}
-                    label={str(child.props.title || child.props.label)}
-                    href={str(child.props.href)}
-                    testId={str(child.props.testID)}
-                    icon={str(child.props.icon)}
-                    events={child.events}
-                    {functions}
-                  />
-                {/if}
-              {/each}
-            </div>
-          {/if}
-        {:else if node.type === "text"}
-          <div class="py-2 px-2 mx-auto max-w-screen-xl lg:px-12">
-            <p>{str(props.text || props.value)}</p>
+{#if node}
+  <!-- Recursive node rendering -->
+  {#if node.type === "title"}
+    <h2 class="mb-4 text-3xl font-extrabold text-gray-700 dark:text-white {node.styling ?? ''}">
+      {node.props.value ?? ''}
+    </h2>
+  {:else if node.type === "text"}
+    <div class="py-2 px-2 mx-auto max-w-screen-xl lg:px-12 text-left {node.styling ?? ''}">
+      <div class="space-y-4 text-gray-700 dark:text-gray-300">
+        {#each (node.props.value ?? '').split('\n\n').filter(p => p.length) as paragraph}
+          <p>{paragraph}</p>
+        {/each}
+      </div>
+    </div>
+  {:else if node.type === "textarea"}
+    <div class="text-gray-700 dark:text-gray-300 {node.styling ?? ''}">
+      {node.props.value ?? ''}
+    </div>
+  {:else if node.type === "hero"}
+    <div class="relative bg-cover bg-center pt-8 pb-24 px-16 sm:py-16 sm:px-4 {node.styling ?? ''}">
+      <div class="background bottom bg-primary-700"></div>
+      <div class="background top bg-gray-300"></div>
+      <div class="relative z-3 max-w-screen-xl mx-auto text-center" style="z-index:3;">
+        <h1 class="font-extrabold tracking-tight text-gray-700 leading-none text-4xl md:text-5xl lg:text-6xl">
+          {node.props.title ?? ''}
+        </h1>
+        <p class="mb-8 font-normal text-gray-700 text-lg lg:text-xl sm:px-16 lg:px-48">
+          {node.props.subtitle ?? ''}
+        </p>
+        <div class="my-16"></div>
+        {#if node.children && node.children.length > 0}
+          <div class="flex flex-wrap gap-3 justify-center">
+            {#each node.children as child}
+              <svelte:self node={child} {functions} />
+            {/each}
           </div>
-        {:else if node.type === "button"}
-          <div class="py-2 px-2 mx-auto max-w-screen-xl lg:px-12">
-            <ButtonComponent
-              id={node.id}
-              label={str(props.title || props.label)}
-              href={str(props.href)}
-              testId={str(props.testID)}
-              icon={str(props.icon)}
-              {events}
-              {functions}
+        {/if}
+      </div>
+    </div>
+  {:else if node.type === "container"}
+    <div class="py-4 px-2 mx-auto max-w-screen-xl lg:px-12 {node.styling ?? ''}">
+      {#if node.props.title}
+        <h3 class="mb-2 text-2xl font-bold text-gray-700 dark:text-white">
+          {node.props.title}
+        </h3>
+      {/if}
+      {#if node.props.description}
+        <p class="mb-4 text-gray-600 dark:text-gray-300">{node.props.description}</p>
+      {/if}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {#each node.children as child (child.id)}
+          <svelte:self node={child} {functions} />
+        {/each}
+      </div>
+    </div>
+  {:else if node.type === "buttonContainer"}
+    <div class="flex flex-wrap gap-3 justify-center {node.styling ?? ''}">
+      {#each node.children as child (child.id)}
+        <svelte:self node={child} {functions} />
+      {/each}
+    </div>
+  {:else if node.type === "card"}
+    <Card class="w-full max-w-full {node.styling ?? ''}">
+      <div class="flex flex-col">
+        {#if node.props.image}
+          <div class="h-full flex justify-center items-center">
+            <img
+              src={node.props.image}
+              alt={node.props.title ?? node.id}
+              class="rounded-t-lg overflow-hidden"
             />
           </div>
-        {:else if node.type === "card"}
-          <CardComponent
-            title={str(props.title)}
-            body={str(props.subtitle || props.body)}
-            testId={str(props.testID)}
-            {events}
-            {functions}
-          />
-        {:else if node.type === "container"}
-          <TextBodyComponent
-            title={str(props.title)}
-            body={props.subtitle
-              ? [str(props.subtitle)]
-              : props.body
-                ? strArr(props.body)
-                : []}
-          />
-          {#if children}
-            <div class="mt-4 space-y-4">
-              {#each children as child}
-                {#if child.visible}
-                  {#if child.node.type === "text"}
-                    <div class="py-2 px-2 mx-auto max-w-screen-xl lg:px-12">
-                      <p>{str(child.props.text || child.props.value)}</p>
-                    </div>
-                  {:else if child.node.type === "button"}
-                    <ButtonComponent
-                      id={child.node.id}
-                      label={str(child.props.title || child.props.label)}
-                      href={str(child.props.href)}
-                      testId={str(child.props.testID)}
-                      icon={str(child.props.icon)}
-                      events={child.events}
-                      {functions}
-                    />
-                  {:else if child.node.type === "card"}
-                    <CardComponent
-                      title={str(child.props.title)}
-                      body={str(child.props.subtitle || child.props.body)}
-                      testId={str(child.props.testID)}
-                      events={child.events}
-                      {functions}
-                    />
-                  {:else if child.node.type === "embeddedFrame"}
-                    <EmbeddedFrameComponent url={str(child.props.url)} />
-                  {:else if child.node.type === "input"}
-                    <input
-                      type="text"
-                      placeholder={str(child.props.placeholder)}
-                      class="w-full p-2 border rounded"
-                    />
-                  {:else if child.node.type === "grid" && child.repeatItems}
-                    <div
-                      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-                    >
-                      {#each child.repeatItems as repeatItem}
-                        <CardComponent
-                          title={str(repeatItem.props.title)}
-                          body={str(
-                            repeatItem.props.subtitle || repeatItem.props.body,
-                          )}
-                          events={repeatItem.events}
-                          {functions}
-                        />
-                      {/each}
-                    </div>
-                  {:else}
-                    <Alert color="yellow"
-                      >Unknown child type: {child.node.type}</Alert
-                    >
-                  {/if}
-                {/if}
-              {/each}
+        {/if}
+        <div class="p-4 flex flex-col">
+          {#if node.props.title}
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-700 dark:text-white">
+              {node.props.title}
+            </h5>
+          {/if}
+          {#if node.props.description}
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-wrap">
+              {node.props.description}
+            </p>
+          {/if}
+          {#if node.props.url}
+            <div class="mt-2">
+              <Button
+                class="custom-button rounded text-nowrap"
+                style="-webkit-clip-path: polygon(0 0, 100% 0, 100% 66%, 78% 100%, 0 100%); clip-path: polygon(0 0, 100% 0, 100% 66%, 78% 100%, 0 100%);"
+                href={node.props.url.startsWith('/') ? `${base}${node.props.url}` : node.props.url}
+                variant="primary"
+              >
+                Learn more
+              </Button>
             </div>
           {/if}
-          {#if props.footer}
-            <p class="mt-2 text-sm text-gray-500">{str(props.footer)}</p>
-          {/if}
-        {:else if node.type === "embeddedFrame"}
-          <EmbeddedFrameComponent url={str(props.url)} />
-        {:else if node.type === "form"}
-          <FormComponent
-            fields={props.fields}
-            submitButton={props.submitButton}
-            {events}
-            {functions}
-          />
-        {:else}
-          <Alert color="yellow">Unknown node type: {node.type}</Alert>
-        {/if}
-      </section>
-    {/if}
+        </div>
+      </div>
+    </Card>
+  {:else if node.type === "button"}
+    <Button
+      class="custom-button rounded text-nowrap"
+      style="-webkit-clip-path: polygon(0 0, 100% 0, 100% 66%, 78% 100%, 0 100%); clip-path: polygon(0 0, 100% 0, 100% 66%, 78% 100%, 0 100%);"
+      href={node.props.url ? (node.props.url.startsWith('/') ? `${base}${node.props.url}` : node.props.url) : undefined}
+      variant="primary"
+      on:click={() => handleEvents(node.events, {})}
+    >
+      {#if node.props.icon}
+        <CMSIcon icon={node.props.icon} className="mr-2" />
+      {/if}
+      {node.props.text ?? node.props.value ?? ''}
+    </Button>
+  {:else if node.type === "image"}
+    <img
+      src={node.props.media ?? node.props.src ?? ''}
+      alt={node.props.alt ?? node.id}
+      class={node.styling ?? ''}
+    />
+  {:else if node.type === "input"}
+    <input
+      type="text"
+      class="mb-2 w-full px-3 py-2 border rounded text-gray-700 {node.styling ?? ''}"
+      value={node.props.value ?? ''}
+      on:input={(e) => handleEvents(node.events, { value: e.target.value })}
+    />
+  {:else if node.type === "embeddedFrame"}
+    <iframe src={node.props.url ?? ''} class="w-full h-128 {node.styling ?? ''}" />
+  {:else if node.type === "table"}
+    <table class="w-full text-sm text-left text-gray-500 {node.styling ?? ''}">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <tr>
+          {#each Object.keys(node.props) as col}
+            <th class="px-6 py-3">{col}</th>
+          {/each}
+        </tr>
+      </thead>
+    </table>
+  {:else}
+    <div class={node.styling ?? ''}>
+      <span class="text-gray-400 text-sm">[{node.type}] {node.id}</span>
+    </div>
+  {/if}
+{:else if resolved}
+  <!-- Top-level document rendering -->
+  {#each resolved.pages as pageData (pageData.page.id)}
+    {#each pageData.children as child (child.id)}
+      <svelte:self node={child} {functions} />
+    {/each}
   {/each}
 {/if}
+
+<style>
+  .background {
+    top: 0;
+    left: 0;
+    position: absolute;
+    height: 80%;
+    width: 100%;
+  }
+  .top {
+    animation-name: breathe-2;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    z-index: 2;
+  }
+  .bottom {
+    animation-name: breathe-1;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    z-index: 1;
+  }
+  @keyframes breathe-1 {
+    0% { border-bottom-right-radius: 60%; border-bottom-left-radius: 10%; }
+    50% { border-bottom-right-radius: 65%; border-bottom-left-radius: 15%; }
+    100% { border-bottom-right-radius: 60%; border-bottom-left-radius: 10%; }
+  }
+  @keyframes breathe-2 {
+    0% { border-bottom-right-radius: 80%; border-bottom-left-radius: 20%; }
+    50% { border-bottom-right-radius: 85%; border-bottom-left-radius: 35%; }
+    100% { border-bottom-right-radius: 80%; border-bottom-left-radius: 20%; }
+  }
+</style>
