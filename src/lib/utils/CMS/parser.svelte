@@ -83,6 +83,29 @@
         {/if}
       </div>
     </div>
+  {:else if node.type === "text-inline-image"}
+    <div class="flex flex-col md:flex-row gap-8">
+      <div class="flex items-center min-w-fit">
+        <img
+          src={node.props.image}
+          alt={node.props.title ?? node.id}
+          class="rounded-t-lg overflow-hidden w-max"
+        />
+      </div>
+      <div class="text-gray-700 dark:text-gray-300 {node.styling ?? ''}">
+        {node.props.value ?? ""}
+      </div>
+    </div>
+  {:else if node.type === "banner"}
+    <div
+      class="py-4 px-2 mx-auto max-w-screen-xl lg:px-12 {node.styling ?? ''}"
+    >
+      <img
+        src={node.props.image}
+        alt={node.props.title ?? node.id}
+        class="rounded-t-lg overflow-hidden w-full"
+      />
+    </div>
   {:else if node.type === "container"}
     <div
       class="py-4 px-2 mx-auto max-w-screen-xl lg:px-12 {node.styling ?? ''}"
@@ -101,7 +124,7 @@
         class={`grid grid-cols-1 gap-4 ${
           node?.props?.["layout-style"] === "list"
             ? ""
-            : "md:grid-cols-2 lg:grid-cols-3 "
+            : "md:grid-cols-2 4xl:grid-cols-3 "
         }`}
       >
         {#each node.children as child (child.id)}

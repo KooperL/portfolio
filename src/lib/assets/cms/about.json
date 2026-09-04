@@ -11,10 +11,24 @@
   "_definitions": {
     "tokens": {},
     "i18n": {
-      "about-page.about-title.value": "About me",
-      "about-page.about-content.value": "I'm Kooper. We might have met already but I can't remember - I didn't want to annoy you with cookies.\n\nI'm a software developer who likes to make things. I most often wear the hat of a front-end web developer, but I've also dabbled in other areas of software development. I've played around with game modding, microcontrollers and hardware, 12 volt automotive modifications, local AI edge compute apps, and backend services that support front-end projects.\n\nOne of the most special aspects of software development is that so many of the tools we rely on are open source. I'm genuinely crushed that this isn't more widely appreciated. I have profound respect for industry heroes like Linus Torvalds and Ken Thompson, as well as the content creators who encourage newbies to enter the space.\n\nThere's a reason I'm a fan of the web. I get inspired by websites that try to be different, and I love that anyone can contribute ideas to the internet through weird websites, awesome toolkits and libraries, and open source projects.\n\nContinuous growth is important to me, and I'm always looking for new things to learn—from new frameworks and programming languages to biology and physiology."
+      "about-page.about-title.value": "About Me",
+      "about-page.about-hello.value": "I'm Kooper Lingohr, a software developer in Melboure. We might have met already, but I can't remember! I didn't want to annoy you with cookies.",
+      "about-page.about-content.value": "I love solving my own problems and I can always find an excuse to start a new software project. I wear the hat of a front-end web developer professionally, but hobby projects put me in all kinds of different software environments. I've played around with game modding (C#), microcontrollers (C/C++) and hardware, 12-volt automotive modifications, local AI edge compute apps (Python), and backend services (Go, Rust, Java) that support front-end JavaScript projects.\n\nOne of the most special aspects of software development is that so many of the tools we rely on are open source. I genuinely wish this were more widely appreciated. I have profound respect for industry heroes like Linus Torvalds, Ken Thompson, and John Carmack for how they shaped software as it exists today, as well as the content creators who encourage newbies to enter the space.",
+      "about-page.about-more-content.value": "There's a reason I'm a fan of the web. I get inspired by websites that try to be different, and I love that anyone can contribute ideas to the internet through weird websites, awesome toolkits and libraries, and open-source projects.\n\nContinuous growth is important to me, and I'm always looking for new things to learn. When I'm not in front of my computer, I like watching presentations at developer conferences by companies that take risks and engineer novel approaches to strange problems.",
+      "about-page.about-more-more-content.value": "I have a healthy, pragmatic stance on AI. I prefer running local AI models, which aligns with my views on personal data and privacy. AI's effectiveness at producing code depends entirely on the use case. While it is a powerful accelerator when used for its strengths, relying on it in areas where it lacks context can actually hinder progress and harm the final product."
     },
-    "media": {},
+    "media": {
+      "headshot-image": {
+        "kind": "image",
+        "source": "url",
+        "ref": "https://raw.githubusercontent.com/KooperL/portfolio/heads/main/assets/Kooper-Lingohr_512.jpg?raw=true"
+      },
+      "contributions-image": {
+        "kind": "image",
+        "source": "url",
+        "ref": "https://raw.githubusercontent.com/KooperL/KooperL/heads/main/assets/lifetime.light.svg?raw=true"
+      }
+    },
     "styleClasses": {}
   },
   "root": [
@@ -34,10 +48,40 @@
           }
         },
         {
-          "id": "about-content",
+          "id": "about-hello",
           "type": "text",
           "props": {
-            "value": "@i18n:about-page.about-content.value"
+            "value": "@i18n:about-page.about-hello.value"
+          }
+        },
+        {
+          "id": "about-content",
+          "type": "text-inline-image",
+          "props": {
+            "value": "@i18n:about-page.about-content.value",
+            "image": "@media:headshot-image"
+          }
+        },
+        {
+          "id": "about-more-content",
+          "type": "text",
+          "props": {
+            "value": "@i18n:about-page.about-more-content.value"
+          }
+        },
+        {
+          "id": "contributions-banner",
+          "type": "banner",
+          "styling": "@styling:card.full-horizontal",
+          "props": {
+            "image": "@media:contributions-image"
+          }
+        },
+        {
+          "id": "about-more-more-content",
+          "type": "text",
+          "props": {
+            "value": "@i18n:about-page.about-more-more-content.value"
           }
         }
       ]
