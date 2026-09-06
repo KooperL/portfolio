@@ -49,8 +49,23 @@
       </div>
     </div>
   {:else if node.type === "textarea"}
-    <div class="text-gray-700 dark:text-gray-300 {node.styling ?? ''}">
-      {node.props.value ?? ""}
+    <div class={node.styling ?? ""}>
+      {#if node.props.label}
+        <label
+          for={node.id}
+          class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
+          {node.props.label}
+        </label>
+      {/if}
+      <textarea
+        id={node.id}
+        class="w-full px-3 py-2 border rounded text-gray-700 dark:text-gray-300 dark:bg-gray-700 dark:border-gray-600"
+        rows="4"
+        value={node.props.value ?? ""}
+        on:input={(e) =>
+          handleEvents(node.events, { value: e.currentTarget.value })}
+      ></textarea>
     </div>
   {:else if node.type === "hero"}
     <div
@@ -212,13 +227,24 @@
       class={node.styling ?? ""}
     />
   {:else if node.type === "input"}
-    <input
-      type="text"
-      class="mb-2 w-full px-3 py-2 border rounded text-gray-700 {node.styling ??
-        ''}"
-      value={node.props.value ?? ""}
-      on:input={(e) => handleEvents(node.events, { value: e.target.value })}
-    />
+    <div class={node.styling ?? ""}>
+      {#if node.props.label}
+        <label
+          for={node.id}
+          class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
+          {node.props.label}
+        </label>
+      {/if}
+      <input
+        id={node.id}
+        type="text"
+        class="mb-2 w-full px-3 py-2 border rounded text-gray-700 dark:text-gray-300 dark:bg-gray-700 dark:border-gray-600"
+        value={node.props.value ?? ""}
+        on:input={(e) =>
+          handleEvents(node.events, { value: e.currentTarget.value })}
+      />
+    </div>
   {:else if node.type === "embeddedFrame"}
     <iframe
       src={node.props.url ?? ""}

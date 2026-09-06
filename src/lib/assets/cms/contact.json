@@ -44,6 +44,7 @@
           "id": "contact-name-input",
           "type": "input",
           "props": {
+            "label": "Name",
             "value": "{{contactNameInputValue}}"
           },
           "events": [
@@ -60,6 +61,7 @@
           "id": "contact-email-input",
           "type": "input",
           "props": {
+            "label": "Email",
             "value": "{{contactEmailInputValue}}"
           },
           "events": [
@@ -76,6 +78,7 @@
           "id": "contact-content-textarea",
           "type": "textarea",
           "props": {
+            "label": "Message",
             "value": "{{contactContentTextareaValue}}"
           },
           "events": [

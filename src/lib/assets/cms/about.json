@@ -21,7 +21,7 @@
       "headshot-image": {
         "kind": "image",
         "source": "url",
-        "ref": "https://raw.githubusercontent.com/KooperL/portfolio/heads/main/assets/Kooper-Lingohr_512.jpg?raw=true"
+        "ref": "https://github.com/KooperL/portfolio/blob/main/src/lib/assets/Kooper-Lingohr_512.jpg?raw=true"
       },
       "contributions-image": {
         "kind": "image",

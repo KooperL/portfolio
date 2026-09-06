@@ -28,19 +28,19 @@
     submitContactContent: async (params) => {
       logger.debug("contact-page", "Submit contact form");
       try {
-        const { name, message, email } = params;
+        const { name, content, email } = params;
 
         if (!name || !name.length) {
           throw new Error("Name is required");
         }
-        if (!message || !message.length) {
+        if (!content || !content.length) {
           throw new Error("Message is required");
         }
 
         const payload = {
           name,
           email: email || "",
-          message,
+          message: content,
           source: "portfolio",
           type: "contact",
         };
